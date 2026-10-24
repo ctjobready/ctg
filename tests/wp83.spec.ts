@@ -57,6 +57,8 @@ async function showSlide(page: Page, n: number) {
 const SCOPE_NOTE = 'The total is contract scope, not a count of completers; it includes Her Power’s national program, which trained 25,125 women (CodersTrust trained 2,400 directly).';
 /** WP84: the shared note also says the 25,125 is the same group already counted in the 150,000+ enrollments (WP85 wording; WP87 kept "150,000+"). */
 const CONTRACT_NOTE = `${SCOPE_NOTE} Her Power’s 25,125 is the same group counted in the 150,000+ enrollments through CodersTrust’s curriculum, not additional people.`;
+// WP94 (triage A4): Investors ends with a pointer to its reconciliation paragraph.
+const CONTRACT_NOTE_INVESTORS = `${SCOPE_NOTE} Her Power’s 25,125 are already counted in the 150,000+ enrollments above, not additional people.`;
 /** WP83 wordings that put the national program's 25,125 as a target still to be met (WP85: the target was met, so none stands). */
 const TARGET_25125 = [
   /to train 25,125/i,
@@ -127,7 +129,7 @@ test.describe('WP83 (WP85 wording): no built page words the 25,125 as a target s
     for (const p of pages) {
       const text = visible(p.html);
       const mentions = [...text.matchAll(/25,125/g)].map((m) => text.slice(Math.max(0, m.index - 45), m.index + 70));
-      for (const m of mentions) expect(m, `${p.route}: "${m}"`).toMatch(/trained 25,125|25,125 women Her Power trained|25,125 is the same group|25,125 women the national program trained|Aims to Train 25,125|aims to train and support 25,125|train and facilitate 25,125|courseware: Her Power’s 25,125|both the 112,926 and the 25,125/);
+      for (const m of mentions) expect(m, `${p.route}: "${m}"`).toMatch(/trained 25,125|25,125 women Her Power trained|25,125 is the same group|25,125 are already counted|25,125 women the national program trained|Aims to Train 25,125|aims to train and support 25,125|train and facilitate 25,125|courseware: Her Power’s 25,125|both the 112,926 and the 25,125/);
     }
   });
 
@@ -171,7 +173,7 @@ test.describe('WP83 (WP85 wording): the pages that state the 25,125', () => {
 
   test('Investors: the tile and the FAQ say trained (CodersTrust’s role first); JobReady Platform’s tile says it too', async ({ page }) => {
     await open(page, 'partner-with-us/investors/');
-    expect(compact(await page.locator('#reach .ir__note').textContent())).toBe(CONTRACT_NOTE);
+    expect(compact(await page.locator('#reach .ir__note').textContent())).toBe(CONTRACT_NOTE_INVESTORS);
     const faq = page.locator('#faq details, #faqs details', { has: page.locator('summary', { hasText: 'Can You Deliver at National Scale?' }) }).first();
     expect(compact(await faq.textContent())).toContain('trained 2,400 women directly; the national program trained 25,125 women across 130 sub-districts (upazilas), meeting its target.');
     await open(page, 'our-model/jobready-platform/');

@@ -38,7 +38,7 @@ test.describe('Investors: the delivered figures lead the track-record band (item
     expect(await page.locator('#guide .ig__tile').evaluateAll((els) => els.map((e) => e.getAttribute('data-fact')))).toEqual(['SC-01', 'SC-02', 'SC-03']);
     // the explanation moved with the tiles, in the register's own words (SC-02 and SC-03 detail lines)
     const note = page.locator('#guide .ig__notes');
-    await expect(note).toHaveText('Of 150,000+ enrollments, 112,926 were direct. Another 40,152 came through CodersTrust curriculum and courseware: Her Power’s 25,125 and UNDP FutureNation’s 15,027. Her Power’s 2,400 directly trained women are in both the 112,926 and the 25,125. Counted once, the total is 150,678. Most delivery has been in Bangladesh.');
+    await expect(note).toHaveText('Of 150,000+ enrollments, 112,926 were direct. Another 40,152 came through CodersTrust curriculum and courseware: Her Power’s 25,125 and UNDP FutureNation’s 15,027. Her Power’s 2,400 directly trained women are in both the 112,926 and the 25,125. Counted once, the total is 150,678 enrollments. Most delivery has been in Bangladesh.');
     expect(await note.getAttribute('data-fact')).toBe('SC-02 SC-03 GV-01 SC-14');
     // moved, not duplicated: the figures are stated where they were, once (the 150,000+ twice in the Guide band: the tile, and the register's own "Of 150,000+ enrollments" note; WP87: the figures are now 112,926 and 40,152), and the Reach band holds none of the delivered figures;
     // WP84 (owner answer 2026-10-24): its contract-scope note, shared with the other pages, says Her Power's 25,125 is the same curriculum reach counted in the 150,000+ enrollments, so the Reach band names the 150,000+ once, in that sentence
@@ -51,7 +51,8 @@ test.describe('Investors: the delivered figures lead the track-record band (item
     const reach = compact(await page.locator('#reach').textContent());
     expect(reach).not.toMatch(/130,000|112,926|Delivered Since 2014/);
     expect(count(reach, '150,000+'), 'only in the overlap sentence of the contract-scope note').toBe(1);
-    expect(reach).toContain('Her Power’s 25,125 is the same group counted in the 150,000+ enrollments through CodersTrust’s curriculum, not additional people.');
+    // WP94 (triage A4): Investors points back to its reconciliation paragraph instead of restating the overlap.
+    expect(reach).toContain('Her Power’s 25,125 are already counted in the 150,000+ enrollments above, not additional people.');
     await expect(page.locator('#reach .status-tag')).toHaveCount(0);
   });
 

@@ -3,7 +3,7 @@ import { expect, test, type Page } from '@playwright/test';
 import { titleCase } from '../src/lib/titleCase.mjs';
 import { fact, sources } from '../src/data/facts';
 import { faqs } from '../src/data/faqs';
-import { CONTRACT_TOTAL_NOTE, CONTRACT_TOTAL_NOTE_SHORT, DISCOVERY_SESSION_LINE, READ_THE_EVIDENCE, SOURCE_NOTE } from '../src/data/copy';
+import { CONTRACT_TOTAL_NOTE, CONTRACT_TOTAL_NOTE_INVESTORS, CONTRACT_TOTAL_NOTE_SHORT, DISCOVERY_SESSION_LINE, READ_THE_EVIDENCE, SOURCE_NOTE } from '../src/data/copy';
 import { NO_PRIOR, percent } from '../src/components/pages/impact/outcomes-data';
 import { DESKTOP, MOBILE, open, scrollThrough } from './support/browser';
 import { listPages } from './support/pages';
@@ -187,7 +187,8 @@ test.describe('G1: the Investors and JobReady Platform "Contracted Scope" tiles 
     await expect(tile.locator('.stat__value')).toHaveText('30,000+');
     const note = tile.locator('.ir__note');
     await expect(note).toHaveCount(1);
-    expect(compact(await note.textContent())).toBe(CONTRACT_TOTAL_NOTE.text);
+    // WP94 (triage A4): Investors' note ends with the pointer sentence; the other pages keep CONTRACT_TOTAL_NOTE.
+    expect(compact(await note.textContent())).toBe(CONTRACT_TOTAL_NOTE_INVESTORS.text);
     expect(await note.getAttribute('data-fact')).toBe('GV-12 GV-01 GV-11 SC-02');
     const gap = await page.evaluate(() => {
       const label = document.querySelector('#reach .ir__tile .stat__label')!.getBoundingClientRect();

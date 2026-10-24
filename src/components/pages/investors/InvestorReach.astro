@@ -6,7 +6,7 @@ import Stat from '../../system/Stat.astro';
 import EvidenceTag from '../../system/EvidenceTag.astro';
 import Fact from '../../facts/Fact.astro';
 import { fact } from '../../../data/facts';
-import { CONTRACT_TOTAL_NOTE } from '../../../data/copy';
+import { CONTRACT_TOTAL_NOTE_INVESTORS } from '../../../data/copy';
 
 /**
  * Contracts, Pipeline and Recognition (Investors; WP24a built it as "Reach to Date"): what is NOT delivered reach, apart from the outcome evidence (the trial and the survey) that follows it, so reach, scope and results are never
@@ -42,7 +42,7 @@ const nuSentence = `1.5M+ National University learners being onboarded (the univ
     <div class="ir__tile" data-fact={contracted}>
       <EvidenceTag type="Contract Scope" />
       <Stat value={stat(contracted).value} label={stat(contracted).label} size="lg" count={stat(contracted).numeric !== undefined} />
-      <p class="ir__note" data-fact={CONTRACT_TOTAL_NOTE.facts.join(' ')}>{CONTRACT_TOTAL_NOTE.text}</p>
+      <p class="ir__note" data-fact={CONTRACT_TOTAL_NOTE_INVESTORS.facts.join(' ')}>{CONTRACT_TOTAL_NOTE_INVESTORS.text}</p>
     </div>
   </div>
   <p class="ir__p" data-fact="SC-04" data-reveal>Separately, and not counted in the delivered reach: {nuSentence}.</p>

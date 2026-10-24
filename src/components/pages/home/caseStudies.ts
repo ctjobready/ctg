@@ -5,7 +5,7 @@ import wsdfm from '../../../assets/images/pages/impact/wsdfm-training-group.jpg'
 import herPower from '../../../assets/images/pages/impact/her-power-training-lab.jpg';
 import { caseCardPhoto } from '../../../data/photos';
 import { fact } from '../../../data/facts';
-import { KOSOVO_RECORDS, WB_KOSOVO, WSDFM_NOT_TRIAL_SHORT, WSDFM_RECORDS } from '../../../data/copy';
+import { HER_POWER_RECORDS, KOSOVO_RECORDS, WB_KOSOVO, WSDFM_NOT_TRIAL_SHORT, WSDFM_RECORDS } from '../../../data/copy';
 
 interface CardPhoto {
   src: ImageMetadata;
@@ -76,5 +76,6 @@ export const caseStudyItems = [
   // WP55 (owner decision 2026-10-17, "Show both"): this card adds the World Bank's own figure in one line (WB_KOSOVO). WP57 (cycle-29 review, Gemini GM4): the card showed only that line, with the program records in the slide far above it, so
   // it now shows both: "Program records: 102 of 150 women in work." (KOSOVO_RECORDS, PR-02) where the delivery-context line was (the Kosovo scope line, see CASE_STUDIES), then the World Bank's line.
   { title: 'Women in Online Work, Kosovo', program: 'World Bank Group', factId: 'PR-02', context: KOSOVO_RECORDS.text, contextFacts: KOSOVO_RECORDS.facts, note: WB_KOSOVO, href: '/impact/case-studies/kosovo-women-in-online-work/' },
-  { title: 'Her Power', program: 'ICT Division / Department of ICT (DoICT)', factId: 'PR-05', context: 'Curriculum, trainer training and direct delivery for women’s digital skills.', href: '/impact/case-studies/her-power/' },
+  // WP94 (triage A2): the card's figure line is the register's (HER_POWER_RECORDS); the delivery sentence stays as the card's second line.
+  { title: 'Her Power', program: 'ICT Division / Department of ICT (DoICT)', factId: 'PR-05', context: `${HER_POWER_RECORDS.text} Curriculum, trainer training and direct delivery for women’s digital skills.`, contextFacts: HER_POWER_RECORDS.facts, href: '/impact/case-studies/her-power/' },
 ];

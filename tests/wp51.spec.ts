@@ -155,10 +155,11 @@ test.describe('Home: the WSDFM card of "Proof in Practice" shows a context line 
     await expect(cards).toHaveCount(3);
     await expect(cards.locator('.case__stat, .case__value, .case__label')).toHaveCount(0);
     // WP57 (cycle-29 review, Gemini GM4): the Kosovo card's context line is its program records
-    expect(await texts(page, '#cases .case__context')).toEqual([RECORDS, 'Program records, 2016–2017: 102 of the 150 women trained were in work.', 'Curriculum, trainer training and direct delivery for women’s digital skills.']);
+    expect(await texts(page, '#cases .case__context')).toEqual([RECORDS, 'Program records, 2016–2017: 102 of the 150 women trained were in work.', 'Program records: 372 of the 800 tracked women were in work (47%), among the 2,400 CodersTrust trained directly. Curriculum, trainer training and direct delivery for women’s digital skills.']);
     expect(compact(await cards.nth(0).locator('.card__title').textContent())).toBe(WSDFM_TITLE);
     // WP55 (owner decision 2026-10-17, "Show both"): the Kosovo card adds one World Bank line (PR-02b). WP57 (cycle-29 review, Gemini GM4): and its own program-records line (PR-02); the band's wrapper names both. WP63 (cycle-35 review, Gemini M4): and the WSDFM card's program records (PR-01); Her Power's fact (PR-05) is not named.
-    expect(await page.locator('#cases [data-fact]').evaluateAll((els) => els.map((e) => e.getAttribute('data-fact')))).toEqual(['PR-01 PR-02 TL-04 PR-02b', 'PR-01', 'PR-02 TL-04', 'PR-02b']);
+    // WP94 (triage A2): the Her Power card's line names PR-05 and GV-11 (its 2,400), so the band's wrapper and that card name them too.
+    expect(await page.locator('#cases [data-fact]').evaluateAll((els) => els.map((e) => e.getAttribute('data-fact')))).toEqual(['PR-01 PR-02 TL-04 PR-05 GV-11 PR-02b', 'PR-01', 'PR-02 TL-04', 'PR-02b', 'PR-05 GV-11']);
   });
 
   test('the figure is stated on Home in slide 4, with its qualifier, and in the WSDFM card as program records (WP63; it was slide 4’s alone)', async ({ page }) => {

@@ -41,6 +41,9 @@ const BLUF = 'Choose a partnership for youth employment, campus skills, team tra
 const description = 'Partner with CodersTrust on youth employment, campus skills, team training, hiring or JobReady’s staged rollout. Pick your route and talk to us.';
 if (description.length > 155) throw new Error(`Hub meta description is ${description.length} characters (max 155)`);
 const discovery = cta('discovery');
+// WP94 (Perplexity cycle 43, triage A1): the closing band's two route lines are Home's (the ministry and investor routes), so a reader who reaches the foot of the hub has a route-specific link.
+const briefing = cta('briefing');
+const introduction = cta('investor');
 
 // Seven decision-led route cards (a headline that names the decision, then who it is for), in the order of the nav menu (src/data/nav.ts). WP27: Investors is
 // a peer route card (it was a link in the "Not sure where you fit?" helper), and the seventh card takes the last row on its own (see .hub__routes).
@@ -114,6 +117,10 @@ const jsonLd = [
       text="Tell us your goals, and we will help you find the right partnership route."
       cta={{ label: discovery.label, href: discovery.href }}
       secondary={{ label: READ_THE_EVIDENCE, href: '/impact/' }}
+      routes={[
+        { audience: 'Governments', label: briefing.label, href: briefing.href },
+        { audience: 'Impact investors', label: introduction.label, href: introduction.href },
+      ]}
       micro={MICRO_COMMITMENT}
     />
   </Tone>

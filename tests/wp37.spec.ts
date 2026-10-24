@@ -52,7 +52,7 @@ test.describe('Home: Proof in Practice says what was delivered where its carouse
     const delivery = [
       { i: 0, title: 'Women’s Skill Development for Freelancing Marketplace (WSDFM)', program: 'Commissioned by Porticus', context: 'Program records: 711 of the 1,000 women enrolled were in work (71%).', slug: 'wsdfm-women-freelancers' },
       { i: 1, title: 'Women in Online Work, Kosovo', program: 'World Bank Group', context: 'Program records, 2016–2017: 102 of the 150 women trained were in work.', slug: 'kosovo-women-in-online-work' },
-      { i: 2, title: 'Her Power', program: 'ICT Division / Department of ICT (DoICT)', context: 'Curriculum, trainer training and direct delivery for women’s digital skills.', slug: 'her-power' },
+      { i: 2, title: 'Her Power', program: 'ICT Division / Department of ICT (DoICT)', context: 'Program records: 372 of the 800 tracked women were in work (47%), among the 2,400 CodersTrust trained directly. Curriculum, trainer training and direct delivery for women’s digital skills.', slug: 'her-power' },
     ];
     for (const d of delivery) {
       const card = cards.nth(d.i);
@@ -101,7 +101,8 @@ test.describe('Home: Proof in Practice says what was delivered where its carouse
     expect(count(text, '711 of the 1,000'), 'WSDFM, the WSDFM card').toBe(1);
     // WP55 (owner decision 2026-10-17, "Show both"): the Kosovo card adds the World Bank's own figure (PR-02b, one line: "World Bank: 77 trainees won at least one online contract."). WP57 (cycle-29 review, Gemini GM4): and its program records
     // (PR-02, "Program records: 102 of 150 women in work."); the band's wrapper names both, and each line names its own. The other program-record figures (PR-01, PR-05) stay slide 4's alone, so no other fact is named.
-    expect(await page.locator('#cases [data-fact]').evaluateAll((els) => els.map((e) => e.getAttribute('data-fact')))).toEqual(['PR-01 PR-02 TL-04 PR-02b', 'PR-01', 'PR-02 TL-04', 'PR-02b']);
+    // WP94 (triage A2): the Her Power card now states its register figure (PR-05, and GV-11 for the 2,400), so its line names both.
+    expect(await page.locator('#cases [data-fact]').evaluateAll((els) => els.map((e) => e.getAttribute('data-fact')))).toEqual(['PR-01 PR-02 TL-04 PR-05 GV-11 PR-02b', 'PR-01', 'PR-02 TL-04', 'PR-02b', 'PR-05 GV-11']);
   });
 
   test('the other pages keep their case-study figures: Development Partners and Foundations show the Kosovo and Her Power results, no card shows a context line', async ({ page }) => {

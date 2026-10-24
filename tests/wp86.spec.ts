@@ -21,6 +21,8 @@ const htmlOf = (p: SitePage): string => readFileSync(p.file, 'utf8');
  */
 
 const OVERLAP = 'Her Power’s 25,125 is the same group counted in the 150,000+ enrollments through CodersTrust’s curriculum, not additional people.';
+// WP94 (triage A4): Investors points back to its reconciliation paragraph instead of restating the overlap.
+const OVERLAP_INVESTORS = 'Her Power’s 25,125 are already counted in the 150,000+ enrollments above, not additional people.';
 const NOTE_SHORT_FIRST = 'The total is contract scope, not a count of completers; it includes Her Power’s national program, which trained 25,125 women (CodersTrust trained 2,400 directly).';
 const CONTRACT_NOTE = 'We confirm each contract’s delivery status in a briefing. Apart from the Her Power figures, the other rows give contracted scopes of work, not delivered scale.';
 const WSDFM_CAPTION = 'WSDFM program records (not trial results; the trial’s 425 women offered a place were among these 1,000): 71% of enrolled women in work';
@@ -53,10 +55,9 @@ test.describe('Item 2: the overlap sentence only where 150,000+ is printed', () 
     }
   });
 
-  test('Investors and Impact keep the full note with the overlap sentence', async () => {
-    for (const route of ['partner-with-us/investors/', 'impact/']) {
-      expect(pageHtml(route), route).toContain(`${NOTE_SHORT_FIRST} ${OVERLAP}`);
-    }
+  test('Impact keeps the full note with the overlap sentence; Investors keeps the first sentence and points back to its reconciliation (WP94)', async () => {
+    expect(pageHtml('impact/'), 'impact/').toContain(`${NOTE_SHORT_FIRST} ${OVERLAP}`);
+    expect(pageHtml('partner-with-us/investors/'), 'investors/').toContain(`${NOTE_SHORT_FIRST} ${OVERLAP_INVESTORS}`);
   });
 });
 

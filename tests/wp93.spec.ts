@@ -8,7 +8,7 @@ import { DESKTOP, MOBILE, open, scrollThrough } from './support/browser';
  * this project from test-first work, so these tests were written after the change. Run `npm run build` first, then
  * `PORT=4574 npx playwright test tests/wp93.spec.ts --project=chromium`.
  *   - A0: Investors' evidence band is headed "Evidence from the Youth Programs" (it was "Independent Evidence");
- *   - A1: SC-02's detail reads "Another 40,152 ... Counted once, the total is 150,678." (every figure stays; the arithmetic closes);
+ *   - A1: SC-02's detail reads "Another 40,152 ... Counted once, the total is 150,678 enrollments." (every figure stays; the arithmetic closes);
  *   - A2: Foundations' Route 2 evidence cell adds "The first conversation covers JobReady’s staged rollout.";
  *   - A3: the Impact ladder's survey row says "19.6% are women." (OC-09's share, read from its text, as Outcomes 2026 words it);
  *   - A4: YouthWIDE's Our Approach reporting promise is "..., as agreed in the program scope.";
@@ -22,7 +22,7 @@ import { DESKTOP, MOBILE, open, scrollThrough } from './support/browser';
 const compact = (t: string | null | undefined) => (t ?? '').replace(/\s+/g, ' ').trim();
 
 const SC02_DETAIL =
-  'Of 150,000+ enrollments, 112,926 were direct. Another 40,152 came through CodersTrust curriculum and courseware: Her Power’s 25,125 and UNDP FutureNation’s 15,027. Her Power’s 2,400 directly trained women are in both the 112,926 and the 25,125. Counted once, the total is 150,678.';
+  'Of 150,000+ enrollments, 112,926 were direct. Another 40,152 came through CodersTrust curriculum and courseware: Her Power’s 25,125 and UNDP FutureNation’s 15,027. Her Power’s 2,400 directly trained women are in both the 112,926 and the 25,125. Counted once, the total is 150,678 enrollments.';
 const EVIDENCE_HEADING = 'Evidence from the Youth Programs';
 const ROUTE_2_EVIDENCE = 'Youth-program outcomes are not platform outcomes. The first conversation covers JobReady’s staged rollout.';
 const SURVEY_NOT = 'Cause: respondents are not a random sample and may over-represent successful learners. 19.6% are women.';

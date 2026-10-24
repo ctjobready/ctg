@@ -36,7 +36,7 @@ const visible = (html: string) =>
   );
 
 // WP91 (triage A1): the detail's wording is the triage's ("came through", not "reached through"); the figures are unchanged.
-const NEW_DETAIL = 'Of 150,000+ enrollments, 112,926 were direct. Another 40,152 came through CodersTrust curriculum and courseware: Her Power’s 25,125 and UNDP FutureNation’s 15,027. Her Power’s 2,400 directly trained women are in both the 112,926 and the 25,125. Counted once, the total is 150,678.';
+const NEW_DETAIL = 'Of 150,000+ enrollments, 112,926 were direct. Another 40,152 came through CodersTrust curriculum and courseware: Her Power’s 25,125 and UNDP FutureNation’s 15,027. Her Power’s 2,400 directly trained women are in both the 112,926 and the 25,125. Counted once, the total is 150,678 enrollments.';
 const OVERLAP = 'Her Power’s 25,125 is the same group counted in the 150,000+ enrollments through CodersTrust’s curriculum, not additional people.';
 const FULL_NOTE = `The total is contract scope, not a count of completers; it includes Her Power’s national program, which trained 25,125 women (CodersTrust trained 2,400 directly). ${OVERLAP}`;
 // WP86 (CLR run 3, Minor 2): Governments and the JobReady Platform print the first sentence alone (CONTRACT_TOTAL_NOTE_SHORT).
@@ -118,7 +118,8 @@ test.describe('WP84: Investors', () => {
     await expect(tile).toHaveCount(1);
     expect(compact(await tile.textContent())).toContain('30,000+');
     const note = tile.locator('.ir__note');
-    await expect(note).toHaveText(FULL_NOTE);
+    // WP94 (triage A4): Investors ends with the pointer sentence, not the full overlap sentence.
+    await expect(note).toHaveText(FULL_NOTE.replace(OVERLAP, 'Her Power’s 25,125 are already counted in the 150,000+ enrollments above, not additional people.'));
     expect(await note.getAttribute('data-fact')).toBe('GV-12 GV-01 GV-11 SC-02');
   });
 });
@@ -130,10 +131,12 @@ test.describe('WP84: the shared contract-scope note', () => {
     expect(CONTRACT_TOTAL_NOTE.text).toContain(`Her Power’s ${fact('GV-01').stat?.value} is the same group counted in the ${fact('SC-02').stat?.value} enrollments through CodersTrust’s curriculum`);
   });
 
-  test('every page that prints the overlap sentence prints the whole note (Investors and Impact); no other page words it', () => {
+  test('every page that prints the overlap sentence prints the whole note (Impact); Investors words it as a pointer back (WP94); no other page words it', () => {
     const pages = builtPages().filter((p) => visible(p.html).includes(OVERLAP)).map((p) => p.route).sort();
-    expect(pages).toEqual(['/impact/', '/partner-with-us/investors/']);
+    expect(pages).toEqual(['/impact/']);
     for (const p of builtPages().filter((q) => pages.includes(q.route))) expect(visible(p.html), p.route).toContain(FULL_NOTE);
+    const investors = builtPages().find((q) => q.route === '/partner-with-us/investors/');
+    expect(visible(investors?.html ?? ''), 'investors').toContain('Her Power’s 25,125 are already counted in the 150,000+ enrollments above, not additional people.');
   });
 
   test('Impact prints the whole note tied to SC-02; Governments and JobReady Platform print the first sentence, tied to their own facts', async ({ page }) => {

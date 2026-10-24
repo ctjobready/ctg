@@ -137,6 +137,19 @@ function wsdfmRecords(): CopyBlock {
   return { text: `Program records: ${base} women enrolled were in work (${pct}).`, facts: ['PR-01'] };
 }
 export const WSDFM_RECORDS: CopyBlock = wsdfmRecords();
+/**
+ * WP94 (Perplexity cycle 43, triage A2): the Her Power card of Home's "Proof in Practice" band states its figure like the two case cards beside it ("Program records: ..."). The count and base are PR-05's stat value ("372 of 800"), the 47% is its label,
+ * and the 2,400 trained directly is GV-11's text ("2,400 women trained directly"), read from the register, never retyped; the builder throws if any of the three stops reading that way or the two counts stop agreeing.
+ */
+function herPowerRecords(): CopyBlock {
+  const r = fact('PR-05');
+  const count = /^([\d,]+) of ([\d,]+)$/.exec(r.stat?.value ?? '');
+  const label = /^tracked women, from the ([\d,]+) trained directly by CodersTrust, in work: (\d+%)$/.exec(r.stat?.label ?? '');
+  const direct = /(\d[\d,]*) women trained directly/.exec(fact('GV-11').text)?.[1];
+  if (!count || !label || !direct || direct !== label[1]) throw new Error('HER_POWER_RECORDS: PR-05 or GV-11 no longer reads "N of M", "tracked women, from the N trained directly by CodersTrust, in work: P%" and "N women trained directly" with the same N');
+  return { text: `Program records: ${count[1]} of the ${count[2]} tracked women were in work (${label[2]}), among the ${direct} CodersTrust trained directly.`, facts: ['PR-05', 'GV-11'] };
+}
+export const HER_POWER_RECORDS: CopyBlock = herPowerRecords();
 
 /**
  * WP57 (cycle-29 review, Grok R2, with Gemini GM1): the 31,200+ (GV-12) must visibly include Her Power's national 25,125 (GV-01), so Home's government slide and the Governments glance tile say it in the wording GV-12's glance note had in WP35
@@ -172,25 +185,29 @@ export const CONTRACT_FIGURES = contractFigures();
  * WP85 (owner update 2026-10-24): SC-02's detail now names "the 25,125 women Her Power trained nationally with CodersTrust’s curriculum", and the sentence reads "Her Power’s 25,125 is the same group counted in the 150,000+ enrollments through CodersTrust’s curriculum, not additional people."
  * WP87 (owner decisions 2026-10-24, items 18 to 21): the sentence keeps "150,000+" (the owner restored it after trying "nearly" and "~"): Her Power's 2,400 directly trained women are inside the national 25,125 and counted once, and the de-duplicated total is 150,678 (112,926 direct + 40,152 courseware - 2,400).
  */
-function overlapSentence(n: string): { text: string; fact: string } {
+function overlapSentence(n: string, investors = false): { text: string; fact: string } {
   const enrollments = fact('SC-02').stat?.value;
   if (!enrollments || !/^[\d,]+\+$/.test(enrollments)) throw new Error('CONTRACT_TOTAL_NOTE: SC-02 no longer has a plain "N+" count as its stat value');
   // WP90 (triage A1): SC-02's detail now names "Her Power’s N" (the shortened breakdown); the guard reads that form.
   if (!(fact('SC-02').stat?.detail ?? '').includes(`Her Power’s ${n} and`)) throw new Error('CONTRACT_TOTAL_NOTE: the SC-02 detail no longer says the courseware share includes "Her Power’s N and" (the overlap with the 30,000+ contract scope)');
+  // WP94 (Perplexity cycle 43, triage A4): on Investors the reconciliation paragraph above already says the Her Power overlap, so the note points back to it instead of restating it.
+  if (investors) return { text: `Her Power’s ${n} are already counted in the ${enrollments} enrollments above, not additional people.`, fact: 'SC-02' };
   return { text: `Her Power’s ${n} is the same group counted in the ${enrollments} enrollments through CodersTrust’s curriculum, not additional people.`, fact: 'SC-02' };
 }
 /**
  * WP86 (CLR review, Sonnet Max run 3, Minor 2): the overlap sentence is printed only where the 150,000+ is printed (Investors and Impact, the full form). Governments and the JobReady Platform page show the short form, the first sentence alone, with no SC-02 in its facts.
  */
-function contractTotalNote(withOverlap: boolean): CopyBlock {
+function contractTotalNote(withOverlap: boolean, investors = false): CopyBlock {
   const { national: n, direct } = CONTRACT_FIGURES;
   const first = `The total is contract scope, not a count of completers; it includes Her Power’s national program, which trained ${n} women (CodersTrust trained ${direct} directly).`;
   if (!withOverlap) return { text: first, facts: ['GV-12', 'GV-01', 'GV-11'] };
-  const overlap = overlapSentence(n);
+  const overlap = overlapSentence(n, investors);
   return { text: `${first} ${overlap.text}`, facts: ['GV-12', 'GV-01', 'GV-11', overlap.fact] };
 }
 export const CONTRACT_TOTAL_NOTE: CopyBlock = contractTotalNote(true);
 export const CONTRACT_TOTAL_NOTE_SHORT: CopyBlock = contractTotalNote(false);
+/** WP94 (triage A4): the Investors page's note, the same figures with the overlap sentence pointing back to its reconciliation paragraph. Impact keeps CONTRACT_TOTAL_NOTE. */
+export const CONTRACT_TOTAL_NOTE_INVESTORS: CopyBlock = contractTotalNote(true, true);
 
 /**
  * WP60 (cycle-32 review, Grok R4): the clause that keeps National University's 1.5M+ apart from CodersTrust's own learners, in one place. Home's government slide closes "... onboarding 1.5M+ learners (National University’s learners, not learners trained by CodersTrust)."

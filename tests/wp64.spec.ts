@@ -310,7 +310,7 @@ test.describe('Item 6 (Grok): "since 2014" is said once where a heading or a nei
     expect(await texts(page, '#guide .ig__tile .stat__value')).toEqual(['130,000+', '150,000+', '16']);
     expect(await texts(page, '#guide .ig__tile .stat__label')).toEqual(['learners trained', 'enrollments', 'countries and territories where CodersTrust has worked']);
     expect(await texts(page, '#guide .ig__tile .status-tag')).toEqual(['Delivered', 'Delivered']);
-    await expect(page.locator('#guide .ig__notes')).toHaveText('Of 150,000+ enrollments, 112,926 were direct. Another 40,152 came through CodersTrust curriculum and courseware: Her Power’s 25,125 and UNDP FutureNation’s 15,027. Her Power’s 2,400 directly trained women are in both the 112,926 and the 25,125. Counted once, the total is 150,678. Most delivery has been in Bangladesh.');
+    await expect(page.locator('#guide .ig__notes')).toHaveText('Of 150,000+ enrollments, 112,926 were direct. Another 40,152 came through CodersTrust curriculum and courseware: Her Power’s 25,125 and UNDP FutureNation’s 15,027. Her Power’s 2,400 directly trained women are in both the 112,926 and the 25,125. Counted once, the total is 150,678 enrollments. Most delivery has been in Bangladesh.');
     expect(await page.locator('#guide .ig__tile').evaluateAll((els) => els.map((e) => /since 2014/.test(e.textContent ?? '')))).toEqual([false, false, false]);
   });
 
