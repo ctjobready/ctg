@@ -319,7 +319,7 @@ test.describe('S6 (Claude): the Governments delivery card is "Trainers and Curri
     await expect(card).toHaveCount(1);
     expect(compact(await card.textContent())).toContain('Training of Trainers, curriculum and manuals, then preparation for industry certification.');
     // WP76: the first card is the settled target-group wording ("Vulnerable and Unemployed Youth" before); tests/wp76.spec.ts holds the card
-    expect(await texts(page, '#mechanism .model__title')).toEqual(['Educated, Unemployed and Underemployed Youth', 'Government Digital Labs', 'Trainers and Curriculum', 'Placement and Monthly Reports']);
+    expect(await texts(page, '#mechanism .model__title')).toEqual(['Educated, Unemployed and Underemployed Youth', 'Government Digital Labs', 'Trainers and Curriculum', 'Local, Remote and Global Work']);
     const titles = await texts(page, 'h3, .card__title, .model__title');
     expect(titles.filter((t) => t === 'Capacity Designed to Stay')).toEqual([]);
     expect(titles.filter((t) => t === 'Capacity Designed to Stay in Your System')).toHaveLength(1);

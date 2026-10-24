@@ -35,7 +35,8 @@ const herPowerLabel = `tracked women in work (${herPowerParts[2]}), among the ${
  */
 const herPowerTracked = /^[\d,]+ of ([\d,]+)$/.exec(fact('PR-05').stat?.value ?? '')?.[1];
 if (!herPowerTracked) throw new Error('caseStudies: PR-05 stat value no longer reads "N of M"');
-export const HER_POWER_TILE_LABEL = `Her Power: ${herPowerParts[2]} of the ${herPowerTracked} tracked women in work, from the ${herPowerParts[1]} women CodersTrust trained directly`;
+// WP92 (Perplexity cycle 41, triage A2): the tile reads the same clause as the cards ("tracked women in work (47%), among the N women ..."), with the program name first; the "372 of 800" numeral above it carries the tracked base, so the label no longer repeats 800 or puts 47% beside the trained count.
+export const HER_POWER_TILE_LABEL = `Her Power: ${herPowerLabel}`;
 /**
  * WP31: the WSDFM card sits on pages that also show the trial's follow-up employment (63.1% against 52.8%), a different measure. The caption says the
  * 71% is program records, from PR-01's own label ("WSDFM: 71% of enrolled women in work", WP76: it said "71% in work"); the figures are not retyped.

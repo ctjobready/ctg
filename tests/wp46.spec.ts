@@ -348,7 +348,7 @@ test.describe('About: the 2022–2024 timeline entry says the government contrac
 });
 
 test.describe('Governments: "What a Ministry Sees" is gone and its follow-up surveys sit in the delivery card (item 20)', () => {
-  test('no #ministry-sees band; the "Placement and Monthly Reports" card names the surveys; the neighbors are not the same ground; no unused anchor link', async ({ page }) => {
+  test('no #ministry-sees band; the "Local, Remote and Global Work" card names the surveys; the neighbors are not the same ground; no unused anchor link', async ({ page }) => {
     await open(page, 'partner-with-us/governments/');
     await expect(page.locator('#ministry-sees')).toHaveCount(0);
     const text = await mainText(page);

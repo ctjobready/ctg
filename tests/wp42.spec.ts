@@ -38,12 +38,14 @@ test.describe('Investors: the delivered figures lead the track-record band (item
     expect(await page.locator('#guide .ig__tile').evaluateAll((els) => els.map((e) => e.getAttribute('data-fact')))).toEqual(['SC-01', 'SC-02', 'SC-03']);
     // the explanation moved with the tiles, in the register's own words (SC-02 and SC-03 detail lines)
     const note = page.locator('#guide .ig__notes');
-    await expect(note).toHaveText('Of 150,000+ enrollments, 112,926 were direct. The other 40,152 came through CodersTrust curriculum and courseware: Her Power’s 25,125 and UNDP FutureNation’s 15,027. Her Power’s 2,400 directly trained women are in both counts, so counted once the total is 150,678. Most delivery has been in Bangladesh.');
+    await expect(note).toHaveText('Of 150,000+ enrollments, 112,926 were direct. The other 40,152 came through CodersTrust curriculum and courseware: Her Power’s 25,125 and UNDP FutureNation’s 15,027. Her Power’s 2,400 directly trained women are in both the 112,926 and the 25,125, so counted once the total is 150,678. Most delivery has been in Bangladesh.');
     expect(await note.getAttribute('data-fact')).toBe('SC-02 SC-03 GV-01 SC-14');
     // moved, not duplicated: the figures are stated where they were, once (the 150,000+ twice in the Guide band: the tile, and the register's own "Of 150,000+ enrollments" note; WP87: the figures are now 112,926 and 40,152), and the Reach band holds none of the delivered figures;
     // WP84 (owner answer 2026-10-24): its contract-scope note, shared with the other pages, says Her Power's 25,125 is the same curriculum reach counted in the 150,000+ enrollments, so the Reach band names the 150,000+ once, in that sentence
     const text = await mainText(page);
-    for (const figure of ['130,000+', '112,926', '40,152']) expect(count(text, figure), `${figure} is stated once on Investors`).toBe(1);
+    for (const figure of ['130,000+', '40,152']) expect(count(text, figure), `${figure} is stated once on Investors`).toBe(1);
+    // WP92 (triage A1): the SC-02 clause names the 112,926 where Her Power's 2,400 are counted, so the note states 112,926 twice
+    expect(count(text, '112,926'), '112,926 is stated in the direct-training tile and the SC-02 clause').toBe(2);
     expect(count(text, '150,000+'), 'the tile, the note’s lead-in and the contract-scope note’s overlap sentence').toBe(3);
     expect(count(compact(await page.locator('#guide').textContent()), '150,000+'), 'both are in the Guide band').toBe(2);
     const reach = compact(await page.locator('#reach').textContent());

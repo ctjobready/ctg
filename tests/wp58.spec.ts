@@ -124,7 +124,7 @@ test.describe('S1, G1 and L7: "16 countries and territories" is where CodersTrus
     await expect(sc03.locator('[data-status]')).toHaveCount(0);
     await expect(sc03.locator('.badge')).toHaveText('Where We Have Worked');
     expect(await texts(page, '#guide .ig__tile .stat__label')).toEqual(['learners trained', 'enrollments', 'countries and territories where CodersTrust has worked']); // WP64 (cycle-36 review, Grok): the group heading says "Since 2014", so the tiles do not
-    expect(compact(await page.locator('#guide .ig__notes').textContent())).toBe('Of 150,000+ enrollments, 112,926 were direct. The other 40,152 came through CodersTrust curriculum and courseware: Her Power’s 25,125 and UNDP FutureNation’s 15,027. Her Power’s 2,400 directly trained women are in both counts, so counted once the total is 150,678. Most delivery has been in Bangladesh.');
+    expect(compact(await page.locator('#guide .ig__notes').textContent())).toBe('Of 150,000+ enrollments, 112,926 were direct. The other 40,152 came through CodersTrust curriculum and courseware: Her Power’s 25,125 and UNDP FutureNation’s 15,027. Her Power’s 2,400 directly trained women are in both the 112,926 and the 25,125, so counted once the total is 150,678. Most delivery has been in Bangladesh.');
     const tops = await page.locator('#guide .ig__tile .stat__value').evaluateAll((els) => els.map((e) => Math.round(e.getBoundingClientRect().top)));
     expect(new Set(tops).size, 'the three figures start on the same line').toBe(1);
   });
@@ -157,7 +157,8 @@ test.describe('S1, G1 and L7: "16 countries and territories" is where CodersTrus
     expect(compact(await page.locator('.hh__card[data-fact="SC-16"]').textContent())).toContain('learners trained through 150,000+ enrollments. CodersTrust has worked in 16 countries and territories.');
     await open(page, IMPACT);
     const tile = page.locator('#glance a[data-fact~="SC-16"]');
-    expect(compact(await tile.locator('.glance__note').textContent())).toBe('Through 150,000+ enrollments. CodersTrust has worked in 16 countries and territories.');
+    // WP92 (triage A4): the Impact Delivered tile's note is its own, "Through 150,000+ enrollments." (the 16 countries sentence stays on Global Reach and the other pages)
+    expect(compact(await tile.locator('.glance__note').textContent())).toBe('Through 150,000+ enrollments.');
     await expect(tile.locator('.status-tag')).toHaveText('Delivered');
     await open(page, HUB);
     expect(compact(await page.locator('#why-partner li[data-fact="SC-16"]').textContent())).toContain('Through 150,000+ enrollments. CodersTrust has worked in 16 countries and territories.');
@@ -203,7 +204,7 @@ test.describe('S1, G1 and L7: "16 countries and territories" is where CodersTrus
     const p = callout.locator('p[data-fact="SC-03"]');
     await expect(p).toHaveCount(1);
     expect(compact(await p.textContent())).toBe(
-      'A location is a country or territory where CodersTrust has worked; most rows do not say how many programs ran there, or how large they were. Rows that are a partnership, an announced cooperation or the launch say so in their note; the other rows are training programs. New York is the headquarters, not one of the 16 locations.',
+      'A location is a country or territory where CodersTrust has worked; most rows do not say how many programs ran there, or how large they were. Rows that are a partnership, an announced cooperation or the launch say so in their note; the other rows are training programs. New York is the headquarters, not one of the 16 locations. Most delivery has been in Bangladesh.',
     );
     // the 16 is the register's, and the table the note speaks of lists that many rows
     await expect(page.locator('.wmap__table tbody tr')).toHaveCount(Number(fact('SC-03').stat?.value));

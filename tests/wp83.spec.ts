@@ -127,7 +127,7 @@ test.describe('WP83 (WP85 wording): no built page words the 25,125 as a target s
     for (const p of pages) {
       const text = visible(p.html);
       const mentions = [...text.matchAll(/25,125/g)].map((m) => text.slice(Math.max(0, m.index - 45), m.index + 70));
-      for (const m of mentions) expect(m, `${p.route}: "${m}"`).toMatch(/trained 25,125|25,125 women Her Power trained|25,125 is the same group|25,125 women the national program trained|Aims to Train 25,125|aims to train and support 25,125|train and facilitate 25,125|courseware: Her Power’s 25,125/);
+      for (const m of mentions) expect(m, `${p.route}: "${m}"`).toMatch(/trained 25,125|25,125 women Her Power trained|25,125 is the same group|25,125 women the national program trained|Aims to Train 25,125|aims to train and support 25,125|train and facilitate 25,125|courseware: Her Power’s 25,125|both the 112,926 and the 25,125/);
     }
   });
 
@@ -303,6 +303,6 @@ test.describe('WP83: CodersTrust trained 2,400 women directly in Her Power (owne
     await open(page, 'impact/');
     expect(compact(await page.locator('#glance [data-fact~="PR-05"]').first().textContent())).toContain('Her Power: tracked women in work (47%), from the 2,400 CodersTrust trained directly');
     await open(page, 'partner-with-us/governments/');
-    expect(compact(await page.locator('#glance li', { hasText: '372 of 800' }).textContent())).toContain('Her Power: 47% of the 800 tracked women in work, from the 2,400 women CodersTrust trained directly');
+    expect(compact(await page.locator('#glance li', { hasText: '372 of 800' }).textContent())).toContain('Her Power: tracked women in work (47%), among the 2,400 women CodersTrust trained directly');
   });
 });

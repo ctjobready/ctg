@@ -80,7 +80,7 @@ test.describe('Development Partners: the problem band and the first portfolio ca
     await open(page, DP);
     const card = page.locator('#features li.card').first();
     await expect(card.locator('h3')).toHaveText('Training, Mentoring and Placement Support');
-    expect(await texts(page, '#features li.card:nth-child(1) p')).toEqual(['CodersTrust connects training, mentoring and placement support in one program.']);
+    expect(await texts(page, '#features li.card:nth-child(1) p')).toEqual(['Certification exam preparation with the exam fee included, three months of mentoring and placement support, in one program.']);
     expect(await card.getAttribute('data-fact')).toBe('PD-01');
     expect(compact(await page.locator('#features').textContent())).not.toContain('100 training hours');
     expect(compact(await page.locator('#mechanism').textContent())).toContain('100 training hours per certification, then three months of milestone-based mentoring and placement support.');

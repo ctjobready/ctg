@@ -106,10 +106,10 @@ test.describe('audience pages', () => {
   });
 
   // WP46 (cycle-22 review): "What a Ministry Sees" (WP24a, WP29) is gone: it restated the reporting cadence the page already gives. Its one detail that stood nowhere else, the follow-up surveys counted from the end of each course, is in the delivery model's card.
-  test('governments: the ministry timeline strip is gone; the "Placement and Monthly Reports" card names the follow-up surveys at 3, 6 and 12 months after each course', async ({ page }) => {
+  test('governments: the ministry timeline strip is gone; the "Local, Remote and Global Work" card names the follow-up surveys at 3, 6 and 12 months after each course', async ({ page }) => {
     await page.goto('partner-with-us/governments/');
     await expect(page.locator('#ministry-sees')).toHaveCount(0);
-    const card = page.locator('#mechanism .model__block', { hasText: 'Placement and Monthly Reports' });
+    const card = page.locator('#mechanism .model__block', { hasText: 'Local, Remote and Global Work' });
     await expect(card).toHaveCount(1);
     // WP52 (cycle-27 review): the card scopes its reports and surveys ("..., as agreed in the program scope.")
     await expect(card).toContainText('Placement support into local, remote and global work, with monthly reports to the agency and follow-up surveys at 3, 6 and 12 months after each course, as agreed in the program scope.');

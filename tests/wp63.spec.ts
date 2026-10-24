@@ -255,14 +255,14 @@ test.describe('M4 (Gemini): Home’s WSDFM card shows its program records, as th
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 test.describe('M6 (Gemini): the Governments Her Power tile states the tracked base', () => {
-  test('the tile reads "372 of 800" over "Her Power: 47% of the 800 tracked women in work, from the 2,400 women CodersTrust trained directly" (the 800 and the 47% are PR-05’s), and the case cards keep their caption', async ({ page }) => {
+  test('the tile reads "372 of 800" over "Her Power: tracked women in work (47%), among the 2,400 women CodersTrust trained directly" (the 800 and the 47% are PR-05’s), and the case cards keep their caption', async ({ page }) => {
     expect(fact('PR-05').stat?.value).toBe('372 of 800');
     expect(fact('PR-05').stat?.label).toBe('tracked women, from the 2,400 trained directly by CodersTrust, in work: 47%');
     await open(page, GOVERNMENTS);
     const tile = page.locator('#glance a[data-fact^="PR-05"]');
     await expect(tile).toHaveCount(1);
     expect(compact(await tile.locator('.pg__value').textContent())).toBe('372 of 800');
-    expect(compact(await tile.locator('.pg__desc').textContent())).toBe('Her Power: 47% of the 800 tracked women in work, from the 2,400 women CodersTrust trained directly');
+    expect(compact(await tile.locator('.pg__desc').textContent())).toBe('Her Power: tracked women in work (47%), among the 2,400 women CodersTrust trained directly');
     for (const route of [DEV_PARTNERS, FOUNDATIONS]) {
       await open(page, route);
       expect((await texts(page, '#cases article')).join(' | '), route).toContain('372 of 800 tracked women in work (47%), among the 2,400 women CodersTrust trained directly');

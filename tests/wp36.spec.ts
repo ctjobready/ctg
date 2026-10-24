@@ -408,8 +408,8 @@ test.describe('SuperKids: two separate 20M+ targets, each labeled', () => {
   test('the DoICT and NCTB targets are labeled apart, and the page says they are agreement targets, not delivered reach', async ({ page }) => {
     await open(page, 'programs/superkids/');
     expect(await texts(page, '.agree__fact p')).toEqual([
-      'DoICT agreement target: 20M+ students through 9,000+ digital labs in Bangladesh, for primary-school STEM and robotics.', // WP64 (cycle-36 review, Kimi): the labs figure says where the labs are
-      'NCTB agreement target: 20M+ students, for competency-based experiential learning.',
+      'DoICT agreement target: 20M+ students through 9,000+ digital labs in Bangladesh.', // WP64 (cycle-36 review, Kimi): the labs figure says where the labs are
+      'NCTB agreement target: 20M+ students.',
       'These are agreement targets, not delivered reach.',
     ]);
     expect(await page.locator('.agree__fact').getAttribute('data-fact')).toBe('GV-08');

@@ -132,11 +132,11 @@ test.describe('Governments: the delivery card scopes its reports and surveys; th
   const CARD = 'Placement support into local, remote and global work, with monthly reports to the agency and follow-up surveys at 3, 6 and 12 months after each course, as agreed in the program scope.';
   const BASE_OF_FIGURE = 'tracked women in work (47%), among the 2,400 women CodersTrust trained directly';
   // WP63 (cycle-35 review, Gemini M6): the tile states the tracked base itself; the case cards keep BASE_OF_FIGURE
-  const TILE_LABEL = 'Her Power: 47% of the 800 tracked women in work, from the 2,400 women CodersTrust trained directly';
+  const TILE_LABEL = 'Her Power: tracked women in work (47%), among the 2,400 women CodersTrust trained directly';
 
-  test('"Placement and Monthly Reports" ends "..., as agreed in the program scope." and keeps the survey months', async ({ page }) => {
+  test('"Local, Remote and Global Work" ends "..., as agreed in the program scope." and keeps the survey months', async ({ page }) => {
     await open(page, GOV);
-    const card = page.locator('#mechanism .model__block', { hasText: 'Placement and Monthly Reports' });
+    const card = page.locator('#mechanism .model__block', { hasText: 'Local, Remote and Global Work' });
     await expect(card).toHaveCount(1);
     expect(compact(await card.locator('.model__text').textContent())).toBe(CARD);
     expect(fact('PD-09').text).toContain('follow-up surveys at 3, 6 and 12 months');

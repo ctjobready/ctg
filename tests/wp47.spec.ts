@@ -252,13 +252,12 @@ test.describe('Single-source wording (items 31, 32, 34, 35, 36)', () => {
   // WP63 (cycle-35 review, Gemini M6): the Governments tile states the tracked base itself ("Her Power: 47% of the 800 tracked women in work, from the 2,500 women CodersTrust trained directly"); the case cards keep the caption below
   test('item 34: the Her Power base reads "among the 2,400 women CodersTrust trained directly" on every case card that shows the figure; the Governments tile states the tracked base (WP63)', async ({ page }) => {
     const LABEL = 'tracked women in work (47%), among the 2,400 women CodersTrust trained directly';
-    const TILE = 'Her Power: 47% of the 800 tracked women in work, from the 2,400 women CodersTrust trained directly';
+    const TILE = 'Her Power: tracked women in work (47%), among the 2,400 women CodersTrust trained directly';
     await open(page, 'partner-with-us/governments/');
     const tile = page.locator('#glance a[data-fact^="PR-05"]');
     expect(compact(await tile.locator('.pg__value').textContent())).toBe('372 of 800');
     // WP52 (cycle-27 review): the tile names the program ("Her Power: ..."); the case cards below sit under the program's name and keep the bare caption
     expect(compact(await tile.locator('.pg__desc').textContent())).toBe(TILE);
-    expect(compact(await tile.locator('.pg__desc').textContent())).not.toContain('among the 2,400');
     for (const route of ['partner-with-us/development-partners/', 'partner-with-us/foundations/', 'partner-with-us/local-partners/']) {
       await open(page, route);
       const cards = (await texts(page, '#cases article')).join(' | ');
@@ -311,7 +310,7 @@ test.describe('About and Investors (items 37, 38, 39)', () => {
     const tile = page.locator('#glance .about-stats__tile[data-fact="SC-02"]');
     await expect(tile.locator('.stat__note')).toHaveCount(0);
     expect(compact(await tile.textContent())).not.toMatch(/direct enrollments|courseware/);
-    expect(fact('SC-02').stat?.detail).toBe('Of 150,000+ enrollments, 112,926 were direct. The other 40,152 came through CodersTrust curriculum and courseware: Her Power’s 25,125 and UNDP FutureNation’s 15,027. Her Power’s 2,400 directly trained women are in both counts, so counted once the total is 150,678.');
+    expect(fact('SC-02').stat?.detail).toBe('Of 150,000+ enrollments, 112,926 were direct. The other 40,152 came through CodersTrust curriculum and courseware: Her Power’s 25,125 and UNDP FutureNation’s 15,027. Her Power’s 2,400 directly trained women are in both the 112,926 and the 25,125, so counted once the total is 150,678.');
   });
 
   test('item 38: the founding line reads "Founded in 2014 and launched in Copenhagen, Denmark, …" on the About timeline and in the register (the Recognition page prints the register line)', async ({ page }) => {

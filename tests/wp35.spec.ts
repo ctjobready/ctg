@@ -366,7 +366,7 @@ test.describe('plain words and plain claims', () => {
   test('Governments: the delivery card names the follow-up surveys at 3, 6 and 12 months; the contracts table and the services line use plain words', async ({ page }) => {
     await open(page, 'partner-with-us/governments/');
     await expect(page.locator('#ministry-sees')).toHaveCount(0);
-    await expect(page.locator('#mechanism .model__block', { hasText: 'Placement and Monthly Reports' })).toContainText('with monthly reports to the agency and follow-up surveys at 3, 6 and 12 months after each course, as agreed in the program scope.');
+    await expect(page.locator('#mechanism .model__block', { hasText: 'Local, Remote and Global Work' })).toContainText('with monthly reports to the agency and follow-up surveys at 3, 6 and 12 months after each course, as agreed in the program scope.');
     const contracts = await texts(page, '#contracts tbody td:nth-child(2)');
     expect(contracts).toContain('Training in digital technologies');
     expect(contracts).toContain('Training for staff on the learning platform and lab operations');
