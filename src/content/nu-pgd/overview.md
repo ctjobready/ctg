@@ -22,8 +22,8 @@ The diploma courses are designed for highly relevant, future-fit job roles, so t
 ## Courses
 
 - Postgraduate Diploma in Digital Marketing: 40 credit hours, 10 subjects, instructor-led
-- Postgraduate Diploma in Information & Communication Technology: 40 credit hours, 10 subjects, instructor-led
-- Postgraduate Diploma in Cybersecurity: 40 credit hours, 10 subjects, instructor-led
+- Postgraduate Diploma in Information and Communication Technology (ICT): 40 credit hours, 10 subjects, instructor-led
+- Postgraduate Diploma in Cyber Security: 40 credit hours, 10 subjects, instructor-led
 - Postgraduate Diploma in Data Analytics: 40 credit hours, 10 subjects, instructor-led
 
 ## How to apply

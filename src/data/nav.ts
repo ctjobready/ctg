@@ -122,7 +122,7 @@ export const navGroups: NavGroup[] = [
       { label: 'Digital Marketing', href: '/programs/nu-postgraduate-diploma/digital-marketing/', description: 'SEO, social media, advertising and analytics.', group: LEARNER_PROGRAMS, menuOnly: true, parent: NU_PARENT, footer: false },
       { label: 'ICT', href: '/programs/nu-postgraduate-diploma/ict/', description: 'Programming, databases, networks, mobile and web development.', group: LEARNER_PROGRAMS, menuOnly: true, parent: NU_PARENT, footer: false },
       // WP76 (owner answer 2026-10-22: the diploma has four courses): Cyber Security and Data Analytics nest under the diploma the same way (header menu and mobile drawer; the footer does not list courses).
-      { label: 'Cybersecurity', href: '/programs/nu-postgraduate-diploma/cyber-security/', description: 'Cryptography, network security, digital forensics, cyber law and risk management.', group: LEARNER_PROGRAMS, menuOnly: true, parent: NU_PARENT, footer: false },
+      { label: 'Cyber Security', href: '/programs/nu-postgraduate-diploma/cyber-security/', description: 'Cryptography, network security, digital forensics, cyber law and risk management.', group: LEARNER_PROGRAMS, menuOnly: true, parent: NU_PARENT, footer: false },
       { label: 'Data Analytics', href: '/programs/nu-postgraduate-diploma/data-analytics/', description: 'Analytics tools, databases, data visualization and machine learning.', group: LEARNER_PROGRAMS, menuOnly: true, parent: NU_PARENT, footer: false },
       { label: 'Courses', href: COURSES_URL, description: 'Short, self-paced courses on JobReady.global.', group: LEARNER_PROGRAMS, menuOnly: true },
     ],

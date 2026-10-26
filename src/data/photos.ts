@@ -65,7 +65,7 @@ const ALT: Record<string, string> = {
   'recognition/nasdaq-sba': 'Aziz Ahmad, Co-Founder of CodersTrust, at the podium of the Nasdaq closing bell ceremony for the US Small Business Administration',
   'recognition/speaking-students': 'Aziz Ahmad, Chairman and Co-Founder of CodersTrust, addressing a large audience from a stage',
   'recognition/supply-chain-award': 'Aziz Ahmad, Co-Founder of CodersTrust, receiving the Supply Chain Diversity and Sustainability Excellence Award at the 2019 awards, among four people on stage with a framed certificate',
-  'nu-pgd/cybersecurity': 'PGD in Cybersecurity course banner from National University and CodersTrust',
+  'nu-pgd/cybersecurity': 'PGD in Cyber Security course banner from National University and CodersTrust',
   'nu-pgd/data-analytics': 'PGD in Data Analytics course banner from National University and CodersTrust',
   'nu-pgd/digital-marketing': 'PGD in Digital Marketing course banner from National University and CodersTrust',
   'nu-pgd/ict': 'PGD in Information and Communication Technology course banner from National University and CodersTrust',

@@ -206,7 +206,7 @@ test.describe('NU course pages: "Is This the Right Course for Me?" (item 9)', ()
   const modulesOf = (slug: string) => JSON.parse(/^modules: (\[.*\])$/m.exec(readFileSync(resolve(`src/content/nu-pgd/${slug}.md`), 'utf8'))![1]) as string[];
 
   for (const [slug, sentence, topics] of [
-    ['ict', 'Choose ICT if you want to study programming, databases, networks and mobile or web development.', ['Java Programming', 'Database Management Systems', 'Computer Networks Maintenance', 'Mobile Application Development', 'Web Application & Web Site Design']],
+    ['ict', 'Choose Information and Communication Technology (ICT) if you want to study programming, databases, networks and mobile or web development.', ['Java Programming', 'Database Management Systems', 'Computer Networks Maintenance', 'Mobile Application Development', 'Web Application & Web Site Design']],
     ['digital-marketing', 'Choose Digital Marketing if you want to study SEO, social media, advertising and analytics.', ['Search Engine Optimization (SEO) (Practical)', 'Social Media Marketing', 'Google Ads and PPC', 'Web & Google Analytics (Practical)']],
   ] as [string, string, string[]][]) {
     test(`${slug}: the answer keeps the eligibility sentence and names what the course teaches, from its own module list`, async ({ page }) => {
@@ -227,7 +227,7 @@ test.describe('NU course pages: "Is This the Right Course for Me?" (item 9)', ()
     await open(page, `${NU}digital-marketing/`);
     const marketing = await mainText(page);
     expect(ict).not.toContain('Choose Digital Marketing');
-    expect(marketing).not.toContain('Choose ICT');
+    expect(marketing).not.toContain('Choose Information and Communication Technology (ICT)');
     await open(page, NU);
     expect(await mainText(page)).toContain(`Eligibility: ${ELIGIBILITY}. It is right for you if you meet that and want a digital career.`);
   });

@@ -92,34 +92,28 @@ test.describe('Item 2: Her Power is dated 2023–2025', () => {
   });
 });
 
-test.describe('Item 3: the NU course is spelled Cybersecurity in visible text', () => {
-  // Job titles and module names come from the course's own pages and keep their wording.
-  const KEPT = ['Junior Cyber Security Analyst', 'Cyber Security Laws, Policies and Strategies'];
-
-  test('no built page prints "Cyber Security" for the course (job titles and module names excepted)', () => {
-    const hits = routesWhere((t) => {
-      let s = t;
-      for (const k of KEPT) s = s.split(k).join('');
-      return s.includes('Cyber Security');
-    });
+// WP97 (owner instruction 2026-10-26: NU's own course names): the course is "Cyber Security" everywhere, so this block now pins that spelling.
+// tests/wp97.spec.ts holds the full WP97 checks.
+test.describe('Item 3: the NU course is spelled Cyber Security in visible text (WP97)', () => {
+  test('no built NU page prints the one-word "Cybersecurity" for the course', () => {
+    const hits = routesWhere((t) => /Diploma in Cybersecurity|in cybersecurity,|Cybersecurity knowledge|Choose Cybersecurity/.test(t));
     expect(hits).toEqual([]);
   });
 
-  test('the course page keeps its URL slug; its H1, title and meta description say Cybersecurity', async ({ page }) => {
+  test('the course page keeps its URL slug; its H1 and title say Cyber Security', async ({ page }) => {
     const route = 'programs/nu-postgraduate-diploma/cyber-security/';
     await open(page, route);
-    await expect(page.getByRole('heading', { level: 1 })).toHaveText('NU Postgraduate Diploma in Cybersecurity');
-    await expect(page).toHaveTitle(/NU Postgraduate Diploma in Cybersecurity/);
-    expect(await page.locator('meta[name="description"]').getAttribute('content')).toContain('in cybersecurity');
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText('NU Postgraduate Diploma in Cyber Security');
+    await expect(page).toHaveTitle(/NU Postgraduate Diploma in Cyber Security/);
+    expect(await page.locator('meta[name="description"]').getAttribute('content')).toContain('in cyber security');
   });
 
-  test('the Programs menu and the diploma overview name the course "Cybersecurity"', async ({ page }) => {
+  test('the Programs menu and the diploma overview name the course "Cyber Security"', async ({ page }) => {
     await open(page, 'programs/nu-postgraduate-diploma/');
     const html = builtPages().find((p) => p.route === 'programs/nu-postgraduate-diploma/')!.html;
-    expect(visible(html)).toContain('Four courses, in digital marketing, ICT, cybersecurity and data analytics');
-    expect(visible(html)).toContain('NU Postgraduate Diploma in Cybersecurity');
+    expect(visible(html)).toContain('Four courses, in digital marketing, information and communication technology (ICT), cyber security and data analytics');
     const labels = await page.locator('#mega-programs .mega__title, #courses h3').allTextContents();
-    expect(labels.map(compact)).toContain('Cybersecurity');
+    expect(labels.map(compact)).toContain('Cyber Security');
   });
 });
 

@@ -140,6 +140,6 @@ test.describe('Item 3: the legacy NU course URLs redirect', () => {
     await serveWithoutUpgradeForLocalHttp(page);
     await page.goto('course/post-graduate-diploma-in-cybersecurity/');
     await page.waitForURL(/programs\/nu-postgraduate-diploma\/cyber-security\/$/);
-    await expect(page.getByRole('heading', { level: 1 })).toHaveText('NU Postgraduate Diploma in Cybersecurity');
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText('NU Postgraduate Diploma in Cyber Security');
   });
 });

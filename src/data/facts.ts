@@ -300,11 +300,11 @@ const rows: [string, Fact['group'], Row][] = [
   ['NU-08', 'admissions', { text: `To enroll in this program, students are required to have completed their honors degree or its equivalent`, sourceIds: ['NUPGD26'] }],
   ['NU-09', 'admissions', { text: `40 Credit Hours and 10 Subjects`, sourceIds: ['NUPGD26', 'NUCYBER26', 'NUDATA26'] }],
   ['NU-10', 'admissions', { text: `On-Campus and Instructor-Led; online delivery is not available`, sourceIds: ['NUPGD26', 'NUCYBER26', 'NUDATA26'] }],
-  ['NU-11', 'admissions', { text: `The program itself awards a Postgraduate Diploma in Information & Communication Technology`, sourceIds: ['NUPGD26'] }],
+  ['NU-11', 'admissions', { text: `The program itself awards a Postgraduate Diploma in Information and Communication Technology (ICT)`, sourceIds: ['NUPGD26'] }],
   ['NU-12', 'admissions', { text: `Postgraduate Diploma Courses Offered by National University in Affiliation with CodersTrust Bangladesh`, sourceIds: ['NUPGD26'] }],
   // WP76 (owner answer 2026-10-22: the NU Postgraduate Diploma has four courses). The overview on the current site lists all four ("Available PG Diploma Programs": Cybersecurity, Data Analytics, Digital Marketing, Information & Communication Technology), and the two added courses have their own pages.
   // The site names them Digital Marketing, ICT, Cyber Security and Data Analytics; the overview, the menus, the Programs hub card and the "Choose Your Course" lead say "four" and name all four.
-  ['NU-13', 'admissions', { text: `The NU Postgraduate Diploma has four courses: Digital Marketing, Information & Communication Technology (ICT), Cybersecurity and Data Analytics`, sourceIds: ['NUPGD26', 'NUCYBER26', 'NUDATA26'] }],
+  ['NU-13', 'admissions', { text: `The NU Postgraduate Diploma has four courses: Digital Marketing, Information and Communication Technology (ICT), Cyber Security and Data Analytics`, sourceIds: ['NUPGD26', 'NUCYBER26', 'NUDATA26'] }],
 ];
 
 export const facts: Record<string, Fact> = Object.fromEntries(
