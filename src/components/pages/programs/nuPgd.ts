@@ -28,7 +28,7 @@ export const NU_NAME = 'National University Postgraduate Diploma';
 export const NU_COURSE_NAME: Record<string, string> = {
   'digital-marketing': 'NU Postgraduate Diploma in Digital Marketing',
   ict: 'NU Postgraduate Diploma in ICT',
-  'cyber-security': 'NU Postgraduate Diploma in Cyber Security',
+  'cyber-security': 'NU Postgraduate Diploma in Cybersecurity', // WP96: the course name is spelled "Cybersecurity" (the URL slug stays cyber-security)
   'data-analytics': 'NU Postgraduate Diploma in Data Analytics',
 };
 /** The four courses in the order every surface lists them (the overview's cards, the menus, "Also Consider"): the two long-standing courses first, then the two added in WP76. */
@@ -37,7 +37,7 @@ export const NU_COURSE_ORDER: readonly string[] = ['digital-marketing', 'ict', '
 export const NU_COURSE_SUBJECT: Record<string, string> = {
   'digital-marketing': 'digital marketing',
   ict: 'ICT',
-  'cyber-security': 'cyber security',
+  'cyber-security': 'cybersecurity',
   'data-analytics': 'data analytics',
 };
 /** Standalone Google Form (never embedded) and the secondary phone route, both from the CTA library. */
@@ -89,11 +89,11 @@ export const NU_COURSE_COPY: Record<string, { short: string; lead: string; descr
   // WP76: from CodersTrust's own course page (NUCYBER26): the ten subjects, the description's topics (cyber criminology, cryptography and data security, network and communication security, cyber security laws and policies, cybercrime investigation and digital forensics, digital privacy,
   // cyber risk management, cyber terrorism, financial cybercrime) and the final "Capstone Project/Internship" module. Everything below is worded from the module names; no outcome, role or service is promised.
   'cyber-security': {
-    short: 'Cyber security: cryptography, network security, digital forensics, cyber law and risk management.',
-    lead: 'Cyber security knowledge, from cryptography and network security to digital forensics and cyber law, in a National University postgraduate diploma delivered by CodersTrust.',
-    description: 'A National University postgraduate diploma in cyber security, delivered by CodersTrust: cryptography, network security, digital forensics and cyber law.',
+    short: 'Cybersecurity: cryptography, network security, digital forensics, cyber law and risk management.',
+    lead: 'Cybersecurity knowledge, from cryptography and network security to digital forensics and cyber law, in a National University postgraduate diploma delivered by CodersTrust.',
+    description: 'A National University postgraduate diploma in cybersecurity, delivered by CodersTrust: cryptography, network security, digital forensics and cyber law.',
     topics: ['Cryptography and network security', 'Digital forensics and investigation', 'Cyber law and risk management'],
-    titleTag: 'NU Postgraduate Diploma in Cyber Security',
+    titleTag: 'NU Postgraduate Diploma in Cybersecurity',
     prefer: 'Prefer cryptography, network security and digital forensics?',
     studyLead: 'Modules, in order. The final module is a capstone project or internship.',
   },
@@ -245,7 +245,7 @@ const FIT_TOPICS: Record<string, { name: string; topics: { modules: string[]; wo
   },
   // WP76: "Choose Cyber Security if you want to study cryptography, network security, digital forensics and cyber law." / "Choose Data Analytics if you want to study analytics tools, databases, data visualization and machine learning."
   'cyber-security': {
-    name: 'Cyber Security',
+    name: 'Cybersecurity',
     topics: [
       { modules: ['Cryptography and Data Security'], words: 'cryptography' },
       { modules: ['Network and Communication Security'], words: 'network security' },

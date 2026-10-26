@@ -48,23 +48,24 @@ const INDIA = 'coderstrust-sets-up-in-india';
 const CARNIVAL = 'coderstrust-organizes-career-carnival-for-students-and-affiliates';
 const GOV_POSTS = ['1000-trainees-enhancing-digital-government-economy-edge', '1000-trainees-sheikh-kamal-ict-incubator-training', '25000-trainees-her-power-empowerment-of-women-through-ict-frontier-initiative'];
 
-test.describe('Item 1: Her Power is dated "from 2023" like the other program records; WSDFM stays undated', () => {
-  test('the Impact cards, the Case Studies index and the Her Power case-study eyebrow say "from 2023"', async ({ page }) => {
+// WP96 (owner decision 2026-10-26): Her Power is dated "2023–2025" (WP87 had "from 2023"); WSDFM stays undated.
+test.describe('Item 1: Her Power is dated "2023–2025" like the other program records; WSDFM stays undated', () => {
+  test('the Impact cards, the Case Studies index and the Her Power case-study eyebrow say "2023–2025"', async ({ page }) => {
     await open(page, 'impact/');
     const eyebrows = (await page.locator('#cases .card .eyebrow').allTextContents()).map(compact);
-    expect(eyebrows).toContain('ICT Division / DoICT, Government of Bangladesh; Bangladesh, from 2023');
+    expect(eyebrows).toContain('ICT Division / DoICT, Government of Bangladesh; Bangladesh, 2023–2025');
     expect(eyebrows).toContain('Commissioned by Porticus; Bangladesh');
     await open(page, 'impact/case-studies/');
     const places = (await page.locator('.case__fields dd').allTextContents()).map(compact);
-    expect(places).toContain('ICT Division / DoICT, Government of Bangladesh; Bangladesh, from 2023');
+    expect(places).toContain('ICT Division / DoICT, Government of Bangladesh; Bangladesh, 2023–2025');
     expect(places).toContain('Commissioned by Porticus; Bangladesh');
     await open(page, 'impact/case-studies/her-power/');
-    expect(compact(await page.locator('.hero__eyebrow').textContent())).toBe('Case Study · ICT Division / Department of ICT (DoICT), Government of Bangladesh, from 2023');
+    expect(compact(await page.locator('.hero__eyebrow').textContent())).toBe('Case Study · ICT Division / Department of ICT (DoICT), Government of Bangladesh, 2023–2025');
     await open(page, 'impact/case-studies/wsdfm-women-freelancers/');
     expect(compact(await page.locator('.hero__eyebrow').textContent())).toBe('Case Study · Commissioned by Porticus');
   });
 
-  test('"from 2023" is the contract signing the site already dates: the Her Power news post is dated April 13, 2023', () => {
+  test('the Her Power news post is still dated April 13, 2023 (the contract signing), and the span starts there', () => {
     expect(visible(pageHtml(news(GOV_POSTS[2])))).toContain('April 13, 2023');
   });
 });
@@ -169,11 +170,11 @@ test.describe('Item 11: the NU Postgraduate Diploma page keeps the partnership�
 });
 
 test.describe('Items 12 and 13: photograph captions', () => {
-  test('12: the 2019 supply-chain award and the Nasdaq photographs keep their captions (no source names a recipient; reported to the owner)', () => {
+  test('12: the 2019 supply-chain award and the Nasdaq photographs are no longer on Recognition or In the Field (WP96: they moved to Aziz Ahmad’s profile, with his name)', () => {
     for (const route of ['about/recognition/', 'impact/in-the-field/']) {
       const text = visible(pageHtml(route));
-      expect(text, route).toContain('Supply Chain Diversity and Sustainability Excellence Awards, 2019');
-      expect(text, route).toContain('Nasdaq closing bell ceremony, US Small Business Administration');
+      expect(text, route).not.toContain('Supply Chain Diversity and Sustainability Excellence Awards, 2019');
+      expect(text, route).not.toContain('Nasdaq closing bell ceremony with the US Small Business Administration');
     }
   });
 

@@ -1,5 +1,5 @@
 ---
-title: "Postgraduate Diploma in Cyber Security"
+title: "Postgraduate Diploma in Cybersecurity"
 slug: cyber-security
 kind: course
 duration: "12 Months"
@@ -9,15 +9,15 @@ applyUrl: "https://docs.google.com/forms/d/e/1FAIpQLScm4K2bBY83VmcOgYfuMpK9RC91j
 modules: ["Introduction to Cyber Criminology", "Cryptography and Data Security", "Network and Communication Security", "Cyber Security Laws, Policies and Strategies", "Cyber Crime Investigation and Digital Forensics", "Social Media and Digital Privacy", "Cyber Risk Management and Crime Prevention", "Cyber Terrorism and Threat Management", "Cyber Economic Crime and Management", "Capstone Project/Internship"]
 internship: "The final project or internship allows students to apply their knowledge to real-world situations and gain practical experience in a relevant organization."
 faqs:
-  - q: "What is the total duration and credit structure of the PGD in Cyber Security program?"
+  - q: "What is the total duration and credit structure of the PGD in Cybersecurity program?"
     a: "The program carries a total of 40 credits spread across two semesters. Semester 1 consists of 5 core courses (20 credits total), and Semester 2 consists of 4 core courses plus a capstone project/internship (20 credits total). Each course accounts for 4 credits."
   - q: "What is the total duration and credit requirement of the program?"
-    a: "The PGD in Cyber Security program spans 1 year (12 months) divided into 2 academic semesters. To graduate, students must complete a total of 40 credits (20 credits in Semester 1 and 20 credits in Semester 2)."
+    a: "The PGD in Cybersecurity program spans 1 year (12 months) divided into 2 academic semesters. To graduate, students must complete a total of 40 credits (20 credits in Semester 1 and 20 credits in Semester 2)."
 legacyUrl: "https://coderstrust.global/course/post-graduate-diploma-in-cybersecurity/"
 verify: true
 ---
 
-The Postgraduate Diploma in Cyber Security is designed to help students understand how to protect computer systems, networks and digital information from cyber threats and online attacks. The programme covers cyber criminology, cryptography and data security, network and communication security, cyber security laws and policies, cybercrime investigation and digital forensics. Students also explore digital privacy, cyber risk management, cyber terrorism and financial cybercrime. The final project or internship allows students to apply their knowledge to real-world situations and gain practical experience in a relevant organization.
+The Postgraduate Diploma in Cybersecurity is designed to help students understand how to protect computer systems, networks and digital information from cyber threats and online attacks. The programme covers cyber criminology, cryptography and data security, network and communication security, cyber security laws and policies, cybercrime investigation and digital forensics. Students also explore digital privacy, cyber risk management, cyber terrorism and financial cybercrime. The final project or internship allows students to apply their knowledge to real-world situations and gain practical experience in a relevant organization.
 
 ## Course objectives
 

@@ -98,7 +98,7 @@ interface Course {
 const COURSES: Course[] = [
   { slug: 'digital-marketing', title: 'NU Postgraduate Diploma in Digital Marketing', subject: 'digital marketing', topics: ['SEO and analytics', 'Social media marketing', 'E-commerce'], prefer: 'Prefer SEO, social media and advertising?' },
   { slug: 'ict', title: 'NU Postgraduate Diploma in ICT', subject: 'ICT', topics: ['Programming and databases', 'Networks and troubleshooting', 'Mobile and web development'], prefer: 'Prefer programming, databases and networks?' },
-  { slug: 'cyber-security', title: 'NU Postgraduate Diploma in Cyber Security', subject: 'cyber security', topics: ['Cryptography and network security', 'Digital forensics and investigation', 'Cyber law and risk management'], prefer: 'Prefer cryptography, network security and digital forensics?' },
+  { slug: 'cyber-security', title: 'NU Postgraduate Diploma in Cybersecurity', subject: 'cybersecurity', topics: ['Cryptography and network security', 'Digital forensics and investigation', 'Cyber law and risk management'], prefer: 'Prefer cryptography, network security and digital forensics?' },
   { slug: 'data-analytics', title: 'NU Postgraduate Diploma in Data Analytics', subject: 'data analytics', topics: ['Analytics tools and databases', 'Data visualization', 'Machine learning and data governance'], prefer: 'Prefer analytics tools, data visualization and machine learning?' },
 ];
 
@@ -120,13 +120,13 @@ interface NewCourse {
 }
 const NEW_COURSES: Record<string, NewCourse> = {
   'cyber-security': {
-    title: 'NU Postgraduate Diploma in Cyber Security',
-    lead: 'Cyber security knowledge, from cryptography and network security to digital forensics and cyber law, in a National University postgraduate diploma delivered by CodersTrust.',
-    description: 'A National University postgraduate diploma in cyber security, delivered by CodersTrust: cryptography, network security, digital forensics and cyber law.',
+    title: 'NU Postgraduate Diploma in Cybersecurity',
+    lead: 'Cybersecurity knowledge, from cryptography and network security to digital forensics and cyber law, in a National University postgraduate diploma delivered by CodersTrust.',
+    description: 'A National University postgraduate diploma in cybersecurity, delivered by CodersTrust: cryptography, network security, digital forensics and cyber law.',
     studyLead: 'Modules, in order. The final module is a capstone project or internship.',
     answer: 'Build a foundation in cryptography, network security, digital forensics and cyber risk management, then apply it in the final capstone project or internship.',
     answerModules: ['Cryptography and Data Security', 'Network and Communication Security', 'Cyber Crime Investigation and Digital Forensics', 'Cyber Risk Management and Crime Prevention'],
-    fit: 'Choose Cyber Security if you want to study cryptography, network security, digital forensics and cyber law.',
+    fit: 'Choose Cybersecurity if you want to study cryptography, network security, digital forensics and cyber law.',
     fitModules: ['Cryptography and Data Security', 'Network and Communication Security', 'Cyber Crime Investigation and Digital Forensics', 'Cyber Security Laws, Policies and Strategies'],
     // WP77: trimmed to eight (the legacy titles, in legacy order); the seven left out are listed in tests/wp77.spec.ts
     roles: [
@@ -174,7 +174,7 @@ const NEW_COURSES: Record<string, NewCourse> = {
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 test.describe('WP76 item 1: the register says the NU Postgraduate Diploma has four courses (owner answer 2026-10-22)', () => {
   test('NU-13 names all four courses and cites the overview and the two new course pages', () => {
-    expect(fact('NU-13').text).toBe('The NU Postgraduate Diploma has four courses: Digital Marketing, Information & Communication Technology (ICT), Cyber Security and Data Analytics');
+    expect(fact('NU-13').text).toBe('The NU Postgraduate Diploma has four courses: Digital Marketing, Information & Communication Technology (ICT), Cybersecurity and Data Analytics');
     expect(fact('NU-13').group).toBe('admissions');
     expect(fact('NU-13').status).toBe('V');
     expect(fact('NU-13').sourceIds).toEqual(['NUPGD26', 'NUCYBER26', 'NUDATA26']);
@@ -244,16 +244,16 @@ test.describe('WP76 item 1: the register says the NU Postgraduate Diploma has fo
   test('the overview content file lists all four courses (it listed the last two as upcoming)', () => {
     const overview = readText('src/content/nu-pgd/overview.md');
     expect(overview).not.toContain('Upcoming:');
-    for (const name of ['Digital Marketing', 'Information & Communication Technology', 'Cyber Security', 'Data Analytics']) expect(overview, name).toContain(`- Postgraduate Diploma in ${name}: 40 credit hours, 10 subjects, instructor-led`);
+    for (const name of ['Digital Marketing', 'Information & Communication Technology', 'Cybersecurity', 'Data Analytics']) expect(overview, name).toContain(`- Postgraduate Diploma in ${name}: 40 credit hours, 10 subjects, instructor-led`);
   });
 });
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 test.describe('WP76 item 1: the overview page, the Programs hub and the menus name all four courses', () => {
-  test('"Choose Your Course" says "Four courses, in digital marketing, ICT, cyber security and data analytics, ..." over four cards in the diploma’s order, each linked, with its banner and three topics', async ({ page }) => {
+  test('"Choose Your Course" says "Four courses, in digital marketing, ICT, cybersecurity and data analytics, ..." over four cards in the diploma’s order, each linked, with its banner and three topics', async ({ page }) => {
     await open(page, NU);
     await expect(page.locator('#courses h2')).toHaveText('Choose Your Course');
-    expect(compact(await page.locator('#courses .lead').textContent())).toBe('Four courses, in digital marketing, ICT, cyber security and data analytics, delivered by CodersTrust under National University’s official training partnership.');
+    expect(compact(await page.locator('#courses .lead').textContent())).toBe('Four courses, in digital marketing, ICT, cybersecurity and data analytics, delivered by CodersTrust under National University’s official training partnership.');
     expect(await texts(page, '#courses article .course__title')).toEqual(COURSES.map((c) => c.title));
     for (const [i, c] of COURSES.entries()) {
       const card = page.locator('#courses article').nth(i);
@@ -281,7 +281,7 @@ test.describe('WP76 item 1: the overview page, the Programs hub and the menus na
   test('the Programs hub card names all four courses; no built page names only "digital marketing and ICT"', async ({ page }) => {
     await open(page, 'programs/');
     const card = page.locator(`#programs-grid li:has(a[href$="${NU}"])`);
-    expect(compact(await card.textContent())).toContain('National University postgraduate diploma courses delivered by CodersTrust, in digital marketing, ICT, cyber security and data analytics.');
+    expect(compact(await card.textContent())).toContain('National University postgraduate diploma courses delivered by CodersTrust, in digital marketing, ICT, cybersecurity and data analytics.');
     expect(sitePages().filter((p) => /digital marketing and ICT/i.test(visible(p.html))).map((p) => p.route)).toEqual([]);
   });
 
@@ -289,7 +289,7 @@ test.describe('WP76 item 1: the overview page, the Programs hub and the menus na
     await page.setViewportSize(DESKTOP);
     await open(page, HOME);
     const kids = '#mega-programs li:has(> a.mega__link[href$="' + NU + '"]) > ul > li > a';
-    expect(await texts(page, kids + ' .mega__title')).toEqual(['Digital Marketing', 'ICT', 'Cyber Security', 'Data Analytics']);
+    expect(await texts(page, kids + ' .mega__title')).toEqual(['Digital Marketing', 'ICT', 'Cybersecurity', 'Data Analytics']);
     expect(await texts(page, kids + ' .mega__desc')).toEqual([
       'SEO, social media, advertising and analytics.',
       'Programming, databases, networks, mobile and web development.',
@@ -297,7 +297,7 @@ test.describe('WP76 item 1: the overview page, the Programs hub and the menus na
       'Analytics tools, databases, data visualization and machine learning.',
     ]);
     expect((await page.locator(kids).evaluateAll((els) => els.map((a) => a.getAttribute('href') ?? ''))).map((h) => h.replace(/^.*programs\/nu-postgraduate-diploma\//, ''))).toEqual(COURSES.map((c) => `${c.slug}/`));
-    for (const label of ['Cyber Security', 'Data Analytics']) expect(await page.locator('footer').getByRole('link', { name: label }).count(), `footer: ${label}`).toBe(0);
+    for (const label of ['Cybersecurity', 'Data Analytics']) expect(await page.locator('footer').getByRole('link', { name: label }).count(), `footer: ${label}`).toBe(0);
   });
 
   // The nested descriptions show where the window is tall enough (the links end 739 px down with the header pinned and 783 px at the top of the page, at 1280 px wide) and are left out below that (671 and 715 px): every window listed shows every link.

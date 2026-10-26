@@ -304,7 +304,7 @@ const rows: [string, Fact['group'], Row][] = [
   ['NU-12', 'admissions', { text: `Postgraduate Diploma Courses Offered by National University in Affiliation with CodersTrust Bangladesh`, sourceIds: ['NUPGD26'] }],
   // WP76 (owner answer 2026-10-22: the NU Postgraduate Diploma has four courses). The overview on the current site lists all four ("Available PG Diploma Programs": Cybersecurity, Data Analytics, Digital Marketing, Information & Communication Technology), and the two added courses have their own pages.
   // The site names them Digital Marketing, ICT, Cyber Security and Data Analytics; the overview, the menus, the Programs hub card and the "Choose Your Course" lead say "four" and name all four.
-  ['NU-13', 'admissions', { text: `The NU Postgraduate Diploma has four courses: Digital Marketing, Information & Communication Technology (ICT), Cyber Security and Data Analytics`, sourceIds: ['NUPGD26', 'NUCYBER26', 'NUDATA26'] }],
+  ['NU-13', 'admissions', { text: `The NU Postgraduate Diploma has four courses: Digital Marketing, Information & Communication Technology (ICT), Cybersecurity and Data Analytics`, sourceIds: ['NUPGD26', 'NUCYBER26', 'NUDATA26'] }],
 ];
 
 export const facts: Record<string, Fact> = Object.fromEntries(

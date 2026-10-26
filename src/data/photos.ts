@@ -61,9 +61,10 @@ const ALT: Record<string, string> = {
   'recognition/us-chamber': 'A roundtable meeting at the US Chamber of Commerce',
   'recognition/european-parliament': 'A speaker addressing a European Parliament committee room',
   'recognition/pope-francis': 'A man greeting Pope Francis, with a cardinal standing beside them',
-  'recognition/nasdaq-sba': 'People standing at the podium of the Nasdaq closing bell ceremony for the US Small Business Administration',
+  // WP96 (owner decision 2026-10-26): both award photographs now show only on Aziz Ahmad's team profile, naming him as Co-Founder; the files and their permissions rows stay.
+  'recognition/nasdaq-sba': 'Aziz Ahmad, Co-Founder of CodersTrust, at the podium of the Nasdaq closing bell ceremony for the US Small Business Administration',
   'recognition/speaking-students': 'Aziz Ahmad, Chairman and Co-Founder of CodersTrust, addressing a large audience from a stage',
-  'recognition/supply-chain-award': 'Four people on stage with a framed certificate at the 2019 Supply Chain Diversity and Sustainability Excellence Awards',
+  'recognition/supply-chain-award': 'Aziz Ahmad, Co-Founder of CodersTrust, receiving the Supply Chain Diversity and Sustainability Excellence Award at the 2019 awards, among four people on stage with a framed certificate',
   'nu-pgd/cybersecurity': 'PGD in Cybersecurity course banner from National University and CodersTrust',
   'nu-pgd/data-analytics': 'PGD in Data Analytics course banner from National University and CodersTrust',
   'nu-pgd/digital-marketing': 'PGD in Digital Marketing course banner from National University and CodersTrust',
@@ -180,8 +181,8 @@ export const CAPTION: Record<string, string> = {
   'recognition/us-chamber': 'Roundtable at the US Chamber of Commerce',
   'recognition/european-parliament': 'European Parliament committee room',
   'recognition/pope-francis': 'Meeting Pope Francis',
-  'recognition/nasdaq-sba': 'Nasdaq closing bell ceremony, US Small Business Administration',
-  'recognition/supply-chain-award': 'Supply Chain Diversity and Sustainability Excellence Awards, 2019',
+  'recognition/nasdaq-sba': 'Aziz Ahmad, Co-Founder of CodersTrust, at the Nasdaq closing bell ceremony with the US Small Business Administration',
+  'recognition/supply-chain-award': 'Aziz Ahmad, Co-Founder of CodersTrust, receiving the Supply Chain Diversity and Sustainability Excellence Award, 2019',
 };
 
 
@@ -288,7 +289,8 @@ const GALLERY: Record<string, string[]> = {
   // WP55: the Kosovo pilot's group photograph (the old "Albania" file, captioned and cropped) joins the Kosovo case study, where Kosovo is meant.
   'kosovo-women-in-online-work': ['general/kosovo-woman-training', 'general/kosovo-women-screens', 'general/kosovo-wow-group'],
   'aziz-ahmad': ['recognition/speaking-students', 'recognition/davos-sdg-lab', 'recognition/us-chamber', 'recognition/european-parliament', 'recognition/pope-francis', 'recognition/nasdaq-sba', 'recognition/supply-chain-award'],
-  recognition: ['recognition/supply-chain-award', 'recognition/nasdaq-sba', 'recognition/davos-sdg-lab', 'recognition/european-parliament'],
+  // WP96: the two award photographs moved to Aziz Ahmad's profile; the two panels keep this gallery at four photographs.
+  recognition: ['recognition/davos-sdg-lab', 'recognition/european-parliament', 'general/panel-international-forum', 'general/un-panel'],
   careers: ['general/office-support-headset', 'general/computer-lab-rows', 'general/office-meeting', 'general/office-exterior'],
 };
 /** A gallery leaves out the photographs the same page already shows in its hero and its "what success looks like" band. */
