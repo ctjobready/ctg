@@ -311,7 +311,7 @@ const CASE_CARD: Record<string, string> = {
 export const caseCardPhoto = (slug: string): Photo | undefined => (CASE_CARD[slug] ? photo(CASE_CARD[slug]) : undefined);
 
 /**
- * NU Postgraduate Diploma course banners, keyed by course slug.
+ * NU Post Graduate Diploma course banners, keyed by course slug.
  * WP76: the Cyber Security course's URL slug is "cyber-security" (/programs/nu-postgraduate-diploma/cyber-security/) while its banner file, alt text and permissions row (legacy-nu-pgd-cybersecurity) are keyed "cybersecurity": the file keeps its name, so this maps the slug to it.
  */
 const NU_BANNER_KEY: Record<string, string> = { 'cyber-security': 'cybersecurity' };

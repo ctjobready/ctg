@@ -125,7 +125,7 @@ test.describe('Other program pages', () => {
   });
 });
 
-test.describe('NU Postgraduate Diploma', () => {
+test.describe('NU Post Graduate Diploma', () => {
   test('the challenge heading no longer claims a degree is not producing offers', async ({ page }) => {
     await open(page, 'programs/nu-postgraduate-diploma/');
     await expect(page.getByRole('heading', { level: 2, name: 'A Degree Alone May Not Be Enough for Today’s Digital Jobs' })).toBeVisible();
@@ -232,7 +232,7 @@ test.describe('About, Governance, Recognition, Careers and Contact', () => {
     const group = (name: string) => page.locator('.ct-group', { has: page.getByRole('heading', { level: 3, name }) });
     await expect(group('Partner or Fund').getByRole('heading', { level: 4, name: 'Due-Diligence Teams' })).toHaveCount(1);
     await expect(page.getByRole('heading', { level: 3, name: 'Study or Contact the Media' })).toBeVisible();
-    await expect(group('Study or Contact the Media').getByRole('heading', { level: 4, name: 'NU Postgraduate Diploma Applicants' })).toHaveCount(1);
+    await expect(group('Study or Contact the Media').getByRole('heading', { level: 4, name: 'NU Post Graduate Diploma Applicants' })).toHaveCount(1);
     // WP42 (cycle-19 review): the group is "Educate, Hire or Train" (it also holds the universities and the schools)
     await expect(group('Educate, Hire or Train')).toContainText('Connect with job-ready digital talent through the placement team.');
     await expect(page.locator('#next')).toContainText('Public procurement follows the agency’s own timeline.');

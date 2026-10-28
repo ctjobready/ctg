@@ -12,7 +12,7 @@ import { listPages } from './support/pages';
  *   - 2: the Her Power laptop photo's alt text and caption agree (a participant receives the laptop);
  *   - 3: the BPI news post closes with the government band; 4: the Career Carnival teaser calls Banani "its Dhaka office"; 5: the India post does not say Gurugram; 6: Ferdinand is "a former Danish Army captain" on both pages;
  *   - 7: the America Week post gives Shamsul Haque the team page's rank; 8: the HolonIQ 2024 quotation is closed; 9: the three government posts' headings are Title Case;
- *   - 10: no page links prweb.com; 11: the NU Postgraduate Diploma page keeps the partnership's scope; 12: the two unattributed award photographs' captions are unchanged (no source names the recipient);
+ *   - 10: no page links prweb.com; 11: the NU Post Graduate Diploma page keeps the partnership's scope; 12: the two unattributed award photographs' captions are unchanged (no source names the recipient);
  *   - 13: the News Photographs captions for the UPEACE program and the NCTB MOU; 14: In the Field's heading outline; 15: the Kosovo portrait alt; 16: Recognition's early-coverage cards link their articles and the World Bank line has its own section;
  *   - 17: the polish items; 18 to 21: the enrollment total stays "150,000+", the composition is 112,926 direct and 40,152 courseware (25,125 + 15,027; 112,926 + 40,152 - 2,400 = 150,678), and no page prints the old figures or a "~" or "nearly" total.
  */
@@ -160,7 +160,7 @@ test.describe('Item 10 (Major): no page links the PRWeb release, whose boilerpla
   });
 });
 
-test.describe('Item 11: the NU Postgraduate Diploma page keeps the partnership’s scope', () => {
+test.describe('Item 11: the NU Post Graduate Diploma page keeps the partnership’s scope', () => {
   test('the Context band reads "National University’s official training partner for digital career skills and credentials since 2023"', () => {
     const sentence = 'CodersTrust has been National University’s official training partner for digital career skills and credentials since 2023.';
     expect(visible(pageHtml('programs/nu-postgraduate-diploma/'))).toContain(sentence);

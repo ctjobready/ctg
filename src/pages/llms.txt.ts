@@ -27,7 +27,7 @@ const PRIORITY: Item[] = [
   { name: 'YouthWIDE', path: '/programs/youthwide/' },
   { name: 'Partner with us', path: '/partner-with-us/' },
   { name: 'Investors', path: '/partner-with-us/investors/' },
-  { name: 'NU Postgraduate Diploma', path: '/programs/nu-postgraduate-diploma/' },
+  { name: 'NU Post Graduate Diploma', path: '/programs/nu-postgraduate-diploma/' },
 ];
 
 const REFERENCE: Item[] = [

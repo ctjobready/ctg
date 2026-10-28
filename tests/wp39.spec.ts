@@ -449,7 +449,7 @@ test.describe('YouthWIDE: one-sentence hero lead and one agenda line (items 7 an
   });
 });
 
-test.describe('NU Postgraduate Diploma course pages: "What Will I Be Able to Do After This Course?" (item 9)', () => {
+test.describe('NU Post Graduate Diploma course pages: "What Will I Be Able to Do After This Course?" (item 9)', () => {
   const NEXT_STEP = 'Your next step depends on your experience, portfolio and local market.';
   const CASES: [string, string, string[]][] = [
     ['programs/nu-postgraduate-diploma/digital-marketing/', 'Build practical work in WordPress design, content marketing, SEO and analytics, followed by the final internship, project work and seminar module.', ['WordPress Design', 'Content Marketing', 'Search Engine Optimization', 'Web & Google Analytics']],

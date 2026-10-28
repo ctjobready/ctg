@@ -5,7 +5,7 @@
 import { fact, sources } from './facts';
 
 /**
- * WP27: the one eligibility statement for the NU Postgraduate Diploma, NU-01 verbatim ("Honors / Diploma holders with a minimum CGPA of 2.25"). The menu
+ * WP27: the one eligibility statement for the NU Post Graduate Diploma, NU-01 verbatim ("Honors / Diploma holders with a minimum CGPA of 2.25"). The menu
  * description, the Home program card, the Programs hub card and finder, the FAQs and the course pages state it in these words, so no surface says "degree
  * holders" (a different, wider group) where admissions says honors or diploma holders with a minimum CGPA.
  */
@@ -43,7 +43,7 @@ export const VALUE_PROPOSITION: Record<Audience, string> = {
   // The two marketplaces are named as two, as IN-04 and tests/wp25s.spec.ts ("named as two") have them: never "the employer and gig-work marketplaces".
   investors: 'Back JobReady’s staged rollout, built on CodersTrust’s training and mentoring programs. Partner portals and AI chat are live; the employer marketplace and the gig-work marketplace are in pre-launch.',
   localPartners: 'We help local organizations prepare young people for paid digital work through mentored, certification-focused training.',
-  nuPgd: 'We help learners prepare for digital work through a National University postgraduate diploma.',
+  nuPgd: 'We help learners prepare for digital work through a National University post graduate diploma.',
 };
 
 /** C1 identity-hook headlines — 6 to 12 words, about the reader (CMF). */
@@ -216,7 +216,7 @@ export const CONTRACT_TOTAL_NOTE_INVESTORS: CopyBlock = contractTotalNote(true, 
  */
 export const NU_NOT_TRAINED = 'not learners trained by CodersTrust';
 /**
- * WP87 (CLR review, Opus XHigh run 1, Minor): the National University partnership is worded with its scope on every page ("... official training partner for digital career skills and credentials since 2023"); the NU Postgraduate Diploma page had dropped it, so it read as an exclusive, university-wide partnership.
+ * WP87 (CLR review, Opus XHigh run 1, Minor): the National University partnership is worded with its scope on every page ("... official training partner for digital career skills and credentials since 2023"); the NU Post Graduate Diploma page had dropped it, so it read as an exclusive, university-wide partnership.
  * One sentence, read from SC-04 ("CodersTrust has been NU’s official training partner for digital career skills and credentials since 2023"), for Governments and the diploma page; the build stops if SC-04 stops saying it.
  */
 const nuPartnershipStatement = (): string => {
@@ -299,7 +299,7 @@ export const IDENTITY: CopyBlock = identity();
  *  - PX-05 is ManpowerGroup's Global Talent Shortage Survey 2026: "(ManpowerGroup, 2026)";
  *  - PX-06 is Demirci, Hannane & Zhu, "Who Is AI Replacing?", Management Science 71(10), 2025 (source DHZ25): "(Demirci, Hannane & Zhu, 2025)";
  *  - PX-08 is PwC's 2026 Global AI Jobs Barometer (15 June 2026): "(PwC, 2026)".
- * WP59 (cycle-31 review, GPT-6.1 Sol G5) adds the Bangladesh graduate-unemployment rate (PX-03, the Local Partners and NU Postgraduate Diploma tiles):
+ * WP59 (cycle-31 review, GPT-6.1 Sol G5) adds the Bangladesh graduate-unemployment rate (PX-03, the Local Partners and NU Post Graduate Diploma tiles):
  *  - PX-03 is the Bangladesh Bureau of Statistics' Labour Force Survey 2024 (source BBSLFS24: "Bangladesh Bureau of Statistics (BBS), Labour Force Survey 2024."): "(BBS Labour Force Survey, 2024)".
  * WP64 (cycle-36 review, Kimi) adds the Bangladesh government digital labs (GV-09, the YouthWIDE and Local Partners tiles), by publisher alone, because its source states no year:
  *  - GV-09 is the Department of ICT's count of the ICTD Digital Lab's labs (source DOICTLAB: "Department of ICT (DoICT), ICT Division, ICTD Digital Lab, “About”: digital labs in a total of 9,001 educational institutions ..."): "(Department of ICT count)". The tile's note,
@@ -404,18 +404,18 @@ export const RCT_HEADLINE: CopyBlock = {
 
 /**
  * Relevance line (review round 14, m2), set directly under the randomized-trial headline on the pages whose offering the trial did not
- * evaluate: /programs/nu-postgraduate-diploma/ (the NU Postgraduate Diploma) and, should a trial band return to them, /partner-with-us/employers/ and
+ * evaluate: /programs/nu-postgraduate-diploma/ (the NU Post Graduate Diploma) and, should a trial band return to them, /partner-with-us/employers/ and
  * /programs/jobready-work/ (JobReady@Work). It restates RC-01's scope (the WSDFM program, women in Dhaka) and adds no figure. The trial stays organizational
  * evidence, not evidence for the offering on the page. scripts/check-facts.mjs pins the sentence on these pages.
  * WP31 (cycle-8 review): the two JobReady@Work pages no longer carry a trial band (they link to the evidence pages), so `work` is not rendered today;
  * the gate still requires the sentence on any proof band either page grows.
- * WP34 (cycle-11 review): the NU Postgraduate Diploma overview no longer carries a trial band either (a one-link strip stands in), so `nuPgd` is not rendered today
+ * WP34 (cycle-11 review): the NU Post Graduate Diploma overview no longer carries a trial band either (a one-link strip stands in), so `nuPgd` is not rendered today
  * and the gate treats that page the same way.
  */
 export const trialScope = (offering: string): CopyBlock => ({ text: `This trial evaluated WSDFM training for women in Dhaka, not ${offering}.`, facts: ['RC-01'] });
 export const TRIAL_SCOPE = {
   work: trialScope('JobReady@Work'),
-  nuPgd: trialScope('the NU Postgraduate Diploma'),
+  nuPgd: trialScope('the NU Post Graduate Diploma'),
 };
 
 /**
@@ -425,7 +425,7 @@ export const TRIAL_SCOPE = {
  * sentences are the shared wording on every page that uses it, verbatim; no page swaps in a different "we" clause.
  * WP31 (cycle-8 review): the long "Unlike approaches that typically focus on one part of the path …" sentence, which eight pages repeated, is two plain sentences now.
  * Built only from the approved positioning table and existing page copy: no figures and no named competitors.
- * The NU postgraduate diploma page has no statement: its copy waits for National University sign-off.
+ * The NU post graduate diploma page has no statement: its copy waits for National University sign-off.
  * WP39 (cycle-16 review): the Investors page has none either: its statement restated the hero lead and returned to cohort language on a page about backing the platform, and "How JobReady Builds on Delivery" said how the
  * platform relates to delivery once (WP43, cycle-20 review, removed that one-sentence band: the evidence block and "What JobReady Does" say it); scripts/check-facts.mjs exempts that one page (POSITION_EXEMPT_PAGES).
  * WP36: YouthWIDE's statement is the two shared sentences alone, with "YouthWIDE" in place of "We" (its audience and regions are in the hero and the glance right above it); the gate declares it whole for that page.

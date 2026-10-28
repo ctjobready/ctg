@@ -2,7 +2,7 @@ import { getCollection } from 'astro:content';
 import { CTAS } from '../../../data/ctas';
 
 /**
- * NU Postgraduate Diploma content, read from the `nu-pgd` collection (legacy-page content, NU sign-off pending).
+ * NU Post Graduate Diploma content, read from the `nu-pgd` collection (legacy-page content, NU sign-off pending).
  * The admissions fact set (duration, schedule, fee, eligibility, delivery mode, internship terms, award,
  * application route) is NOT approved, so none of those fields are ever read or rendered here: only titles,
  * module names, role titles and a few legacy FAQs are used. No `Offer` is ever emitted in JSON-LD.
@@ -23,13 +23,13 @@ export const NU_SCHEDULE_NOTE = 'Admissions confirms intake dates and schedule w
 export const NU_LOCATION_NOTE = 'Admissions confirms the teaching location with each applicant.';
 /** WP44 (cycle-21 review): the FAQ answer states the schedule and the location in one sentence (the rows keep NU_SCHEDULE_NOTE and NU_LOCATION_NOTE). */
 export const NU_ADMISSIONS_NOTE = 'Admissions confirms intake dates, schedule and teaching location with each applicant.';
-export const NU_NAME = 'National University Postgraduate Diploma';
+export const NU_NAME = 'National University Post Graduate Diploma';
 /** WP21: one name for each NU track on every surface (menu, footer, <title>, H1, cards, breadcrumbs). Official module titles are untouched. */
 export const NU_COURSE_NAME: Record<string, string> = {
-  'digital-marketing': 'NU Postgraduate Diploma in Digital Marketing',
-  ict: 'NU Postgraduate Diploma in Information and Communication Technology (ICT)', // WP97: NU's course name (National University's PGD site); the menus keep the short "ICT" label
-  'cyber-security': 'NU Postgraduate Diploma in Cyber Security', // WP97: NU's course name is "Cyber Security" (the URL slug stays cyber-security)
-  'data-analytics': 'NU Postgraduate Diploma in Data Analytics',
+  'digital-marketing': 'NU Post Graduate Diploma in Digital Marketing',
+  ict: 'NU Post Graduate Diploma in Information and Communication Technology (ICT)', // WP97: NU's course name (National University's PGD site); the menus keep the short "ICT" label
+  'cyber-security': 'NU Post Graduate Diploma in Cyber Security', // WP97: NU's course name is "Cyber Security" (the URL slug stays cyber-security)
+  'data-analytics': 'NU Post Graduate Diploma in Data Analytics',
 };
 /** The four courses in the order every surface lists them (the overview's cards, the menus, "Also Consider"): the two long-standing courses first, then the two added in WP76. */
 export const NU_COURSE_ORDER: readonly string[] = ['digital-marketing', 'ict', 'cyber-security', 'data-analytics'];
@@ -65,25 +65,25 @@ const SAFE_FAQS: Record<string, number[]> = {
 /**
  * Short, claim-light summary per course, written from the module names. (WP46: the "Why This Course" points are gone with the "What You Will Work On" band, which restated the module list.)
  * WP76: `prefer` is the question that points a reader to THIS course ("Prefer programming, databases and networks?"), asked on the other three course pages' "Also Consider" band, which names this course after it ("... The NU
- * Postgraduate Diploma in ICT is the course for those modules."; it was `alsoConsider`, the two-course sentence each page said about the other). `studyLead` is the line under "What You Study": the last module differs by course.
+ * Post Graduate Diploma in ICT is the course for those modules."; it was `alsoConsider`, the two-course sentence each page said about the other). `studyLead` is the line under "What You Study": the last module differs by course.
  */
 export const NU_COURSE_COPY: Record<string, { short: string; lead: string; description: string; topics: string[]; titleTag: string; prefer: string; studyLead: string }> = {
   'digital-marketing': {
     short: 'Practical digital marketing: SEO, social media, advertising and analytics.',
-    lead: 'Practical digital marketing skills, from SEO and social media to advertising and analytics, in a National University postgraduate diploma delivered by CodersTrust.',
-    description: 'A National University postgraduate diploma in digital marketing, delivered by CodersTrust: SEO, social media, advertising and analytics.',
+    lead: 'Practical digital marketing skills, from SEO and social media to advertising and analytics, in a National University post graduate diploma delivered by CodersTrust.',
+    description: 'A National University post graduate diploma in digital marketing, delivered by CodersTrust: SEO, social media, advertising and analytics.',
     topics: ['SEO and analytics', 'Social media marketing', 'E-commerce'],
-    titleTag: 'NU Postgraduate Diploma in Digital Marketing',
+    titleTag: 'NU Post Graduate Diploma in Digital Marketing',
     prefer: 'Prefer SEO, social media and advertising?',
     studyLead: 'Modules, in order. The final module combines internship, project work and a seminar; internship arrangements are confirmed with admissions.',
   },
   ict: {
     short: 'Practical information and communication technology (ICT): programming, databases, networks, mobile and web development.',
-    lead: 'Practical information and communication technology (ICT) skills, from programming and databases to networks, mobile apps and web design, in a National University postgraduate diploma delivered by CodersTrust.',
-    description: 'National University postgraduate diploma in information and communication technology (ICT), delivered by CodersTrust: programming, databases and networks.',
+    lead: 'Practical information and communication technology (ICT) skills, from programming and databases to networks, mobile apps and web design, in a National University post graduate diploma delivered by CodersTrust.',
+    description: 'National University post graduate diploma in information and communication technology (ICT), delivered by CodersTrust: programming, databases and networks.',
     topics: ['Programming and databases', 'Networks and troubleshooting', 'Mobile and web development'],
     // WP97: the <title> is capped at 60 characters with " | CodersTrust"; the full course name does not fit, so the title keeps the short "ICT" that NU itself uses (the H1 and the description carry the full name)
-    titleTag: 'NU Postgraduate Diploma in ICT',
+    titleTag: 'NU Post Graduate Diploma in ICT',
     prefer: 'Prefer programming, databases and networks?',
     studyLead: 'Modules, in order. The final module combines internship, project work and a seminar; internship arrangements are confirmed with admissions.',
   },
@@ -91,10 +91,10 @@ export const NU_COURSE_COPY: Record<string, { short: string; lead: string; descr
   // cyber risk management, cyber terrorism, financial cybercrime) and the final "Capstone Project/Internship" module. Everything below is worded from the module names; no outcome, role or service is promised.
   'cyber-security': {
     short: 'Cyber Security: cryptography, network security, digital forensics, cyber law and risk management.',
-    lead: 'Cyber security knowledge, from cryptography and network security to digital forensics and cyber law, in a National University postgraduate diploma delivered by CodersTrust.',
-    description: 'A National University postgraduate diploma in cyber security, delivered by CodersTrust: cryptography, network security, digital forensics and cyber law.',
+    lead: 'Cyber security knowledge, from cryptography and network security to digital forensics and cyber law, in a National University post graduate diploma delivered by CodersTrust.',
+    description: 'A National University post graduate diploma in cyber security, delivered by CodersTrust: cryptography, network security, digital forensics and cyber law.',
     topics: ['Cryptography and network security', 'Digital forensics and investigation', 'Cyber law and risk management'],
-    titleTag: 'NU Postgraduate Diploma in Cyber Security',
+    titleTag: 'NU Post Graduate Diploma in Cyber Security',
     prefer: 'Prefer cryptography, network security and digital forensics?',
     studyLead: 'Modules, in order. The final module is a capstone project or internship.',
   },
@@ -102,10 +102,10 @@ export const NU_COURSE_COPY: Record<string, { short: string; lead: string; descr
   // below names only what the module list does (analytics tools, databases, data visualization, machine learning, data governance and ethics).
   'data-analytics': {
     short: 'Practical data analytics: analytics tools, databases, data visualization and machine learning.',
-    lead: 'Practical data analytics skills, from analytics tools and databases to data visualization and machine learning, in a National University postgraduate diploma delivered by CodersTrust.',
-    description: 'A National University postgraduate diploma in data analytics, delivered by CodersTrust: analytics tools, databases, visualization and machine learning.',
+    lead: 'Practical data analytics skills, from analytics tools and databases to data visualization and machine learning, in a National University post graduate diploma delivered by CodersTrust.',
+    description: 'A National University post graduate diploma in data analytics, delivered by CodersTrust: analytics tools, databases, visualization and machine learning.',
     topics: ['Analytics tools and databases', 'Data visualization', 'Machine learning and data governance'],
-    titleTag: 'NU Postgraduate Diploma in Data Analytics',
+    titleTag: 'NU Post Graduate Diploma in Data Analytics',
     prefer: 'Prefer analytics tools, data visualization and machine learning?',
     studyLead: 'Modules, in order. The final module is a special-topics thesis or project report.',
   },

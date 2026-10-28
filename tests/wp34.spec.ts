@@ -212,7 +212,7 @@ test.describe('the Bangladesh graduate-unemployment tile (PX-03) leaves the glob
     expect(await texts(page, '#problem .card__title')).toEqual(['Make Students’ Skills Visible', 'Build Placement Evidence']);
   });
 
-  test('the Bangladesh pages keep it: Local Partners and the NU Postgraduate Diploma', async ({ page }) => {
+  test('the Bangladesh pages keep it: Local Partners and the NU Post Graduate Diploma', async ({ page }) => {
     for (const route of ['partner-with-us/local-partners/', 'programs/nu-postgraduate-diploma/']) {
       await open(page, route);
       const tile = page.locator('#problem [data-fact="PX-03"]');
@@ -277,7 +277,7 @@ test.describe('Foundations: what is discussed for each funding route is said onc
   });
 });
 
-test.describe('NU Postgraduate Diploma: a link to the wider programs, not their results', () => {
+test.describe('NU Post Graduate Diploma: a link to the wider programs, not their results', () => {
   test('the overview shows a one-link strip headed "Evidence from CodersTrust’s Wider Programs" and no trial or survey figure', async ({ page }) => {
     await open(page, 'programs/nu-postgraduate-diploma/');
     const strip = page.locator('#offer-evidence');
@@ -290,7 +290,7 @@ test.describe('NU Postgraduate Diploma: a link to the wider programs, not their 
     await expect(page.locator('#proof-band')).toHaveCount(0);
     await expect(page.locator('[data-trial-scope]')).toHaveCount(0);
     const text = await mainText(page);
-    expect(text).not.toMatch(/10\.3|78\.2%|48\.0%|\+41%|Not This Diploma|not from the National University Postgraduate Diploma|This trial evaluated/);
+    expect(text).not.toMatch(/10\.3|78\.2%|48\.0%|\+41%|Not This Diploma|not from the National University Post Graduate Diploma|This trial evaluated/);
   });
 
   test('the strip sits between "Delivered with National University" and the questions, and the closing call to action keeps its one primary button', async ({ page }) => {

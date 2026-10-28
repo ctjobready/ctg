@@ -15,7 +15,7 @@ import { listPages } from './support/pages';
  *   - S4: Outcomes 2026, "Results in Brief": the 70.8% tile names its base, "(34 of 48) of surveyed 2014-2023 completers with no prior income were earning at the October 2026 survey";
  *   - G1: the Investors and JobReady Platform "Contracted Scope" tiles carry the note Home and Governments print (CONTRACT_TOTAL_NOTE), so the 30,000+ is explained the same way wherever it appears;
  *   - G2: the closing bands (Impact pages, TalentLEAP) say "A discovery session explores your goals, priority groups and possible program scope.";
- *   - G5: the Bangladesh graduate-unemployment rate (PX-03) names its publisher and year, "(BBS Labour Force Survey, 2024)", wherever it is shown (Local Partners, NU Postgraduate Diploma);
+ *   - G5: the Bangladesh graduate-unemployment rate (PX-03) names its publisher and year, "(BBS Labour Force Survey, 2024)", wherever it is shown (Local Partners, NU Post Graduate Diploma);
  *   - G6: the five audience pages no longer print the standalone "Safeguarding, Governance and Due Diligence" link after their FAQs; the due-diligence band and its "Governance and Accountability" link stay;
  *   - K3: Home slide 1's ">4x" callout states its base, "Employment effect, not income: +10.3 percentage points, more than four times the 2.3-point average across nine vocational-training trials.", within the carousel's height budget;
  *   - L1: Home slide 2 keeps "onboarding 1.5M+ learners" and adds "(National University's learners, not learners trained by CodersTrust)", within the carousel's height budget;

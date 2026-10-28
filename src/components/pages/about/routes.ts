@@ -53,7 +53,7 @@ export const contactRoutes = (): ContactRoute[] => [
   { id: 'media', who: 'Journalists and Media', text: 'Interviews, background and the press kit.', icon: 'mail', cta: fromLibrary('media'), secondary: { label: 'Press Kit', href: '/about/recognition/#press-kit' } },
   {
     id: 'nu-pgd',
-    who: 'NU Postgraduate Diploma Applicants',
+    who: 'NU Post Graduate Diploma Applicants',
     text: 'Apply through the application form, or call the admissions team.',
     icon: 'graduation-cap',
     cta: { key: 'nu-pgd', label: CTAS['nu-pgd'].label, href: NU_PGD_APPLY_URL },

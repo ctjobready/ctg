@@ -1,5 +1,5 @@
 ---
-// P15 — NU Postgraduate Diploma /programs/nu-postgraduate-diploma/ (applicant admissions page; moved under /programs/ in WP20a, the old /nu-postgraduate-diploma/ paths are redirect stubs).
+// P15 — NU Post Graduate Diploma /programs/nu-postgraduate-diploma/ (applicant admissions page; moved under /programs/ in WP20a, the old /nu-postgraduate-diploma/ paths are redirect stubs).
 // Applicant template: key facts in the hero, the full "Before You Apply" table after the value band, one primary CTA (Apply Now) with admissions as a text link.
 // "Apply Now" is a plain link to the standalone Google Form.
 // WP30d (owner direction 2026-10-14: less is more): the definition, "employers are asking" (cost), "a clearer route" (vignettes), three-step, "start your application" and
@@ -29,8 +29,8 @@ import { formatDate, isoDate, joinList } from '../../../lib/format';
 import { pageUrl, webPage } from '../../../lib/schema';
 
 const path = NU_PATH;
-const title = 'NU Postgraduate Diploma';
-const description = 'Build practical digital skills after your degree with the National University postgraduate diploma, delivered by CodersTrust.';
+const title = 'NU Post Graduate Diploma';
+const description = 'Build practical digital skills after your degree with the National University post graduate diploma, delivered by CodersTrust.';
 const overview = await nuOverview();
 const apply = { label: NU_APPLY.label, href: overview.data.applyUrl };
 const applyLink = linkAttrs(apply.href);
@@ -41,24 +41,24 @@ const coursesLead = `${COUNT_WORD[courses.length]} courses, in ${joinList(course
 
 const faqSources: FaqSource[] = [
   // WP27: admissions' own eligibility sentence (NU-01), not "if you hold a degree".
-  { q: 'Is the NU Postgraduate Diploma Right for Me?', html: `Eligibility: ${NU_ELIGIBILITY}. It is right for you if you meet that and want a digital career. Not right if you want a short self-paced course: see ${anchor(COURSES_URL, 'JobReady.global')}.`, evidence: ['NU-01'] },
+  { q: 'Is the NU Post Graduate Diploma Right for Me?', html: `Eligibility: ${NU_ELIGIBILITY}. It is right for you if you meet that and want a digital career. Not right if you want a short self-paced course: see ${anchor(COURSES_URL, 'JobReady.global')}.`, evidence: ['NU-01'] },
   { q: 'Where Do I Find Eligibility, Schedule and Fees?', html: `The eligibility, duration, fee, payment and recognition details are in Before You Apply above. ${NU_ADMISSIONS_NOTE} To ask, call ${anchor(NU_CALL.href, NU_CALL_NUMBER)}.` },
   { q: 'How Do I Apply?', html: `Complete the ${anchor(apply.href, 'application form')}. Our admissions team contacts you with the next steps.` },
 ];
 
 const jsonLd = [
-  webPage({ path, name: NU_NAME, description, dateModified: PAGE_UPDATED.nu, breadcrumb: [{ name: 'Home', path: '/' }, { name: 'Programs', path: '/programs/' }, { name: 'NU Postgraduate Diploma', path }] }),
+  webPage({ path, name: NU_NAME, description, dateModified: PAGE_UPDATED.nu, breadcrumb: [{ name: 'Home', path: '/' }, { name: 'Programs', path: '/programs/' }, { name: 'NU Post Graduate Diploma', path }] }),
   {
     '@type': 'ItemList',
     '@id': `${pageUrl(path)}#courses`,
-    name: 'NU Postgraduate Diploma courses',
+    name: 'NU Post Graduate Diploma courses',
     itemListElement: courses.map((c, i) => ({ '@type': 'ListItem', position: i + 1, name: c.title, url: pageUrl(`${path}${c.slug}/`) })),
   },
   faqNode(faqSources, path),
 ];
 ---
 
-<LandingLayout title={title} description={description} path={path} breadcrumbs={[{ label: 'Programs', href: '/programs/' }, { label: 'NU Postgraduate Diploma' }]} jsonLd={jsonLd} stickyCta={apply}>
+<LandingLayout title={title} description={description} path={path} breadcrumbs={[{ label: 'Programs', href: '/programs/' }, { label: 'NU Post Graduate Diploma' }]} jsonLd={jsonLd} stickyCta={apply}>
   <!-- C1: one primary CTA (Apply Now); admissions is a text link; duration and fee sit in the hero, the full table (eligibility and delivery included, stated once) follows the value band -->
   <Hero eyebrow={NU_NAME} title={HEADLINE.nuPgd} lead={VALUE_PROPOSITION.nuPgd} artSeed="nu-pgd">
     <Fragment slot="actions">
@@ -103,7 +103,7 @@ const jsonLd = [
   />
 
   <Section id="before-you-apply" aria-labelledby="before-h">
-    <SectionHeader id="before-h" eyebrow="Admissions" title="Before You Apply" lead="Program details as stated for the National University Postgraduate Diploma." />
+    <SectionHeader id="before-h" eyebrow="Admissions" title="Before You Apply" lead="Program details as stated for the National University Post Graduate Diploma." />
     <dl class="ba">
       <div class="ba__row"><dt>Eligibility</dt><dd><Fact id="NU-01" /></dd></div>
       <div class="ba__row"><dt>Duration</dt><dd><Fact id="NU-02" /></dd></div>

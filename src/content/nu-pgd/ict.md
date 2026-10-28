@@ -1,5 +1,5 @@
 ---
-title: "Postgraduate Diploma in Information and Communication Technology (ICT)"
+title: "Post Graduate Diploma in Information and Communication Technology (ICT)"
 slug: ict
 kind: course
 duration: "12 Months"
@@ -9,7 +9,7 @@ applyUrl: "https://docs.google.com/forms/d/e/1FAIpQLScm4K2bBY83VmcOgYfuMpK9RC91j
 modules: ["Introduction to ICT", "Office Automation", "Java Programming", "Database Management Systems", "Multimedia Design and Developments", "System Maintenance and Troubleshooting", "Computer Networks Maintenance", "Mobile Application Development", "Web Application & Web Site Design", "Internship/ Project Work & Seminar"]
 internship: "The students are required to undergo an internship in Information & Communication Technology Firm for gaining practical experience in the field."
 faqs:
-  - q: "How long does it take to complete the Postgraduate Diploma in Information and Communication Technology (ICT)?"
+  - q: "How long does it take to complete the Post Graduate Diploma in Information and Communication Technology (ICT)?"
     a: "The program typically takes 12 months to complete, with a total of 40 credit hours spread across 10 subjects."
   - q: "What Can I Expect from the Course Structure?"
     a: "The course structure is designed to provide a comprehensive learning experience, covering a range of subjects such as Introduction to ICT, Office Automation, Java Programming, System Maintenance and Troubleshooting, Computer Networks Maintenance, Mobile Application Development, and Web Application & Website Design."
@@ -24,14 +24,14 @@ faqs:
   - q: "Can I pursue this diploma online?"
     a: "Currently, we do not offer this diploma program online."
   - q: "Will I receive any certification upon completion of the program?"
-    a: "While the program itself awards a Postgraduate Diploma in Information and Communication Technology (ICT), students may also have the opportunity to obtain additional certifications depending on the subjects covered and industry requirements."
+    a: "While the program itself awards a Post Graduate Diploma in Information and Communication Technology (ICT), students may also have the opportunity to obtain additional certifications depending on the subjects covered and industry requirements."
 legacyUrl: "https://coderstrust.global/course/information-communication-technology/"
 verify: true
 ---
 
-The Postgraduate Diploma in Information and Communication Technology (ICT) offers a comprehensive and cutting-edge curriculum designed to equip students with advanced skills and knowledge in the dynamic field of ICT. With a credit-based structure and a balance between theory and practical application, this program provides a holistic learning experience.
+The Post Graduate Diploma in Information and Communication Technology (ICT) offers a comprehensive and cutting-edge curriculum designed to equip students with advanced skills and knowledge in the dynamic field of ICT. With a credit-based structure and a balance between theory and practical application, this program provides a holistic learning experience.
 
-The Postgraduate Diploma in Information and Communication Technology (ICT) offers an extensive curriculum encompassing a diverse range of courses meticulously crafted to furnish students with comprehensive knowledge and practical expertise in the dynamic realm of ICT. From foundational principles to advanced applications, the program traverses various domains including Introduction to ICT, Office Automation, Java Programming, System Maintenance and Troubleshooting, Computer Networks Maintenance, Mobile Application Development, and Web Application & Website Design.
+The Post Graduate Diploma in Information and Communication Technology (ICT) offers an extensive curriculum encompassing a diverse range of courses meticulously crafted to furnish students with comprehensive knowledge and practical expertise in the dynamic realm of ICT. From foundational principles to advanced applications, the program traverses various domains including Introduction to ICT, Office Automation, Java Programming, System Maintenance and Troubleshooting, Computer Networks Maintenance, Mobile Application Development, and Web Application & Website Design.
 
 Information & Communication Technology stands as a cornerstone in contemporary businesses and industries, embracing a multitude of technologies and applications essential for modern operations. The diploma program serves as a conduit for students to cultivate proficiency in hardware setup, software configuration, programming languages, database management, system maintenance, networking, mobile application development, and web design.
 

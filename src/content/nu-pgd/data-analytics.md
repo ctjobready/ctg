@@ -1,5 +1,5 @@
 ---
-title: "Postgraduate Diploma in Data Analytics"
+title: "Post Graduate Diploma in Data Analytics"
 slug: data-analytics
 kind: course
 duration: "12 Months"
@@ -23,7 +23,7 @@ legacyUrl: "https://coderstrust.global/course/post-graduate-diploma-in-data-anal
 verify: true
 ---
 
-The Postgraduate Diploma in Data Analytics introduces students to the essential concepts, techniques, and tools used to transform raw data into meaningful insights. Through practical exercises, case studies, and project-based learning, students develop the ability to work with datasets, interpret analytical findings, and communicate insights effectively. The program aims to build technical, analytical, and problem-solving skills that can be applied in business, finance, marketing, development organizations, research, and other professional fields.
+The Post Graduate Diploma in Data Analytics introduces students to the essential concepts, techniques, and tools used to transform raw data into meaningful insights. Through practical exercises, case studies, and project-based learning, students develop the ability to work with datasets, interpret analytical findings, and communicate insights effectively. The program aims to build technical, analytical, and problem-solving skills that can be applied in business, finance, marketing, development organizations, research, and other professional fields.
 
 ## Course objectives
 

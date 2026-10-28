@@ -12,7 +12,7 @@ import { listPages } from './support/pages';
 /**
  * WP76 (Claude-ladder fixes). Retrospective coverage: the owner exempted this project from test-first work (WP24-common.md), so these tests were written after the changes.
  * Each one states an observable behavior of the register or of the built site (run `npm run build` first, then `PORT=<port> npx playwright test tests/wp76.spec.ts --project=chromium`):
- *   - 1 (owner answer 2026-10-22: the NU Postgraduate Diploma has FOUR courses): Cyber Security and Data Analytics have pages beside Digital Marketing and ICT, built from the same template (the same bands, Before You Apply rows, FAQ questions,
+ *   - 1 (owner answer 2026-10-22: the NU Post Graduate Diploma has FOUR courses): Cyber Security and Data Analytics have pages beside Digital Marketing and ICT, built from the same template (the same bands, Before You Apply rows, FAQ questions,
  *     apply and call links, schedule and location notes); the overview, the Programs hub card and the menus name all four; "Also Consider" names the other three; the register and its two new sources say so; the pages are in the sitemap and
  *     reachable without JavaScript;
  *   - 2 (owner answer 2026-10-22: "the 1,000 are the women enrolled"): PR-01 and every rendering of "711 of 1,000" name the base; the carousel keeps its rows and its 48 px height budget at 1280 and 390;
@@ -96,10 +96,10 @@ interface Course {
 }
 /** The four courses in the order every surface lists them. */
 const COURSES: Course[] = [
-  { slug: 'digital-marketing', title: 'NU Postgraduate Diploma in Digital Marketing', subject: 'digital marketing', topics: ['SEO and analytics', 'Social media marketing', 'E-commerce'], prefer: 'Prefer SEO, social media and advertising?' },
-  { slug: 'ict', title: 'NU Postgraduate Diploma in Information and Communication Technology (ICT)', subject: 'information and communication technology (ICT)', topics: ['Programming and databases', 'Networks and troubleshooting', 'Mobile and web development'], prefer: 'Prefer programming, databases and networks?' },
-  { slug: 'cyber-security', title: 'NU Postgraduate Diploma in Cyber Security', subject: 'cyber security', topics: ['Cryptography and network security', 'Digital forensics and investigation', 'Cyber law and risk management'], prefer: 'Prefer cryptography, network security and digital forensics?' },
-  { slug: 'data-analytics', title: 'NU Postgraduate Diploma in Data Analytics', subject: 'data analytics', topics: ['Analytics tools and databases', 'Data visualization', 'Machine learning and data governance'], prefer: 'Prefer analytics tools, data visualization and machine learning?' },
+  { slug: 'digital-marketing', title: 'NU Post Graduate Diploma in Digital Marketing', subject: 'digital marketing', topics: ['SEO and analytics', 'Social media marketing', 'E-commerce'], prefer: 'Prefer SEO, social media and advertising?' },
+  { slug: 'ict', title: 'NU Post Graduate Diploma in Information and Communication Technology (ICT)', subject: 'information and communication technology (ICT)', topics: ['Programming and databases', 'Networks and troubleshooting', 'Mobile and web development'], prefer: 'Prefer programming, databases and networks?' },
+  { slug: 'cyber-security', title: 'NU Post Graduate Diploma in Cyber Security', subject: 'cyber security', topics: ['Cryptography and network security', 'Digital forensics and investigation', 'Cyber law and risk management'], prefer: 'Prefer cryptography, network security and digital forensics?' },
+  { slug: 'data-analytics', title: 'NU Post Graduate Diploma in Data Analytics', subject: 'data analytics', topics: ['Analytics tools and databases', 'Data visualization', 'Machine learning and data governance'], prefer: 'Prefer analytics tools, data visualization and machine learning?' },
 ];
 
 interface NewCourse {
@@ -120,9 +120,9 @@ interface NewCourse {
 }
 const NEW_COURSES: Record<string, NewCourse> = {
   'cyber-security': {
-    title: 'NU Postgraduate Diploma in Cyber Security',
-    lead: 'Cyber security knowledge, from cryptography and network security to digital forensics and cyber law, in a National University postgraduate diploma delivered by CodersTrust.',
-    description: 'A National University postgraduate diploma in cyber security, delivered by CodersTrust: cryptography, network security, digital forensics and cyber law.',
+    title: 'NU Post Graduate Diploma in Cyber Security',
+    lead: 'Cyber security knowledge, from cryptography and network security to digital forensics and cyber law, in a National University post graduate diploma delivered by CodersTrust.',
+    description: 'A National University post graduate diploma in cyber security, delivered by CodersTrust: cryptography, network security, digital forensics and cyber law.',
     studyLead: 'Modules, in order. The final module is a capstone project or internship.',
     answer: 'Build a foundation in cryptography, network security, digital forensics and cyber risk management, then apply it in the final capstone project or internship.',
     answerModules: ['Cryptography and Data Security', 'Network and Communication Security', 'Cyber Crime Investigation and Digital Forensics', 'Cyber Risk Management and Crime Prevention'],
@@ -145,9 +145,9 @@ const NEW_COURSES: Record<string, NewCourse> = {
     source: 'NUCYBER26',
   },
   'data-analytics': {
-    title: 'NU Postgraduate Diploma in Data Analytics',
-    lead: 'Practical data analytics skills, from analytics tools and databases to data visualization and machine learning, in a National University postgraduate diploma delivered by CodersTrust.',
-    description: 'A National University postgraduate diploma in data analytics, delivered by CodersTrust: analytics tools, databases, visualization and machine learning.',
+    title: 'NU Post Graduate Diploma in Data Analytics',
+    lead: 'Practical data analytics skills, from analytics tools and databases to data visualization and machine learning, in a National University post graduate diploma delivered by CodersTrust.',
+    description: 'A National University post graduate diploma in data analytics, delivered by CodersTrust: analytics tools, databases, visualization and machine learning.',
     studyLead: 'Modules, in order. The final module is a special-topics thesis or project report.',
     answer: 'Build a foundation in analytics tools, databases, data visualization and machine learning, then apply it in the final special-topics thesis or project report.',
     answerModules: ['Data Analytics: Tools and Techniques', 'Database Systems', 'Data Visualization', 'Fundamentals of Machine Learning'],
@@ -172,9 +172,9 @@ const NEW_COURSES: Record<string, NewCourse> = {
 };
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-test.describe('WP76 item 1: the register says the NU Postgraduate Diploma has four courses (owner answer 2026-10-22)', () => {
+test.describe('WP76 item 1: the register says the NU Post Graduate Diploma has four courses (owner answer 2026-10-22)', () => {
   test('NU-13 names all four courses and cites the overview and the two new course pages', () => {
-    expect(fact('NU-13').text).toBe('The NU Postgraduate Diploma has four courses: Digital Marketing, Information and Communication Technology (ICT), Cyber Security and Data Analytics');
+    expect(fact('NU-13').text).toBe('The NU Post Graduate Diploma has four courses: Digital Marketing, Information and Communication Technology (ICT), Cyber Security and Data Analytics');
     expect(fact('NU-13').group).toBe('admissions');
     expect(fact('NU-13').status).toBe('V');
     expect(fact('NU-13').sourceIds).toEqual(['NUPGD26', 'NUCYBER26', 'NUDATA26']);
@@ -244,7 +244,7 @@ test.describe('WP76 item 1: the register says the NU Postgraduate Diploma has fo
   test('the overview content file lists all four courses (it listed the last two as upcoming)', () => {
     const overview = readText('src/content/nu-pgd/overview.md');
     expect(overview).not.toContain('Upcoming:');
-    for (const name of ['Digital Marketing', 'Information and Communication Technology (ICT)', 'Cyber Security', 'Data Analytics']) expect(overview, name).toContain(`- Postgraduate Diploma in ${name}: 40 credit hours, 10 subjects, instructor-led`);
+    for (const name of ['Digital Marketing', 'Information and Communication Technology (ICT)', 'Cyber Security', 'Data Analytics']) expect(overview, name).toContain(`- Post Graduate Diploma in ${name}: 40 credit hours, 10 subjects, instructor-led`);
   });
 });
 
@@ -269,7 +269,7 @@ test.describe('WP76 item 1: the overview page, the Programs hub and the menus na
 
   test('the diploma’s JSON-LD list has four courses, in order, each with its URL; the page says "Four courses", never "Two courses"', async ({ page }) => {
     await open(page, NU);
-    const list = (await jsonLdNodes(page)).find((n) => n['@type'] === 'ItemList' && String(n.name).includes('NU Postgraduate Diploma courses'));
+    const list = (await jsonLdNodes(page)).find((n) => n['@type'] === 'ItemList' && String(n.name).includes('NU Post Graduate Diploma courses'));
     const items = (list?.itemListElement as { position: number; name: string; url: string }[]) ?? [];
     expect(items.map((i) => i.position)).toEqual([1, 2, 3, 4]);
     expect(items.map((i) => i.name)).toEqual(COURSES.map((c) => c.title));
@@ -281,7 +281,7 @@ test.describe('WP76 item 1: the overview page, the Programs hub and the menus na
   test('the Programs hub card names all four courses; no built page names only "digital marketing and ICT"', async ({ page }) => {
     await open(page, 'programs/');
     const card = page.locator(`#programs-grid li:has(a[href$="${NU}"])`);
-    expect(compact(await card.textContent())).toContain('National University postgraduate diploma courses delivered by CodersTrust, in digital marketing, information and communication technology (ICT), cyber security and data analytics.');
+    expect(compact(await card.textContent())).toContain('National University post graduate diploma courses delivered by CodersTrust, in digital marketing, information and communication technology (ICT), cyber security and data analytics.');
     expect(sitePages().filter((p) => /digital marketing and ICT/i.test(visible(p.html))).map((p) => p.route)).toEqual([]);
   });
 
@@ -360,9 +360,9 @@ test.describe('WP76 item 1: the two new course pages follow the course template'
       expect(await page.locator('meta[name="description"]').getAttribute('content')).toBe(c.description);
       expect(c.description.length, 'meta description length (the SEO check warns above 155)').toBeLessThanOrEqual(155);
       expect(compact(await page.locator('.hero__lead').first().textContent())).toBe(c.lead);
-      expect(compact(await page.locator('.hero [class*="eyebrow"]').first().textContent())).toBe('National University Postgraduate Diploma');
-      // the trail Home › Programs › NU Postgraduate Diploma › <course> (each crumb ends with its "›" separator in the markup)
-      expect((await texts(page, 'nav[aria-label="Breadcrumb"] li, .breadcrumbs li')).map((t) => t.replace(/›$/, ''))).toEqual(['Home', 'Programs', 'NU Postgraduate Diploma', c.title]);
+      expect(compact(await page.locator('.hero [class*="eyebrow"]').first().textContent())).toBe('National University Post Graduate Diploma');
+      // the trail Home › Programs › NU Post Graduate Diploma › <course> (each crumb ends with its "›" separator in the markup)
+      expect((await texts(page, 'nav[aria-label="Breadcrumb"] li, .breadcrumbs li')).map((t) => t.replace(/›$/, ''))).toEqual(['Home', 'Programs', 'NU Post Graduate Diploma', c.title]);
     });
 
     test(`${route}: the bands are the same, in the same order and tones, as the other course pages, with the same heading outline`, async ({ page }) => {
@@ -378,7 +378,7 @@ test.describe('WP76 item 1: the two new course pages follow the course template'
         'For Learners Who Want a Digital Career',
         'Fields This Diploma Can Support',
         'What You Study',
-        'Other NU Postgraduate Diploma Courses',
+        'Other NU Post Graduate Diploma Courses',
         'Questions About This Course',
         'Ready to Apply?',
       ]);
@@ -467,7 +467,7 @@ test.describe('WP76 item 1: the two new course pages follow the course template'
       expect(course?.offers).toMatchObject({ '@type': 'Offer', price: '50000', priceCurrency: 'BDT' });
       expect(JSON.stringify(course?.provider)).toContain('National University, Bangladesh');
       const crumbs = nodes.find((n) => n['@type'] === 'BreadcrumbList');
-      expect(((crumbs?.itemListElement as { name: string }[]) ?? []).map((i) => i.name)).toEqual(['Home', 'Programs', 'NU Postgraduate Diploma', c.title]);
+      expect(((crumbs?.itemListElement as { name: string }[]) ?? []).map((i) => i.name)).toEqual(['Home', 'Programs', 'NU Post Graduate Diploma', c.title]);
       expect(nodes.filter((n) => n['@type'] === 'WebPage').some((n) => n.dateModified === '2026-10-22')).toBe(true);
     });
 
@@ -490,12 +490,12 @@ test.describe('WP76 item 1: "Also Consider" names the other three courses on eve
     test(`${c.slug}: the band lists the other three, in the diploma’s order, each as "Prefer ...? The ... is the course for those modules." with a link, then the overview link`, async ({ page }) => {
       await open(page, `${NU}${c.slug}/`);
       const others = COURSES.filter((x) => x.slug !== c.slug);
-      await expect(page.locator('#also-consider h2')).toHaveText('Other NU Postgraduate Diploma Courses');
+      await expect(page.locator('#also-consider h2')).toHaveText('Other NU Post Graduate Diploma Courses');
       expect(compact(await page.locator('#also-consider .eyebrow').textContent())).toBe('Also Consider');
       expect(await texts(page, '#also-consider .others li')).toEqual(others.map((o) => `${o.prefer} The ${o.title} is the course for those modules.`));
       const links = await page.locator('#also-consider .others li a.link').evaluateAll((els) => els.map((a) => a.getAttribute('href') ?? ''));
       expect(links.map((h) => h.replace(/^.*programs\/nu-postgraduate-diploma\//, ''))).toEqual(others.map((o) => `${o.slug}/`));
-      const overview = page.locator('#also-consider a.link', { hasText: 'See the NU Postgraduate Diploma Overview' });
+      const overview = page.locator('#also-consider a.link', { hasText: 'See the NU Post Graduate Diploma Overview' });
       await expect(overview).toHaveCount(1);
       expect((await overview.getAttribute('href'))?.endsWith(`/${NU}`)).toBe(true);
       // the page never links to itself from this band, and the band is the only place that names the other courses' titles in full
@@ -504,11 +504,11 @@ test.describe('WP76 item 1: "Also Consider" names the other three courses on eve
     });
   }
 
-  test('the two long-standing pages’ sentences about the courses they had named are the same words (they were "Prefer ...? The NU Postgraduate Diploma in ... is the course for those modules.")', async ({ page }) => {
+  test('the two long-standing pages’ sentences about the courses they had named are the same words (they were "Prefer ...? The NU Post Graduate Diploma in ... is the course for those modules.")', async ({ page }) => {
     await open(page, `${NU}digital-marketing/`);
-    expect(await texts(page, '#also-consider .others li')).toContain('Prefer programming, databases and networks? The NU Postgraduate Diploma in Information and Communication Technology (ICT) is the course for those modules.');
+    expect(await texts(page, '#also-consider .others li')).toContain('Prefer programming, databases and networks? The NU Post Graduate Diploma in Information and Communication Technology (ICT) is the course for those modules.');
     await open(page, `${NU}ict/`);
-    expect(await texts(page, '#also-consider .others li')).toContain('Prefer SEO, social media and advertising? The NU Postgraduate Diploma in Digital Marketing is the course for those modules.');
+    expect(await texts(page, '#also-consider .others li')).toContain('Prefer SEO, social media and advertising? The NU Post Graduate Diploma in Digital Marketing is the course for those modules.');
   });
 
   test('the course pages’ answers and "right for me" sentences differ from one another (no two courses share a sentence)', async ({ page }) => {
@@ -518,7 +518,7 @@ test.describe('WP76 item 1: "Also Consider" names the other three courses on eve
       await open(page, `${NU}${c.slug}/`);
       answers.push(await answerOf(page, 'What Will I Be Able to Do After This Course?'));
       fits.push(await answerOf(page, 'Is This the Right Course for Me?'));
-      expect(fits[fits.length - 1], c.slug).toContain(`Choose ${c.title.replace('NU Postgraduate Diploma in ', '')} if you want to study`);
+      expect(fits[fits.length - 1], c.slug).toContain(`Choose ${c.title.replace('NU Post Graduate Diploma in ', '')} if you want to study`);
     }
     expect(new Set(answers).size).toBe(4);
     expect(new Set(fits).size).toBe(4);

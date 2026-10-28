@@ -9,7 +9,7 @@ import { DESKTOP, MOBILE, open } from './support/browser';
  *   - A2: the Foundations "Accountability" callout is removed; the "A Pilot Scorecard Agreed with You" card stays;
  *   - A3: the 23,000+ tile leads the JobReady@Work band, above the credential bullets;
  *   - A4: SuperKids "Who It Is For" no longer repeats the discovery-session clause;
- *   - A5 and item 2: the program cards for SuperKids and the NU Postgraduate Diploma carry an in-card link;
+ *   - A5 and item 2: the program cards for SuperKids and the NU Post Graduate Diploma carry an in-card link;
  *   - A6: the Universities third card reads "Placement Evidence You Can Report" (the program page's wording);
  *   - item 3: the Investors H2 is "Contracts and Recognition" and the NU sentence says the learners are being onboarded (SC-04 keeps "onboarding pipeline" for the other pages);
  *   - item 4: the comparison row reads "Included for every cohort".
@@ -74,10 +74,10 @@ test.describe('WP90 A4: SuperKids "Who It Is For" drops the repeated clause', ()
 });
 
 test.describe('WP90 A5 and item 2: program cards link to their programs', () => {
-  test('the NU Postgraduate Diploma and SuperKids cards each carry an in-card link', async ({ page }) => {
+  test('the NU Post Graduate Diploma and SuperKids cards each carry an in-card link', async ({ page }) => {
     await open(page, 'programs/');
-    const nu = page.locator('li', { has: page.locator('h3', { hasText: 'NU Postgraduate Diploma' }) });
-    await expect(nu.locator('a', { hasText: 'Explore the NU Postgraduate Diploma' })).toHaveAttribute('href', /\/programs\/nu-postgraduate-diploma\/$/);
+    const nu = page.locator('li', { has: page.locator('h3', { hasText: 'NU Post Graduate Diploma' }) });
+    await expect(nu.locator('a', { hasText: 'Explore the NU Post Graduate Diploma' })).toHaveAttribute('href', /\/programs\/nu-postgraduate-diploma\/$/);
     const sk = page.locator('li', { has: page.locator('h3', { hasText: 'SuperKids' }) });
     await expect(sk.locator('a', { hasText: 'Explore SuperKids' })).toHaveAttribute('href', /\/programs\/superkids\/$/);
   });
@@ -98,7 +98,7 @@ test.describe('WP90 item 3: Investors reach band', () => {
     const p = page.locator('#reach p.ir__p');
     const text = compact(await p.textContent());
     expect(text).toBe(
-      'Separately, and not counted in the delivered reach: 1.5M+ National University learners being onboarded (the university’s own learners, not learners trained by CodersTrust); CodersTrust has been NU’s official training partner for digital career skills and credentials since 2023 and delivers NU postgraduate diploma courses.',
+      'Separately, and not counted in the delivered reach: 1.5M+ National University learners being onboarded (the university’s own learners, not learners trained by CodersTrust); CodersTrust has been NU’s official training partner for digital career skills and credentials since 2023 and delivers NU post graduate diploma courses.',
     );
     expect(text).not.toContain('onboarding pipeline');
   });

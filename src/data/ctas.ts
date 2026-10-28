@@ -48,7 +48,7 @@ export interface CtaDef {
 
 export const CTA_RECIPIENT = CONTACT.email;
 
-/** Existing NU Postgraduate Diploma application form. */
+/** Existing NU Post Graduate Diploma application form. */
 export const NU_PGD_APPLY_URL =
   'https://docs.google.com/forms/d/e/1FAIpQLScm4K2bBY83VmcOgYfuMpK9RC91jhULnKFo479dug8strodtA/viewform';
 

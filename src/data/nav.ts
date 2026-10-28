@@ -118,7 +118,7 @@ export const navGroups: NavGroup[] = [
       { label: 'JobReady@Work', href: '/programs/jobready-work/', description: 'For employers and corporate teams.', group: PARTNER_PROGRAMS },
       { label: 'SuperKids', href: '/programs/superkids/', description: 'For schools and young learners.', group: PARTNER_PROGRAMS },
       // WP27: admissions' eligibility sentence (NU-01), the same words on the NU pages, the Programs hub and the FAQs (Home's programs slide, which carried it too, is gone: WP53).
-      { label: 'NU Postgraduate Diploma', href: '/programs/nu-postgraduate-diploma/', description: `Eligibility: ${NU_ELIGIBILITY}.`, factIds: ['NU-01'], group: LEARNER_PROGRAMS },
+      { label: 'NU Post Graduate Diploma', href: '/programs/nu-postgraduate-diploma/', description: `Eligibility: ${NU_ELIGIBILITY}.`, factIds: ['NU-01'], group: LEARNER_PROGRAMS },
       { label: 'Digital Marketing', href: '/programs/nu-postgraduate-diploma/digital-marketing/', description: 'SEO, social media, advertising and analytics.', group: LEARNER_PROGRAMS, menuOnly: true, parent: NU_PARENT, footer: false },
       { label: 'ICT', href: '/programs/nu-postgraduate-diploma/ict/', description: 'Programming, databases, networks, mobile and web development.', group: LEARNER_PROGRAMS, menuOnly: true, parent: NU_PARENT, footer: false },
       // WP76 (owner answer 2026-10-22: the diploma has four courses): Cyber Security and Data Analytics nest under the diploma the same way (header menu and mobile drawer; the footer does not list courses).

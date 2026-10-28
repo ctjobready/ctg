@@ -187,7 +187,7 @@ test.describe('About, Careers and Local Partners: the SC-11 tile', () => {
     expect(TOTAL_LABEL).toBe(fact('SC-11').stat?.label);
     expect(await page.locator('#glance .about-stats [data-fact]').evaluateAll((els) => els.map((e) => e.getAttribute('data-fact')))).toEqual(['SC-01', 'SC-02', 'SC-03', 'SC-11', 'SC-09']);
     expect(await texts(page, '#glance .about-stats .stat__note')).toEqual(['Most delivery has been in Bangladesh.', BREAKDOWN]);
-    // SC-09 (its courses are JobReady.global's plus the 4 NU Postgraduate Diploma courses, a comment in the register) reads as it did
+    // SC-09 (its courses are JobReady.global's plus the 4 NU Post Graduate Diploma courses, a comment in the register) reads as it did
     const courses = page.locator('#glance .about-stats .factstat[data-fact="SC-09"]');
     await expect(courses.locator('.stat__value')).toHaveText('150+');
     expect(compact(await courses.locator('.stat__label').textContent())).toBe('skill and certification courses delivered');

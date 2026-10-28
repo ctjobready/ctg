@@ -1,5 +1,5 @@
 ---
-title: "Postgraduate Diploma in Cyber Security"
+title: "Post Graduate Diploma in Cyber Security"
 slug: cyber-security
 kind: course
 duration: "12 Months"
@@ -17,7 +17,7 @@ legacyUrl: "https://coderstrust.global/course/post-graduate-diploma-in-cybersecu
 verify: true
 ---
 
-The Postgraduate Diploma in Cyber Security is designed to help students understand how to protect computer systems, networks and digital information from cyber threats and online attacks. The programme covers cyber criminology, cryptography and data security, network and communication security, cyber security laws and policies, cybercrime investigation and digital forensics. Students also explore digital privacy, cyber risk management, cyber terrorism and financial cybercrime. The final project or internship allows students to apply their knowledge to real-world situations and gain practical experience in a relevant organization.
+The Post Graduate Diploma in Cyber Security is designed to help students understand how to protect computer systems, networks and digital information from cyber threats and online attacks. The programme covers cyber criminology, cryptography and data security, network and communication security, cyber security laws and policies, cybercrime investigation and digital forensics. Students also explore digital privacy, cyber risk management, cyber terrorism and financial cybercrime. The final project or internship allows students to apply their knowledge to real-world situations and gain practical experience in a relevant organization.
 
 ## Course objectives
 

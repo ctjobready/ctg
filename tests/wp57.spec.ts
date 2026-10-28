@@ -13,7 +13,7 @@ import { listPages } from './support/pages';
  *   - G2: YouthWIDE's three-card band "Built Around What Funders and Agencies Ask" (#features) is gone, its verification detail is in the glance's Reporting row, the page keeps its three ranked pains and its tone rhythm, and the
  *     facts gate accepts a page with no C8 band (its allowance is one page; the gate's own negative self-tests run with it);
  *   - G5: the short "CodersTrust Around the World" strip on Development Partners, Governments and Foundations leads with Kosovo, then Copenhagen and Dubai; Home and About stay chronological;
- *   - G6: the mobile drawer's Programs accordion shows the desktop menu's two group labels as plain labels, before YouthWIDE and the NU Postgraduate Diploma (it already did: this pins it beside the desktop names);
+ *   - G6: the mobile drawer's Programs accordion shows the desktop menu's two group labels as plain labels, before YouthWIDE and the NU Post Graduate Diploma (it already did: this pins it beside the desktop names);
  *   - G7: Employers' "Due Diligence in One View" is three rows (no "Independent Evaluation Welcome"), laid out without an empty cell; the hub keeps its four;
  *   - P1: Home's fourth logo group is "Employers and Industry Partners";
  *   - P2: the press line is two short sentences ("Early press coverage, 2014–2016: ..." and "World Bank coverage: ..."), every link kept (WP62: printed on Recognition and Media; Home has one pointer sentence);
@@ -184,7 +184,7 @@ test.describe('G5, the short strip on the audience pages leads with Kosovo; Home
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 test.describe('G6, the mobile drawer’s Programs accordion has the desktop menu’s group labels as plain labels', () => {
-  test('"Partner Programs" comes before YouthWIDE and "For Individual Learners" before the NU Postgraduate Diploma; both are labels, not links, and match the desktop names', async ({ page }) => {
+  test('"Partner Programs" comes before YouthWIDE and "For Individual Learners" before the NU Post Graduate Diploma; both are labels, not links, and match the desktop names', async ({ page }) => {
     await page.setViewportSize(MOBILE);
     await open(page, HOME);
     const desktop = await texts(page, '#mega-programs .mega__group-title');
@@ -200,7 +200,7 @@ test.describe('G6, the mobile drawer’s Programs accordion has the desktop menu
     await expect(heads.last()).toBeVisible();
     // each label is directly followed by the first link of its group
     const firstLinkAfter = await heads.evaluateAll((els) => els.map((e) => (e.nextElementSibling?.querySelector(':scope > a')?.textContent ?? '').replace(/\s+/g, ' ').trim()));
-    expect(firstLinkAfter).toEqual(['YouthWIDE', 'NU Postgraduate Diploma']);
+    expect(firstLinkAfter).toEqual(['YouthWIDE', 'NU Post Graduate Diploma']);
     // the Programs overview link comes first, ahead of any label
     const firstItem = await accordion.locator('.acc__body > ul > li').first().evaluate((e) => e.className);
     expect(firstItem).not.toContain('drawer__subhead');

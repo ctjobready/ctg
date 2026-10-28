@@ -32,7 +32,7 @@ test.describe('one NU eligibility sentence', () => {
     const card = page.locator(`#programs-grid li:has(a[href$="${NU}"])`);
     expect(compact(await card.textContent())).toContain(`Eligibility: ${ELIGIBILITY}`);
     expect(await everything(page)).not.toMatch(/degree holders?/i);
-    expect(compact(await page.locator('.hero__lead').first().textContent())).toContain('the NU Postgraduate Diploma for individual learners');
+    expect(compact(await page.locator('.hero__lead').first().textContent())).toContain('the NU Post Graduate Diploma for individual learners');
   });
 
   for (const route of [NU, `${NU}ict/`, `${NU}digital-marketing/`]) {
@@ -75,7 +75,7 @@ test.describe('one NU eligibility sentence', () => {
     expect(text).toBe('Co-funded country cohorts, designed for three regions, from training to paid digital work.');
     expect(await page.locator('#mega-programs .mega__feature a.link').getAttribute('href')).toMatch(/\/programs\/youthwide\/$/);
     const learners = (await page.locator('#mega-programs a.mega__link').allTextContents()).map(compact).join(' ');
-    expect(learners).toContain('NU Postgraduate Diploma');
+    expect(learners).toContain('NU Post Graduate Diploma');
     expect(learners).toContain('Courses');
   });
 });

@@ -47,7 +47,7 @@
 //     each (<li data-relieves="P1">.. since WP38/WP39; a <tr> row is still read), in the same order; rows without data-relieves are gain creators; WP57: YouthWIDE may carry no C8 band
 //     (PAIN_C8_OPTIONAL: its three-card band was removed in cycle 29; its C2 pains are still checked, and a C8 band it shows is held to the same rule); negative self-tests below
 //   - trial relevance line (round 14, m2): /partner-with-us/employers/, /programs/jobready-work/ (JobReady@Work) and /programs/nu-postgraduate-diploma/ (the NU
-//     Postgraduate Diploma) carry "This trial evaluated WSDFM training for women in Dhaka, not <offering>." directly under the trial headline of
+//     Post Graduate Diploma) carry "This trial evaluated WSDFM training for women in Dhaka, not <offering>." directly under the trial headline of
 //     the C7 proof band (WP31: the two employer pages show no proof band today, which is allowed; any band they show needs the line; WP34: the same for the NU diploma overview, which
 //     shows a one-link strip to the Impact page instead); negative self-tests below
 //   - number guard (doc 10 §1 "Facts guard", WP1l): every claim-marked figure (%, pp, a leading + or ~, a trailing +, M/K/B/million, $ or BDT, ×,
@@ -493,11 +493,11 @@ function painMapProblems(markup, { c8Optional = false } = {}) {
 const TRIAL_SCOPE_BY_PAGE = {
   '/partner-with-us/employers/': 'This trial evaluated WSDFM training for women in Dhaka, not JobReady@Work.',
   '/programs/jobready-work/': 'This trial evaluated WSDFM training for women in Dhaka, not JobReady@Work.',
-  '/programs/nu-postgraduate-diploma/': 'This trial evaluated WSDFM training for women in Dhaka, not the NU Postgraduate Diploma.',
+  '/programs/nu-postgraduate-diploma/': 'This trial evaluated WSDFM training for women in Dhaka, not the NU Post Graduate Diploma.',
 };
 const TRIAL_SCOPE_PAGES = Object.keys(TRIAL_SCOPE_BY_PAGE);
 // WP31: the two employer pages show no trial band (they link to the evidence pages), so a missing #proof-band is fine there; the sentence stays required on any band they grow.
-// WP34 (cycle-11 review): the NU Postgraduate Diploma overview is treated the same way (a one-link strip to the Impact page replaced its trial and survey band).
+// WP34 (cycle-11 review): the NU Post Graduate Diploma overview is treated the same way (a one-link strip to the Impact page replaced its trial and survey band).
 const TRIAL_SCOPE_OPTIONAL = new Set(['/partner-with-us/employers/', '/programs/jobready-work/', '/programs/nu-postgraduate-diploma/']);
 function trialScopeProblems(markup, wanted, { optional = false } = {}) {
   const band = bandMarkup(markup, 'proof-band');
@@ -1223,7 +1223,7 @@ function surveyEditionProblems(factsById, rows, pins = { facts: SURVEY_FACTS, ro
   // the trial relevance line (m2): directly under the trial headline, in the plan's words for the page's own offering
   const scopeWork = TRIAL_SCOPE_BY_PAGE['/programs/jobready-work/'];
   const scopeNu = TRIAL_SCOPE_BY_PAGE['/programs/nu-postgraduate-diploma/'];
-  if (scopeWork !== 'This trial evaluated WSDFM training for women in Dhaka, not JobReady@Work.' || scopeNu !== 'This trial evaluated WSDFM training for women in Dhaka, not the NU Postgraduate Diploma.') problems.push('self-test: the trial relevance lines are no longer the plan wording');
+  if (scopeWork !== 'This trial evaluated WSDFM training for women in Dhaka, not JobReady@Work.' || scopeNu !== 'This trial evaluated WSDFM training for women in Dhaka, not the NU Post Graduate Diploma.') problems.push('self-test: the trial relevance lines are no longer the plan wording');
   const proofPage = (headInner, after = '') => `<main><section class="band band--klein band--pad-md" id="proof-band" aria-labelledby="proof-band-h"><div class="container"><header class="proofband__head" data-reveal data-fact="RC-01"><p class="eyebrow">The evidence</p>${headInner}</header><div class="proofband"><div class="proofband__stats"></div></div>${after}</div></section></main>`;
   const trialH2 = '<h2 class="proofband__title" id="proof-band-h">A randomized trial found…</h2>';
   const trialLine = (text) => `<p class="proofband__scope" data-trial-scope data-astro-cid-x>${text}</p>`;

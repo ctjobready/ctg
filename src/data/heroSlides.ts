@@ -385,7 +385,7 @@ export const HOME_SLIDES: HeroSlide[] = [
     title: 'Results by Program',
     // WP50 (cycle-25 review): four programs, in the order of the Impact page and the case studies (Kosovo first). WP35 had left WSDFM out (read beside the trial's 63.1% its 71% looked like a second result for the same program); its line is back
     // with the case card's qualifier, "program records, not trial data".
-    // WP52 (cycle-27 review, Kimi M1): "Four delivered programs, ..." (it said "Four programs, ...", which clashed with the Programs page's "four partner programs ... and the NU Postgraduate Diploma", a different four; these are the delivered programs whose own records give the results).
+    // WP52 (cycle-27 review, Kimi M1): "Four delivered programs, ..." (it said "Four programs, ...", which clashed with the Programs page's "four partner programs ... and the NU Post Graduate Diploma", a different four; these are the delivered programs whose own records give the results).
     // The review's wording ended "... from their own program records."; that is 683 px against the 626 px the lead has at 1280 px (the old line was 610 px), so it wrapped and made this the tallest slide, 14 px taller than "Find Your Program", which left every
     // other slide 55 px unused (the limit is 48, tests/hero-slider.spec.ts). "Program" is left out of "records" (615 px; the eyebrow says "Program Records" and the WSDFM line says "program records, not trial data").
     // WP57b (cycle-29 review, GLM L3): "Four delivered programs, with results from each program’s records." (it said "..., each with its partner, with results from their own records.")

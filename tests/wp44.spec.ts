@@ -77,7 +77,7 @@ test.describe('Investors: the thesis heading is in sentence pairs (item 6)', () 
   });
 });
 
-test.describe('NU Postgraduate Diploma: one admissions sentence in the FAQ (item 8)', () => {
+test.describe('NU Post Graduate Diploma: one admissions sentence in the FAQ (item 8)', () => {
   test('the FAQ answer names intake dates, schedule and teaching location in one sentence; the Admissions rows keep their own wording', async ({ page }) => {
     await open(page, 'programs/nu-postgraduate-diploma/');
     const text = await mainText(page);

@@ -1,5 +1,5 @@
 ---
-title: "National University Postgraduate Diploma"
+title: "National University Post Graduate Diploma"
 slug: overview
 kind: overview
 applyUrl: "https://docs.google.com/forms/d/e/1FAIpQLScm4K2bBY83VmcOgYfuMpK9RC91jhULnKFo479dug8strodtA/viewform"
@@ -7,7 +7,7 @@ legacyUrl: "https://coderstrust.global/nu-postgraduate-diploma/"
 verify: true
 ---
 
-CodersTrust offers Postgraduate Diploma courses of National University and has been the Official Training Partner for Digital Career Skills and Credentials since 2023. CodersTrust's College Code with National University is 6634.
+CodersTrust offers Post Graduate Diploma courses of National University and has been the Official Training Partner for Digital Career Skills and Credentials since 2023. CodersTrust's College Code with National University is 6634.
 
 The diploma courses are designed for highly relevant, future-fit job roles, so that learners gain the technical knowledge to improve their domain in technical and IT skills. The program offers four high-demand courses with experienced mentors who have long been involved in upskilling learners in technology.
 
@@ -21,10 +21,10 @@ The diploma courses are designed for highly relevant, future-fit job roles, so t
 
 ## Courses
 
-- Postgraduate Diploma in Digital Marketing: 40 credit hours, 10 subjects, instructor-led
-- Postgraduate Diploma in Information and Communication Technology (ICT): 40 credit hours, 10 subjects, instructor-led
-- Postgraduate Diploma in Cyber Security: 40 credit hours, 10 subjects, instructor-led
-- Postgraduate Diploma in Data Analytics: 40 credit hours, 10 subjects, instructor-led
+- Post Graduate Diploma in Digital Marketing: 40 credit hours, 10 subjects, instructor-led
+- Post Graduate Diploma in Information and Communication Technology (ICT): 40 credit hours, 10 subjects, instructor-led
+- Post Graduate Diploma in Cyber Security: 40 credit hours, 10 subjects, instructor-led
+- Post Graduate Diploma in Data Analytics: 40 credit hours, 10 subjects, instructor-led
 
 ## How to apply
 

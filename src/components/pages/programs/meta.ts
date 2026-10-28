@@ -10,9 +10,9 @@ export const C14_FIRST = C14.firstAction.replace(/^Your first step: a discovery 
  * "Last updated" date of a program page (doc 09 §3): the day its content last changed, shown on the page and used as JSON-LD dateModified.
  * LAST_UPDATED is the date of the first publication of the program pages.
  * A page that changes gets its own entry in PAGE_UPDATED (2026-10-09: the programs index, YouthWIDE, JobReady@Campus, JobReady@Work, and the former NationWIDE page, now merged into YouthWIDE;
- * 2026-10-10: those five again, SuperKids and the NU Postgraduate Diploma index, after the round-16 wording changes, and the NU course pages
+ * 2026-10-10: those five again, SuperKids and the NU Post Graduate Diploma index, after the round-16 wording changes, and the NU course pages
  * and the program pages once more after the round-17 heading changes; the program pages and the NU pages again after the round-18 wording changes, same date).
- * 2026-10-22 (WP76, owner answer: the diploma has four courses): the NU Postgraduate Diploma index and the NU course pages (two new course pages, and "Also Consider" naming the other three courses on each).
+ * 2026-10-22 (WP76, owner answer: the diploma has four courses): the NU Post Graduate Diploma index and the NU course pages (two new course pages, and "Also Consider" naming the other three courses on each).
  */
 export const LAST_UPDATED = '2026-10-08';
 export const PAGE_UPDATED = {

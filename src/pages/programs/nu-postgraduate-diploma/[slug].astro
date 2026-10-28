@@ -52,7 +52,7 @@ const faqSources: FaqSource[] = [
 ];
 
 const jsonLd = [
-  webPage({ path, name: c.title, description: copy.description, dateModified: LAST_UPDATED, breadcrumb: [{ name: 'Home', path: '/' }, { name: 'Programs', path: '/programs/' }, { name: 'NU Postgraduate Diploma', path: NU_PATH }, { name: c.title, path }] }),
+  webPage({ path, name: c.title, description: copy.description, dateModified: LAST_UPDATED, breadcrumb: [{ name: 'Home', path: '/' }, { name: 'Programs', path: '/programs/' }, { name: 'NU Post Graduate Diploma', path: NU_PATH }, { name: c.title, path }] }),
   {
     ...courseNode({ path, name: c.title, description: copy.description }),
     offers: { '@type': 'Offer', category: 'Paid', price: '50000', priceCurrency: 'BDT', url: pageUrl(path) },
@@ -62,7 +62,7 @@ const jsonLd = [
 ];
 ---
 
-<BaseLayout title={copy.titleTag} description={copy.description} path={path} breadcrumbs={[{ label: 'Programs', href: '/programs/' }, { label: 'NU Postgraduate Diploma', href: NU_PATH }, { label: c.title }]} jsonLd={jsonLd}>
+<BaseLayout title={copy.titleTag} description={copy.description} path={path} breadcrumbs={[{ label: 'Programs', href: '/programs/' }, { label: 'NU Post Graduate Diploma', href: NU_PATH }, { label: c.title }]} jsonLd={jsonLd}>
   <Hero eyebrow={NU_NAME} title={c.title} lead={copy.lead} artSeed={`nu-${slug}`}>
     <Fragment slot="actions">
       <Button href={apply.href} iconEnd="arrow-right">{apply.label}</Button>
@@ -77,7 +77,7 @@ const jsonLd = [
   </Hero>
 
   <Section id="before-you-apply" aria-labelledby="before-h">
-    <SectionHeader id="before-h" eyebrow="Admissions" title="Before You Apply" lead="Program details as stated for this course in the National University Postgraduate Diploma." />
+    <SectionHeader id="before-h" eyebrow="Admissions" title="Before You Apply" lead="Program details as stated for this course in the National University Post Graduate Diploma." />
     <dl class="ba">
       <div class="ba__row"><dt>Eligibility</dt><dd><Fact id={eligibilityId} /></dd></div>
       <div class="ba__row"><dt>Duration</dt><dd><Fact id="NU-02" /></dd></div>
@@ -123,11 +123,11 @@ const jsonLd = [
   </Section>
 
   <Section id="also-consider" aria-labelledby="also-h">
-    <SectionHeader id="also-h" eyebrow="Also Consider" title="Other NU Postgraduate Diploma Courses" />
+    <SectionHeader id="also-h" eyebrow="Also Consider" title="Other NU Post Graduate Diploma Courses" />
     <ul class="others" role="list">
       {others.map((o) => <li>{NU_COURSE_COPY[o.slug].prefer} The <a class="link" href={url(`${NU_PATH}${o.slug}/`)}>{o.title}</a> is the course for those modules.</li>)}
     </ul>
-    <p><a class="link" href={url(NU_PATH)}>See the NU Postgraduate Diploma Overview<Icon name="arrow-right" size={16} /></a></p>
+    <p><a class="link" href={url(NU_PATH)}>See the NU Post Graduate Diploma Overview<Icon name="arrow-right" size={16} /></a></p>
   </Section>
 
   <FaqSection sources={faqSources} title="Questions About This Course" />

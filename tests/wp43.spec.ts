@@ -101,7 +101,7 @@ test.describe('Investors: the track-record band (item 1)', () => {
       'PA-06': ['AWS Authorized Training Partner'], // WP65: AWS is named by its registered status, not listed as a PA-03 partner
     };
     for (const [id, names] of Object.entries(named)) for (const name of names) expect(fact(id).text, `${id} names "${name}"`).toContain(name);
-    // and the paragraph names exactly these (the register's "(CCNY)" and "; postgraduate diploma courses" are the only parts of the two university entries it leaves out)
+    // and the paragraph names exactly these (the register's "(CCNY)" and "; post graduate diploma courses" are the only parts of the two university entries it leaves out)
     for (const name of Object.values(named).flat()) expect(PARTNERS, name).toContain(name.replace(' (CCNY)', ''));
   });
 

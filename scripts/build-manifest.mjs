@@ -384,7 +384,7 @@ for (const p of ['/wp-login.php', '/wp-admin/', '/wp-json/', '/xmlrpc.php', '/wp
   add({ legacy_url: p, class: 'system', disposition: 'SYSTEM', destination: GONE, test_status: 'edge' });
 }
 
-// ---- 3b. Site routes that moved after launch planning (WP20a): the NU Postgraduate Diploma pages now live under /programs/. The hub (/nu-postgraduate-diploma/)
+// ---- 3b. Site routes that moved after launch planning (WP20a): the NU Post Graduate Diploma pages now live under /programs/. The hub (/nu-postgraduate-diploma/)
 // is a legacy WordPress page and is classified in PAGES above; its two course pages existed only on this site, so their old paths are stubbed here.
 for (const slug of ['digital-marketing', 'ict']) {
   add({ legacy_url: `/nu-postgraduate-diploma/${slug}/`, class: 'page', disposition: 'MOVE', destination: `/programs/nu-postgraduate-diploma/${slug}/` });

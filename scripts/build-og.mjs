@@ -39,7 +39,7 @@ const CARDS = [
   { file: 'partner-with-us', prefix: '/partner-with-us/', label: 'Partner with us', line: 'Co-design a youth-employment program with CodersTrust.' },
   { file: 'investors', prefix: '/partner-with-us/investors/', label: 'Investors', line: 'Invest in the platform connecting emerging-market youth to work.' },
   { file: 'programs', prefix: '/programs/', label: 'Programs', line: 'Choose the program that fits you.' },
-  { file: 'nu-postgraduate-diploma', prefix: '/programs/nu-postgraduate-diploma/', label: 'NU Postgraduate Diploma', line: 'Build the digital skills employers are hiring for — after your degree.' },
+  { file: 'nu-postgraduate-diploma', prefix: '/programs/nu-postgraduate-diploma/', label: 'NU Post Graduate Diploma', line: 'Build the digital skills employers are hiring for — after your degree.' },
   { file: 'our-model', prefix: '/our-model/', label: 'Our model', line: 'How the CodersTrust model works' },
   { file: 'impact', prefix: '/impact/', label: 'Impact', line: 'What CodersTrust results show, what kind of evidence each one is, and what it does not show.' },
   { file: 'about', prefix: '/about/', label: 'About', line: 'CodersTrust trains and mentors educated, unemployed youth in emerging markets for digital work.' },

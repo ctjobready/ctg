@@ -32,12 +32,12 @@ const courses = linkAttrs(COURSES_URL);
 // WP67 (cycle-38 review, Gemini): the YouthWIDE card's "Best For" line names the three audiences its route links below it name, "Governments, Development Partners and Foundations" (it said "... and Funders", a word that is not one of the three routes).
 // WP50 (cycle-25 review): the overview prints no "Last updated" line (it read as a draft stamp on a hub page); the date stays in the page's JSON-LD (dateModified). The program pages, the evidence pages and the legal pages keep theirs.
 const LAST_UPDATED = '2026-10-15'; // WP31: the cycle-8 review wording changes (WP20c had set 2026-10-14; PAGE_UPDATED.programs is 2026-10-10)
-// R10/WP11 F23: no sentence says that every program aims at the same result (SuperKids is a K-12 program and the NU Postgraduate Diploma
+// R10/WP11 F23: no sentence says that every program aims at the same result (SuperKids is a K-12 program and the NU Post Graduate Diploma
 // is a diploma), so the H1 speaks of stages ("from classroom to career"), not of one outcome. The meta description is the plan's P9 wording.
 // WP48 (cycle-23 review): the H1 is "Programs That Take Learners from Classroom to Career" (it was "Digital Skills for Every Stage, from Classroom to Career").
 // WP50 (cycle-25 review): the H1 is "Digital Skills Programs, from School to Work" (the WP48 line did not cover SuperKids or people already employed).
 const title = 'Programs';
-const description = 'Explore CodersTrust programs, from school to the workplace: YouthWIDE, JobReady@Campus, JobReady@Work, SuperKids and the NU Postgraduate Diploma.';
+const description = 'Explore CodersTrust programs, from school to the workplace: YouthWIDE, JobReady@Campus, JobReady@Work, SuperKids and the NU Post Graduate Diploma.';
 const discovery = ctaFor('discovery');
 // WP64 (cycle-36 review, Grok): the reach band is headed "Reach Since 2014", so its learners tile reads "130,000+ learners trained" (SC-01's label without " since 2014", read from the register); the register's label is unchanged.
 const learnersLabel = withoutSince2014(fact('SC-01').stat?.label ?? '');
@@ -47,7 +47,7 @@ const programs = [
   { icon: 'graduation-cap', href: '/programs/jobready-campus/', title: 'JobReady@Campus', audience: 'Universities and Colleges', text: 'Industry-oriented skills training in parallel with academic studies, using on-campus labs.', means: 'students get a supported route to industry certification beside the degree.', partner: [{ label: 'For Universities', href: '/partner-with-us/universities/' }] },
   { icon: 'briefcase', href: '/programs/jobready-work/', title: 'JobReady@Work', audience: 'Employers', text: 'Corporate training custom-developed for each organization, plus a route to hire job-ready talent.', means: 'your team learns on tasks from your own roles.', partner: [{ label: 'For Employers', href: '/partner-with-us/employers/' }] },
   // WP76 (owner answer 2026-10-22: the diploma has four courses): the card names all four ("..., in digital marketing, ICT, cyber security and data analytics."; it said "... in digital marketing and ICT."), from the same list the diploma page and the menus use.
-  { icon: 'book-open', href: '/programs/nu-postgraduate-diploma/', title: 'NU Postgraduate Diploma', audienceLabel: 'Eligibility', audienceFacts: 'NU-01', audience: NU_ELIGIBILITY, text: `National University postgraduate diploma courses delivered by CodersTrust, in ${joinList(NU_COURSE_ORDER.map((s) => NU_COURSE_SUBJECT[s]))}.`, means: 'you add digital skills to the qualification you hold.', partner: [{ label: 'Explore the NU Postgraduate Diploma', href: '/programs/nu-postgraduate-diploma/' }] },
+  { icon: 'book-open', href: '/programs/nu-postgraduate-diploma/', title: 'NU Post Graduate Diploma', audienceLabel: 'Eligibility', audienceFacts: 'NU-01', audience: NU_ELIGIBILITY, text: `National University post graduate diploma courses delivered by CodersTrust, in ${joinList(NU_COURSE_ORDER.map((s) => NU_COURSE_SUBJECT[s]))}.`, means: 'you add digital skills to the qualification you hold.', partner: [{ label: 'Explore the NU Post Graduate Diploma', href: '/programs/nu-postgraduate-diploma/' }] },
   { icon: 'blocks', href: '/programs/superkids/', title: 'SuperKids', audience: 'Schools and Education Partners', text: 'STEAM, coding, robotics and digital art for young learners.', means: 'a school can bring these into the classroom, so children build digital skills early.', partner: [{ label: 'Explore SuperKids', href: '/programs/superkids/' }] },
 ];
 
@@ -66,13 +66,13 @@ const jsonLd = [
   <Hero
     eyebrow="Programs"
     title="Digital Skills Programs, from School to Work"
-    lead="CodersTrust offers four partner programs for institutions — YouthWIDE, JobReady@Campus, JobReady@Work and SuperKids — and the NU Postgraduate Diploma for individual learners."
+    lead="CodersTrust offers four partner programs for institutions — YouthWIDE, JobReady@Campus, JobReady@Work and SuperKids — and the NU Post Graduate Diploma for individual learners."
     artSeed="programs-hub"
   >
     <Fragment slot="actions">
       <Button href={discovery.href} iconEnd="arrow-right">{discovery.label}</Button>
       <!-- WP25s: the learner route is visible at the top, as a text link under the one primary button (the diploma has no partner route). -->
-      <p class="hub__nu">Applying for the NU Postgraduate Diploma? <a class="link" href={linkAttrs('/programs/nu-postgraduate-diploma/').href}>See the diploma.</a></p>
+      <p class="hub__nu">Applying for the NU Post Graduate Diploma? <a class="link" href={linkAttrs('/programs/nu-postgraduate-diploma/').href}>See the diploma.</a></p>
       <!-- WP95 (triage A2): the body's only route for a learner who wants short courses; a text link, not a second button. Same external-link pattern as SuperKids. -->
       <p class="hub__nu">Looking for a short self-paced course? <a class="link" href={courses.href} rel={courses.rel}>Explore Courses at JobReady.global<Icon name="arrow-up-right" size={16} /><span class="sr-only"> {courses.srText}</span></a></p>
     </Fragment>

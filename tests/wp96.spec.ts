@@ -103,8 +103,8 @@ test.describe('Item 3: the NU course is spelled Cyber Security in visible text (
   test('the course page keeps its URL slug; its H1 and title say Cyber Security', async ({ page }) => {
     const route = 'programs/nu-postgraduate-diploma/cyber-security/';
     await open(page, route);
-    await expect(page.getByRole('heading', { level: 1 })).toHaveText('NU Postgraduate Diploma in Cyber Security');
-    await expect(page).toHaveTitle(/NU Postgraduate Diploma in Cyber Security/);
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText('NU Post Graduate Diploma in Cyber Security');
+    await expect(page).toHaveTitle(/NU Post Graduate Diploma in Cyber Security/);
     expect(await page.locator('meta[name="description"]').getAttribute('content')).toContain('in cyber security');
   });
 

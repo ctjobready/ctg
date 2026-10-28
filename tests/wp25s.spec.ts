@@ -103,7 +103,7 @@ test.describe('Programs', () => {
     const hero = page.locator('main .hero');
     await expect(hero.locator('.btn--primary')).toHaveCount(1);
     const nu = hero.locator('.hub__nu').first(); // WP95 A2 adds a second .hub__nu line (the JobReady.global course link) after it
-    await expect(nu).toContainText('Applying for the NU Postgraduate Diploma?');
+    await expect(nu).toContainText('Applying for the NU Post Graduate Diploma?');
     await expect(nu.getByRole('link', { name: 'See the diploma.' })).toHaveAttribute('href', /programs\/nu-postgraduate-diploma\/$/);
   });
 

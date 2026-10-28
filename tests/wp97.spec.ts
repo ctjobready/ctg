@@ -11,9 +11,9 @@ import { listPages } from './support/pages';
  *   - 1: the course is "Cyber Security" (WP96's "Cybersecurity" is reverted); the URL slug stays cyber-security;
  *   - 2: course titles (H1, <title>, meta description, cards and lists on the overview, FAQ answers that name the course) use NU's names:
  *        "Information and Communication Technology (ICT)" for the ICT course. Menus keep the short "ICT" label. The <title> cannot hold the full name
- *        under its 60-character limit, so it keeps "NU Postgraduate Diploma in ICT" (the short form NU itself uses);
+ *        under its 60-character limit, so it keeps "NU Post Graduate Diploma in ICT" (the short form NU itself uses);
  *   - 3: module names and job titles keep the two-word "Cyber Security";
- *   - 4: the program's own name is unchanged ("Postgraduate Diploma", as the site has always said it; NU writes "Post Graduate Diploma (PGD)", owner decides).
+ *   - 4: the program's own name is unchanged ("Post Graduate Diploma", as the site has always said it; NU writes "Post Graduate Diploma (PGD)", owner decides).
  * Run `npm run build` first, then `PORT=<port> npx playwright test tests/wp97.spec.ts --project=chromium --workers=2`.
  * Screenshots (opt-in): WP97_SHOTS=<dir> with the same command writes PNGs of the overview, the two course pages and the Programs menu at 1280 and 390.
  */
@@ -43,10 +43,10 @@ test.describe('Item 1: the course is spelled "Cyber Security"', () => {
     expect(routesWhere((t) => /Diploma in Cybersecurity|in cybersecurity,|Cybersecurity knowledge|Choose Cybersecurity/.test(t))).toEqual([]);
   });
 
-  test('the Cyber Security page keeps its URL slug; its H1 and <title> say "NU Postgraduate Diploma in Cyber Security"', async ({ page }) => {
+  test('the Cyber Security page keeps its URL slug; its H1 and <title> say "NU Post Graduate Diploma in Cyber Security"', async ({ page }) => {
     await open(page, CYBER);
-    await expect(page.getByRole('heading', { level: 1 })).toHaveText('NU Postgraduate Diploma in Cyber Security');
-    await expect(page).toHaveTitle('NU Postgraduate Diploma in Cyber Security | CodersTrust');
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText('NU Post Graduate Diploma in Cyber Security');
+    await expect(page).toHaveTitle('NU Post Graduate Diploma in Cyber Security | CodersTrust');
   });
 
   test('the Cyber Security page keeps "Cyber Security" in its job titles and module names', () => {
@@ -58,15 +58,15 @@ test.describe('Item 1: the course is spelled "Cyber Security"', () => {
 });
 
 test.describe('Item 2: course titles use NU’s course names', () => {
-  test('the ICT page H1 is "NU Postgraduate Diploma in Information and Communication Technology (ICT)"', async ({ page }) => {
+  test('the ICT page H1 is "NU Post Graduate Diploma in Information and Communication Technology (ICT)"', async ({ page }) => {
     await open(page, ICT);
-    await expect(page.getByRole('heading', { level: 1 })).toHaveText('NU Postgraduate Diploma in Information and Communication Technology (ICT)');
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText('NU Post Graduate Diploma in Information and Communication Technology (ICT)');
   });
 
   test('the ICT <title> is the shortest NU-faithful form that fits the 60-character limit; the description names the full course', async ({ page }) => {
     await open(page, ICT);
     const title = await page.title();
-    expect(title).toBe('NU Postgraduate Diploma in ICT | CodersTrust');
+    expect(title).toBe('NU Post Graduate Diploma in ICT | CodersTrust');
     expect([...title].length).toBeLessThanOrEqual(60);
     const description = (await page.locator('meta[name="description"]').getAttribute('content')) ?? '';
     expect(description).toContain('in information and communication technology (ICT)');
@@ -92,10 +92,10 @@ test.describe('Item 2: course titles use NU’s course names', () => {
     );
     const titles = (await page.locator('#courses article .course__title').allTextContents()).map(compact);
     expect(titles).toEqual([
-      'NU Postgraduate Diploma in Digital Marketing',
-      'NU Postgraduate Diploma in Information and Communication Technology (ICT)',
-      'NU Postgraduate Diploma in Cyber Security',
-      'NU Postgraduate Diploma in Data Analytics',
+      'NU Post Graduate Diploma in Digital Marketing',
+      'NU Post Graduate Diploma in Information and Communication Technology (ICT)',
+      'NU Post Graduate Diploma in Cyber Security',
+      'NU Post Graduate Diploma in Data Analytics',
     ]);
   });
 
@@ -126,16 +126,16 @@ test.describe('Item 2: course titles use NU’s course names', () => {
   test('"Also Consider" names the ICT course by its full NU name', async ({ page }) => {
     await open(page, 'programs/nu-postgraduate-diploma/digital-marketing/');
     const others = (await page.locator('#also-consider .others li').allTextContents()).map(compact);
-    expect(others).toContain('Prefer programming, databases and networks? The NU Postgraduate Diploma in Information and Communication Technology (ICT) is the course for those modules.');
-    expect(others).toContain('Prefer cryptography, network security and digital forensics? The NU Postgraduate Diploma in Cyber Security is the course for those modules.');
+    expect(others).toContain('Prefer programming, databases and networks? The NU Post Graduate Diploma in Information and Communication Technology (ICT) is the course for those modules.');
+    expect(others).toContain('Prefer cryptography, network security and digital forensics? The NU Post Graduate Diploma in Cyber Security is the course for those modules.');
   });
 });
 
 test.describe('Item 4: the program name is unchanged', () => {
-  test('the overview still names the program "National University Postgraduate Diploma" and "NU Postgraduate Diploma"', () => {
+  test('the overview still names the program "National University Post Graduate Diploma" and "NU Post Graduate Diploma"', () => {
     const text = visible(pageHtml(OVERVIEW));
-    expect(text).toContain('National University Postgraduate Diploma');
-    expect(text).toContain('NU Postgraduate Diploma');
+    expect(text).toContain('National University Post Graduate Diploma');
+    expect(text).toContain('NU Post Graduate Diploma');
   });
 });
 
