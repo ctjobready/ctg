@@ -90,7 +90,7 @@ export function pilotDurationText(duration: string): string {
 }
 /**
  * Option-card duration line: the pilot's duration gets the sentence above; Scale and National print as registered. The pilot is recognized by its
- * registered duration wording, not by the card's name, because pages may rename it ("First Multi-Cohort Program" on JobReady@Campus; Home called it
+ * registered duration wording, not by the card's name, because pages may rename it (JobReady@Campus called it "First Multi-Cohort Program" until WP105; Home called it
  * "First Multi-Cohort Pilot" until WP63) and no card may print the raw "(tracking to month 23)" line (WP31).
  */
 export function optionDuration(duration: string): string {

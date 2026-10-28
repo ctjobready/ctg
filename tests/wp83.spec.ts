@@ -168,7 +168,7 @@ test.describe('WP83 (WP85 wording): the pages that state the 25,125', () => {
     expect(compact(await page.locator('#contracts .ct__notes').textContent())).toBe('We confirm each contract’s delivery status in a briefing. Apart from the Her Power figures, the other rows give contracted scopes of work, not delivered scale.');
     expect(compact(await page.locator('#contracts caption').textContent())).toContain('Apart from CodersTrust’s own Her Power figures, counts are contract training scopes, not delivered scale.');
     const faq = page.locator('#faq details, #faqs details', { has: page.locator('summary', { hasText: 'Can You Deliver at National Scale?' }) }).first();
-    expect(compact(await faq.textContent())).toContain('We scale in phases. Her Power, a national program, met its full target with CodersTrust’s curriculum, and CodersTrust trained 2,400 women directly; the contract table above gives the figures. A 100,000+ program is a design option we have not yet delivered.');
+    expect(compact(await faq.textContent())).toContain('We scale in phases. Her Power, a national program, met its full target with CodersTrust’s curriculum; the contract table above gives the figures. A 100,000+ program is a design option we have not yet delivered.');
   });
 
   test('Investors: the tile and the FAQ say trained (CodersTrust’s role first); JobReady Platform’s tile says it too', async ({ page }) => {

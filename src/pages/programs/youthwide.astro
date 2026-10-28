@@ -72,7 +72,7 @@ import { webPage } from '../../lib/schema';
 import { url } from '../../lib/url';
 
 const path = '/programs/youthwide/';
-const LAST_UPDATED = '2026-10-29'; // 29 October 2026 (WP104: the meta description names the full target group; the page's wording last changed on 28 October, WP99 and WP101). 24 October 2026 (WP86, CLR run 3 Minor 3: the Her Power wording changed that day). 21 October 2026:the survey stat OC-03 (the before-training median, $82 to $98) changed in facts.ts; WP31: the cycle-8 review wording changes
+const LAST_UPDATED = '2026-10-29'; // 29 October 2026 (WP105: the 2030 aim tile is short; WP104: the meta description names the full target group; the page's wording last changed on 28 October, WP99 and WP101). 24 October 2026 (WP86, CLR run 3 Minor 3: the Her Power wording changed that day). 21 October 2026:the survey stat OC-03 (the before-training median, $82 to $98) changed in facts.ts; WP31: the cycle-8 review wording changes
 const title = 'YouthWIDE: From Training to Paid Digital Work';
 // WP63 rework RW1: the hero lead and the glance row name the full group ("educated, unemployed and underemployed youth"); WP104 (Sonnet High run 1): the description names it too, in 154 characters ("trains" for "prepares", and "with a" left out, to make room; "paid digital work" and "designed for three regions" stay).
 const description = 'YouthWIDE trains educated, unemployed and underemployed youth for paid digital work: co-funded cohorts designed for three regions, 2030 aim in Bangladesh.';
@@ -190,8 +190,9 @@ const measures = [...SCORECARD_LABELS];
     <div class="mech-stats">
       <div class="mech-target" data-reveal>
         <StatusTag status="Target" />
-        <FactStat id="IN-01" />
-        <p class="mech-target__note">An ambition for 2030, {AIM_DEPENDENCY}; not a delivered figure.</p>
+        <!-- WP105 (Sonnet XHigh run 1, kit 71, Minor 1): the full statement (the group in brackets, the region list) is said once, in the "Designed for Three Regions" row, so the tile is short: IN-01's value, a short label, and the ambition note that carries the dependency. -->
+        <FactStat id="IN-01" label="educated youth YouthWIDE aims to train by 2030" />
+        <p class="mech-target__note">An ambition, {AIM_DEPENDENCY}; not a delivered figure.</p>
       </div>
       <div class="mech-stat"><FactStat id="GV-09" /></div>
       <div class="mech-stat"><StatusTag status="Delivered" /><FactStat id="GV-13" /></div>
@@ -313,8 +314,7 @@ const measures = [...SCORECARD_LABELS];
     gap: var(--space-xs) var(--space-lg);
   }
   /* The Bangladesh band's proof: the 2030 aim (with its "Target" label and fact) beside two figures; one column on a phone, three from 900 px.
-     WP101: the aim's label is the register's full sentence (IN-01, about 175 characters), so the aim column is twice as wide as each figure's and the label's 28-character cap (Stat) is lifted to a 60-character measure:
-     it reads in three lines at 390, 768, 1024 and 1280 px (it ran to six lines in a column one third of the band wide). */
+     WP101 widened the aim column for the register's full label; WP105 gives the tile a short label, so the three columns are equal again and the label keeps a 60-character measure. */
   .mech-stats {
     display: grid;
     gap: var(--space-md);
@@ -323,7 +323,7 @@ const measures = [...SCORECARD_LABELS];
   }
   @media (min-width: 900px) {
     .mech-stats {
-      grid-template-columns: minmax(0, 2fr) repeat(2, minmax(0, 1fr));
+      grid-template-columns: repeat(3, minmax(0, 1fr));
     }
   }
   .mech-target :global(.stat__label) {

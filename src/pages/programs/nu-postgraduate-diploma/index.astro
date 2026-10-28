@@ -22,7 +22,7 @@ import MechanismSection from '../../../components/pages/programs/MechanismSectio
 import FaqSection from '../../../components/pages/programs/FaqSection.astro';
 import { anchor, faqNode, type FaqSource } from '../../../components/pages/programs/faq';
 import { PAGE_UPDATED } from '../../../components/pages/programs/meta';
-import { NU_ADMISSIONS_NOTE, NU_AFFILIATION, NU_APPLY, NU_CALL, NU_CALL_NUMBER, NU_CALL_TEXT, NU_COURSE_COPY, NU_COURSE_SUBJECT, NU_LOCATION_NOTE, NU_NAME, NU_NOTICES, NU_PATH, NU_SCHEDULE_NOTE, nuCourses, nuOverview } from '../../../components/pages/programs/nuPgd';
+import { NU_ADMISSIONS_NOTE, NU_APPLY, NU_CALL, NU_CALL_NUMBER, NU_CALL_TEXT, NU_COURSE_COPY, NU_COURSE_SUBJECT, NU_LOCATION_NOTE, NU_NAME, NU_NOTICES, NU_PATH, NU_SCHEDULE_NOTE, nuCourses, nuOverview } from '../../../components/pages/programs/nuPgd';
 import NuNoticeLinks from '../../../components/pages/programs/NuNoticeLinks.astro';
 import { HEADLINE, NU_ELIGIBILITY, VALUE_PROPOSITION } from '../../../data/copy';
 import { COURSES_URL } from '../../../lib/site';
@@ -120,16 +120,14 @@ const jsonLd = [
     </dl>
   </Section>
 
-  <!-- C5 -->
+  <!-- C5. WP105 (Sonnet XHigh run 1, kit 71, Polish 6): the band no longer opens with "CodersTrust is an affiliated college (College Code: 6634) under the National University of Bangladesh." (the Recognition row in Before You Apply says it, NU-04). -->
   <GuideSection
     eyebrow="Context"
     title="An Affiliated College of National University"
     statIds={['SC-05']}
     partnerGroup="academic"
     method={{ text: 'Practical digital-skills courses, delivered by CodersTrust.', factId: 'NU-04' }}
-  >
-    <p data-fact="NU-04">{NU_AFFILIATION}</p>
-  </GuideSection>
+  />
 
   <!-- C7. WP34 (cycle-11 review): no trial or survey figure is shown on the admissions page (they are not this diploma's results); a one-link strip points to the wider programs' evidence. The trial relevance line has no band to sit in (scripts/check-facts.mjs allows that, as on the two employer pages). -->
   <PairedEvidence

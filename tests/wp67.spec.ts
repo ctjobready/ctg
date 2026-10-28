@@ -239,7 +239,7 @@ test.describe('Item 5: YouthWIDE’s track-record heading is "We’ve Built This
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 test.describe('Item 6: Governments’ "Can You Deliver at National Scale?" answer gives Her Power’s figures', () => {
   const Q = 'Can You Deliver at National Scale?';
-  const ANSWER = 'We scale in phases. Her Power, a national program, met its full target with CodersTrust’s curriculum, and CodersTrust trained 2,400 women directly; the contract table above gives the figures. A 100,000+ program is a design option we have not yet delivered.';
+  const ANSWER = 'We scale in phases. Her Power, a national program, met its full target with CodersTrust’s curriculum; the contract table above gives the figures. A 100,000+ program is a design option we have not yet delivered.';
   const item = (page: Page) => page.locator('#faq details', { has: page.locator('summary', { hasText: Q }) });
 
   test('the figures are the register’s (GV-01’s 25,125 and GV-11’s 2,400, GV-13 holds the same count)', () => {
@@ -250,7 +250,7 @@ test.describe('Item 6: Governments’ "Can You Deliver at National Scale?" answe
     expect(fact('PD-05').text).toContain('National Design Option 100,000+ trainees'); // WP69 (owner item 3): the option is "National Design Option"
   });
 
-  test('the answer is three sentences with no link, its JSON-LD says the same, and it rests on GV-01, GV-11 and PD-05', async ({ page }) => {
+  test('the answer is three sentences with no link, its JSON-LD says the same, and it rests on GV-01 and PD-05 (WP105: the 2,400 is no longer repeated)', async ({ page }) => {
     await open(page, GOVERNMENTS);
     await expect(item(page)).toHaveCount(1);
     const answer = compact(await item(page).locator('.faq__a').textContent());
@@ -258,7 +258,7 @@ test.describe('Item 6: Governments’ "Can You Deliver at National Scale?" answe
     expect(sentences(answer)).toHaveLength(3);
     await expect(item(page).locator('.faq__a a')).toHaveCount(0);
     expect(answer).not.toContain('See the contract scopes above');
-    expect(await item(page).locator('.faq__a p').getAttribute('data-fact')).toBe('GV-01 GV-11 PD-05');
+    expect(await item(page).locator('.faq__a p').getAttribute('data-fact')).toBe('GV-01 PD-05');
     expect((await faqJsonLd(page)).find((q) => q.name === Q)?.text).toBe(ANSWER);
   });
 

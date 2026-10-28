@@ -232,21 +232,23 @@ async function lineCount(page: Page, selector: string): Promise<number> {
 test.describe('WP101 C1: the YouthWIDE 2030 aim tile', () => {
   const LABEL = '#governments .mech-target .stat__label';
   for (const width of [390, 768, 1024, 1280]) {
-    test(`the "1 million" label reads in three lines or fewer at ${width} px, with the register’s words unchanged`, async ({ page }) => {
+    // WP105 (Minor 1): the tile's label is the short "educated youth YouthWIDE aims to train by 2030"; the register's long label (IN-01) is unchanged and is said in full once, in the "Designed for Three Regions" row.
+    test(`the "1 million" label reads in three lines or fewer at ${width} px`, async ({ page }) => {
       await page.setViewportSize({ width, height: 900 });
       await open(page, 'programs/youthwide/');
-      expect(compact(await page.locator(LABEL).textContent())).toBe(fact('IN-01').stat!.label);
+      expect(compact(await page.locator(LABEL).textContent())).toBe('educated youth YouthWIDE aims to train by 2030');
+      expect(fact('IN-01').stat!.label).toContain('educated youth (Higher Secondary Certificate or above) that YouthWIDE aims to train by 2030');
       expect(await lineCount(page, LABEL)).toBeLessThanOrEqual(3);
       expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), 'no horizontal scroll').toBe(true);
     });
   }
 
-  test('the aim tile is the widest of the three at desktop width, and its two neighbours still read their labels in four lines or fewer', async ({ page }) => {
+  test('WP105: with the short label the three tiles share the band equally at desktop width, and the two neighbours read their labels in four lines or fewer', async ({ page }) => {
     await page.setViewportSize(DESKTOP);
     await open(page, 'programs/youthwide/');
     const widths = await page.locator('#governments .mech-stats > *').evaluateAll((els) => els.map((e) => Math.round(e.getBoundingClientRect().width)));
     expect(widths).toHaveLength(3);
-    expect(widths[0]).toBeGreaterThan(widths[1]);
+    expect(Math.max(...widths) - Math.min(...widths)).toBeLessThanOrEqual(4);
     for (const sel of ['#governments .mech-stat:nth-child(2) .stat__label', '#governments .mech-stat:nth-child(3) .stat__label']) expect(await lineCount(page, sel), sel).toBeLessThanOrEqual(4);
   });
 });

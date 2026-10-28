@@ -162,13 +162,13 @@ test.describe('Governments: Her Power is told once', () => {
     await open(page, 'partner-with-us/governments/');
     const answer = await answerOf(page, 'Can You Deliver at National Scale?');
     // WP85 (owner update 2026-10-24: the government achieved 100% of the 25,125 target): "Her Power, a national program, trained 25,125 women, meeting its target;" (WP83 had "Her Power is a national program to train 25,125 women;")
-    expect(answer).toBe('We scale in phases. Her Power, a national program, met its full target with CodersTrust’s curriculum, and CodersTrust trained 2,400 women directly; the contract table above gives the figures. A 100,000+ program is a design option we have not yet delivered.');
+    expect(answer).toBe('We scale in phases. Her Power, a national program, met its full target with CodersTrust’s curriculum; the contract table above gives the figures. A 100,000+ program is a design option we have not yet delivered.');
     expect(sentences(answer)).toHaveLength(3);
     expect(answer, 'the figures are in the contract table above').toContain('the contract table above gives the figures');
     expect(answer).not.toMatch(/120\+|3,120\+|See the contract scopes above/);
     await expect(itemOf(page, 'Can You Deliver at National Scale?').locator('.faq__a a')).toHaveCount(0);
     expect((await faqJsonLd(page)).find((q) => q.name === 'Can You Deliver at National Scale?')?.text).toBe(answer);
-    expect(await itemOf(page, 'Can You Deliver at National Scale?').locator('.faq__a p').getAttribute('data-fact')).toBe('GV-01 GV-11 PD-05');
+    expect(await itemOf(page, 'Can You Deliver at National Scale?').locator('.faq__a p').getAttribute('data-fact')).toBe('GV-01 PD-05');
   });
 
   for (const vp of [DESKTOP, MOBILE]) {

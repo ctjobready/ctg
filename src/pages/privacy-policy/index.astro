@@ -1,7 +1,7 @@
 ---
 import LongformLayout from '../../layouts/LongformLayout.astro';
 import CopyEmail from '../../components/ui/CopyEmail.astro';
-import { BANGLADESH_HQ, CONTACT, OFFICES } from '../../lib/site';
+import { BANGLADESH_HQ, CAREERS_EMAIL, CONTACT, OFFICES } from '../../lib/site';
 import { promo } from '../../data/nav';
 import { NU_PGD_APPLY_URL } from '../../data/ctas';
 import { webPage } from '../../lib/schema';
@@ -9,7 +9,7 @@ import { url, linkAttrs } from '../../lib/url';
 
 const GITHUB_PRIVACY = 'https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement';
 const JOBREADY = 'https://jobready.global/';
-const UPDATED = '2026-10-10';
+const UPDATED = '2026-10-29'; // WP105: the Email Inquiries section names the careers and NU diploma help inboxes
 const description = 'How the CodersTrust website handles data: no analytics cookies, no trackers of its own, and a plain list of every service involved.';
 const toc = [
   { id: 'summary', label: 'In Short' },
@@ -79,6 +79,8 @@ const jsonLd = [webPage({ path: '/privacy-policy/', name: 'Privacy Policy', desc
       <p>Buttons that say “Request a Discovery Session,” “Ask About Due Diligence” and similar open your own email app with a prefilled message. Nothing is sent to us until you press send in your email app. If you write to us, we receive your email address and whatever you include, and we use it to answer you and to follow up on your inquiry. Your email provider handles the message on its way.</p>
       <p>Write to us at <CopyEmail email={CONTACT.email} trail="." /></p>
       <p>Inquiries from the local-partners page go to our Bangladesh team at <CopyEmail email={BANGLADESH_HQ.email} trail="." /></p>
+      <p>Applications from the Careers page go to <CopyEmail email={CAREERS_EMAIL} trail="." /></p>
+      <p>Help requests from the National University diploma page go to <CopyEmail email={BANGLADESH_HQ.email} trail="." /></p>
     </section>
 
     <section id="nu-form" aria-labelledby="nu-h">

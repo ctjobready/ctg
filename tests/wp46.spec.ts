@@ -339,7 +339,8 @@ test.describe('Our Model: the scale card says delivery is designed to run 10 coh
 test.describe('About: the 2022–2024 timeline entry says the government contracts are in Bangladesh (item 19)', () => {
   test('"Government contracts in Bangladesh, including Her Power, EDGE and SKIT;" and the three contracts are registered as Bangladesh bodies’ (GV-01, GV-02, GV-03)', async ({ page }) => {
     await open(page, 'about/');
-    expect(compact(await page.locator('#story').textContent())).toContain('Government contracts in Bangladesh, including Her Power, EDGE and SKIT; partnerships with National University');
+    // WP105: EDGE is expanded at first use ("Enhancing Digital Government and Economy", GV-02's own words); SKIT has no expansion in the register or the news posts, so it stays as is.
+    expect(compact(await page.locator('#story').textContent())).toContain('Government contracts in Bangladesh, including Her Power, EDGE (Enhancing Digital Government and Economy) and SKIT; partnerships with National University');
     expect(fact('PA-02').text).toContain('Bangladesh’s ICT Division, DoICT, Bangladesh Hi-Tech Park Authority, NSDA and BCC');
     expect(fact('GV-03').text).toContain('Bangladesh Hi-Tech Park Authority');
     expect(fact('GV-02').text).toContain('with BCC');

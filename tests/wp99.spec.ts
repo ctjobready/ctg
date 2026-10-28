@@ -110,11 +110,13 @@ test.describe('Item 1: the YouthWIDE aim is 1 million educated youth (Higher Sec
     const band = page.locator('section#governments');
     await expect(band.getByRole('heading', { level: 2 })).toHaveText(BAND);
     expect(BAND).toBe(titleCase(BAND));
-    expect(compact(await band.locator('.mech-target__note').textContent())).toBe(`An ambition for 2030, ${AIM_DEPENDENCY}; not a delivered figure.`);
+    // WP105 (Sonnet XHigh run 1, kit 71, Minor 1): the full statement is said once, in the "Designed for Three Regions" row; the tile is short ("1 million", "educated youth YouthWIDE aims to train by 2030", the ambition note), with no region list.
+    expect(compact(await band.locator('.mech-target__note').textContent())).toBe(`An ambition, ${AIM_DEPENDENCY}; not a delivered figure.`);
     expect(compact(await band.locator('.mech-target').textContent())).not.toMatch(/national/i);
     const target = compact(await band.locator('.mech-target').textContent());
     expect(target).toContain('1 million');
-    expect(target).toContain(`educated youth (Higher Secondary Certificate or above) that YouthWIDE aims to train by 2030, ${IN01_SCOPE}`);
+    expect(target).toContain('educated youth YouthWIDE aims to train by 2030');
+    expect(target).not.toContain(IN01_SCOPE);
     expect(await routesWith(/Bangladesh: Delivery Base and 2030 Aim/)).toEqual([]);
   });
 

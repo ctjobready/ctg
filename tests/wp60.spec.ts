@@ -233,7 +233,7 @@ test.describe('S3 (Claude): the 1 million 2030 aim carries its dependency on eve
     );
     await open(page, YOUTHWIDE);
     expect(compact(await page.locator('#program-glance .pg__row').first().textContent())).toContain(`YouthWIDE aims to train 1 million educated youth (Higher Secondary Certificate or above) for digital employment by 2030, in Bangladesh and similar countries in South Asia and the Middle East and North Africa, ${AIM_DEPENDENCY}.`);
-    expect(compact(await page.locator('section#governments .mech-target__note').textContent())).toBe(`An ambition for 2030, ${AIM_DEPENDENCY}; not a delivered figure.`);
+    expect(compact(await page.locator('section#governments .mech-target__note').textContent())).toBe(`An ambition, ${AIM_DEPENDENCY}; not a delivered figure.`); // WP105: "An ambition, ..." (the tile no longer repeats "for 2030", which its label says)
   });
 
   test('no built page states the 1 million aim without the clause within 330 characters, and only those four pages state it', () => {

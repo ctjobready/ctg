@@ -32,13 +32,9 @@ const post = (id: string) => byId.get(id);
 const HONOR_POSTS: [RegExp, string | null][] = [
   [/UPEACE/, 'aziz-ahmad-co-founder-and-global-chairman-of-coderstrust-appointed-as-global-upeace-ambassador'],
   [/SDG Life Achievement/, 'coderstrust-chairman-mr-aziz-ahmad-receives-sdg-life-achievement-award-from-the-unsgii'],
-  [/NYNJMSDC/, 'aziz-ahmad-wins-the-nynjmsdc-partnership-award-in-the-united-states'],
   [/NOVA/, null],
 ];
-// The NYNJMSDC Partnership Award went to UTC Associates, the technology consulting company Aziz Ahmad leads (see the dated
-// news post), so the card says so and spells out the council's name.
 const HONOR_NOTES: [RegExp, string][] = [
-  [/NYNJMSDC/, 'Presented by the New York & New Jersey Minority Supplier Development Council to UTC Associates, the technology consulting company Aziz Ahmad leads.'],
   [/NOVA/, 'He received the NOVA Award in 2022 for his contribution to the green technology industry.'],
 ];
 const honors = fact('PA-11')
@@ -53,12 +49,10 @@ const honors = fact('PA-11')
     const note = HONOR_NOTES.find(([re]) => re.test(label))?.[1] ?? m?.[3];
     return { label, year: m?.[2], note, post: slug ? post(slug) : undefined };
   });
-// The NYNJMSDC Partnership Award was received by UTC Associates, the company Aziz Ahmad leads, so it is shown as related
-// recognition rather than as one of his personal honors (owner decision, 2026-10-13).
+// The NYNJMSDC Partnership Award was received by UTC Associates, the company Aziz Ahmad leads, so it is not one of his personal honors (owner decision, 2026-10-13).
+// WP105 (owner 2026-10-29: "bio only"): the "Recognition Connected to Our Chairman’s Work" section that showed it as related recognition is gone from this page; the award is told in his profile and its dated news post.
 const COMPANY_AWARD = /NYNJMSDC/;
-const COMPANY_AWARD_TITLE = 'UTC Associates, Led by Aziz Ahmad: NYNJMSDC Partnership Award';
 const personalHonors = honors.filter((h) => !COMPANY_AWARD.test(h.label));
-const relatedRecognition = honors.filter((h) => COMPANY_AWARD.test(h.label)).map((h) => ({ ...h, label: COMPANY_AWARD_TITLE }));
 
 // Media coverage (PA-09): the eight registered items, with years, oldest first. Links only where the original URL is known.
 const PA09 = ['Forbes', 'The Wall Street Journal', 'TechCrunch', 'Tech in Asia', 'Gulf News', 'USA Today', 'The Times of India', 'World Bank'];
@@ -103,7 +97,7 @@ const kit = [
 ];
 
 const description = 'HolonIQ South Asia EdTech 100 listing, founder honors, media coverage from 2014 to 2016, and a press kit with logos and boilerplate for CodersTrust.';
-const jsonLd = [webPage({ path: '/about/recognition/', name: 'Recognition and Media', description, breadcrumb: [{ name: 'Home', path: '/' }, { name: 'About', path: '/about/' }, { name: 'Recognition and Media', path: '/about/recognition/' }] })];
+const jsonLd = [webPage({ path: '/about/recognition/', name: 'Recognition and Media', description, dateModified: '2026-10-29', breadcrumb: [{ name: 'Home', path: '/' }, { name: 'About', path: '/about/' }, { name: 'Recognition and Media', path: '/about/recognition/' }] })];
 const media = { href: ctaHref('media'), label: 'Media Inquiries' };
 ---
 
@@ -120,7 +114,6 @@ const media = { href: ctaHref('media'), label: 'Media Inquiries' };
   <PageNav links={[
     { label: 'HolonIQ South Asia EdTech 100, 2023 and 2024', href: '#listing' },
     { label: 'Aziz Ahmad’s Appointments and Honors', href: '#honors' },
-    ...(relatedRecognition.length > 0 ? [{ label: 'Recognition Connected to Our Chairman’s Work', href: '#related' }] : []),
     ...(FORUMS.length > 0 ? [{ label: 'Where CodersTrust Has Taken Part', href: '#forums' }] : []),
     ...(quotes.length > 0 ? [{ label: 'What University for Peace Says', href: '#endorsements' }] : []),
     { label: 'Awards and Forums in Photographs', href: '#photos' },
@@ -166,33 +159,6 @@ const media = { href: ctaHref('media'), label: 'Media Inquiries' };
       }
     </ul>
   </Section>
-
-  {
-    relatedRecognition.length > 0 && (
-      <Section id="related" tone="ice" aria-labelledby="related-h">
-        <SectionHeader id="related-h" eyebrow="Related Recognition" title="Recognition Connected to Our Chairman’s Work" />
-        <ul class="rec-honors" role="list" data-fact="PA-11">
-          {relatedRecognition.map((h) => (
-            <li class="card rec-honor" data-reveal>
-              <div class="card__body">
-                {h.year && <p class="eyebrow">{h.year}</p>}
-                <h3 class="card__title">{h.label}</h3>
-                {h.note && <p class="card__meta">{h.note}</p>}
-                {
-                  h.post && (
-                    <p>
-                      <a class="link" href={url(newsHref(h.post))}>Read the Announcement<Icon name="arrow-right" size={16} /></a>
-                      <span class="card__meta rec-honor__date"> Published <time datetime={isoDate(h.post.data.date)}>{formatDate(h.post.data.date)}</time></span>
-                    </p>
-                  )
-                }
-              </div>
-            </li>
-          ))}
-        </ul>
-      </Section>
-    )
-  }
 
   {
     FORUMS.length > 0 && (

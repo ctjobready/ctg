@@ -16,10 +16,10 @@ import { DESKTOP, MOBILE, open } from './support/browser';
 
 const compact = (t: string | null | undefined) => (t ?? '').replace(/\s+/g, ' ').trim();
 
-test.describe('WP95 A1: Governments national-scale answer names CodersTrust’s direct training', () => {
+test.describe('WP95 A1 (answer wording superseded by WP105, which drops the repeated 2,400): Governments national-scale answer', () => {
   const Q = 'Can You Deliver at National Scale?';
   const ANSWER =
-    'We scale in phases. Her Power, a national program, met its full target with CodersTrust’s curriculum, and CodersTrust trained 2,400 women directly; the contract table above gives the figures. A 100,000+ program is a design option we have not yet delivered.';
+    'We scale in phases. Her Power, a national program, met its full target with CodersTrust’s curriculum; the contract table above gives the figures. A 100,000+ program is a design option we have not yet delivered.';
 
   test('the 2,400 is the register’s figure (GV-11, GV-13) and is read through CONTRACT_FIGURES', () => {
     expect(CONTRACT_FIGURES.direct).toBe('2,400');

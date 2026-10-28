@@ -169,7 +169,7 @@ test.describe('WP85: the pages that state the 25,125', () => {
     const row = compact(await page.locator('#contracts tbody tr').first().textContent());
     expect(row).toContain('CodersTrust trained 2,400 women directly. The national program trained 25,125 women across 130 sub-districts (upazilas), meeting its target. 54,609 manuals and guidelines were distributed.');
     const faq = page.locator('#faq details, #faqs details', { has: page.locator('summary', { hasText: 'Can You Deliver at National Scale?' }) }).first();
-    const answer = 'We scale in phases. Her Power, a national program, met its full target with CodersTrust’s curriculum, and CodersTrust trained 2,400 women directly; the contract table above gives the figures. A 100,000+ program is a design option we have not yet delivered.';
+    const answer = 'We scale in phases. Her Power, a national program, met its full target with CodersTrust’s curriculum; the contract table above gives the figures. A 100,000+ program is a design option we have not yet delivered.';
     expect(compact(await faq.textContent())).toContain(answer);
     expect(builtPages().find((p) => p.route === '/partner-with-us/governments/')!.html).toContain(`"text":"${answer}"`);
   });

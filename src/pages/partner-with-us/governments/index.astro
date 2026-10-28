@@ -109,7 +109,7 @@ const FAQ_IDS = ['Q7-government', 'Q2-government', 'Q1-government', 'Q10', 'Q8-g
   description={description}
   path={PATH}
   breadcrumbs={[{ label: 'Partner with Us', href: LINKS.hub }, { label: 'Governments' }]}
-  jsonLd={[webPage({ path: PATH, name: title, description }), faqJsonLd('governments', PATH, FAQ_IDS)]}
+  jsonLd={[webPage({ path: PATH, name: title, description, dateModified: '2026-10-29' }), faqJsonLd('governments', PATH, FAQ_IDS)]}
   stickyCta={{ label: primary.label, href: primary.href }}
 >
   <!-- C1 · Identity hook -->
