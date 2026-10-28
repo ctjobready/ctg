@@ -25,7 +25,7 @@ interface Props {
 }
 const { id = 'thesis' } = Astro.props;
 // PX-08 is a global figure: the register's own sentence says "Globally" (claims rule 12), so it is shown as registered.
-// WP57b (owner decision 2026-10-19): the sentence names its publisher and year inside it, "... with a 62% wage premium (PwC, 2026)." (withSourceNote, src/data/copy.ts)
+// WP57b (owner decision 2026-10-19): the sentence names its publisher and year inside it, "... earned a 62% wage premium (PwC, 2026)." (withSourceNote, src/data/copy.ts)
 const px08Text = fact('PX-08').text;
 if (!/^globally\b/i.test(px08Text)) throw new Error('PX-08 no longer says "Globally": the investors thesis must keep the scope in the sentence (claims rule 12)');
 const px08 = withSourceNote('PX-08', px08Text);

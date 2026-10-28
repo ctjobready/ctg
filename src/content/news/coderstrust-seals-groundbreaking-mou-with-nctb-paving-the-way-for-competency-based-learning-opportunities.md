@@ -1,7 +1,7 @@
 ---
 title: "CodersTrust Seals Groundbreaking MOU with NCTB, Paving the Way for Competency-Based Learning Opportunities"
 date: 2023-12-12
-updated: 2026-10-13
+updated: 2026-10-29
 topic: partnerships
 excerpt: "CodersTrust and the National Curriculum and Textbook Board sign an MOU to develop competency-based experiential learning programs."
 cover: ../../assets/images/news/coderstrust-seals-groundbreaking-mou-with-nctb-paving-the-way-for-competency-based-learning-opportunities/mou-with-nctb-4.jpg
@@ -26,7 +26,7 @@ CodersTrust inked a groundbreaking agreement with the esteemed National Curricul
 
 ![A laptop screen showing a video call during the NCTB MOU signing](../../assets/images/news/coderstrust-seals-groundbreaking-mou-with-nctb-paving-the-way-for-competency-based-learning-opportunities/ct-mou-with-nctb-5.jpg)
 
-Prof. Md. Farhadul Islam, Chairman of NCTB and CodersTrust CEO Md. Shamsul Haque signed the document in the presence of Prof. Md. Mukhlesur Rahman, Member, NCTB (Primary Wing), CodersTrust Chairman Aziz Ahmad, Mosammat Nazma Akhter, Secretary, NCTB, and Ataul Gani Osmani, Country Director of CodersTrust.
+Prof. Md. Farhadul Islam, Chairman of NCTB and CodersTrust Bangladesh CEO Md. Shamsul Haque signed the document in the presence of Prof. Md. Mukhlesur Rahman, Member, NCTB (Primary Wing), CodersTrust Chairman Aziz Ahmad, Mosammat Nazma Akhter, Secretary, NCTB, and Ataul Goni Osmani, Country Director of CodersTrust.
 
 Expressing optimism, Prof. Md. Farhadul Islam highlighted the necessity of technology-based learning. He hoped the collaboration with CodersTrust would be a significant step towards that goal. “The concept of competency-based experiential learning is still new to both students and teachers in Bangladesh and I hope CodersTrust will work jointly with NCTB to prepare the educators to deliver the learning experience on advanced competencies like robotics and coding — a crucial step for the success of the new curriculum being rolled out,” he said.
 

@@ -183,7 +183,7 @@ export const CAPTION: Record<string, string> = {
   'recognition/davos-sdg-lab': 'SDG Lab, Davos',
   'recognition/us-chamber': 'Roundtable at the US Chamber of Commerce',
   'recognition/european-parliament': 'European Parliament committee room',
-  'recognition/pope-francis': 'Meeting Pope Francis',
+  'recognition/pope-francis': 'Greeting Pope Francis',
   'recognition/nasdaq-sba': 'Aziz Ahmad, Co-Founder of CodersTrust, at the Nasdaq closing bell ceremony with the US Small Business Administration',
   'recognition/supply-chain-award': 'Aziz Ahmad, Co-Founder of CodersTrust, receiving the Supply Chain Diversity and Sustainability Excellence Award, 2019',
 };

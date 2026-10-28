@@ -162,7 +162,7 @@ test.describe('external statistics name their publisher and year inside the sent
     expect(fact('PX-05').stat?.label).toBe('of employers globally reported difficulty finding talent in 2026');
     expect(fact('PX-02').stat?.label).toBe('university-educated people of all working ages unemployed across South Asia, the Middle East and North Africa, and Sub-Saharan Africa');
     expect(fact('PX-01').stat?.label).toMatch(/\(range 61–78 million\)$/);
-    expect(fact('PX-08').text).toBe('Globally, jobs requiring AI skills grew 69% vs. 9% for all jobs, with a 62% wage premium');
+    expect(fact('PX-08').text).toBe('Globally, job postings requiring AI skills grew 69% vs. 9% for all postings, and workers with AI skills earned a 62% wage premium');
     for (const id of Object.keys(NOTES)) {
       expect(fact(id).text, id).not.toMatch(/\((?:CodersTrust estimate|ILOSTAT|ManpowerGroup|PwC),/);
       expect(fact(id).stat?.label ?? '', id).not.toMatch(/\((?:CodersTrust estimate|ILOSTAT|ManpowerGroup|PwC),/);
@@ -174,7 +174,7 @@ test.describe('external statistics name their publisher and year inside the sent
       ['PX-01', /62 million/],
       ['PX-02', /19M\+/],
       ['PX-05', /72% of employers/],
-      ['PX-08', /jobs requiring AI skills grew 69%/],
+      ['PX-08', /job postings requiring AI skills grew 69%/],
     ];
     const problems: string[] = [];
     for (const p of sitePages()) {

@@ -1,7 +1,7 @@
 ---
 title: "MOU Signing Ceremony Between North South University & CodersTrust"
 date: 2025-01-04
-updated: 2025-01-27
+updated: 2026-10-29
 topic: partnerships
 excerpt: "North South University and CodersTrust sign a Memorandum of Understanding, signed by NSU Vice Chancellor Abdul Hannan Chowdhury and Aziz Ahmad."
 cover: ../../assets/images/news/mou-signing-ceremony-between-north-south-university-coderstrust/mou-signing-ceremony-between-north-south-university-coderstrust.jpg
@@ -15,7 +15,7 @@ We are proud to announce the signing of a Memorandum of Understanding (MOU) betw
 
 ![Representatives standing together holding signed MOU documents in front of a screen](../../assets/images/news/mou-signing-ceremony-between-north-south-university-coderstrust/mou-signing-ceremony-between-north-south-university-coderstrust-2.jpg)
 
-The ceremony was witnessed and attended by Dr. Shazzad Hosain, Dean of North South University, and Mr. Md. Shamsul Haque, CEO of CodersTrust, along with Mr. Md. Iqbal Hassan Ferdous (CRO), Ms. Shamama Naushin Yamani (Director), Ms. Mahzabin Akter, Ms. Sajeda Akter Happy, among others.
+The ceremony was witnessed and attended by Dr. Shazzad Hosain, Dean of North South University, and Mr. Md. Shamsul Haque, CEO of CodersTrust Bangladesh, along with Mr. Md. Iqbal Hassan Ferdous (CRO), Ms. Shamama Naushin Yamani (Director), Ms. Mahzabin Akter, Ms. Sajeda Akter Happy, among others.
 
 ![Five men standing together in front of a screen announcing the MOU Signing Ceremony](../../assets/images/news/mou-signing-ceremony-between-north-south-university-coderstrust/mou-signing-ceremony-between-north-south-university-coderstrust-3.jpg)
 

@@ -260,7 +260,7 @@ test.describe('WP104 item 8: meta descriptions name the full target group', () =
     {
       route: 'programs/youthwide/',
       name: 'YouthWIDE',
-      text: 'YouthWIDE trains educated, unemployed and underemployed youth for paid digital work: co-funded cohorts designed for three regions, 2030 aim in Bangladesh.',
+      text: 'YouthWIDE trains educated, unemployed and underemployed youth for paid digital work: co-funded cohorts designed for three regions, with a 2030 aim.',
     },
     {
       route: 'careers/',

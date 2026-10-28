@@ -12,8 +12,6 @@ import NextStep from '../../../components/pages/impact/NextStep.astro';
 import { articleNode, desc, title, discoveryCta } from '../../../components/pages/impact/page-utils';
 import { fact, sources } from '../../../data/facts';
 import { BIGD_FULL, DISCOVERY_SESSION_LINE, MICRO_COMMITMENT } from '../../../data/copy';
-import { buildFaq, para } from '../../../components/pages/programs/faq';
-import { faqPage } from '../../../lib/schema';
 import { hostOf, linkAttrs } from '../../../lib/url';
 
 const path = '/impact/independent-evaluation/';
@@ -32,13 +30,8 @@ const rc08 = fact('RC-08').text;
 for (const c of classes) if (!rc08.includes(`${c.value}%`)) throw new Error(`RC-08 chart value ${c.value}% is not in the register text`);
 
 // WP30e: one decision question with a short answer (the page itself answers "Is there independent evidence?"). The answer is the shared Q3 shortened to its two claims.
-const faq = buildFaq([
-  {
-    q: 'How Do You Track Outcomes?',
-    html: para('For every cohort, as agreed in the program scope, we plan a baseline at enrollment, follow-up surveys at 3, 6 and 12 months and monthly reports. Where available, offer letters, payslips, platform logs or bank receipts document work and earnings.'),
-    evidence: ['PD-09', 'PD-08', 'RC-01'],
-  },
-]);
+// WP107 (Sonnet XHigh run 3, Polish 5): one question does not make a FAQ, so the closing band is headed "How We Track Outcomes" and the answer sits directly under the H2 (no accordion, no FAQPage JSON-LD: the schema.org FAQPage needs a visible question and this page no longer prints one).
+const trackingAnswer = 'For every cohort, as agreed in the program scope, we plan a baseline at enrollment, follow-up surveys at 3, 6 and 12 months and monthly reports. Where available, offer letters, payslips, platform logs or bank receipts document work and earnings.';
 const bigdReport = sources.BIGD22;
 // WP73: the follow-up study is under way (BIGD's study page, BIGDSTUDY), so RC-10's sentence links that page.
 const bigdStudy = sources.BIGDSTUDY;
@@ -73,7 +66,6 @@ const jsonLd = [
       },
     ],
   }),
-  faqPage(faq, path),
 ];
 // WP60 (cycle-32 review, Grok R6): the classes band is headed "Freelancing Share by Classes Attended" and says "In this study, freelancing was higher among women who attended more classes." (it said "More Classes, More Freelancing" and "... were more likely to be
 // freelancing at follow-up", which reads as a dose effect; the trial randomized the offer of a place, not how many classes a woman attended). The anchor (#classes) is unchanged. The chart under it is titled "Share of Women Freelancing" (it was
@@ -85,7 +77,7 @@ const toc = [
   { id: 'context', label: 'Over Four Times the Average of Nine Training Trials' },
   { id: 'journal', label: 'Published in a Peer-Reviewed Journal' },
   { id: 'funders', label: 'What It Means for Funders' },
-  { id: 'faq', label: 'Questions Funders Ask' },
+  { id: 'outcomes', label: 'How We Track Outcomes' },
 ];
 // How to read this trial (closed disclosure): what was evaluated, who took part and the design. The wording is the former Evidence-and-Fit Brief and RC-07.
 const howToRead = `<ul>
@@ -178,8 +170,8 @@ const d = discoveryCta();
     </p>
   </ReportSection>
 
-  <ReportSection id="faq" title="Questions Funders Ask">
-    <Accordion items={faq} name="ie-faq" openFirst />
+  <ReportSection id="outcomes" title="How We Track Outcomes">
+    <p data-fact="PD-09 PD-08 RC-01">{trackingAnswer}</p>
   </ReportSection>
 
   <NextStep

@@ -1,7 +1,7 @@
 ---
 title: "CodersTrust and DoICT Shaping a Smart Future Through Trainer Empowerment"
 date: 2023-11-16
-updated: 2023-11-22
+updated: 2026-10-29
 topic: programs-events
 excerpt: "CodersTrust and the DoICT conclude a five-day Training of Trainers program with a closing ceremony at the ICT Tower in Agargaon, Dhaka."
 cover: ../../assets/images/news/coderstrust-and-doict-shaping-a-smart-future-through-trainer-empowerment/tot-closing-ceremony-at-ict-4.jpg
@@ -29,7 +29,7 @@ Mr. Md. Shamsul Arefin, Secretary of the Information and Communication Technolog
 
 ![Three men seated at a meeting table with microphones](../../assets/images/news/coderstrust-and-doict-shaping-a-smart-future-through-trainer-empowerment/tot-closing-ceremony-at-ict-5.jpg)
 
-“We are ready to invest our maximum efforts, leveraging our expertise and enthusiasm to guarantee the triumph of this significant project and make a transformative impact,” said Mr. Md. Shamsul Haque, CEO of CodersTrust.
+“We are ready to invest our maximum efforts, leveraging our expertise and enthusiasm to guarantee the triumph of this significant project and make a transformative impact,” said Mr. Md. Shamsul Haque, CEO of CodersTrust Bangladesh.
 
 He expressed his gratitude to the ICT division for choosing CodersTrust as a training partner.
 

@@ -180,7 +180,7 @@ test.describe('Outcomes 2026', () => {
 test.describe('Independent Evaluation', () => {
   test.use({ viewport: DESKTOP });
 
-  test('the result leads, the method is a closed disclosure and the FAQ asks how outcomes are tracked', async ({ page }) => {
+  test('the result leads, the method is a closed disclosure and the last band says how outcomes are tracked', async ({ page }) => {
     await open(page, 'impact/independent-evaluation/');
     await expect(page.getByRole('heading', { level: 1 })).toHaveText('Randomized Trial: Women Offered a Place Were More Likely to Work');
     await expect(page.getByRole('link', { name: /Read the BIGD Report \(2022\)/ })).toHaveCount(1);
@@ -192,7 +192,7 @@ test.describe('Independent Evaluation', () => {
     await expect(page.locator('#funders')).toContainText(/follow-up study of the program is under way/);
     await expect(page.locator('#funders')).not.toContainText(/five-year/i);
     await expect(page.locator('#funders')).toContainText('See How Partnerships Work');
-    await expect(page.locator('#faq')).toContainText('How Do You Track Outcomes?');
+    await expect(page.locator('#outcomes')).toContainText('follow-up surveys at 3, 6 and 12 months'); // WP107: the single-question FAQ became the "How We Track Outcomes" band
     await expect(page.locator('#classes h2')).toHaveText('Freelancing Share by Classes Attended');
     await expect(page.locator('#classes')).toContainText('Freelancing Share by Classes Attended');
   });

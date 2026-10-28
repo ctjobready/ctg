@@ -1,7 +1,7 @@
 ---
 title: "Enhanced Technology Skills Can Support Peace, Says Aziz Ahmad"
 date: 2023-05-04
-updated: 2026-10-13
+updated: 2026-10-29
 topic: leadership-advocacy
 excerpt: "Speaking on UN World Press Freedom Day, Aziz Ahmad says closing the digital divide and building technology skills can support peace."
 cover: ../../assets/images/news/aziz-ahmad-advocates-technology-skills-for-peace-at-un-world-press-freedom-day/aziz-ahmad-at-un-1.jpg
@@ -15,7 +15,7 @@ seoTitle: "Aziz Ahmad on Technology Skills and Peace"
 
 “We need to embrace all technology advancements with a clear understanding on digital good and digital bad and address the digital divide by reducing gaps in the society at large,” said Aziz Ahmad, Co-Founder and Chairman CodersTrust and CEO of UTC Associates, Inc. at a recent technology seminar held at the United Nations in New York City.
 
-Aziz Ahmad is a globally renowned technology innovator, entrepreneur, and speaker. He recently presented at a seminar on “Data Collection and Distribution Process as Enablers for the Exercise of Human Rights” held at United Nations Headquarters in New York organized by the United Nations University for Peace as a side event in observance of World Press Freedom Day 2023.
+Aziz Ahmad is a globally renowned technology innovator, entrepreneur, and speaker. He recently presented at a seminar on “Data Collection and Distribution Process as Enablers for the Exercise of Human Rights” held at United Nations Headquarters in New York organized by the University for Peace (UPEACE) as a side event in observance of World Press Freedom Day 2023.
 
 Peace and prosperity can be supported by enhancing the technology skills among the youths so that they can become resources for society, Ahmad underscored.
 
