@@ -1,0 +1,13 @@
+---
+// WP102 (owner answer 2026-10-28): links to National University's own PGD notices, where the page says intake and schedule are confirmed with each applicant.
+// The notices are in Bangla. External links carry the site's external-link icon and screen-reader text (as the header and footer do).
+import Icon from '../../system/Icon.astro';
+import { linkAttrs } from '../../../lib/url';
+import { NU_NOTICES } from './nuPgd';
+
+const links = NU_NOTICES.map((n) => ({ label: n.label, ...linkAttrs(n.href) }));
+---
+
+National University’s notices are published in Bangla: {links.map((l, i) => (
+  <>{i > 0 && ' and '}<a class="link" href={l.href} rel={l.rel}>{l.label}{l.external && <Icon name="arrow-up-right" size={14} />}{l.external && <span class="sr-only"> {l.srText}</span>}</a></>
+))}.

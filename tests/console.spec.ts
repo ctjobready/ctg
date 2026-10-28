@@ -79,7 +79,8 @@ async function exercise(page: Page): Promise<void> {
   // WP101: the back-to-top button is shown only while the reader scrolls up (and after one screen of scrolling), so scroll up a little before pressing it.
   // The press is a real mouse click at the button (Playwright's own scroll-into-view before a click would scroll down and hide it again).
   const top = page.locator('[data-backtotop]');
-  await page.waitForTimeout(150); // the scroll down above registers as a scroll down, not as part of the scroll up below
+  // The button reads the scroll direction once per animation frame. Wait until the scroll position has held still for a few frames (an earlier click can leave a smooth scroll running), so the scroll up below is read as a scroll up.
+  await page.evaluate(() => new Promise<void>((r) => { let y = -1; let still = 0; const tick = () => { still = scrollY === y ? still + 1 : 0; y = scrollY; if (still >= 5) r(); else requestAnimationFrame(tick); }; requestAnimationFrame(tick); }));
   await page.evaluate(() => window.scrollBy({ top: -200, behavior: 'instant' }));
   if (await top.evaluate((el) => el.classList.contains('is-active'))) {
     await expect(top).toHaveClass(/is-visible/);

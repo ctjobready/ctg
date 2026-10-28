@@ -203,7 +203,7 @@ test.describe('G1: the Investors and JobReady Platform "Contracted Scope" tiles 
     await open(page, JOBREADY);
     const tiles = page.locator('#why .jr__whystat');
     await expect(tiles).toHaveCount(3);
-    expect(await texts(page, '#why .jr__whyh')).toEqual(['Delivered Since 2014', 'In the Pipeline', 'Contracted Scope']);
+    expect(await texts(page, '#why .jr__whyh')).toEqual(['Delivered Since 2014', 'Being Onboarded', 'Contracted Scope']);
     await expect(page.locator('#why .jr__whynote')).toHaveCount(1);
     const third = tiles.nth(2);
     expect(compact(await third.locator('.jr__whynote').textContent())).toBe(CONTRACT_TOTAL_NOTE_SHORT.text);
@@ -409,7 +409,7 @@ test.describe('L1: Home slide 2 separates the National University’s learners f
   // WP60 (cycle-32 review, GPT-6.1 Sol G1): the qualifier was a sentence of its own after "onboarding 1.5M+ learners." (it had been in brackets): "They are National University’s own learners, not learners trained by CodersTrust."
   test('the owner-confirmed wording "onboarding 1.5M+ learners" is kept (GV-12), and the qualifier closes the same sentence', async ({ page }) => {
     expect(fact('GV-12').text).toContain('official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners');
-    expect(fact('SC-04').text.startsWith('1.5M+ National University learners in the onboarding pipeline')).toBe(true);
+    expect(fact('SC-04').text.startsWith('1.5M+ National University learners being onboarded (the university’s own learners, not learners trained by CodersTrust)')).toBe(true);
     await open(page, HOME);
     const lead = slide(page, 2).locator('.hs__lead');
     expect(compact(await lead.textContent()).endsWith(SENTENCE)).toBe(true);

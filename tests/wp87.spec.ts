@@ -163,7 +163,9 @@ test.describe('Item 10 (Major): no page links the PRWeb release, whose boilerpla
 test.describe('Item 11: the NU Post Graduate Diploma page keeps the partnership’s scope', () => {
   test('the Context band reads "National University’s official training partner for digital career skills and credentials since 2023"', () => {
     const sentence = 'CodersTrust has been National University’s official training partner for digital career skills and credentials since 2023.';
-    expect(visible(pageHtml('programs/nu-postgraduate-diploma/'))).toContain(sentence);
+    // WP102 (owner answer 2026-10-28): the NU overview describes CodersTrust as an affiliated college, not the official training partner
+    expect(visible(pageHtml('programs/nu-postgraduate-diploma/'))).toContain('CodersTrust is an affiliated college (College Code: 6634) under the National University of Bangladesh.');
+    expect(visible(pageHtml('programs/nu-postgraduate-diploma/'))).not.toContain(sentence);
     expect(visible(pageHtml('partner-with-us/governments/'))).toContain(sentence);
     expect(builtPages().filter((p) => visible(p.html).includes('the official training partner of National University since 2023')).map((p) => p.route)).toEqual([]);
   });

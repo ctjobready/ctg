@@ -29,10 +29,8 @@ const stat = (sid: string) => {
   return s;
 };
 const badges = ['PA-06', 'PA-08'];
-// WP90 (triage item 3): this page says the NU learners are being onboarded (the wording the other NU pages use). SC-04 keeps "onboarding pipeline" for the pages that read it; only this sentence changes, and the rest of SC-04 is read from the register.
-const nuPipeline = '1.5M+ National University learners in the onboarding pipeline';
-if (!fact('SC-04').text.startsWith(nuPipeline)) throw new Error('InvestorReach: SC-04 no longer opens with the pipeline wording this sentence replaces');
-const nuSentence = `1.5M+ National University learners being onboarded (the university’s own learners, not learners trained by CodersTrust)${fact('SC-04').text.slice(nuPipeline.length)}`;
+// WP102 (owner answer 2026-10-28): this page reads SC-04 whole. SC-04 says the NU learners are being onboarded, not learners trained by CodersTrust (WP90 had this page's own sentence for it).
+const nuSentence = fact('SC-04').text;
 ---
 
 <Section id={id} tone="white" aria-labelledby={`${id}-h`}>

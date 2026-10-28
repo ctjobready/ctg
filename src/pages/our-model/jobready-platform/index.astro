@@ -51,11 +51,10 @@ const toc = [
   { id: 'roadmap', label: 'Planned Adaptive Learning' },
   { id: 'faq', label: 'Questions About the Platform' },
 ];
-// WP60 (cycle-32 review, Grok R4): the "In the Pipeline" tile read "1.5M+ National University learners in the onboarding pipeline" with no word that they are not CodersTrust's learners (the Universities and Campus pages say it in their band lead, Investors in "Separately, and not counted in the
-// delivered reach"). The tile's label is SC-04's own with the clause Home's government slide uses (NU_NOT_TRAINED, src/data/copy.ts): "... in the onboarding pipeline, not learners trained by CodersTrust". The register's label is unchanged, so the other pages that show it are too.
-const pipelineBase = fact('SC-04').stat?.label;
-if (!pipelineBase) throw new Error('jobready-platform: SC-04 no longer has a stat label');
-const pipelineLabel = `${pipelineBase}, ${NU_NOT_TRAINED}`;
+// WP60 (cycle-32 review, Grok R4): the tile says the 1.5M+ are not CodersTrust's learners: SC-04's label plus NU_NOT_TRAINED (src/data/copy.ts). WP102: headed "Being Onboarded"; the label reads "National University learners being onboarded, not learners trained by CodersTrust".
+const onboardBase = fact('SC-04').stat?.label;
+if (!onboardBase) throw new Error('jobready-platform: SC-04 no longer has a stat label');
+const onboardLabel = `${onboardBase}, ${NU_NOT_TRAINED}`;
 // WP64 (cycle-36 review, Grok; the same repeat as the Programs hub's and Investors' tiles): the group is headed "Delivered Since 2014", so the learners tile reads "130,000+ learners trained" (SC-01's label without " since 2014", read from the register).
 const learnersLabel = withoutSince2014(fact('SC-01').stat?.label ?? '');
 const f = fundingCta();
@@ -99,13 +98,13 @@ const d = discoveryCta();
     <p><a class="link" href={JOBREADY} rel={linkAttrs(JOBREADY).rel}>Visit jobready.global<Icon name="arrow-up-right" size={16} /><span class="sr-only"> (opens JobReady.global)</span></a></p>
   </ReportSection>
 
-  <!-- WP46 (cycle-22 review): the band shows CodersTrust's record (delivered, in the pipeline, contracted), not evidence that institutions adopt JobReady, so the heading says so. The id stays: tests and deep links use #why. -->
+  <!-- WP46 (cycle-22 review): the band shows CodersTrust's record (delivered, being onboarded, contracted), not evidence that institutions adopt JobReady, so the heading says so. The id stays: tests and deep links use #why. -->
   <ReportSection id="why" title="The Record Behind JobReady">
     <p data-fact="IN-04">JobReady builds on CodersTrust’s delivery record, its role with National University and its institutional reach.</p>
-    <!-- WP25s: three labelled groups, so the National University pipeline figure (not CodersTrust-trained learners) never reads as part of "Delivered". -->
+    <!-- WP25s: three labelled groups, so the National University onboarding figure (not CodersTrust-trained learners) never reads as part of "Delivered". WP102: the middle group is "Being Onboarded". -->
     <div class="jr__why">
       <div class="jr__whystat"><h3 class="jr__whyh">Delivered Since 2014</h3><StatusTag status="Delivered" /><FactStat id="SC-01" label={learnersLabel} /></div>
-      <div class="jr__whystat"><h3 class="jr__whyh">In the Pipeline</h3><FactStat id="SC-04" label={pipelineLabel} /></div>
+      <div class="jr__whystat"><h3 class="jr__whyh">Being Onboarded</h3><FactStat id="SC-04" label={onboardLabel} /></div>
       <div class="jr__whystat"><h3 class="jr__whyh">Contracted Scope</h3><EvidenceTag type="Contract Scope" /><FactStat id="SC-06" /><p class="jr__whynote" data-fact={CONTRACT_TOTAL_NOTE_SHORT.facts.join(' ')}>{CONTRACT_TOTAL_NOTE_SHORT.text}</p></div>
     </div>
     <p class="jr__links">

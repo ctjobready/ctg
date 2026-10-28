@@ -294,7 +294,7 @@ test.describe('Partner with Us', () => {
 });
 
 test.describe('Our Model and Investors', () => {
-  test('the platform names two marketplaces, and the National University pipeline sits in its own group', async ({ page }) => {
+  test('the platform names two marketplaces, and the National University onboarding figure sits in its own group', async ({ page }) => {
     await open(page, 'our-model/jobready-platform/');
     const text = compact(await main(page));
     // WP49 (cycle-24 review): the "What Is Live Today" callout is gone; the status table names the two marketplaces as two rows, each in pre-launch (never "the employer and gig-work marketplaces")
@@ -304,8 +304,8 @@ test.describe('Our Model and Investors', () => {
     expect(text).not.toMatch(/employer and gig-work marketplaces/i);
     const why = page.locator('#why');
     const tile = (title: string) => why.locator('.jr__whystat', { has: page.getByRole('heading', { level: 3, name: title }) });
-    await expect(tile('In the Pipeline')).toContainText('1.5M+');
-    await expect(tile('In the Pipeline').locator('.status-tag')).toHaveCount(0);
+    await expect(tile('Being Onboarded')).toContainText('1.5M+');
+    await expect(tile('Being Onboarded').locator('.status-tag')).toHaveCount(0);
     await expect(tile('Delivered Since 2014').locator('.status-tag')).toHaveText('Delivered');
     await expect(tile('Delivered Since 2014')).not.toContainText('1.5M+');
   });

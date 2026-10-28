@@ -30,8 +30,8 @@ test.describe('WP90 A1: SC-02 detail is shortened, the figures are unchanged', (
     expect(fact('SC-02').text).toContain('including the 2,400 CodersTrust also trained directly');
   });
 
-  test('SC-04 keeps the "onboarding pipeline" wording that the other pages read', () => {
-    expect(fact('SC-04').text.startsWith('1.5M+ National University learners in the onboarding pipeline')).toBe(true);
+  test('SC-04 opens with the "being onboarded" wording (WP102 retired "onboarding pipeline")', () => {
+    expect(fact('SC-04').text.startsWith('1.5M+ National University learners being onboarded (the university’s own learners, not learners trained by CodersTrust)')).toBe(true);
   });
 
   test('the Investors track-record note prints the shortened detail and the Her Power overlap sentence', async ({ page }) => {

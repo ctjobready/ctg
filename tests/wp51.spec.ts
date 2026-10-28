@@ -355,7 +355,7 @@ test.describe('Home: the first Imagine card and the Learner Journeys lead (items
 
   test('the Learner Journeys lead names Proof in Practice, the band it counts from, which comes before it', async ({ page }) => {
     await open(page, '');
-    expect(compact(await page.locator('#journeys .sh__lead').textContent())).toBe('One learner from each program in Proof in Practice: individual stories, not typical or promised outcomes.');
+    expect(compact(await page.locator('#journeys .sh__lead').textContent())).toBe('One learner from each program shown in Proof in Practice: individual stories, not typical or promised outcomes.');
     await expect(page.locator('#cases h2')).toHaveText('Proof in Practice');
     const order = await page.evaluate(() => Boolean(document.getElementById('cases')!.compareDocumentPosition(document.getElementById('journeys')!) & Node.DOCUMENT_POSITION_FOLLOWING));
     expect(order).toBe(true);

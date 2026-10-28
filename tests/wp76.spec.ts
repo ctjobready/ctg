@@ -253,7 +253,7 @@ test.describe('WP76 item 1: the overview page, the Programs hub and the menus na
   test('"Choose Your Course" says "Four courses, in digital marketing, information and communication technology (ICT), cyber security and data analytics, ..." over four cards in the diploma’s order, each linked, with its banner and three topics', async ({ page }) => {
     await open(page, NU);
     await expect(page.locator('#courses h2')).toHaveText('Choose Your Course');
-    expect(compact(await page.locator('#courses .lead').textContent())).toBe('Four courses, in digital marketing, information and communication technology (ICT), cyber security and data analytics, delivered by CodersTrust under National University’s official training partnership.');
+    expect(compact(await page.locator('#courses .lead').textContent())).toBe('Four courses, in digital marketing, information and communication technology (ICT), cyber security and data analytics, delivered by CodersTrust, an affiliated college (College Code: 6634) under the National University of Bangladesh.');
     expect(await texts(page, '#courses article .course__title')).toEqual(COURSES.map((c) => c.title));
     for (const [i, c] of COURSES.entries()) {
       const card = page.locator('#courses article').nth(i);
@@ -264,7 +264,7 @@ test.describe('WP76 item 1: the overview page, the Programs hub and the menus na
       expect(await card.locator('img').getAttribute('alt'), c.slug).toContain('course banner from National University and CodersTrust');
     }
     // the grid carries the register facts it rests on: the partnership (SC-04) and the four courses (NU-13)
-    expect(await page.locator('#courses .courses').getAttribute('data-fact')).toBe('SC-04 NU-13');
+    expect(await page.locator('#courses .courses').getAttribute('data-fact')).toBe('NU-04 NU-13');
   });
 
   test('the diploma’s JSON-LD list has four courses, in order, each with its URL; the page says "Four courses", never "Two courses"', async ({ page }) => {
@@ -407,7 +407,8 @@ test.describe('WP76 item 1: the two new course pages follow the course template'
       expect(mine.actions.some((a) => a.startsWith('Apply Now') && a.includes('docs.google.com/forms'))).toBe(true);
       expect(mine.actions).toEqual(ict.actions);
       expect(mine.labels).toEqual(['Eligibility', 'Duration', 'Credit Hours and Subjects', 'Schedule and Intake', 'Delivery', 'Teaching Location', 'Program Fee', 'Payment', 'Recognition', 'How to Apply']);
-      expect(mine.values).toContain('Admissions confirms intake dates and schedule with each applicant.');
+      // WP102: the schedule value now also links National University's notices, so it starts with the admissions sentence
+      expect(mine.values.some((v) => v.startsWith('Admissions confirms intake dates and schedule with each applicant.'))).toBe(true);
       expect(mine.values).toContain('Admissions confirms the teaching location with each applicant.');
       // a register fact ends with its full stop in the table ("<Fact>" adds it)
       expect(mine.values).toContain(`${ELIGIBILITY}.`);

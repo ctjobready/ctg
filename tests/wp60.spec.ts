@@ -150,13 +150,14 @@ test.describe('R2 (Grok): Maria Dewan first came across Her Power, where CodersT
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 test.describe('R4 (Grok): the JobReady Platform pipeline tile says the 1.5M+ are not learners trained by CodersTrust', () => {
-  const BASE = 'National University learners in the onboarding pipeline';
+  // WP102: SC-04's label is "being onboarded"; the tile still appends NU_NOT_TRAINED, as WP60 set it.
+  const BASE = 'National University learners being onboarded';
 
-  test('the tile reads SC-04’s label plus the clause Home’s slide 2 uses; the register’s label is unchanged', async ({ page }) => {
+  test('the tile reads SC-04’s label under "Being Onboarded"; the clause Home’s slide 2 uses stays on Home', async ({ page }) => {
     expect(NU_NOT_TRAINED).toBe('not learners trained by CodersTrust');
     expect(fact('SC-04').stat?.label).toBe(BASE);
     await open(page, 'our-model/jobready-platform/');
-    const tile = page.locator('#why .jr__whystat', { has: page.getByRole('heading', { level: 3, name: 'In the Pipeline' }) });
+    const tile = page.locator('#why .jr__whystat', { has: page.getByRole('heading', { level: 3, name: 'Being Onboarded' }) });
     await expect(tile).toHaveCount(1);
     await expect(tile.locator('.stat__label')).toHaveText(`${BASE}, ${NU_NOT_TRAINED}`);
     await expect(tile).toContainText('1.5M+');

@@ -207,7 +207,7 @@ test.describe('JobReady Platform: the record band is "The Record Behind JobReady
     expect(await toc.getAttribute('href')).toMatch(/#why$/);
     expect(await texts(page, '.lf-toc nav a')).toEqual(['Four Jobs, One Platform', 'Rollout Status', 'The Record Behind JobReady', 'Planned Adaptive Learning', 'Questions About the Platform']);
     // the band still shows the three labelled groups (delivered, in the pipeline, contracted scope)
-    expect(await texts(page, '#why .jr__whyh')).toEqual(['Delivered Since 2014', 'In the Pipeline', 'Contracted Scope']);
+    expect(await texts(page, '#why .jr__whyh')).toEqual(['Delivered Since 2014', 'Being Onboarded', 'Contracted Scope']);
     expect(await mainText(page)).not.toContain('Why Institutions Choose JobReady');
     expect(builtPages().filter((p) => p.html.includes('Why Institutions Choose JobReady')).map((p) => p.route)).toEqual([]);
   });

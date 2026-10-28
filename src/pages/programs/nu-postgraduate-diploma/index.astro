@@ -22,8 +22,9 @@ import MechanismSection from '../../../components/pages/programs/MechanismSectio
 import FaqSection from '../../../components/pages/programs/FaqSection.astro';
 import { anchor, faqNode, type FaqSource } from '../../../components/pages/programs/faq';
 import { PAGE_UPDATED } from '../../../components/pages/programs/meta';
-import { NU_ADMISSIONS_NOTE, NU_APPLY, NU_CALL, NU_CALL_NUMBER, NU_CALL_TEXT, NU_COURSE_COPY, NU_COURSE_SUBJECT, NU_LOCATION_NOTE, NU_NAME, NU_PATH, NU_SCHEDULE_NOTE, nuCourses, nuOverview } from '../../../components/pages/programs/nuPgd';
-import { HEADLINE, NU_ELIGIBILITY, NU_PARTNERSHIP_STATEMENT, VALUE_PROPOSITION } from '../../../data/copy';
+import { NU_ADMISSIONS_NOTE, NU_AFFILIATION, NU_APPLY, NU_CALL, NU_CALL_NUMBER, NU_CALL_TEXT, NU_COURSE_COPY, NU_COURSE_SUBJECT, NU_LOCATION_NOTE, NU_NAME, NU_NOTICES, NU_PATH, NU_SCHEDULE_NOTE, nuCourses, nuOverview } from '../../../components/pages/programs/nuPgd';
+import NuNoticeLinks from '../../../components/pages/programs/NuNoticeLinks.astro';
+import { HEADLINE, NU_ELIGIBILITY, VALUE_PROPOSITION } from '../../../data/copy';
 import { COURSES_URL } from '../../../lib/site';
 import { formatDate, isoDate, joinList } from '../../../lib/format';
 import { pageUrl, webPage } from '../../../lib/schema';
@@ -37,12 +38,13 @@ const applyLink = linkAttrs(apply.href);
 const courses = await nuCourses();
 // WP76: "Four courses, in digital marketing, ICT, cyber security and data analytics, delivered by ..." (it said "Two courses, delivered by ..."), built from the collection so the count and the names cannot drift from the cards below it
 const COUNT_WORD = ['No', 'One', 'Two', 'Three', 'Four', 'Five', 'Six'];
-const coursesLead = `${COUNT_WORD[courses.length]} courses, in ${joinList(courses.map((c) => NU_COURSE_SUBJECT[c.slug]))}, delivered by CodersTrust under National University’s official training partnership.`;
+// WP102 (owner answer 2026-10-28): on the NU pages CodersTrust is described only as an affiliated college (College Code: 6634), not as the official training partner.
+const coursesLead = `${COUNT_WORD[courses.length]} courses, in ${joinList(courses.map((c) => NU_COURSE_SUBJECT[c.slug]))}, delivered by CodersTrust, an affiliated college (College Code: 6634) under the National University of Bangladesh.`;
 
 const faqSources: FaqSource[] = [
   // WP27: admissions' own eligibility sentence (NU-01), not "if you hold a degree".
   { q: 'Is the NU Post Graduate Diploma Right for Me?', html: `Eligibility: ${NU_ELIGIBILITY}. It is right for you if you meet that and want a digital career. Not right if you want a short self-paced course: see ${anchor(COURSES_URL, 'JobReady.global')}.`, evidence: ['NU-01'] },
-  { q: 'Where Do I Find Eligibility, Schedule and Fees?', html: `The eligibility, duration, fee, payment and recognition details are in Before You Apply above. ${NU_ADMISSIONS_NOTE} To ask, call ${anchor(NU_CALL.href, NU_CALL_NUMBER)}.` },
+  { q: 'Where Do I Find Eligibility, Schedule and Fees?', html: `The eligibility, duration, fee, payment and recognition details are in Before You Apply above. ${NU_ADMISSIONS_NOTE} National University’s notices are published in Bangla: ${NU_NOTICES.map((n) => anchor(n.href, n.label)).join(' and ')}. To ask, call ${anchor(NU_CALL.href, NU_CALL_NUMBER)}.` },
   { q: 'How Do I Apply?', html: `Complete the ${anchor(apply.href, 'application form')}. Our admissions team contacts you with the next steps.` },
 ];
 
@@ -74,8 +76,8 @@ const jsonLd = [
   </Hero>
 
   <!-- WP22: the course-choice cards sit directly under the hero (they were the C6 band). WP76 (owner answer 2026-10-22: the diploma has four courses): four cards, and the lead names all four (NU-13 states them; SC-04 the partnership). -->
-  <MechanismSection id="courses" title="Choose Your Course" lead={coursesLead} eyebrow="The Courses" factIds={['SC-04', 'NU-13']} tone="airy">
-    <div class="courses" data-fact="SC-04 NU-13">
+  <MechanismSection id="courses" title="Choose Your Course" lead={coursesLead} eyebrow="The Courses" factIds={['NU-04', 'NU-13']} tone="airy">
+    <div class="courses" data-fact="NU-04 NU-13">
       {
         courses.map((c) => (
           <CourseCard
@@ -108,7 +110,7 @@ const jsonLd = [
       <div class="ba__row"><dt>Eligibility</dt><dd><Fact id="NU-01" /></dd></div>
       <div class="ba__row"><dt>Duration</dt><dd><Fact id="NU-02" /></dd></div>
       <div class="ba__row"><dt>Credit Hours and Subjects (Each Course)</dt><dd><Fact id="NU-09" /></dd></div>
-      <div class="ba__row"><dt>Schedule and Intake</dt><dd>{NU_SCHEDULE_NOTE}</dd></div>
+      <div class="ba__row"><dt>Schedule and Intake</dt><dd>{NU_SCHEDULE_NOTE} <NuNoticeLinks /></dd></div>
       <div class="ba__row"><dt>Delivery</dt><dd><Fact id="NU-10" /></dd></div>
       <div class="ba__row"><dt>Teaching Location</dt><dd>{NU_LOCATION_NOTE}</dd></div>
       <div class="ba__row"><dt>Program Fee</dt><dd><Fact id="NU-03" /></dd></div>
@@ -124,9 +126,9 @@ const jsonLd = [
     title="Delivered with National University"
     statIds={['SC-05']}
     partnerGroup="academic"
-    method={{ text: 'Practical digital-skills courses, delivered by CodersTrust under National University’s training partnership.', factId: 'SC-04' }}
+    method={{ text: 'Practical digital-skills courses, delivered by CodersTrust.', factId: 'NU-04' }}
   >
-    <p data-fact="SC-04">{NU_PARTNERSHIP_STATEMENT}</p>
+    <p data-fact="NU-04">{NU_AFFILIATION}</p>
   </GuideSection>
 
   <!-- C7. WP34 (cycle-11 review): no trial or survey figure is shown on the admissions page (they are not this diploma's results); a one-link strip points to the wider programs' evidence. The trial relevance line has no band to sit in (scripts/check-facts.mjs allows that, as on the two employer pages). -->

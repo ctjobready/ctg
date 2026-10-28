@@ -88,7 +88,7 @@ test.describe('Item 2: course titles use NU’s course names', () => {
   test('the overview cards carry the four course names, in order, with the full ICT name', async ({ page }) => {
     await open(page, OVERVIEW);
     expect(compact(await page.locator('#courses .lead').textContent())).toBe(
-      'Four courses, in digital marketing, information and communication technology (ICT), cyber security and data analytics, delivered by CodersTrust under National University’s official training partnership.',
+      'Four courses, in digital marketing, information and communication technology (ICT), cyber security and data analytics, delivered by CodersTrust, an affiliated college (College Code: 6634) under the National University of Bangladesh.',
     );
     const titles = (await page.locator('#courses article .course__title').allTextContents()).map(compact);
     expect(titles).toEqual([

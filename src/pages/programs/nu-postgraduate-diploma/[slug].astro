@@ -12,6 +12,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 import Hero from '../../../components/system/Hero.astro';
 import Button from '../../../components/system/Button.astro';
 import Icon from '../../../components/system/Icon.astro';
+import NuNoticeLinks from '../../../components/pages/programs/NuNoticeLinks.astro';
 import Fact from '../../../components/facts/Fact.astro';
 import Section from '../../../components/ui/Section.astro';
 import SectionHeader from '../../../components/ui/SectionHeader.astro';
@@ -82,7 +83,7 @@ const jsonLd = [
       <div class="ba__row"><dt>Eligibility</dt><dd><Fact id={eligibilityId} /></dd></div>
       <div class="ba__row"><dt>Duration</dt><dd><Fact id="NU-02" /></dd></div>
       <div class="ba__row"><dt>Credit Hours and Subjects</dt><dd><Fact id="NU-09" /></dd></div>
-      <div class="ba__row"><dt>Schedule and Intake</dt><dd>{NU_SCHEDULE_NOTE}</dd></div>
+      <div class="ba__row"><dt>Schedule and Intake</dt><dd>{NU_SCHEDULE_NOTE} <NuNoticeLinks /></dd></div>
       <div class="ba__row"><dt>Delivery</dt><dd><Fact id="NU-10" /></dd></div>
       <div class="ba__row"><dt>Teaching Location</dt><dd>{NU_LOCATION_NOTE}</dd></div>
       <div class="ba__row"><dt>Program Fee</dt><dd><Fact id="NU-03" /></dd></div>

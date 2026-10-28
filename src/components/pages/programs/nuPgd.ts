@@ -1,5 +1,6 @@
 import { getCollection } from 'astro:content';
 import { CTAS } from '../../../data/ctas';
+import { fact } from '../../../data/facts';
 
 /**
  * NU Post Graduate Diploma content, read from the `nu-pgd` collection (legacy-page content, NU sign-off pending).
@@ -24,6 +25,18 @@ export const NU_LOCATION_NOTE = 'Admissions confirms the teaching location with 
 /** WP44 (cycle-21 review): the FAQ answer states the schedule and the location in one sentence (the rows keep NU_SCHEDULE_NOTE and NU_LOCATION_NOTE). */
 export const NU_ADMISSIONS_NOTE = 'Admissions confirms intake dates, schedule and teaching location with each applicant.';
 export const NU_NAME = 'National University Post Graduate Diploma';
+/** WP102 (owner answer 2026-10-28): National University's own notices for the diploma, published in Bangla. Linked where the pages say intake and schedule are confirmed with each applicant. */
+export const NU_NOTICES: { label: string; href: string }[] = [
+  { label: 'National University PGD Admission Notices', href: 'https://pgd.nu.ac.bd/admission-notices-pgd.php' },
+  { label: 'National University PGD Recent Notices', href: 'https://pgd.nu.ac.bd/all-recent-notices-pgd.php' },
+];
+/** WP102: on the NU pages CodersTrust is described only as an affiliated college (NU-04, the Recognition row), never as the official training partner (SC-04 keeps that wording for the other pages). */
+const nuAffiliation = (): string => {
+  const t = fact('NU-04').text;
+  if (!t.startsWith('CodersTrust is an affiliated college (College Code: 6634) under the National University of Bangladesh')) throw new Error('nuPgd: NU-04 no longer reads "CodersTrust is an affiliated college (College Code: 6634) under the National University of Bangladesh"');
+  return `${t}.`;
+};
+export const NU_AFFILIATION: string = nuAffiliation();
 /** WP21: one name for each NU track on every surface (menu, footer, <title>, H1, cards, breadcrumbs). Official module titles are untouched. */
 export const NU_COURSE_NAME: Record<string, string> = {
   'digital-marketing': 'NU Post Graduate Diploma in Digital Marketing',
