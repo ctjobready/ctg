@@ -24,11 +24,12 @@
 // WP51 (cycle-26 review): the options lead no longer describes the website ("Program options are shown without prices; the indicative budget is shared in the discovery session."): it says "We share an indicative budget in the discovery session."
 // WP52 (cycle-27 reviews, Claude): the hero's ministry-briefing text link is labelled with its audience, "Governments: Request a Briefing for Your Ministry" (the label sits outside the link, as in CTABand's `routes`; the one primary button is unchanged);
 // the glance's first row says "Bangladesh is where most delivery has been" where it said "Bangladesh is the reference implementation" (IN-02 says it the same way).
-// WP53 (owner follow-up, 2026-10-16, consistent with that change): the Bangladesh band is headed "Bangladesh: Delivery Base and 2030 Aim" ("Reference" was the same jargon), and the options band's eyebrow is "Options" (it was "Start", directly above "Three Ways to Start, ...").
+// WP53 (owner follow-up, 2026-10-16, consistent with that change): the Bangladesh band was headed "Bangladesh: Delivery Base and 2030 Aim" ("Reference" was the same jargon; WP99: now "Delivery Base in Bangladesh and the 2030 Aim"), and the options band's eyebrow is "Options" (it was "Start", directly above "Three Ways to Start, ...").
 // WP57 (cycle-29 review, GPT-6.1 Sol G2): the three-card C8 band ("Built Around What Funders and Agencies Ask", #features) is gone: it restated At a Glance and "One Delivery Model", so its one new detail (what evaluators check earnings against) is in the glance's
 // Reporting row. The C2 pains stay (the challenge band); scripts/check-facts.mjs allows this page to carry no C8 band (PAIN_C8_OPTIONAL), and nothing links to the removed anchor. The photograph band takes the white ground the C8 band had, so white and airy still alternate after the case-study carousel.
 // WP60 (cycle-32 reviews, Grok R5 and Claude S3): the "Will This Work in Our Country?" answer ends "CodersTrust has worked in 16 countries and territories; most delivery has been in Bangladesh." (it said "has worked since 2014 in 16 ...", which reads as all 16 since 2014);
-// the 2 million 2030 aim carries the dependency clause wherever it is stated (AIM_DEPENDENCY, src/data/copy.ts, the clause the Programs hub card had): the "Designed for Three Regions" row says it, and the 2030 aim tile's note reads it in place of "that depends on".
+// the 2030 aim carries the dependency clause wherever it is stated (AIM_DEPENDENCY, src/data/copy.ts, the clause the Programs hub card had): the "Designed for Three Regions" row says it, and the 2030 aim tile's note reads it in place of "that depends on".
+// WP99 (owner answers 2026-10-28, Q1): the aim is 1 million educated youth (Higher Secondary Certificate or above) in Bangladesh and similar countries (IN-01; the row prints AIM_STATEMENT), the Bangladesh band is headed "Delivery Base in Bangladesh and the 2030 Aim" (it reached beyond Bangladesh), and the tile note says "An ambition" (it said "A national ambition"). The meta description is unchanged ("designed for three regions" is pinned, and 155 characters leave no room for "and similar countries").
 // WP60 (cycle-32 review, GPT-6.1 Sol G2): the "Can You Deliver at National Scale?" answer says "Larger programs are designed to run in phases, up to 10 cohorts in parallel, with certified local facilitators." (it said "We scale in phases, ...", which reads as an established configuration); the 100,000+ sentence after it is unchanged.
 // WP62 (cycle-34 reviews, Sonnet and Gemini): the "Will This Work in Our Country?" answer reads "Our outcome evidence comes mainly from Bangladesh; the Kosovo pilot adds program results from outside it, and Digital Jobs Albania adds delivery experience." (Albania has no outcome figures,
 // so it adds experience, not results; the answer also rests on TL-05 now); the "Where They Work" card says "... outcome tracking for 12 months after each course." (the months are PD-02's, TRACKING_MONTHS).
@@ -63,7 +64,7 @@ import NextSteps from '../../components/pages/programs/NextSteps.astro';
 import { faqNode, type FaqSource } from '../../components/pages/programs/faq';
 import { KOSOVO_WOW_TILE_LABEL, WHERE_THEY_WORK_TEXT } from '../../components/pages/partners/partners';
 import { C14_FIRST, ctaFor, serviceNode, statValue } from '../../components/pages/programs/meta';
-import { AIM_DEPENDENCY, C14, FUNDER_PAINS, MICRO_COMMITMENT, POSITIONING, PROGRAM_OPTIONS, SAFEGUARDING, SCORECARD_LABELS, WB_KOSOVO, painForList } from '../../data/copy';
+import { AIM_DEPENDENCY, AIM_STATEMENT, C14, FUNDER_PAINS, MICRO_COMMITMENT, POSITIONING, PROGRAM_OPTIONS, SAFEGUARDING, SCORECARD_LABELS, WB_KOSOVO, painForList } from '../../data/copy';
 import { fact } from '../../data/facts';
 import { galleryPhotos } from '../../data/photos';
 import { formatDate, isoDate } from '../../lib/format';
@@ -132,9 +133,9 @@ const measures = [...SCORECARD_LABELS];
   <ProgramGlance
     title="YouthWIDE at a Glance"
     rows={[
-      // WP45 (cycle-21 review): IN-01 is an initiative that AIMS to train 2 million vulnerable youth by 2030, not an existing national program, so the row says "aims" (and the figure is the band's tile below, not retyped here).
-      // WP48 (cycle-23 review): the row says "2 million vulnerable youth", IN-01's own wording, as the Programs menu, Home and the Programs hub do.
-      { label: 'Designed for Three Regions', text: `South Asia, the Middle East and North Africa, and Sub-Saharan Africa, as co-funded country cohorts. Bangladesh is where most delivery has been, with an initiative of its own that aims to train 2 million vulnerable youth by 2030, ${AIM_DEPENDENCY}.`, facts: ['IN-02', 'IN-01'] },
+      // WP45 (cycle-21 review): IN-01 is an initiative that AIMS to train youth by 2030, not an existing national program, so the row says "aims" (and the figure is the band's tile below, not retyped here).
+      // WP48 (cycle-23 review): the row says the aim in IN-01's own wording, as the Programs hub does (WP99: AIM_STATEMENT).
+      { label: 'Designed for Three Regions', text: `South Asia, the Middle East and North Africa, and Sub-Saharan Africa, as co-funded country cohorts. Bangladesh is where most delivery has been. YouthWIDE aims to train ${AIM_STATEMENT}.`, facts: ['IN-02', 'IN-01'] },
       { label: 'Who It Is For', text: 'Governments, development partners and funders who want to report on educated, unemployed and underemployed young people moving into paid digital work.' },
       { label: 'Delivery', text: 'Blended training in existing labs and colleges, with certified local facilitators; a central team coordinating local labs for larger programs.', facts: ['PD-06'] },
       { label: 'Training and Mentoring', text: `${hours} training hours per certification with the exam fee included, then three months of milestone-based mentoring.`, facts: ['PD-01', 'PD-02', 'PD-02a'] },
@@ -177,12 +178,12 @@ const measures = [...SCORECARD_LABELS];
   />
 
   <!-- The Bangladesh initiative: one band (WP30d), built from the shared C6 band (eyebrow, headline, one paragraph, proof, text link). #governments is linked from the Governments partner page and a case study.
-       WP45 (cycle-21 review): not headed "The National Initiative", which read as an existing national program (IN-01 is an initiative that aims to train 2 million vulnerable youth by 2030); WP53: headed "Bangladesh: Delivery Base and 2030 Aim" (it said "Reference Country"). -->
+       WP45 (cycle-21 review): not headed "The National Initiative", which read as an existing national program (IN-01 is an initiative that aims to train youth by 2030); WP53: headed "Bangladesh: Delivery Base and 2030 Aim" (it said "Reference Country"); WP99 (owner answer 2026-10-28, Q1): headed "Delivery Base in Bangladesh and the 2030 Aim", because the aim reaches beyond Bangladesh. -->
   <MechanismSection
     id="governments"
     tone="airy"
     eyebrow="For Governments and Ministries"
-    title="Bangladesh: Delivery Base and 2030 Aim"
+    title="Delivery Base in Bangladesh and the 2030 Aim"
     lead="Designed for delivery through existing government digital labs and colleges; lab access and seats are confirmed per program."
     link={{ label: cofunding.label, href: cofunding.href }}
   >
@@ -190,7 +191,7 @@ const measures = [...SCORECARD_LABELS];
       <div class="mech-target" data-reveal>
         <StatusTag status="Target" />
         <FactStat id="IN-01" />
-        <p class="mech-target__note">A national ambition for 2030, {AIM_DEPENDENCY}; not a delivered figure.</p>
+        <p class="mech-target__note">An ambition for 2030, {AIM_DEPENDENCY}; not a delivered figure.</p>
       </div>
       <div class="mech-stat"><FactStat id="GV-09" /></div>
       <div class="mech-stat"><StatusTag status="Delivered" /><FactStat id="GV-13" /></div>
@@ -207,7 +208,7 @@ const measures = [...SCORECARD_LABELS];
     chart="trial"
     chip={false}
     trialSentence
-    lead="Trial figures are for a predecessor program. Survey figures are among surveyed completers, from the October 2026 survey."
+    lead="Trial figures are for CodersTrust’s WSDFM program. Survey figures are among surveyed completers, from the October 2026 survey."
     statIds={['RC-02']}
     surveyStatIds={['OC-03']}
     links={[{ label: 'Impact Survey 2026', href: '/impact/outcomes-2026/' }, { label: 'The Randomized Trial', href: '/impact/independent-evaluation/' }]}

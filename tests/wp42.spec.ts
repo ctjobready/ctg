@@ -141,7 +141,7 @@ test.describe('Investors: the delivered figures lead the track-record band (item
 
 test.describe('Local Partners: the evidence is a two-line strip (item 2)', () => {
   const URL = 'partner-with-us/local-partners/';
-  const TRIAL = 'A randomized trial of the predecessor WSDFM program found women offered a place were 10.3 percentage points more likely to be employed.';
+  const TRIAL = 'A randomized trial of CodersTrust’s WSDFM program found women offered a place were 10.3 percentage points more likely to be employed.';
   const SURVEY = 'Among surveyed completers, employment was 78.2% at the October 2026 survey, up from 48.0% before training.';
 
   test('the strip keeps the band’s anchor, says the trial and the survey in one line each, and links the two evidence pages', async ({ page }) => {
@@ -342,7 +342,7 @@ test.describe('Home: the government slide is second (item 10)', () => {
   test('the carousel runs trial, government scale, survey, program results; the government slide’s text and links are unchanged', async ({ page }) => {
     await open(page, '');
     expect(await texts(page, '#results [data-hs-slide] h3')).toEqual([
-      // WP48 (cycle-23 review): the heading named the predecessor program; WP50 (cycle-25 review): the eyebrow does ("Randomized Trial of a Predecessor Program"), and the heading is short again
+      // WP48 (cycle-23 review): the heading named CodersTrust’s WSDFM program; WP50 (cycle-25 review): the eyebrow does ("Randomized Trial of CodersTrust’s WSDFM Program"), and the heading is short again
       'Women Offered a Place Earned an Estimated 41% More per Month',
       'Six Government Contracts and a National University Partnership',
       'Surveyed Completers Report Higher Income',
@@ -410,7 +410,7 @@ test.describe('Home: the comparison table is one style (item 13)', () => {
       ['Mentoring', 'Three months of milestone-based mentoring', 'Varies; often self-directed'],
       ['Work Entry', 'Placement support into local, remote and global work', 'Work-entry support depends on the provider and package'],
       ['Outcome Tracking', 'Included for every cohort, as agreed in the program scope: monthly reports and follow-up surveys at 3, 6 and 12 months', 'Reporting emphasis varies; check whether employment outcomes are included'],
-      ['Independent Evidence', 'One randomized trial of a predecessor program (200 hours, women in Dhaka); independent evaluation of your cohort welcome', 'Varies'],
+      ['Independent Evidence', 'One randomized trial of CodersTrust’s WSDFM program (200 hours, women in Dhaka); independent evaluation of your cohort welcome', 'Varies'],
     ]);
     for (const [, ...cells] of rows) {
       for (const cell of cells) {

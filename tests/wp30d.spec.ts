@@ -74,7 +74,7 @@ test.describe('YouthWIDE leads with the global program', () => {
     await open(page, 'programs/');
     const text = compact(await page.locator('#programs-grid li:has(a[href$="programs/youthwide/"])').textContent());
     expect(text.indexOf('co-funded country cohorts')).toBeGreaterThan(-1);
-    expect(text.indexOf('co-funded country cohorts')).toBeLessThan(text.indexOf('In Bangladesh it aims'));
+    expect(text.indexOf('co-funded country cohorts')).toBeLessThan(text.indexOf('It aims to train')); // WP99: the aim sentence opens "It aims to train 1 million educated youth ..." (it opened "In Bangladesh it aims")
   });
 
   test('the structured data lists no roadmap the page does not show', async ({ page }) => {

@@ -18,7 +18,7 @@ export function factPart(id: string, re: RegExp): string {
 }
 
 
-/** A fact's headline stat value ("6–8 weeks", "2 million"). */
+/** A fact's headline stat value ("6–8 weeks", "1 million"). */
 export function statValue(id: string): string {
   const v = fact(id).stat?.value;
   if (!v) throw new Error(`statValue: fact ${id} has no stat`);

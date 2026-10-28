@@ -55,7 +55,7 @@ test.describe('The Bangladesh initiative is an aim, not an existing national pro
 
   test('the Programs menu and its featured panel say the cohorts are designed for three regions (IN-02) and no longer state the Bangladesh initiative’s aim (IN-01); WP53: Home’s carousel does not repeat it on a programs slide', async ({ page }) => {
     await open(page, '');
-    expect(fact('IN-01').stat?.value, 'the register’s aim is still 2 million').toBe('2 million');
+    expect(fact('IN-01').stat?.value, 'the register’s aim is 1 million (owner 2026-10-23)').toBe('1 million');
     expect(compact(await page.locator('#mega-programs a.mega__link[href$="programs/youthwide/"] .mega__desc').textContent())).toBe(LINE);
     expect(compact(await page.locator('#mega-programs .mega__feature-text').textContent())).toBe(LINE);
     await expect(page.locator('#results .hs__program')).toHaveCount(0);
@@ -64,13 +64,13 @@ test.describe('The Bangladesh initiative is an aim, not an existing national pro
     expect(factIds).not.toContain('IN-01');
   });
 
-  // WP53 (owner follow-up, 2026-10-16): "Reference" was the jargon WP52 removed from the glance row and IN-02, so the band is headed "Bangladesh: Delivery Base and 2030 Aim" (tests/wp53.spec.ts)
-  test('YouthWIDE: the Bangladesh band is headed "Bangladesh: Delivery Base and 2030 Aim" (Title Case), the glance row says "aims", the meta description says "a 2030 aim"', async ({ page }) => {
+  // WP53 (owner follow-up, 2026-10-16): "Reference" was the jargon WP52 removed from the glance row and IN-02, so the band was headed "Bangladesh: Delivery Base and 2030 Aim"; WP99 (owner answer 2026-10-28, Q1): it is "Delivery Base in Bangladesh and the 2030 Aim" because the aim now reaches beyond Bangladesh
+  test('YouthWIDE: the Bangladesh band is headed "Delivery Base in Bangladesh and the 2030 Aim" (Title Case), the glance row says "aims", the meta description says "a 2030 aim"', async ({ page }) => {
     await open(page, 'programs/youthwide/');
     const heading = page.locator('section#governments').getByRole('heading', { level: 2 });
-    await expect(heading).toHaveText('Bangladesh: Delivery Base and 2030 Aim');
-    expect('Bangladesh: Delivery Base and 2030 Aim').toBe(titleCase('Bangladesh: Delivery Base and 2030 Aim'));
-    expect(compact(await page.locator('#program-glance .pg__row').first().textContent())).toContain('Bangladesh is where most delivery has been, with an initiative of its own that aims to train 2 million vulnerable youth by 2030, depending on government and donor commitments.');
+    await expect(heading).toHaveText('Delivery Base in Bangladesh and the 2030 Aim');
+    expect('Delivery Base in Bangladesh and the 2030 Aim').toBe(titleCase('Delivery Base in Bangladesh and the 2030 Aim'));
+    expect(compact(await page.locator('#program-glance .pg__row').first().textContent())).toContain('Bangladesh is where most delivery has been. YouthWIDE aims to train 1 million educated youth (Higher Secondary Certificate or above) for digital employment by 2030, in Bangladesh and similar countries in South Asia and the Middle East and North Africa, depending on government and donor commitments.');
     const description = await page.locator('meta[name="description"]').getAttribute('content');
     expect(description).toContain('co-funded cohorts designed for three regions, with a 2030 aim in Bangladesh.');
     expect(description!.length).toBeLessThanOrEqual(155);
@@ -84,17 +84,17 @@ test.describe('The Bangladesh initiative is an aim, not an existing national pro
 
 test.describe('Home: the trial slide leads with income and keeps its scope (item 11)', () => {
   // WP48 (cycle-23 review): the heading itself named the predecessor program ("Women Offered a Place in a Predecessor Program Earned an Estimated 41% More")
-  // WP50 (cycle-25 review): the heading is "Women Offered a Place Earned an Estimated 41% More" and the slide's eyebrow is "Randomized Trial of a Predecessor Program"; the >4× tile's caption says the multiple in words (tests/wp50.spec.ts)
-  test('slide 1 is "Women Offered a Place Earned an Estimated 41% More per Month": RC-01 and RC-04, the predecessor program named in the eyebrow and the lead, the >4× tile kept', async ({ page }) => {
+  // WP50 (cycle-25 review): the heading is "Women Offered a Place Earned an Estimated 41% More" and the slide's eyebrow is "Randomized Trial of CodersTrust’s WSDFM Program"; the >4× tile's caption says the multiple in words (tests/wp50.spec.ts)
+  test('slide 1 is "Women Offered a Place Earned an Estimated 41% More per Month": RC-01 and RC-04, CodersTrust’s WSDFM program named in the eyebrow and the lead, the >4× tile kept', async ({ page }) => {
     await open(page, '');
     const first = slide(page, 1);
     await expect(first.locator('h3')).toHaveText('Women Offered a Place Earned an Estimated 41% More per Month');
     expect(await first.locator('h3').getAttribute('data-fact')).toBe('RC-01');
-    expect(compact(await first.locator('.hs__lead').textContent())).toBe('In the predecessor WSDFM program, women offered a place had an estimated 41% higher monthly income than the control group, about $27 more a month.'); // WP63 (cycle-35 review, GLM L4)
+    expect(compact(await first.locator('.hs__lead').textContent())).toBe('In CodersTrust’s WSDFM program, women offered a place had an estimated 41% higher monthly income than the control group, about $27 more a month.'); // WP63 (cycle-35 review, GLM L4)
     expect(await first.locator('.hs__lead').getAttribute('data-fact')).toBe('RC-01 RC-04');
     expect(fact('RC-01').stat?.value).toBe('+41%');
     expect(fact('RC-04').stat?.value).toBe('+$27');
-    await expect(first.locator('.hs__eyebrow')).toHaveText('Randomized Trial of a Predecessor Program');
+    await expect(first.locator('.hs__eyebrow')).toHaveText('Randomized Trial of CodersTrust’s WSDFM Program');
     expect(compact(await first.locator('.hs__proof').textContent())).toContain('>4×');
     // WP54 (cycle-28 review, Grok R2): the callout names the comparison and its average (tests/wp54.spec.ts); WP59 (cycle-31 review, Kimi K3): and states the +10.3 it compares
     expect(compact(await first.locator('.hs__proof').textContent())).toContain('Employment effect, not income: +10.3 percentage points, more than four times the 2.3-point average across nine vocational-training trials.');
@@ -250,7 +250,7 @@ test.describe('Programs: the YouthWIDE card links every audience it names (item 
     expect(await texts(page, '#programs-grid li:has(a[href$="programs/youthwide/"]) .hub__partner a')).toEqual(['For Governments', 'For Development Partners', 'For Foundations']);
     expect((await hrefs(page, '#programs-grid li:has(a[href$="programs/youthwide/"]) .hub__partner a')).map(sitePath)).toEqual(['/partner-with-us/governments/', '/partner-with-us/development-partners/', '/partner-with-us/foundations/']);
     expect(compact(await card.textContent())).toContain('designed as co-funded country cohorts for South Asia, the Middle East and North Africa, and Sub-Saharan Africa');
-    expect(compact(await card.textContent())).toContain('aims to train 2 million vulnerable youth');
+    expect(compact(await card.textContent())).toContain('It aims to train 1 million educated youth (Higher Secondary Certificate or above) for digital employment by 2030, in Bangladesh and similar countries in South Asia and the Middle East and North Africa, depending on government and donor commitments.');
   });
 });
 
@@ -396,7 +396,7 @@ test.describe('No bare "pp" and no "MENA" (item 25)', () => {
   test('the tile’s label does not say the unit twice', async ({ page }) => {
     await open(page, 'programs/youthwide/');
     const tile = page.locator('#proof-band .stat', { has: page.locator('.fig-unit') }).first();
-    expect(compact(await tile.locator('.stat__label').textContent())).toBe('more employment for women offered a place (randomized trial of a predecessor program)');
+    expect(compact(await tile.locator('.stat__label').textContent())).toBe('more employment for women offered a place (randomized trial of CodersTrust’s WSDFM program)');
   });
 
   test('the unit line fits at 390 px: no horizontal overflow on the pages that show the tile', async ({ page }) => {

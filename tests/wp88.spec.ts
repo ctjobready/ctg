@@ -133,7 +133,7 @@ test.describe('Items 7, 8 and 9: case-study heading, meta description and About 
 
   test('the WSDFM meta description says women offered a place had an estimated 41% higher income than the control group', () => {
     const meta = metaDescription(htmlOf(WSDFM));
-    expect(meta).toBe('WSDFM (Porticus): a randomized trial of the predecessor found women offered a place had an estimated 41% higher monthly income than the control group.');
+    expect(meta).toBe('WSDFM (Porticus): a randomized trial of the program found women offered a place had an estimated 41% higher monthly income than the control group.');
     expect(meta.length).toBeLessThanOrEqual(155);
     expect(meta).not.toContain('income rose');
   });

@@ -176,7 +176,7 @@ test.describe('Partner with Us hub', () => {
 
 test.describe('Investors', () => {
   const EVIDENCE =
-    'A randomized trial of CodersTrust’s predecessor WSDFM program found women offered a place were 10.3 percentage points more likely to be employed. Among surveyed completers, employment was 78.2% at the October 2026 survey, up from 48.0% before training. Youth-program outcomes are not platform outcomes.';
+    'A randomized trial of CodersTrust’s WSDFM program found women offered a place were 10.3 percentage points more likely to be employed. Among surveyed completers, employment was 78.2% at the October 2026 survey, up from 48.0% before training. Youth-program outcomes are not platform outcomes.';
 
   test('Independent Evidence is three sentences tied to RC-02 and OC-01, then three links; no chart, tile, table or case-study card', async ({ page }) => {
     await open(page, 'partner-with-us/investors/');
@@ -225,7 +225,7 @@ test.describe('Investors', () => {
 });
 
 test.describe('Foundations', () => {
-  // WP62 (cycle-34 review, Grok, GPT-6.1 Sol and Gemini): the fourth tile is a program record, the WSDFM one (PR-01), in place of the +$27 tile (RC-04: "estimated monthly income gain for women offered a place in a predecessor program, compared with the control group"),
+  // WP62 (cycle-34 review, Grok, GPT-6.1 Sol and Gemini): the fourth tile is a program record, the WSDFM one (PR-01), in place of the +$27 tile (RC-04: "estimated monthly income gain for women offered a place in CodersTrust’s WSDFM program, compared with the control group"),
   // which the trial's +10.3 already shared the glance with; tests/wp62.spec.ts. WP65 (cycle-37 review): it is the UNDP YES, Korail record (PR-03) now, because "711 of 1,000" is on the Proof in Practice card below (tests/wp65.spec.ts)
   test('the fourth tile is a program record, the UNDP YES, Korail one: "67%", "... in UNDP YES, Korail (2017), found their first job within three months", tagged Program Record', async ({ page }) => {
     await open(page, 'partner-with-us/foundations/');

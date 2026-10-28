@@ -621,7 +621,7 @@ test.describe('WP76 item 2: the register says the 1,000 are the women enrolled (
   test('PR-01 reads "program records report that 711 of the 1,000 women enrolled were in work (71%)", with the value "711 of 1,000" and the label "WSDFM: 71% of enrolled women in work"', () => {
     const pr01 = fact('PR-01');
     expect(pr01.text).toBe(
-      'WSDFM (Women’s Skill Development for Freelancing Marketplace), commissioned by Porticus: program records report that 711 of the 1,000 women enrolled were in work (71%); BIGD evaluated the predecessor WSDFM program in a randomized trial',
+      'WSDFM (Women’s Skill Development for Freelancing Marketplace), commissioned by Porticus: program records report that 711 of the 1,000 women enrolled were in work (71%); BIGD evaluated CodersTrust’s WSDFM program in a randomized trial',
     );
     expect(pr01.stat?.value).toBe('711 of 1,000');
     expect(pr01.stat?.numeric).toBe(711);
@@ -697,7 +697,7 @@ test.describe('WP76 item 2: every page that states the figure names its base', (
   });
 
   test('the WSDFM case study: the first tile (711 of 1,000, "WSDFM: 71% of enrolled women in work"), the program-results sentence and the description, social descriptions and JSON-LD all say the women enrolled', async ({ page }) => {
-    const DESCRIPTION = 'WSDFM (Porticus): a randomized trial of the predecessor found women offered a place had an estimated 41% higher monthly income than the control group.';
+    const DESCRIPTION = 'WSDFM (Porticus): a randomized trial of the program found women offered a place had an estimated 41% higher monthly income than the control group.';
     await open(page, 'impact/case-studies/wsdfm-women-freelancers/');
     expect(await page.locator('.factstat[data-fact="PR-01"] .stat__num').getAttribute('data-final')).toBe('711 of 1,000');
     await expect(page.locator('.factstat[data-fact="PR-01"] .stat__label')).toHaveText('WSDFM: 71% of enrolled women in work');

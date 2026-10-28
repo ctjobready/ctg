@@ -18,7 +18,7 @@ test.describe('direct answers under the H1', () => {
     await open(page, 'impact/');
     expect(compact(await heroLead(page))).toBe('Program records from Kosovo and Bangladesh, an independent trial in Dhaka and a 2026 survey of completers. Each figure names its kind of evidence.');
     const box = compact(await page.locator('#summary').innerText());
-    expect(box).toContain('A randomized trial of CodersTrust’s predecessor WSDFM program found that women offered a place');
+    expect(box).toContain('A randomized trial of CodersTrust’s WSDFM program found that women offered a place');
     expect(box).toContain('Among surveyed completers, employment was');
   });
 
@@ -44,9 +44,9 @@ test.describe('direct answers under the H1', () => {
 });
 
 test.describe('Impact', () => {
-  test('the WSDFM case study names the predecessor program in its H1', async ({ page }) => {
+  test('the WSDFM case study names CodersTrust’s WSDFM program in its H1', async ({ page }) => {
     await open(page, 'impact/case-studies/wsdfm-women-freelancers/');
-    await expect(page.getByRole('heading', { level: 1 })).toHaveText('WSDFM: A Predecessor Program Evaluated by a Randomized Trial');
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText('CodersTrust’s WSDFM Program Evaluated by a Randomized Trial');
   });
 
   // WP55 (owner decision 2026-10-18): Digital Jobs Albania is the fifth case study; the two World Bank programs lead, then the three Bangladesh programs in their earlier order
@@ -249,7 +249,7 @@ test.describe('Partner with Us', () => {
     const dd = compact(await page.locator('#due-diligence').innerText());
     expect(dd).toContain('Monthly Reports and Follow-Up Surveys');
     expect(dd).toContain('Consent, protected records and grievance handling are specified for each program.');
-    expect(dd).toContain('We support third-party evaluation of outcomes, and the randomized trial of a predecessor program is public.');
+    expect(dd).toContain('We support third-party evaluation of outcomes, and the randomized trial of CodersTrust’s WSDFM program is public.');
   });
 
   test('Employers: one pricing sentence, and the scoped-candidate sentence is not repeated', async ({ page }) => {
@@ -317,7 +317,7 @@ test.describe('Our Model and Investors', () => {
     expect(text).toContain('A randomized trial by the BRAC Institute of Governance and Development (BIGD) found');
     await open(page, 'partner-with-us/investors/');
     await expect(page.locator('#in-short')).toHaveCount(0);
-    expect(compact(await page.locator('#proof-band').innerText())).toContain('A randomized trial of CodersTrust’s predecessor WSDFM program found women offered a place were 10.3 percentage points more likely to be employed.');
+    expect(compact(await page.locator('#proof-band').innerText())).toContain('A randomized trial of CodersTrust’s WSDFM program found women offered a place were 10.3 percentage points more likely to be employed.');
     expect(compact(await main(page))).not.toMatch(/BIGD|BRAC Institute of Governance and Development/);
   });
 
@@ -329,7 +329,7 @@ test.describe('Our Model and Investors', () => {
     // WP49 (cycle-24 review): the shared "What Happens When Funding Ends?" answer no longer carries that TalentLEAP clause (tests/wp49.spec.ts); the page's own worked example states the levels
     expect(text).not.toContain('TalentLEAP is designed to organize skills into career paths with progressive levels as further levels are published');
     expect(text).toContain('TalentLEAP organizes skills into career paths with progressive levels. In this example the levels are Competent, Proficient and Expert.');
-    // WP80 (item 1): the FAQ answer now opens "Yes, for a predecessor program." and names the evaluator in its second sentence.
+    // WP80 (item 1): the FAQ answer now opens "Yes, for CodersTrust’s WSDFM program." and names the evaluator in its second sentence.
     expect(text).toContain('The BRAC Institute of Governance and Development (BIGD) at BRAC University ran a randomized controlled trial');
   });
 

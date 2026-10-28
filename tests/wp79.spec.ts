@@ -10,7 +10,7 @@ import { open } from './support/browser';
  *     (Benin, Egypt, Uganda); the map pin card for Albania shows the same label.
  *   - Item 2: the Case Studies lead says "Five programs, each with its result and its base." (no claim about what the figures do not show).
  *   - Item 3: the Kosovo case study says the pilot was implemented in five municipalities (Ministry release of 13 February 2017, MED17).
- *   - Item 4: the Independent Evaluation page reads "Last updated October 23, 2026", and its JSON-LD dateModified agrees.
+ *   - Item 4: the Independent Evaluation page reads "Last updated October 28, 2026" (WP99 added the journal band; it read October 23, 2026), and its JSON-LD dateModified agrees.
  */
 
 const compact = (t: string | null | undefined) => (t ?? '').replace(/\s+/g, ' ').trim();
@@ -67,11 +67,11 @@ test.describe('WP79 item 3: Kosovo case study scope', () => {
 });
 
 test.describe('WP79 item 4: Independent Evaluation last-updated date', () => {
-  test('the page reads "Last updated October 23, 2026" and its JSON-LD dateModified is 2026-10-23', async ({ page }) => {
+  test('the page reads "Last updated October 28, 2026" and its JSON-LD dateModified is 2026-10-28', async ({ page }) => {
     await open(page, 'impact/independent-evaluation/');
-    await expect(page.locator('body')).toContainText('Last updated October 23, 2026');
-    await expect(page.locator('body')).not.toContainText('Last updated October 10, 2026');
+    await expect(page.locator('body')).toContainText('Last updated October 28, 2026');
+    await expect(page.locator('body')).not.toContainText('Last updated October 23, 2026');
     const ld = await page.locator('script[type="application/ld+json"]').evaluateAll((els) => els.map((e) => e.textContent ?? '').join('\n'));
-    expect(ld).toMatch(/"dateModified"\s*:\s*"2026-10-23"/);
+    expect(ld).toMatch(/"dateModified"\s*:\s*"2026-10-28"/);
   });
 });

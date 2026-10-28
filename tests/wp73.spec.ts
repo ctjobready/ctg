@@ -7,7 +7,7 @@ import { open } from './support/browser';
  * so these tests were written after the change. Each states one observable behavior of the built site
  * (run `npm run build` first, then `PORT=<port> npx playwright test tests/wp73.spec.ts --project=chromium`):
  *   - 1: RC-10 says BIGD's follow-up study is under way, sourced to BIGD's study page (BIGDSTUDY); the trial page links that page;
- *   - 2: the JobReady@Campus FAQ answer reads its bachelor's-degree share from OC-09 and names the October 2026 survey of completers;
+ *   - 2: the JobReady@Campus FAQ answer reads its bachelor's-degree share from OC-09 and names the alumni who answered the October 2026 survey (WP99: the profile describes all responding alumni, not completers);
  *   - 3: TalentLEAP is dated October 21, 2026 (page line and JSON-LD dateModified);
  *   - 4: Our Model's scope line links YouthWIDE and JobReady@Campus.
  */
@@ -35,13 +35,13 @@ test.describe('Item 1: RC-10 reports the follow-up study as under way', () => {
 });
 
 test.describe('Item 2: JobReady@Campus FAQ reads the bachelor’s share from OC-09', () => {
-  test('the answer names the October 2026 survey of completers and carries OC-09’s share', async ({ page }) => {
+  test('the answer names the alumni who answered the October 2026 survey and carries OC-09’s share', async ({ page }) => {
     const share = /(\d+\.\d+)% hold a bachelor/.exec(fact('OC-09').text)?.[1];
     expect(share).toBe('85.0');
     await open(page, 'programs/jobready-campus/');
     const answer = page.locator('#faq details', { hasText: 'Who Is JobReady@Campus For?' }).locator('p');
     await expect(answer).toHaveCount(1);
-    expect(compact(await answer.textContent())).toBe('Students and degree holders at universities and colleges. In CodersTrust’s October 2026 survey of completers across its programs, 85.0% held a bachelor’s degree or higher.');
+    expect(compact(await answer.textContent())).toBe('Students and degree holders at universities and colleges. Among alumni of CodersTrust’s programs who answered the October 2026 survey, 85.0% hold a bachelor’s degree or higher.');
     await expect(answer).toHaveAttribute('data-fact', 'OC-09');
   });
 });

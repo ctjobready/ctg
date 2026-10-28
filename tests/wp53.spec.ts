@@ -59,7 +59,7 @@ test.describe('Home: the carousel is four slides (item 1)', () => {
       await expect(page.locator('[data-hs-dot]').nth(i)).toHaveAttribute('aria-label', `Show slide ${i + 1} of 4: ${t}`);
     }
     await expect(page.locator('[data-hs-dot]')).toHaveCount(4);
-    expect(await texts(page, '[data-hs-slide] .hs__eyebrow')).toEqual(['Randomized Trial of a Predecessor Program', 'Government and University Partners', 'Impact Survey 2026', 'Program Records']);
+    expect(await texts(page, '[data-hs-slide] .hs__eyebrow')).toEqual(['Randomized Trial of CodersTrust’s WSDFM Program', 'Government and University Partners', 'Impact Survey 2026', 'Program Records']);
   });
 
   test('the next control wraps from slide 4 to slide 1 (and the previous control from 1 to 4)', async ({ page }) => {
@@ -261,11 +261,11 @@ test.describe('The legal status of the two entities is a registered fact and the
 });
 
 test.describe('The WP52 follow-ups (items 6 to 9)', () => {
-  test('YouthWIDE: the Bangladesh band is headed "Bangladesh: Delivery Base and 2030 Aim" (Title Case); "Reference Country" is on no built page', async ({ page }) => {
+  test('YouthWIDE: the Bangladesh band is headed "Delivery Base in Bangladesh and the 2030 Aim" (Title Case; WP99, owner answer 2026-10-28, Q1); "Reference Country" is on no built page', async ({ page }) => {
     await open(page, YOUTHWIDE);
     const heading = page.locator('section#governments').getByRole('heading', { level: 2 });
-    await expect(heading).toHaveText('Bangladesh: Delivery Base and 2030 Aim');
-    expect('Bangladesh: Delivery Base and 2030 Aim').toBe(titleCase('Bangladesh: Delivery Base and 2030 Aim'));
+    await expect(heading).toHaveText('Delivery Base in Bangladesh and the 2030 Aim');
+    expect('Delivery Base in Bangladesh and the 2030 Aim').toBe(titleCase('Delivery Base in Bangladesh and the 2030 Aim'));
     expect(pagesMatching(/Reference Country/i)).toEqual([]);
   });
 

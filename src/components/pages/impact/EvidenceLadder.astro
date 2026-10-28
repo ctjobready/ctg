@@ -30,7 +30,7 @@ const womenShare = /(\d+(?:\.\d+)?)% women/.exec(fact('OC-09').text)?.[1];
 if (!womenShare) throw new Error('OC-09 no longer states the share of women respondents ("N% women")');
 /** What each rung shows and does not show, once: the cards and the matrix read the same wording. */
 const TEXT = {
-  trial: { shows: `The effect of CodersTrust’s predecessor WSDFM program on women in Dhaka, evaluated by the ${BIGD_INSTITUTE} against a randomly chosen control group.`, not: 'Results for other countries, groups or today’s standard track.' },
+  trial: { shows: `The effect of CodersTrust’s WSDFM program on women in Dhaka, evaluated by the ${BIGD_INSTITUTE} against a randomly chosen control group.`, not: 'Results for other countries, groups or today’s standard track.' },
   survey: { shows: 'What alumni who responded report about work and income after training.', not: `Cause: respondents are not a random sample and may over-represent successful learners. ${womenShare}% are women.` },
   records: { shows: 'What each named program recorded (in work, or a first job within three months), from CodersTrust program records.', not: 'What would have happened without training.' },
   // WP64 (cycle-36 review, Gemini): "...; some stories are outliers, and their cards say so." (it said "...; some are outliers and say so.", where "some" had no noun and "say so" no clear subject): the story cards carry the caveat ("Individual story; an outlier, not typical.", LearnerStory).

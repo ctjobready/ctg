@@ -121,7 +121,7 @@ test.describe('headings use the system weights', () => {
       await open(page, path);
       return page.evaluate((q) => Array.from(document.querySelectorAll(q)).filter((e) => (e as HTMLElement).offsetParent !== null).map((e) => ({ w: Number(getComputedStyle(e).fontWeight), s: parseFloat(getComputedStyle(e).fontSize) })), sel);
     };
-    const groups = await read('impact/', 'h3.glance__group-title'); // "Trial Results, Predecessor Program" and its siblings
+    const groups = await read('impact/', 'h3.glance__group-title'); // "Trial Results, CodersTrust’s WSDFM Program" and its siblings
     const glance = await read('partner-with-us/governments/', 'h2.pg__title'); // "Results at a Glance" (WP35: the hub's "What Your Monthly Report Covers" panels are gone)
     const outcomes = await read('impact/outcomes-2026/', 'h3.ro__group'); // "Earnings and Work"
     const cards = await read('contact/', 'h3.card__title');

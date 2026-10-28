@@ -14,9 +14,9 @@ import SectionHeader from '../../components/ui/SectionHeader.astro';
 import FeatureCard from '../../components/ui/FeatureCard.astro';
 import CTABand from '../../components/ui/CTABand.astro';
 import EvidenceBand from '../../components/pages/home/EvidenceBand.astro';
-import { ctaFor, statValue } from '../../components/pages/programs/meta';
+import { ctaFor } from '../../components/pages/programs/meta';
 import { NU_COURSE_ORDER, NU_COURSE_SUBJECT } from '../../components/pages/programs/nuPgd';
-import { AIM_DEPENDENCY, MICRO_COMMITMENT, NU_ELIGIBILITY, withoutSince2014 } from '../../data/copy';
+import { AIM_STATEMENT, MICRO_COMMITMENT, NU_ELIGIBILITY, withoutSince2014 } from '../../data/copy';
 import { fact } from '../../data/facts';
 import { joinList } from '../../lib/format';
 import { linkAttrs } from '../../lib/url';
@@ -27,8 +27,8 @@ const path = '/programs/';
 // WP95 (triage A2): the JobReady.global link for learners who want short courses (linkAttrs adds the opens-in-new-note the SuperKids page uses).
 const courses = linkAttrs(COURSES_URL);
 // WP60 (cycle-32 review, Gemini GM1): the evidence band under the program cards is headed "Evidence from Youth-Employment Programs" and opens "These results are from youth-employment programs, not evidence for every program listed above." (it was "Trial and Survey Evidence",
-// under a list that includes schools, universities and employers); the figures and the predecessor label (the trial line and the tile's label) are unchanged.
-// WP60 (cycle-32 review, Claude S3): the YouthWIDE card's "..., depending on government and donor commitments" is AIM_DEPENDENCY (src/data/copy.ts), the clause every other page that states the 2 million 2030 aim now reads too (it was typed here only).
+// under a list that includes schools, universities and employers); the figures and the program label (the trial line and the tile's label) are unchanged.
+// WP60 (cycle-32 review, Claude S3): the YouthWIDE card's "..., depending on government and donor commitments" was typed here only. WP99 (owner answers 2026-10-28, Q1): the card prints IN-01's own statement (AIM_STATEMENT, src/data/copy.ts), which ends with that clause.
 // WP67 (cycle-38 review, Gemini): the YouthWIDE card's "Best For" line names the three audiences its route links below it name, "Governments, Development Partners and Foundations" (it said "... and Funders", a word that is not one of the three routes).
 // WP50 (cycle-25 review): the overview prints no "Last updated" line (it read as a draft stamp on a hub page); the date stays in the page's JSON-LD (dateModified). The program pages, the evidence pages and the legal pages keep theirs.
 const LAST_UPDATED = '2026-10-15'; // WP31: the cycle-8 review wording changes (WP20c had set 2026-10-14; PAGE_UPDATED.programs is 2026-10-10)
@@ -43,7 +43,7 @@ const discovery = ctaFor('discovery');
 const learnersLabel = withoutSince2014(fact('SC-01').stat?.label ?? '');
 
 const programs = [
-  { icon: 'globe', href: '/programs/youthwide/', title: 'YouthWIDE', audience: 'Governments, Development Partners and Foundations', text: `The youth digital-employment program, designed as co-funded country cohorts for South Asia, the Middle East and North Africa, and Sub-Saharan Africa. It builds on results from earlier programs in Bangladesh and Kosovo. In Bangladesh it aims to train ${statValue('IN-01')} vulnerable youth for digital employment by 2030, ${AIM_DEPENDENCY}.`, means: 'ministries can follow phased delivery from training to paid work, and funders get monthly reports on progress toward paid work, not only enrollment.', partner: [{ label: 'For Governments', href: '/partner-with-us/governments/' }, { label: 'For Development Partners', href: '/partner-with-us/development-partners/' }, { label: 'For Foundations', href: '/partner-with-us/foundations/' }] },
+  { icon: 'globe', href: '/programs/youthwide/', title: 'YouthWIDE', audience: 'Governments, Development Partners and Foundations', text: `The youth digital-employment program, designed as co-funded country cohorts for South Asia, the Middle East and North Africa, and Sub-Saharan Africa. It builds on results from earlier programs in Bangladesh and Kosovo. It aims to train ${AIM_STATEMENT}.`, means: 'ministries can follow phased delivery from training to paid work, and funders get monthly reports on progress toward paid work, not only enrollment.', partner: [{ label: 'For Governments', href: '/partner-with-us/governments/' }, { label: 'For Development Partners', href: '/partner-with-us/development-partners/' }, { label: 'For Foundations', href: '/partner-with-us/foundations/' }] },
   { icon: 'graduation-cap', href: '/programs/jobready-campus/', title: 'JobReady@Campus', audience: 'Universities and Colleges', text: 'Industry-oriented skills training in parallel with academic studies, using on-campus labs.', means: 'students get a supported route to industry certification beside the degree.', partner: [{ label: 'For Universities', href: '/partner-with-us/universities/' }] },
   { icon: 'briefcase', href: '/programs/jobready-work/', title: 'JobReady@Work', audience: 'Employers', text: 'Corporate training custom-developed for each organization, plus a route to hire job-ready talent.', means: 'your team learns on tasks from your own roles.', partner: [{ label: 'For Employers', href: '/partner-with-us/employers/' }] },
   // WP76 (owner answer 2026-10-22: the diploma has four courses): the card names all four ("..., in digital marketing, ICT, cyber security and data analytics."; it said "... in digital marketing and ICT."), from the same list the diploma page and the menus use.
@@ -103,8 +103,8 @@ const jsonLd = [
   </Section>
 
   <!-- WP31: the hub keeps the 78.2% tile without its detail line; the income paragraph (RC-01's headline) and the tile's detail line live on the evidence pages the band links.
-       WP41 (cycle-18 review): the trial is ONE line (TRIAL_LINE: the employment result, the predecessor program named) under its heading, with the link to the trial page; the plain-language paragraph, the +10.3 pp tile, the chart
-       and the lead that said "predecessor program" and "surveyed completers" a second time are gone (the line and the tile's label say both). -->
+       WP41 (cycle-18 review): the trial is ONE line (TRIAL_LINE: the employment result, CodersTrust’s WSDFM program named) under its heading, with the link to the trial page; the plain-language paragraph, the +10.3 pp tile, the chart
+       and the lead that said "CodersTrust’s WSDFM program" and "surveyed completers" a second time are gone (the line and the tile's label say both). -->
   <EvidenceBand
     id="proof-band"
     title="Evidence from Youth-Employment Programs"

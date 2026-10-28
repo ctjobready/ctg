@@ -39,7 +39,7 @@ test.describe('Partner with Us hub', () => {
     await open(page, 'partner-with-us/');
     const tiles = page.locator('#why-partner li');
     await expect(tiles).toHaveCount(3);
-    expect(await texts(page, '#why-partner .wp__kicker')).toEqual(['Randomized Trial of a Predecessor Program', 'Impact Survey 2026', 'Reach Since 2014']);
+    expect(await texts(page, '#why-partner .wp__kicker')).toEqual(['Randomized Trial of CodersTrust’s WSDFM Program', 'Impact Survey 2026', 'Reach Since 2014']);
     expect(await tiles.evaluateAll((els) => els.map((e) => e.getAttribute('data-fact')))).toEqual(['RC-02', 'OC-01', 'SC-16']);
     const reach = tiles.nth(2);
     await expect(reach.locator('.wp__value')).toHaveText('130,000+');
@@ -137,8 +137,8 @@ test.describe('YouthWIDE', () => {
     const band = page.locator('#proof-band');
     await expect(band.locator('.eb__headline')).toHaveCount(1);
     await expect(band.locator('.eb__headline')).toHaveText(
-      // WP54 (cycle-28 review, GPT-6.1 Sol G8): the evaluator is spelled out where YouthWIDE first names it (it said "In BIGD’s randomized trial of the predecessor WSDFM program, ...")
-      'In the randomized trial of the predecessor WSDFM program by the BRAC Institute of Governance and Development (BIGD), women offered a place were 10.3 percentage points more likely to be employed and had an estimated 41% higher monthly income than the control group.',
+      // WP54 (cycle-28 review, GPT-6.1 Sol G8): the evaluator is spelled out where YouthWIDE first names it (it said "In BIGD’s randomized trial of CodersTrust’s WSDFM program, ...")
+      'In the randomized trial of CodersTrust’s WSDFM program by the BRAC Institute of Governance and Development (BIGD), women offered a place were 10.3 percentage points more likely to be employed and had an estimated 41% higher monthly income than the control group.',
     );
     expect(await band.locator('.eb__headline').getAttribute('data-fact')).toBe('RC-01 RC-02');
     await expect(band.locator('[data-plain-line]')).toHaveCount(0);

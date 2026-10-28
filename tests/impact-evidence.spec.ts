@@ -76,7 +76,7 @@ test.describe('/impact/ At a Glance', () => {
     await expect(tileOf('PR-05')).toContainText(/47%/);
     await expect(tileOf('PR-05')).toContainText(/2,400/);
     // The trial group holds trial figures only.
-    const trial = group('Trial Results, Predecessor Program');
+    const trial = group('Trial Results, CodersTrust’s WSDFM Program');
     await expect(trial).toHaveCount(1);
     await expect(trial).not.toContainText(/71%|68%|67%/);
     await expect(trial.locator('[data-evidence]')).toHaveCount(await trial.locator('li').count());
@@ -99,9 +99,9 @@ test.describe('/impact/ At a Glance', () => {
     await expect(reach.locator('.status-tag[data-status="Delivered"]')).toHaveCount(1);
   });
 
-  test('the trial tile (WP35: the one trial group tile) names the predecessor program and the +10.3 label does not repeat itself', async ({ page }) => {
+  test('the trial tile (WP35: the one trial group tile) names CodersTrust’s WSDFM program and the +10.3 label does not repeat itself', async ({ page }) => {
     await open(page, 'impact/');
-    await expect(page.locator('#glance')).toContainText(/more employment for women offered a place \(randomized trial of a predecessor program\)/);
+    await expect(page.locator('#glance')).toContainText(/more employment for women offered a place \(randomized trial of CodersTrust’s WSDFM program\)/);
     // WP45 (cycle-21 review): the figure is "+10.3" with "percentage points" under it, and the label does not say the unit a second time
     const tile = await page.locator('#glance a[data-fact~="RC-02"]').innerText();
     expect(tile.match(/percentage points/g) ?? []).toHaveLength(1);

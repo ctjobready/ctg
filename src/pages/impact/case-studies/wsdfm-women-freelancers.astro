@@ -19,7 +19,7 @@ import photo from '../../../assets/images/pages/impact/wsdfm-training-group.jpg'
 // WP54 (cycle-28 review, GPT-6.1 Sol G8): the hero note is where the page first names the evaluator, so it spells it out (BIGD_FULL); the tiles' evidence lines, the trial sub-heading and the chart note below use the abbreviation it introduces.
 // WP87 (CLR review, Opus XHigh run 1, Polish): the note says "the randomized trial by the BRAC Institute of Governance and Development (BIGD)" (it said "(BIGD)’s randomized trial") and "among the 1,000 women enrolled", so it has its antecedent while it still stands above the tiles (it must, so the evaluator is spelled out before the tiles say "BIGD", WP54 G8).
 // WP60 (cycle-32 review, Claude S4; owner answer 2026-10-20, "711 of 1000 is correct. The BIGD study only studied 833."): the note above the tiles says the trial's count beside the records the first tile shows ("711 of 1,000"): "Program records and a separate randomized trial of 833 women in the
-// predecessor program, by ...". The 833 is RC-07's (TRIAL_WOMEN, src/data/copy.ts; the note's data-fact names RC-07), the trial's whole sample (425 offered a place, 408 control), so the note does not say the 833 are "of" the 1,000.
+// CodersTrust’s WSDFM program, by ...". The 833 is RC-07's (TRIAL_WOMEN, src/data/copy.ts; the note's data-fact names RC-07), the trial's whole sample (425 offered a place, 408 control), so the note does not say the 833 are "of" the 1,000.
 // WP76 (owner answer 2026-10-22: "the 1,000 are the women enrolled"): the first tile, the program-results sentence and the meta description name the base ("711 of the 1,000 women enrolled were in work"), all read from PR-01; the description says "WSDFM (Porticus)" (PR-06's wording) to stay within 155 characters.
 // RC-09 (BIGD employment status at follow-up). The chart values must match the register text.
 const control = [47.2, 40.9, 11.9];
@@ -37,7 +37,7 @@ if (!(samina.body ?? '').includes('She has completed 90+ projects on Fiverr so f
 <CaseStudyPage
   slug="wsdfm-women-freelancers"
   pageTitle="WSDFM Case Study"
-  description="WSDFM (Porticus): a randomized trial of the predecessor found women offered a place had an estimated 41% higher monthly income than the control group."
+  description="WSDFM (Porticus): a randomized trial of the program found women offered a place had an estimated 41% higher monthly income than the control group."
   heroNote={`Program records, not trial results; the ${TRIAL_OFFERED} women offered a place in the randomized trial by ${BIGD_FULL} were among the ${WSDFM_ENROLLED} women enrolled.`}
   heroNoteFacts={['RC-07']}
   trialLink
@@ -48,6 +48,8 @@ if (!(samina.body ?? '').includes('She has completed 90+ projects on Fiverr so f
   ]}
   context={[
     'Porticus commissioned CodersTrust to run a skills project for women, focused on ICT skills for freelancing marketplaces and local jobs, and on women’s empowerment.',
+    // WP99 (owner answers 2026-10-28, Q6 and the correction of the same day; register PR-01a): the funder is a specific foundation, written "Dutch Foundation" (singular); Manusher Jonno Foundation is named in text only (no logo: there is no permissions row for one).
+    'The project was funded by the Dutch Foundation advised by Porticus, with Manusher Jonno Foundation as outreach partner.',
     'Women in Bangladesh have limited access to the skills and training needed to succeed in the workforce, which restricts their employment opportunities.',
   ]}
   challenges={[

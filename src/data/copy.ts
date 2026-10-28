@@ -227,13 +227,34 @@ const nuPartnershipStatement = (): string => {
 export const NU_PARTNERSHIP_STATEMENT: string = nuPartnershipStatement();
 
 /**
- * WP60 (cycle-32 review, Claude S3): the clause that makes the 2 million 2030 aim (IN-01) conditional. It was typed once, in the Programs hub card; IN-01's register text does not carry it, so it is kept here and every page that states the aim reads it from here:
+ * WP60 (cycle-32 review, Claude S3): the clause that makes the 2030 aim (IN-01) conditional. It was typed once, in the Programs hub card, and every page that states the aim reads it from here:
  * the Programs hub card, YouthWIDE's "Designed for Three Regions" row and its 2030 aim tile, the Impact "Where We Are Heading" tile and the About timeline. It is not a figure and not an outcome; it says the aim depends on commitments that are not CodersTrust's to give.
  */
 export const AIM_DEPENDENCY = 'depending on government and donor commitments';
 
 /**
- * WP60 (cycle-32 review, Claude S4; owner answer 2026-10-20: "711 of 1000 is correct. The BIGD study only studied 833."): WSDFM's program records (PR-01: 711 of 1,000 women in work) and the randomized trial of the predecessor program (RC-07) are two different counts,
+ * WP99 (owner 2026-10-23, wording confirmed 2026-10-28, Q1): the 2030 aim is "1 million educated youth (Higher Secondary Certificate or above) for digital employment by 2030, in Bangladesh and similar countries in South Asia and the Middle East and North Africa,
+ * depending on government and donor commitments", and IN-01's register text now ENDS with that clause. The pages that state the aim read it from IN-01 through these constants, so the figure is never retyped and the clause is said once:
+ *   AIM_GROUP and AIM_SCOPE are the two phrases the tile notes and labels reuse; AIM_STATEMENT is IN-01's text after "YouthWIDE aims to train " (the Programs hub card, the YouthWIDE "Designed for Three Regions" row and the About timeline print it whole);
+ *   AIM_DEPENDENCY stays the clause the Impact tile note and the YouthWIDE 2030 aim tile print. The builder throws if IN-01 stops reading this way, so a change to the register wording is a decision, not a drift.
+ * The deck's shorthand (HSC+, NEET, MENA) is in no public string.
+ */
+export const AIM_GROUP = 'educated youth (Higher Secondary Certificate or above)';
+export const AIM_SCOPE = 'in Bangladesh and similar countries in South Asia and the Middle East and North Africa';
+function aimStatement(): string {
+  const aim = fact('IN-01');
+  const head = 'YouthWIDE aims to train ';
+  const value = aim.stat?.value;
+  const text = aim.text;
+  if (!value || !text.startsWith(`${head}${value} ${AIM_GROUP} `) || !text.includes(`, ${AIM_SCOPE}, `) || !text.endsWith(`, ${AIM_DEPENDENCY}`)) {
+    throw new Error(`AIM_STATEMENT: IN-01 no longer reads "${head}<value> ${AIM_GROUP} ... by 2030, ${AIM_SCOPE}, ${AIM_DEPENDENCY}": ${text}`);
+  }
+  return text.slice(head.length);
+}
+export const AIM_STATEMENT: string = aimStatement();
+
+/**
+ * WP60 (cycle-32 review, Claude S4; owner answer 2026-10-20: "711 of 1000 is correct. The BIGD study only studied 833."): WSDFM's program records (PR-01: 711 of 1,000 women in work) and the randomized trial of CodersTrust’s WSDFM program (RC-07) are two different counts,
  * and the pages that show them side by side say so. The trial's count is the 833 that RC-07's text states ("Trial design: 833 women at baseline (425 treatment, 408 control) ..."), read from it, never retyped; it is the trial's whole sample, the 408 women who
  * were not offered a place included, so no page says that the 833 are "of" the 1,000 trainees. The builder throws if RC-07 stops saying "N women at baseline".
  */
@@ -265,7 +286,7 @@ function wsdfmEnrolled(): string {
 export const WSDFM_ENROLLED: string = wsdfmEnrolled();
 
 /**
- * WP62 (cycle-34 review, rework R3): the short note under a WSDFM program-record tile that says how the records relate to the trial ("Program records, separate from the randomized trial of the predecessor program, which studied 833 women.", 15 words).
+ * WP62 (cycle-34 review, rework R3): the short note under a WSDFM program-record tile that says how the records relate to the trial ("Program records, separate from the randomized trial of CodersTrust’s WSDFM program, which studied 833 women.", 15 words).
  * WP81: "separate from" is gone, because the trial's women were among the 1,000; the note now reads "Program records, not trial results; the women offered a place in the randomized trial (833 women studied) were among these 1,000."
  * It is the Impact page's tile note (WP60), moved here so Foundations' WSDFM tile says it with the same string; the tile's data-fact names RC-07 beside PR-01 (the 833 is RC-07's, TRIAL_WOMEN).
  * WP65 (cycle-37 review): Foundations' glance no longer carries the WSDFM tile (its fourth tile is UNDP YES, Korail), so the Impact page's tile is the note's one user; the Proof in Practice caption (CASE_CARD_LABELS) says the same thing in its own words.
@@ -506,7 +527,7 @@ export const POSITIONING: Record<PositioningKey, CopyBlock> = {
     text: 'YouthWIDE combines training, mentoring and placement support in existing labs and colleges. Partners receive monthly reports on progress toward paid work, as agreed in the program scope.',
     facts: ['PD-01', 'PD-08'],
   },
-  // No page uses this statement today (the YouthWIDE page's is `youthwide`, above). WP45 (cycle-21 review): it no longer calls the Bangladesh initiative "a national initiative" (IN-01 is an initiative that aims to train 2 million vulnerable youth by 2030).
+  // No page uses this statement today (the YouthWIDE page's is `youthwide`, above). WP45 (cycle-21 review): it no longer calls the Bangladesh initiative "a national initiative" (IN-01 is an initiative that aims to train educated youth by 2030, in Bangladesh and similar countries).
   nationwide: {
     text: `For ministries, agencies and national funders who need educated, unemployed and underemployed youth in paid digital work, CodersTrust offers YouthWIDE in Bangladesh. ${UNLIKE_APPROVED}`,
     facts: ['IN-01', 'PD-01', 'PD-08'],
@@ -604,10 +625,10 @@ export const spellOutBigd = (sentence: string): string => sentence.replace('by B
 
 /**
  * The trial result as ONE sentence (WP32, cycle-9 review: YouthWIDE's evidence band explained the trial twice in a row, in the plain line and again in the RC-01 headline). It names
- * the evaluator and the predecessor program, then the two results RC-01 headlines for women offered a place: the employment effect (RC-02's stat, in percentage points) and the
+ * the evaluator and CodersTrust’s WSDFM program, then the two results RC-01 headlines for women offered a place: the employment effect (RC-02's stat, in percentage points) and the
  * estimated income difference (RC-01's stat). Both figures are read from the register, so the sentence cannot drift from it; it throws if either stat changes shape.
- * WP54 (cycle-28 review, GPT-6.1 Sol G8): it is where YouthWIDE first names the evaluator, so it spells it out: "In the randomized trial of the predecessor WSDFM program by the BRAC Institute of Governance and Development (BIGD), ..."
- * (it said "In BIGD’s randomized trial of the predecessor WSDFM program, ...").
+ * WP54 (cycle-28 review, GPT-6.1 Sol G8): it is where YouthWIDE first names the evaluator, so it spells it out: "In the randomized trial of CodersTrust’s WSDFM program by the BRAC Institute of Governance and Development (BIGD), ..."
+ * (it said "In BIGD’s randomized trial of CodersTrust’s WSDFM program, ...").
  */
 function trialSentence(): CopyBlock {
   const employment = fact('RC-02').stat;
@@ -617,7 +638,7 @@ function trialSentence(): CopyBlock {
   }
   const points = employment.value.replace(/^\+/, '').replace(/ pp$/, ' percentage points');
   return {
-    text: `In the randomized trial of the predecessor WSDFM program by ${BIGD_FULL}, women offered a place were ${points} more likely to be employed and had an estimated ${income.value.replace(/^\+/, '')} higher monthly income than the control group.`,
+    text: `In the randomized trial of CodersTrust’s WSDFM program by ${BIGD_FULL}, women offered a place were ${points} more likely to be employed and had an estimated ${income.value.replace(/^\+/, '')} higher monthly income than the control group.`,
     facts: ['RC-01', 'RC-02'],
   };
 }
@@ -625,7 +646,7 @@ export const TRIAL_SENTENCE: CopyBlock = trialSentence();
 
 /**
  * The trial result as the one line of the Programs hub's evidence band (WP41, cycle-18 review: the hub restated the trial in prose, in the +10.3 pp tile and in a chart): the employment result alone, in plain words, with the
- * predecessor program named; RC-01 and RC-02 state it. The figure is RC-02's stat with its "pp" spelled out, so the sentence cannot drift from the register; it throws if the stat changes shape.
+ * CodersTrust’s WSDFM program named; RC-01 and RC-02 state it. The figure is RC-02's stat with its "pp" spelled out, so the sentence cannot drift from the register; it throws if the stat changes shape.
  */
 function trialLine(): CopyBlock {
   const employment = fact('RC-02').stat;
@@ -634,7 +655,7 @@ function trialLine(): CopyBlock {
   }
   const points = employment.value.replace(/^\+/, '').replace(/ pp$/, ' percentage points');
   return {
-    text: `Women offered a place in the predecessor WSDFM program were ${points} more likely to be employed than the control group.`,
+    text: `Women offered a place in CodersTrust’s WSDFM program were ${points} more likely to be employed than the control group.`,
     facts: ['RC-01', 'RC-02'],
   };
 }
@@ -742,7 +763,7 @@ export const SURVEY_INCOME: CopyBlock = surveyIncome();
 export const TRIAL_RUNG_NAME = 'Independent Evaluation (BIGD)';
 
 /**
- * Answer-first opening of /impact/ (WP20d; 40 to 60 words): the randomized trial (a predecessor program) and the survey (surveyed
+ * Answer-first opening of /impact/ (WP20d; 40 to 60 words): the randomized trial (CodersTrust’s WSDFM program) and the survey (surveyed
  * completers), each labeled as what it is. The figures are read from RC-02 and OC-01, never typed. WP25s: the survey is stated as two
  * readings ("was … before training and … at the survey"), not as a rise, which reads as cause; the sentence on what the trial shows and the
  * survey describes is the lead under the H1 (src/pages/impact/index.astro), so it is not repeated here.
@@ -753,7 +774,7 @@ function impactAnswer(): CopyBlock {
   if (!rc || !/^\+[\d.]+ pp$/.test(rc.value) || !oc?.from) throw new Error('IMPACT_ANSWER: RC-02 or OC-01 no longer has the expected stat');
   const points = rc.value.replace(/^\+/, '').replace(/ pp$/, ' percentage points');
   return {
-    text: `A randomized trial of CodersTrust’s predecessor WSDFM program found that women offered a place were ${points} more likely to be employed. Among surveyed completers, employment was ${oc.from} before training and ${oc.value} at the October 2026 survey.`,
+    text: `A randomized trial of CodersTrust’s WSDFM program found that women offered a place were ${points} more likely to be employed. Among surveyed completers, employment was ${oc.from} before training and ${oc.value} at the October 2026 survey.`,
     facts: ['RC-02', 'OC-01'],
   };
 }
@@ -935,7 +956,7 @@ export const HOME_META = {
   title: 'CodersTrust: From Learning to Earning for Youth',
   // WP23: at most 155 characters. WP41 (cycle-18 review): it opens with what CodersTrust does (ID-01: it trains and mentors educated, unemployed youth for digital work) and ends with the evidence, instead of leading with the trial abstract.
   // WP63 rework RW1: this description still says "educated, unemployed youth": with ID-01's full group ("educated, unemployed and underemployed youth") it would be 162 characters, over the 155 limit, and no word can go without changing what it says. Reported, not truncated.
-  description: 'CodersTrust trains and mentors educated, unemployed youth for paid digital work, with evidence from a randomized trial of a predecessor program.',
+  description: 'CodersTrust trains and mentors educated, unemployed youth for paid digital work, with evidence from a randomized trial of CodersTrust’s WSDFM program.',
 };
 
 /**
@@ -949,9 +970,9 @@ function trialAndSurveyReadings(who: string): { points: string; employment: stri
   return { points: rc.value.replace(/^\+/, '').replace(/ pp$/, ' percentage points'), employment: oc.value, before: oc.from };
 }
 
-/** The trial line of a strip that links the evidence pages (Local Partners): the predecessor program is named, the result is RC-02's, and the line makes no claim about the page's own offer. */
-const predecessorTrialLine = (points: string): CopyBlock => ({
-  text: `A randomized trial of the predecessor WSDFM program found women offered a place were ${points} more likely to be employed.`,
+/** The trial line of a strip that links the evidence pages (Local Partners): CodersTrust’s WSDFM program is named, the result is RC-02's, and the line makes no claim about the page's own offer. */
+const wsdfmTrialLine = (points: string): CopyBlock => ({
+  text: `A randomized trial of CodersTrust’s WSDFM program found women offered a place were ${points} more likely to be employed.`,
   facts: ['RC-02'],
 });
 
@@ -964,7 +985,7 @@ const predecessorTrialLine = (points: string): CopyBlock => ({
 function investorEvidence(): CopyBlock {
   const { points, employment, before } = trialAndSurveyReadings('INVESTOR_EVIDENCE');
   return {
-    text: `A randomized trial of CodersTrust’s predecessor WSDFM program found women offered a place were ${points} more likely to be employed. Among surveyed completers, employment was ${employment} at the October 2026 survey, up from ${before} before training. Youth-program outcomes are not platform outcomes.`,
+    text: `A randomized trial of CodersTrust’s WSDFM program found women offered a place were ${points} more likely to be employed. Among surveyed completers, employment was ${employment} at the October 2026 survey, up from ${before} before training. Youth-program outcomes are not platform outcomes.`,
     facts: ['RC-02', 'OC-01'],
   };
 }
@@ -1011,7 +1032,7 @@ export const INVESTOR_PARTNERS: CopyBlock = investorPartners();
  */
 function localPartnerEvidence(): CopyBlock[] {
   const { points, employment, before } = trialAndSurveyReadings('LOCAL_PARTNER_EVIDENCE');
-  return [predecessorTrialLine(points), { text: `Among surveyed completers, employment was ${employment} at the October 2026 survey, up from ${before} before training.`, facts: ['OC-01'] }];
+  return [wsdfmTrialLine(points), { text: `Among surveyed completers, employment was ${employment} at the October 2026 survey, up from ${before} before training.`, facts: ['OC-01'] }];
 }
 export const LOCAL_PARTNER_EVIDENCE: CopyBlock[] = localPartnerEvidence();
 

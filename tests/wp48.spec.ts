@@ -13,7 +13,7 @@ import { listPages } from './support/pages';
  * "Is the JobReady Platform Live?" answer drops the internal tooling; the Governments contracts column is "Scale and Outputs" and its glance is "Results and Contract Scope at a Glance"; Foundations has no second "Reporting and Review"
  * callout; the WSDFM headline tile says "gain versus the control group"; Home's proof strip is "Proof at a Glance" and its "Evidence You Can Check" band is folded into the "Proof in Practice" link row; the GV-12 note, the Governments
  * blurb, the 2030 aim wording, the PX-05 year, the "three months" wording and the Programs H1 read as the reviews asked. Items 22-34 (Kimi K3, GLM 5.3 and Grok 4.7): Home loses its "Low Risk" band (one line leads the closing band), the FAQ trial answer is two
- * sentences, the RC-06a tile label says what is compared, the hero line names the underemployed, slide 1 names the predecessor program, the Imagine card is "Employers Hiring from Your Cohort", OC-05 says "had started earning by six months after
+ * sentences, the RC-06a tile label says what is compared, the hero line names the underemployed, slide 1 names CodersTrust’s WSDFM program, the Imagine card is "Employers Hiring from Your Cohort", OC-05 says "had started earning by six months after
  * finishing", the Home investor card says "Back JobReady", and the evidence ladder's first rung is "Independent Randomized Trial (BIGD)" (WP49: "Independent Evaluation (BIGD)"). Retrospective coverage (the owner exempted this project from test-first work); run `npm run build` first, then
  * `PORT=<port> npx playwright test tests/wp48.spec.ts --project=chromium`.
  */
@@ -300,7 +300,7 @@ test.describe('"Reporting and Review" (item 7)', () => {
 });
 
 test.describe('WSDFM case study: the +41% tile says gain versus the control group (item 8)', () => {
-  const LABEL = 'estimated monthly income gain versus the control group, for women in Dhaka offered a place (randomized trial of a predecessor program)';
+  const LABEL = 'estimated monthly income gain versus the control group, for women in Dhaka offered a place (randomized trial of CodersTrust’s WSDFM program)';
 
   test('the label comes from RC-01; the tile shows it, and only the case study and the component gallery print it', async ({ page }) => {
     expect(fact('RC-01').stat?.label).toBe(LABEL);
@@ -403,14 +403,14 @@ test.describe('The Governments blurb and the 2030 aim (items 17 and 18)', () => 
   });
 
   // WP53 (owner decision 2026-10-16): Home's carousel has no programs slide any more, so the aim was in the Programs menu and panel and the YouthWIDE glance row. WP54 (cycle-28 review, Claude S7): the menu and panel no longer carry it; the glance row does
-  test('the aim is "2 million vulnerable youth" in the YouthWIDE glance row and not in the Programs menu and panel; no site page says "2 million youth"', async ({ page }) => {
+  test('the aim is "1 million educated youth (Higher Secondary Certificate or above)" in the YouthWIDE glance row and not in the Programs menu and panel; no site page says "2 million youth"', async ({ page }) => {
     await page.setViewportSize(DESKTOP);
     await open(page, '');
     expect(compact(await page.locator('#mega-programs a.mega__link[href$="programs/youthwide/"] .mega__desc').textContent())).toBe(MENU_LINE);
     expect(compact(await page.locator('#mega-programs .mega__feature-text').textContent())).toBe(MENU_LINE);
     await expect(page.locator('#results .hs__program')).toHaveCount(0);
     await open(page, 'programs/youthwide/');
-    expect(compact(await page.locator('#program-glance .pg__row').first().textContent())).toContain('an initiative of its own that aims to train 2 million vulnerable youth by 2030, depending on government and donor commitments.');
+    expect(compact(await page.locator('#program-glance .pg__row').first().textContent())).toContain('YouthWIDE aims to train 1 million educated youth (Higher Secondary Certificate or above) for digital employment by 2030, in Bangladesh and similar countries in South Asia and the Middle East and North Africa, depending on government and donor commitments.');
     expect(sitePages().filter((p) => /2 million youth/.test(visible(p.html))).map((p) => p.route)).toEqual([]);
   });
 });
@@ -488,11 +488,11 @@ test.describe('Home: the low-risk band, the FAQ trial answer, the hero line, the
     }
   });
 
-  test('"Does the Trial Apply to Your Program?" is two sentences: the trial covered a 200-hour predecessor program, not today’s 100-hour tracks; other programs rest on the survey and program records, which are descriptive', async ({ page }) => {
+  test('"Does the Trial Apply to Your Program?" is two sentences: the trial covered CodersTrust’s 200-hour WSDFM program, not today’s 100-hour tracks; other programs rest on the survey and program records, which are descriptive', async ({ page }) => {
     await open(page, '');
     const answer = await answerOf(page, 'Does the Trial Apply to Your Program?');
     expect(answer).toBe(
-      'The randomized trial evaluated a 200-hour predecessor program for women in Dhaka, not today’s 100-hour tracks. Results for other programs come from the October 2026 survey of completers and from program records, which are descriptive.',
+      'The randomized trial evaluated CodersTrust’s 200-hour WSDFM program for women in Dhaka, not today’s 100-hour tracks. Results for other programs come from the October 2026 survey of completers and from program records, which are descriptive.',
     );
     expect((await faqJsonLd(page)).find((q) => q.name === 'Does the Trial Apply to Your Program?')?.text).toBe(answer);
   });
@@ -504,16 +504,16 @@ test.describe('Home: the low-risk band, the FAQ trial answer, the hero line, the
     expect(fact('ID-01').text).toContain('educated, unemployed and underemployed youth');
   });
 
-  // WP50 (cycle-25 review): the predecessor program is named in the slide's eyebrow ("Randomized Trial of a Predecessor Program") and the lead; the heading is short again (tests/wp50.spec.ts)
-  test('slide 1 names the predecessor program, in the eyebrow above its heading and in its lead; the >4× tile stays', async ({ page }) => {
+  // WP50 (cycle-25 review): CodersTrust’s WSDFM program is named in the slide's eyebrow ("Randomized Trial of CodersTrust’s WSDFM Program") and the lead; the heading is short again (tests/wp50.spec.ts)
+  test('slide 1 names CodersTrust’s WSDFM program, in the eyebrow above its heading and in its lead; the >4× tile stays', async ({ page }) => {
     await open(page, '');
     const first = slide(page, 1);
     const title = 'Women Offered a Place Earned an Estimated 41% More per Month';
     await expect(first.locator('h3')).toHaveText(title);
     expect(title).toBe(titleCase(title));
     expect(await first.locator('h3').getAttribute('data-fact')).toBe('RC-01');
-    await expect(first.locator('.hs__eyebrow')).toHaveText('Randomized Trial of a Predecessor Program');
-    expect(compact(await first.locator('.hs__lead').textContent())).toBe('In the predecessor WSDFM program, women offered a place had an estimated 41% higher monthly income than the control group, about $27 more a month.'); // WP63 (cycle-35 review, GLM L4)
+    await expect(first.locator('.hs__eyebrow')).toHaveText('Randomized Trial of CodersTrust’s WSDFM Program');
+    expect(compact(await first.locator('.hs__lead').textContent())).toBe('In CodersTrust’s WSDFM program, women offered a place had an estimated 41% higher monthly income than the control group, about $27 more a month.'); // WP63 (cycle-35 review, GLM L4)
     expect(compact(await first.locator('.hs__proof').textContent())).toContain('>4×');
   });
 
@@ -651,7 +651,7 @@ test.describe('The evidence ladder’s first rung is "Independent Evaluation (BI
     expect(((await link.getAttribute('href')) ?? '').replace(/^\/ctg/, '')).toBe('/impact/independent-evaluation/');
     expect(await first.locator('th [data-evidence]').getAttribute('data-evidence')).toBe('Randomized Trial');
     const shows = compact(await first.locator('td[data-label="What It Shows"]').textContent());
-    expect(shows).toBe(`The effect of CodersTrust’s predecessor WSDFM program on women in Dhaka, evaluated by the ${INSTITUTE} against a randomly chosen control group.`);
+    expect(shows).toBe(`The effect of CodersTrust’s WSDFM program on women in Dhaka, evaluated by the ${INSTITUTE} against a randomly chosen control group.`);
     const text = await mainText(page);
     expect(count(text, INSTITUTE), 'the institute is spelled out once on Impact').toBe(1);
     expect(count(text, 'BIGD'), 'the abbreviation appears once, in the rung name').toBe(1);

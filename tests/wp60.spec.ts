@@ -212,31 +212,31 @@ test.describe('R6 (Grok): Independent Evaluation does not read the classes resul
 });
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-test.describe('S3 (Claude): the 2 million 2030 aim carries its dependency on every page that states it', () => {
+test.describe('S3 (Claude): the 1 million 2030 aim carries its dependency on every page that states it (WP99: the aim is IN-01’s text, which ends with the clause)', () => {
   test('the constant is the clause the Programs hub card had', () => {
     expect(AIM_DEPENDENCY).toBe('depending on government and donor commitments');
   });
 
   test('Programs, Impact, About and YouthWIDE (the regions row and the 2030 aim tile) say it', async ({ page }) => {
     await open(page, 'programs/');
-    expect(compact(await page.locator('main').textContent())).toContain(`In Bangladesh it aims to train 2 million vulnerable youth for digital employment by 2030, ${AIM_DEPENDENCY}.`);
+    expect(compact(await page.locator('main').textContent())).toContain(`It aims to train 1 million educated youth (Higher Secondary Certificate or above) for digital employment by 2030, in Bangladesh and similar countries in South Asia and the Middle East and North Africa, ${AIM_DEPENDENCY}.`);
     await open(page, 'impact/');
     const tile = page.locator('#heading a[data-fact~="IN-01"]');
     await expect(tile).toHaveCount(1);
-    expect(compact(await tile.locator('.glance__note').textContent())).toBe(`YouthWIDE in Bangladesh, ${AIM_DEPENDENCY}. An ambition, not a result.`);
+    expect(compact(await tile.locator('.glance__note').textContent())).toBe(`YouthWIDE in Bangladesh and similar countries in South Asia and the Middle East and North Africa, ${AIM_DEPENDENCY}. An ambition, not a result.`);
     await open(page, 'about/');
     expect(compact(await page.locator('#story .timeline__item').last().locator('.timeline__text').textContent())).toBe(
-      `JobReady rolls out in stages. YouthWIDE aims to train 2 million vulnerable youth in Bangladesh by 2030, ${AIM_DEPENDENCY}; CodersTrust publishes Impact Survey 2026.`,
+      `JobReady rolls out in stages. YouthWIDE aims to train 1 million educated youth (Higher Secondary Certificate or above) for digital employment by 2030, in Bangladesh and similar countries in South Asia and the Middle East and North Africa, ${AIM_DEPENDENCY}; CodersTrust publishes Impact Survey 2026.`,
     );
     await open(page, YOUTHWIDE);
-    expect(compact(await page.locator('#program-glance .pg__row').first().textContent())).toContain(`that aims to train 2 million vulnerable youth by 2030, ${AIM_DEPENDENCY}.`);
-    expect(compact(await page.locator('section#governments .mech-target__note').textContent())).toBe(`A national ambition for 2030, ${AIM_DEPENDENCY}; not a delivered figure.`);
+    expect(compact(await page.locator('#program-glance .pg__row').first().textContent())).toContain(`YouthWIDE aims to train 1 million educated youth (Higher Secondary Certificate or above) for digital employment by 2030, in Bangladesh and similar countries in South Asia and the Middle East and North Africa, ${AIM_DEPENDENCY}.`);
+    expect(compact(await page.locator('section#governments .mech-target__note').textContent())).toBe(`An ambition for 2030, ${AIM_DEPENDENCY}; not a delivered figure.`);
   });
 
-  test('no built page states the 2 million aim without the clause within 260 characters, and only those four pages state it', () => {
+  test('no built page states the 1 million aim without the clause within 330 characters, and only those four pages state it', () => {
     const pages = sitePages()
       .map((p) => ({ route: p.route, text: visible(p.html) }))
-      .map((p) => ({ route: p.route, windows: [...p.text.matchAll(/(?<![\d,.])2 million.{0,260}/g)].map((m) => m[0]).filter((w) => /vulnerable youth/.test(w) && /2030/.test(w)) }))
+      .map((p) => ({ route: p.route, windows: [...p.text.matchAll(/(?<![\d,.])1 million.{0,330}/g)].map((m) => m[0]).filter((w) => /educated youth/.test(w) && /2030/.test(w)) }))
       .filter((p) => p.windows.length > 0);
     expect(pages.map((p) => p.route).sort()).toEqual(['/about/', '/impact/', '/programs/', '/programs/youthwide/']);
     for (const p of pages) for (const w of p.windows) expect(w, p.route).toContain(AIM_DEPENDENCY);
@@ -475,13 +475,13 @@ test.describe('L7 (GLM): the JobReady Platform rollout table says "Live" for the
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 test.describe('GM1 (Gemini): the Programs hub’s evidence band is scoped to youth-employment programs', () => {
-  test('the band is "Evidence from Youth-Employment Programs", opens with the scope line, and keeps the trial line (predecessor program named), the survey tile and the two links', async ({ page }) => {
+  test('the band is "Evidence from Youth-Employment Programs", opens with the scope line, and keeps the trial line (CodersTrust’s WSDFM program named), the survey tile and the two links', async ({ page }) => {
     await open(page, 'programs/');
     const band = page.locator('#proof-band');
     await expect(band.locator('h2')).toHaveText('Evidence from Youth-Employment Programs');
     await expect(band.locator('.eb__head .lead').first()).toHaveText('These results are from youth-employment programs, not evidence for every program listed above.');
     expect(await texts(page, '#proof-band h3')).toEqual(['An Independent Randomized Trial', 'From the October 2026 Survey']);
-    expect(compact(await band.locator('.eb__headline').textContent())).toContain('predecessor WSDFM program');
+    expect(compact(await band.locator('.eb__headline').textContent())).toContain('CodersTrust’s WSDFM program');
     expect(compact(await band.locator('.eb__stat').first().textContent())).toContain('78.2%');
     expect(await texts(page, '#proof-band .eb__links a')).toEqual(['See the Evidence', 'The Randomized Trial']);
     expect(sitePages().filter((p) => p.route === '/programs/' && visible(p.html).includes('Trial and Survey Evidence'))).toEqual([]);

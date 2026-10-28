@@ -320,7 +320,7 @@ test.describe('Audience pages: the Track Record band closes with the sentence fo
     await open(page, FOUNDATIONS);
     const items = page.locator('#guide .pg__list li');
     await expect(items).toHaveCount(3);
-    expect(compact(await items.nth(0).textContent())).toContain('evaluated the predecessor WSDFM program');
+    expect(compact(await items.nth(0).textContent())).toContain('evaluated CodersTrust’s WSDFM program');
     expect(compact(await items.nth(1).textContent())).toBe('Organizations that have worked with CodersTrust include the Rockefeller Foundation, DANIDA and Porticus.');
     await open(page, EMPLOYERS);
     expect(await texts(page, '#guide .pg__list li')).toEqual([

@@ -168,7 +168,7 @@ test.describe('BIGD is spelled out at its first mention on every page that names
     for (const route of [ABOUT, GOVERNANCE]) {
       await open(page, route);
       const text = await everything(page);
-      expect(text, route).toContain('A randomized trial by the BRAC Institute of Governance and Development (BIGD) found that women offered a place in CodersTrust’s predecessor WSDFM program were 10.3 percentage points more likely to be employed.');
+      expect(text, route).toContain('A randomized trial by the BRAC Institute of Governance and Development (BIGD) found that women offered a place in CodersTrust’s WSDFM program were 10.3 percentage points more likely to be employed.');
       expect(count(text, 'BIGD'), route).toBe(1);
       expect(await page.locator('[data-fact="RC-01"]').count(), route).toBeGreaterThan(0);
     }
@@ -178,7 +178,7 @@ test.describe('BIGD is spelled out at its first mention on every page that names
     await open(page, YOUTHWIDE);
     const headline = page.locator('#proof-band .eb__headline');
     await expect(headline).toHaveText(
-      'In the randomized trial of the predecessor WSDFM program by the BRAC Institute of Governance and Development (BIGD), women offered a place were 10.3 percentage points more likely to be employed and had an estimated 41% higher monthly income than the control group.',
+      'In the randomized trial of CodersTrust’s WSDFM program by the BRAC Institute of Governance and Development (BIGD), women offered a place were 10.3 percentage points more likely to be employed and had an estimated 41% higher monthly income than the control group.',
     );
     expect(await headline.getAttribute('data-fact')).toBe('RC-01 RC-02');
     expect(await everything(page)).not.toContain('BIGD’s');
@@ -213,11 +213,11 @@ test.describe('The Programs menu describes YouthWIDE without the Bangladesh aim 
   test('no page’s menu carries the aim, and it is still stated where it is labeled as an aim: YouthWIDE, the Programs hub and Impact', async ({ page }) => {
     expect(sitePages().filter((p) => visible(p.html).includes('Co-funded country cohorts, designed for three regions, with a Bangladesh initiative')).map((p) => p.route)).toEqual([]);
     await open(page, YOUTHWIDE);
-    expect(compact(await page.locator('#program-glance .pg__row').first().textContent())).toContain('aims to train 2 million vulnerable youth by 2030');
+    expect(compact(await page.locator('#program-glance .pg__row').first().textContent())).toContain('YouthWIDE aims to train 1 million educated youth (Higher Secondary Certificate or above) for digital employment by 2030, in Bangladesh and similar countries in South Asia and the Middle East and North Africa, depending on government and donor commitments.');
     await open(page, PROGRAMS);
-    expect(await everything(page)).toContain('In Bangladesh it aims to train 2 million vulnerable youth for digital employment by 2030');
+    expect(await everything(page)).toContain('It aims to train 1 million educated youth (Higher Secondary Certificate or above) for digital employment by 2030, in Bangladesh and similar countries in South Asia and the Middle East and North Africa, depending on government and donor commitments.');
     await open(page, IMPACT);
-    expect(await everything(page)).toContain('Aim: vulnerable youth trained for digital employment by 2030');
+    expect(await everything(page)).toContain('Aim: educated youth (Higher Secondary Certificate or above) trained for digital employment by 2030');
   });
 });
 

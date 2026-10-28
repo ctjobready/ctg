@@ -108,7 +108,7 @@ test.describe('Investors: the track-record band names relationships, not distrib
 
 test.describe('Programs hub: the trial is one line (item 4)', () => {
   const points = fact('RC-02').stat!.value.replace(/^\+/, '').replace(/ pp$/, ' percentage points');
-  const LINE = `Women offered a place in the predecessor WSDFM program were ${points} more likely to be employed than the control group.`;
+  const LINE = `Women offered a place in CodersTrust’s WSDFM program were ${points} more likely to be employed than the control group.`;
 
   test('under "An Independent Randomized Trial" there is the one line, read from RC-02 and RC-01, and nothing else of the trial: no prose paragraph, no +10.3 pp tile, no chart', async ({ page }) => {
     await open(page, 'programs/');
@@ -262,7 +262,7 @@ test.describe('Home: slide headings, tile and meta description (items 8, 13 and 
   test('the meta description opens with what CodersTrust does and ends with the evidence; the title is unchanged', async ({ page }) => {
     await open(page, '');
     const description = (await page.locator('meta[name="description"]').getAttribute('content')) ?? '';
-    expect(description).toBe('CodersTrust trains and mentors educated, unemployed youth for paid digital work, with evidence from a randomized trial of a predecessor program.');
+    expect(description).toBe('CodersTrust trains and mentors educated, unemployed youth for paid digital work, with evidence from a randomized trial of CodersTrust’s WSDFM program.');
     expect(description.length).toBeLessThanOrEqual(155);
     expect(description).not.toMatch(/10\.3|percentage points/);
     await expect(page).toHaveTitle('CodersTrust: From Learning to Earning for Youth');

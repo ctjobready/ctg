@@ -378,7 +378,7 @@ test.describe('The WSDFM card says its 71% is program records, not trial data (i
     const withCaption = builtPages().filter((p) => p.html.includes('WSDFM program records (not trial results; the trial’s 425 women offered a place were among these 1,000): 71% of enrolled women in work'));
     // WP51 (cycle-26 review): Home's card shows delivery context in place of the figure and its caption (the fourth carousel slide states the figure), so Home is not in the list
     expect(withCaption.map((p) => p.route).filter((r) => r !== '/styleguide/').sort()).toEqual(['/partner-with-us/development-partners/', '/partner-with-us/foundations/', '/partner-with-us/local-partners/', '/programs/youthwide/']);
-    // the old caption is gone everywhere (Impact’s tile has its own label, "WSDFM program records: enrolled women in work (71%)", and its own note, "Program records, separate from the randomized trial of the predecessor program.": different lines, unchanged)
+    // the old caption is gone everywhere (Impact’s tile has its own label, "WSDFM program records: enrolled women in work (71%)", and its own note, "Program records, separate from the randomized trial of CodersTrust’s WSDFM program.": different lines, unchanged)
     expect(builtPages().filter((p) => p.html.includes('program records, separate from the trial')).map((p) => p.route)).toEqual([]);
   });
 });

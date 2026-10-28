@@ -416,13 +416,13 @@ test.describe('Development Partners and Governments: no closing line repeats the
 test.describe('Home: the trial slide (items 17 and 18)', () => {
   const first = (page: Page) => page.locator('[data-hs-slide]').nth(0);
 
-  test('the heading is "Women Offered a Place Earned an Estimated 41% More per Month"; the eyebrow is "Randomized Trial of a Predecessor Program"; the lead still names the predecessor WSDFM program', async ({ page }) => {
+  test('the heading is "Women Offered a Place Earned an Estimated 41% More per Month"; the eyebrow is "Randomized Trial of CodersTrust’s WSDFM Program"; the lead still names CodersTrust’s WSDFM program', async ({ page }) => {
     await open(page, '');
     await expect(first(page).locator('h3')).toHaveText('Women Offered a Place Earned an Estimated 41% More per Month');
     expect('Women Offered a Place Earned an Estimated 41% More per Month').toBe(titleCase('Women Offered a Place Earned an Estimated 41% More per Month'));
-    await expect(first(page).locator('.hs__eyebrow')).toHaveText('Randomized Trial of a Predecessor Program');
-    expect('Randomized Trial of a Predecessor Program').toBe(titleCase('Randomized Trial of a Predecessor Program'));
-    expect(compact(await first(page).locator('.hs__lead').textContent())).toBe('In the predecessor WSDFM program, women offered a place had an estimated 41% higher monthly income than the control group, about $27 more a month.'); // WP63 (cycle-35 review, GLM L4)
+    await expect(first(page).locator('.hs__eyebrow')).toHaveText('Randomized Trial of CodersTrust’s WSDFM Program');
+    expect('Randomized Trial of CodersTrust’s WSDFM Program').toBe(titleCase('Randomized Trial of CodersTrust’s WSDFM Program'));
+    expect(compact(await first(page).locator('.hs__lead').textContent())).toBe('In CodersTrust’s WSDFM program, women offered a place had an estimated 41% higher monthly income than the control group, about $27 more a month.'); // WP63 (cycle-35 review, GLM L4)
     expect(await first(page).locator('h3').getAttribute('data-fact')).toBe('RC-01');
     expect(await first(page).getAttribute('aria-label')).toBe('1 of 4: Women Offered a Place Earned an Estimated 41% More per Month');
   });
@@ -430,7 +430,7 @@ test.describe('Home: the trial slide (items 17 and 18)', () => {
   test('the eyebrow is this slide’s own text: the menu’s trial card and the partner hub keep their wording, and the other slides keep their eyebrows', async ({ page }) => {
     await open(page, '');
     // WP53 (owner decision 2026-10-16): the second "Impact Survey 2026" slide, "Reach at Scale" and "Our Programs" are gone
-    expect(await texts(page, '[data-hs-slide] .hs__eyebrow')).toEqual(['Randomized Trial of a Predecessor Program', 'Government and University Partners', 'Impact Survey 2026', 'Program Records']);
+    expect(await texts(page, '[data-hs-slide] .hs__eyebrow')).toEqual(['Randomized Trial of CodersTrust’s WSDFM Program', 'Government and University Partners', 'Impact Survey 2026', 'Program Records']);
     expect(sitePages().filter((p) => visible(p.html).includes('Women Offered a Place in a Predecessor Program Earned')).map((p) => p.route)).toEqual([]);
   });
 
@@ -639,7 +639,7 @@ test.describe('Home: the hero trial card says "10.3 more" (item 28)', () => {
     const card = page.locator('.hh__card[data-fact="RC-02"]');
     await expect(card.locator('.hh__num')).toHaveText('+10.3');
     await expect(card.locator('.hh__unit')).toHaveText('percentage points');
-    await expect(card.locator('.hh__figlabel')).toHaveText('For every 100 women offered a place in a 200-hour predecessor program, 10.3 more were in work than in the control group.');
+    await expect(card.locator('.hh__figlabel')).toHaveText('For every 100 women offered a place in CodersTrust’s 200-hour WSDFM program, 10.3 more were in work than in the control group.');
     await open(page, 'impact/independent-evaluation/');
     expect(compact(await page.locator('[data-plain-line]').textContent())).toBe('For every 100 women offered a place, about 10 more were in work at follow-up than among 100 comparable women in the control group (+10.3 percentage points).');
     expect(sitePages().filter((p) => visible(p.html).includes('about 10 more were in work than in the control group')).map((p) => p.route)).toEqual([]);

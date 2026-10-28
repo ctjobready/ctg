@@ -369,8 +369,8 @@ test.describe('S10 and S11: headings', () => {
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 test.describe('G5 and L3: Foundations’ Results at a Glance', () => {
   // WP62 (cycle-34 review, Grok, GPT-6.1 Sol and Gemini): the +$27 tile left the glance (a program record is the fourth tile; tests/wp62.spec.ts; WP65, cycle-37 review: the UNDP YES, Korail record); RC-04’s register wording is unchanged
-  test('RC-04’s caption still reads "... in a predecessor program, compared with the control group" (the $66 mean stays in the register’s text only); Foundations’ glance no longer shows it', async ({ page }) => {
-    expect(fact('RC-04').stat?.label).toBe('estimated monthly income gain for women offered a place in a predecessor program, compared with the control group');
+  test('RC-04’s caption still reads "... in CodersTrust’s WSDFM program, compared with the control group" (the $66 mean stays in the register’s text only); Foundations’ glance no longer shows it', async ({ page }) => {
+    expect(fact('RC-04').stat?.label).toBe('estimated monthly income gain for women offered a place in CodersTrust’s WSDFM program, compared with the control group');
     expect(fact('RC-04').text).toContain('control-group mean of about $66');
     await open(page, FOUNDATIONS);
     await expect(page.locator('#glance a[data-fact~="RC-04"]')).toHaveCount(0);

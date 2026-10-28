@@ -53,7 +53,7 @@ test.describe('WP95 A2: Programs hub links learners to JobReady.global for short
 });
 
 test.describe('WP95 A3: evidence band has one sentence between the heading and the two links', () => {
-  const SENTENCE = 'The trial evaluated a predecessor program; the survey describes what completers who responded report about work and income.';
+  const SENTENCE = 'The trial evaluated CodersTrust’s WSDFM program; the survey describes what completers who responded report about work and income.';
   for (const slug of ['governments', 'development-partners', 'foundations']) {
     test(`${slug}: the sentence sits under the H2 and above the links; heading and link labels are unchanged`, async ({ page }) => {
       await page.setViewportSize(DESKTOP);

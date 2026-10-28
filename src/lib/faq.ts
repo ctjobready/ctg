@@ -35,7 +35,8 @@ function answerHtml(f: Faq): string {
   if (!f.inlineLink) return text;
   const phrase = esc(f.inlineLink.text);
   if (text.split(phrase).length !== 2) throw new Error(`faqItems: the link text "${f.inlineLink.text}" must appear exactly once in the answer ${f.id}`);
-  return text.replace(phrase, () => `<a href="${esc(linkAttrs(f.inlineLink!.href).href)}">${phrase}</a>`);
+  const link = linkAttrs(f.inlineLink.href);
+  return text.replace(phrase, () => `<a href="${esc(link.href)}"${link.rel ? ` rel="${link.rel}"` : ''}>${phrase}</a>`);
 }
 
 /** FAQPage JSON-LD node for the same FAQs — pass it to the layout's `jsonLd` prop (one @graph per page). */

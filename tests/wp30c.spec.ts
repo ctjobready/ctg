@@ -130,7 +130,7 @@ test.describe('Home', () => {
     expect(work[work.length - 1]).toBe('Work-entry support depends on the provider and package');
     expect(mentoring[mentoring.length - 1]).not.toBe(work[work.length - 1]);
     // WP31: the independent-evidence cell is one clause on Home (the shared cell keeps its longer wording elsewhere)
-    expect(byLabel.get('Independent Evidence')![1]).toBe('One randomized trial of a predecessor program (200 hours, women in Dhaka); independent evaluation of your cohort welcome');
+    expect(byLabel.get('Independent Evidence')![1]).toBe('One randomized trial of CodersTrust’s WSDFM program (200 hours, women in Dhaka); independent evaluation of your cohort welcome');
   });
 
   // WP55 (owner decisions 2026-10-17/18, synthesis 3.5): the band ends with ONE press line (WP62, cycle-34 review: one pointer sentence to Recognition and Media; tests/wp55.spec.ts) above the link to the full list. The 2014–2016 press outlets are named

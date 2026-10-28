@@ -40,7 +40,7 @@ export const HER_POWER_TILE_LABEL = `Her Power: ${herPowerLabel}`;
 /**
  * WP31: the WSDFM card sits on pages that also show the trial's follow-up employment (63.1% against 52.8%), a different measure. The caption says the
  * 71% is program records, from PR-01's own label ("WSDFM: 71% of enrolled women in work", WP76: it said "71% in work"); the figures are not retyped.
- * WP46 (cycle-22 review): "(not trial data)", where it read "separate from the trial", which suggested the records contradict the trial of the same predecessor program.
+ * WP46 (cycle-22 review): "(not trial data)", where it read "separate from the trial", which suggested the records contradict the trial of the same program.
  * WP60 (cycle-32 review, Claude S4; owner answer 2026-10-20, "The BIGD study only studied 833"): the parenthesis adds how the records relate to the trial, "(not trial data; the trial studied 833 women)": the 711 of 1,000 above it are the program's records and
  * the trial's count is RC-07's 833 (TRIAL_WOMEN, src/data/copy.ts), so the card names RC-07 beside PR-01 (CASE_CARD_LABEL_FACTS). It does not say the 833 are "of" the 1,000: the trial's sample includes 408 women who were not offered a place.
  */

@@ -55,7 +55,7 @@ test.describe('WP78 item 3: taka amounts on the trial page', () => {
     await expect(note).toHaveCount(1);
     const text = compact(await note.textContent());
     // WP80 (item 2): the rate sits in RC-04a's text, beside the dollar figures it converts.
-    expect(text).toBe('The report gives these amounts in taka: BDT 2,354 a month for women offered a place, BDT 3,118 for attenders, on a control-group mean of BDT 5,715 (Table 4); the dollar figures are approximate conversions at about BDT 87 to the dollar, the rate at the time of the study.');
+    expect(text).toBe('The report gives these amounts in taka: BDT 2,354 a month for women offered a place, BDT 3,118 for attenders, on a control-group mean of BDT 5,715 (Table 4); the dollar figures are approximate conversions at about BDT 86 to the dollar, the rate in November–December 2021, when the follow-up survey ran.');
     await expect(page.locator('#results')).not.toContainText('BIGD22');
   });
 });

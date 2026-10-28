@@ -51,10 +51,10 @@ if (!bachelorShare) throw new Error('OC-09 no longer states the bachelor’s-deg
 
 const faqSources: FaqSource[] = [
   { audience: 'variants' as const, id: 'Q3-institution' },
-  // WP34 (cycle-11 review): the question is about this program's fit, so the answer names who it is for; the 85.0% is the October 2026 survey's profile of completers, said as such (WP73).
+  // WP34 (cycle-11 review): the question is about this program's fit, so the answer names who it is for; the 85.0% is the October 2026 survey's profile of the alumni who answered, said as such (WP73; WP99: it describes all responding alumni, not completers).
   {
     q: 'Who Is JobReady@Campus For?',
-    html: `Students and degree holders at universities and colleges. In CodersTrust’s October 2026 survey of completers across its programs, ${bachelorShare}% held a bachelor’s degree or higher.`,
+    html: `Students and degree holders at universities and colleges. Among alumni of CodersTrust’s programs who answered the October 2026 survey, ${bachelorShare}% hold a bachelor’s degree or higher.`,
     evidence: ['OC-09'],
   },
 ];

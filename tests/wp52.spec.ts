@@ -177,7 +177,7 @@ test.describe('Foundations: the cohort-grant offer’s lead is the program-sizes
 });
 
 test.describe('About: the 2025–2026 timeline entry is sentences, not a semicolon chain (item 7)', () => {
-  const TEXT = 'JobReady rolls out in stages. YouthWIDE aims to train 2 million vulnerable youth in Bangladesh by 2030, depending on government and donor commitments; CodersTrust publishes Impact Survey 2026.';
+  const TEXT = 'JobReady rolls out in stages. YouthWIDE aims to train 1 million educated youth (Higher Secondary Certificate or above) for digital employment by 2030, in Bangladesh and similar countries in South Asia and the Middle East and North Africa, depending on government and donor commitments; CodersTrust publishes Impact Survey 2026.';
 
   test('the last entry reads as above, from data/timeline.ts, under its unchanged heading, and cites the facts its sentences rest on (IN-02 is no longer among them)', async ({ page }) => {
     const last = timeline[timeline.length - 1];
@@ -192,9 +192,9 @@ test.describe('About: the 2025–2026 timeline entry is sentences, not a semicol
     expect(await item.getAttribute('data-fact')).toBe('IN-04 IN-01 OC-01');
   });
 
-  test('every claim in the entry rests on the register: IN-04 (modules roll out in stages), IN-01 (2 million vulnerable youth in Bangladesh by 2030), OC-01 (the Impact Survey 2026 result)', () => {
+  test('every claim in the entry rests on the register: IN-04 (modules roll out in stages), IN-01 (1 million educated youth by 2030, in Bangladesh and similar countries), OC-01 (the Impact Survey 2026 result)', () => {
     expect(fact('IN-04').text).toContain('Modules are rolling out in stages');
-    expect(fact('IN-01').text).toContain('aims to train 2 million vulnerable youth');
+    expect(fact('IN-01').text).toContain('aims to train 1 million educated youth (Higher Secondary Certificate or above)');
     expect(fact('IN-01').text).toContain('by 2030');
     expect(fact('OC-01').text).toContain('October 2026 survey');
   });
@@ -418,10 +418,10 @@ test.describe('YouthWIDE: the briefing link names its audience (item 15) and the
     expect(fact('IN-02').text.endsWith('current outcome evidence comes from Bangladesh and Kosovo, with Bangladesh where most delivery has been')).toBe(true);
     await open(page, YOUTHWIDE);
     expect(compact(await page.locator('#program-glance .pg__row').first().textContent())).toContain(
-      'South Asia, the Middle East and North Africa, and Sub-Saharan Africa, as co-funded country cohorts. Bangladesh is where most delivery has been, with an initiative of its own that aims to train 2 million vulnerable youth by 2030, depending on government and donor commitments.',
+      'South Asia, the Middle East and North Africa, and Sub-Saharan Africa, as co-funded country cohorts. Bangladesh is where most delivery has been. YouthWIDE aims to train 1 million educated youth (Higher Secondary Certificate or above) for digital employment by 2030, in Bangladesh and similar countries in South Asia and the Middle East and North Africa, depending on government and donor commitments.',
     );
-    // WP53 (owner follow-up, 2026-10-16): the Bangladesh band’s heading had kept "Reference Country", the jargon this item removed from the glance row; it is "Bangladesh: Delivery Base and 2030 Aim" (tests/wp53.spec.ts)
-    await expect(page.locator('section#governments').getByRole('heading', { level: 2 })).toHaveText('Bangladesh: Delivery Base and 2030 Aim');
+    // WP53 (owner follow-up, 2026-10-16): the Bangladesh band’s heading had kept "Reference Country", the jargon this item removed from the glance row; it was "Bangladesh: Delivery Base and 2030 Aim"; WP99 (owner answer 2026-10-28, Q1): it is "Delivery Base in Bangladesh and the 2030 Aim"
+    await expect(page.locator('section#governments').getByRole('heading', { level: 2 })).toHaveText('Delivery Base in Bangladesh and the 2030 Aim');
     expect(pagesWith('reference implementation')).toEqual([]);
     // the YouthWIDE service node in the page’s JSON-LD carries IN-02’s text
     const blobs = await page.locator('script[type="application/ld+json"]').allTextContents();
@@ -621,10 +621,10 @@ test.describe('The Programs hub lines (items 28 and 30)', () => {
 });
 
 test.describe('Impact: the evidence ladder’s first row and the page title (items 31 and 38)', () => {
-  test('row 1 "What It Shows": "The effect of CodersTrust’s predecessor WSDFM program on women in Dhaka, evaluated by the BRAC Institute ..." (the institute’s name stays)', async ({ page }) => {
+  test('row 1 "What It Shows": "The effect of CodersTrust’s WSDFM program on women in Dhaka, evaluated by the BRAC Institute ..." (the institute’s name stays)', async ({ page }) => {
     await open(page, IMPACT);
     const shows = compact(await page.locator('#evidence-ladder tbody tr').first().locator('td[data-label="What It Shows"]').textContent());
-    expect(shows).toBe('The effect of CodersTrust’s predecessor WSDFM program on women in Dhaka, evaluated by the BRAC Institute of Governance and Development against a randomly chosen control group.');
+    expect(shows).toBe('The effect of CodersTrust’s WSDFM program on women in Dhaka, evaluated by the BRAC Institute of Governance and Development against a randomly chosen control group.');
     expect(pagesWith('The effect of one CodersTrust program (WSDFM)')).toEqual([]);
   });
 

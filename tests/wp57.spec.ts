@@ -372,7 +372,7 @@ test.describe('K1, Impact: "On This Page" ends on the closing band', () => {
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 test.describe('K2, Foundations: the meta description reads "earned an estimated $27 more a month"', () => {
-  const DESCRIPTION = 'Fund a supported path to earnings. A randomized trial of a predecessor program found women offered a place earned an estimated $27 more a month.';
+  const DESCRIPTION = 'Fund a supported path to earnings. A randomized trial of CodersTrust’s WSDFM program found women offered a place earned an estimated $27 more a month.';
 
   test('the description, its Open Graph copy and the page’s structured data say it, within the length limit, with the figure read from RC-04', async ({ page }) => {
     await open(page, FOUNDATIONS);

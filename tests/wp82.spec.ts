@@ -71,11 +71,11 @@ test.describe('WP82: WSDFM trial wording uses the 425 offered a place', () => {
 
   test('PR-01 and Foundations no longer say the trial was "separately" evaluated', async ({ page }) => {
     expect(fact('PR-01').text).not.toMatch(/separately/);
-    expect(fact('PR-01').text).toContain('BIGD evaluated the predecessor WSDFM program in a randomized trial');
+    expect(fact('PR-01').text).toContain('BIGD evaluated CodersTrust’s WSDFM program in a randomized trial');
     await open(page, 'partner-with-us/foundations/');
     const guide = compact(await page.locator('#guide').textContent());
     expect(guide).not.toMatch(/separately evaluated/);
-    expect(guide).toContain('evaluated the predecessor WSDFM program, commissioned by Porticus, in a randomized trial.');
+    expect(guide).toContain('evaluated CodersTrust’s WSDFM program, commissioned by Porticus, in a randomized trial.');
   });
 
   test('no built page says the WSDFM records are separate from the trial', () => {

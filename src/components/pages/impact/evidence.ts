@@ -2,7 +2,7 @@ import { fact } from '../../../data/facts';
 
 /**
  * Evidence types for the Impact pages (WP24b). A proof figure is one of four kinds, and the kind follows from the register entry's id:
- *  - RC-*  the BIGD randomized trial of the predecessor WSDFM program  → Randomized Trial
+ *  - RC-*  the BIGD randomized trial of CodersTrust’s WSDFM program  → Randomized Trial
  *  - OC-*  the CodersTrust Impact Survey, October 2026                  → Surveyed Completers
  *  - PR-*  a program's own records (WSDFM, Kosovo, UNDP YES, Her Power) → Program Record
  *  - ST-*  one learner's own account                                    → Individual Story

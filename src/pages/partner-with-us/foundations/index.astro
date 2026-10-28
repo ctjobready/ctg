@@ -7,8 +7,8 @@
  * and the restated three-step mechanism. The two inquiry links now sit directly under the two-route comparison they belong to (cycle-7 IA review).
  * WP35 (cycle-12 review): the trial and the survey are shown once, as tiles in Results at a Glance; the proof band that restated them is a one-line strip of links (#proof-band). The WSDFM tile is gone
  * from the glance (its 71% is program records, read beside the trial's 63.1%; the Kosovo program result takes its place), the evaluator is spelled out where the page first names it, the independent-evidence
- * row says the evidence is on the predecessor program, and the meta description is a complete sentence.
- * WP36 (cycle-13 reviews): the +$27 tile reads "estimated monthly income gain for women offered a place in a predecessor program, versus a control mean of about $66" (RC-04's stat label); the three pains are
+ * row says the evidence is on CodersTrust’s WSDFM program, and the meta description is a complete sentence.
+ * WP36 (cycle-13 reviews): the +$27 tile reads "estimated monthly income gain for women offered a place in CodersTrust’s WSDFM program, versus a control mean of about $66" (RC-04's stat label); the three pains are
  * statements; the cost and safeguarding questions have the one-line route answers, each with a link to the full answer.
  * WP37 (cycle-14 review): the Funding Route 2 passage under the offer cards no longer retells the platform and its live and pre-launch list (the comparison above it has them); it says what a platform grant
  * supports in one sentence and links the platform-grant inquiry.
@@ -42,7 +42,7 @@
  * Samina's learner card shows her outcome line alone ("Completed 90+ projects as a freelance graphic designer on Fiverr"): the sentence under it, "She has completed 90+ projects on Fiverr so far.", repeated it (flagged in three cycles) and is gone.
  * WP62 (cycle-34 review, Grok, GPT-6.1 Sol and Gemini): the randomized trial filled two of the four glance tiles (+10.3 percentage points and about +$27), so the fourth tile is the WSDFM program-record tile (PR-01: "711 of 1,000", "WSDFM program records: 71% in work",
  * tagged Program Record) in place of the +$27 tile. The +$27 is not stated elsewhere in the page body; the meta description still says it (RC-04, read by factPart).
- * WP62 rework (R3): the tile carries the note the Impact page's WSDFM tile has, WSDFM_NOT_TRIAL_NOTE ("Program records, separate from the randomized trial of the predecessor program, which studied 833 women."; src/data/copy.ts), since WP35 had taken the tile off this
+ * WP62 rework (R3): the tile carries the note the Impact page's WSDFM tile has, WSDFM_NOT_TRIAL_NOTE ("Program records, separate from the randomized trial of CodersTrust’s WSDFM program, which studied 833 women."; src/data/copy.ts), since WP35 had taken the tile off this
  * page because its 71% read beside the trial's figures; the tile's data-fact names RC-07 (the 833) and PR-06 beside PR-01, as Impact's does.
  * WP65 (cycle-37 review, GPT-6.1 Sol, Gemini): "711 of 1,000" stood in Results at a Glance and again on the Proof in Practice WSDFM card, with the not-the-trial note twice. UNDP YES, Korail was on no other part of this page (the UNDP logo in the
  * partner strip is the organization's, not the program), so the glance's fourth tile is the UNDP YES, Korail program-record tile (PR-03: 67% of the 350 enrolled found their first job within three months, 2017; the label is Development Partners',
@@ -92,7 +92,7 @@ const report = { label: reportCta.label, href: reportCta.href };
 
 const { title, description } = meta(
   'Fund Youth Employment: Foundations and CSR',
-  `Fund a supported path to earnings. A randomized trial of a predecessor program found women offered a place earned an estimated ${factPart('RC-04', /\+(\$\d+) a month/)} more a month.`,
+  `Fund a supported path to earnings. A randomized trial of CodersTrust’s WSDFM program found women offered a place earned an estimated ${factPart('RC-04', /\+(\$\d+) a month/)} more a month.`,
 );
 
 // Q8-route and Q9-route: the one-line cost and safeguarding answers, each with a link to where the full answer lives (the partner hub FAQ, the governance page) (WP36).
@@ -149,7 +149,7 @@ const FAQ_IDS = ['Q3', 'Q8-route', 'Q9-route', 'Q10'];
   <!-- C5 · Guide. WP50 (cycle-25 review): no empathy line; the band opens with the origin line, since the problem band above states the problem. -->
   <PartnerGuideBand
     statements={[
-      { facts: ['PR-01', 'RC-01'], markers: ['RC-01'], text: `The ${BIGD_NAME} evaluated the predecessor WSDFM program, commissioned by Porticus, in a randomized trial.` },
+      { facts: ['PR-01', 'RC-01'], markers: ['RC-01'], text: `The ${BIGD_NAME} evaluated CodersTrust’s WSDFM program, commissioned by Porticus, in a randomized trial.` },
       // WP51 (cycle-26 review, Kimi m1): the partner line that closed the page under "What Happens Next" moved here, unchanged, directly after the BIGD line.
       C14.validateFor.foundations,
     ]}
@@ -183,7 +183,7 @@ const FAQ_IDS = ['Q3', 'Q8-route', 'Q9-route', 'Q10'];
     id="proof-band"
     eyebrow="The Evidence"
     title="See the Evidence Behind the Results"
-    lead="The trial evaluated a predecessor program; the survey describes what completers who responded report about work and income."
+    lead="The trial evaluated CodersTrust’s WSDFM program; the survey describes what completers who responded report about work and income."
     items={[]}
     broader={[
       { label: 'Read the Trial Results', href: LINKS.trial },
@@ -201,7 +201,7 @@ const FAQ_IDS = ['Q3', 'Q8-route', 'Q9-route', 'Q10'];
 
   <!-- C8 · Features to benefits. WP39 (cycle-16 review): three short cards in place of the concern / inclusion / benefit matrix, in the order of the three pains in C2 (grants buy hours, rarely earnings; independent evidence is
        hard to find; accountable implementers are hard to find). The fourth row (SDG-mapped reporting, co-branded certificates and events, "Added Benefit") joins the reporting card as its second sentence, so nothing it said is lost.
-       Each sentence rests on the register: PD-01 and PD-02 (mentoring and placement support; outcome tracking for 12 months after each course, in the standard inclusions), PD-11 (the pilot scorecard; WP44: the second card is the scorecard, not the predecessor trial, because it describes a deliverable), PD-08 (monthly reports and the quarterly steering review) and PD-18 (SDG-mapped reporting, co-branded certificates and events).
+       Each sentence rests on the register: PD-01 and PD-02 (mentoring and placement support; outcome tracking for 12 months after each course, in the standard inclusions), PD-11 (the pilot scorecard; WP44: the second card is the scorecard, not the WSDFM trial, because it describes a deliverable), PD-08 (monthly reports and the quarterly steering review) and PD-18 (SDG-mapped reporting, co-branded certificates and events).
        WP49 (cycle-24 review): the third card no longer lists the scorecard (the first two cards, the Accountability callout and the agenda state it) or the contracting entity and due-diligence documents (the Due Diligence band states them), so its facts are PD-08 and PD-18. -->
   <IncludesBand
     title="What Your Cohort Grant Gets"

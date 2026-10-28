@@ -3,7 +3,7 @@ import { open } from './support/browser';
 
 /**
  * WP44 behaviors (cycle-21 whole-site review, GPT-6.1 Sol items 1-8): the Contact fallback names both inquiry addresses; Foundations' second card is the pilot scorecard
- * (not the predecessor trial) and its "Our Approach" is one whole statement; Universities' "Our Approach" is one whole statement with the reporting scoped; the JobReady Platform hero drops
+ * (not the WSDFM trial) and its "Our Approach" is one whole statement; Universities' "Our Approach" is one whole statement with the reporting scoped; the JobReady Platform hero drops
  * "AI-native"; Investors' thesis heading is "Young People Need Work. Employers Need Skills."; the NU diploma FAQ states schedule, intake and location in one sentence; Development Partners' guide
  * band has no empathy line and opens with the launch line. Retrospective coverage (the owner exempted this project from test-first work); run `npm run build` first, then
  * `PORT=<port> npx playwright test tests/wp44.spec.ts --project=chromium`.
@@ -23,7 +23,7 @@ test.describe('Contact: the inquiry fallback names both addresses (item 1)', () 
 });
 
 test.describe('Foundations: the second card is the scorecard and the approach is one whole statement (items 2 and 3)', () => {
-  test('the features card is "A Pilot Scorecard Agreed with You" with the scorecard sentence, and the card is not the predecessor trial', async ({ page }) => {
+  test('the features card is "A Pilot Scorecard Agreed with You" with the scorecard sentence, and the card is not the WSDFM trial', async ({ page }) => {
     await open(page, 'partner-with-us/foundations/');
     const card = page.locator('#features li.card', { has: page.locator('h3', { hasText: 'A Pilot Scorecard Agreed with You' }) });
     await expect(card).toHaveCount(1);

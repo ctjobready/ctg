@@ -165,7 +165,7 @@ test.describe('Item 3 (GPT-6.1 Sol, Gemini): Foundations’ fourth glance tile i
     await expect(card).toHaveCount(1);
     await expect(card.locator('.case__value')).toHaveText('711 of 1,000');
     const glance = compact(await page.locator('#glance').textContent());
-    expect(glance).not.toMatch(/711|WSDFM|833/);
+    expect(glance).not.toMatch(/711|833|WSDFM program records|71% of enrolled women/); // WP99: the +10.3 tile’s label now names "CodersTrust’s WSDFM program", so the bare word WSDFM is no longer the test of a program-record tile
     // the card’s band still names the trial’s count beside the program record (RC-07 beside PR-01), and keeps its second card
     expect(((await page.locator('#cases [data-fact]').first().getAttribute('data-fact')) ?? '').split(' ')).toEqual(expect.arrayContaining(['PR-01', 'RC-07', 'PR-05']));
     expect(await texts(page, '#cases article .card__title')).toEqual(['Women’s Skill Development for Freelancing Marketplace (WSDFM)', 'Her Power']);

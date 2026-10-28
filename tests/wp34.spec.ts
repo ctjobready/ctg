@@ -229,7 +229,7 @@ test.describe('JobReady@Campus FAQ: who the program is for', () => {
     await expect(item).toHaveCount(1);
     expect(compact(await item.locator('summary').textContent())).toBe('Who Is JobReady@Campus For?');
     const answer = item.locator('p');
-    expect(compact(await answer.textContent())).toBe('Students and degree holders at universities and colleges. In CodersTrust’s October 2026 survey of completers across its programs, 85.0% held a bachelor’s degree or higher.');
+    expect(compact(await answer.textContent())).toBe('Students and degree holders at universities and colleges. Among alumni of CodersTrust’s programs who answered the October 2026 survey, 85.0% hold a bachelor’s degree or higher.');
     expect(await answer.getAttribute('data-fact')).toBe('OC-09');
     expect(await mainText(page)).not.toMatch(/Typical Learners|Mostly university graduates from across Bangladesh/);
     const ld = (await page.locator('script[type="application/ld+json"]').allTextContents()).join(' ');

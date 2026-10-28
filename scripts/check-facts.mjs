@@ -261,7 +261,7 @@ function plainLineProblems(markup, text, stat, required) {
 /* ---- [PROOF-CARD]: the plain-language trial reading on Home's hero Randomized Trial proof card (WP35, cycle-12 review; its strip is headed "Proof at a Glance" since WP48) ---- */
 // Home states the trial in the hero's Randomized Trial card and in the first carousel slide; its evidence band no longer restates it, so the [PLAIN-LINE] anchor for Home moved to the card (the gate keeps its
 // strength: the card's numbers are held to the register, as the [PLAIN-LINE]'s are). The card (<li class="hh__card" data-fact="RC-02">) carries the eyebrow "Randomized Trial", RC-02's value ("+10.3") with the unit
-// "percentage points", and the plain-language caption "For every 100 women offered a place in a 200-hour predecessor program, 10.3 more were in work than in the control group." The caption's numbers
+// "percentage points", and the plain-language caption "For every 100 women offered a place in CodersTrust’s 200-hour WSDFM program, 10.3 more were in work than in the control group." The caption's numbers
 // are re-derived here from RC-02 (as the card's own figure, "10.3", WP50 cycle-25 review; the [PLAIN-LINE] keeps the rounded "about 10") and RC-07 ("... was 200 hours"), independently of src/data/heroSlides.ts, so a drift in either place fails the build.
 const PROOF_CARD_PAGES = ['/'];
 const proofCardWanted = (stat, rc07Text) => {
@@ -272,7 +272,7 @@ const proofCardWanted = (stat, rc07Text) => {
     eyebrow: 'Randomized Trial',
     value,
     unit: 'percentage points',
-    caption: `For every 100 women offered a place in a ${hours}-hour predecessor program, ${figure} more were in work than in the control group.`,
+    caption: `For every 100 women offered a place in CodersTrust’s ${hours}-hour WSDFM program, ${figure} more were in work than in the control group.`,
   };
 };
 /** Problems with the hero's trial card on one page: the card exists and its figure, unit and plain-language caption are RC-02's and RC-07's. */
@@ -937,7 +937,7 @@ function surveyEditionProblems(factsById, rows, pins = { facts: SURVEY_FACTS, ro
   // [PROOF-CARD]: Home's hero trial card carries RC-02's figure and the plain-language caption derived from RC-02 and RC-07 (WP35)
   const rc07 = facts['RC-07'].text;
   const cardWant = proofCardWanted(rc02, rc07);
-  if (cardWant.caption !== 'For every 100 women offered a place in a 200-hour predecessor program, 10.3 more were in work than in the control group.') problems.push(`self-test: RC-02 and RC-07 no longer yield the hero card caption (derived: "${cardWant.caption}"); the card wording needs a decision`);
+  if (cardWant.caption !== 'For every 100 women offered a place in CodersTrust’s 200-hour WSDFM program, 10.3 more were in work than in the control group.') problems.push(`self-test: RC-02 and RC-07 no longer yield the hero card caption (derived: "${cardWant.caption}"); the card wording needs a decision`);
   const heroCard = ({ eyebrow = cardWant.eyebrow, value = cardWant.value, unit = cardWant.unit, caption = cardWant.caption, fact = 'RC-02' } = {}) =>
     `<main><ul class="hh__cards" role="list"><li class="hh__card" data-fact="${fact}" data-astro-cid-x><p class="hh__eyebrow" data-astro-cid-x>${eyebrow}</p><div class="hh__fig"><p class="hh__figvalue"><span class="hh__num">${value}</span> <span class="hh__unit">${unit}</span></p><p class="hh__figlabel">${caption}</p></div></li><li class="hh__card" data-fact="OC-01"><p class="hh__eyebrow">Impact Survey 2026</p></li></ul></main>`;
   if (proofCardProblems(heroCard(), rc02, rc07).length) problems.push(`self-test: the [PROOF-CARD] check rejected the register-derived card: ${proofCardProblems(heroCard(), rc02, rc07).join('; ')}`);
@@ -951,7 +951,7 @@ function surveyEditionProblems(factsById, rows, pins = { facts: SURVEY_FACTS, ro
   cardBad('"10.4 more" (a figure that differs from RC-02)', heroCard({ caption: cardWant.caption.replace('10.3 more', '10.4 more') }));
   cardBad('"about 10 more" (the card states RC-02’s own 10.3; the rounded reading is the [PLAIN-LINE]’s)', heroCard({ caption: cardWant.caption.replace('10.3 more', 'about 10 more') }));
   cardBad('"100-hour" (RC-07 says 200 hours)', heroCard({ caption: cardWant.caption.replace('200-hour', '100-hour') }));
-  cardBad('a caption without the predecessor-program scope', heroCard({ caption: 'For every 100 women offered a place, 10.3 more were in work than in the control group.' }));
+  cardBad('a caption without the WSDFM-program scope', heroCard({ caption: 'For every 100 women offered a place, 10.3 more were in work than in the control group.' }));
   cardBad('a changed eyebrow', heroCard({ eyebrow: 'Independent Evaluation' }));
   if (proofCardProblems(heroCard(), { ...rc02, numeric: 10.6, value: '+10.6 pp' }, rc07).length !== 2) problems.push('self-test: the [PROOF-CARD] check did not notice that RC-02 changed (10.6 would give "+10.6" and "10.6 more")');
   // copy conventions: curly apostrophes, "pp" spelled out before it is used

@@ -19,8 +19,8 @@ const trialPoints = `+${trial.numeric} Percentage Points`;
 /**
  * YouthWIDE's one-line description (the Programs menu and its featured panel; Home's carousel showed it on a seventh slide until WP53): co-funded country cohorts designed for three regions (IN-02; the YouthWIDE page names them: South Asia, the Middle East and North Africa, and Sub-Saharan Africa),
  * from training to paid digital work. The three regions are not listed here: with them spelled out (no "MENA") the line is longer than a menu line should be.
- * WP54 (cycle-28 review, Claude S7): the line no longer carries the Bangladesh aim. It said "..., with a Bangladesh initiative that aims to train 2 million vulnerable youth by 2030" (IN-01; WP45, cycle-21 review: "a national initiative in Bangladesh" read as an existing national
- * program; WP48: IN-01's own "vulnerable youth"), which put a Bangladesh target in the menu of every page of a global site. The aim stays on the YouthWIDE page, the Programs hub and Impact, where it is labeled as an aim; this line states IN-02 only.
+ * WP54 (cycle-28 review, Claude S7): the line no longer carries the Bangladesh aim. It said "..., with a Bangladesh initiative that aims to train ... by 2030" (IN-01; WP45, cycle-21 review: "a national initiative in Bangladesh" read as an existing national
+ * program; WP48: IN-01's own wording), which put a Bangladesh target in the menu of every page of a global site. The aim stays on the YouthWIDE page, the Programs hub and Impact, where it is labeled as an aim; this line states IN-02 only.
  */
 const youthwideLine = 'Co-funded country cohorts, designed for three regions, from training to paid digital work.';
 
@@ -141,7 +141,7 @@ export const navGroups: NavGroup[] = [
     href: '/impact/',
     items: [
       { label: 'Impact Overview', href: '/impact/', description: 'Headline outcomes and the evidence ladder.' },
-      { label: 'Independent Evaluation', href: '/impact/independent-evaluation/', description: 'The randomized trial of a predecessor program.' },
+      { label: 'Independent Evaluation', href: '/impact/independent-evaluation/', description: 'The randomized trial of CodersTrust’s WSDFM program.' },
       { label: 'Impact Survey 2026', href: '/impact/outcomes-2026/', description: 'Findings from the Impact Survey 2026.' },
       { label: 'Case Studies', href: '/impact/case-studies/', description: 'Five programs with partners, in depth.' },
       { label: 'Success Stories', href: '/impact/stories/', description: 'Individual learner stories and outcomes.' },
@@ -151,7 +151,7 @@ export const navGroups: NavGroup[] = [
     ],
     feature: {
       kind: 'stat',
-      eyebrow: 'Randomized Trial of a Predecessor Program',
+      eyebrow: 'Randomized Trial of CodersTrust’s WSDFM Program',
       title: 'More Employment for Women Offered a Place',
       figure: trialPoints,
       factIds: ['RC-02'],
@@ -194,7 +194,7 @@ export const headerCta: NavLink = { label: 'Talk to Us', href: '/contact/' };
 
 /** PromoBar (planning/03 §3.1) — hidden on the outcomes page itself. One statement, the trial's employment result (WP31: the survey sentence is gone, the survey stays one text link away). */
 export const promo = {
-  lead: 'Randomized trial of a predecessor program:',
+  lead: 'Randomized trial of CodersTrust’s WSDFM program:',
   rest: `women offered a place were ${trial.numeric} percentage points more likely to be employed.`,
   /** The same statement for a phone (up to 575 px). */
   short: `women offered a place: +${trial.numeric} percentage points employed.`,

@@ -34,8 +34,8 @@ import { cta } from '../lib/mailto';
  * WP48 (cycle-23 review): the government slide's body is two sentences, the contract scope in GV-12's words ("... work scoped for 31,200+ people: contract scope, not a count of completers.") and the National University sentence; Her Power's 25,125 women and
  * the 2,500 CodersTrust trained directly stay on the Impact and Governments tiles (GV-12's glance note) and are no longer on the slide.
  * WP50 (cycle-25 review): the program-results slide lists four programs again ("Four programs, each with its partner, ...", as Impact and Case Studies say "Four Programs"): WSDFM's line (PR-01) is back, between Kosovo and UNDP YES, with the
- * qualifier "program records, not trial data" that the Home case card uses, so its 71% is not read as a second result of the randomized trial of the predecessor program.
- * WP50 (cycle-25 review): the trial slide's heading is "Women Offered a Place Earned an Estimated 41% More" again, with the qualifier in the slide's eyebrow ("Randomized Trial of a Predecessor Program") and in the lead; the ">4×" tile's caption says
+ * qualifier "program records, not trial data" that the Home case card uses, so its 71% is not read as a second result of the randomized trial of CodersTrust’s WSDFM program.
+ * WP50 (cycle-25 review): the trial slide's heading is "Women Offered a Place Earned an Estimated 41% More" again, with the qualifier in the slide's eyebrow ("Randomized Trial of CodersTrust’s WSDFM Program") and in the lead; the ">4×" tile's caption says
  * the multiple in words ("More than four times the average employment effect across nine vocational-training trials."), without the +10.3 the hero's trial card states. Both are the slide's own text: RC-06a's labels are unchanged.
  * The hero's Randomized Trial card says "10.3 more were in work than in the control group" (RC-02's figure, as in the "+10.3" above it), where it said "about 10 more" (RC-02 rounded).
  * WP51 (cycle-26 review): the speed slide's heading names its subgroup: "Most Surveyed New Earners Were Earning by Six Months After the Course" (OC-05's label calls the 170 "surveyed new earners"; the heading dropped the subgroup).
@@ -215,7 +215,7 @@ if (!korailYear) throw new Error('heroSlides: PR-03 text no longer reads "..., Y
 /**
  * WSDFM's program-record result, the fourth program on the program-results slide (WP50, cycle-25 review: Impact says "Four Programs" and so does Case Studies). Read from PR-01 as Kosovo's line is: the label ("WSDFM: 71% of enrolled women in work")
  * and the base from its value ("711 of 1,000"). The line carries the Home case card's qualifier ("program records, not trial data", src/components/pages/home/caseStudies.ts), because the first slide is the
- * randomized trial of the same predecessor program (RC-01), and it is kept to one line at 1280 px so the slide does not grow and leave the other slides more than 48 px unused below their content (tests/hero-slider.spec.ts; the "Find Your Program"
+ * randomized trial of the same program (RC-01), and it is kept to one line at 1280 px so the slide does not grow and leave the other slides more than 48 px unused below their content (tests/hero-slider.spec.ts; the "Find Your Program"
  * slide that used to set the carousel's height is gone, WP53, and this slide's copy is now the tallest). The program's full name, which would need a second line, is on the Proof in Practice card below.
  */
 const wsdfmShare = /^WSDFM: (\d+%) of enrolled women in work$/.exec(fact('PR-01').stat?.label ?? '')?.[1];
@@ -281,7 +281,7 @@ export const HOME_HERO = {
       unit: 'percentage points',
       // WP50 (cycle-25 review): "10.3 more", RC-02's own figure, which is the "+10.3" directly above the caption (it read "about 10 more", RC-02 rounded; the Independent Evaluation page's [PLAIN-LINE] keeps the rounded reading).
       // scripts/check-facts.mjs derives this caption on its own ([PROOF-CARD]).
-      caption: `For every 100 women offered a place in a ${hours}-hour predecessor program, ${offeredPoints} more were in work than in the control group.`,
+      caption: `For every 100 women offered a place in CodersTrust’s ${hours}-hour WSDFM program, ${offeredPoints} more were in work than in the control group.`,
     },
     { eyebrow: 'Impact Survey 2026', factId: 'OC-01', caption: surveyCaption },
     { eyebrow: 'Reach Since 2014', factId: 'SC-16', caption: reachCaption },
@@ -291,19 +291,19 @@ export const HOME_HERO = {
 export const HOME_SLIDES: HeroSlide[] = [
   {
     id: 'evidence',
-    // WP50 (cycle-25 review): the eyebrow carries the qualifier ("Randomized Trial of a Predecessor Program"; it was "Independent Evaluation"), so the heading can be short again. It is this slide's own text (the pill is not the shared evidence tag).
-    eyebrow: 'Randomized Trial of a Predecessor Program',
+    // WP50 (cycle-25 review): the eyebrow carries the qualifier ("Randomized Trial of CodersTrust’s WSDFM Program"; it was "Independent Evaluation"), so the heading can be short again. It is this slide's own text (the pill is not the shared evidence tag).
+    eyebrow: 'Randomized Trial of CodersTrust’s WSDFM Program',
     // WP45 (cycle-21 review): Home states the trial's employment result three times already (the hero's Randomized Trial card, the announcement bar, the ">4×" tile on this slide), so the slide's own finding is the trial's income result
-    // (RC-01: an estimated 41% higher, RC-04: about +$27 a month), worded as the register words it, with the predecessor program still named in the sentence (the heading and the figures are the offered-place women's, not today's tracks').
-    // WP48 (cycle-23 review, the third reviewer to raise it): the heading named the predecessor program ("... in a Predecessor Program Earned an Estimated 41% More"), where only the lead below it did.
-    // WP50 (cycle-25 review): two reviewers wanted it shorter and three had wanted the qualifier, so the heading is "Women Offered a Place Earned an Estimated 41% More" and the qualifier sits in the eyebrow directly above it and in the lead below it ("In the predecessor WSDFM program, ...").
+    // (RC-01: an estimated 41% higher, RC-04: about +$27 a month), worded as the register words it, with CodersTrust’s WSDFM program still named in the sentence (the heading and the figures are the offered-place women's, not today's tracks').
+    // WP48 (cycle-23 review, the third reviewer to raise it): the heading named the program too, where only the lead below it did.
+    // WP50 (cycle-25 review): two reviewers wanted it shorter and three had wanted the qualifier, so the heading is "Women Offered a Place Earned an Estimated 41% More" and the qualifier sits in the eyebrow directly above it and in the lead below it ("In CodersTrust’s WSDFM program, ...").
     // WP62 (cycle-34 review, GPT-6.1 Sol and Kimi): "... Earned an Estimated 41% More per Month": the 41% is a monthly income difference (RC-01: "Their monthly income was an estimated 41% higher"; its tile label: "estimated monthly income gain"), which the heading left unsaid.
     title: `Women Offered a Place Earned an Estimated ${incomeOffered}% More per Month`,
     titleFacts: ['RC-01'],
     // WP63 (cycle-35 review, GLM L4): "..., women offered a place had an estimated 41% higher monthly income than the control group, about +$27 a month." (it said "..., their monthly income was an estimated 41% higher than the control group’s, ...", and "their" had no noun
     // before it in the sentence); the figures are RC-01's and RC-04's, read above, and the heading and the data-facts are unchanged.
     // WP64 (cycle-36 review, GLM): "..., about $27 more a month." (it said "..., about +$27 a month.", a sign without a noun); the figure is still RC-04's (dollarsOffered), and RC-04's own text and tile ("+$27") are unchanged.
-    lead: `In the predecessor WSDFM program, women offered a place had an estimated ${incomeOffered}% higher monthly income than the control group, about $${dollarsOffered} more a month.`,
+    lead: `In CodersTrust’s WSDFM program, women offered a place had an estimated ${incomeOffered}% higher monthly income than the control group, about $${dollarsOffered} more a month.`,
     leadFacts: ['RC-01', 'RC-04'],
     // WP50 (cycle-25 review): the caption no longer repeats the trial's employment result (+10.3 percentage points), which the hero's trial card states; it says the multiple the tile shows.
     // WP54 (cycle-28 review, Grok R2): "Employment effect: more than four times the 2.3-point average across nine vocational-training trials." (see trialMultiple); the tile (">4×") and its data-fact are unchanged.

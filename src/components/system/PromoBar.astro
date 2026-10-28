@@ -97,10 +97,11 @@ const { lead, message, shortMessage, actionLabel, href, links = [], dismissible 
   .promo-bar__close:hover {
     background: var(--blue-600);
   }
-  /* A two-part announcement (WP19): on a wide screen the text stops short of the full width, so its action sits beside it, not on a row of its own. */
+  /* A two-part announcement (WP19): on a wide screen the text stops short of the full width, so its action sits beside it, not on a row of its own.
+     WP99: 66rem (it was 62rem). The lead now names "CodersTrust’s WSDFM program" (the wording before WP99 was 45 px shorter), which is wider than 62rem (992 px) allows, so the bar wrapped to two lines (56 px) at 1100 px and wider; at 66rem (1056 px) it is one line again. */
   @media (min-width: 900px) {
     .promo-bar__text {
-      max-width: 62rem;
+      max-width: 66rem;
     }
   }
   .promo-bar__short {

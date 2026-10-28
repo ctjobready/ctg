@@ -90,7 +90,7 @@ const FIVE_AUDIENCE_PAGES = ['partner-with-us/development-partners/', 'partner-w
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 test.describe('S3: the Home FAQ says "Results for other programs ..."', () => {
   const ANSWER =
-    'The randomized trial evaluated a 200-hour predecessor program for women in Dhaka, not today’s 100-hour tracks. Results for other programs come from the October 2026 survey of completers and from program records, which are descriptive.';
+    'The randomized trial evaluated CodersTrust’s 200-hour WSDFM program for women in Dhaka, not today’s 100-hour tracks. Results for other programs come from the October 2026 survey of completers and from program records, which are descriptive.';
 
   test('the register holds the two-sentence answer with "other programs" (the Kosovo pilot of 2016–2017 predates the trial follow-up, so "later" was untrue of it)', () => {
     const q15 = faqs.find((f) => f.id === 'Q15');

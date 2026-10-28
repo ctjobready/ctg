@@ -25,12 +25,12 @@ const SPELLED = 'BRAC Institute of Governance and Development (BIGD)';
 test.describe('Impact overview: Results at a Glance and the jump list', () => {
   test('the trial group is one tile, the employment result for women offered a place (RC-02), linked to the Independent Evaluation page', async ({ page }) => {
     await open(page, 'impact/');
-    const group = page.locator('#glance .glance__group', { has: page.getByRole('heading', { level: 3, name: 'Trial Results, Predecessor Program' }) });
+    const group = page.locator('#glance .glance__group', { has: page.getByRole('heading', { level: 3, name: 'Trial Results, CodersTrust’s WSDFM Program' }) });
     await expect(group.locator('li')).toHaveCount(1);
     const tile = group.locator('li a');
     expect(await tile.getAttribute('data-fact')).toBe('RC-02');
     await expect(tile).toContainText('+10.3 percentage points');
-    await expect(tile).toContainText('more employment for women offered a place (randomized trial of a predecessor program)');
+    await expect(tile).toContainText('more employment for women offered a place (randomized trial of CodersTrust’s WSDFM program)');
     await expect(tile.locator('[data-evidence="Randomized Trial"]')).toHaveCount(1);
     expect(await tile.getAttribute('href')).toMatch(/\/impact\/independent-evaluation\/$/);
     expect(compact(await page.locator('#glance').textContent())).not.toMatch(/\+41%|\+54%|>4×|in percentage points/);
@@ -135,7 +135,7 @@ test.describe('the trial and the survey are shown once per page', () => {
   });
 
   // WP45 (cycle-21 review): the first slide states the trial's income result for the offered-place women (the employment result is this card's, the bar's and the slide's >4× tile)
-  // WP48 (cycle-23 review): the hero's proof strip is headed "Proof at a Glance" (it was "The Strongest Proof"; screen-reader heading), and the first slide's heading names the predecessor program
+  // WP48 (cycle-23 review): the hero's proof strip is headed "Proof at a Glance" (it was "The Strongest Proof"; screen-reader heading), and the first slide's heading names CodersTrust’s WSDFM program
   test('Home: the hero’s Randomized Trial card carries the plain-language reading of the trial (the check:facts anchor moved here), and the first slide still states the offered-place results', async ({ page }) => {
     await open(page, '');
     const card = page.locator('.hh__card[data-fact="RC-02"]');
@@ -143,7 +143,7 @@ test.describe('the trial and the survey are shown once per page', () => {
     await expect(card.locator('.hh__num')).toHaveText('+10.3');
     await expect(card.locator('.hh__unit')).toHaveText('percentage points');
     // WP50 (cycle-25 review, item 28): "10.3 more", RC-02's own figure (it read "about 10 more"); tests/wp50.spec.ts
-    await expect(card.locator('.hh__figlabel')).toHaveText('For every 100 women offered a place in a 200-hour predecessor program, 10.3 more were in work than in the control group.');
+    await expect(card.locator('.hh__figlabel')).toHaveText('For every 100 women offered a place in CodersTrust’s 200-hour WSDFM program, 10.3 more were in work than in the control group.');
     const first = page.locator('[data-hs-slide]').nth(0);
     expect(compact(await first.locator('.hs__lead').textContent())).toContain('women offered a place had an estimated 41% higher monthly income than the control group'); // WP63 (cycle-35 review, GLM L4)
     // WP50 (cycle-25 review, item 18): the slide's >4× tile said the multiple in words and no longer repeated the +10.3 percentage points, which this card states
@@ -201,7 +201,7 @@ test.describe('the WSDFM 71% is off the glance tiles of Development Partners and
     for (const slug of THREE.filter((s) => s !== 'foundations')) {
       await open(page, `partner-with-us/${slug}/`);
       await expect(page.locator('#glance [data-fact~="PR-01"]'), slug).toHaveCount(0);
-      expect(compact(await page.locator('#glance').textContent()), slug).not.toMatch(/711 of 1,000|WSDFM/);
+      expect(compact(await page.locator('#glance').textContent()), slug).not.toMatch(/711 of 1,000|71% of enrolled women|WSDFM program records/);
     }
     // WP49 (cycle-24 review): each page's one secondary tile (RC-06a, RC-02, PR-02) is the glance's fourth tile, in the main group, with no "More Results" heading (tests/wp49.spec.ts)
     await open(page, 'partner-with-us/development-partners/');
@@ -233,14 +233,14 @@ test.describe('the evaluator is spelled out where a page first names it', () => 
   test('Home names BIGD nowhere: the Impact menu line no longer introduces the acronym', async ({ page }) => {
     await open(page, '');
     expect(await page.content()).not.toContain('BIGD');
-    await expect(page.locator('#mega-impact a.mega__link[href$="independent-evaluation/"] .mega__desc')).toHaveText('The randomized trial of a predecessor program.');
+    await expect(page.locator('#mega-impact a.mega__link[href$="independent-evaluation/"] .mega__desc')).toHaveText('The randomized trial of CodersTrust’s WSDFM program.');
   });
 
   test('Foundations: the track-record band spells it out once; the benefits cards no longer name the evaluator (WP44: the second card is the scorecard)', async ({ page }) => {
     await open(page, 'partner-with-us/foundations/');
     const text = await mainText(page);
     expect(text.indexOf('BIGD')).toBe(text.indexOf(SPELLED) + SPELLED.length - 'BIGD)'.length);
-    expect(compact(await page.locator('#guide').textContent())).toContain(`The ${SPELLED} evaluated the predecessor WSDFM program, commissioned by Porticus, in a randomized trial.`);
+    expect(compact(await page.locator('#guide').textContent())).toContain(`The ${SPELLED} evaluated CodersTrust’s WSDFM program, commissioned by Porticus, in a randomized trial.`);
     expect(count(text, SPELLED)).toBe(1);
     expect(compact(await page.locator('#features').textContent())).not.toContain('BIGD');
   });
@@ -265,7 +265,7 @@ test.describe('the evaluator is spelled out where a page first names it', () => 
     expect(count(text, 'BRAC Institute of Governance and Development')).toBe(1);
   });
 
-  // WP38 (cycle-15 review): Universities' evidence band is two lines ("A randomized trial of the predecessor WSDFM program found ..."), so, like Development Partners and Governments, it no longer names the evaluator
+  // WP38 (cycle-15 review): Universities' evidence band is two lines ("A randomized trial of CodersTrust’s WSDFM program found ..."), so, like Development Partners and Governments, it no longer names the evaluator
   // WP42 (cycle-19 review): Local Partners' evidence band is the same two-line strip, so it names no evaluator either (the trial page it links spells it out)
   // WP43 (cycle-20 review): Universities' two-line strip is gone; the linked strip that ends its first band ("Broader Evidence from Our Youth Programs", #offer-evidence) links the trial page and names no evaluator
   test('Local Partners and Universities name no evaluator: the evidence is a strip that links the trial page', async ({ page }) => {
@@ -351,7 +351,7 @@ test.describe('plain words and plain claims', () => {
     expect(gov.join(' ')).not.toContain('curricula that stay');
   });
 
-  test('Foundations: the second features card is the pilot scorecard the grant agrees (WP44: it replaced the predecessor-evidence card)', async ({ page }) => {
+  test('Foundations: the second features card is the pilot scorecard the grant agrees (WP44: it replaced the trial-evidence card)', async ({ page }) => {
     await open(page, 'partner-with-us/foundations/');
     // WP39 (cycle-16 review) headed this card "Independent Evidence on the Predecessor Program"; WP44 (cycle-21 review) describes the scorecard instead, since the card lists a deliverable (tests/wp44.spec.ts)
     const card = page.locator('#features li.card', { has: page.locator('h3', { hasText: 'A Pilot Scorecard Agreed with You' }) });
@@ -425,7 +425,7 @@ test.describe('plain words and plain claims', () => {
     await open(page, 'partner-with-us/foundations/');
     const description = await page.locator('meta[name="description"]').getAttribute('content');
     // WP57 (cycle-29 review, Kimi K3, item K2): "earned an estimated $27 more a month" (it said "had an estimated $27 higher monthly income")
-    expect(description).toBe('Fund a supported path to earnings. A randomized trial of a predecessor program found women offered a place earned an estimated $27 more a month.');
+    expect(description).toBe('Fund a supported path to earnings. A randomized trial of CodersTrust’s WSDFM program found women offered a place earned an estimated $27 more a month.');
     expect(description!.length).toBeLessThanOrEqual(155);
   });
 });

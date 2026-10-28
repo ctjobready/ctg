@@ -239,9 +239,9 @@ test.describe('G4 (GPT-6.1 Sol): Local Partners’ first pain says what CodersTr
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 test.describe('G5 (GPT-6.1 Sol): Independent Evaluation’s lead opens with the result', () => {
   const LEAD =
-    'In a randomized trial by the BRAC Institute of Governance and Development (BIGD), women offered a place were 10.3 percentage points more likely to be employed than the control group. The trial evaluated CodersTrust’s 200-hour predecessor WSDFM program for women in Dhaka, not today’s 100-hour tracks.';
+    'In a randomized trial by the BRAC Institute of Governance and Development (BIGD), women offered a place were 10.3 percentage points more likely to be employed than the control group. The trial evaluated CodersTrust’s 200-hour WSDFM program for women in Dhaka, not today’s 100-hour tracks.';
 
-  test('the lead reads as above (46 words, inside the 40 to 60 of the direct answer), names the evaluator in full once, and the register still backs its figures', async ({ page }) => {
+  test('the lead reads as above (45 words, inside the 40 to 60 of the direct answer; WP99: 46 before "predecessor" left the second sentence), names the evaluator in full once, and the register still backs its figures', async ({ page }) => {
     expect(BIGD_FULL).toBe('the BRAC Institute of Governance and Development (BIGD)');
     expect(fact('RC-01').text).toContain('10.3 percentage points');
     expect(fact('RC-07').text).toContain('200 hours');
@@ -249,7 +249,7 @@ test.describe('G5 (GPT-6.1 Sol): Independent Evaluation’s lead opens with the 
     await open(page, EVALUATION);
     const lead = compact(await page.locator('main .lf-head .lead').textContent());
     expect(lead).toBe(LEAD);
-    expect(lead.split(/\s+/)).toHaveLength(46);
+    expect(lead.split(/\s+/)).toHaveLength(45);
     expect(lead.split(/(?<=\.)\s+/)).toHaveLength(2);
     expect(compact(await page.locator('main').textContent()).split('BRAC Institute of Governance and Development').length - 1).toBe(1);
     await expect(page.locator('[data-fact~="RC-01"]').first()).toBeAttached();

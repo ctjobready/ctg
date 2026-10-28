@@ -47,12 +47,12 @@ test.describe('figures say what they measure', () => {
     expect(compact(await slide.locator('.hs__lead').textContent())).not.toMatch(/income/i);
   });
 
-  // WP45 (cycle-21 review): the slide states the offered-place women's income result (the employment result is the hero card's, the bar's and the >4× tile's), with the predecessor program named
+  // WP45 (cycle-21 review): the slide states the offered-place women's income result (the employment result is the hero card's, the bar's and the >4× tile's), with CodersTrust’s WSDFM program named
   // WP50 (cycle-25 review, item 10): the fourth slide lists WSDFM again, as program records and not trial data, so a reader does not take its 71% for a second result of the trial (tests/wp50.spec.ts)
   test('Home slide 1 states the offered-place income result only; the program-results slide and the case card say the WSDFM 71% is program records, not trial results (WP42: it is the fourth slide)', async ({ page }) => {
     await open(page, '');
     const lead = compact(await page.locator('[data-hs-slide]').nth(0).locator('.hs__lead').textContent());
-    expect(lead).toBe('In the predecessor WSDFM program, women offered a place had an estimated 41% higher monthly income than the control group, about $27 more a month.'); // WP63 (cycle-35 review, GLM L4)
+    expect(lead).toBe('In CodersTrust’s WSDFM program, women offered a place had an estimated 41% higher monthly income than the control group, about $27 more a month.'); // WP63 (cycle-35 review, GLM L4)
     await expect(page.locator('[data-hs-slide]').nth(3)).toContainText('WSDFM: 711 of 1,000 enrolled in work (71%), from program records.');
     // WP51 (cycle-26 review): the Home card shows delivery context in place of the figure and its caption ("WSDFM program records (not trial results; the trial’s 425 women offered a place were among these 1,000): 71% of enrolled women in work"), which the pages that keep the figure still print (below; tests/wp51.spec.ts)
     expect(compact(await page.locator('#cases article').first().textContent())).not.toContain('WSDFM program records');
@@ -104,7 +104,7 @@ test.describe('figures say what they measure', () => {
 
   test('the Impact hub’s trial group is the one employment tile for women offered a place (WP35: the +41% and +54% income results and the >4× comparison are on the Independent Evaluation page)', async ({ page }) => {
     await open(page, 'impact/');
-    const group = page.locator('#glance .glance__group', { has: page.getByRole('heading', { level: 3, name: 'Trial Results, Predecessor Program' }) });
+    const group = page.locator('#glance .glance__group', { has: page.getByRole('heading', { level: 3, name: 'Trial Results, CodersTrust’s WSDFM Program' }) });
     const facts = await group.locator('li a').evaluateAll((els) => els.map((e) => (e.getAttribute('data-fact') ?? '').split(' ')[0]));
     expect(facts).toEqual(['RC-02']);
     await expect(group.locator('li').first()).toContainText('+10.3 percentage points');
@@ -124,13 +124,13 @@ test.describe('figures say what they measure', () => {
     expect(links.map((l) => l.label)).toContain('Where We Are Heading');
   });
 
-  // WP41 (cycle-18 review): the hub states the trial as ONE line (the employment result, the predecessor program named) and keeps the 78.2% tile; the plain-language paragraph (WP31 kept it), the +10.3 pp tile and the chart
+  // WP41 (cycle-18 review): the hub states the trial as ONE line (the employment result, CodersTrust’s WSDFM program named) and keeps the 78.2% tile; the plain-language paragraph (WP31 kept it), the +10.3 pp tile and the chart
   // (WP31 kept them too) are gone, with the income paragraph and the 5.9% line before them (tests/wp41.spec.ts covers the band in full)
   test('the Programs hub states the trial as one line and keeps the 78.2% tile; the plain-language paragraph, the chart, the income paragraph and the 5.7% line are gone', async ({ page }) => {
     await open(page, 'programs/');
     const band = page.locator('#proof-band');
     const text = compact(await band.textContent());
-    expect(text).toContain('Women offered a place in the predecessor WSDFM program were 10.3 percentage points more likely to be employed than the control group.');
+    expect(text).toContain('Women offered a place in CodersTrust’s WSDFM program were 10.3 percentage points more likely to be employed than the control group.');
     expect(text).toContain('78.2%');
     expect(text).not.toMatch(/For every 100 women|41% higher|54% higher|5\.7%|View Chart Data as a Table/);
     await expect(band.locator('svg[role="img"]')).toHaveCount(0);
