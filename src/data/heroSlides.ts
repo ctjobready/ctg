@@ -284,9 +284,9 @@ export const HOME_HERO = {
       factId: 'RC-02',
       value: `+${offeredPoints}`,
       unit: 'percentage points',
-      // WP50 (cycle-25 review): "10.3 more", RC-02's own figure, which is the "+10.3" directly above the caption (it read "about 10 more", RC-02 rounded; the Independent Evaluation page's [PLAIN-LINE] keeps the rounded reading).
+      // WP109 (Opus Low run 1): "about 10 more were in work than among 100 comparable women in the control group", the Trial page's own wording, with RC-02 rounded (the "+10.3" above it keeps RC-02's figure). Before WP109 it read "10.3 more ... than in the control group" (WP50).
       // scripts/check-facts.mjs derives this caption on its own ([PROOF-CARD]).
-      caption: `For every 100 women offered a place in CodersTrust’s ${hours}-hour WSDFM program, ${offeredPoints} more were in work than in the control group.`,
+      caption: `For every 100 women offered a place in CodersTrust’s ${hours}-hour WSDFM program, about ${Math.round(offeredPoints)} more were in work than among 100 comparable women in the control group.`,
     },
     { eyebrow: 'Impact Survey 2026', factId: 'OC-01', caption: surveyCaption },
     { eyebrow: 'Reach Since 2014', factId: 'SC-16', caption: reachCaption },

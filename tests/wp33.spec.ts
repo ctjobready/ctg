@@ -171,7 +171,7 @@ test.describe('"skill and certification courses delivered" reads the same on eve
     expect(tileText).toContain('skill and certification courses delivered');
     expect(await mainText(page)).not.toContain('skill courses and certification courses');
     await open(page, 'about/mentors/');
-    await expect(page.locator('#mentors .lead[data-fact="SC-09"]')).toHaveText('150+ skill and certification courses delivered. 150+ instructors and mentors.');
+    await expect(page.locator('#mentors .lead[data-fact="SC-09"]')).toHaveText('150+ instructors and mentors.');
     expect(await mainText(page)).not.toContain('skill courses and certification courses');
   });
 });

@@ -372,7 +372,7 @@ test.describe('K1, Impact: "On This Page" ends on the closing band', () => {
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 test.describe('K2, Foundations: the meta description is one complete sentence pair within the SEO limit (WP57: "$27 more a month"; WP108: it now leads with the employment result)', () => {
-  const DESCRIPTION = 'Fund a supported path to earnings. In a randomized trial of CodersTrust’s WSDFM program, women offered a place were 10.3 points more likely to be employed.';
+  const DESCRIPTION = 'Fund paths to earnings. In a randomized trial of CodersTrust’s WSDFM program, women offered a place were 10.3 percentage points more likely to be employed.';
 
   test('the description, its Open Graph copy and the page’s structured data say it, within the length limit, with the figure read from RC-02', async ({ page }) => {
     await open(page, FOUNDATIONS);

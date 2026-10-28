@@ -143,7 +143,7 @@ test.describe('the trial and the survey are shown once per page', () => {
     await expect(card.locator('.hh__num')).toHaveText('+10.3');
     await expect(card.locator('.hh__unit')).toHaveText('percentage points');
     // WP50 (cycle-25 review, item 28): "10.3 more", RC-02's own figure (it read "about 10 more"); tests/wp50.spec.ts
-    await expect(card.locator('.hh__figlabel')).toHaveText('For every 100 women offered a place in CodersTrust’s 200-hour WSDFM program, 10.3 more were in work than in the control group.');
+    await expect(card.locator('.hh__figlabel')).toHaveText('For every 100 women offered a place in CodersTrust’s 200-hour WSDFM program, about 10 more were in work than among 100 comparable women in the control group.');
     const first = page.locator('[data-hs-slide]').nth(0);
     expect(compact(await first.locator('.hs__lead').textContent())).toContain('women offered a place had an estimated 41% higher monthly income than the control group'); // WP63 (cycle-35 review, GLM L4)
     // WP50 (cycle-25 review, item 18): the slide's >4× tile said the multiple in words and no longer repeated the +10.3 percentage points, which this card states
@@ -425,7 +425,7 @@ test.describe('plain words and plain claims', () => {
     await open(page, 'partner-with-us/foundations/');
     const description = await page.locator('meta[name="description"]').getAttribute('content');
     // WP57 (cycle-29 review, Kimi K3, item K2): "earned an estimated $27 more a month" (it said "had an estimated $27 higher monthly income")
-    expect(description).toBe('Fund a supported path to earnings. In a randomized trial of CodersTrust’s WSDFM program, women offered a place were 10.3 points more likely to be employed.');
+    expect(description).toBe('Fund paths to earnings. In a randomized trial of CodersTrust’s WSDFM program, women offered a place were 10.3 percentage points more likely to be employed.');
     expect(description!.length).toBeLessThanOrEqual(155);
   });
 });

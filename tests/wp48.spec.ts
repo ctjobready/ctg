@@ -627,7 +627,7 @@ test.describe('The Home router’s investor card states the route (item 33)', ()
   // WP50 (cycle-25 review, item 14): Home's card reads "Back the staged rollout of JobReady, CodersTrust’s digital education and employment platform." (tests/wp50.spec.ts); the partner hub's card is the one this test still holds
   // WP53 (owner decision 2026-10-16): the definition is "CodersTrust’s digital learning and earning platform" on both cards (tests/wp53.spec.ts)
   test('Home states the investor’s route ("Back ..."); the partner hub’s card already names its audience and is unchanged', async ({ page }) => {
-    const BACK = 'Back the staged rollout of JobReady, CodersTrust’s digital learning and earning platform.';
+    const BACK = 'Back JobReady’s staged rollout';
     await open(page, '');
     expect(compact(await page.locator('#router a.cat[href$="partner-with-us/investors/"] .cat__text').textContent())).toBe(BACK);
     await open(page, 'partner-with-us/');

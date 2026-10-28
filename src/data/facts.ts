@@ -220,7 +220,7 @@ const rows: [string, Fact['group'], Row][] = [
   ['ST-01', 'stories', { text: `Aklima Akder, a UNDP YES learner from Dhaka’s Korail settlement, reported: “Earned $600 in 3 months”`, sourceIds: ['IR26'] }],
   ['ST-02', 'stories', { text: `Shamim Ahmed, a UNDP YES learner from Dhaka’s Korail settlement, reported: “Earned $32K in 3 years” (about $32,000; an outlier among the program’s learners)`, sourceIds: ['IR26'] }],
   ['ST-03', 'stories', { text: `Samina Tasneem Chowdhury (WSDFM) completed 90+ projects on Fiverr`, sourceIds: ['IR26'] }],
-  ['ST-05', 'stories', { text: `Erlisa Zherka, a Women in Online Work participant in Kosovo, landed a full-time online contract with a US-based startup and was earning more than Kosovo’s average wage at the time`, sourceIds: ['IR26'] }],
+  ['ST-05', 'stories', { text: `Erlisa Zherka, a Women in Online Work participant in Kosovo, landed a full-time online contract with a U.S.-based startup and was earning more than Kosovo’s average wage at the time`, sourceIds: ['IR26'] }],
   ['ST-06', 'stories', { text: `Maria Dewan (Her Power): won a company logo design on Freelancer.com, then more clients`, sourceIds: ['IR26'] }],
   // F. Government & institutional work
   // WP84 (CLR review, Sonnet Max run 2, finding 2): "is", not a colon, so "The national program’s target is separate: Her Power (DoICT, ICT Division) is a national program to train ..." has one colon

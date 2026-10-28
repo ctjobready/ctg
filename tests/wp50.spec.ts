@@ -335,9 +335,9 @@ test.describe('Programs: the H1 (item 9)', () => {
 
 test.describe('Home: the Investors router card names the platform in IN-04’s words (item 14)', () => {
   // WP53 (owner decision 2026-10-16): IN-04's definition is "CodersTrust’s digital learning and earning platform" (it said "education and employment"; tests/wp53.spec.ts)
-  const CARD = 'Back the staged rollout of JobReady, CodersTrust’s digital learning and earning platform.';
+  const CARD = 'Back JobReady’s staged rollout';
 
-  test('the card reads "Back the staged rollout of JobReady, CodersTrust’s digital learning and earning platform."; the definition is IN-04’s own; the card does not say the platform "connects" youth to work', async ({ page }) => {
+  test('the card reads "Back JobReady’s staged rollout"; the definition is IN-04’s own; the card does not say the platform "connects" youth to work', async ({ page }) => {
     expect(fact('IN-04').text.startsWith('JobReady is CodersTrust’s digital learning and earning platform,')).toBe(true);
     await open(page, '');
     const card = page.locator('#router a.cat[href$="partner-with-us/investors/"]');
@@ -348,7 +348,8 @@ test.describe('Home: the Investors router card names the platform in IN-04’s w
 
   test('the 404 page reads the same single source; the partner hub’s card names the platform the same way (primary follow-up)', async ({ page }) => {
     await open(page, '404.html');
-    expect(compact(await page.locator('main a.cat[href$="partner-with-us/investors/"] .cat__text').first().textContent())).toBe(CARD);
+    // WP109: Home's card is the fragment; the 404 page keeps the shared nav.ts text with the definition.
+    expect(compact(await page.locator('main a.cat[href$="partner-with-us/investors/"] .cat__text').first().textContent())).toBe('Back the staged rollout of JobReady, CodersTrust’s digital learning and earning platform.');
     await open(page, 'partner-with-us/');
     expect(compact(await page.locator('main a.cat[href$="partner-with-us/investors/"] .cat__text').first().textContent())).toBe('For impact investors: JobReady, CodersTrust’s digital learning and earning platform.');
     expect(sitePages().filter((p) => /Back JobReady, the platform we are building/.test(visible(p.html))).map((p) => p.route)).toEqual([]);
@@ -639,7 +640,7 @@ test.describe('Home: the hero trial card says "10.3 more" (item 28)', () => {
     const card = page.locator('.hh__card[data-fact="RC-02"]');
     await expect(card.locator('.hh__num')).toHaveText('+10.3');
     await expect(card.locator('.hh__unit')).toHaveText('percentage points');
-    await expect(card.locator('.hh__figlabel')).toHaveText('For every 100 women offered a place in CodersTrust’s 200-hour WSDFM program, 10.3 more were in work than in the control group.');
+    await expect(card.locator('.hh__figlabel')).toHaveText('For every 100 women offered a place in CodersTrust’s 200-hour WSDFM program, about 10 more were in work than among 100 comparable women in the control group.');
     await open(page, 'impact/independent-evaluation/');
     expect(compact(await page.locator('[data-plain-line]').textContent())).toBe('For every 100 women offered a place, about 10 more were in work at follow-up than among 100 comparable women in the control group (+10.3 percentage points).');
     expect(sitePages().filter((p) => visible(p.html).includes('about 10 more were in work than in the control group')).map((p) => p.route)).toEqual([]);

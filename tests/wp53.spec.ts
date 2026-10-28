@@ -166,9 +166,9 @@ test.describe('JobReady is "CodersTrust’s digital learning and earning platfor
     expect(pagesMatching(/education and employment platform/i)).toEqual([]);
   });
 
-  test('Home’s role router and the partner hub carry the definition on the investor card, and keep "staged rollout"', async ({ page }) => {
+  test('Home’s role router reads "Back JobReady’s staged rollout" (WP109, a fragment); the partner hub carries the definition on the investor card', async ({ page }) => {
     await open(page, HOME);
-    expect(compact(await page.locator('#router a.cat[href$="partner-with-us/investors/"] .cat__text').textContent())).toBe(`Back the staged rollout of JobReady, ${DEFINITION}.`);
+    expect(compact(await page.locator('#router a.cat[href$="partner-with-us/investors/"] .cat__text').textContent())).toBe('Back JobReady’s staged rollout');
     await open(page, HUB);
     expect(compact(await page.locator('main a.cat[href$="partner-with-us/investors/"] .cat__text').first().textContent())).toBe(`For impact investors: JobReady, ${DEFINITION}.`);
     await expect(page.locator('main a.cat[href$="partner-with-us/investors/"] .cat__title').first()).toHaveText('Back JobReady’s Staged Rollout');

@@ -34,9 +34,9 @@ const routesWhere = (test: (text: string, html: string) => boolean) =>
 
 const AZIZ = 'about/team/aziz-ahmad/';
 const SUPPLY_CAPTION = 'Aziz Ahmad, Co-Founder of CodersTrust, receiving the Supply Chain Diversity and Sustainability Excellence Award, 2019';
-const NASDAQ_CAPTION = 'Aziz Ahmad, Co-Founder of CodersTrust, at the Nasdaq closing bell ceremony with the US Small Business Administration';
+const NASDAQ_CAPTION = 'Aziz Ahmad, Co-Founder of CodersTrust, at the Nasdaq closing bell ceremony with the U.S. Small Business Administration';
 const SUPPLY_ALT = 'Aziz Ahmad, Co-Founder of CodersTrust, receiving the Supply Chain Diversity and Sustainability Excellence Award at the 2019 awards, among four people on stage with a framed certificate';
-const NASDAQ_ALT = 'Aziz Ahmad, Co-Founder of CodersTrust, at the podium of the Nasdaq closing bell ceremony for the US Small Business Administration';
+const NASDAQ_ALT = 'Aziz Ahmad, Co-Founder of CodersTrust, at the podium of the Nasdaq closing bell ceremony for the U.S. Small Business Administration';
 
 test.describe('Item 1: the two award photographs show only on Aziz Ahmad’s profile', () => {
   test('both captions appear on the profile page, and on no other built page', () => {

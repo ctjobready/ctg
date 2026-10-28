@@ -113,8 +113,8 @@ const desc = `${before.label}: ${fmt(before.value)}. ${after.label}: ${fmt(after
           <caption class="sr-only">{title}</caption>
           <thead><tr><th scope="col">{comparison ? 'Group' : 'Measure'}</th><th scope="col">Value</th></tr></thead>
           <tbody>
-            <tr><th scope="row">{before.label}{before.caption ? ` (${before.caption})` : ''}</th><td>{fmt(before.value)}</td></tr>
-            <tr><th scope="row">{after.label}{after.caption ? ` (${after.caption})` : ''}</th><td>{fmt(after.value)}</td></tr>
+            <tr><th scope="row">{before.caption ?? before.label}</th><td>{fmt(before.value)}</td></tr>
+            <tr><th scope="row">{after.label}</th><td>{fmt(after.value)}</td></tr>
             {deltaFull && <tr><th scope="row">{diffWord}</th><td>{deltaFull}</td></tr>}
           </tbody>
         </table>

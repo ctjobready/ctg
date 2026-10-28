@@ -216,7 +216,7 @@ test.describe('About, Governance, Recognition, Careers and Contact', () => {
     await expect(page.locator('main .hero .btn--primary')).toHaveCount(1);
     await expect(page.locator('main .hero .btn--primary')).toContainText('Media Inquiries');
     await expect(page.locator('#endorsements .eyebrow').first()).toHaveText('University Partnership');
-    await expect(page.locator('#coverage')).toContainText('as a co-founder. CodersTrust’s founders are');
+    await expect(page.locator('#coverage')).toContainText('as a co-founder of CodersTrust. CodersTrust’s founders are');
   });
 
   test('Careers: the hiring status sits in the hero above the button, and the equal-opportunity heading is "We Judge People on Merit"', async ({ page }) => {

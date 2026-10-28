@@ -288,11 +288,11 @@ test.describe('Home: the investor route card says what JobReady is (item 15)', (
   // WP49 (cycle-24 review): the card's title is "Investors" (it was "Impact Investors"); its text is unchanged
   // WP50 (cycle-25 review, item 14): the text is "Back the staged rollout of JobReady, CodersTrust’s digital education and employment platform." (IN-04's definition; tests/wp50.spec.ts)
   // WP53 (owner decision 2026-10-16): IN-04's definition is "CodersTrust’s digital learning and earning platform", so the card reads "... digital learning and earning platform." (tests/wp53.spec.ts)
-  test('the "Investors" card reads "Back the staged rollout of JobReady, CodersTrust’s digital learning and earning platform."', async ({ page }) => {
+  test('the "Investors" card reads "Back JobReady’s staged rollout"', async ({ page }) => {
     await open(page, '');
     const card = page.locator('#router .cat', { has: page.locator('.cat__title', { hasText: 'Investors' }) });
     await expect(card).toHaveCount(1);
-    expect(compact(await card.textContent())).toContain('Back the staged rollout of JobReady, CodersTrust’s digital learning and earning platform.');
+    expect(compact(await card.textContent())).toContain('Back JobReady’s staged rollout');
     expect(compact(await card.textContent())).not.toContain('For impact investors:');
     expect(await mainText(page)).not.toContain('For impact investors backing JobReady');
   });

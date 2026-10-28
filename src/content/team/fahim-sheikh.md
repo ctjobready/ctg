@@ -2,7 +2,6 @@
 name: "Md. Fahim Sheikh"
 slug: fahim-sheikh
 role: "Marketing, Project and Training Operations"
-titleRole: "Marketing and Operations"
 group: management
 order: 11
 photo: ../../assets/images/team/fahim-sheikh.jpg

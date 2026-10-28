@@ -46,10 +46,10 @@ const slugOf = (t: string) => `mentors-${t.toLowerCase().replace(/[^a-z0-9]+/g, 
 const groups = DISCIPLINE_GROUPS.map((g) => ({ ...g, id: slugOf(g.title), mentors: mentors.filter((m) => groupOf(m) === g.title) })).filter((g) => g.mentors.length > 0);
 const ungrouped = mentors.filter((m) => !groups.some((g) => g.mentors.includes(m)));
 if (ungrouped.length > 0) throw new Error(`Mentors: no discipline group for ${ungrouped.map((m) => `${m.name} (${m.role})`).join(', ')}`);
-// SC-09 states two 150+ figures; they are shown as two sentences so neither reads as a total for the other.
+// SC-09 states two 150+ figures; the lede shows only the instructors and mentors figure (WP109), so the courses figure is not read as a total for it.
 const [coursesPart, mentorsPart] = fact('SC-09').text.split('; ');
 if (!coursesPart || !mentorsPart || !/^150\+ skill and certification courses delivered$/.test(coursesPart) || !/^150\+ instructors and mentors$/.test(mentorsPart)) throw new Error('Mentors page: SC-09 wording changed; update the split');
-const scLine = `${coursesPart}. ${mentorsPart}.`;
+const scLine = `${mentorsPart}.`;
 const apply = cta('mentor');
 const discovery = cta('discovery');
 const description = 'Meet CodersTrust mentors: practitioners in digital marketing, design, video, development and accounting who guide learners toward jobs and freelance work.';

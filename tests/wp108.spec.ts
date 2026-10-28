@@ -115,7 +115,7 @@ test.describe('WP108 item 3: the JobReady@Work meta description names the publis
 
 // --------------------------------------------------------------------------------------------------------------------------------
 test.describe('WP108 item 4: the Foundations meta description leads with the employment result', () => {
-  const DESCRIPTION = 'Fund a supported path to earnings. In a randomized trial of CodersTrust’s WSDFM program, women offered a place were 10.3 points more likely to be employed.';
+  const DESCRIPTION = 'Fund paths to earnings. In a randomized trial of CodersTrust’s WSDFM program, women offered a place were 10.3 percentage points more likely to be employed.';
 
   test('the description, its Open Graph copy and the structured data say it, within 155 characters, with the figure read from RC-02', async ({ page }) => {
     expect([...DESCRIPTION].length).toBeLessThanOrEqual(155);

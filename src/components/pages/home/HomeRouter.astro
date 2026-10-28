@@ -24,7 +24,8 @@ const cards = [
   { title: 'Governments', icon: 'landmark', text: text('governments'), href: '/partner-with-us/governments/' },
   { title: 'Foundations and CSR', icon: 'heart-handshake', text: text('foundations'), href: '/partner-with-us/foundations/' },
   // WP32 (cycle-9 review) called this card "Impact Investors" (the Investors page's audience, owner decision 2026-10-14). WP49 (cycle-24 review): it is "Investors", the title the menu, the footer and the partner hub use, read from nav.ts so they cannot differ.
-  { title: investors.title, icon: 'trending-up', text: text('investors'), href: '/partner-with-us/investors/' },
+  // WP109 (Opus Low run 1): Home's card is a fragment, "Back JobReady’s staged rollout" (no full stop, like the other cards); nav.ts and the partner hub keep the definition.
+  { title: investors.title, icon: 'trending-up', text: 'Back JobReady’s staged rollout', href: '/partner-with-us/investors/' },
 ];
 const also = [
   { label: 'Local Partners', href: '/partner-with-us/local-partners/' },

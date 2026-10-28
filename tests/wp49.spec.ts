@@ -93,7 +93,7 @@ test.describe('Governments, Universities and Local Partners: the wording the rev
   test('Governments: the two pain lines say what the agency needs, and "What Your Agency Gets" opens with tracks and placement support toward local, remote and global work', async ({ page }) => {
     await open(page, GOV);
     const pain = (title: string) => page.locator('.gp__pains li', { has: page.locator('.gp__q', { hasText: title }) });
-    expect(compact(await pain('Training Budgets Do Not Show Up as Earnings').locator('.gp__a').textContent())).toBe('Track who is earning afterward, not only who enrolled.');
+    expect(compact(await pain('Training Budgets Do Not Show Up as Earnings').locator('.gp__a').textContent())).toBe('Most training budgets count who enrolled, not who is earning afterward.');
     // WP54 (cycle-28 review, GPT-6.1 Sol G2): the heading is "Trainer and Curriculum Capacity Takes Time to Build" (it said "Is Thin"); the line under it is unchanged
     expect(compact(await pain('Trainer and Curriculum Capacity Takes Time to Build').locator('.gp__a').textContent())).toBe('National delivery needs trained facilitators and localized curricula.');
     expect(await texts(page, '#features li.card:nth-child(1) p')).toEqual(['Certification tracks chosen from employer demand, then mentoring and placement support toward local, remote and global work.']);
@@ -373,7 +373,7 @@ test.describe('Home: the router card, the closing steps and the first-step line 
     await open(page, '');
     expect(await texts(page, '#router .cat__title')).toEqual(['Development Partners and NGOs', 'Governments', 'Foundations and CSR', 'Investors']);
     const card = page.locator('#router a.cat[href$="partner-with-us/investors/"]');
-    expect(compact(await card.locator('.cat__text').textContent())).toBe('Back the staged rollout of JobReady, CodersTrust’s digital learning and earning platform.');
+    expect(compact(await card.locator('.cat__text').textContent())).toBe('Back JobReady’s staged rollout');
     expect(sitePages().filter((p) => /cat__title[^>]*>\s*Impact Investors/.test(p.html)).map((p) => p.route)).toEqual([]);
   });
 

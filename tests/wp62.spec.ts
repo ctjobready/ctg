@@ -247,7 +247,7 @@ test.describe('Item 3 (Grok, GPT-6.1 Sol, Gemini; superseded by WP65): Foundatio
     await open(page, FOUNDATIONS);
     expect(compact(await page.locator('main').textContent())).not.toContain('+$27');
     await expect(page.locator('#glance a[data-fact~="RC-04"]')).toHaveCount(0);
-    expect(await page.locator('meta[name="description"]').getAttribute('content')).toContain('women offered a place were 10.3 points more likely to be employed');
+    expect(await page.locator('meta[name="description"]').getAttribute('content')).toContain('women offered a place were 10.3 percentage points more likely to be employed');
     expect(await page.locator('meta[name="description"]').getAttribute('content')).not.toContain('$27');
   });
 

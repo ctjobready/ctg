@@ -24,10 +24,10 @@ export const endorsements: Endorsement[] = [
   {
     id: "james-gardiner",
     name: "James Gardiner",
-    title: "Economic Officer, US Embassy",
+    title: "Economic Officer, U.S. Embassy",
     quote: "“CodersTrust educates youngsters with the necessary knowledge they need for continuing education skills development and access to digital platforms in the United States for Bangladeshi in the ICT field. The organization aims to foster a global mindset among its students to excel in the ICT sector.”",
     photo: jamesGardiner,
-    photoAlt: "Portrait of James Gardiner, Economic Officer, US Embassy",
+    photoAlt: "Portrait of James Gardiner, Economic Officer, U.S. Embassy",
     date: null,
     legacyUrl: "https://coderstrust.global/endorsements/james-gardiner/",
   },

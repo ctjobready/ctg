@@ -14,6 +14,6 @@ Aziz Ahmad is the Co-Founder and Chairman of CodersTrust, which he founded in 20
 
 Together with co-founder Ferdinand Kjærulff, a former Danish Army captain, he launched CodersTrust in Copenhagen in 2014, in the presence of Sir Richard Branson and investor Morten Lund.
 
-An award-winning entrepreneur, he speaks at forums including the US Senate, the World Economic Forum, the European Parliament, and Vatican City, on the Future of Work and the Common Good in the Digital Age. He received the NOVA Award in 2022 for his contribution to the green technology industry and chairs the US-Bangladesh Global Chamber of Commerce.
+An award-winning entrepreneur, he speaks at forums including the U.S. Senate, the World Economic Forum, the European Parliament, and Vatican City, on the Future of Work and the Common Good in the Digital Age. He received the NOVA Award in 2022 for his contribution to the green technology industry and chairs the U.S.-Bangladesh Global Chamber of Commerce.
 
 UTC Associates, a technology consulting company that he leads, received the NYNJMSDC Partnership Award from the New York & New Jersey Minority Supplier Development Council on October 20, 2022.
