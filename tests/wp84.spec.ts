@@ -36,7 +36,7 @@ const visible = (html: string) =>
   );
 
 // WP91 (triage A1): the detail's wording is the triage's ("came through", not "reached through"); the figures are unchanged.
-const NEW_DETAIL = 'Of 150,000+ enrollments, 112,926 were direct. Another 40,152 came through CodersTrust curriculum and courseware: Her Power’s 25,125 and UNDP FutureNation’s 15,027. Her Power’s 2,400 directly trained women are in both the 112,926 and the 25,125. Counted once, the total is 150,678 enrollments.';
+const NEW_DETAIL = 'Of 150,000+ enrollments, 112,926 were direct. Another 40,152 came through CodersTrust curriculum and courseware: 25,125 in Her Power’s national program, which used CodersTrust’s curriculum, and 15,027 enrollments in six CodersTrust-designed courses on UNDP’s FutureNation platform. Her Power’s 2,400 directly trained women are in both the 112,926 and the 25,125. Counted once, the total is 150,678 enrollments.';
 const OVERLAP = 'Her Power’s 25,125 is the same group counted in the 150,000+ enrollments through CodersTrust’s curriculum, not additional people.';
 const FULL_NOTE = `The total is contract scope, not a count of completers; it includes Her Power’s national program, which trained 25,125 women (CodersTrust trained 2,400 directly). ${OVERLAP}`;
 // WP86 (CLR run 3, Minor 2): Governments and the JobReady Platform print the first sentence alone (CONTRACT_TOTAL_NOTE_SHORT).
@@ -60,8 +60,8 @@ test.describe('WP84: the register says what the courseware share is', () => {
     const futureNation = fact('SC-14').stat?.numeric;
     expect(herPower).toBe(25125);
     expect(futureNation).toBe(15027);
-    // WP90 (triage A1): the detail names Her Power's figure and UNDP FutureNation's figure, not the longer curriculum clause.
-    expect(detail).toContain(`Her Power’s ${fact('GV-01').stat?.value} and UNDP FutureNation’s ${futureNation?.toLocaleString('en-US')}.`);
+    // WP108: each part carries its unit: Her Power's national program (GV-01's figure) and enrollments in six courses on UNDP's FutureNation platform (SC-14's figure).
+    expect(detail).toContain(`${fact('GV-01').stat?.value} in Her Power’s national program, which used CodersTrust’s curriculum, and ${futureNation?.toLocaleString('en-US')} enrollments in six CodersTrust-designed courses on UNDP’s FutureNation platform.`);
     expect(share).toBe(herPower + (futureNation ?? 0));
     expect(share).toBe(40152);
     expect(direct).toBe(112926);

@@ -5,7 +5,7 @@ updated: 2026-10-29
 topic: partnerships
 excerpt: "CodersTrust is contracted to train 1,000 people in high-demand IT skills at the Sheikh Kamal IT Training and Incubation Center in Barishal."
 cover: ../../assets/images/news/1000-trainees-sheikh-kamal-ict-incubator-training/sheikh-kamal-it-centre.jpg
-coverAlt: "Architect’s rendering of the Sheikh Kamal IT Centre, a curved glass building with palm trees in front"
+coverAlt: "Architect’s rendering of the Sheikh Kamal IT Center, a curved glass building with palm trees in front"
 legacyUrl: "https://coderstrust.global/1000-trainees-sheikh-kamal-ict-incubator-training/"
 tags: []
 seoTitle: "Sheikh Kamal ICT: Contract to Train 1,000"

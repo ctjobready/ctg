@@ -90,7 +90,7 @@ test.describe('Item 2: the Investors enrollment note states the de-duplicated to
     await open(page, 'partner-with-us/investors/');
     const note = compact(await page.locator('#guide .ig__notes').textContent());
     expect(note).toContain('Of 150,000+ enrollments, 112,926 were direct. Another 40,152 came through CodersTrust curriculum and courseware');
-    expect(note).toContain('UNDP FutureNation’s 15,027. Her Power’s 2,400 directly trained women are in both the 112,926 and the 25,125. Counted once, the total is 150,678 enrollments. Most delivery has been in Bangladesh.');
+    expect(note).toContain('UNDP’s FutureNation platform. Her Power’s 2,400 directly trained women are in both the 112,926 and the 25,125. Counted once, the total is 150,678 enrollments. Most delivery has been in Bangladesh.');
   });
 });
 

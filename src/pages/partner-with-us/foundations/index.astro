@@ -41,7 +41,7 @@
  * WP60 (cycle-32 review, Gemini GM4 and GM9): "What Happens Next" opens "For platform grants, the first conversation covers JobReady’s infrastructure and staged rollout. For cohort grants, the steps are below." before the four cohort steps (it covered cohort grants only);
  * Samina's learner card shows her outcome line alone ("Completed 90+ projects as a freelance graphic designer on Fiverr"): the sentence under it, "She has completed 90+ projects on Fiverr so far.", repeated it (flagged in three cycles) and is gone.
  * WP62 (cycle-34 review, Grok, GPT-6.1 Sol and Gemini): the randomized trial filled two of the four glance tiles (+10.3 percentage points and about +$27), so the fourth tile is the WSDFM program-record tile (PR-01: "711 of 1,000", "WSDFM program records: 71% in work",
- * tagged Program Record) in place of the +$27 tile. The +$27 is not stated elsewhere in the page body; the meta description still says it (RC-04, read by factPart).
+ * tagged Program Record) in place of the +$27 tile. The +$27 is not stated elsewhere in the page body. WP108 (Sonnet XHigh run 4, kit 74): the meta description no longer says it; it leads with the employment result, "In a randomized trial of CodersTrust’s WSDFM program, women offered a place were 10.3 points more likely to be employed." (RC-02, read by factPart), and the page states its modified date (2026-10-29) in its JSON-LD.
  * WP62 rework (R3): the tile carries the note the Impact page's WSDFM tile has, WSDFM_NOT_TRIAL_NOTE ("Program records, separate from the randomized trial of CodersTrust’s WSDFM program, which studied 833 women."; src/data/copy.ts), since WP35 had taken the tile off this
  * page because its 71% read beside the trial's figures; the tile's data-fact names RC-07 (the 833) and PR-06 beside PR-01, as Impact's does.
  * WP65 (cycle-37 review, GPT-6.1 Sol, Gemini): "711 of 1,000" stood in Results at a Glance and again on the Proof in Practice WSDFM card, with the not-the-trial note twice. UNDP YES, Korail was on no other part of this page (the UNDP logo in the
@@ -92,7 +92,7 @@ const report = { label: reportCta.label, href: reportCta.href };
 
 const { title, description } = meta(
   'Fund Youth Employment: Foundations and CSR',
-  `Fund a supported path to earnings. A randomized trial of CodersTrust’s WSDFM program found women offered a place earned an estimated ${factPart('RC-04', /\+(\$\d+) a month/)} more a month.`,
+  `Fund a supported path to earnings. In a randomized trial of CodersTrust’s WSDFM program, women offered a place were ${factPart('RC-02', /(\d+\.\d) percentage points/)} points more likely to be employed.`,
 );
 
 // Q8-route and Q9-route: the one-line cost and safeguarding answers, each with a link to where the full answer lives (the partner hub FAQ, the governance page) (WP36).
@@ -104,7 +104,7 @@ const FAQ_IDS = ['Q3', 'Q8-route', 'Q9-route', 'Q10'];
   description={description}
   path={PATH}
   breadcrumbs={[{ label: 'Partner with Us', href: LINKS.hub }, { label: 'Foundations and CSR' }]}
-  jsonLd={[webPage({ path: PATH, name: title, description }), faqJsonLd('foundations', PATH, FAQ_IDS)]}
+  jsonLd={[webPage({ path: PATH, name: title, description, dateModified: '2026-10-29' }), faqJsonLd('foundations', PATH, FAQ_IDS)]}
   stickyCta={{ label: primary.label, href: primary.href }}
 >
   <!-- C1 · Identity hook -->

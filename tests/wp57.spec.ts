@@ -371,18 +371,18 @@ test.describe('K1, Impact: "On This Page" ends on the closing band', () => {
 });
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-test.describe('K2, Foundations: the meta description reads "earned an estimated $27 more a month"', () => {
-  const DESCRIPTION = 'Fund a supported path to earnings. A randomized trial of CodersTrust’s WSDFM program found women offered a place earned an estimated $27 more a month.';
+test.describe('K2, Foundations: the meta description is one complete sentence pair within the SEO limit (WP57: "$27 more a month"; WP108: it now leads with the employment result)', () => {
+  const DESCRIPTION = 'Fund a supported path to earnings. In a randomized trial of CodersTrust’s WSDFM program, women offered a place were 10.3 points more likely to be employed.';
 
-  test('the description, its Open Graph copy and the page’s structured data say it, within the length limit, with the figure read from RC-04', async ({ page }) => {
+  test('the description, its Open Graph copy and the page’s structured data say it, within the length limit, with the figure read from RC-02', async ({ page }) => {
     await open(page, FOUNDATIONS);
     const description = await page.locator('meta[name="description"]').getAttribute('content');
     expect(description).toBe(DESCRIPTION);
     expect(description!.length).toBeLessThanOrEqual(155);
     expect(description).not.toContain('higher monthly income');
     expect(await page.locator('meta[property="og:description"]').getAttribute('content')).toBe(DESCRIPTION);
-    expect(fact('RC-04').stat?.value, 'the figure is RC-04’s "+$27"').toBe('+$27');
-    expect(fact('RC-04').text).toContain('+$27 a month');
+    expect(fact('RC-02').stat?.value, 'the figure is RC-02’s "+10.3 pp"').toBe('+10.3 pp');
+    expect(fact('RC-02').text).toContain('10.3 percentage points');
     const blobs = await page.locator('script[type="application/ld+json"]').allTextContents();
     expect(blobs.some((b) => b.includes(DESCRIPTION)), 'the WebPage node carries the same description').toBe(true);
   });

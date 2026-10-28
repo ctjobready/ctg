@@ -95,7 +95,7 @@ test.describe('WP94 A5: Governments Launch in Existing Labs step', () => {
 test.describe('WP94 A6: SC-02 detail ends with the enrollments noun', () => {
   test('the detail reads "Counted once, the total is 150,678 enrollments." and the arithmetic closes', () => {
     expect(fact('SC-02').stat?.detail).toBe(
-      'Of 150,000+ enrollments, 112,926 were direct. Another 40,152 came through CodersTrust curriculum and courseware: Her Power’s 25,125 and UNDP FutureNation’s 15,027. Her Power’s 2,400 directly trained women are in both the 112,926 and the 25,125. Counted once, the total is 150,678 enrollments.',
+      'Of 150,000+ enrollments, 112,926 were direct. Another 40,152 came through CodersTrust curriculum and courseware: 25,125 in Her Power’s national program, which used CodersTrust’s curriculum, and 15,027 enrollments in six CodersTrust-designed courses on UNDP’s FutureNation platform. Her Power’s 2,400 directly trained women are in both the 112,926 and the 25,125. Counted once, the total is 150,678 enrollments.',
     );
     expect(112926 + 40152 - 2400).toBe(150678);
     expect(25125 + 15027).toBe(40152);

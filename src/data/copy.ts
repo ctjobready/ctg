@@ -188,8 +188,8 @@ export const CONTRACT_FIGURES = contractFigures();
 function overlapSentence(n: string, investors = false): { text: string; fact: string } {
   const enrollments = fact('SC-02').stat?.value;
   if (!enrollments || !/^[\d,]+\+$/.test(enrollments)) throw new Error('CONTRACT_TOTAL_NOTE: SC-02 no longer has a plain "N+" count as its stat value');
-  // WP90 (triage A1): SC-02's detail now names "Her Power’s N" (the shortened breakdown); the guard reads that form.
-  if (!(fact('SC-02').stat?.detail ?? '').includes(`Her Power’s ${n} and`)) throw new Error('CONTRACT_TOTAL_NOTE: the SC-02 detail no longer says the courseware share includes "Her Power’s N and" (the overlap with the 30,000+ contract scope)');
+  // WP90 (triage A1): SC-02's detail names Her Power's N in the shortened breakdown; the guard reads that form. WP108: the form is "N in Her Power’s national program" (both parts of the breakdown now carry their unit).
+  if (!(fact('SC-02').stat?.detail ?? '').includes(`${n} in Her Power’s national program`)) throw new Error('CONTRACT_TOTAL_NOTE: the SC-02 detail no longer says the courseware share includes "N in Her Power’s national program" (the overlap with the 30,000+ contract scope)');
   // WP94 (Perplexity cycle 43, triage A4): on Investors the reconciliation paragraph above already says the Her Power overlap, so the note points back to it instead of restating it.
   if (investors) return { text: `Her Power’s ${n} are already counted in the ${enrollments} enrollments above, not additional people.`, fact: 'SC-02' };
   return { text: `Her Power’s ${n} is the same group counted in the ${enrollments} enrollments through CodersTrust’s curriculum, not additional people.`, fact: 'SC-02' };

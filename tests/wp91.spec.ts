@@ -24,7 +24,7 @@ import { DESKTOP, MOBILE, open } from './support/browser';
 const compact = (t: string | null | undefined) => (t ?? '').replace(/\s+/g, ' ').trim();
 
 const SC02_DETAIL =
-  'Of 150,000+ enrollments, 112,926 were direct. Another 40,152 came through CodersTrust curriculum and courseware: Her Power’s 25,125 and UNDP FutureNation’s 15,027. Her Power’s 2,400 directly trained women are in both the 112,926 and the 25,125. Counted once, the total is 150,678 enrollments.';
+  'Of 150,000+ enrollments, 112,926 were direct. Another 40,152 came through CodersTrust curriculum and courseware: 25,125 in Her Power’s national program, which used CodersTrust’s curriculum, and 15,027 enrollments in six CodersTrust-designed courses on UNDP’s FutureNation platform. Her Power’s 2,400 directly trained women are in both the 112,926 and the 25,125. Counted once, the total is 150,678 enrollments.';
 const HOME_SLIDE_2_LEAD =
   'Six government contracts with training and curriculum work scoped for 30,000+ people, not a count of completers. Her Power, one of the six, trained 25,125 women nationally, its full target; CodersTrust trained 2,400 directly. As the official training partner of Bangladesh’s National University for digital career skills and credentials, CodersTrust is onboarding 1.5M+ of the university’s own learners, who are not learners trained by CodersTrust.';
 const TRIAL_CAPTION =
@@ -44,8 +44,8 @@ test.describe('WP91 A1: SC-02 detail is reworded at its source, and every figure
     expect(112926 + 40152 - 2400).toBe(150678);
     expect(25125 + 15027).toBe(40152);
     expect(fact('SC-02').stat?.value).toBe('150,000+');
-    // the copy.ts guard reads "Her Power’s N and" from this detail; it must still find it
-    expect(fact('SC-02').stat?.detail).toContain('Her Power’s 25,125 and');
+    // the copy.ts guard reads "N in Her Power’s national program" from this detail; it must still find it
+    expect(fact('SC-02').stat?.detail).toContain('25,125 in Her Power’s national program');
   });
 
   test('the Investors note prints the new SC-02 wording, then the SC-03 line', async ({ page }) => {

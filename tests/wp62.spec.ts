@@ -241,13 +241,14 @@ test.describe('Item 3 (Grok, GPT-6.1 Sol, Gemini; superseded by WP65): Foundatio
     }
   });
 
-  test('the figure and the share are the register’s (PR-01), and the +$27 is not stated anywhere in the page body (the meta description still says it)', async ({ page }) => {
+  test('the figure and the share are the register’s (PR-01), and the +$27 is not stated anywhere in the page body (WP108: nor in the meta description, which leads with the +10.3 employment result)', async ({ page }) => {
     expect(fact('PR-01').stat?.value).toBe('711 of 1,000');
     expect(fact('PR-01').stat?.label).toBe('WSDFM: 71% of enrolled women in work');
     await open(page, FOUNDATIONS);
     expect(compact(await page.locator('main').textContent())).not.toContain('+$27');
     await expect(page.locator('#glance a[data-fact~="RC-04"]')).toHaveCount(0);
-    expect(await page.locator('meta[name="description"]').getAttribute('content')).toContain('earned an estimated $27 more a month');
+    expect(await page.locator('meta[name="description"]').getAttribute('content')).toContain('women offered a place were 10.3 points more likely to be employed');
+    expect(await page.locator('meta[name="description"]').getAttribute('content')).not.toContain('$27');
   });
 
   test('the trial fills one of four tiles now (the +10.3), and the four tiles sit in one row at 1280 with no sideways scroll at 390', async ({ page }) => {

@@ -425,7 +425,7 @@ test.describe('plain words and plain claims', () => {
     await open(page, 'partner-with-us/foundations/');
     const description = await page.locator('meta[name="description"]').getAttribute('content');
     // WP57 (cycle-29 review, Kimi K3, item K2): "earned an estimated $27 more a month" (it said "had an estimated $27 higher monthly income")
-    expect(description).toBe('Fund a supported path to earnings. A randomized trial of CodersTrust’s WSDFM program found women offered a place earned an estimated $27 more a month.');
+    expect(description).toBe('Fund a supported path to earnings. In a randomized trial of CodersTrust’s WSDFM program, women offered a place were 10.3 points more likely to be employed.');
     expect(description!.length).toBeLessThanOrEqual(155);
   });
 });

@@ -72,7 +72,7 @@ test.describe('WP85: the register says the national program trained 25,125 women
     const longBreakdown = '(the 25,125 women Her Power trained nationally with CodersTrust’s curriculum, including the 2,400 CodersTrust also trained directly, and UNDP FutureNation’s 15,027 course learners)';
     expect(fact('SC-02').text).toBe(`150,000+ enrollments since 2014 — 112,926 through direct training across 45 programs and 40,152 reached through CodersTrust curriculum and courseware ${longBreakdown}`);
     // WP91 (triage A1): the detail's wording is the triage's; the figures are unchanged
-    expect(fact('SC-02').stat?.detail).toBe('Of 150,000+ enrollments, 112,926 were direct. Another 40,152 came through CodersTrust curriculum and courseware: Her Power’s 25,125 and UNDP FutureNation’s 15,027. Her Power’s 2,400 directly trained women are in both the 112,926 and the 25,125. Counted once, the total is 150,678 enrollments.');
+    expect(fact('SC-02').stat?.detail).toBe('Of 150,000+ enrollments, 112,926 were direct. Another 40,152 came through CodersTrust curriculum and courseware: 25,125 in Her Power’s national program, which used CodersTrust’s curriculum, and 15,027 enrollments in six CodersTrust-designed courses on UNDP’s FutureNation platform. Her Power’s 2,400 directly trained women are in both the 112,926 and the 25,125. Counted once, the total is 150,678 enrollments.');
     expect(25125 + (fact('SC-14').stat?.numeric ?? 0)).toBe(40152);
     expect(fact('SC-01').stat?.value).toBe('130,000+');
     expect(fact('SC-02').stat?.value).toBe('150,000+');
@@ -95,9 +95,9 @@ test.describe('WP85: the register says the national program trained 25,125 women
 });
 
 test.describe('WP85: every 25,125 on a built page is said as trained', () => {
-  // WP90: the SC-02 detail's shortened form "courseware (Her Power’s 25,125 and ...)" is a reach figure, not a target
+  // WP90: the SC-02 detail's form "courseware: 25,125 in Her Power’s national program, which used ..." is a reach figure, not a target
   // WP94 (triage A4): Investors' pointer sentence ("are already counted ... above") follows the note's "trained 2,400" sentence, so it is a reference to a figure already said as trained.
-  const TRAINED = /trained 25,125|25,125 women Her Power trained|25,125 is the same group counted|25,125 are already counted|25,125 women the national program trained|courseware: Her Power’s 25,125|both the 112,926 and the 25,125/;
+  const TRAINED = /trained 25,125|25,125 women Her Power trained|25,125 is the same group counted|25,125 are already counted|25,125 women the national program trained|courseware: 25,125 in Her Power’s national program|both the 112,926 and the 25,125/;
   const ARCHIVED = /Aims to Train 25,125|aims to train and support 25,125|train and facilitate 25,125/;
 
   test('text, meta tags and JSON-LD: each 25,125 is in a "trained" context; only the Her Power news post and the news index keep the archived "aims to train" wording', () => {
@@ -177,7 +177,7 @@ test.describe('WP85: the pages that state the 25,125', () => {
   test('Investors: the track-record note, the 30,000+ note and the national-scale answer say trained; JobReady Platform prints the shared note', async ({ page }) => {
     await open(page, 'partner-with-us/investors/');
     await expect(page.locator('#guide .ig__notes')).toHaveText(
-      'Of 150,000+ enrollments, 112,926 were direct. Another 40,152 came through CodersTrust curriculum and courseware: Her Power’s 25,125 and UNDP FutureNation’s 15,027. Her Power’s 2,400 directly trained women are in both the 112,926 and the 25,125. Counted once, the total is 150,678 enrollments. Most delivery has been in Bangladesh.',
+      'Of 150,000+ enrollments, 112,926 were direct. Another 40,152 came through CodersTrust curriculum and courseware: 25,125 in Her Power’s national program, which used CodersTrust’s curriculum, and 15,027 enrollments in six CodersTrust-designed courses on UNDP’s FutureNation platform. Her Power’s 2,400 directly trained women are in both the 112,926 and the 25,125. Counted once, the total is 150,678 enrollments. Most delivery has been in Bangladesh.',
     );
     expect(await page.locator('#guide .ig__notes').getAttribute('data-fact')).toBe('SC-02 SC-03 GV-01 SC-14');
     // WP94 (triage A4): Investors' note ends with the pointer sentence.
