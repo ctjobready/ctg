@@ -408,7 +408,7 @@ test.describe('plain words and plain claims', () => {
     expect(await texts(page, '.gp__q')).toContain('Graduates Struggle to Find Work');
   });
 
-  test('About: National University sits with the 2022–2024 partnerships (official training partner since 2023), not with 2025–2026', async ({ page }) => {
+  test('About: National University sits with the 2023–2025 partnerships (official training partner since 2023), not with 2025–2026', async ({ page }) => {
     await open(page, 'about/');
     const items = page.locator('#story li, #story article');
     const timeline = compact(await page.locator('#story').textContent());

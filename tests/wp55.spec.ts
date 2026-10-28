@@ -173,8 +173,8 @@ test.describe('Global Reach: 16 locations, the owner’s corrected rows, and a p
     expect(uganda.note).toBe('Partners: Maarifasasa, Makerere University Business School and U-Touch');
     expect(uganda.target, 'the unsupported "100 participants aged 18 to 40" is gone').not.toMatch(/\d/);
     const somaliland = await get('Somaliland');
-    expect(somaliland.years).toBe('2015–2016');
-    expect(somaliland.note).toBe('Hour of Code, and an ICT program at Tima-ade University');
+    expect(somaliland.years).toBe('2015–2016, 2020'); // WP106 (owner 2026-10-29): the 2020 partnership announcement is added
+    expect(somaliland.note).toBe('Hour of Code, and an ICT program at Tima-ade University (2015–2016); separately, a learning partnership announced in 2020');
     const iraq = await get('Iraq');
     expect(iraq.years).toBe('2018');
     expect(iraq.note).toBe('Cooperation with the World Food Programme announced in March 2018');

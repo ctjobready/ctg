@@ -48,8 +48,11 @@ const DESCRIPTIONS: Record<string, string> = {
 };
 const description = DESCRIPTIONS[p.id] ?? firstPara;
 if (description.length > 155) throw new Error(`Team profile ${p.id}: the meta description is ${description.length} characters (limit 155). Add a complete sentence to DESCRIPTIONS in this file.`);
-const titleFull = titleCase(`${d.name}, ${d.role}`);
+// WP106: `titleRole` (front matter) is the short role for the <title> where `role` is too long for "Name, Role | CodersTrust" in 60 characters; the displayed role and the JSON-LD jobTitle stay `role`.
+const titleFull = titleCase(`${d.name}, ${d.titleRole ?? d.role}`);
 const title = titleFull.length + ' | CodersTrust'.length <= 60 ? titleFull : d.name;
+// WP106: the four profiles whose <title> gained a role changed on 2026-10-29; the others state no "last updated" date, so their JSON-LD dateModified is the build date.
+const MODIFIED: Record<string, string> = { 'abdul-karim': '2026-10-29', 'faruque-hossain': '2026-10-29', 'ferdinand-kjaerulff': '2026-10-29', 'fahim-sheikh': '2026-10-29' };
 const img = d.photo ? await getImage({ src: d.photo, width: 800, height: 800, format: 'jpg' }) : undefined;
 const imgUrl = img ? PRODUCTION_ORIGIN + stripBase(img.src) : undefined;
 const deceased = /passed away in (\w+ \d{4})/.exec(p.body ?? '');
@@ -67,7 +70,7 @@ const personNode = {
   ...(deceased && { deathDate: '2023-02' }),
 };
 const jsonLd = [
-  webPage({ path, name: title, description, type: 'ProfilePage', about: { '@id': `${pageUrl(path)}#person` }, breadcrumb: [{ name: 'Home', path: '/' }, { name: 'About', path: '/about/' }, { name: 'Team', path: '/about/team/' }, { name: d.name, path }] }),
+  webPage({ path, name: title, description, type: 'ProfilePage', dateModified: MODIFIED[p.id], about: { '@id': `${pageUrl(path)}#person` }, breadcrumb: [{ name: 'Home', path: '/' }, { name: 'About', path: '/about/' }, { name: 'Team', path: '/about/team/' }, { name: d.name, path }] }),
   personNode,
 ];
 ---

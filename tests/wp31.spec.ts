@@ -318,8 +318,8 @@ test.describe('smaller wording fixes', () => {
   test('the YouthWIDE menu lines, the Programs card and the funding-route table say "designed for", and "builds on results from earlier programs"', async ({ page }) => {
     await open(page, 'programs/');
     const card = compact(await page.locator('#programs-grid li', { hasText: 'YouthWIDE' }).first().textContent());
-    expect(card).toContain('designed as co-funded country cohorts for South Asia, the Middle East and North Africa, and Sub-Saharan Africa');
-    expect(card).toContain('It builds on results from earlier programs in Bangladesh and Kosovo.');
+    // WP106 (Polish, accepted): the card is sibling length; the three regions and "builds on results from earlier programs" stay on the YouthWIDE page and in the menu lines (tests/wp106.spec.ts item 7)
+    expect(card).toContain('designed as co-funded country cohorts.');
     expect(card).not.toContain('outcome evidence so far');
     await open(page, '');
     const desc = compact(await page.locator('#mega-programs a.mega__link[href$="programs/youthwide/"] .mega__desc').textContent());

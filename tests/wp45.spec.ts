@@ -249,8 +249,9 @@ test.describe('Programs: the YouthWIDE card links every audience it names (item 
     const card = page.locator('#programs-grid li:has(a[href$="programs/youthwide/"])');
     expect(await texts(page, '#programs-grid li:has(a[href$="programs/youthwide/"]) .hub__partner a')).toEqual(['For Governments', 'For Development Partners', 'For Foundations']);
     expect((await hrefs(page, '#programs-grid li:has(a[href$="programs/youthwide/"]) .hub__partner a')).map(sitePath)).toEqual(['/partner-with-us/governments/', '/partner-with-us/development-partners/', '/partner-with-us/foundations/']);
-    expect(compact(await card.textContent())).toContain('designed as co-funded country cohorts for South Asia, the Middle East and North Africa, and Sub-Saharan Africa');
-    expect(compact(await card.textContent())).toContain('It aims to train 1 million educated youth (Higher Secondary Certificate or above) for digital employment by 2030, in Bangladesh and similar countries in South Asia and the Middle East and North Africa, depending on government and donor commitments.');
+    // WP106 (Polish, accepted): the card is sibling length; the full aim statement and the three regions stay on the YouthWIDE page (tests/wp106.spec.ts item 7)
+    expect(compact(await card.textContent())).toContain('designed as co-funded country cohorts.');
+    expect(compact(await card.textContent())).toContain('It aims to train 1 million educated youth by 2030, depending on government and donor commitments.');
   });
 });
 

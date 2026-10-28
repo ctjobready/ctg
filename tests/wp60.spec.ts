@@ -222,7 +222,8 @@ test.describe('S3 (Claude): the 1 million 2030 aim carries its dependency on eve
 
   test('Programs, Impact, About and YouthWIDE (the regions row and the 2030 aim tile) say it', async ({ page }) => {
     await open(page, 'programs/');
-    expect(compact(await page.locator('main').textContent())).toContain(`It aims to train 1 million educated youth (Higher Secondary Certificate or above) for digital employment by 2030, in Bangladesh and similar countries in South Asia and the Middle East and North Africa, ${AIM_DEPENDENCY}.`);
+    // WP106 (Polish, accepted): the Programs card is the short form of the aim; the full statement stays on About and YouthWIDE
+    expect(compact(await page.locator('main').textContent())).toContain(`It aims to train 1 million educated youth by 2030, ${AIM_DEPENDENCY}.`);
     await open(page, 'impact/');
     const tile = page.locator('#heading a[data-fact~="IN-01"]');
     await expect(tile).toHaveCount(1);

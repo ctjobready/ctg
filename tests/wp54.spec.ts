@@ -215,7 +215,8 @@ test.describe('The Programs menu describes YouthWIDE without the Bangladesh aim 
     await open(page, YOUTHWIDE);
     expect(compact(await page.locator('#program-glance .pg__row').first().textContent())).toContain('YouthWIDE aims to train 1 million educated youth (Higher Secondary Certificate or above) for digital employment by 2030, in Bangladesh and similar countries in South Asia and the Middle East and North Africa, depending on government and donor commitments.');
     await open(page, PROGRAMS);
-    expect(await everything(page)).toContain('It aims to train 1 million educated youth (Higher Secondary Certificate or above) for digital employment by 2030, in Bangladesh and similar countries in South Asia and the Middle East and North Africa, depending on government and donor commitments.');
+    // WP106 (Polish, accepted): the Programs card is the short form of the aim; the full statement stays on YouthWIDE, About and Impact
+    expect(await everything(page)).toContain('It aims to train 1 million educated youth by 2030, depending on government and donor commitments.');
     await open(page, IMPACT);
     expect(await everything(page)).toContain('Aim: educated youth (Higher Secondary Certificate or above) trained for digital employment by 2030');
   });

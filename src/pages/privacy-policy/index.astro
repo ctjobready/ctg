@@ -9,7 +9,7 @@ import { url, linkAttrs } from '../../lib/url';
 
 const GITHUB_PRIVACY = 'https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement';
 const JOBREADY = 'https://jobready.global/';
-const UPDATED = '2026-10-29'; // WP105: the Email Inquiries section names the careers and NU diploma help inboxes
+const UPDATED = '2026-10-29'; // WP106: "This website is run by CT USA, Inc. (CodersTrust)." (owner 2026-10-29). WP105: the Email Inquiries section names the careers and NU diploma help inboxes
 const description = 'How the CodersTrust website handles data: no analytics cookies, no trackers of its own, and a plain list of every service involved.';
 const toc = [
   { id: 'summary', label: 'In Short' },
@@ -117,7 +117,7 @@ const jsonLd = [webPage({ path: '/privacy-policy/', name: 'Privacy Policy', desc
     <section id="changes" aria-labelledby="changes-h">
       <h2 id="changes-h">Changes and Contact</h2>
       <p>If we add or change a service that touches your data, we update this page before the change goes live. The “Last updated” date above shows the current version.</p>
-      <p>This website is run by CodersTrust. Questions about privacy go to <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>, or by post to either office:</p>
+      <p>This website is run by CT USA, Inc. (CodersTrust). Questions about privacy go to <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>, or by post to either office:</p>
       <ul>
         {OFFICES.map((o) => <li><strong>{o.name}</strong>, {o.address.join(', ')}</li>)}
       </ul>

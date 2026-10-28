@@ -2,6 +2,7 @@
 name: "Abdul Karim"
 slug: abdul-karim
 role: "Advisor; former Principal Secretary, Government of Bangladesh"
+titleRole: "Advisor"
 group: advisors
 order: 5
 photo: ../../assets/images/team/abdul-karim.jpg

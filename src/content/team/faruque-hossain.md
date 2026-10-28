@@ -2,6 +2,7 @@
 name: "Faruque Hossain"
 slug: faruque-hossain
 role: "Advisor; former Chairman, National Skills Development Authority"
+titleRole: "Advisor"
 group: advisors
 order: 4
 photo: ../../assets/images/team/faruque-hossain.jpg

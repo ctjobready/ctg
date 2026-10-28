@@ -2,6 +2,7 @@
 name: "Ferdinand Kjærulff"
 slug: ferdinand-kjaerulff
 role: "Co-Founder · In Memoriam (2023)"
+titleRole: "Co-Founder"
 group: founders
 order: 2
 photo: ../../assets/images/team/ferdinand-kjaerulff.jpg

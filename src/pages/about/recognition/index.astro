@@ -32,10 +32,6 @@ const post = (id: string) => byId.get(id);
 const HONOR_POSTS: [RegExp, string | null][] = [
   [/UPEACE/, 'aziz-ahmad-co-founder-and-global-chairman-of-coderstrust-appointed-as-global-upeace-ambassador'],
   [/SDG Life Achievement/, 'coderstrust-chairman-mr-aziz-ahmad-receives-sdg-life-achievement-award-from-the-unsgii'],
-  [/NOVA/, null],
-];
-const HONOR_NOTES: [RegExp, string][] = [
-  [/NOVA/, 'He received the NOVA Award in 2022 for his contribution to the green technology industry.'],
 ];
 const honors = fact('PA-11')
   .text.split(': ')
@@ -46,10 +42,11 @@ const honors = fact('PA-11')
     const m = s.match(/^(.*?) \((\d{4})(?:, (.*))?\)$/);
     const label = m ? m[1] : s;
     const slug = HONOR_POSTS.find(([re]) => re.test(label))?.[1] ?? null;
-    const note = HONOR_NOTES.find(([re]) => re.test(label))?.[1] ?? m?.[3];
+    const note = m?.[3];
     return { label, year: m?.[2], note, post: slug ? post(slug) : undefined };
   });
 // The NYNJMSDC Partnership Award was received by UTC Associates, the company Aziz Ahmad leads, so it is not one of his personal honors (owner decision, 2026-10-13).
+// WP106 (owner 2026-10-29: the NOVA Award is "bio only"): PA-11 no longer lists it, so this list is the two dated appointments and honors that have a news post; the award is told in his profile.
 // WP105 (owner 2026-10-29: "bio only"): the "Recognition Connected to Our Chairman’s Work" section that showed it as related recognition is gone from this page; the award is told in his profile and its dated news post.
 const COMPANY_AWARD = /NYNJMSDC/;
 const personalHonors = honors.filter((h) => !COMPANY_AWARD.test(h.label));

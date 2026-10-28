@@ -70,7 +70,7 @@ test.describe('Somalia is removed: Global Reach lists Somaliland only (owner dec
   test('the data has no Somalia row; Somaliland stays, as 2015–2016; the list is 16 locations', () => {
     expect(locations.map((l) => l.id)).not.toContain('somalia');
     expect(locations.map((l) => l.name)).not.toContain('Somalia');
-    expect(locations.find((l) => l.id === 'somaliland')?.years).toBe('2015–2016');
+    expect(locations.find((l) => l.id === 'somaliland')?.years).toBe('2015–2016, 2020'); // WP106 (owner 2026-10-29): 2020 is added
     expect(locations).toHaveLength(16);
   });
 
@@ -182,6 +182,8 @@ test.describe('16 countries and territories wherever SC-03 and SC-16 render (own
 test.describe('Somaliland wording: "Hour of Code, and an ICT program at Tima-ade University" (owner decision 13)', () => {
   const ICT_PROGRAM = /\ban ICT program at Tima-ade University\b/;
   const BANNER = /\bin front of a Tima-ade University banner\b/;
+  /** WP106 (owner 2026-10-29, "add 2020"): the Somaliland row’s note ends with this clause, about the September 2020 partnership announcement, not about the university; the "partner" guards below read the text without it. */
+  const ANNOUNCED = ' (2015–2016); separately, a learning partnership announced in 2020';
   /** Every text node or attribute value (no `<`, `>` or `"` inside) that names Tima-ade, per built page. */
   const contexts = () => allPages().flatMap((p) => [...p.html.replace(/<style[\s\S]*?<\/style>/gi, ' ').matchAll(/[^<>"]*Tima-ade[^<>"]*/g)].map((m) => ({ route: p.route, text: compact(m[0]) })));
 
@@ -211,9 +213,10 @@ test.describe('Somaliland wording: "Hour of Code, and an ICT program at Tima-ade
     await open(page, GLOBAL_REACH);
     const row = page.locator('.wmap__table tbody tr', { has: page.locator('th[scope="row"]', { hasText: 'Somaliland' }) }).first();
     const note = compact(await row.locator('td[data-label="Partner / Note"]').textContent());
-    expect(note).toBe(PHRASE);
+    expect(note).toBe(`${PHRASE}${ANNOUNCED}`);
+    expect(note.replace(ANNOUNCED, '')).toBe(PHRASE);
     expect(note).not.toMatch(/^Partner|\bwith Tima-ade/);
-    expect(compact(await row.locator('td[data-label="Years"]').textContent())).toBe('2015–2016');
+    expect(compact(await row.locator('td[data-label="Years"]').textContent())).toBe('2015–2016, 2020');
     expect(compact(await page.locator('#wmap-card-somaliland').evaluate((el) => el.textContent ?? ''))).toContain(PHRASE);
     const alt = await row.locator('.wmap__photo img').getAttribute('alt');
     expect(alt).toBe(BANNER_ALT);
@@ -247,7 +250,7 @@ test.describe('Somaliland wording: "Hour of Code, and an ICT program at Tima-ade
   test('every place the built site names Tima-ade says "an ICT program at Tima-ade University" or describes the banner; none says the Hour of Code was "with" the university or calls it a partner', () => {
     const found = contexts();
     expect(found.length, 'the university is named on the site').toBeGreaterThan(5);
-    const bad = found.filter((c) => !(ICT_PROGRAM.test(c.text) || BANNER.test(c.text)) || /Hour of Code[^.]{0,80}\bwith\b[^.]{0,30}Tima-ade/i.test(c.text) || /\bpartner/i.test(c.text) || /programme/i.test(c.text));
+    const bad = found.filter((c) => !(ICT_PROGRAM.test(c.text) || BANNER.test(c.text)) || /Hour of Code[^.]{0,80}\bwith\b[^.]{0,30}Tima-ade/i.test(c.text) || /\bpartner/i.test(c.text.replace(ANNOUNCED, '')) || /programme/i.test(c.text));
     expect(bad).toEqual([]);
   });
 
@@ -255,7 +258,7 @@ test.describe('Somaliland wording: "Hour of Code, and an ICT program at Tima-ade
     const strings = [
       ...Object.values(facts).map((f) => `${f.id}: ${f.text} ${f.stat?.label ?? ''} ${f.stat?.detail ?? ''}`),
       ...Object.values(sources).map((s) => `${s.id}: ${s.label} ${s.citation}`),
-      ...locations.map((l) => `${l.id}: ${l.note ?? ''}`),
+      ...locations.map((l) => `${l.id}: ${(l.note ?? '').replace(ANNOUNCED, '')}`),
     ].filter((s) => /Tima-ade/.test(s));
     expect(strings.length).toBeGreaterThanOrEqual(3);
     for (const s of strings) {
@@ -291,7 +294,7 @@ test.describe('Nigeria is a timeline line only (owner decision 15): About, "Our 
         fact: e.getAttribute('data-fact') ?? '',
       })),
     );
-    expect(items.map((i) => i.year)).toEqual(['2014', '2014–2017', '2015–2016', '2018–2021', '2022–2024', '2025–2026']);
+    expect(items.map((i) => i.year)).toEqual(['2014', '2014–2017', '2015–2016', '2018–2021', '2023–2025', '2025–2026']);
     expect(items.map((i) => i.year)).toEqual(timeline.map((t) => t.year));
     expect(items[2]).toEqual({ year: '2015–2016', title: 'Rockefeller Foundation Grant', text: NIGERIA_TEXT, fact: 'TL-07' });
     expect(`${items[2].year}: ${items[2].text}`).toBe('2015–2016: A Rockefeller Foundation grant supported a CodersTrust feasibility study in Kenya and Nigeria.');

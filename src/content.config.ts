@@ -88,6 +88,11 @@ const team = defineCollection({
       name: z.string(),
       slug: z.string(),
       role: z.string(),
+      /**
+       * Optional short form of `role` for the page <title> ("Name, Role | CodersTrust", 60 characters at most). WP106: a role that is too long for the title ("Advisor; former Principal Secretary, Government of Bangladesh")
+       * is shortened here, never invented; the displayed role stays `role`. Without it the title uses `role`, and falls back to the name alone when that is too long.
+       */
+      titleRole: z.string().max(40).optional(),
       group: z.enum(['founders', 'advisors', 'executive', 'management']),
       order: z.number(),
       photo: image().optional(),
