@@ -50,14 +50,14 @@ export const FIRST_COHORT = statValue('PD-04');
 export const NATIONWIDE_TARGET = statValue('IN-01');
 
 /**
- * The grant-funded start sequence as step headings (WP29: every timeline names its starting point), read from PD-04 so no week is retyped:
- * "Discovery (Week 1)", "Co-Design (Week 2)", "Agreement (Week 3)", then "Training Starts 6–8 Weeks After Signing". Week 1 to 3 count from the first
- * conversation; the last window counts from signing. Public procurement timing is a separate line (it is not part of this sequence).
+ * The grant-funded start sequence as step headings: "Discovery", "Co-Design", "Agreement", then "Training Starts 6–8 Weeks After Signing". The three step names are read from
+ * PD-04 ("Discovery → Co-Design → Agreement; ...") so the sequence is never retyped; the build stops if PD-04 changes shape. The steps carry no week numbers
+ * (WP100, owner decision 2026-10-28: the pre-signature timing is not stated); the last window counts from signing.
  */
 export function grantStartTitles(): [string, string, string, string] {
-  const weeks = [...fact('PD-04').text.matchAll(/(Discovery|Co-Design|Agreement) \(Week (\d)\)/g)].map((m) => `${m[1]} (Week ${m[2]})`);
-  if (weeks.length !== 3) throw new Error(`grantStartTitles: PD-04 no longer reads "Discovery (Week 1) → Co-Design (Week 2) → Agreement (Week 3)": "${fact('PD-04').text}"`);
-  return [weeks[0], weeks[1], weeks[2], `Training Starts ${FIRST_COHORT} After Signing`];
+  const names = /(Discovery) → (Co-Design) → (Agreement);/.exec(fact('PD-04').text);
+  if (!names) throw new Error(`grantStartTitles: PD-04 no longer reads "Discovery → Co-Design → Agreement; ...": "${fact('PD-04').text}"`);
+  return [names[1], names[2], names[3], `Training Starts ${FIRST_COHORT} After Signing`];
 }
 
 /**

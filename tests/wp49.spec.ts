@@ -176,7 +176,7 @@ test.describe('YouthWIDE: the closing timing paragraph (item 7)', () => {
     expect(text).not.toContain('Discovery (Week 1)');
     // procurement timing is stated in the Governments entry card and in the timing answer
     expect(compact(await page.locator('#cta-governments .entry__text').textContent())).toBe('Public procurement follows the agency’s own timeline, so we start with a briefing that fits it.');
-    expect(await answerOf(page, 'How Fast Can We Start?')).toBe('Target timing for grant-funded pilots: about three weeks from the first conversation to agreement, then 6–8 weeks from signing to training. Public procurement follows the agency’s own timeline.');
+    expect(await answerOf(page, 'How Fast Can We Start?')).toBe('Target timing for grant-funded pilots: training starts 6–8 weeks after signing. Public procurement follows the agency’s own timeline.');
     expect(await itemOf(page, 'How Fast Can We Start?').locator('.faq__a p').getAttribute('data-fact')).toBe('PD-04');
   });
 });
@@ -380,7 +380,7 @@ test.describe('Home: the router card, the closing steps and the first-step line 
   test('the four closing steps carry the hub’s one-line descriptions (one shared source), and the "Your First Step" panel does not say "first step" twice', async ({ page }) => {
     await open(page, '');
     expect(await texts(page, '#next-steps .steps__text')).toEqual(DESCRIPTIONS);
-    expect((await texts(page, '#next-steps ol h3')).map((t) => t.replace(/^Step \d+: /, ''))).toEqual(['Discovery (Week 1)', 'Co-Design (Week 2)', 'Agreement (Week 3)', 'Training Starts 6–8 Weeks After Signing']);
+    expect((await texts(page, '#next-steps ol h3')).map((t) => t.replace(/^Step \d+: /, ''))).toEqual(['Discovery', 'Co-Design', 'Agreement', 'Training Starts 6–8 Weeks After Signing']);
     expect(await texts(page, '#next-steps .ns__note--first p')).toEqual(['Your First Step', C14.firstActionLabeled]);
     expect(C14.firstActionLabeled).toBe('A discovery session. In your inquiry, include two suitable times.');
     await open(page, 'partner-with-us/');

@@ -21,7 +21,7 @@ test.describe('timelines name their starting point', () => {
     expect(text).not.toMatch(/\bMonth (6|12)\b/);
   });
 
-  // every grant-funded week sequence on the site reads Discovery (Week 1) → Co-Design (Week 2) → Agreement (Week 3) → Training Starts 6–8 Weeks After Signing
+  // every grant-funded step sequence on the site reads Discovery → Co-Design → Agreement → Training Starts 6–8 Weeks After Signing (WP100: the week numbers before signing are gone)
   // (WP32 had taken the sequence off Foundations, whose call-to-action band states what is discussed for a cohort grant and for a platform grant, tests/wp32.spec.ts; WP46 put it back, scoped "For cohort grants.")
   const SEQUENCES: { page: string; steps: string }[] = [
     { page: '', steps: '#next-steps ol h3' },
@@ -31,10 +31,10 @@ test.describe('timelines name their starting point', () => {
     { page: 'partner-with-us/foundations/', steps: '#next-steps ol h3' },
   ];
   for (const s of SEQUENCES) {
-    test(`${s.page || 'Home'}: the grant-funded steps read Discovery (Week 1) → Co-Design (Week 2) → Agreement (Week 3) → Training Starts 6–8 Weeks After Signing`, async ({ page }) => {
+    test(`${s.page || 'Home'}: the grant-funded steps read Discovery → Co-Design → Agreement → Training Starts 6–8 Weeks After Signing`, async ({ page }) => {
       await open(page, s.page);
       const titles = (await page.locator(s.steps).allTextContents()).map((t) => compact(t).replace(/^Step \d: /, ''));
-      expect(titles).toEqual(['Discovery (Week 1)', 'Co-Design (Week 2)', 'Agreement (Week 3)', 'Training Starts 6–8 Weeks After Signing']);
+      expect(titles).toEqual(['Discovery', 'Co-Design', 'Agreement', 'Training Starts 6–8 Weeks After Signing']);
       expect(compact(await page.locator('main').textContent())).not.toMatch(/\bwk \d|First Cohort Starting Training|First Cohort · /);
     });
   }
@@ -50,7 +50,7 @@ test.describe('timelines name their starting point', () => {
 
   test('PD-04 (the register) carries the sequence the pages read', () => {
     const text = fact('PD-04').text;
-    expect(text).toContain('Discovery (Week 1) → Co-Design (Week 2) → Agreement (Week 3)');
+    expect(text).toContain('Discovery → Co-Design → Agreement; training starts');
     expect(text).toContain('training starts 6–8 weeks after signing');
     expect(text).not.toMatch(/\bwk \d/);
   });
@@ -65,7 +65,7 @@ test.describe('timelines name their starting point', () => {
     await open(page, 'programs/youthwide/');
     const main = compact(await page.locator('main').textContent());
     // WP40 (cycle-17 review): YouthWIDE's "What Happens Next" shows the sequence, so its answer is the two-sentence variant (tests/wp40.spec.ts)
-    expect(main).toContain('Target timing for grant-funded pilots: about three weeks from the first conversation to agreement, then 6–8 weeks from signing to training. Public procurement follows the agency’s own timeline.');
+    expect(main).toContain('Target timing for grant-funded pilots: training starts 6–8 weeks after signing. Public procurement follows the agency’s own timeline.');
     expect(main).not.toMatch(/Counting from the first conversation|week 1 is a discovery session, week 2/i);
   });
 });

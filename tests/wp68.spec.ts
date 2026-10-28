@@ -14,7 +14,7 @@ import { listPages } from './support/pages';
  */
 
 const compact = (t: string | null | undefined) => (t ?? '').replace(/\s+/g, ' ').trim();
-const STEP_HEADINGS = [/^Discovery \(Week 1\)$/, /^Co-Design \(Week 2\)$/, /^Agreement \(Week 3\)$/, /^Training Starts 6–8 Weeks After Signing$/];
+const STEP_HEADINGS = [/^Discovery$/, /^Co-Design$/, /^Agreement$/, /^Training Starts 6–8 Weeks After Signing$/];
 const OLD_TIMING_PHRASES = ['For grant-funded pilots, agreement typically takes', 'For grant-funded pilots, allow about three weeks', 'we plan for the first cohort to begin training'];
 
 async function stepHeadings(page: Page, selector: string) {
@@ -95,7 +95,7 @@ test.describe('WP68 item 2 and RW2: the grant-funded week figures are target tim
     for (const route of ['our-model/', 'programs/youthwide/']) {
       await open(page, route);
       const answer = compact(await fastAnswer(page).textContent());
-      expect(answer, route).toBe('Target timing for grant-funded pilots: about three weeks from the first conversation to agreement, then 6–8 weeks from signing to training. Public procurement follows the agency’s own timeline.');
+      expect(answer, route).toBe('Target timing for grant-funded pilots: training starts 6–8 weeks after signing. Public procurement follows the agency’s own timeline.');
     }
   });
 });

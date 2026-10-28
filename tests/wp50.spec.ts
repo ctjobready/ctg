@@ -561,10 +561,10 @@ test.describe('Governments: the timing answer is the procurement sentence alone 
     expect(text).not.toMatch(/grant-funded pilots, agreement typically takes|after contracting/);
   });
 
-  test('the other timing answers are unchanged: the shared Q7 (Home’s bank) and Q7-model (YouthWIDE, Our Model)', async () => {
-    expect(faqs.find((f) => f.id === 'Q7')!.a).toContain('Target timing for grant-funded pilots: agreement typically takes about three weeks from first conversation, and the first cohort is typically in training 6–8 weeks after signing.');
+  test('the other timing answers state only the 6–8 weeks after signing: the shared Q7 (Home’s bank) and Q7-model (YouthWIDE, Our Model)', async () => {
+    expect(faqs.find((f) => f.id === 'Q7')!.a).toBe('Target timing for grant-funded pilots: the first cohort is typically in training 6–8 weeks after signing. Public procurement follows the agency’s own timeline.');
     expect(faqsFor('variants').find((f) => f.id === 'Q7-model')!.a).toBe(
-      'Target timing for grant-funded pilots: about three weeks from the first conversation to agreement, then 6–8 weeks from signing to training. Public procurement follows the agency’s own timeline.',
+      'Target timing for grant-funded pilots: training starts 6–8 weeks after signing. Public procurement follows the agency’s own timeline.',
     );
   });
 });
@@ -589,7 +589,7 @@ test.describe('Home and Governments: the closing band heading and link (items 25
     await open(page, '');
     await expect(page.locator('#next-steps h2')).toHaveText('What Happens Next');
     await expect(page.locator('#next-steps .eyebrow').first()).toHaveText('Target Timing for Grant-Funded Pilots');
-    await expect(page.locator('#next-steps ol h3')).toHaveText([/Discovery \(Week 1\)/, /Co-Design \(Week 2\)/, /Agreement \(Week 3\)/, /Training Starts 6–8 Weeks After Signing/]);
+    await expect(page.locator('#next-steps ol h3')).toHaveText([/Discovery$/, /Co-Design$/, /Agreement$/, /Training Starts 6–8 Weeks After Signing/]);
     expect(sitePages().filter((p) => visible(p.html).includes('What Happens After You Contact Us')).map((p) => p.route)).toEqual([]);
   });
 

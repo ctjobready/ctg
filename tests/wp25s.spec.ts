@@ -335,11 +335,11 @@ test.describe('Our Model and Investors', () => {
 
   // WP37 (cycle-14 review): Our Model has its own two-sentence variant of the timeline answer ("allow about three weeks ... then 6–8 weeks ..."), hedged by "allow about"; WP40 (cycle-17 review): YouthWIDE, whose "What Happens Next"
   // shows the sequence, uses it too; the Governments variant kept "typically". WP50 (cycle-25 review, item 23): the Governments variant is the procurement sentence alone, with no grant-pilot timing to hedge (tests/wp50.spec.ts)
-  test('the timeline answers are hedged: YouthWIDE and Our Model say "allow about"; Governments states no timing beyond the agency’s own procurement timeline', async ({ page }) => {
+  test('the timeline answers: YouthWIDE and Our Model state the 6–8 weeks after signing; Governments states no timing beyond the agency’s own procurement timeline', async ({ page }) => {
     for (const route of ['programs/youthwide/', 'our-model/']) {
       await open(page, route);
       const text = compact(await everything(page));
-      expect(text, route).toContain('about three weeks from the first conversation to agreement, then 6–8 weeks from signing to training');
+      expect(text, route).toContain('Target timing for grant-funded pilots: training starts 6–8 weeks after signing. Public procurement follows the agency’s own timeline.');
     }
     await open(page, 'partner-with-us/governments/');
     const gov = compact(await everything(page));

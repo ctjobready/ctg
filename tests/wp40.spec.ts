@@ -146,7 +146,7 @@ test.describe('YouthWIDE: the glance row and the timing answer (items 2 and 7)',
 
   test('"How Fast Can We Start?" is the two-sentence variant (Q7-model), tied to PD-04, with no week-by-week count; the JSON-LD says the same', async ({ page }) => {
     const answer = faqsFor('variants').find((f) => f.id === 'Q7-model')!.a;
-    expect(answer).toBe('Target timing for grant-funded pilots: about three weeks from the first conversation to agreement, then 6–8 weeks from signing to training. Public procurement follows the agency’s own timeline.');
+    expect(answer).toBe('Target timing for grant-funded pilots: training starts 6–8 weeks after signing. Public procurement follows the agency’s own timeline.');
     await open(page, 'programs/youthwide/');
     const item = page.locator('#faq details', { has: page.locator('summary', { hasText: 'How Fast Can We Start?' }) });
     await expect(item).toHaveCount(1);
@@ -158,15 +158,15 @@ test.describe('YouthWIDE: the glance row and the timing answer (items 2 and 7)',
     expect(text).not.toMatch(/Counting from the first conversation|Week 1 is a discovery session/);
     // WP49 (cycle-24 review): "What Happens Next" no longer prints the timing in a line of its own (it repeated this answer and the steps above it); the answer here is where the page states it
     await expect(page.locator('.next-timing')).toHaveCount(0);
-    expect(answer).toContain('6–8 weeks from signing to training');
+    expect(answer).toContain('training starts 6–8 weeks after signing');
   });
 
-  test('the shared answer with the Week 1 to 3 sentence stays in the objection bank; no built page prints it any more except the component gallery', async () => {
-    expect(faqs.find((f) => f.id === 'Q7')!.a).toContain('Counting from the first conversation, Week 1 is a discovery session, Week 2 co-design and Week 3 the agreement');
+  test('the shared answer stays in the objection bank without a week count; no built page prints the old Week 1 to 3 sentence', async () => {
+    expect(faqs.find((f) => f.id === 'Q7')!.a).toBe('Target timing for grant-funded pilots: the first cohort is typically in training 6–8 weeks after signing. Public procurement follows the agency’s own timeline.');
     const printing = listPages()
       .filter((p) => readFileSync(p.file, 'utf8').includes('Week 1 is a discovery session'))
       .map((p) => p.route);
-    expect(printing).toEqual(['/styleguide/']);
+    expect(printing).toEqual([]);
   });
 });
 
