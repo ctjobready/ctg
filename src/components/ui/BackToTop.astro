@@ -27,14 +27,22 @@ import Icon from '../system/Icon.astro';
     justify-content: center;
     opacity: 0;
     visibility: hidden;
+    pointer-events: none;
     transform: translateY(8px);
     transition: opacity var(--dur-base) ease, transform var(--dur-base) var(--ease-standard), visibility 0s linear var(--dur-base);
   }
-  .btt.is-visible {
-    opacity: 1;
+  /* WP101 (owner answer 2026-10-28, "Hide when idle"; src/scripts/backtotop.ts): past one viewport of scrolling the button is "active": it can take focus (so a
+     keyboard reader reaches it at the end of the page), but it is still unseen and untouchable. It is drawn only while the reader scrolls up (.is-visible), or while
+     it has focus. Without JavaScript it never leaves its base state (hidden). */
+  .btt.is-active {
     visibility: visible;
-    transform: none;
     transition-delay: 0s;
+  }
+  .btt.is-visible,
+  .btt:focus {
+    opacity: 1;
+    pointer-events: auto;
+    transform: none;
   }
   .btt:hover {
     background: var(--primary);
@@ -70,6 +78,7 @@ import Icon from '../system/Icon.astro';
   @media (prefers-reduced-motion: reduce) {
     .btt {
       transform: none;
+      transition: none;
     }
     .btt__bar {
       display: none;

@@ -76,8 +76,16 @@ async function exercise(page: Page): Promise<void> {
   const close = page.locator('[data-promo-close]:visible');
   if (await close.count()) await close.first().click();
   await page.evaluate(() => window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'instant' }));
+  // WP101: the back-to-top button is shown only while the reader scrolls up (and after one screen of scrolling), so scroll up a little before pressing it.
+  // The press is a real mouse click at the button (Playwright's own scroll-into-view before a click would scroll down and hide it again).
   const top = page.locator('[data-backtotop]');
-  if (await top.isVisible()) await top.click();
+  await page.waitForTimeout(150); // the scroll down above registers as a scroll down, not as part of the scroll up below
+  await page.evaluate(() => window.scrollBy({ top: -200, behavior: 'instant' }));
+  if (await top.evaluate((el) => el.classList.contains('is-active'))) {
+    await expect(top).toHaveClass(/is-visible/);
+    const box = await top.boundingBox();
+    if (box) await page.mouse.click(box.x + box.width / 2, box.y + box.height / 2);
+  }
   await quiet(page);
 }
 

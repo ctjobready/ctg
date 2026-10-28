@@ -10,15 +10,15 @@ export const DEFAULT_OG: OgCard = { src: '/og/default.png', alt: 'CodersTrust: L
 
 /** Path prefix -> section card, longest prefix first. */
 const SECTION_CARDS: { prefix: string; card: OgCard }[] = [
-  { prefix: '/programs/nu-postgraduate-diploma/', card: { src: '/og/nu-postgraduate-diploma.png', alt: 'CodersTrust: NU Post Graduate Diploma. Build the digital skills employers are hiring for — after your degree.' } },
-  { prefix: '/partner-with-us/investors/', card: { src: '/og/investors.png', alt: 'CodersTrust: Investors. Invest in the infrastructure of emerging-market work.' } },
-  { prefix: '/partner-with-us/', card: { src: '/og/partner-with-us.png', alt: 'CodersTrust: Partner with us. Co-design a youth-employment program with CodersTrust.' } },
-  { prefix: '/our-model/', card: { src: '/og/our-model.png', alt: 'CodersTrust: Our model. How the CodersTrust model works.' } },
-  { prefix: '/programs/', card: { src: '/og/programs.png', alt: 'CodersTrust: Programs. Choose the program that fits you.' } },
-  { prefix: '/careers/', card: { src: '/og/careers.png', alt: 'CodersTrust: Careers. Help prepare educated, unemployed young people for paid digital work.' } },
+  { prefix: '/programs/nu-postgraduate-diploma/', card: { src: '/og/nu-postgraduate-diploma.png', alt: 'CodersTrust: NU Post Graduate Diploma. We help learners prepare for digital work through a National University post graduate diploma.' } },
+  { prefix: '/partner-with-us/investors/', card: { src: '/og/investors.png', alt: 'CodersTrust: Investors. Back JobReady’s staged rollout, built on CodersTrust’s training and mentoring programs.' } },
+  { prefix: '/partner-with-us/', card: { src: '/og/partner-with-us.png', alt: 'CodersTrust: Partner with Us. Choose a partnership for youth employment, campus skills, team training, hiring or JobReady’s staged rollout.' } },
+  { prefix: '/our-model/', card: { src: '/og/our-model.png', alt: 'CodersTrust: Our Model. One Path from Learning to Earning, with Outcomes Tracked.' } },
+  { prefix: '/programs/', card: { src: '/og/programs.png', alt: 'CodersTrust: Programs. Digital Skills Programs, from School to Work.' } },
+  { prefix: '/careers/', card: { src: '/og/careers.png', alt: 'CodersTrust: Careers. We are building a team that finds practical answers and delivers.' } },
   { prefix: '/contact/', card: { src: '/og/contact.png', alt: 'CodersTrust: Contact. Choose the route that fits you.' } },
-  { prefix: '/impact/', card: { src: '/og/impact.png', alt: 'CodersTrust: Impact. What CodersTrust results show, what kind of evidence each one is, and what it does not show.' } },
-  { prefix: '/about/', card: { src: '/og/about.png', alt: 'CodersTrust: About. CodersTrust trains and mentors educated, unemployed youth in emerging markets for digital work.' } },
+  { prefix: '/impact/', card: { src: '/og/impact.png', alt: 'CodersTrust: Impact. Impact You Can Verify.' } },
+  { prefix: '/about/', card: { src: '/og/about.png', alt: 'CodersTrust: About. A Global Workforce Organization, Built on Evidence.' } },
   { prefix: '/news/', card: { src: '/og/news.png', alt: 'CodersTrust: News. Partnerships and MOUs, recognition, program events and leadership.' } },
 ];
 

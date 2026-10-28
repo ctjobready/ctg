@@ -572,11 +572,12 @@ test.describe('WP76 item 1: sitemap, banners and reachability', () => {
     }
   });
 
-  test('the two new banners are cleared like the other two course banners (the same clearance, published on the previous site, no sensitive group), and the cards carry their asset ids', async ({ page }) => {
+  // WP101 (owner answer 2026-10-28): all four banners are CodersTrust's own 2026 designs (scripts/build-nu-banners.mjs), so their rows carry that clearance and are not "published on the legacy site" (they were, as the previous banners).
+  test('the four course banners share one cleared row shape (the 2026-10-28 owner clearance, not published on the previous site, no sensitive group), and the cards carry their asset ids', async ({ page }) => {
     const rows = JSON.parse(readText('src/data/permissions.json')) as { assetId: string; clearanceId: string; status: string; publishedOnLegacySite: boolean; sensitiveGroup: boolean }[];
     const row = (id: string) => rows.find((r) => r.assetId === id);
     for (const id of ['legacy-nu-pgd-digital-marketing', 'legacy-nu-pgd-ict', 'legacy-nu-pgd-cybersecurity', 'legacy-nu-pgd-data-analytics']) {
-      expect(row(id), id).toMatchObject({ clearanceId: 'OWNER-2026-10-11-OLDSITE', status: 'cleared', publishedOnLegacySite: true, sensitiveGroup: false });
+      expect(row(id), id).toMatchObject({ clearanceId: 'OWNER-2026-10-28-NU-BANNERS', status: 'cleared', publishedOnLegacySite: false, sensitiveGroup: false });
     }
     await open(page, NU);
     expect(await page.locator('#courses article img').evaluateAll((els) => els.map((i) => i.getAttribute('data-asset')))).toEqual([

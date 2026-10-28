@@ -34,6 +34,7 @@
     "manifest:check": "node scripts/generate-from-manifest.mjs --check",
     "manifest:report": "node scripts/manifest-report.mjs",
     "og": "node scripts/build-og.mjs",
+    "nu-banners": "node scripts/build-nu-banners.mjs",
     "test:redirects": "node scripts/test-redirects.mjs",
     "test:manifest": "node scripts/test-manifest.mjs",
     "test:edge": "node --test edge/worker/test/",

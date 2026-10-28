@@ -65,10 +65,13 @@ const ALT: Record<string, string> = {
   'recognition/nasdaq-sba': 'Aziz Ahmad, Co-Founder of CodersTrust, at the podium of the Nasdaq closing bell ceremony for the US Small Business Administration',
   'recognition/speaking-students': 'Aziz Ahmad, Chairman and Co-Founder of CodersTrust, addressing a large audience from a stage',
   'recognition/supply-chain-award': 'Aziz Ahmad, Co-Founder of CodersTrust, receiving the Supply Chain Diversity and Sustainability Excellence Award at the 2019 awards, among four people on stage with a framed certificate',
-  'nu-pgd/cybersecurity': 'PGD in Cyber Security course banner from National University and CodersTrust',
-  'nu-pgd/data-analytics': 'PGD in Data Analytics course banner from National University and CodersTrust',
-  'nu-pgd/digital-marketing': 'PGD in Digital Marketing course banner from National University and CodersTrust',
-  'nu-pgd/ict': 'PGD in Information and Communication Technology course banner from National University and CodersTrust',
+  // WP101 (owner answer 2026-10-28): the four course banners are CodersTrust’s own 2026 designs, drawn by scripts/build-nu-banners.mjs (npm run nu-banners): the National University crest (src/assets/images/partners/national-university.png, used as the earlier
+  // co-branded banners used it) and the CodersTrust wordmark, "PGD | Post Graduate Diploma", the course name, and a vector motif each. Their permissions rows (legacy-nu-pgd-cybersecurity, -data-analytics, -digital-marketing, -ict) are cleared by
+  // OWNER-2026-10-28-NU-BANNERS and are not "published on the legacy site" (the previous banners were); the asset ids keep their names. The alt text says what the banner says and shows.
+  'nu-pgd/cybersecurity': 'Post Graduate Diploma in Cyber Security course banner from National University and CodersTrust, with a shield and padlock illustration',
+  'nu-pgd/data-analytics': 'Post Graduate Diploma in Data Analytics course banner from National University and CodersTrust, with a bar chart illustration',
+  'nu-pgd/digital-marketing': 'Post Graduate Diploma in Digital Marketing course banner from National University and CodersTrust, with a megaphone and funnel illustration',
+  'nu-pgd/ict': 'Post Graduate Diploma in Information and Communication Technology course banner from National University and CodersTrust, with a network and code illustration',
   'nu-pgd/students-laptops': 'Students seated together at a table, one smiling toward the camera',
   'impact/her-power-training-lab': 'Women working on laptops in a Her Power training lab',
   'impact/wsdfm-training-group': 'Women trainees and a CodersTrust Bangladesh banner at a WSDFM training session',

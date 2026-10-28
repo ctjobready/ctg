@@ -5,6 +5,7 @@
  *   src/lib/og.ts            (path prefix -> card, used by SEOHead; generated so it can never drift from the files)
  *
  *   node scripts/build-og.mjs
+ *   node scripts/build-og.mjs --check   runs the corpus check below, prints the card table as JSON and renders nothing
  *   env: CHROMIUM_PATH  Chromium/Chrome executable (default: Playwright's cached "Google Chrome for Testing" 1243 on macOS)
  *
  * Source of everything on a card:
@@ -29,22 +30,21 @@ const MAX_BYTES = 200 * 1024;
 
 /**
  * One card per top-level section of the IA (planning/03 §2). `prefix` is the base-less path prefix the card serves;
- * `label` is the section name and `line` one existing sentence from that section's own copy.
- * WP63 rework RW1 (not applied): the About and Careers lines still say "educated, unemployed youth" and "educated, unemployed young people", while the site names the group "educated, unemployed and underemployed youth" (ID-01). With the full group they
- * are 113 and 87 characters and still fit the card (48 px and 52 px headlines, four lines each, measured with the template below), but the script cannot run today: the corpus check below fails for 9 of these 11 cards (their lines are no longer verbatim
- * site copy), so the cards and src/lib/og.ts are stale until all lines are refreshed from current copy and the cards regenerated.
+ * `label` is the section name (Title Case, as the site writes it) and `line` one existing text from that section's own copy.
+ * WP101 (owner 2026-10-28, "Refresh all 11"): each line is the page's own hero title or lead (or the lead's first sentence), verbatim and without a digit,
+ * so the corpus check below passes unchanged; the cards and src/lib/og.ts are regenerated from this table.
  */
 const CARDS = [
-  { file: 'default', prefix: '/', exact: true, label: 'Learn. Earn. Prosper.', line: 'Turn youth unemployment into digital employment — with evidence.' },
-  { file: 'partner-with-us', prefix: '/partner-with-us/', label: 'Partner with us', line: 'Co-design a youth-employment program with CodersTrust.' },
-  { file: 'investors', prefix: '/partner-with-us/investors/', label: 'Investors', line: 'Invest in the platform connecting emerging-market youth to work.' },
-  { file: 'programs', prefix: '/programs/', label: 'Programs', line: 'Choose the program that fits you.' },
-  { file: 'nu-postgraduate-diploma', prefix: '/programs/nu-postgraduate-diploma/', label: 'NU Post Graduate Diploma', line: 'Build the digital skills employers are hiring for — after your degree.' },
-  { file: 'our-model', prefix: '/our-model/', label: 'Our model', line: 'How the CodersTrust model works' },
-  { file: 'impact', prefix: '/impact/', label: 'Impact', line: 'What CodersTrust results show, what kind of evidence each one is, and what it does not show.' },
-  { file: 'about', prefix: '/about/', label: 'About', line: 'CodersTrust trains and mentors educated, unemployed youth in emerging markets for digital work.' },
+  { file: 'default', prefix: '/', exact: true, label: 'Learn. Earn. Prosper.', line: 'Turn Youth Unemployment into a Digital Workforce — with Evidence' },
+  { file: 'partner-with-us', prefix: '/partner-with-us/', label: 'Partner with Us', line: 'Choose a partnership for youth employment, campus skills, team training, hiring or JobReady’s staged rollout.' },
+  { file: 'investors', prefix: '/partner-with-us/investors/', label: 'Investors', line: 'Back JobReady’s staged rollout, built on CodersTrust’s training and mentoring programs.' },
+  { file: 'programs', prefix: '/programs/', label: 'Programs', line: 'Digital Skills Programs, from School to Work' },
+  { file: 'nu-postgraduate-diploma', prefix: '/programs/nu-postgraduate-diploma/', label: 'NU Post Graduate Diploma', line: 'We help learners prepare for digital work through a National University post graduate diploma.' },
+  { file: 'our-model', prefix: '/our-model/', label: 'Our Model', line: 'One Path from Learning to Earning, with Outcomes Tracked' },
+  { file: 'impact', prefix: '/impact/', label: 'Impact', line: 'Impact You Can Verify' },
+  { file: 'about', prefix: '/about/', label: 'About', line: 'A Global Workforce Organization, Built on Evidence' },
   { file: 'news', prefix: '/news/', label: 'News', line: 'Partnerships and MOUs, recognition, program events and leadership' },
-  { file: 'careers', prefix: '/careers/', label: 'Careers', line: 'Help prepare educated, unemployed young people for paid digital work.' },
+  { file: 'careers', prefix: '/careers/', label: 'Careers', line: 'We are building a team that finds practical answers and delivers.' },
   { file: 'contact', prefix: '/contact/', label: 'Contact', line: 'Choose the route that fits you.' },
 ];
 
@@ -101,6 +101,11 @@ for (const c of CARDS) {
     if (!corpus.includes(text)) throw new Error(`card "${c.file}": ${what} "${text}" does not appear in the site copy (src/); cards may only reuse existing copy`);
     if (/\d/.test(text)) throw new Error(`card "${c.file}": ${what} contains a digit; cards carry no statistics`);
   }
+}
+
+if (process.argv.includes('--check')) {
+  console.log(JSON.stringify({ cards: CARDS.map(({ file, prefix, label, line }) => ({ file, prefix, label, line })) }));
+  process.exit(0);
 }
 
 // ---------------------------------------------------------------------------------------------

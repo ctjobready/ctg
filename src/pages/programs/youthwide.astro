@@ -12,13 +12,13 @@
 // WP39 (cycle-16 review): the hero lead is one sentence (audience, outcome and mechanism; the scope word "as agreed in the program scope" moved to the glance's Reporting row); the three-card C8 band (IncludesBand) replaces the
 // funder concern / what is included / practical benefit matrix; "Choose Your Entry Point" keeps both route actions and the procurement sentence and has ONE agenda line under the two cards in place of two near-identical agendas.
 // WP40 (cycle-17 review): the glance row that says where the program is designed to run is headed "Designed for Three Regions" ("Where It Runs" read as a list of countries where it runs today); the timing question uses the
-// two-sentence variant (Q7-model), because "What Happens Next" below shows the sequence the shared answer counted out week by week.
+// two-sentence variant (Q7-model: "training starts 6–8 weeks after signing"), because "What Happens Next" below already shows the sequence.
 // WP41 (cycle-18 review): the "What Success Looks Like" band (#future) is about young people earning ("Young People Earning, Locally and Globally": jobs, freelance clients and businesses of their own); the monthly
 // reports it used to describe are already in the glance's Reporting row and the C8 cards, so it no longer explains them a third time.
 // WP48 (cycle-23 reviews, consistent with the owner decision of 2026-10-15 for the audience pages): the page no longer repeats Home's persuasion bands. The Cost of Waiting band ("Training Without Work Entry Leaves Budgets Without Results", #cost)
 // and the Imagine band ("Young People Earning, Locally and Globally", #future) are gone, and so are the hero's two links back to audience pages ("For Development Partners", "For Governments"; the ministry briefing stays beside the one button).
 // The challenge band stays, then the track record and the delivery model; the tone alternates white, airy, white, airy, Klein. The Bangladesh band's labs tile (GV-09) shows the register's qualifier as its note (lab access and seats are confirmed per program).
-// WP49 (cycle-24 review): the closing paragraph under "What Happens Next" (PD-04 in full: "For grant-funded pilots: Discovery (Week 1) → Co-Design (Week 2) → Agreement (Week 3), ...; training starts 6–8 weeks after signing. Public procurement follows the agency’s own timeline.") is gone: it repeated
+// WP49 (cycle-24 review): the closing paragraph under "What Happens Next" (PD-04 in full: the step names, then "training starts 6–8 weeks after signing. Public procurement follows the agency’s own timeline.") is gone: it repeated
 // the step sequence above it and the timing question in the FAQ (Q7-model). The procurement sentence is still on the page, in the Governments entry card and in that answer; the risk band's eyebrow is "Managed Rollout".
 // WP50 (cycle-25 review): step 4 of "What Happens Next" says "Training starts in existing labs and colleges on the agreed schedule." (it pointed at "the window below", which WP49 had removed).
 // WP51 (cycle-26 review): the options lead no longer describes the website ("Program options are shown without prices; the indicative budget is shared in the discovery session."): it says "We share an indicative budget in the discovery session."
@@ -312,7 +312,9 @@ const measures = [...SCORECARD_LABELS];
     flex-wrap: wrap;
     gap: var(--space-xs) var(--space-lg);
   }
-  /* The Bangladesh band's proof: the 2030 aim (with its "Target" label and fact) beside two figures; one column on a phone, three from 900 px */
+  /* The Bangladesh band's proof: the 2030 aim (with its "Target" label and fact) beside two figures; one column on a phone, three from 900 px.
+     WP101: the aim's label is the register's full sentence (IN-01, about 175 characters), so the aim column is twice as wide as each figure's and the label's 28-character cap (Stat) is lifted to a 60-character measure:
+     it reads in three lines at 390, 768, 1024 and 1280 px (it ran to six lines in a column one third of the band wide). */
   .mech-stats {
     display: grid;
     gap: var(--space-md);
@@ -321,8 +323,11 @@ const measures = [...SCORECARD_LABELS];
   }
   @media (min-width: 900px) {
     .mech-stats {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: minmax(0, 2fr) repeat(2, minmax(0, 1fr));
     }
+  }
+  .mech-target :global(.stat__label) {
+    max-width: 60ch;
   }
   /* WP50 (owner design rule 2026-10-16): no left-edge accent bar on the 2030 aim (it was a 4 px tertiary border with a left inset); its "Target" tag and note still set it apart. */
   .mech-target {

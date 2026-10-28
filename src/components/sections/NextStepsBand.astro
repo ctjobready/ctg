@@ -7,7 +7,7 @@ import { NEXT_STEPS_TITLE } from '../../data/copy';
 import { grantStartSteps } from '../pages/partners/partners';
 import { endSentence } from './copyText';
 
-/** C14 Next steps: Discovery → Co-design → Agreement → Training starts; the weeks and the window come from PD-04 (WP29: each names its starting point). */
+/** C14 Next steps: Discovery → Co-Design → Agreement → Training Starts 6–8 Weeks After Signing; the step names and the window after signing come from PD-04 (WP100: no week count before signing). */
 interface Props {
   title?: string;
   lead?: string;
@@ -18,7 +18,7 @@ interface Props {
 // WP46 (cycle-22 review): the stepless variant (WP34, Foundations only) is gone: Foundations now shows these four steps, with the lead "For cohort grants.".
 const { title = NEXT_STEPS_TITLE, lead = 'Target timing for grant-funded pilots. Public procurement follows the agency’s own timeline.', timing = true, id = 'next-steps' } = Astro.props;
 const pd04 = fact('PD-04');
-// Step headings are read from PD-04 ("Discovery (Week 1) → Co-Design (Week 2) → Agreement (Week 3)", then the window after signing) so timings are never retyped.
+// Step headings are read from PD-04 (grantStartTitles: Discovery, Co-Design and Agreement, then the window that starts at signing) so the timing is never retyped.
 // The step texts are the hub's and Home's (grantStartSteps), so the grant-funded sequence reads the same on every page that shows it.
 const steps = grantStartSteps();
 ---

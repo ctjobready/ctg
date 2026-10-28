@@ -15,7 +15,7 @@ import type { CopyBlock as CopyBlockData } from '../../../data/copy';
  * C14 Next steps with the post-decision reinforcement (messaging framework §8): the step flow, then
  * validate / transformation reminder / first action, then the partner logo row (PA-04).
  * Default steps are the grant-funded pilot timeline, parsed from PD-04 so the weeks are never retyped.
- * WP28: the week-by-week steps are labelled by `eyebrow` ("For Grant-Funded Pilots" since WP46, the term the Partner with Us hub and Development Partners use for this timing), and `otherRoutes`
+ * WP28: the grant-funded steps are labelled by `eyebrow` ("For Grant-Funded Pilots" since WP46, the term the Partner with Us hub and Development Partners use for this timing), and `otherRoutes`
  * adds the one line that names the audiences with their own next step (each a link to its route page).
  */
 interface Props {
@@ -38,7 +38,7 @@ interface Props {
 const { title, lead, steps, timing = !steps, validate, reminder, firstAction, logos = false, tone = 'airy', id = 'next-steps', eyebrow = 'Next Steps', otherRoutes } = Astro.props;
 
 const pd04 = fact('PD-04');
-// WP29: each step names its starting point (weeks from the first conversation, then the window after signing), read from PD-04 so nothing is retyped. WP49 (cycle-24 review): and describes it, in the words of the partner hub's "Your First 90 Days" (grantStartSteps).
+// The default steps are grantStartSteps(): the headings are read from PD-04 (Discovery, Co-Design and Agreement, then the window that starts at signing) so nothing is retyped, and each step has the one-line description the partner hub's "From First Conversation to First Cohort" band uses.
 const flow = steps ?? grantStartSteps();
 // With the logo row below, the row is the validation; the sentence naming a few of the same organizations would only repeat it.
 const notes = [
