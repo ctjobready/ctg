@@ -49,12 +49,12 @@ test.describe('WP79 item 1: Global Reach labels follow the Locations Are Not Pro
 });
 
 test.describe('WP79 item 2: Case Studies lead', () => {
-  test('the lead reads "Five programs, each with its result and its base." and drops the claim about what the figures do not show', async ({ page }) => {
+  test('the lead reads "Five programs, each with its figure and its base." (WP103: "figure", not "result") and drops the claim about what the figures do not show', async ({ page }) => {
     await open(page, 'impact/case-studies/');
-    await expect(page.locator('main .hero__lead').first()).toHaveText('Five programs, each with its result and its base.');
+    await expect(page.locator('main .hero__lead').first()).toHaveText('Five programs, each with its figure and its base.');
     const description = (await page.locator('meta[name="description"]').getAttribute('content')) ?? '';
     expect(description).not.toContain('do not show');
-    expect(description).toContain('each with its result and its base');
+    expect(description).toContain('each with its figure and its base');
   });
 });
 

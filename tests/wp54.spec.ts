@@ -432,7 +432,8 @@ test.describe('Albania and Kosovo: no photograph is captioned as Albania, and Gl
       rows.map((r) => ({ name: (r.querySelector('th')?.firstChild?.textContent ?? '').trim(), cell: (r.querySelector('td[data-label="Partner / Note"]')?.textContent ?? '').replace(/\s+/g, ' ').trim() })),
     );
     expect(cells.filter((c) => c.cell.startsWith('Partner')).map((c) => c.name).sort()).toEqual(['Benin', 'Egypt', 'Uganda']);
-    expect(cells.filter((c) => c.cell !== '—' && !c.cell.startsWith('Partner')).map((c) => c.name).sort()).toEqual(['Albania', 'Bangladesh', 'Denmark', 'Iraq', 'Kosovo', 'Somaliland']);
+    // WP103: Kenya's note says it is a feasibility study with a Rockefeller Foundation grant (not a partner row)
+    expect(cells.filter((c) => c.cell !== '—' && !c.cell.startsWith('Partner')).map((c) => c.name).sort()).toEqual(['Albania', 'Bangladesh', 'Denmark', 'Iraq', 'Kenya', 'Kosovo', 'Somaliland']);
     expect(cells, 'the table lists the 16 program locations').toHaveLength(16);
   });
 

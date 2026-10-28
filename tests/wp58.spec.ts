@@ -204,7 +204,7 @@ test.describe('S1, G1 and L7: "16 countries and territories" is where CodersTrus
     const p = callout.locator('p[data-fact="SC-03"]');
     await expect(p).toHaveCount(1);
     expect(compact(await p.textContent())).toBe(
-      'A location is a country or territory where CodersTrust has worked; most rows do not say how many programs ran there, or how large they were. Rows that are a partnership, an announced cooperation or the launch say so in their note; the other rows are training programs. New York is the headquarters, not one of the 16 locations. Most delivery has been in Bangladesh.',
+      'A location is a country or territory where CodersTrust has worked; most rows do not say how many programs ran there, or how large they were. Rows that are a partnership, an announced cooperation or the launch say so in their note; the other rows are training programs, except Kenya, a feasibility study. New York is the headquarters, not one of the 16 locations. Most delivery has been in Bangladesh.',
     );
     // the 16 is the register's, and the table the note speaks of lists that many rows
     await expect(page.locator('.wmap__table tbody tr')).toHaveCount(Number(fact('SC-03').stat?.value));

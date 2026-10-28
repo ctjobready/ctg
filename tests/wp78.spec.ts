@@ -25,17 +25,17 @@ test.describe('WP78 item 1: Global Reach note', () => {
 });
 
 test.describe('WP78 item 2: Case Studies index wording', () => {
-  test('the lead says each result comes with its base, and the old overpromise is gone', async ({ page }) => {
+  test('the lead says each figure comes with its base (WP103: "figure", not "result"), and the old overpromise is gone', async ({ page }) => {
     await open(page, 'impact/case-studies/');
     const lead = page.locator('main .hero__lead').first();
-    await expect(lead).toHaveText('Five programs, each with its result and its base.');
+    await expect(lead).toHaveText('Five programs, each with its figure and its base.');
     await expect(page.locator('main')).not.toContainText('its base and what the figures do and do not show');
   });
 
   test('the meta description names the result and the base, stays within 155 characters, and drops "what it does not show"', async ({ page }) => {
     await open(page, 'impact/case-studies/');
     const description = (await page.locator('meta[name="description"]').getAttribute('content')) ?? '';
-    expect(description).toContain('each with its result and its base');
+    expect(description).toContain('each with its figure and its base');
     expect(description).not.toContain('what it does not show');
     expect(description.length).toBeLessThanOrEqual(155);
   });
