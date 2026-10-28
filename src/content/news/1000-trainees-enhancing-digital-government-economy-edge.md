@@ -1,7 +1,7 @@
 ---
 title: "Contract to Train 1,000 Youth | Enhancing Digital Government & Economy (EDGE)"
 date: 2023-03-05
-updated: 2023-11-08
+updated: 2026-10-29
 topic: partnerships
 excerpt: "CodersTrust signs a contract with PMIS at the University of Dhaka and the Bangladesh Computer Council to train 1,000 youths under the EDGE project."
 cover: ../../assets/images/news/1000-trainees-enhancing-digital-government-economy-edge/edge-signing.jpg
@@ -22,4 +22,4 @@ The objectives of the wider EDGE project are to improve cybersecurity, build res
 
 ## Scope
 
-CodersTrust will provide training to 1000 youths on digital and disruptive 4IR technologies.
+CodersTrust will provide training to 1,000 youths on digital and disruptive 4IR technologies.

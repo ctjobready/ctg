@@ -376,7 +376,7 @@ test.describe('Development Partners, Foundations and Governments: sector general
     await open(page, 'partner-with-us/development-partners/');
     const answer = await answerOf(page, 'Can You Reach Women and Other Priority Groups?');
     expect(answer).toBe(
-      'Our women-focused programs report work outcomes; see Proof in Practice above. For other priority groups, we measure outcomes in each pilot. The randomized trial studied women aged 18–35 in Dhaka with at least a Secondary School Certificate (SSC), so it does not speak to other groups.',
+      'Our women-focused programs report work outcomes; see Proof in Practice above. For other priority groups, we measure outcomes in each pilot. The randomized trial studied women in Dhaka with at least a Secondary School Certificate (SSC), most of them aged 18–35, so it does not speak to other groups.',
     );
     expect((await faqJsonLd(page)).find((q) => q.name === 'Can You Reach Women and Other Priority Groups?')?.text).toBe(answer);
     expect(faqs.find((f) => f.id === 'Q6')!.a).toContain('For other priority groups, we measure outcomes in each pilot.');

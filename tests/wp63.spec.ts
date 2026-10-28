@@ -354,7 +354,7 @@ test.describe('R9 (Grok, not done): YouthWIDE keeps its "Last updated" line', ()
     expect(withLine).toContain('/programs/youthwide/');
     expect(withLine.length, `pages with a "Last updated" line: ${withLine.join(', ')}`).toBeGreaterThan(5);
     await open(page, YOUTHWIDE);
-    await expect(page.locator('.updated')).toHaveText('Last updated October 24, 2026');
+    await expect(page.locator('.updated')).toHaveText('Last updated October 29, 2026'); // WP104
   });
 });
 
@@ -388,22 +388,19 @@ test.describe('RW1 (rework; coordinator, extending Grok R1): the target group is
     expect(sitePages().filter((p) => OLD_GROUP.test(visible(p.html))).map((p) => p.route)).toEqual([]);
   });
 
-  // Reported, not changed (see the WP63 rework report): the full group does not fit three meta descriptions (155 characters). This test pins exactly where the old phrase survives; when one is fixed, its entry goes.
-  // WP101: the social cards were refreshed from current copy (scripts/build-og.mjs), so the About and Careers card alt texts no longer carry the old phrase and that entry is gone.
-  test('the old phrase survives only in three meta descriptions that the full group would push past 155 characters (the social-card alt texts no longer carry it)', async ({ page }) => {
+  // WP104 (Sonnet High run 1): the three meta descriptions that kept the old phrase (Home, Careers, YouthWIDE) now name the full group within 155 characters (tests/wp104.spec.ts), so the old phrase survives nowhere in a built page.
+  // WP101: the social cards were refreshed from current copy (scripts/build-og.mjs), so the About and Careers card alt texts no longer carry the old phrase.
+  test('the old phrase survives nowhere (the three meta descriptions that kept it now name the full group within 155 characters; the social-card alt texts never carry it)', async ({ page }) => {
     const tag = (html: string, attr: string, value: string) => new RegExp(`<meta[^>]*\\b${attr}="${value}"[^>]*\\bcontent="([^"]*)"`, 'i').exec(html)?.[1] ?? '';
     const pages = sitePages().filter((p) => OLD_GROUP.test(p.html));
-    const inDescription = pages.filter((p) => OLD_GROUP.test(tag(p.html, 'name', 'description'))).map((p) => p.route).sort();
-    const inCardAlt = pages.filter((p) => OLD_GROUP.test(tag(p.html, 'property', 'og:image:alt'))).map((p) => p.route).sort();
-    expect(inDescription).toEqual(['/', '/careers/', '/programs/youthwide/']);
-    expect(inCardAlt, 'no social-card alt text carries the old phrase').toEqual([]);
-    expect(pages.filter((p) => !inDescription.includes(p.route)).map((p) => p.route), 'the phrase is nowhere else').toEqual([]);
+    expect(pages.filter((p) => OLD_GROUP.test(tag(p.html, 'name', 'description'))).map((p) => p.route), 'no meta description carries the old phrase').toEqual([]);
+    expect(pages.filter((p) => OLD_GROUP.test(tag(p.html, 'property', 'og:image:alt'))).map((p) => p.route), 'no social-card alt text carries the old phrase').toEqual([]);
+    expect(pages.map((p) => p.route), 'the phrase is nowhere else').toEqual([]);
     for (const route of [HOME, CAREERS, YOUTHWIDE]) {
       await open(page, route);
       const description = (await page.locator('meta[name="description"]').getAttribute('content')) ?? '';
-      const full = description.replace('unemployed youth', 'unemployed and underemployed youth').replace('unemployed young people', 'unemployed and underemployed young people');
+      expect(description, route).toContain('educated, unemployed and underemployed');
       expect(description.length, route).toBeLessThanOrEqual(155);
-      expect(full.length, `${route}: the full group would not fit`).toBeGreaterThan(155);
     }
     // About's description already names the full group (R6), and its card alt text is the page's own title
     await open(page, ABOUT);

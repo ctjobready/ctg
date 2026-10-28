@@ -136,8 +136,8 @@ test.describe('S4: Outcomes 2026, "Results in Brief": the 70.8% tile names its b
     expect(compact(await tile.locator('.stat__label').textContent())).toBe(LABEL);
     await expect(tile.locator('.stat__note')).toHaveCount(0);
     expect(compact(await tile.evaluate((el) => (el as HTMLElement).innerText))).toBe(`70.8% ${LABEL}`);
-    // the paragraph in "Income Higher for Most Surveyed Completers" still states the register's text
-    expect(compact(await page.locator('#income p[data-fact="OC-02"]').textContent())).toBe(`${fact('OC-02').text}.`);
+    // WP104 (item 7): the paragraph that repeated the register's text under "Median Change per Person" is gone; Results in Brief says it once
+    await expect(page.locator('#income [data-fact="OC-02"]')).toHaveCount(0);
   });
 
   test('the tile fits at 1280 and 390: the label stays inside its tile and the page does not scroll sideways', async ({ page }) => {

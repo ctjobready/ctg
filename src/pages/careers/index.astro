@@ -17,8 +17,8 @@ import falgun from '../../assets/images/pages/about/careers-team-falgun-celebrat
 import picnic from '../../assets/images/pages/about/careers-team-picnic.jpg';
 
 const apply = cta('careers');
-// WP63 rework RW1: this description still says "educated, unemployed young people": with "and underemployed" it would be 172 characters, over the 155 limit. Reported, not truncated.
-const description = 'Join CodersTrust and help prepare educated, unemployed young people for paid digital work. How we work, how to apply, and a speculative application route.';
+// WP104 (Sonnet High run 1): the description names the full group ("educated, unemployed and underemployed young people"), in 152 characters: "How we work" and "a ... route" went to make room (WP63 had kept the short group, 172 characters with the full one).
+const description = 'Join CodersTrust and help prepare educated, unemployed and underemployed young people for paid digital work. How to apply, and speculative applications.';
 const jsonLd = [webPage({ path: '/careers/', name: 'Careers at CodersTrust', description, breadcrumb: [{ name: 'Home', path: '/' }, { name: 'Careers', path: '/careers/' }] })];
 const expect = [
   { icon: 'users', title: 'Inclusive and Flexible', text: 'A workplace that is active, flexible, diverse and inclusive, socially responsible and open to new thinking.' },

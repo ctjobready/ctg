@@ -101,6 +101,11 @@ export interface HeroSlide {
   audience?: { label: string; href: string }[];
   /** Key of the photograph registry (src/data/photos.ts, photo()). */
   photo: string;
+  /**
+   * WP104 (owner answer 2026-10-29): a reframing of the photograph on the desktop visual column only (from 1024 px, where the proof card sits over the foot of the photograph): the image is scaled by `zoom` about
+   * `origin` (a CSS transform-origin, "x% y%"), so the faces stay above the card. Below 1024 px the photograph keeps its plain centered crop.
+   */
+  crop?: { zoom: number; origin: string };
 }
 
 /** The before-training figure of a survey fact (stat.from), for a caption such as "the median before training was $98". */
@@ -312,7 +317,8 @@ export const HOME_SLIDES: HeroSlide[] = [
       caption: () => trialMultiple,
     },
     links: [{ label: 'See the Trial', href: '/impact/independent-evaluation/', variant: 'primary' }],
-    photo: 'general/classroom-girls',
+    crop: { zoom: 1.45, origin: '50% 100%' },
+    photo: 'impact/wsdfm-training-group', // WP104: the WSDFM training-session photograph, since the slide is about the trial of CodersTrust’s WSDFM program (it was the generic classroom photograph, which In the Field keeps)
   },
   {
     id: 'government-trust',

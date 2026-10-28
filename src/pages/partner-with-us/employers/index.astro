@@ -23,7 +23,8 @@
  * WP57 (cycle-29 review, GPT-6.1 Sol G7): "Due Diligence in One View" is three rows (contracting entities, needs assessment, progress evaluation); its "Independent Evaluation Welcome" row is gone, because "Broader Evidence from Our Youth Programs" links the trial
  * and the pilot-team band after it (RiskReversalBand) has the same item.
  * WP66 (owner request 2026-10-20): the Track Record band's list closes with the signed-agreement sentence for companies and industry bodies (SC-11d, `signed` on PartnerGuideBand: "CodersTrust has signed MOUs, agreements or contracts with ... companies and industry bodies."),
- * after the contract line and the AIvolve line; the band's heading says "Since 2014", so the sentence leaves the year to it.
+ * after the contract line; the band's heading says "Since 2014", so the sentence leaves the year to it.
+ * WP104 (owner answer 2026-10-29: the AIvolve agreement is an MOU only): the AIvolve line (PA-07) is no longer in this band, which is a track record of delivery; JobReady@Work names AIvolve as an offering in its Training row.
  */
 import DueDiligenceView from '../../../components/pages/hub/DueDiligenceView.astro';
 import LearnerVoice from '../../../components/pages/impact/LearnerVoice.astro';
@@ -137,7 +138,7 @@ if (aws !== 'AWS Authorized Training Partner') throw new Error('Employers: PA-06
   <PartnerGuideBand
     stats={['SC-15']}
     statSize="lg"
-    statements={[{ facts: ['GV-06'], text: contractScope('GV-06') }, { facts: ['PA-07'] }]}
+    statements={[{ facts: ['GV-06'], text: contractScope('GV-06') }]}
     signed="SC-11d"
     captionNote={{ facts: ['PA-06'], text: `CodersTrust is an ${aws}.` }}
     method={{ text: 'Our TalentLEAP method organizes skills into career paths.', link: { label: 'How TalentLEAP Works', href: LINKS.talentleap } }}
@@ -157,7 +158,7 @@ if (aws !== 'AWS Authorized Training Partner') throw new Error('Employers: PA-06
     link={{ label: 'About JobReady@Work', href: LINKS.work }}
   />
 
-  <!-- C7 · Proof: the employer credentials (the 23,000+ Grameenphone Academy enrollments, AWS Authorized Training Partner, the AIvolve partnership) are stated once, in "Our Track Record" above
+  <!-- C7 · Proof: the employer credentials (the 23,000+ Grameenphone Academy enrollments, AWS Authorized Training Partner) are stated once, in "Our Track Record" above
        (WP32, cycle-9 review: they were repeated here); this strip is two links to the youth programs' evidence (WP31: no trial, survey or pathway figure is shown on this corporate page).
        WP25s: proof comes before the features table (C8), as on every other audience page. -->
   <PairedEvidence

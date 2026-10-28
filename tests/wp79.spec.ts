@@ -67,11 +67,11 @@ test.describe('WP79 item 3: Kosovo case study scope', () => {
 });
 
 test.describe('WP79 item 4: Independent Evaluation last-updated date', () => {
-  test('the page reads "Last updated October 28, 2026" and its JSON-LD dateModified is 2026-10-28', async ({ page }) => {
+  test('the page reads "Last updated October 29, 2026" and its JSON-LD dateModified is 2026-10-29 (WP104; WP99 had October 28)', async ({ page }) => {
     await open(page, 'impact/independent-evaluation/');
-    await expect(page.locator('body')).toContainText('Last updated October 28, 2026');
+    await expect(page.locator('body')).toContainText('Last updated October 29, 2026');
     await expect(page.locator('body')).not.toContainText('Last updated October 23, 2026');
     const ld = await page.locator('script[type="application/ld+json"]').evaluateAll((els) => els.map((e) => e.textContent ?? '').join('\n'));
-    expect(ld).toMatch(/"dateModified"\s*:\s*"2026-10-28"/);
+    expect(ld).toMatch(/"dateModified"\s*:\s*"2026-10-29"/);
   });
 });

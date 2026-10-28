@@ -139,14 +139,13 @@ test.describe('G2 (GPT-6.1 Sol; Kimi K1): the Employers and JobReady@Work track-
     await expect(page.locator('#guide section.partners')).toHaveCount(1);
   });
 
-  test('JobReady@Work: the band opens with the credentials list (AWS, AIvolve, the ministry contract), then the method line; the figure and the logo strip stay', async ({ page }) => {
+  test('JobReady@Work: the band opens with the credentials list (AWS, the ministry contract; WP104: AIvolve is an offering in the glance, not a list item), then the method line; the figure and the logo strip stay', async ({ page }) => {
     await open(page, WORK);
     await expect(page.locator('#guide p.lead')).toHaveCount(0);
     const kids = await page.locator('#guide .guide__copy').evaluate((el) => Array.from(el.children).map((c) => c.className));
     expect(kids).toEqual(['guide__auth', 'guide__method']);
     expect(await texts(page, '#guide .guide-list li')).toEqual([
       'AWS Authorized Training Partner.',
-      'Partnership with AIvolve Leadership Dynamics GmbH (Switzerland) for AI leadership and AI-transformation programs.',
       'Contract scope: ICT, networking and cybersecurity for 120+ professionals, for the Ministry of Power, Energy and Mineral Resources (via Bangladesh Petroleum Institute).',
     ]);
     await expect(page.locator('#guide .factstat[data-fact="SC-15"]')).toHaveCount(1);

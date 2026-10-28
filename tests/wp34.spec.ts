@@ -293,7 +293,7 @@ test.describe('NU Post Graduate Diploma: a link to the wider programs, not their
     expect(text).not.toMatch(/10\.3|78\.2%|48\.0%|\+41%|Not This Diploma|not from the National University Post Graduate Diploma|This trial evaluated/);
   });
 
-  test('the strip sits between "Delivered with National University" and the questions, and the closing call to action keeps its one primary button', async ({ page }) => {
+  test('the strip sits between "An Affiliated College of National University" (WP104; it was "Delivered with National University") and the questions, and the closing call to action keeps its one primary button', async ({ page }) => {
     await open(page, 'programs/nu-postgraduate-diploma/');
     const order = await page.evaluate(() => Array.from(document.querySelectorAll('main section[id]')).map((s) => s.id));
     expect(order.indexOf('offer-evidence')).toBe(order.indexOf('guide') + 1);
@@ -304,7 +304,7 @@ test.describe('NU Post Graduate Diploma: a link to the wider programs, not their
   test('the page shows today as its last-updated date', async ({ page }) => {
     await open(page, 'programs/nu-postgraduate-diploma/');
     // WP76 (2026-10-22): the page's wording changed that day (four courses), so PAGE_UPDATED.nu moved from 2026-10-15
-    await expect(page.locator('.updated time')).toHaveAttribute('datetime', '2026-10-22');
+    await expect(page.locator('.updated time')).toHaveAttribute('datetime', '2026-10-29'); // WP104: the page's wording last changed on 29 October (WP102; the Context heading, WP104)
   });
 });
 

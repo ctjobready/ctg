@@ -72,7 +72,7 @@ test.describe('The Bangladesh initiative is an aim, not an existing national pro
     expect('Delivery Base in Bangladesh and the 2030 Aim').toBe(titleCase('Delivery Base in Bangladesh and the 2030 Aim'));
     expect(compact(await page.locator('#program-glance .pg__row').first().textContent())).toContain('Bangladesh is where most delivery has been. YouthWIDE aims to train 1 million educated youth (Higher Secondary Certificate or above) for digital employment by 2030, in Bangladesh and similar countries in South Asia and the Middle East and North Africa, depending on government and donor commitments.');
     const description = await page.locator('meta[name="description"]').getAttribute('content');
-    expect(description).toContain('co-funded cohorts designed for three regions, with a 2030 aim in Bangladesh.');
+    expect(description).toContain('co-funded cohorts designed for three regions, 2030 aim in Bangladesh.'); // WP104: the full target group is in the description, so "with a" went to stay within 155
     expect(description!.length).toBeLessThanOrEqual(155);
   });
 

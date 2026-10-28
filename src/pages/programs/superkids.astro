@@ -33,7 +33,7 @@ import { webPage } from '../../lib/schema';
 import { linkAttrs } from '../../lib/url';
 
 const path = '/programs/superkids/';
-const LAST_UPDATED = '2026-10-15'; // WP36: the cycle-13 wording changes (the two agreement targets, the safeguarding answer); WP20c had 2026-10-14 (PAGE_UPDATED.superkids is 2026-10-10)
+const LAST_UPDATED = '2026-10-29'; // WP104: the gallery's consent line was added. WP36: the cycle-13 wording changes (the two agreement targets, the safeguarding answer); WP20c had 2026-10-14 (PAGE_UPDATED.superkids is 2026-10-10)
 const title = 'SuperKids: STEAM, Coding and Robotics';
 const description = 'SuperKids brings STEAM, coding, robotics and digital art to young learners through schools. 400+ learners since 2021, plus DoICT and NCTB agreements.';
 const inquiry = ctaFor('superkids');
@@ -149,7 +149,7 @@ const courses = linkAttrs(COURSES_URL);
     <p class="note note--key" data-fact="PD-02">{pricingFirst}</p>
   </OfferSection>
 
-  <GalleryDisclosure id="in-the-field" eyebrow="In the Field" title="Inside SuperKids Classrooms and Events" lead="Workshops, certificate ceremonies and school agreements, in photographs." photos={galleryPhotos('superkids')} visible={4} />
+  <GalleryDisclosure id="in-the-field" eyebrow="In the Field" title="Inside SuperKids Classrooms and Events" lead="Workshops, certificate ceremonies and school agreements, in photographs." note="Photographs are used with the consent of those pictured or their guardians." photos={galleryPhotos('superkids')} visible={4} />
 
   <!-- C12 (risk reversal) is the micro-commitment line under the C13 button. Safeguarding is stated once on this page, in the FAQ answer
        above (Q9); the former "Safeguarding Is Agreed Before Enrollment" card repeated it word for word. -->

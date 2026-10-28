@@ -224,7 +224,7 @@ test.describe('Development Partners: the women-and-marginalized-groups answer do
     const answer = await answerOf(page, QUESTION);
     expect(answer).toBe(
       // WP48 (cycle-23 review): "we have early delivery experience and" is gone (tests/wp48.spec.ts)
-      'Our women-focused programs report work outcomes; see Proof in Practice above. For other priority groups, we measure outcomes in each pilot. The randomized trial studied women aged 18–35 in Dhaka with at least a Secondary School Certificate (SSC), so it does not speak to other groups.',
+      'Our women-focused programs report work outcomes; see Proof in Practice above. For other priority groups, we measure outcomes in each pilot. The randomized trial studied women in Dhaka with at least a Secondary School Certificate (SSC), most of them aged 18–35, so it does not speak to other groups.',
     );
     expect(sentences(answer)).toHaveLength(3);
     expect(answer).not.toMatch(SHARED_FIGURES);
@@ -239,7 +239,7 @@ test.describe('Development Partners: the women-and-marginalized-groups answer do
   test('the objection bank’s shared answer is unchanged (it keeps the three program results); the page variant is not listed in the bank’s full list', () => {
     const shared = faqs.find((f) => f.id === 'Q6')!;
     expect(shared.a).toContain('WSDFM 71% in work; Women in Online Work, Kosovo 68%; Her Power 372 of 800 tracked women in work (47%), tracked from the 2,400 trained directly by CodersTrust.');
-    expect(shared.a).toContain('The randomized trial studied women aged 18–35 in Dhaka with at least a Secondary School Certificate (SSC), so it does not speak to other groups.');
+    expect(shared.a).toContain('The randomized trial studied women in Dhaka with at least a Secondary School Certificate (SSC), most of them aged 18–35, so it does not speak to other groups.');
     expect(faqsFor('all').map((f) => f.id)).not.toContain('Q6-development-partners');
     expect(faqsFor('variants').map((f) => f.id)).toContain('Q6-development-partners');
   });

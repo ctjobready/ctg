@@ -66,7 +66,7 @@ const AUDIENCE = [
   { route: UNIVERSITIES, id: 'SC-11b', sentence: `${LEAD} 20 universities and colleges.`, list: ['SC-11b'] },
   { route: DEV_PARTNERS, id: 'SC-11c', sentence: `${LEAD} 13 development partners and NGOs.`, list: ['SC-11c'] },
   { route: FOUNDATIONS, id: 'SC-11c', sentence: `${LEAD} 13 development partners and NGOs.`, list: ['PR-01 RC-01', 'PA-01', 'SC-11c'] },
-  { route: EMPLOYERS, id: 'SC-11d', sentence: `${LEAD} 27 companies and industry bodies.`, list: ['GV-06', 'PA-07', 'SC-11d'] },
+  { route: EMPLOYERS, id: 'SC-11d', sentence: `${LEAD} 27 companies and industry bodies.`, list: ['GV-06', 'SC-11d'] },
 ] as const;
 const HUB_LINE = `${LEAD} 70+ organizations since 2014: 13 government bodies, 20 universities and colleges, 13 development partners and NGOs, and 27 companies and industry bodies.`;
 
@@ -325,7 +325,6 @@ test.describe('Audience pages: the Track Record band closes with the sentence fo
     await open(page, EMPLOYERS);
     expect(await texts(page, '#guide .pg__list li')).toEqual([
       'Contract scope: ICT, networking and cybersecurity for 120+ professionals, for the Ministry of Power, Energy and Mineral Resources (via Bangladesh Petroleum Institute).',
-      'Partnership with AIvolve Leadership Dynamics GmbH (Switzerland) for AI leadership and AI-transformation programs.',
       `${LEAD} 27 companies and industry bodies.`,
     ]);
     await expect(page.locator('#guide .partners__title [data-fact="PA-06"]')).toHaveText('CodersTrust is an AWS Authorized Training Partner.');

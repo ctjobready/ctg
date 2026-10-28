@@ -955,8 +955,8 @@ export const HOME_META = {
   // A colon, not a dash: scripts/check-title-case.mjs lowercases "From" after an em dash, and the title keeps its capital F.
   title: 'CodersTrust: From Learning to Earning for Youth',
   // WP23: at most 155 characters. WP41 (cycle-18 review): it opens with what CodersTrust does (ID-01: it trains and mentors educated, unemployed youth for digital work) and ends with the evidence, instead of leading with the trial abstract.
-  // WP63 rework RW1: this description still says "educated, unemployed youth": with ID-01's full group ("educated, unemployed and underemployed youth") it would be 162 characters, over the 155 limit, and no word can go without changing what it says. Reported, not truncated.
-  description: 'CodersTrust trains and mentors educated, unemployed youth for paid digital work, with evidence from a randomized trial of CodersTrust’s WSDFM program.',
+  // WP104 (Sonnet High run 1): the description names ID-01's full group ("educated, unemployed and underemployed youth"), in 153 characters: "paid" and "CodersTrust’s" (for "its") went to make room (WP63 had kept the short group because the full one was 162 characters).
+  description: 'CodersTrust trains and mentors educated, unemployed and underemployed youth for digital work, with evidence from a randomized trial of its WSDFM program.',
 };
 
 /**

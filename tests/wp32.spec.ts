@@ -154,13 +154,16 @@ test.describe('YouthWIDE', () => {
 });
 
 test.describe('the employer credentials are stated once', () => {
-  const CREDENTIALS = ['AWS Authorized Training Partner', 'Partnership with AIvolve Leadership Dynamics', 'enrollments in Grameenphone Academy courses'];
+  // WP104 (owner 2026-10-29): AIvolve is an offering named in JobReady@Work's glance Training row, not a credential in either Track Record list.
+  const CREDENTIALS = ['AWS Authorized Training Partner', 'enrollments in Grameenphone Academy courses'];
+  const AIVOLVE = 'AIvolve';
 
   for (const route of ['programs/jobready-work/', 'partner-with-us/employers/']) {
     test(`${route}: each credential appears once, in the Track Record band; the evidence strip is the two links`, async ({ page }) => {
       await open(page, route);
       const text = await mainText(page);
       for (const c of CREDENTIALS) expect(count(text, c), c).toBe(1);
+      expect(count(text, AIVOLVE), AIVOLVE).toBe(route === 'programs/jobready-work/' ? 1 : 0); // the one mention is the glance row's offering
       expect(count(text, '23,000+'), '23,000+').toBe(1);
       const strip = page.locator('#offer-evidence');
       await expect(strip.locator('h2')).toHaveText('Broader Evidence from Our Youth Programs');
@@ -176,6 +179,7 @@ test.describe('the employer credentials are stated once', () => {
     await open(page, 'programs/jobready-work/');
     const guide = compact(await page.locator('#guide').textContent());
     for (const c of [...CREDENTIALS, '23,000+']) expect(guide, c).toContain(c);
+    expect(guide).not.toContain(AIVOLVE);
     await open(page, 'partner-with-us/employers/');
     const track = compact(await page.locator('#guide').textContent());
     for (const c of [...CREDENTIALS, '23,000+']) expect(track, c).toContain(c);

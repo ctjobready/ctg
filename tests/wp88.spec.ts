@@ -126,9 +126,9 @@ test.describe('Items 5 and 6: the 30,000+ contract-scope wording', () => {
 });
 
 test.describe('Items 7, 8 and 9: case-study heading, meta description and About tile', () => {
-  test('the UNDP YES heading says "Korail Youth into Paid Work, 2017"', async ({ page }) => {
+  test('the UNDP YES heading says "Korail Youth Finding First Jobs, 2017" (WP104; WP88 had "Korail Youth into Paid Work, 2017")', async ({ page }) => {
     await open(page, 'impact/case-studies/undp-yes-korail/');
-    await expect(page.locator('h1')).toHaveText('UNDP YES: Korail Youth into Paid Work, 2017');
+    await expect(page.locator('h1')).toHaveText('UNDP YES: Korail Youth Finding First Jobs, 2017');
   });
 
   test('the WSDFM meta description says women offered a place had an estimated 41% higher income than the control group', () => {

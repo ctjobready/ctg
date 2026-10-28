@@ -9,6 +9,7 @@ import type { Photo } from '../../../data/photos';
  * A compact "In the field" gallery (WP20c, SuperKids): the first `visible` photographs show in a grid; the rest sit behind a native
  * <details> disclosure ("View More Photos"), so a long set does not push the final call to action down. No script. A photograph the
  * D13 rule does not let render is left out, as in PhotoGallery. The markup of a figure matches PhotoGallery's.
+ * WP104: an optional `note` is a small line under the lede (SuperKids: the consent line for photographs of children).
  */
 interface Props {
   photos: Photo[];
@@ -16,6 +17,8 @@ interface Props {
   title?: string;
   eyebrow?: string;
   lead?: string;
+  /** A small note under the lede, before the photographs (WP104). */
+  note?: string;
   id?: string;
   tone?: 'white' | 'airy' | 'ice';
   /** The disclosure's summary text (default "View More Photos"). */
@@ -23,7 +26,7 @@ interface Props {
   /** Heading level of the gallery's title (default 2); a gallery that sits under another section's H2 passes 3 (WP87). */
   level?: 2 | 3;
 }
-const { photos, visible = 6, title = 'In the Field', eyebrow = 'Photographs', lead, id = 'field', tone = 'airy', moreLabel = 'View More Photos', level = 2 } = Astro.props;
+const { photos, visible = 6, title = 'In the Field', eyebrow = 'Photographs', lead, note, id = 'field', tone = 'airy', moreLabel = 'View More Photos', level = 2 } = Astro.props;
 const shown = photos.filter((p) => mayRender(p.assetId));
 const first = shown.slice(0, visible);
 const rest = shown.slice(visible);
@@ -33,7 +36,9 @@ const sizes = '(min-width:1024px) 280px, (min-width:600px) 33vw, 50vw';
 {
   first.length > 1 && (
     <Section id={id} tone={tone} defer aria-labelledby={`${id}-h`}>
-      <SectionHeader id={`${id}-h`} eyebrow={eyebrow} title={title} lead={lead} level={level} />
+      <SectionHeader id={`${id}-h`} eyebrow={eyebrow} title={title} lead={lead} level={level}>
+        {note && <p class="gd__note">{note}</p>}
+      </SectionHeader>
       <ul class="gd" aria-label={title}>
         {first.map((p) => (
           <li>
@@ -112,6 +117,11 @@ const sizes = '(min-width:1024px) 280px, (min-width:600px) 33vw, 50vw';
     width: 100%;
     height: 100%;
     object-fit: cover;
+  }
+  .gd__note {
+    max-width: var(--measure);
+    font-size: var(--fs-body-sm);
+    color: var(--on-surface-variant);
   }
   .gd__more {
     margin-top: var(--space-md);

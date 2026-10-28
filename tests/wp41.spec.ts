@@ -177,7 +177,7 @@ test.describe('JobReady Platform: the status question points to "Rollout Status"
 
   test('the page carries today’s date, the day its wording changed', async ({ page }) => {
     await open(page, 'our-model/jobready-platform/');
-    expect(compact(await page.locator('.lf-updated').textContent())).toBe('Last updated October 24, 2026');
+    expect(compact(await page.locator('.lf-updated').textContent())).toBe('Last updated October 29, 2026'); // WP104: the page's wording last changed on 29 October (WP102)
   });
 });
 
@@ -262,7 +262,7 @@ test.describe('Home: slide headings, tile and meta description (items 8, 13 and 
   test('the meta description opens with what CodersTrust does and ends with the evidence; the title is unchanged', async ({ page }) => {
     await open(page, '');
     const description = (await page.locator('meta[name="description"]').getAttribute('content')) ?? '';
-    expect(description).toBe('CodersTrust trains and mentors educated, unemployed youth for paid digital work, with evidence from a randomized trial of CodersTrust’s WSDFM program.');
+    expect(description).toBe('CodersTrust trains and mentors educated, unemployed and underemployed youth for digital work, with evidence from a randomized trial of its WSDFM program.');
     expect(description.length).toBeLessThanOrEqual(155);
     expect(description).not.toMatch(/10\.3|percentage points/);
     await expect(page).toHaveTitle('CodersTrust: From Learning to Earning for Youth');
@@ -313,7 +313,7 @@ test.describe('Governments: the contracts table has short scope phrases and ever
 });
 
 test.describe('Employers: "Our Track Record" leads with its delivered figure; "AI Is Reshaping the Workforce" states the 11M and 9M jobs (items 10 and 15)', () => {
-  test('the 23,000+ is the band’s headline stat (large), followed by the ministry contract in the register’s "Contract scope:" wording and the AIvolve partnership', async ({ page }) => {
+  test('the 23,000+ is the band’s headline stat (large), followed by the ministry contract in the register’s "Contract scope:" wording (WP104: the AIvolve MOU is no longer listed here)', async ({ page }) => {
     await open(page, 'partner-with-us/employers/');
     await expect(page.locator('#guide .pg__stats .stat--lg')).toHaveCount(1);
     expect(compact(await page.locator('#guide .pg__stats').textContent())).toContain('23,000+');
@@ -321,10 +321,9 @@ test.describe('Employers: "Our Track Record" leads with its delivered figure; "A
     // WP66 (owner request 2026-10-20): the list closes with the signed-agreement sentence for companies and industry bodies (SC-11d); the two lines before it are as they were (tests/wp66.spec.ts)
     expect(await texts(page, '#guide .pg__list li')).toEqual([
       'Contract scope: ICT, networking and cybersecurity for 120+ professionals, for the Ministry of Power, Energy and Mineral Resources (via Bangladesh Petroleum Institute).',
-      'Partnership with AIvolve Leadership Dynamics GmbH (Switzerland) for AI leadership and AI-transformation programs.',
       'CodersTrust has signed MOUs, agreements or contracts with 27 companies and industry bodies.',
     ]);
-    expect(await page.locator('#guide .pg__list li').evaluateAll((els) => els.map((e) => e.getAttribute('data-fact')))).toEqual(['GV-06', 'PA-07', 'SC-11d']);
+    expect(await page.locator('#guide .pg__list li').evaluateAll((els) => els.map((e) => e.getAttribute('data-fact')))).toEqual(['GV-06', 'SC-11d']);
     // a scope of work is never worded as delivered training (register presentation rule for GV-02 to GV-06)
     expect(compact(await page.locator('#guide').textContent())).not.toMatch(/Also delivered/);
   });
@@ -395,7 +394,7 @@ test.describe('Outcomes 2026: the heading is the finding; the survey’s name is
       return out;
     });
     expect(headlines).toContain('Surveyed Completers Report More Work and Higher Income');
-    expect(compact(await page.locator('.lf-updated').textContent())).toBe('Source snapshot: October 2026 · Last updated October 21, 2026');
+    expect(compact(await page.locator('.lf-updated').textContent())).toBe('Source snapshot: October 2026 · Last updated October 29, 2026'); // WP104
   });
 });
 

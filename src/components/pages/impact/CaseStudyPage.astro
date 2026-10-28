@@ -64,7 +64,7 @@ const fallback = caseCardPhoto(slug);
 const hero = heroPhoto ?? (fallback ? { src: fallback.src, alt: fallback.alt, assetId: fallback.assetId, width: fallback.src.width, height: fallback.src.height } : undefined);
 const showPhoto = Boolean(hero) && mayRender(hero!.assetId);
 const c = caseBySlug(slug);
-const jsonLd = [articleNode({ path: c.path, headline: c.heading, description, datePublished: '2026-10-08', dateModified: '2026-10-10', author: 'CodersTrust' })];
+const jsonLd = [articleNode({ path: c.path, headline: c.heading, description, datePublished: '2026-10-08', dateModified: c.dateModified ?? '2026-10-10', author: 'CodersTrust' })];
 const related = linkAttrs(c.related.href);
 const d = discoveryCta();
 ---

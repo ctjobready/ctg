@@ -13,16 +13,18 @@ export const C14_FIRST = C14.firstAction.replace(/^Your first step: a discovery 
  * 2026-10-10: those five again, SuperKids and the NU Post Graduate Diploma index, after the round-16 wording changes, and the NU course pages
  * and the program pages once more after the round-17 heading changes; the program pages and the NU pages again after the round-18 wording changes, same date).
  * 2026-10-22 (WP76, owner answer: the diploma has four courses): the NU Post Graduate Diploma index and the NU course pages (two new course pages, and "Also Consider" naming the other three courses on each).
+ * 2026-10-29 (WP104, from a build of the site before and after each commit): the NU index and course pages (WP102: NU learners "being onboarded", the affiliated-college wording; WP104: the Context heading) and JobReady@Campus (WP102: the same NU learners line);
+ * JobReady@Work (WP104: AIvolve as an offering in the Training row, off the partners list). Pages whose text last changed on 28 October (TalentLEAP) are dated then.
  */
 export const LAST_UPDATED = '2026-10-08';
 export const PAGE_UPDATED = {
   programs: '2026-10-10',
   youthwide: '2026-10-11',
-  campus: '2026-10-21',
-  work: '2026-10-15',
+  campus: '2026-10-29',
+  work: '2026-10-29',
   superkids: '2026-10-10',
-  nu: '2026-10-22',
-  nuCourse: '2026-10-22',
+  nu: '2026-10-29',
+  nuCourse: '2026-10-29',
 } as const;
 
 /** Page-level primary-CTA helper: label + href for a registered key. */

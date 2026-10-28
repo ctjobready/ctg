@@ -26,6 +26,8 @@ export interface CaseStudy {
   resultTitle?: string;
   /** WP86 (coordinator item 9): a figure the World Bank reported while the program was still running; the card takes no "Delivered" tag (CaseGrid). */
   reported?: boolean;
+  /** WP104: the day the page's content last changed, for the JSON-LD dateModified, where it is later than the case studies' shared 2026-10-10 (UNDP YES: its heading). */
+  dateModified?: string;
   related: { label: string; href: string };
 }
 
@@ -84,7 +86,8 @@ export const CASE_STUDIES: CaseStudy[] = [
     slug: 'undp-yes-korail',
     path: `${base}undp-yes-korail/`,
     name: 'UNDP YES, Korail',
-    heading: 'UNDP YES: Korail Youth into Paid Work, 2017',
+    heading: 'UNDP YES: Korail Youth Finding First Jobs, 2017',
+    dateModified: '2026-10-29',
     program: 'UNDP, Government of Bangladesh, Swanirvar Bangladesh',
     partner: '2017',
     factId: 'PR-03',
