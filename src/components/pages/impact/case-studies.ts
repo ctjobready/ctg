@@ -102,7 +102,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     slug: 'her-power',
     path: `${base}her-power/`,
     name: 'Her Power',
-    heading: 'Her Power: Women’s Digital Skills with the ICT Division',
+    heading: 'Her Power: Women’s Digital Skills with the Department of ICT (DoICT)',
     program: 'ICT Division / Department of ICT (DoICT), Government of Bangladesh, 2023–2025', // WP96 (owner decision 2026-10-26): the span 2023–2025 replaces "from 2023", matching register GV-01's contract scope 2023–2025 (WP87 had dated the contract signing, April 2023)
     partner: 'Training cohort',
     factId: 'PR-05',

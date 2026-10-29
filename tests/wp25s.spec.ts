@@ -324,7 +324,7 @@ test.describe('Our Model and Investors', () => {
   test('TalentLEAP: supported cohorts, further levels, typical timing, BIGD spelled out once', async ({ page }) => {
     await open(page, 'our-model/talentleap/');
     const text = compact(await everything(page));
-    expect(text).toContain('Every supported TalentLEAP cohort pairs');
+    expect(text).toContain('every supported TalentLEAP cohort pairs'); // WP118: the sentence opens "As agreed in the program scope, every supported …"
     // WP48 (cycle-23 review): "... progressive levels as further levels are published." (it ended ", so completers can keep advancing as further levels are published"; tests/wp48.spec.ts).
     // WP49 (cycle-24 review): the shared "What Happens When Funding Ends?" answer no longer carries that TalentLEAP clause (tests/wp49.spec.ts); the page's own worked example states the levels
     expect(text).not.toContain('TalentLEAP is designed to organize skills into career paths with progressive levels as further levels are published');
