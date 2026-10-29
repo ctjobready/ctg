@@ -61,14 +61,14 @@ const LOCAL = 'partner-with-us/local-partners/';
 const NU = 'programs/nu-postgraduate-diploma/';
 
 test.describe('Development Partners: the problem band and the first portfolio card (items 1 and 5)', () => {
-  test('the band is "Show Who Reaches Paid Work"; its cards are "Training Must Connect to Paid Work", "Barriers Can Interrupt Training" and "Outcomes Are Hard to Audit"; the first body is "Connect training to a first job, freelance client or business." (WP60; it repeated the band’s lead) and the other two are unchanged', async ({ page }) => {
+  test('the band is "Show Who Reaches Paid Work"; its cards are "Training Must Connect to Paid Work", "Barriers Can Interrupt Training" and "Outcomes Are Hard to Audit"; the first body is "Training often ends before a first job, freelance client or business." (WP114; it was "Connect training to a first job, freelance client or business.", an instruction) and the other two are unchanged', async ({ page }) => {
     await open(page, DP);
     await expect(page.locator('#problem h2')).toHaveText('Show Who Reaches Paid Work');
     const heads = ['Show Who Reaches Paid Work', 'Training Must Connect to Paid Work', 'Barriers Can Interrupt Training', 'Outcomes Are Hard to Audit'];
     for (const h of heads) expect(h, h).toBe(titleCase(h));
     expect(await texts(page, '#problem .gp__q')).toEqual(heads.slice(1));
     expect(await texts(page, '#problem .gp__a')).toEqual([
-      'Connect training to a first job, freelance client or business.',
+      'Training often ends before a first job, freelance client or business.',
       'Computer skills, devices, connectivity and social barriers can keep learners from joining or staying.',
       'Without a baseline and documentary evidence, evaluators have little to check.',
     ]);

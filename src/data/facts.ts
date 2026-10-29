@@ -308,7 +308,7 @@ const rows: [string, Fact['group'], Row][] = [
   // NU-03: learner course fees are published (owner decision, 2026-10-14); partner and program pricing stays unpublished. Wording as on the current site ("Program Fee: BDT 50,000"); it states no installment terms.
   ['NU-03', 'admissions', { text: `BDT 50,000`, sourceIds: ['NUPGD26', 'NUCYBER26', 'NUDATA26'] }],
   ['NU-04', 'admissions', { text: `CodersTrust is an affiliated college (College Code: 6634) under the National University of Bangladesh`, sourceIds: ['NUPGD26'] }],
-  ['NU-05', 'admissions', { text: `Pay instantly online, transfer via mobile merchant accounts, visit CodersTrust Bangladesh (CTBD) branches for cash or POS payments, or make a bank deposit`, sourceIds: ['NUPGD26'] }],
+  ['NU-05', 'admissions', { text: `Pay instantly online, transfer via mobile merchant accounts, visit a CodersTrust Bangladesh (CTBD) campus for cash or POS payments, or make a bank deposit`, sourceIds: ['NUPGD26'] }],
   ['NU-06', 'admissions', { text: `Instructor-Led`, sourceIds: ['NUPGD26', 'NUCYBER26', 'NUDATA26'] }],
   ['NU-07', 'admissions', { text: `The PGD in Digital Marketing is open to individuals with various educational backgrounds`, sourceIds: ['NUPGD26'] }],
   ['NU-08', 'admissions', { text: `To enroll in this program, students are required to have completed their honors degree or its equivalent`, sourceIds: ['NUPGD26'] }],

@@ -79,8 +79,8 @@ const NOTE = 'These are program sizes, not commitments: in the discovery session
 const WSDFM_TITLE = 'Women’s Skill Development for Freelancing Marketplace (WSDFM)';
 
 test.describe('JobReady@Campus: the problem cards say what the program does for the students (item 1)', () => {
-  const TITLES = ['Make Students’ Skills Visible', 'Build Placement Evidence'];
-  const TEXTS = ['Prepare students for industry certification alongside the degree.', 'Track where completers start earning, with a baseline and follow-up surveys.'];
+  const TITLES = ['Skills Employers Cannot See', 'Placement Evidence Is Missing'];
+  const TEXTS = ['Employers look for proof of job-ready skills beside the degree.', 'Without a baseline and follow-up surveys, placement results are hard to report.'];
 
   test('the two cards are Title Case, read as above, and name the facts they rest on', async ({ page }) => {
     await open(page, CAMPUS);

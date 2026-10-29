@@ -77,7 +77,7 @@ test.describe('Employers and JobReady@Work: the track-record opener makes no spe
 });
 
 test.describe('JobReady@Campus: the problem band’s lead says what the program does for the students (item 2)', () => {
-  const LEAD = 'Help students prepare for paid digital work and build placement evidence from your campus cohorts.';
+  const LEAD = 'A degree alone does not show employers what students can do, and without follow-up data an institution cannot show where its students start earning.';
   const HEADING = 'Capable Students Still Struggle to Find Work';
 
   test('the lead is the line (EMPATHY.universities), stated once; the heading speaks of students, not of the reader, and stays', async ({ page }) => {

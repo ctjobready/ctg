@@ -215,7 +215,7 @@ test.describe('Foundations: the first pain and the track-record band (items 2 an
 
 test.describe('Universities: the track-record band opens with the origin line; JobReady@Campus keeps the sentence (item 7)', () => {
   // WP52 (cycle-27 review): the sentence is "Help students prepare for paid digital work and build placement evidence from your campus cohorts." (it read "You see capable students finish their degrees and still struggle to find work, and you are asked for placement results you cannot yet show.")
-  const CAMPUS_SENTENCE = 'Help students prepare for paid digital work and build placement evidence from your campus cohorts.';
+  const CAMPUS_SENTENCE = 'A degree alone does not show employers what students can do, and without follow-up data an institution cannot show where its students start earning.';
 
   test('the Universities partner page’s band opens with "Since 2014, ..." and has no empathy line', async ({ page }) => {
     await open(page, UNI);

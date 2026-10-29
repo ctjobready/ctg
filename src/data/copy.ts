@@ -71,7 +71,8 @@ export const HEADLINE: Record<Audience, string> = {
 export const EMPATHY: Record<Exclude<Audience, 'developmentPartners' | 'home' | 'localPartners' | 'foundations' | 'governments' | 'investors' | 'employers'>, string> = {
   // WP52 (cycle-27 review): "Help students prepare for paid digital work and build placement evidence from your campus cohorts." (it said "You see capable students finish their degrees and still struggle to find work, and you are asked for placement results you cannot yet show.",
   // which assumed the institution has no results to show). JobReady@Campus's problem band reads it as its lead; its heading, "Capable Students Still Struggle to Find Work", speaks of students, not of the reader, and stays.
-  universities: 'Help students prepare for paid digital work and build placement evidence from your campus cohorts.',
+  // WP114 (Opus Low run 6): the lead states the obstacle the band's heading names (the reader's, not an instruction).
+  universities: 'A degree alone does not show employers what students can do, and without follow-up data an institution cannot show where its students start earning.',
   nuPgd: 'You worked hard for your degree, but the job offers did not follow, and it is hard to know which skills to add next.',
 };
 

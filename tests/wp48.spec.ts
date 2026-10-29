@@ -363,7 +363,7 @@ test.describe('Development Partners, Foundations and Governments: sector general
     const dp = await mainText(page);
     // the pain headings render in Title Case (the sentence-case source strings are converted when the page prints them). WP49 (cycle-24 review): the first card is headed "Training Must Connect to Paid Work" (it was "Skills Programs Miss Their Employment Targets"; tests/wp49.spec.ts)
     expect(dp).toContain('Training Must Connect to Paid Work');
-    expect(dp).toContain('Connect training to a first job, freelance client or business.');
+    expect(dp).toContain('Training often ends before a first job, freelance client or business.');
     expect(dp).not.toContain('Enrollment targets are often met, while employment results lag behind.');
     await open(page, 'partner-with-us/foundations/');
     const foundations = await mainText(page);

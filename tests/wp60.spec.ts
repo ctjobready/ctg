@@ -526,10 +526,10 @@ test.describe('GM5 (Gemini): Governments’ "Capacity Designed to Stay in Your S
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 test.describe('GM6 (Gemini): Development Partners’ first challenge card no longer repeats the band’s lead', () => {
-  test('the card body is "Connect training to a first job, freelance client or business."; the other two are unchanged', async ({ page }) => {
+  test('the card body is "Training often ends before a first job, freelance client or business." (WP114); the other two are unchanged', async ({ page }) => {
     await open(page, 'partner-with-us/development-partners/');
     expect(await texts(page, '#problem .gp__a')).toEqual([
-      'Connect training to a first job, freelance client or business.',
+      'Training often ends before a first job, freelance client or business.',
       'Computer skills, devices, connectivity and social barriers can keep learners from joining or staying.',
       'Without a baseline and documentary evidence, evaluators have little to check.',
     ]);

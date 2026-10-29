@@ -209,7 +209,7 @@ test.describe('the Bangladesh graduate-unemployment tile (PX-03) leaves the glob
     const problem = page.locator('#problem');
     await expect(problem.locator('[data-fact="PX-03"]')).toHaveCount(0);
     expect(compact(await problem.textContent())).not.toMatch(/13\.5%|SSC|graduate unemployment in Bangladesh/);
-    expect(await texts(page, '#problem .card__title')).toEqual(['Make Students’ Skills Visible', 'Build Placement Evidence']);
+    expect(await texts(page, '#problem .card__title')).toEqual(['Skills Employers Cannot See', 'Placement Evidence Is Missing']);
   });
 
   test('the Bangladesh pages keep it: Local Partners and the NU Post Graduate Diploma', async ({ page }) => {
