@@ -52,7 +52,7 @@ const TARGET_WORDING = [/to train 25,125/i, /national target/i, /targeted for tr
 
 test.describe('WP85: the register says the national program trained 25,125 women and met its target', () => {
   test('GV-01 (text and tile label) and GV-10', () => {
-    expect(fact('GV-01').text).toBe('Her Power (DoICT, ICT Division) is a national program that trained 25,125 women across 130 sub-districts (upazilas), meeting its target');
+    expect(fact('GV-01').text).toBe('Her Power (DoICT, under the ICT Division) is a national program that trained 25,125 women across 130 sub-districts (upazilas), meeting its target');
     expect(fact('GV-01').stat?.value).toBe('25,125');
     expect(fact('GV-01').stat?.numeric).toBe(25125);
     expect(fact('GV-01').stat?.label).toBe('women trained across 130 sub-districts (upazilas) in the national program (its full target)');
@@ -200,7 +200,7 @@ test.describe('WP85: the pages that state the 25,125', () => {
     expect(titleCase('National Scale: The Wider Program')).toBe('National Scale: The Wider Program');
     const para = compact(await page.locator('.hp__scale p').textContent());
     expect(para).toBe(
-      'The in-work figure above covers 800 tracked women from the 2,400 that CodersTrust trained directly. The national program’s reach is a separate measure: Her Power (DoICT, ICT Division) is a national program that trained 25,125 women across 130 sub-districts (upazilas), meeting its target. The 2,400 women CodersTrust trained directly are among them.',
+      'The in-work figure above covers 800 tracked women from the 2,400 that CodersTrust trained directly. The national program’s reach is a separate measure: Her Power (DoICT, under the ICT Division) is a national program that trained 25,125 women across 130 sub-districts (upazilas), meeting its target. The 2,400 women CodersTrust trained directly are among them.',
     );
     expect(para.split(':').length - 1, 'one colon in the paragraph').toBe(1);
     expect(await page.locator('.hp__scale').getAttribute('data-fact')).toBe('GV-01');

@@ -71,7 +71,7 @@ const TARGET_25125 = [
 
 test.describe('WP83 (WP85 wording): the register words Her Power’s 25,125 as trained, meeting its target', () => {
   test('GV-01 and GV-10 say "a national program that trained 25,125 women"; GV-11 and GV-13 keep CodersTrust’s own 2,400 trained directly', () => {
-    expect(fact('GV-01').text).toBe('Her Power (DoICT, ICT Division) is a national program that trained 25,125 women across 130 sub-districts (upazilas), meeting its target'); // WP84: "is", where it had a colon
+    expect(fact('GV-01').text).toBe('Her Power (DoICT, under the ICT Division) is a national program that trained 25,125 women across 130 sub-districts (upazilas), meeting its target'); // WP84: "is", where it had a colon
     expect(fact('GV-01').stat?.value).toBe('25,125');
     expect(fact('GV-01').stat?.label).toBe('women trained across 130 sub-districts (upazilas) in the national program (its full target)');
     expect(fact('GV-10').text).toContain('curriculum for a national program that trained 25,125 women (its full target), with 2,400 women trained directly');
@@ -190,7 +190,7 @@ test.describe('WP83 (WP85 wording): the pages that state the 25,125', () => {
     await open(page, 'impact/case-studies/her-power/');
     await expect(page.getByRole('heading', { level: 3, name: 'National Scale: The Wider Program' })).toBeVisible();
     const scale = compact(await page.locator('.hp__scale').textContent());
-    expect(scale).toContain('The in-work figure above covers 800 tracked women from the 2,400 that CodersTrust trained directly. The national program’s reach is a separate measure: Her Power (DoICT, ICT Division) is a national program that trained 25,125 women across 130 sub-districts (upazilas), meeting its target. The 2,400 women CodersTrust trained directly are among them.');
+    expect(scale).toContain('The in-work figure above covers 800 tracked women from the 2,400 that CodersTrust trained directly. The national program’s reach is a separate measure: Her Power (DoICT, under the ICT Division) is a national program that trained 25,125 women across 130 sub-districts (upazilas), meeting its target. The 2,400 women CodersTrust trained directly are among them.');
     expect(await page.locator('.hp__scale').getAttribute('data-fact')).toBe('GV-01');
     expect(compact(await page.locator('main').textContent())).toContain('Her Power (ICT Division / DoICT): 372 of 800 tracked women, from the 2,400 trained directly by CodersTrust, were in work (47%)');
     expect(titleCase('National Scale: The Wider Program')).toBe('National Scale: The Wider Program');
@@ -253,7 +253,7 @@ test.describe('WP83: CodersTrust trained 2,400 women directly in Her Power (owne
   test('the register reads 2,400: GV-13 (value, numeric, text), GV-11, GV-10, GV-12’s note and PR-05 (text and label); the 800 tracked, 372 and 47% are unchanged', () => {
     expect(fact('GV-13').stat?.value).toBe('2,400');
     expect(fact('GV-13').stat?.numeric).toBe(2400);
-    expect(fact('GV-13').text).toBe('Her Power (DoICT, ICT Division): 2,400 women trained directly by CodersTrust');
+    expect(fact('GV-13').text).toBe('Her Power (DoICT, under the ICT Division): 2,400 women trained directly by CodersTrust');
     expect(fact('GV-11').text).toBe('CodersTrust’s role in Her Power: curriculum, training manuals and mentorship guidelines; Training of Trainers; 2,400 women trained directly; 54,609 manuals and guidelines distributed');
     expect(fact('GV-10').text).toContain('with 2,400 women trained directly');
     expect(fact('GV-12').stat?.glance?.note).toContain('CodersTrust trained 2,400 women directly.');

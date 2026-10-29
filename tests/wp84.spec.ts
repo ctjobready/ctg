@@ -13,7 +13,7 @@ import { listPages } from './support/pages';
  *     15,027 course learners (25,125 + 15,027 = 40,152; 112,926 + 40,152 - 2,400 = 150,678); the headline figures are 130,000+ learners trained and 150,000+ enrollments; Investors prints the relabeled note and no page prints the old wording;
  *   - 2: the shared contract-scope note under the 30,000+ ends "Her Power’s 25,125 is the same group counted in the 150,000+ enrollments through CodersTrust’s curriculum, not additional people." on every page that prints it (Investors, Impact,
  *     Governments, JobReady Platform), tied to SC-02; Home's government slide, which words the contract scope itself, is unchanged;
- *   - 3: the Her Power case study reads "... reach is a separate measure: Her Power (DoICT, ICT Division) is a national program that trained 25,125 women ..., meeting its target." (one colon), from GV-01's text;
+ *   - 3: the Her Power case study reads "... reach is a separate measure: Her Power (DoICT, under the ICT Division) is a national program that trained 25,125 women ..., meeting its target." (one colon), from GV-01's text;
  *   - the changed regions fit at 1280 and 390 (nothing scrolls sideways).
  */
 
@@ -166,17 +166,17 @@ test.describe('WP84: the shared contract-scope note', () => {
 });
 
 test.describe('WP84: the Her Power case study sentence has one colon', () => {
-  test('GV-01 reads "Her Power (DoICT, ICT Division) is a national program that trained 25,125 women across 130 sub-districts (upazilas), meeting its target"', () => {
-    expect(fact('GV-01').text).toBe('Her Power (DoICT, ICT Division) is a national program that trained 25,125 women across 130 sub-districts (upazilas), meeting its target');
+  test('GV-01 reads "Her Power (DoICT, under the ICT Division) is a national program that trained 25,125 women across 130 sub-districts (upazilas), meeting its target"', () => {
+    expect(fact('GV-01').text).toBe('Her Power (DoICT, under the ICT Division) is a national program that trained 25,125 women across 130 sub-districts (upazilas), meeting its target');
     expect(fact('GV-01').stat?.value).toBe('25,125');
   });
 
-  test('"The national program’s reach is a separate measure: Her Power (DoICT, ICT Division) is a national program that trained 25,125 women across 130 sub-districts (upazilas), meeting its target. The 2,400 women CodersTrust trained directly are among them."', async ({ page }) => {
+  test('"The national program’s reach is a separate measure: Her Power (DoICT, under the ICT Division) is a national program that trained 25,125 women across 130 sub-districts (upazilas), meeting its target. The 2,400 women CodersTrust trained directly are among them."', async ({ page }) => {
     await page.setViewportSize(DESKTOP);
     await open(page, 'impact/case-studies/her-power/');
     const para = compact(await page.locator('.hp__scale p').textContent());
     expect(para).toBe(
-      'The in-work figure above covers 800 tracked women from the 2,400 that CodersTrust trained directly. The national program’s reach is a separate measure: Her Power (DoICT, ICT Division) is a national program that trained 25,125 women across 130 sub-districts (upazilas), meeting its target. The 2,400 women CodersTrust trained directly are among them.',
+      'The in-work figure above covers 800 tracked women from the 2,400 that CodersTrust trained directly. The national program’s reach is a separate measure: Her Power (DoICT, under the ICT Division) is a national program that trained 25,125 women across 130 sub-districts (upazilas), meeting its target. The 2,400 women CodersTrust trained directly are among them.',
     );
     expect(para.split(':').length - 1, 'one colon in the paragraph').toBe(1);
     expect(await page.locator('.hp__scale').getAttribute('data-fact')).toBe('GV-01');
