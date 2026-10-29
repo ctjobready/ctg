@@ -168,7 +168,7 @@ export const navGroups: NavGroup[] = [
       // WP48 (cycle-23 review): not "National programs for youth employment." (a 100,000+ national program is a design option CodersTrust has not yet delivered); the blurb says what the Governments page offers. The featured panel below and the audience router (Home, 404, partner hub) say the same.
       { label: 'Governments', href: '/partner-with-us/governments/', description: 'Curriculum, trainer training and phased delivery for ministries.' },
       { label: 'Foundations and CSR', href: '/partner-with-us/foundations/', description: 'Fund outcomes you can track.' },
-      { label: 'Universities', href: '/partner-with-us/universities/', description: 'Make graduates job-ready.' },
+      { label: 'Universities', href: '/partner-with-us/universities/', description: 'Make students job-ready.' },
       { label: 'Employers', href: '/partner-with-us/employers/', description: 'Train your team or hire talent.' },
       { label: 'Local Partners in Bangladesh', href: '/partner-with-us/local-partners/', description: 'NGOs, colleges, chambers and associations delivering locally.' },
       { label: 'Investors', href: '/partner-with-us/investors/', description: 'For impact investors: back JobReady’s staged rollout.' },
@@ -259,7 +259,7 @@ export const audiences = [
   { id: 'development-partners', title: 'Development Partners', icon: 'globe', text: 'Evidence-led delivery for your portfolio', href: '/partner-with-us/development-partners/' },
   { id: 'governments', title: 'Governments', icon: 'landmark', text: 'Curriculum, trainer training and phased delivery for ministries', href: '/partner-with-us/governments/' },
   { id: 'foundations', title: 'Foundations and CSR', icon: 'heart-handshake', text: 'Fund outcomes you can track', href: '/partner-with-us/foundations/' },
-  { id: 'universities', title: 'Universities', icon: 'graduation-cap', text: 'Make graduates job-ready', href: '/partner-with-us/universities/' },
+  { id: 'universities', title: 'Universities', icon: 'graduation-cap', text: 'Make students job-ready', href: '/partner-with-us/universities/' },
   { id: 'employers', title: 'Employers', icon: 'briefcase', text: 'Train your team or hire talent', href: '/partner-with-us/employers/' },
   { id: 'local-partners', title: 'Local Partners in Bangladesh', icon: 'map-pin', text: 'NGOs, colleges, chambers and associations delivering locally', href: '/partner-with-us/local-partners/' },
   // WP46 (cycle-22 review): JobReady is not defined on Home, so the investor card says what it is, in the partner hub's words for this route.

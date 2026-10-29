@@ -258,7 +258,7 @@ test.describe('Local Partners: the positioning statement divides the work (item 
   // WP44 (cycle-21 review): Foundations and Universities are declared whole too (tests/wp44.spec.ts), so neither keeps the audience sentence any more
   test('Foundations and Universities carry their own declared statements, not the audience sentence (the declaration is for the pages the gate lists only)', async ({ page }) => {
     const WHOLE: [string, string][] = [
-      ['partner-with-us/foundations/', 'Fund a YouthWIDE cohort or JobReady’s platform infrastructure. For cohort grants, we agree a pilot scorecard and combine training, mentoring and placement support, with monthly progress reports.'],
+      ['partner-with-us/foundations/', 'Fund a YouthWIDE cohort or JobReady’s platform infrastructure. For cohort grants, we agree a pilot scorecard and combine training, mentoring and placement support, with monthly progress reports, as agreed in the program scope.'],
       ['partner-with-us/universities/', 'JobReady@Campus combines training, mentoring and placement support in campus labs alongside academic studies. Your institution receives monthly reports on progress toward paid work, as agreed in the program scope.'],
     ];
     for (const [route, statement] of WHOLE) {

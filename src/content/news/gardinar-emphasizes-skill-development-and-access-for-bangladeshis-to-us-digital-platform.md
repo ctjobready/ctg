@@ -1,5 +1,5 @@
 ---
-title: "Gardiner Emphasizes on Skill Development and Access to U.S. Digital Platform for Bangladesh"
+title: "Gardiner Emphasizes Skill Development and Access to U.S. Digital Platforms for Bangladesh"
 date: 2022-11-16
 updated: 2026-10-29
 topic: leadership-advocacy

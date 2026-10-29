@@ -298,7 +298,7 @@ test.describe('TalentLEAP and YouthWIDE', () => {
     expect(await page.locator('#mechanism .pos').getAttribute('data-fact')).toBe('PD-01 PD-08');
     // WP44 (cycle-21 review): Foundations is declared whole too, with its own two sentences (tests/wp44.spec.ts), not the audience sentence it had here
     await open(page, 'partner-with-us/foundations/');
-    expect(compact(await page.locator('#mechanism .pos__text').textContent())).toBe('Fund a YouthWIDE cohort or JobReady’s platform infrastructure. For cohort grants, we agree a pilot scorecard and combine training, mentoring and placement support, with monthly progress reports.');
+    expect(compact(await page.locator('#mechanism .pos__text').textContent())).toBe('Fund a YouthWIDE cohort or JobReady’s platform infrastructure. For cohort grants, we agree a pilot scorecard and combine training, mentoring and placement support, with monthly progress reports, as agreed in the program scope.');
   });
 });
 

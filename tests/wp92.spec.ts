@@ -28,7 +28,7 @@ const WHERE_THEY_WORK_BODY =
   'Placement support into local, remote and global work, with monthly reports to the agency and follow-up surveys at 3, 6 and 12 months after each course, as agreed in the program scope.';
 const BLENDED_TITLE = 'Blended Training and Certification Preparation';
 const GLOBAL_REACH_NOTE_END = 'New York is the headquarters, not one of the 16 locations. Most delivery has been in Bangladesh.';
-const PORTFOLIO_CARD_1 = 'Certification exam preparation with the exam fee included, three months of mentoring and placement support, in one program.';
+const PORTFOLIO_CARD_1 = 'Certification exam preparation, three months of mentoring and placement support in one program; exam fees and attempts as agreed in the program scope.';
 const DOICT_LINE = 'DoICT agreement target: 20M+ students through 9,000+ digital labs in Bangladesh.';
 const NCTB_LINE = 'NCTB agreement target: 20M+ students.';
 const SUPERKIDS_MEANS = 'A school can bring these into the classroom, so children build digital skills early.';

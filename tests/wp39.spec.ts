@@ -61,7 +61,7 @@ const PAGES: PageSpec[] = [
     h2: 'What Your Portfolio Gets',
     cards: [
       // WP49 (cycle-24 review): the 100 hours per certification stay in the delivery model above (tests/wp49.spec.ts); WP65 (cycle-37 review, Gemini, Sonnet): "CodersTrust connects training, mentoring and placement support in one program." (it said "One delivery partner connects ...")
-      { title: 'Training, Mentoring and Placement Support', text: 'Certification exam preparation with the exam fee included, three months of mentoring and placement support, in one program.', facts: ['PD-01'] },
+      { title: 'Training, Mentoring and Placement Support', text: 'Certification exam preparation, three months of mentoring and placement support in one program; exam fees and attempts as agreed in the program scope.', facts: ['PD-01'] },
       { title: 'Accessible Local Delivery', text: 'Outreach, accessible selection and tracks chosen from employer demand, with safeguarding agreed for each program.', facts: ['PD-02', 'PD-10', 'PD-12'] },
       { title: 'Progress Your Evaluators Can Check', text: 'Baseline data, follow-up surveys and monthly reports, with documentary evidence where available, as agreed in the program scope.', facts: ['PD-08', 'PD-09'] },
     ],
@@ -95,7 +95,7 @@ const PAGES: PageSpec[] = [
       {
         title: 'Progress You Can See Every Month',
         // WP49 (cycle-24 review): two sentences; the scorecard and the contracting entity and due-diligence confirmation are stated elsewhere on the page (the first two cards, the Due Diligence band), so the card rests on PD-08 and PD-18 alone
-        text: 'Monthly reports and quarterly reviews keep progress visible. Where agreed, SDG-mapped reporting follows your CSR framework, with co-branded certificates and events.',
+        text: 'Monthly reports and quarterly reviews, as agreed in the program scope, keep progress visible. Where agreed, SDG-mapped reporting follows your CSR framework, with co-branded certificates and events.',
         facts: ['PD-08', 'PD-18'],
       },
     ],

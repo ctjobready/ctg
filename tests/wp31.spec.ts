@@ -248,7 +248,7 @@ test.describe('the positioning statements share one plain closing', () => {
     'partner-with-us/governments/': 'We combine training, mentoring and placement support in existing labs and colleges. Your agency receives monthly reports on progress toward paid work, as agreed in the program scope.',
     'programs/jobready-campus/': 'JobReady@Campus combines certification exam preparation, mentoring and placement support in campus labs alongside academic studies. Institutions receive monthly reports on progress toward paid work, as agreed in the program scope.',
     // WP44 (cycle-21 review): Foundations and Universities are declared whole too (tests/wp44.spec.ts)
-    'partner-with-us/foundations/': 'Fund a YouthWIDE cohort or JobReady’s platform infrastructure. For cohort grants, we agree a pilot scorecard and combine training, mentoring and placement support, with monthly progress reports.',
+    'partner-with-us/foundations/': 'Fund a YouthWIDE cohort or JobReady’s platform infrastructure. For cohort grants, we agree a pilot scorecard and combine training, mentoring and placement support, with monthly progress reports, as agreed in the program scope.',
     'partner-with-us/universities/': 'JobReady@Campus combines training, mentoring and placement support in campus labs alongside academic studies. Your institution receives monthly reports on progress toward paid work, as agreed in the program scope.',
   };
   for (const route of PAGES) {

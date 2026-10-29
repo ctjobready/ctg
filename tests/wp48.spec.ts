@@ -285,8 +285,8 @@ test.describe('"Reporting and Review" (item 7)', () => {
     const text = await mainText(page);
     expect(text).not.toContain(SENTENCE);
     expect(text).toContain('Progress You Can See Every Month');
-    // WP49 (cycle-24 review): the card is two sentences: "Monthly reports and quarterly reviews keep progress visible. Where agreed, SDG-mapped reporting follows your CSR framework, with co-branded certificates and events." (tests/wp49.spec.ts)
-    expect(text).toContain('Monthly reports and quarterly reviews keep progress visible');
+    // WP49 (cycle-24 review): the card is two sentences: "Monthly reports and quarterly reviews, as agreed in the program scope, keep progress visible. Where agreed, SDG-mapped reporting follows your CSR framework, with co-branded certificates and events." (tests/wp49.spec.ts)
+    expect(text).toContain('Monthly reports and quarterly reviews, as agreed in the program scope, keep progress visible');
     const ids = await sectionIds(page);
     expect(ids.indexOf('cta')).toBe(ids.indexOf('due-diligence') + 1);
   });
@@ -368,7 +368,7 @@ test.describe('Development Partners, Foundations and Governments: sector general
     await open(page, 'partner-with-us/foundations/');
     const foundations = await mainText(page);
     expect(foundations).toContain('Independent Evidence Is Hard to Find');
-    expect(foundations).toContain('You need independent evidence, not a provider’s own count.');
+    expect(foundations).toContain('You need evidence an outsider can check, not only a provider’s own count.');
     expect(foundations).not.toContain('Independent evidence on youth-employment programs is thin.');
   });
 

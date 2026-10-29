@@ -408,7 +408,7 @@ const POSITION_WHOLE_STATEMENT = {
   '/partner-with-us/development-partners/': 'We combine training, mentoring and placement support in existing labs and colleges. Partners receive monthly reports and outcome tracking after each course, as agreed in the program scope.',
   '/partner-with-us/governments/': 'We combine training, mentoring and placement support in existing labs and colleges. Your agency receives monthly reports on progress toward paid work, as agreed in the program scope.',
   // WP44 (cycle-21 review): Foundations' and Universities' statements are whole too (see the comment on the WP43 entry below)
-  '/partner-with-us/foundations/': 'Fund a YouthWIDE cohort or JobReady’s platform infrastructure. For cohort grants, we agree a pilot scorecard and combine training, mentoring and placement support, with monthly progress reports.',
+  '/partner-with-us/foundations/': 'Fund a YouthWIDE cohort or JobReady’s platform infrastructure. For cohort grants, we agree a pilot scorecard and combine training, mentoring and placement support, with monthly progress reports, as agreed in the program scope.',
   '/partner-with-us/universities/': 'JobReady@Campus combines training, mentoring and placement support in campus labs alongside academic studies. Your institution receives monthly reports on progress toward paid work, as agreed in the program scope.',
   '/programs/jobready-campus/': 'JobReady@Campus combines certification exam preparation, mentoring and placement support in campus labs alongside academic studies. Institutions receive monthly reports on progress toward paid work, as agreed in the program scope.',
   // WP61 (cycle-33 review, GPT-6.1 Sol G3): JobReady@Work's "Our Approach" is one sentence (it was an audience sentence and a three-part closing that repeated the four cards under it).
@@ -1114,7 +1114,7 @@ function surveyEditionProblems(factsById, rows, pins = { facts: SURVEY_FACTS, ro
   // WP44: Foundations and Universities declare theirs whole, with the same guarantees (the exact wording, nothing in front of it, each page its own text only); Universities keeps its scope clause
   const wholeFdn = POSITION_WHOLE_STATEMENT['/partner-with-us/foundations/'];
   const wholeUni = POSITION_WHOLE_STATEMENT['/partner-with-us/universities/'];
-  if (wholeFdn !== 'Fund a YouthWIDE cohort or JobReady’s platform infrastructure. For cohort grants, we agree a pilot scorecard and combine training, mentoring and placement support, with monthly progress reports.') problems.push('self-test: the Foundations whole statement is no longer the WP44 wording');
+  if (wholeFdn !== 'Fund a YouthWIDE cohort or JobReady’s platform infrastructure. For cohort grants, we agree a pilot scorecard and combine training, mentoring and placement support, with monthly progress reports, as agreed in the program scope.') problems.push('self-test: the Foundations whole statement is no longer the WP44 wording');
   if (wholeUni !== 'JobReady@Campus combines training, mentoring and placement support in campus labs alongside academic studies. Your institution receives monthly reports on progress toward paid work, as agreed in the program scope.') problems.push('self-test: the Universities whole statement is no longer the WP44 wording');
   for (const [name, own, other, otherName] of [['Foundations', wholeFdn, wholeUni, 'Universities'], ['Universities', wholeUni, wholeFdn, 'Foundations']]) {
     posOk(`the declared whole statement on the page that declares it (${name})`, mech(`${headerHtml}${posBlock(own)}</header>`), { whole: own });

@@ -256,11 +256,11 @@ test.describe('Item 6 (Gemini, Kimi, Sonnet): polish', () => {
     expect(pagesWith('Delivery status is confirmed for each contract')).toEqual([]);
   });
 
-  test('Development Partners: the first "What Your Portfolio Gets" card reads "Certification exam preparation with the exam fee included, three months of mentoring and placement support, in one program." (PD-01)', async ({ page }) => {
+  test('Development Partners: the first "What Your Portfolio Gets" card reads "Certification exam preparation, three months of mentoring and placement support in one program; exam fees and attempts as agreed in the program scope." (PD-01)', async ({ page }) => {
     await open(page, DEV_PARTNERS);
     const card = page.locator('#features li.card').first();
     await expect(card.locator('h3')).toHaveText('Training, Mentoring and Placement Support');
-    expect(await texts(page, '#features li.card:nth-child(1) p')).toEqual(['Certification exam preparation with the exam fee included, three months of mentoring and placement support, in one program.']);
+    expect(await texts(page, '#features li.card:nth-child(1) p')).toEqual(['Certification exam preparation, three months of mentoring and placement support in one program; exam fees and attempts as agreed in the program scope.']);
     expect(await card.getAttribute('data-fact')).toBe('PD-01');
     expect(pagesWith('One delivery partner connects training')).toEqual([]);
   });

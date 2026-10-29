@@ -52,7 +52,7 @@ export const HEADLINE: Record<Audience, string> = {
   developmentPartners: 'Youth Employment Results You Can Report — Not Just Training Numbers',
   governments: 'Build a National Digital Workforce Through Graduates and Digital Labs',
   foundations: 'Fund a Supported Path from Learning to Earning',
-  universities: 'Give Your Graduates a Route into Paid Digital Work',
+  universities: 'Give Your Students a Route into Paid Digital Work',
   employers: 'Upskill Your Teams for AI — and Hire Job-Ready Digital Talent',
   investors: 'Invest in the Platform Connecting Emerging-Market Youth to Work',
   localPartners: 'Bring Paid Digital Work Within Reach of Your Community',
@@ -500,7 +500,7 @@ export const POSITIONING: Record<PositioningKey, CopyBlock> = {
   foundations: {
     // WP44 (cycle-21 review): the hero and the Funding Route chooser already say who the page is for, so "Our Approach" states what the two grants fund and what they agree, in two sentences. scripts/check-facts.mjs declares it whole
     // for /partner-with-us/foundations/ (POSITION_WHOLE_STATEMENT). It rests on IN-04 (the platform grant), PD-01 (training, mentoring, placement support), PD-08 (monthly reports) and PD-11 (the pilot scorecard agreed in co-design).
-    text: 'Fund a YouthWIDE cohort or JobReady’s platform infrastructure. For cohort grants, we agree a pilot scorecard and combine training, mentoring and placement support, with monthly progress reports.',
+    text: 'Fund a YouthWIDE cohort or JobReady’s platform infrastructure. For cohort grants, we agree a pilot scorecard and combine training, mentoring and placement support, with monthly progress reports, as agreed in the program scope.',
     facts: ['IN-04', 'PD-01', 'PD-08', 'PD-11'],
   },
   universities: {

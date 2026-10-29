@@ -34,7 +34,7 @@ test.describe('Foundations: the second card is the scorecard and the approach is
   test('"Our Approach" is exactly the declared whole statement, rests on IN-04, PD-01, PD-08 and PD-11, and opens the band', async ({ page }) => {
     await open(page, 'partner-with-us/foundations/');
     await expect(page.locator('#mechanism .pos__label')).toHaveText('Our Approach');
-    await expect(page.locator('#mechanism .pos__text')).toHaveText('Fund a YouthWIDE cohort or JobReady’s platform infrastructure. For cohort grants, we agree a pilot scorecard and combine training, mentoring and placement support, with monthly progress reports.');
+    await expect(page.locator('#mechanism .pos__text')).toHaveText('Fund a YouthWIDE cohort or JobReady’s platform infrastructure. For cohort grants, we agree a pilot scorecard and combine training, mentoring and placement support, with monthly progress reports, as agreed in the program scope.');
     expect(await page.locator('#mechanism .pos').getAttribute('data-fact')).toBe('IN-04 PD-01 PD-08 PD-11');
     const before = await page.evaluate(() => {
       const band = document.querySelector('#mechanism')!;
