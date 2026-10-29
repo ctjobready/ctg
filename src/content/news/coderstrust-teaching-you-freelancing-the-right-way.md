@@ -1,7 +1,7 @@
 ---
 title: "CodersTrust Offers Training for Freelancing Careers: Teaching You the Right Way to Succeed"
 date: 2021-05-12
-updated: 2026-10-13
+updated: 2026-10-29
 topic: insights
 excerpt: "The story of a student who turned to freelancing training after her father could no longer afford her education."
 cover: ../../assets/images/news/coderstrust-teaching-you-freelancing-the-right-way/coders-trust-7-1-1-scaled.jpg
@@ -17,7 +17,7 @@ On a sunny afternoon, a student returned home from her tuition classes only to r
 
 Amidst her search, she discovered CodersTrust, an organization offering free basic courses on data entry. Recognizing that acquiring this skill could potentially pave the way for her continued education, she seized the opportunity and enrolled without hesitation. Looking back, she reflects, “It was 2015, and I didn’t have much knowledge about freelancing at that time. But one thing I knew for sure was that if I could learn this skill, I could continue my studies.” With that determination, she embarked on her journey, and within a few years, she is now on the path to becoming a dental technician as a student at the United Care Institute of Medical Technology.
 
-Like her, many students have found support and opportunities through CodersTrust Bangladesh, enabling them to pursue their dreams and navigate their educational journeys. CodersTrust is a multinational company and specialized platform that combines “Learn & Earn” opportunities, equipping students with globally in-demand skills to earn money online, secure employment, or advance their careers. Founded in 2014 by Aziz Ahmad, a Bangladeshi-American philanthropic business leader, and Ferdinand Kjærulff, a Danish army captain, CodersTrust Bangladesh aims to provide a platform for professional courses and skill development.
+Like her, many students have found support and opportunities through CodersTrust Bangladesh, enabling them to pursue their dreams and navigate their educational journeys. CodersTrust is a multinational company and specialized platform that combines “Learn & Earn” opportunities, equipping students with globally in-demand skills to earn money online, secure employment, or advance their careers. Founded in 2014 by Aziz Ahmad, a Bangladeshi-American philanthropic business leader, and Ferdinand Kjærulff, a Danish Army captain, CodersTrust Bangladesh aims to provide a platform for professional courses and skill development.
 
 As a Global Skill Development Institute, CodersTrust collaborates with international development agencies such as UNDP, the World Bank, Danida, and the Dutch Foundation. It has successfully implemented various projects in 11 countries, including India, Malaysia, Poland, Kosovo, and Kenya. In Dhaka, CodersTrust Bangladesh stands as an international skill development institute, with four branches and a dedicated team of approximately 120 core members working tirelessly to support students.
 

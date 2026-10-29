@@ -4,9 +4,10 @@ import SectionHeader from '../../ui/SectionHeader.astro';
 import StepFlow from '../../ui/StepFlow.astro';
 import RouteBlock from '../../ui/RouteBlock.astro';
 import { NEXT_STEPS_TITLE } from '../../../data/copy';
+import { C14_LEAD } from './meta';
 
 /**
- * C14 Next steps: StepFlow plus the first-action line (C14-FIRST or an audience variant) and an
+ * C14 Next steps: StepFlow plus the first-action line (C14-FIRST or an audience variant; WP123: printed under the shared lead "Your first step: a discovery session.") and an
  * optional note slot (for example the PD-04 timing footnote).
  * WP34 (cycle-11 review): `route` labels the steps and their first action as one route of the band ("For Team Training" on JobReady@Work, whose offer is training and
  * hiring); the slot then holds the other route(s) as <RouteBlock>s.
@@ -34,12 +35,12 @@ const { eyebrow = 'Next Steps', title = NEXT_STEPS_TITLE, lead, steps, route, fi
     route ? (
       <RouteBlock label={route}>
         <StepFlow level={4} steps={steps} />
-        {firstAction && <p class="next__first" data-reveal><strong>First action.</strong> {firstAction}</p>}
+        {firstAction && <p class="next__first" data-reveal><strong>{C14_LEAD}</strong> {firstAction}</p>}
       </RouteBlock>
     ) : (
       <>
         <StepFlow steps={steps} />
-        {firstAction && <p class="next__first" data-reveal><strong>First action.</strong> {firstAction}</p>}
+        {firstAction && <p class="next__first" data-reveal><strong>{C14_LEAD}</strong> {firstAction}</p>}
       </>
     )
   }

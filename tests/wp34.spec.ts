@@ -84,7 +84,7 @@ test.describe('Employers and JobReady@Work: the closing steps name their routes'
     await open(page, 'programs/jobready-work/');
     const training = page.locator('#next-steps .route').first();
     await expect(training.locator('h3')).toHaveText('For Team Training');
-    expect(compact(await training.locator('.next__first').textContent())).toBe('First action. In your inquiry, include two suitable times for a discovery conversation.');
+    expect(compact(await training.locator('.next__first').textContent())).toBe('Your first step: a discovery session. In your inquiry, include two suitable times for a discovery conversation.');
     await expect(page.locator('#next-steps .route').nth(1).locator('.next__first')).toHaveCount(0);
   });
 

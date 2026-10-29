@@ -31,7 +31,7 @@ const YOUTHWIDE_STATEMENT =
 const NATIONAL_ANSWER =
   'We scale in phases. Her Power, a national program, met its full target with CodersTrust’s curriculum; the contract table above gives the figures. A 100,000+ program is a design option we have not yet delivered.';
 const FIRST_ACTION_PARTNER = 'Your first step: a discovery session. In your inquiry, include two suitable times for it.';
-const FIRST_ACTION_PROGRAMS = 'First action. In your inquiry, include two suitable times for a discovery conversation.';
+const FIRST_ACTION_PROGRAMS = 'Your first step: a discovery session. In your inquiry, include two suitable times for a discovery conversation.';
 
 test.describe('WP93 A0: the Investors evidence band is headed "Evidence from the Youth Programs"', () => {
   test('the band heading is the new wording and "Independent Evidence" is no longer a heading on Investors', async ({ page }) => {

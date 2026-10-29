@@ -157,7 +157,7 @@ test.describe('Item 2: the trial’s exchange rate is BDT 86 to the dollar', () 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Item 3: the peer-reviewed article (RC-15) and its benefit/cost ratio (RC-16)
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-const CITATION = 'Arman, Bhattacharjee, Das, Gomes and Mahmood (2026), “Tackling Women’s Unemployment: Evidence from an Online Jobs Experiment in Bangladesh”, Economic Development and Cultural Change 75(1): 367–399';
+const CITATION = 'Arman, Bhattacharjee, Das, Gomes and Mahmood (2026), “Tackling Women’s Unemployment: Evidence from an Online Jobs Experiment in Bangladesh,” Economic Development and Cultural Change 75(1): 367–399';
 const DOI = 'https://doi.org/10.1086/741450';
 const TRIAL = 'impact/independent-evaluation/';
 
