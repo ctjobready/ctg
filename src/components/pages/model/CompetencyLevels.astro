@@ -1,10 +1,10 @@
 ---
-import Icon from '../../system/Icon.astro';
 import CertNote from '../../ui/CertNote.astro';
 
 /**
  * TalentLEAP example: the Digital Marketing career path (IN-08). The competency levels
- * Competent → Proficient → Expert are shown here only, as this career-path example.
+ * Competent → Proficient → Expert are named only on this page, as this career-path example. Only the published Level 1 is drawn;
+ * WP122: the "Proficient and Expert levels are planned." card and arrow are gone (the page's opening says it once).
  */
 interface Props {
   class?: string;
@@ -23,13 +23,9 @@ const { class: className } = Astro.props;
         <li>Bonus mini-courses in essential business and leadership skills</li>
       </ul>
     </li>
-    <li class="lv__arrow" aria-hidden="true"><Icon name="arrow-right" size={24} /></li>
-    <li class="lv__item lv__item--planned" data-reveal>
-      <p class="lv__planned">Proficient and Expert levels are planned.</p>
-    </li>
   </ol>
   <CertNote />
-  <figcaption class="lv__cap">Example only: the Digital Marketing career path. Competent is the published first level.</figcaption>
+  <figcaption class="lv__cap">Example only: the Digital Marketing career path.</figcaption>
 </figure>
 
 <style>
@@ -65,14 +61,6 @@ const { class: className } = Astro.props;
     line-height: var(--lh-heading-m);
     color: var(--ctx-heading);
   }
-  .lv__planned {
-    font-size: var(--fs-body-base);
-    color: var(--on-surface-variant);
-  }
-  .lv__item--planned {
-    border-style: dashed;
-    align-content: center;
-  }
   .lv__bullets {
     margin: 0;
     padding-left: 1.2em;
@@ -85,28 +73,9 @@ const { class: className } = Astro.props;
   .lv__bullets li::marker {
     color: var(--primary);
   }
-  .lv__arrow {
-    display: flex;
-    justify-content: center;
-    color: var(--primary);
-    transform: rotate(90deg);
-    height: 24px;
-    align-items: center;
-  }
   .lv__cap {
     margin-top: var(--space-md);
     font-size: var(--fs-body-xs);
     color: var(--outline);
-  }
-  @media (min-width: 900px) {
-    .lv__list {
-      grid-template-columns: minmax(0, 1.5fr) 24px minmax(0, 1fr);
-      align-items: stretch;
-      gap: var(--space-sm);
-    }
-    .lv__arrow {
-      transform: none;
-      height: auto;
-    }
   }
 </style>

@@ -62,9 +62,9 @@ const ALT: Record<string, string> = {
   'recognition/european-parliament': 'A speaker addressing a European Parliament committee room',
   'recognition/pope-francis': 'A man greeting Pope Francis, with a cardinal standing beside them',
   // WP96 (owner decision 2026-10-26): both award photographs now show only on Aziz Ahmad's team profile, naming him as Co-Founder; the files and their permissions rows stay.
-  'recognition/nasdaq-sba': 'Aziz Ahmad, Co-Founder of CodersTrust, at the podium of the Nasdaq closing bell ceremony for the U.S. Small Business Administration',
+  'recognition/nasdaq-sba': 'Aziz Ahmad, Co-Founder and Chairman of CodersTrust, at the podium of the Nasdaq closing bell ceremony for the U.S. Small Business Administration',
   'recognition/speaking-students': 'Aziz Ahmad, Co-Founder and Chairman of CodersTrust, addressing a large audience from a stage',
-  'recognition/supply-chain-award': 'Aziz Ahmad, Co-Founder of CodersTrust, receiving the Supply Chain Diversity and Sustainability Excellence Award at the 2019 awards, among four people on stage with a framed certificate',
+  'recognition/supply-chain-award': 'Aziz Ahmad, Co-Founder and Chairman of CodersTrust, receiving the Supply Chain Diversity and Sustainability Excellence Award at the 2019 awards, among four people on stage with a framed certificate',
   // WP101 (owner answer 2026-10-28): the four course banners are CodersTrust’s own 2026 designs, drawn by scripts/build-nu-banners.mjs (npm run nu-banners): the National University crest (src/assets/images/partners/national-university.png, used as the earlier
   // co-branded banners used it) and the CodersTrust wordmark, "PGD | Post Graduate Diploma", the course name, and a vector motif each. Their permissions rows (legacy-nu-pgd-cybersecurity, -data-analytics, -digital-marketing, -ict) are cleared by
   // OWNER-2026-10-28-NU-BANNERS and are not "published on the legacy site" (the previous banners were); the asset ids keep their names. The alt text says what the banner says and shows.
@@ -184,8 +184,8 @@ export const CAPTION: Record<string, string> = {
   'recognition/us-chamber': 'Roundtable at the U.S. Chamber of Commerce',
   'recognition/european-parliament': 'European Parliament committee room',
   'recognition/pope-francis': 'Greeting Pope Francis',
-  'recognition/nasdaq-sba': 'Aziz Ahmad, Co-Founder of CodersTrust, at the Nasdaq closing bell ceremony with the U.S. Small Business Administration',
-  'recognition/supply-chain-award': 'Aziz Ahmad, Co-Founder of CodersTrust, receiving the Supply Chain Diversity and Sustainability Excellence Award, 2019',
+  'recognition/nasdaq-sba': 'Aziz Ahmad, Co-Founder and Chairman of CodersTrust, at the Nasdaq closing bell ceremony with the U.S. Small Business Administration',
+  'recognition/supply-chain-award': 'Aziz Ahmad, Co-Founder and Chairman of CodersTrust, receiving the Supply Chain Diversity and Sustainability Excellence Award, 2019',
 };
 
 

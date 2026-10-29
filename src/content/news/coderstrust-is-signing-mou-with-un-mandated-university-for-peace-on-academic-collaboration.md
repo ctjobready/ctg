@@ -13,7 +13,7 @@ seoTitle: "UPEACE Partnership for Next Generation Skills"
 
 Global EdTech company CodersTrust and the University for Peace, a university and treaty organization mandated by UN General Assembly, have forged a partnership on Saturday June 3rd, at a signing ceremony held at UPEACE campus in San Jose, Costa Rica, to offer Next Generation Skills training for the Digital Era through academic collaboration and student exchanges.
 
-Aziz Ahmad, Chairman of CodersTrust and Professor Francisco Rojas Aravena, Rector of University for Peace signed the agreement. Dr. Juan Carlos Sainz Borgo, Vice Rector of University for Peace and Md. Shamsul Haque, CEO of CodersTrust Bangladesh was present among others.
+Aziz Ahmad, Chairman of CodersTrust and Professor Francisco Rojas Aravena, Rector of University for Peace signed the agreement. Dr. Juan Carlos Sainz-Borgo, Vice Rector of University for Peace, and Md. Shamsul Haque, CEO of CodersTrust Bangladesh, were present among others.
 
 ![Two men shaking hands while exchanging a signed document](../../assets/images/news/coderstrust-is-signing-mou-with-un-mandated-university-for-peace-on-academic-collaboration/whatsapp-image-2023-06-04-at-00-15-44.jpg)
 

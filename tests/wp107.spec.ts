@@ -69,7 +69,7 @@ test.describe('WP107 item 1: Md. Shamsul Haque is "CEO of CodersTrust Bangladesh
     ['BASIS-ASSET', BASIS, 'The CEO of CodersTrust Bangladesh, Md. Shamsul Haque, signed the agreement on behalf of CodersTrust.'],
     ['DoICT Training of Trainers', DOICT, 'said Mr. Md. Shamsul Haque, CEO of CodersTrust Bangladesh.'],
     ['Ostitto', OSTITTO, 'Mr. Shamsul Haque, CEO of CodersTrust Bangladesh, and Former Additional Foreign Secretary emphasized'],
-    ['UPEACE partnership', UPEACE_MOU, 'Md. Shamsul Haque, CEO of CodersTrust Bangladesh was present among others.'],
+    ['UPEACE partnership', UPEACE_MOU, 'Md. Shamsul Haque, CEO of CodersTrust Bangladesh, were present among others.'],
     ['NSU MOU', NSU, 'Mr. Md. Shamsul Haque, CEO of CodersTrust Bangladesh, along with Mr. Md. Iqbal Hassan Ferdous (CRO)'],
     ['NCTB MOU', NCTB, 'Chairman of NCTB and CodersTrust Bangladesh CEO Md. Shamsul Haque signed the document'],
     ['America Week', AMERICA_WEEK, 'CodersTrust was proudly represented by CodersTrust Bangladesh CEO Md. Shamsul Haque, former Additional Foreign Secretary of Bangladesh, and his team'],

@@ -21,7 +21,7 @@ Peace and prosperity can be supported by enhancing the technology skills among t
 
 The Bangladeshi-American technology investor joined the discussion with Jayashri Wyatt, Chief of the Education Outreach Section, Outreach Division, Department of Global Communications, United Nations, Amy Larsen, Director, Strategy and Management at Democracy Forward, Microsoft, Dr. Chris Wiggins, Chief Data Scientist, New York Times and Professor at the Data Science Institute, Columbia University and Dr. Mona Sloane, Senior Research Scientist & Associate Professor, NYU Center for Responsible AI as the panellists.
 
-Renowned UN diplomat and communication expert Ramu Damodaran moderated the seminar while Juan Carlos Sainz Borgo, Vice Rector of the University for Peace, was in the chair.
+Renowned UN diplomat and communication expert Ramu Damodaran moderated the seminar while Juan Carlos Sainz-Borgo, Vice Rector of the University for Peace, was in the chair.
 
 The speakers emphasized their concern about the spread of hate speech and privacy violations in the name of technological advancement.
 

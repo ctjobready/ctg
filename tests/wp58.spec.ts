@@ -423,12 +423,12 @@ test.describe('G6: Development Partners’ Adrian Afraham card', () => {
 });
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-test.describe('G7: TalentLEAP’s results paragraph points up, not down', () => {
-  test('"The figures in At a Glance above describe CodersTrust programs, not individual TalentLEAP features." keeps the evaluation sentences, and nothing says "The results below"', async ({ page }) => {
+test.describe('G7: TalentLEAP’s results paragraph opens with the evaluation sentence (WP122: the repeated caveat is gone), and nothing says "The results below"', () => {
+  test('keeps the evaluation sentences, and nothing says "The results below"', async ({ page }) => {
     await open(page, TALENTLEAP);
     const results = page.locator('#results');
     expect(compact(await results.locator('p').first().textContent())).toBe(
-      'The figures in At a Glance above describe CodersTrust programs, not individual TalentLEAP features. The current 100-hour track has not yet been independently evaluated. A pilot scorecard tracks agreed outcomes; independent evaluation is welcome.',
+      'The current 100-hour track has not yet been independently evaluated. A pilot scorecard tracks agreed outcomes; independent evaluation is welcome.',
     );
     expect(compact(await page.locator('main').textContent())).not.toContain('The results below are for CodersTrust programs');
     // At a Glance is above the results section, as the sentence says
