@@ -128,3 +128,20 @@ test.describe('WP112 Polish 7: dates', () => {
     expect(visibleText(distHtml('about/governance/index.html'))).toContain('Last updated October 24, 2026');
   });
 });
+
+// --------------------------------------------------------------------------------------------------------------------------------
+// WP112b (kit 79 check): JobReady@Campus said "with the exam fee included, …; eligibility, attempts and retakes are agreed in the program scope."
+// The sentence carried the qualifier, but for eligibility and attempts, not for the fee, so the sweep above passed it. No built page may state the fee as included at all.
+test.describe('WP112b: no built page says the exam fee is included', () => {
+  test('"exam fee(s) included" appears on no built page or in llms.txt', () => {
+    const FEE = /exam fees? included/i;
+    const offenders = walk(DIST_DIR).filter((f) => FEE.test(decode(readFileSync(f, 'utf8')))).map((f) => relative(DIST_DIR, f));
+    const llms = join(DIST_DIR, 'llms.txt');
+    if (existsSync(llms) && FEE.test(readFileSync(llms, 'utf8'))) offenders.push('llms.txt');
+    expect(offenders).toEqual([]);
+  });
+
+  test('JobReady@Campus states the fee, eligibility, attempts and retakes as agreed in the program scope', () => {
+    expect(visibleText(distHtml('programs/jobready-campus/index.html'))).toContain('100 training hours per certification, then certification exam preparation and three months of milestone-based mentoring; exam fees, eligibility, attempts and retakes are agreed in the program scope.');
+  });
+});
