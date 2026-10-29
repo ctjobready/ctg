@@ -110,7 +110,7 @@ test.describe('Programs', () => {
   test('the YouthWIDE hub card reads "from training to paid work"', async ({ page }) => {
     await open(page, 'programs/');
     const text = compact(await main(page));
-    expect(text).toContain('Ministries can follow phased delivery from training to paid work, and funders get monthly reports on progress toward paid work, not only enrollment.');
+    expect(text).toContain('Ministries can follow phased delivery from training to paid work, and funders get monthly reports on progress toward paid work, as agreed in the program scope, not only enrollment.');
   });
 
   test('YouthWIDE: the 2030 aim keeps its own "Target" tag and its not-delivered note in the Bangladesh band, beside two delivered-scale figures', async ({ page }) => {

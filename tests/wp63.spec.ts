@@ -314,10 +314,10 @@ test.describe('R5 (Grok): Home’s first offer is the "Multi-Cohort Pilot Progra
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 test.describe('R6 (Grok): About’s meta description names the group as ID-01 does', () => {
-  test('it is 152 characters (limit 155), says "educated, unemployed and underemployed youth" and "with work in 16 countries and territories", in the page and in og:description', async ({ page }) => {
+  test('it is 151 characters (limit 155), says "educated, unemployed and underemployed youth" and "has worked in 16 countries and territories", in the page and in og:description', async ({ page }) => {
     await open(page, ABOUT);
-    const D = 'New York-headquartered CodersTrust has trained educated, unemployed and underemployed youth for digital work, with work in 16 countries and territories.';
-    expect(D.length).toBe(152);
+    const D = 'New York-headquartered CodersTrust trains educated, unemployed and underemployed youth for digital work and has worked in 16 countries and territories.';
+    expect(D.length).toBe(151);
     expect(await page.locator('meta[name="description"]').getAttribute('content')).toBe(D);
     expect(await page.locator('meta[property="og:description"]').getAttribute('content')).toBe(D);
     expect(D).toContain('educated, unemployed and underemployed youth');

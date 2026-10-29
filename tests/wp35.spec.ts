@@ -385,7 +385,7 @@ test.describe('plain words and plain claims', () => {
     const cost = await answer('What Does It Cost?');
     expect(cost).toBe(
       // WP41 (cycle-18 review): "For supported youth cohorts, standard inclusions are …"; WP43 (cycle-20 review): "Supported youth cohorts include training, certification exam preparation and the exam fee, …"
-      'Pricing is set per program; we share an indicative budget in the discovery session. Supported youth cohorts include outreach and selection, training, certification exam preparation and the exam fee, three months of mentoring, placement support and 12 months of outcome tracking after each course, as agreed in the program scope. Devices, stipends, connectivity and independent evaluation are budgeted separately where needed.',
+      'Pricing is set per program; we share an indicative budget in the discovery session. As agreed in the program scope, supported youth cohorts include outreach and selection, training, certification exam preparation (with exam fees and attempts), three months of mentoring, placement support and 12 months of outcome tracking after each course. Devices, stipends, connectivity and independent evaluation are budgeted separately where needed.',
     );
     expect(cost.split(/(?<=[.!?])\s+(?=[A-Z“])/).length).toBeLessThanOrEqual(3);
     await expect(page.locator('#faqs details', { has: page.locator('summary', { hasText: 'What About Safeguarding and Data Protection?' }) })).toHaveCount(0);

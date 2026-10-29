@@ -8,7 +8,7 @@ import { DIST_DIR } from './support/env';
  * Test-first: run `npm run build`, then `PORT=<port> npx playwright test tests/wp112.spec.ts --project=chromium`.
  *   - Minor 1: YouthWIDE's glance "Training and Mentoring" row says the exam preparation with "exam fees and attempts as agreed in the program scope".
  *   - Minor 2: Our Model's pipeline step 3 (and TalentLEAP's, which shares it) says the same.
- *   - Minor 3: the Partner with Us hub's "What Does It Cost?" answer ends its list of supported-cohort inclusions with "as agreed in the program scope."; Home's comparison table cell too.
+ *   - Minor 3: the Partner with Us hub's "What Does It Cost?" answer carries "as agreed in the program scope" in its list of supported-cohort inclusions (WP113: once, on the exam preparation, not at the end); Home's comparison table cell too.
  *   - Minor 4 (sweep): no built page, JSON-LD or llms.txt states "exam fee included" / "exam fees included" / "with the exam fee", or a supported-cohort inclusion list, without "program scope" in the same sentence.
  *   - Polish 5: the NU Post Graduate Diploma 72% tile reads "of employers globally reported difficulty finding talent in 2026 (ManpowerGroup, 2026)".
  *   - Polish 6: Universities' campus FAQ answer says "your students’ skills", not "your graduates’ skills".
@@ -73,8 +73,8 @@ test.describe('WP112 Minor 2: Our Model pipeline step 3', () => {
 
 // --------------------------------------------------------------------------------------------------------------------------------
 test.describe('WP112 Minor 3: "What Does It Cost?" list and the comparison cell', () => {
-  test('the Partner with Us hub answer ends the list of supported-cohort inclusions with "as agreed in the program scope."', () => {
-    expect(visibleText(distHtml('partner-with-us/index.html'))).toContain('placement support and 12 months of outcome tracking after each course, as agreed in the program scope.');
+  test('the Partner with Us hub answer states the supported-cohort inclusions with the clause once, opening the sentence so it covers every item (WP113)', () => {
+    expect(visibleText(distHtml('partner-with-us/index.html'))).toContain('certification exam preparation (with exam fees and attempts), three months of mentoring, placement support and 12 months of outcome tracking after each course.');
   });
 });
 

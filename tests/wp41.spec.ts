@@ -63,7 +63,7 @@ test.describe('YouthWIDE: no "What Success Looks Like" band (item 1; WP48: the b
 test.describe('"What Does It Cost?" and Home’s inclusions heading: standard inclusions are for supported youth cohorts (item 2)', () => {
   // WP43 (cycle-20 review): the answer is three shorter sentences; the inclusions are still said for "Supported youth cohorts" ("include ..."), and the separately budgeted items stay
   const COST =
-    'Pricing is set per program; we share an indicative budget in the discovery session. Supported youth cohorts include outreach and selection, training, certification exam preparation and the exam fee, three months of mentoring, placement support and 12 months of outcome tracking after each course, as agreed in the program scope. Devices, stipends, connectivity and independent evaluation are budgeted separately where needed.';
+    'Pricing is set per program; we share an indicative budget in the discovery session. As agreed in the program scope, supported youth cohorts include outreach and selection, training, certification exam preparation (with exam fees and attempts), three months of mentoring, placement support and 12 months of outcome tracking after each course. Devices, stipends, connectivity and independent evaluation are budgeted separately where needed.';
 
   test('the partner hub FAQ says it for supported youth cohorts, in three sentences, and the FAQ JSON-LD says the same words', async ({ page }) => {
     await open(page, 'partner-with-us/');

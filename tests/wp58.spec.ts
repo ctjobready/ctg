@@ -164,15 +164,15 @@ test.describe('S1, G1 and L7: "16 countries and territories" is where CodersTrus
     expect(compact(await page.locator('#why-partner li[data-fact="SC-16"]').textContent())).toContain('Through 150,000+ enrollments. CodersTrust has worked in 16 countries and territories.');
   });
 
-  test('About’s meta description says the count is where CodersTrust has worked ("..., with work in 16 countries and territories."), within 155 characters, in the page and its structured data', async ({ page }) => {
+  test('About’s meta description says the count is where CodersTrust has worked ("... and has worked in 16 countries and territories.", WP113), within 155 characters, in the page and its structured data', async ({ page }) => {
     await open(page, ABOUT);
     const description = await page.locator('meta[name="description"]').getAttribute('content');
-    expect(description).toBe('New York-headquartered CodersTrust has trained educated, unemployed and underemployed youth for digital work, with work in 16 countries and territories.'); // WP63 (cycle-35 review, Grok R6)
+    expect(description).toBe('New York-headquartered CodersTrust trains educated, unemployed and underemployed youth for digital work and has worked in 16 countries and territories.'); // WP63 (cycle-35 review, Grok R6)
     expect(description!.length).toBeLessThanOrEqual(155);
     expect(description, 'the 16 is not attached to the training').not.toMatch(/(?:trained|youth|digital work) in 16 countries/);
     expect(await page.locator('meta[property="og:description"]').getAttribute('content')).toBe(description);
     const ld = (await page.locator('script[type="application/ld+json"]').allTextContents()).join(' ');
-    expect(ld).toContain('with work in 16 countries and territories.');
+    expect(ld).toContain('and has worked in 16 countries and territories.');
     expect(ld).not.toContain('for digital work in 16 countries');
   });
 

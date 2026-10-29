@@ -376,7 +376,7 @@ test.describe('cost and safeguarding: full on the hub, one line and a link on th
     await open(page, 'partner-with-us/');
     const cost = await answerOf(page, 'What Does It Cost?');
     // WP41 (cycle-18 review): the list is scoped to supported youth cohorts; WP43 (cycle-20 review): "Supported youth cohorts include training, certification exam preparation and the exam fee, …"; WP45: "… include outreach and selection, training, …"
-    expect(cost).toContain('Supported youth cohorts include outreach and selection, training, certification exam preparation and the exam fee');
+    expect(cost).toContain('As agreed in the program scope, supported youth cohorts include outreach and selection, training, certification exam preparation (with exam fees and attempts)');
     expect(sentences(cost).length).toBeLessThanOrEqual(3);
     expect(await mainText(page)).not.toContain('Guardian consent and supervision apply to anyone under 18');
     const ld = await faqJsonLd(page);

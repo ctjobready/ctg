@@ -520,7 +520,7 @@ test.describe('GM5 (Gemini): Governments’ "Capacity Designed to Stay in Your S
       'Where included in your program scope: Training of Trainers, curriculum and manuals; certified local facilitators; and blended learning in existing labs that works with limited connectivity, so rural labs can take part.',
     );
     expect(await card.getAttribute('data-fact')).toBe('GV-11 PD-06 PD-07');
-    expect(compact(await cards.nth(1).locator('.card__text').textContent())).toBe('A pilot scorecard with cost per completer and per verified outcome, and monthly reports. Your budget is assessed against the agreed scorecard.');
+    expect(compact(await cards.nth(1).locator('.card__text').textContent())).toBe('A pilot scorecard with cost per completer and per verified outcome, and monthly reports, as agreed in the program scope. Your budget is assessed against the agreed scorecard.');
   });
 });
 

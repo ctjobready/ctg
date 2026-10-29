@@ -72,7 +72,7 @@ const PAGES: PageSpec[] = [
     cards: [
       // WP49 (cycle-24 review): "completers", the site's word for people who finished a program (it said "graduates"); WP62 (cycle-34 review, Gemini): "... placement support toward local, remote and global work." (it said "... that point completers toward paid work.")
       { title: 'Certification Tracks and Placement Support', text: 'Certification tracks chosen from employer demand, then mentoring and placement support toward local, remote and global work.', facts: ['PD-10', 'PD-01'] },
-      { title: 'Spending Measured Against Outcomes', text: 'A pilot scorecard with cost per completer and per verified outcome, and monthly reports. Your budget is assessed against the agreed scorecard.', facts: ['PD-11', 'PD-08'] },
+      { title: 'Spending Measured Against Outcomes', text: 'A pilot scorecard with cost per completer and per verified outcome, and monthly reports, as agreed in the program scope. Your budget is assessed against the agreed scorecard.', facts: ['PD-11', 'PD-08'] },
       {
         title: 'Capacity Designed to Stay in Your System',
         // WP60 (cycle-32 review, Gemini GM5): the list opens "Where included in your program scope:" (it read as unconditional)
@@ -137,7 +137,7 @@ const PAGES: PageSpec[] = [
       },
       {
         title: 'Monthly Reports and Program Updates',
-        text: 'Where a funder is involved, it receives monthly reports, and your organization receives agreed program updates on enrollment, completion, certification and placement.',
+        text: 'Where a funder is involved, it receives monthly reports as agreed in the program scope, and your organization receives agreed program updates on enrollment, completion, certification and placement.',
         facts: ['PD-08'],
         pain: 'P3',
       },

@@ -392,8 +392,8 @@ test.describe('About: the identity sentences sit directly under the lede (item 1
   // WP63 (cycle-35 review, Grok R6): "educated," is back in the group (ID-01's wording), so "Since 2014," is out to stay within 155 characters: 152
   test('the meta description is 152 characters, within the limit of 155, with the register’s count, and names the group as ID-01 does (also in og:description)', async ({ page }) => {
     await open(page, ABOUT);
-    const D = 'New York-headquartered CodersTrust has trained educated, unemployed and underemployed youth for digital work, with work in 16 countries and territories.';
-    expect(D.length).toBe(152);
+    const D = 'New York-headquartered CodersTrust trains educated, unemployed and underemployed youth for digital work and has worked in 16 countries and territories.';
+    expect(D.length).toBe(151);
     expect(await page.locator('meta[name="description"]').getAttribute('content')).toBe(D);
     expect(await page.locator('meta[property="og:description"]').getAttribute('content')).toBe(D);
     expect(fact('SC-03').stat?.value).toBe('16'); // WP55 (owner decision 2026-10-18): 17, with Egypt and Benin added; WP56 (owner decision 2026-10-18): 16, with Somalia merged into Somaliland
@@ -614,7 +614,7 @@ test.describe('The Programs hub lines (items 28 and 30)', () => {
   test('YouthWIDE’s "In Practice" line promises reports on progress toward paid work; JobReady@Work offers "a route to hire job-ready talent"', async ({ page }) => {
     await open(page, PROGRAMS);
     const text = await everything(page);
-    expect(text).toContain('Ministries can follow phased delivery from training to paid work, and funders get monthly reports on progress toward paid work, not only enrollment.');
+    expect(text).toContain('Ministries can follow phased delivery from training to paid work, and funders get monthly reports on progress toward paid work, as agreed in the program scope, not only enrollment.');
     expect(text).toContain('Corporate training custom-developed for each organization, plus a route to hire job-ready talent.');
     expect(pagesWith('monthly reports on paid-work outcomes', 'plus access to job-ready talent')).toEqual([]);
   });

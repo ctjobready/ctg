@@ -347,7 +347,7 @@ test.describe('Home: the first Imagine card and the Learner Journeys lead (items
     await open(page, '');
     expect(await texts(page, '#future .card__text')).toEqual([
       'A young woman in your cohort invoices her first foreign client from her own laptop.',
-      'You review monthly reports showing who is earning, not only who completed.',
+      'You review monthly reports, as agreed in the program scope, showing who is earning, not only who completed.',
       'You see employers hire completers whose skills match current employer demand.',
     ]);
     expect(await mainText(page)).not.toContain('You hear from a young woman');

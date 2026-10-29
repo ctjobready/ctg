@@ -409,8 +409,8 @@ test.describe('About: the meta description (item 17)', () => {
   // WP52 (cycle-27 review, GLM m4): it names the group as ID-01 does ("educated, unemployed and underemployed youth") and opens with the year: 153 characters, within the 155 limit (tests/wp52.spec.ts); WP58 (cycle-30 reviews, Claude S1 d and GPT-6.1 Sol G1 i): "..., with work in 16 countries and territories." (the count is where CodersTrust has worked), so "educated," was out to stay within the limit: 154 characters; WP63 (cycle-35 review, Grok R6): "educated," is back and "Since 2014," is out: 152 characters
   test('it reads "New York-headquartered CodersTrust has trained educated, ... in 16 countries and territories." within 155 characters, in the meta description and in og:description', async ({ page }) => {
     await open(page, 'about/');
-    const D = 'New York-headquartered CodersTrust has trained educated, unemployed and underemployed youth for digital work, with work in 16 countries and territories.';
-    expect(D.length).toBe(152);
+    const D = 'New York-headquartered CodersTrust trains educated, unemployed and underemployed youth for digital work and has worked in 16 countries and territories.';
+    expect(D.length).toBe(151);
     expect(await page.locator('meta[name="description"]').getAttribute('content')).toBe(D);
     expect(await page.locator('meta[property="og:description"]').getAttribute('content')).toBe(D);
   });

@@ -31,7 +31,7 @@ const countries = fact('SC-03').stat?.value;
 // characters longer with "with work in", so "educated," is out to stay within the 155-character limit (the guard below): the group is "unemployed and underemployed youth", still ID-01's wording less its first adjective.
 // WP61 (cycle-33 review, Kimi K2): the <title> is "About | CodersTrust" (it was "About Us | CodersTrust", which broke the "{Page} | CodersTrust" pattern the menu label and the other pages follow); the hero eyebrow "About Us" is unchanged.
 // WP63 (cycle-35 review, Grok R6): "educated," is back, so the group is named as ID-01 names it ("educated, unemployed and underemployed youth"). It is ten characters longer, so "Since 2014," is out to stay within the 155-character limit (the guard below): 152 characters.
-const description = `New York-headquartered CodersTrust has trained educated, unemployed and underemployed youth for digital work, with work in ${countries} countries and territories.`;
+const description = `New York-headquartered CodersTrust trains educated, unemployed and underemployed youth for digital work and has worked in ${countries} countries and territories.`;
 if (description.length > 155) throw new Error(`About meta description is ${description.length} characters (max 155)`);
 
 // SC-01 (learners) and SC-02 (enrollments) sit side by side, so each tile names what it counts: learners trained, and course enrollments.
