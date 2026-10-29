@@ -26,7 +26,7 @@ test.describe('Home: "What a Supported Youth Cohort Includes" (WP41: it was "Wha
     {
       title: 'Training, Mentoring and Placement Support',
       // WP54 (cycle-28 review, Claude S25): "agreed before enrollment" (it said "approved")
-      text: '100 training hours per certification, followed by three months of milestone-based mentoring and placement support. Each track’s work-entry plan is agreed before enrollment.',
+      text: '100 training hours per certification, followed by three months of milestone-based mentoring and placement support, as agreed in the program scope. Each track’s work-entry plan is agreed before enrollment.',
       pain: 'P1',
       facts: ['PD-01', 'PD-15', 'PD-19'],
     },
