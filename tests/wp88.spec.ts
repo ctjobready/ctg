@@ -97,7 +97,7 @@ test.describe('Item 2: the Investors enrollment note states the de-duplicated to
 test.describe('Items 3 and 4: archive posts', () => {
   test('BCIU and HolonIQ 2023 say "worked in 16 countries and territories", not "trained … across 15"', () => {
     const bciu = visibleText(htmlOf(BCIU));
-    expect(bciu).toContain('has trained learners since 2014 and has worked in 16 countries and territories');
+    expect(bciu).toContain('has worked in 16 countries and territories'); // WP120: "since 2014" once in the sentence
     expect(bciu).not.toContain('trained learners across 15 countries');
     const holoniq = visibleText(htmlOf(HOLONIQ23));
     expect(holoniq).toContain('has worked in 16 countries and territories');

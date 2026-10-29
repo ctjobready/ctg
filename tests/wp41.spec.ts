@@ -80,7 +80,7 @@ test.describe('"What Does It Cost?" and Home’s inclusions heading: standard in
       expect(await mainText(page), route).not.toMatch(/standard inclusions are outreach and selection|Supported youth cohorts include (outreach and selection, )?training/);
     }
     await open(page, 'partner-with-us/employers/');
-    expect(await mainText(page)).toContain('Standard inclusions are a needs assessment, a customized curriculum');
+    expect(await mainText(page)).toContain('Standard inclusions, as agreed in the program scope, are a needs assessment, a customized curriculum');
   });
 
   test('Home’s band is headed "What a Supported Youth Cohort Includes" (Title Case) and keeps its id and its three cards', async ({ page }) => {

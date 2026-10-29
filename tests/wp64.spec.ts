@@ -375,7 +375,7 @@ test.describe('Item 7 (GLM, Gemini, Claude): three polish fixes', () => {
     );
     await open(page, INVESTORS);
     await expect(page.locator('#features li.card').first().locator('h3')).toHaveText('Learn Through TalentLEAP');
-    expect(await texts(page, '#features li.card:nth-child(1) p')).toEqual([`${SENTENCE} Supported cohorts include mentoring, certification exam preparation and placement support.`]);
+    expect(await texts(page, '#features li.card:nth-child(1) p')).toEqual([`${SENTENCE} Supported cohorts include mentoring, certification exam preparation and placement support, as agreed in the program scope.`]);
     expect(pagesWith('Competent is the published first level; Proficient and Expert are planned')).toEqual([]);
     expect(fact('IN-08').text).toContain('Competent is the first level; Proficient and Expert are planned');
   });

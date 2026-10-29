@@ -44,7 +44,7 @@ test.describe('Investors: "What JobReady Does" is three short cards and one link
   const CARDS = [
     {
       title: 'Learn Through TalentLEAP',
-      text: 'The first published TalentLEAP level is Competent; Proficient and Expert levels are planned. Supported cohorts include mentoring, certification exam preparation and placement support.', // WP64 (cycle-36 review, Claude): it said "Competent is the published first level; Proficient and Expert are planned."
+      text: 'The first published TalentLEAP level is Competent; Proficient and Expert levels are planned. Supported cohorts include mentoring, certification exam preparation and placement support, as agreed in the program scope.', // WP64 (cycle-36 review, Claude): it said "Competent is the published first level; Proficient and Expert are planned."
       facts: ['IN-06', 'IN-08', 'PD-01', 'PD-02'],
     },
     {

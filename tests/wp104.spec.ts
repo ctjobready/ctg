@@ -284,7 +284,7 @@ test.describe('WP104 item 8: meta descriptions name the full target group', () =
 // --------------------------------------------------------------------------------------------------------------------------------
 test.describe('WP104 item 9: "1,000" in the two 1,000-trainees news posts', () => {
   const POSTS = [
-    { route: 'news/1000-trainees-sheikh-kamal-ict-incubator-training/', h1: '1,000 People to Be Trained on High Demand IT Skills | Sheikh Kamal ICT Incubator Training', body: 'CodersTrust will provide training to 1,000 people on high demand IT skills' },
+    { route: 'news/1000-trainees-sheikh-kamal-ict-incubator-training/', h1: '1,000 People to Be Trained on High Demand IT Skills | Sheikh Kamal ICT Incubator Training', body: 'CodersTrust will provide training to 1,000 people in high-demand IT skills.' },
     { route: 'news/1000-trainees-enhancing-digital-government-economy-edge/', h1: 'Contract to Train 1,000 Youth | Enhancing Digital Government & Economy (EDGE)', body: 'CodersTrust will provide training to 1,000 youths on digital and disruptive 4IR technologies.' },
   ];
   for (const p of POSTS) {

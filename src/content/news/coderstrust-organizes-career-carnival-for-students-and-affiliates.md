@@ -17,7 +17,7 @@ CodersTrust recently organized a ‘Career Carnival’ at its Dhaka office in Ba
 
 Around 20 prominent companies, including Bdjobs, Priyo Shop, Technosoft, and House of Bookkeepers, participated in the event, offering over 60 job openings in fields such as Web Development, Accounts Management, Graphics Design, Digital Marketing, SEO, and Content Writing. The event saw an overwhelming response, with more than 1,000 students and alumni attending in person.
 
-For the past decade, CodersTrust has been dedicated to solving Bangladesh’s unemployment issue by developing skilled manpower focused on digital competencies. The organization’s approach blends concept-based education with practical assignments and projects, ensuring that students are equipped with both knowledge and hands-on experience. Graduates also benefit from job-placement support through CodersTrust’s extensive network of partner companies.
+For the past decade, CodersTrust has been dedicated to solving Bangladesh’s unemployment issue by developing skilled manpower focused on digital competencies. The organization’s approach blends concept-based education with practical assignments and projects, ensuring that students are equipped with both knowledge and hands-on experience. Program completers also benefit from job-placement support through CodersTrust’s extensive network of partner companies.
 
 A representative from Priyo Shop remarked, “In most job applications, we see many qualifications listed, but the candidates often lack the specific skills needed. CodersTrust’s direct job placement system, tied to their skill-based courses, greatly helps companies like us find the right talent.”
 

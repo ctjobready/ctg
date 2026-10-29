@@ -295,7 +295,7 @@ test.describe('Employers and JobReady@Work: the pricing sentence is said once, i
       expect(count(await everything(page), PRICING), route).toBe(1);
       const answer = await answerOf(page, 'What Does It Cost?');
       expect(answer.startsWith(PRICING), route).toBe(true);
-      expect(answer, route).toContain('Standard inclusions are a needs assessment, a customized curriculum, interactive workshops, progress evaluation and post-training support');
+      expect(answer, route).toContain('Standard inclusions, as agreed in the program scope, are a needs assessment, a customized curriculum, interactive workshops, progress evaluation and post-training support');
     }
   });
 

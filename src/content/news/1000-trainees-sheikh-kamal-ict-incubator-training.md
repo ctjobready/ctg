@@ -19,4 +19,4 @@ Bangladesh Hi-Tech Park Authority is setting up Sheikh Kamal IT Training and Inc
 
 ## Scope
 
-CodersTrust will provide training to 1,000 people on high demand IT skills
+CodersTrust will provide training to 1,000 people in high-demand IT skills.

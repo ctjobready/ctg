@@ -57,6 +57,20 @@
       "tag": "th",
       "text": "NHRDF (National Human Resource Development Fund, implemented by the National Skills Development Authority, NSDA)",
       "reason": "A contract name in the register's own wording (GV-04: \"NHRDF (implemented by NSDA)\"): \"implemented by\" is a clause inside the parenthesis, not a heading word, and a capital I in the middle of the name read as an error (cycle-28 review, Claude S20)."
+    },
+    {
+      "page": "/news/coderstrust-chairman-mr-aziz-ahmad-joins-bciu-roundtable-in-washington-d-c/",
+      "tag": "h1",
+      "text": "CodersTrust Chairman Mr. Aziz Ahmad Joins BCIU Roundtable in Washington, D.C.",
+      "rule": "trailing-period",
+      "reason": "The abbreviation \"D.C.\" (WP120, U.S. style per WP109); the period belongs to the abbreviation, not to the heading."
+    },
+    {
+      "page": "/news/",
+      "tag": "h3",
+      "text": "CodersTrust Chairman Mr. Aziz Ahmad Joins BCIU Roundtable in Washington, D.C.",
+      "rule": "trailing-period",
+      "reason": "The abbreviation \"D.C.\" (WP120, U.S. style per WP109); the period belongs to the abbreviation, not to the heading."
     }
   ]
 }
