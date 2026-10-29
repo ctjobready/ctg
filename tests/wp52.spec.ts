@@ -469,10 +469,10 @@ test.describe('Home: slide 2 is plain sentences (items 17 and 25; four since WP6
 });
 
 test.describe('Home: "Progress You Can Check" promises reports (item 36) and the recognition band gives the AWS item its line (item 24)', () => {
-  test('"Monthly reports will show progress toward paid work, as agreed in the program scope."', async ({ page }) => {
+  test('"Monthly reports show progress toward paid work, as agreed in the program scope."', async ({ page }) => {
     await open(page, HOME);
-    expect(compact(await page.locator('#features .card__text').nth(1).textContent())).toBe('Monthly reports will show progress toward paid work, as agreed in the program scope.');
-    expect(pagesWith('Monthly reports show progress toward paid work')).toEqual([]);
+    expect(compact(await page.locator('#features .card__text').nth(1).textContent())).toBe('Monthly reports show progress toward paid work, as agreed in the program scope.');
+    expect(pagesWith('Monthly reports will show progress toward paid work')).toEqual([]);
   });
 
   test('every badge has a line under its title; the AWS one is "CodersTrust is an AWS Authorized Training Partner." (PA-06)', async ({ page }) => {

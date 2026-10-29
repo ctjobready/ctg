@@ -349,7 +349,7 @@ test.describe('smaller wording fixes', () => {
     await open(page, '');
     await expect(page.locator('#cost h2')).toHaveText('Training and Evidence Fall Behind While You Wait');
     // WP38: Home's band is three short cards; WP45 (cycle-21 review): the reporting card is one line about the monthly reports (the "follow-up surveys" are in Home's FAQ answer)
-    expect(compact(await page.locator('#features .card__text').nth(1).textContent())).toBe('Monthly reports will show progress toward paid work, as agreed in the program scope.');
+    expect(compact(await page.locator('#features .card__text').nth(1).textContent())).toBe('Monthly reports show progress toward paid work, as agreed in the program scope.');
     expect(compact(await page.locator('#faq').textContent())).toContain('follow-up surveys at 3, 6 and 12 months');
     await open(page, 'programs/youthwide/');
     // WP39 (cycle-16 review): YouthWIDE's features band was three short cards; the second said "follow-up surveys". WP57 (cycle-29 review, GPT-6.1 Sol G2): the band is gone, and the glance's Reporting row says them

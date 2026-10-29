@@ -111,7 +111,7 @@ test.describe('Home: the trial slide leads with income and keeps its scope (item
     await open(page, '');
     const card = page.locator('#features li.card', { has: page.locator('h3', { hasText: 'Progress You Can Check' }) });
     await expect(card).toHaveCount(1);
-    await expect(card.locator('.card__text')).toHaveText('Monthly reports will show progress toward paid work, as agreed in the program scope.');
+    await expect(card.locator('.card__text')).toHaveText('Monthly reports show progress toward paid work, as agreed in the program scope.');
     expect(await card.getAttribute('data-fact')).toBe('PD-08');
     expect(await card.getAttribute('data-relieves')).toBe('P2');
   });

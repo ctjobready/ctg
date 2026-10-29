@@ -279,7 +279,7 @@ test.describe('Governments: the contracts table has short scope phrases and ever
       expect(s, 'a scope is a short phrase').not.toMatch(/\d|;|\.$/);
       expect(s.split(' ').length, s).toBeLessThanOrEqual(10);
     }
-    expect(scopes[0]).toBe('Curriculum, manuals, mentorship guidelines and Training of Trainers');
+    expect(scopes[0]).toBe('Curriculum, manuals, mentorship guidelines, Training of Trainers and direct training');
     const first = page.locator('#contracts tbody tr').first();
     expect(await first.getAttribute('data-fact')).toBe('GV-01 GV-11');
     // WP50 (cycle-25 review, item 15): each line is a full sentence (tests/wp50.spec.ts)

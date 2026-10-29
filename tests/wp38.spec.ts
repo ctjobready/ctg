@@ -33,7 +33,7 @@ test.describe('Home: "What a Supported Youth Cohort Includes" (WP41: it was "Wha
     {
       title: 'Progress You Can Check',
       // WP45 (cycle-21 review): one line, the monthly reports (PD-08), scoped
-      text: 'Monthly reports will show progress toward paid work, as agreed in the program scope.',
+      text: 'Monthly reports show progress toward paid work, as agreed in the program scope.',
       pain: 'P2',
       facts: ['PD-08'],
     },

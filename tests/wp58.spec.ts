@@ -343,7 +343,7 @@ test.describe('S10 and S11: headings', () => {
     await open(page, HOME);
     expect(await texts(page, '#features .card__title')).toEqual(['Training, Mentoring and Placement Support', 'Progress You Can Check', 'Tracks Chosen from Employer Demand']);
     const card = page.locator('#features li.card', { has: page.locator('h3', { hasText: 'Progress You Can Check' }) });
-    expect(compact(await card.locator('.card__text').textContent())).toBe('Monthly reports will show progress toward paid work, as agreed in the program scope.');
+    expect(compact(await card.locator('.card__text').textContent())).toBe('Monthly reports show progress toward paid work, as agreed in the program scope.');
     expect(await card.getAttribute('data-fact')).toContain('PD-08');
     const hits = sitePages().filter((p) => /Results You Can Check|Results Your Evaluators Can Check/.test(visible(p.html))).map((p) => p.route);
     expect(hits).toEqual([]);

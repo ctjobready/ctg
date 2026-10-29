@@ -140,7 +140,7 @@ test.describe('Item 2: the trial’s exchange rate is BDT 86 to the dollar', () 
     expect(Math.round(2354.311 / 86)).toBe(27);
     expect(Math.round(3118.155 / 86)).toBe(36);
     expect(Math.round(5714.605 / 86)).toBe(66);
-    expect(fact('RC-04').text).toBe('About +$27 a month for all women offered a place (+$36 for attenders) on a control-group mean of about $66');
+    expect(fact('RC-04').text).toBe('About +$27 a month for all women offered a place, on a control-group mean of about $66');
     expect(Math.round(3118.155 / 86), 'BDT 3,118 is about $36').toBe(36);
   });
 
