@@ -68,10 +68,12 @@ test.describe('WP107 item 1: Md. Shamsul Haque is "CEO of CodersTrust Bangladesh
   const CASES: [string, string, string][] = [
     ['BASIS-ASSET', BASIS, 'The CEO of CodersTrust Bangladesh, Md. Shamsul Haque, signed the agreement on behalf of CodersTrust.'],
     ['DoICT Training of Trainers', DOICT, 'said Mr. Md. Shamsul Haque, CEO of CodersTrust Bangladesh.'],
-    ['Ostitto', OSTITTO, 'Mr. Shamsul Haque, CEO of CodersTrust Bangladesh, and Former Additional Foreign Secretary emphasized'],
+    // WP124 proofread: the appositive is closed after the second title ("..., CEO of CodersTrust Bangladesh and former Additional Foreign Secretary, emphasized")
+    ['Ostitto', OSTITTO, 'Mr. Shamsul Haque, CEO of CodersTrust Bangladesh and former Additional Foreign Secretary, emphasized'],
     ['UPEACE partnership', UPEACE_MOU, 'Md. Shamsul Haque, CEO of CodersTrust Bangladesh, were present among others.'],
     ['NSU MOU', NSU, 'Mr. Md. Shamsul Haque, CEO of CodersTrust Bangladesh, along with Mr. Md. Iqbal Hassan Ferdous (CRO)'],
-    ['NCTB MOU', NCTB, 'Chairman of NCTB and CodersTrust Bangladesh CEO Md. Shamsul Haque signed the document'],
+    // WP124 proofread: the comma closing "Prof. Md. Farhadul Islam, Chairman of NCTB,"
+    ['NCTB MOU', NCTB, 'Chairman of NCTB, and CodersTrust Bangladesh CEO Md. Shamsul Haque signed the document'],
     ['America Week', AMERICA_WEEK, 'CodersTrust was proudly represented by CodersTrust Bangladesh CEO Md. Shamsul Haque, former Additional Foreign Secretary of Bangladesh, and his team'],
   ];
   for (const [name, slug, sentence] of CASES) {

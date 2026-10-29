@@ -14,7 +14,7 @@ political: true
 
 ![A man speaking into a microphone at the CodersTrust Certificate and Award Giving Ceremony 2022, with guests seated at a table beside him](../../assets/images/news/gardinar-emphasizes-skill-development-and-access-for-bangladeshis-to-us-digital-platform/gardinar-emphasizes-skill-development-1.jpg)
 
-James Gardiner, the Economic Officer, responsible for technology issues at the U.S. Embassy, highlighted the importance of continuous education, skill development, and access to U.S. digital platforms for Bangladeshi professionals working in the ICT industry. He shared this insight during the Certificate and Award Giving Ceremony organized by CodersTrust at their Banani main office on Tuesday, according to a press release.
+James Gardiner, the Economic Officer responsible for technology issues at the U.S. Embassy, highlighted the importance of continuous education, skill development, and access to U.S. digital platforms for Bangladeshi professionals working in the ICT industry. He shared this insight during the Certificate and Award Giving Ceremony organized by CodersTrust at their Banani main office on Tuesday, according to a press release.
 
 The ceremony celebrated the achievements of approximately 150 trainees who had recently completed their training at CodersTrust, as they received their well-deserved certificates.
 

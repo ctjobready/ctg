@@ -1,7 +1,7 @@
 ---
 title: "The Future: Building a Digital Factory for Bangladesh"
 date: 2026-07-17
-updated: 2026-08-01
+updated: 2026-10-29
 topic: insights
 excerpt: "Aziz Ahmad outlines a vision of Bangladesh as a digital factory, with AI and digital skills reaching every district, town, and village."
 cover: ../../assets/images/news/the-future-building-a-digital-factory-for-bangladesh/technical-excellence.jpg
@@ -19,6 +19,6 @@ His vision is to make Bangladesh a digital factory by embedding ICT, AI, and dig
 
 https://www.youtube.com/watch?v=uRsp5R3K4cY
 
-As Mr. Ahmad often says, “Learn a skill, the world is yours.” This philosophy is more than a slogan, it is a roadmap for transforming Bangladesh into a knowledge based economy driven by innovation, entrepreneurship, and globally competitive talent.
+As Mr. Ahmad often says, “Learn a skill, the world is yours.” This philosophy is more than a slogan—it is a roadmap for transforming Bangladesh into a knowledge-based economy driven by innovation, entrepreneurship, and globally competitive talent.
 
 He envisions a Bangladesh where every young person with determination and the right skills can compete on the world stage, making the country a global hub for digital talent, AI innovation, and technology-enabled services.

@@ -43,9 +43,10 @@ test.describe('WP122, Privacy Policy: YouTube is named wherever the page lists s
 });
 
 test.describe('WP122, Discovery Education post: every person is "Name, Title"', () => {
-  test('the tail of the second paragraph reads "Jeni Evans, Senior Director of Educational Partnerships, Ataul Goni Osmani, CodersTrust Bangladesh Country Director, and other officials of CodersTrust."', () => {
+  // WP124 proofread: the list of "Name, Title" entries is separated by semicolons
+  test('the tail of the second paragraph reads "Jeni Evans, Senior Director of Educational Partnerships; Ataul Goni Osmani, CodersTrust Bangladesh Country Director; and other officials of CodersTrust."', () => {
     const t = text(DISCOVERY);
-    expect(t).toContain('Jeni Evans, Senior Director of Educational Partnerships, Ataul Goni Osmani, CodersTrust Bangladesh Country Director, and other officials of CodersTrust.');
+    expect(t).toContain('Jeni Evans, Senior Director of Educational Partnerships; Ataul Goni Osmani, CodersTrust Bangladesh Country Director; and other officials of CodersTrust.');
     expect(t).not.toContain('CodersTrust Bangladesh Country Director, Ataul Goni Osmani and other officials');
   });
 });

@@ -71,14 +71,15 @@ test.describe('Item 3: "Last updated" and the Her Power news date are October 24
     expect(pageHtml('our-model/jobready-platform/')).toContain('"dateModified":"2026-10-29"');
   });
 
-  test('the Her Power news post reads "updated October 24, 2026" and its JSON-LD dateModified is 2026-10-24', async ({ page }) => {
+  // WP124: the Her Power post moved on to October 29, 2026 with its quotation-mark fix (tests/wp124.spec.ts)
+  test('the Her Power news post reads "updated October 29, 2026" and its JSON-LD dateModified is 2026-10-29', async ({ page }) => {
     const route = listPages().map((p) => p.route).find((r) => r.includes(HER_POWER_SLUG));
     expect(route, 'Her Power news route').toBeTruthy();
     await open(page, route!.replace(/^\//, ''));
-    await expect(page.locator('body')).toContainText('updated October 24, 2026');
+    await expect(page.locator('body')).toContainText('updated October 29, 2026');
     await expect(page.locator('body')).not.toContainText('updated October 15, 2026');
     const ld = (await page.locator('script[type="application/ld+json"]').allTextContents()).join(' ');
-    expect(ld).toContain('"dateModified":"2026-10-24"');
+    expect(ld).toContain('"dateModified":"2026-10-29"');
     expect(ld).not.toContain('"dateModified":"2026-10-15"');
   });
 });

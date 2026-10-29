@@ -13,7 +13,7 @@ seoTitle: "ICT Education for Street Children with LEEDO"
 
 ![Children raising their hands in celebration in the new computer lab at the LEEDO Peace Home](../../assets/images/news/coderstrust-leedo-join-to-expands-ict-education-to-street-children/leedo1.jpg)
 
-CodersTrust, a prominent EduTech Company, has embarked on an initiative to provide information technology training to underprivileged street children in Dhaka, aiming to empower them and foster self-reliance. This collaborative effort is being carried out in cooperation with LEEDO, an organization dedicated to the well-being and support of street children.
+CodersTrust, a prominent EdTech company, has embarked on an initiative to provide information technology training to underprivileged street children in Dhaka, aiming to empower them and foster self-reliance. This collaborative effort is being carried out in cooperation with LEEDO, an organization dedicated to the well-being and support of street children.
 
 To facilitate the training program, a dedicated computer lab has been established at the LEEDO Peace Home in Bosila, Dhaka. The lab is equipped with 20 desktop computers, chairs, tables, and other necessary materials, generously provided by CodersTrust.
 

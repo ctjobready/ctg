@@ -17,7 +17,7 @@ CodersTrust Bangladesh is proud to announce the signing of a strategic Memorandu
 
 On this momentous occasion, Md. Shamsul Haque, CEO of CodersTrust Bangladesh, and Md. Monayem Siddique, Co-Founder & CEO of Base Study Concern, formally signed the MOU on behalf of their respective organizations.
 
-Also present at the occasion were Md. Aminul Islam, Country Manager of CodersTrust Bangladesh; Md. Rakib Ahmed from Base Study Concern; Rezaul Karim Khan, Chief Business Officer of CodersTrust Bangladesh, Rana Saha, Finance & Accounts Manager of CodersTrust Bangladesh along with other senior officials from both organizations.
+Also present at the occasion were Md. Aminul Islam, Country Manager of CodersTrust Bangladesh; Md. Rakib Ahmed from Base Study Concern; Rezaul Karim Khan, Chief Business Officer of CodersTrust Bangladesh; and Rana Saha, Finance & Accounts Manager of CodersTrust Bangladesh, along with other senior officials from both organizations.
 
 What this partnership means for our students & alumni:
 

@@ -22,6 +22,6 @@ This is what CodersTrust is all about: using digital skills to build real, meani
 
 Since 2014, we’ve trained 130,000+ learners and worked in 16 countries and territories, with major operations in Bangladesh, empowering youth and underserved communities to build real economic opportunity.
 
-Here’s to lifting educated youth in Bangladesh and beyond and to many more collaborations ahead.
+Here’s to lifting educated youth in Bangladesh and beyond, and to many more collaborations ahead.
 
 Learn a skill, the world is yours.

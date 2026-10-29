@@ -327,7 +327,7 @@ export async function nuCourses(): Promise<NuCourse[]> {
       return {
         slug: e.data.slug,
         title: NU_COURSE_NAME[e.data.slug] ?? e.data.title,
-        modules: (e.data.modules ?? []).map((m) => (/^Internship/i.test(m) ? 'Internship, project work and seminar' : m)),
+        modules: (e.data.modules ?? []).map((m) => (/^Internship/i.test(m) ? 'Internship, Project Work and Seminar' : m)),
         roles: relatedCareerAreas(list(e.body ?? '', 'Career opportunities'), e.data.slug),
         faqs: (e.data.faqs ?? []).filter((_, i) => keep.includes(i)),
       };

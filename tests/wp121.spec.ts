@@ -28,6 +28,6 @@ test.describe('WP121', () => {
     expect(NEWS).toContain('CodersTrust Visits the BIMSTEC Secretariat to Discuss Science, Technology and Innovation Cooperation');
   });
   test('Discovery Education post: "Senior Director of Educational Partnerships"', () => {
-    expect(text('news/coderstrust-brings-discovery-education-the-global-leader-of-stem-education-to-bangladeshi-schools-and-learners/index.html')).toContain('Jeni Evans, Senior Director of Educational Partnerships,');
+    expect(text('news/coderstrust-brings-discovery-education-the-global-leader-of-stem-education-to-bangladeshi-schools-and-learners/index.html')).toContain('Jeni Evans, Senior Director of Educational Partnerships;'); // WP124: the list of people is semicolon-separated
   });
 });

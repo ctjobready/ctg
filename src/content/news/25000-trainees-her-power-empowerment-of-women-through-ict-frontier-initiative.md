@@ -1,7 +1,7 @@
 ---
 title: "Her Power Contract Aims to Train 25,125 Women: Empowerment of Women Through ICT Frontier Initiative"
 date: 2023-04-13
-updated: 2026-10-24
+updated: 2026-10-29
 topic: partnerships
 excerpt: "CodersTrust signs a contract with the DoICT for Her Power, which aims to train and support 25,125 women as ICT professionals and entrepreneurs."
 cover: ../../assets/images/news/25000-trainees-her-power-empowerment-of-women-through-ict-frontier-initiative/signing-with-her-power-project.jpg
@@ -22,7 +22,7 @@ CodersTrust signing contract with Department of Information and Communication Te
 
 ## Objective
 
-The objective of this project is to establish a framework and ecosystem that will create a platform and train and facilitate 25,125 women in becoming professionals and entrepreneurs in the field of information and communication technology (ICT). Those women entrepreneurs would be a ‘supportive’ force in building Bangladesh’s ICT sector.
+The objective of this project is to establish a framework and ecosystem that will create a platform and train and facilitate 25,125 women in becoming professionals and entrepreneurs in the field of information and communication technology (ICT). Those women entrepreneurs would be a “supportive” force in building Bangladesh’s ICT sector.
 
 ## Scope
 
