@@ -307,11 +307,11 @@ test.describe('WP104 item 9: "1,000" in the two 1,000-trainees news posts', () =
 
 // --------------------------------------------------------------------------------------------------------------------------------
 test.describe('WP104 item 10: "Last updated" stamps match each page’s latest content change', () => {
-  // Dates: TalentLEAP 2026-10-28 (its text last changed with WP98 to WP101, 28 October; checked by building the site before and after WP102);
+  // Dates: TalentLEAP 2026-10-29 (WP112: its FAQ answer and pipeline step changed on 29 October; it was 2026-10-28 from WP98 to WP101);
   // the NU overview and course pages, JobReady@Campus and JobReady Platform 2026-10-29 (WP102, 29 October: NU learners "being onboarded", the affiliated-college wording);
   // every page this WP changes (YouthWIDE, JobReady@Work, SuperKids, Outcomes 2026, Independent Evaluation, the NU overview, the UNDP YES case study) 2026-10-29.
   const STAMPED = [
-    { route: 'our-model/talentleap/', selector: '.lf-updated', text: 'Last updated October 28, 2026', iso: '2026-10-28' },
+    { route: 'our-model/talentleap/', selector: '.lf-updated', text: 'Last updated October 29, 2026', iso: '2026-10-29' },
     { route: 'our-model/jobready-platform/', selector: '.lf-updated', text: 'Last updated October 29, 2026', iso: '2026-10-29' },
     { route: 'programs/nu-postgraduate-diploma/', selector: '.updated', text: 'Last updated October 29, 2026', iso: '2026-10-29' },
     { route: 'programs/nu-postgraduate-diploma/cyber-security/', selector: '.updated', text: 'Last updated October 29, 2026', iso: '2026-10-29' },

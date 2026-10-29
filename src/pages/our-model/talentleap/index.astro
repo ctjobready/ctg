@@ -50,7 +50,7 @@ const faq = faqItems('foundations', ['Q14', 'Q10', 'Q4']).map((f) => {
   return f;
 });
 const jsonLd = [
-  articleNode({ path, headline: 'TalentLEAP: A Skill-by-Skill Path from Learning to Earning', description, datePublished: '2026-10-08', dateModified: '2026-10-28', author: 'CodersTrust Learning Design', about: { '@type': 'Thing', name: 'TalentLEAP' } }),
+  articleNode({ path, headline: 'TalentLEAP: A Skill-by-Skill Path from Learning to Earning', description, datePublished: '2026-10-08', dateModified: '2026-10-29', author: 'CodersTrust Learning Design', about: { '@type': 'Thing', name: 'TalentLEAP' } }),
   describedList('How TalentLEAP Works', steps.map((s) => ({ name: s.name, description: s.text })), `${path}#steps`),
   describedList('TalentLEAP example: Digital Marketing career path levels', levels, `${path}#levels`),
   faqPage(faq, path),
@@ -73,7 +73,7 @@ const d = discoveryCta();
   lead={bluf}
   description={description}
   path={path}
-  updated="2026-10-28"
+  updated="2026-10-29"
   toc={toc}
   breadcrumbs={[{ label: 'Our Model', href: '/our-model/' }, { label: 'TalentLEAP' }]}
   jsonLd={jsonLd}

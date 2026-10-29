@@ -428,7 +428,7 @@ test.describe('PX-05 is dated, and UNDP YES says "three months" (items 19 and 20
     }
     await open(page, 'programs/nu-postgraduate-diploma/');
     // WP57b (owner decision 2026-10-19): the tile names its publisher and year inside the sentence (tests/wp57b.spec.ts)
-    expect(await texts(page, 'main .pcs__label')).toContain('of employers worldwide reported difficulty finding the talent they need in 2026 (ManpowerGroup, 2026)');
+    expect(await texts(page, 'main .pcs__label')).toContain('of employers globally reported difficulty finding talent in 2026 (ManpowerGroup, 2026)');
     await open(page, 'programs/jobready-work/');
     const description = await page.locator('meta[name="description"]').getAttribute('content');
     expect(description).toBe('JobReady@Work builds custom AI-ready training and sources talent. In 2026, 72% of employers globally reported difficulty finding talent (ManpowerGroup).');

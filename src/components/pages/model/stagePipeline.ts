@@ -21,7 +21,7 @@ export const STAGE_GROUPS: PipelineGroup[] = [
     steps: [
       { name: 'Assess', icon: 'clipboard-check', text: 'A readiness assessment routes applicants to a career or foundation track.' },
       { name: 'Learn', icon: 'graduation-cap', text: 'Skill units on a track set from employer demand, with hands-on labs.' },
-      { name: 'Prepare for Certification', icon: 'award', text: 'Certification exam preparation, exam fee included.' },
+      { name: 'Prepare for Certification', icon: 'award', text: 'Certification exam preparation (exam fees and attempts as agreed in the program scope).' },
     ],
   },
   { stage: 'Earn', steps: [{ name: 'Earn', icon: 'briefcase', text: 'Milestone-based mentoring and placement support toward the track’s work-entry goal.' }] },

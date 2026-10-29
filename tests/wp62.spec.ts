@@ -336,7 +336,7 @@ test.describe('Item 6 (Sonnet, Gemini; reworded by WP63, GPT-6.1 Sol G2): "Will 
     for (const [route, opening] of [
       [DEV_PARTNERS, 'We test local employer demand in your portfolio countries first and choose each country’s tracks with local partners.'],
       [GOVERNMENTS, 'We test local employer demand, lab access and facilitator supply first and choose each country’s tracks with local partners.'],
-      ['partner-with-us/universities/', 'We test local employer demand for your graduates’ skills and your campus labs first, and choose each country’s tracks with local partners.'],
+      ['partner-with-us/universities/', 'We test local employer demand for your students’ skills and your campus labs first, and choose each country’s tracks with local partners.'],
     ] as const) {
       await open(page, route);
       expect(await answerOf(page), route).toBe(`${opening} ${SECOND}`);

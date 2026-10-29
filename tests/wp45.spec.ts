@@ -318,7 +318,7 @@ test.describe('News: the Her Power post carries a delivery note (item 20)', () =
 
 // WP46 (cycle-22 review): Our Model no longer prints the hub's inclusion answer word for word; its "What Does It Cost?" is the one-line route answer with a link to the hub's FAQ (tests/wp46.spec.ts)
 test.describe('The cost inclusions are one sentence in the hub (item 21); Our Model links to it (WP46)', () => {
-  const SENTENCE = 'Supported youth cohorts include outreach and selection, training, certification exam preparation and the exam fee, three months of mentoring, placement support and 12 months of outcome tracking after each course.';
+  const SENTENCE = 'Supported youth cohorts include outreach and selection, training, certification exam preparation and the exam fee, three months of mentoring, placement support and 12 months of outcome tracking after each course, as agreed in the program scope.';
   const COST = `Pricing is set per program; we share an indicative budget in the discovery session. ${SENTENCE} Devices, stipends, connectivity and independent evaluation are budgeted separately where needed.`;
 
   for (const route of ['partner-with-us/']) {
@@ -347,7 +347,7 @@ test.describe('The cost inclusions are one sentence in the hub (item 21); Our Mo
 
   test('every inclusion in the sentence is one of PD-02’s standard inclusions', async () => {
     const pd02 = fact('PD-02').text.toLowerCase();
-    for (const phrase of ['outreach and selection', 'certification exam preparation (exam fee included)', 'three months of mentoring', 'placement support', 'outcome tracking for 12 months after each course']) expect(pd02, phrase).toContain(phrase);
+    for (const phrase of ['outreach and selection', 'certification exam preparation (exam fees and attempts as agreed in the program scope)', 'three months of mentoring', 'placement support', 'outcome tracking for 12 months after each course']) expect(pd02, phrase).toContain(phrase);
   });
 });
 

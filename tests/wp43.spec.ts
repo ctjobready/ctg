@@ -262,7 +262,7 @@ test.describe('Home: the survey slide’s timing line is one sentence that repea
 
 test.describe('Partner with Us hub: "What Does It Cost?" is three shorter sentences (item 5)', () => {
   const COST =
-    'Pricing is set per program; we share an indicative budget in the discovery session. Supported youth cohorts include outreach and selection, training, certification exam preparation and the exam fee, three months of mentoring, placement support and 12 months of outcome tracking after each course. Devices, stipends, connectivity and independent evaluation are budgeted separately where needed.';
+    'Pricing is set per program; we share an indicative budget in the discovery session. Supported youth cohorts include outreach and selection, training, certification exam preparation and the exam fee, three months of mentoring, placement support and 12 months of outcome tracking after each course, as agreed in the program scope. Devices, stipends, connectivity and independent evaluation are budgeted separately where needed.';
 
   test('the hub answer is the three sentences, the FAQ JSON-LD says the same words, and the delivery inventory is gone', async ({ page }) => {
     await open(page, 'partner-with-us/');
@@ -278,7 +278,7 @@ test.describe('Partner with Us hub: "What Does It Cost?" is three shorter senten
 
   test('every claim in the answer rests on the register (PD-02, PD-02a): the same items, the 12 months after each course, the separately budgeted items', async () => {
     const pd02 = fact('PD-02').text;
-    for (const phrase of ['Pricing is set per program', 'certification exam preparation (exam fee included)', 'three months of mentoring', 'placement support', 'outcome tracking for 12 months after each course', 'devices, stipends, connectivity and independent evaluation are budgeted separately where needed']) {
+    for (const phrase of ['Pricing is set per program', 'certification exam preparation (exam fees and attempts as agreed in the program scope)', 'three months of mentoring', 'placement support', 'outcome tracking for 12 months after each course', 'devices, stipends, connectivity and independent evaluation are budgeted separately where needed']) {
       expect(pd02.toLowerCase(), phrase).toContain(phrase.toLowerCase());
     }
     expect(fact('PD-02a').text).toContain('exam fee');
