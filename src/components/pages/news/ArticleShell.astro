@@ -39,6 +39,8 @@ interface Props {
   heroCaption?: string;
   /** Who the post is about: picks the closing call to action (NEWS_CTA). */
   audience?: NewsAudience;
+  /** WP119: the post was written in October 2026 from dated sources (front matter `writtenFromSources`); the banner then gives its own note and the event date instead of the archive sentences. */
+  writtenFromSources?: boolean;
   /** One line under the banner's standard sentences (front matter `archiveNote`): what an announced aim ended up as, in the register's words. */
   archiveNote?: string;
   /** Register facts the note states (front matter `archiveNoteFacts`), rendered as data-fact. */
@@ -46,7 +48,7 @@ interface Props {
   /** A text link that closes the note (front matter `archiveNoteLink`): the page that now tells the story, e.g. its case study (WP46). */
   archiveNoteLink?: { label: string; href: string };
 }
-const { headline, seoTitle, description, path, date, updated, topic, image, imageAlt, imageAsset, heroCaption, audience = 'general', archiveNote, archiveNoteFacts = [], archiveNoteLink } = Astro.props;
+const { headline, seoTitle, description, path, date, updated, topic, image, imageAlt, imageAsset, heroCaption, audience = 'general', writtenFromSources = false, archiveNote, archiveNoteFacts = [], archiveNoteLink } = Astro.props;
 const closing = NEWS_CTA[audience];
 const closingHref = ctaHref(closing.cta);
 const canonical = canonicalUrl(path);
@@ -97,12 +99,18 @@ const share = {
     </header>
     <p class="archive-banner" role="note">
       <Icon name="calendar" size={18} />
-      <span>
-        Archived post, lightly edited. Figures, job titles and references to officeholders reflect the date of publication; current figures are on the{' '}
-        <a class="link" href={url('/impact/')}>Impact pages</a>.
-        Published <time datetime={isoDate(date)}>{formatDate(date)}</time>{updated && <>; updated <time datetime={isoDate(updated)}>{formatDate(updated)}</time></>}.
-        {archiveNote && <span class="archive-banner__note" data-fact={archiveNoteFacts.length ? archiveNoteFacts.join(' ') : undefined}>{archiveNote}{archiveNoteLink && <>{' '}<a class="link" href={url(archiveNoteLink.href)}>{archiveNoteLink.label}</a></>}</span>}
-      </span>
+      {writtenFromSources ? (
+        <span>
+          Written in October 2026 from the dated sources linked in the text. Event date: <time datetime={isoDate(date)}>{formatDate(date)}</time>.
+        </span>
+      ) : (
+        <span>
+          Archived post, lightly edited. Figures, job titles and references to officeholders reflect the date of publication; current figures are on the{' '}
+          <a class="link" href={url('/impact/')}>Impact pages</a>.
+          Published <time datetime={isoDate(date)}>{formatDate(date)}</time>{updated && <>; updated <time datetime={isoDate(updated)}>{formatDate(updated)}</time></>}.
+          {archiveNote && <span class="archive-banner__note" data-fact={archiveNoteFacts.length ? archiveNoteFacts.join(' ') : undefined}>{archiveNote}{archiveNoteLink && <>{' '}<a class="link" href={url(archiveNoteLink.href)}>{archiveNoteLink.label}</a></>}</span>}
+        </span>
+      )}
     </p>
     {Astro.slots.has('hero') && <figure class="art__hero"><slot name="hero" />{heroCaption && <figcaption class="art__caption">{heroCaption}</figcaption>}</figure>}
     <div class="prose art__body"><slot /></div>

@@ -8,7 +8,7 @@ cover: ../../assets/images/news/coderstrust-launches-in-copenhagen-with-a-virgin
 coverAlt: "A speaker in a dark jacket holds a microphone and addresses seated dinner guests in a hotel ballroom"
 tags: []
 seoTitle: "CodersTrust Launches in Copenhagen"
-archiveNote: "Added in October 2026 from the dated sources linked in the text."
+writtenFromSources: true
 ---
 
 CodersTrust launched in Copenhagen, Denmark, in April 2014, at a Virgin Unite dinner held in the presence of Sir Richard Branson and early Skype investor Morten Lund.

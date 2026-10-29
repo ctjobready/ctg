@@ -1,7 +1,7 @@
 ---
 title: "A Proud Milestone for CodersTrust!"
 date: 2026-08-01
-updated: 2026-09-02
+updated: 2026-10-29
 topic: programs-events
 excerpt: "CodersTrust and the U.S. Embassy Dhaka mark America’s 250th anniversary with a gamified digital treasure hunt that drew 1,400+ registered users."
 cover: ../../assets/images/news/a-proud-milestone-for-coderstrust/great-american-treasure-hunt-2.jpg
@@ -16,7 +16,7 @@ tags: ["Latest News", "U.S. Embassy"]
 
 Our “Great American Treasure Hunt” partnership with the U.S. Embassy Dhaka celebrating America’s 250th anniversary was a huge success! Our Bangladesh team built a gamified digital experience that drew 1,400+ registered users and 15,000+ QR code scans, culminating in a lively in-person trivia finale at the EMK Center.
 
-This is what CodersTrust is all about using digital skills to build real, meaningful platforms. To our clients, students, funders, and well-wishers: this milestone belongs to you too.
+This is what CodersTrust is all about: using digital skills to build real, meaningful platforms. To our clients, students, funders, and well-wishers: this milestone belongs to you too.
 
 ![A man taking a selfie with a large audience seated in a hall behind him](../../assets/images/news/a-proud-milestone-for-coderstrust/great-american-treasure-hunt-2.jpg)
 

@@ -1,7 +1,7 @@
 ---
 title: "Empowering Women in Digital Economy: Certificate Giving Ceremony by CodersTrust with Joyeeta Foundation"
 date: 2024-05-28
-updated: 2026-10-13
+updated: 2026-10-29
 topic: programs-events
 excerpt: "CodersTrust and the Joyeeta Foundation hold a certificate ceremony for women who completed advanced social media marketing training."
 cover: ../../assets/images/news/empowering-women-in-digital-economy-certificate-giving-ceremony-by-coderstrust-with-joyeeta-foundation/certifictae-ceremony.jpg
@@ -28,7 +28,7 @@ Aziz Ahmad, Chairman of CodersTrust, joined the event virtually from Geneva, Swi
 
 ![Women learners seated in rows at a certificate-giving ceremony](../../assets/images/news/empowering-women-in-digital-economy-certificate-giving-ceremony-by-coderstrust-with-joyeeta-foundation/certifictae-ceremony-2.jpg)
 
-CodersTrust is a global EdTech-based workforce development and skill-oriented education provider that has trained learners since 2014, has worked in 16 countries and territories, and is onboarding 1.5M+ National University learners. Its programs range from K-12 STEM, coding, and robotics to professional skills and advanced technology skills for the digital era.
+CodersTrust is a global EdTech-based workforce development and skill-oriented education provider that has trained learners since 2014 and has worked in 16 countries and territories. Its programs range from K-12 STEM, coding, and robotics to professional skills and advanced technology skills for the digital era.
 
 CodersTrust’s mission is to transform underprivileged, disadvantaged, and marginalized communities, especially youth and women, into skilled professionals and connect them with work opportunities to enable financial independence and economic growth on a global scale. CodersTrust has developed a sustainable and scalable market-based model for providing skill-focused training to youth worldwide, designed to support employment, upward social mobility, and durable social impact.
 

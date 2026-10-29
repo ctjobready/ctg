@@ -58,6 +58,11 @@ const news = defineCollection({
       archiveNoteFacts: z.array(z.string()).default([]),
       /** WP46 (cycle-22 review): an optional text link that closes the archive note, to the page that now tells the story (a case study); `href` is a site path, `label` a full sentence ("See the Her Power case study."). */
       archiveNoteLink: z.object({ label: z.string().max(60), href: z.string().startsWith('/') }).optional(),
+      /**
+       * WP119 (Opus Medium run 1, kit 86): true for the archive entries written in October 2026 from dated public sources (ADDED_NEWS in scripts/manifest-lib.mjs). They were never published on the old site, so the banner does not call them
+       * an "Archived post ... Published <date>"; it says they were written in October 2026 from the dated sources linked in the text, and gives the event date (the post's `date`).
+       */
+      writtenFromSources: z.boolean().default(false),
       /** More photographs from the old post that the body does not place inline; shown as a PhotoGallery under the text. */
       gallery: z.array(z.object({ image: image(), alt: z.string() })).default([]),
     }),

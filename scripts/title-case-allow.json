@@ -49,6 +49,12 @@
     {
       "page": "/partner-with-us/governments/",
       "tag": "th",
+      "text": "Her Power: Department of ICT (DoICT), under the ICT Division",
+      "reason": "A contract name in the settled WP115/WP117 form (\"the Department of ICT (DoICT), under the ICT Division\"): \"under\" states the department-division relationship, as in the same sentence everywhere else on the site, and is not a heading word (WP119, kit 86)."
+    },
+    {
+      "page": "/partner-with-us/governments/",
+      "tag": "th",
       "text": "NHRDF (National Human Resource Development Fund, implemented by the National Skills Development Authority, NSDA)",
       "reason": "A contract name in the register's own wording (GV-04: \"NHRDF (implemented by NSDA)\"): \"implemented by\" is a clause inside the parenthesis, not a heading word, and a capital I in the middle of the name read as an error (cycle-28 review, Claude S20)."
     }

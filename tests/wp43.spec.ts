@@ -89,7 +89,8 @@ test.describe('Investors: the track-record band (item 1)', () => {
     // the first mention of DoICT on the page is spelled out (the Her Power answer in the FAQ says "DoICT")
     const text = await mainText(page);
     expect(text.indexOf('the Department of ICT (DoICT)')).toBeGreaterThan(-1);
-    expect(text.indexOf('the Department of ICT (DoICT)')).toBeLessThan(text.indexOf('a national program of DoICT'));
+    // WP115: the Her Power answer now spells DoICT out as well, so the check is that the first "DoICT" on the page sits inside "Department of ICT (DoICT)".
+    expect(text.indexOf('DoICT')).toBe(text.indexOf('Department of ICT (DoICT)') + 'Department of ICT ('.length);
   });
 
   test('every institution the paragraph names is in the register fact it rests on, and the two relationships are the register’s', async () => {

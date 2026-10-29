@@ -10,7 +10,7 @@ expertise: []
 legacyUrl: "https://coderstrust.global/aziz-ahmad/"
 ---
 
-Aziz Ahmad is the Co-Founder and Chairman of CodersTrust, which he founded in 2014. A Bangladeshi-American business leader, he is passionate about making applied education affordable and accessible to the masses. His goal is to empower people to break through traditional career barriers and acquire the modern digital skills needed to meet global skill demands, so that they can earn a living.
+Aziz Ahmad is the Co-Founder and Chairman of CodersTrust, which he co-founded in 2014. A Bangladeshi-American business leader, he is passionate about making applied education affordable and accessible to the masses. His goal is to empower people to break through traditional career barriers and acquire the modern digital skills needed to meet global skill demands, so that they can earn a living.
 
 Together with co-founder Ferdinand Kjærulff, a former Danish Army captain, he launched CodersTrust in Copenhagen in 2014, in the presence of Sir Richard Branson and investor Morten Lund.
 

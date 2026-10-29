@@ -704,7 +704,8 @@ test.describe('five news-archive entries, dated and sourced, in American English
       expect(n.title).toBe(titleCase(n.title));
       expect(compact(await page.locator('main time').first().textContent())).toBe(n.date);
       expect(compact(await page.locator('main').textContent())).toContain(n.topic);
-      await expect(page.locator('.archive-banner__note')).toHaveText('Added in October 2026 from the dated sources linked in the text.');
+      // WP119: these posts were written in October 2026, so the banner is their own note (not "Archived post ... Published <old date>"); the event date is the date the post shows
+      expect(compact(await page.locator('.archive-banner').textContent())).toBe(`Written in October 2026 from the dated sources linked in the text. Event date: ${n.date}.`);
       const links = page.locator('article.art .art__body a[href^="http"]');
       expect(await links.count(), 'at least one source link').toBeGreaterThan(0);
       expect(await links.evaluateAll((as) => as.every((a) => /noopener/.test(a.getAttribute('rel') ?? '')))).toBe(true);

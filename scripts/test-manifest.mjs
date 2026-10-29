@@ -152,7 +152,8 @@ for (const id of ADDED_NEWS) {
   if (mapped.has(route)) err(`news entry ${id} is declared added but a legacy post row points at it`);
   const h = html(route);
   if (h === null || isRedirectStub(h)) err(`added news entry ${route} missing from dist/`);
-  else if (!/Published\s/.test(h)) err(`added news entry ${route} has no dated archive banner`);
+  // WP119: an added entry was written in October 2026, so its banner is its own note with the event date, not "Published <date>"
+  else if (!/Written in October 2026[\s\S]*?Event date:\s/.test(h)) err(`added news entry ${route} has no dated banner note ("Written in October 2026 ... Event date: ...")`);
 }
 for (const r of postRows) if (!news.some((n) => `/news/${n.id}/` === r.destination)) err(`post ${r.legacy_url} points at ${r.destination}, which is not an article`);
 if (postRows.length !== 42 || news.length !== 42) err(`posts accounted for: ${postRows.length} legacy post rows, ${news.length} migrated articles (expected 42/42)`);

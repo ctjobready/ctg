@@ -281,7 +281,7 @@ test.describe('Item 17: polish', () => {
   test('Governments: the Her Power row has no nested parentheses', async ({ page }) => {
     await open(page, 'partner-with-us/governments/');
     const first = compact(await page.locator('#contracts tbody tr').first().textContent());
-    expect(first).toContain('Her Power: Department of ICT (DoICT), ICT Division');
+    expect(first).toContain('Her Power: Department of ICT (DoICT), under the ICT Division');
     expect(first).not.toContain('Her Power (Department');
   });
 

@@ -98,7 +98,7 @@ test.describe('Governments: Her Power is a row of the contracts table and a link
     const row = page.locator('#contracts tbody tr').first();
     expect(await row.getAttribute('data-fact')).toBe('GV-01 GV-11');
     const text = compact(await row.textContent());
-    expect(text).toContain('Her Power: Department of ICT (DoICT), ICT Division');
+    expect(text).toContain('Her Power: Department of ICT (DoICT), under the ICT Division');
     expect(text).toContain('25,125 women across 130 sub-districts (upazilas)');
     expect(fact('GV-01').text).toContain('a national program that trained 25,125 women across 130 sub-districts (upazilas), meeting its target');
     // WP50 (cycle-25 review, item 15): the row's three lines are full sentences ("CodersTrust trained 2,500 women directly." ...; tests/wp50.spec.ts); the register's GV-11 string is unchanged

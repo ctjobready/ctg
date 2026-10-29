@@ -40,7 +40,7 @@ async function faqJsonLd(page: Page) {
 
 test.describe('TalentLEAP: the course-platform answer compares with a self-paced course alone (item 1)', () => {
   const QUESTION = 'How Is CodersTrust Different from an Online Course Platform?';
-  const FIRST = 'Compared with a self-paced course alone, supported CodersTrust cohorts add mentoring, certification exam preparation and placement support, agreed in each program’s scope.';
+  const FIRST = 'Compared with a self-paced course alone, supported CodersTrust cohorts add mentoring, certification exam preparation and placement support.';
   const SECOND = 'As agreed in the program scope, every supported TalentLEAP cohort pairs 100 training hours per certification with three months of milestone-based mentoring, certification exam preparation (with exam fees and attempts), placement support and outcome tracking for 12 months after each course.';
 
   test('the answer is the scoped comparison followed by the unchanged cohort sentence, in the page and in its FAQ JSON-LD; it no longer generalizes about every course platform', async ({ page }) => {

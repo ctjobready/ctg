@@ -16,7 +16,7 @@ export interface FieldNewsPhoto {
 /** Short event name per post. */
 export const FIELD_NEWS_LABEL: Record<string, string> = {
   "1000-trainees-enhancing-digital-government-economy-edge": "EDGE project agreement",
-  "1000-trainees-sheikh-kamal-ict-incubator-training": "Sheikh Kamal ICT Incubator training agreement",
+  "1000-trainees-sheikh-kamal-ict-incubator-training": "SKIT Incubator training agreement, Barishal",
   "25000-trainees-her-power-empowerment-of-women-through-ict-frontier-initiative": "Her Power contract signing",
   "a-proud-milestone-for-coderstrust": "A proud milestone for CodersTrust",
   "aziz-ahmad-advocates-technology-skills-for-peace-at-un-world-press-freedom-day": "UN World Press Freedom Day session",
@@ -34,7 +34,7 @@ export const FIELD_NEWS_LABEL: Record<string, string> = {
   "coderstrust-chairman-and-co-founder-aziz-ahmad-participates-in-u-s-energy-security-panel": "U.S. energy security panel",
   "coderstrust-chairman-aziz-ahmad-meets-bangladesh-foreign-affairs-minister-khalilur-rahman": "Meeting with the Foreign Affairs Minister of Bangladesh",
   "coderstrust-chairman-aziz-ahmad-visits-city-college-downtown-to-explore-global-partnership": "City College Downtown visit",
-  "coderstrust-chairman-mr-aziz-ahmad-joins-bciu-roundtable-in-washington-d-c": "BCIU roundtable, Washington, DC",
+  "coderstrust-chairman-mr-aziz-ahmad-joins-bciu-roundtable-in-washington-d-c": "BCIU roundtable, Washington, D.C.",
   "coderstrust-chairman-mr-aziz-ahmad-leads-delegation-to-u-s-embassy-to-discuss-youth-empowerment": "Delegation to the U.S. Embassy",
   "coderstrust-chairman-mr-aziz-ahmad-receives-sdg-life-achievement-award-from-the-unsgii": "SDG Life Achievement Award",
   "coderstrust-chairman-mr-aziz-ahmad-speaks-on-cybersecurity-artificial-intelligence-at-united-nations-general-assembly-unga-2025": "Digital Ambassadors Forum, UNGA 2025",

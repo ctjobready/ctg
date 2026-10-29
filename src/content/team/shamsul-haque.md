@@ -10,7 +10,7 @@ expertise: ["Emerging Markets", "Government and NGOs", "Strategic Planning", "Bu
 legacyUrl: "https://coderstrust.global/team-member/shamsul-haque/"
 ---
 
-Md. Shamsul Haque is the CEO of CodersTrust Bangladesh and a former Additional Foreign Secretary of Bangladesh. He brings 38 years of diverse experience as a banker, advertising executive, and Additional Foreign Secretary.
+Md. Shamsul Haque is the CEO of CodersTrust Bangladesh and a former Additional Foreign Secretary of Bangladesh. He brings 38 years of experience, including in banking and advertising.
 
 Specializing in government relations and foreign policy, he draws on deep expertise in multilateral negotiations to strengthen the organization's global positioning. His skills in competitive intelligence and scenario planning contribute to shaping new initiatives.
 

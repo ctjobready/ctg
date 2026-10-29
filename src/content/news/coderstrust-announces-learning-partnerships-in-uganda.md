@@ -1,12 +1,13 @@
 ---
 title: "CodersTrust Announces Learning Partnerships in Uganda"
 date: 2020-09-10
+updated: 2026-10-29
 topic: partnerships
 excerpt: "In September 2020, CodersTrust Global announced learning partnerships in Uganda with Maarifasasa, Makerere University Business School and U-Touch."
 coverAlt: ""
 tags: []
 seoTitle: "CodersTrust Announces Uganda Partnerships"
-archiveNote: "Added in October 2026 from the dated sources linked in the text."
+writtenFromSources: true
 ---
 
 In September 2020, CodersTrust Global announced learning partnerships in Uganda with Maarifasasa, Makerere University Business School and U-Touch.

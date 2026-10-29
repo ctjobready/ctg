@@ -167,7 +167,7 @@ test.describe('Item 8: Aziz Ahmad meta description', () => {
   test('the appositive attaches to Aziz Ahmad and the text is within 155 characters', () => {
     const meta = metaDescription(htmlFor('/about/team/aziz-ahmad/'));
     expect(meta).toBe(
-      'Aziz Ahmad, a Bangladeshi-American business leader, is the Co-Founder and Chairman of CodersTrust, which he founded in 2014 with Ferdinand Kjærulff.',
+      'Aziz Ahmad, a Bangladeshi-American business leader, is the Co-Founder and Chairman of CodersTrust, which he co-founded in 2014 with Ferdinand Kjærulff.',
     );
     expect(meta.length).toBeLessThanOrEqual(155);
   });
