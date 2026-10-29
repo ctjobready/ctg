@@ -183,15 +183,15 @@ test.describe('WP85: the pages that state the 25,125', () => {
     // WP94 (triage A4): Investors' note ends with the pointer sentence.
     expect(compact(await page.locator('#reach .ir__note').textContent())).toBe(`${SCOPE_NOTE} Her Power’s 25,125 are already counted in the 150,000+ enrollments above, not additional people.`);
     const faq = page.locator('#faq details, #faqs details', { has: page.locator('summary', { hasText: 'Can You Deliver at National Scale?' }) }).first();
-    expect(compact(await faq.textContent())).toContain('In Her Power, a national program of DoICT, the ICT Division, CodersTrust provided the curriculum, training manuals and mentorship guidelines and trained 2,400 women directly; the national program trained 25,125 women across 130 sub-districts (upazilas), meeting its target.');
+    expect(compact(await faq.textContent())).toContain('In Her Power, a national program of the Department of ICT (DoICT), under the ICT Division, CodersTrust provided the curriculum, training manuals and mentorship guidelines and trained 2,400 women directly; the national program trained 25,125 women across 130 sub-districts (upazilas), meeting its target.');
     await open(page, 'our-model/jobready-platform/');
     expect(compact(await page.locator('#why .jr__whynote').textContent())).toBe(SCOPE_NOTE);
   });
 
-  test('YouthWIDE: "Her Power, a national program of DoICT, the ICT Division, trained 25,125 women across 130 sub-districts (upazilas), meeting its target."', async ({ page }) => {
+  test('YouthWIDE: "Her Power, a national program of the Department of ICT (DoICT), under the ICT Division, trained 25,125 women across 130 sub-districts (upazilas), meeting its target."', async ({ page }) => {
     await open(page, 'programs/youthwide/');
     const faq = page.locator('#faq details, #faqs details', { has: page.locator('summary', { hasText: 'Can You Deliver at National Scale?' }) }).first();
-    expect(compact(await faq.textContent())).toContain('Her Power, a national program of DoICT, the ICT Division, trained 25,125 women across 130 sub-districts (upazilas), meeting its target. CodersTrust provided the curriculum, training manuals and mentorship guidelines and trained 2,400 women directly.');
+    expect(compact(await faq.textContent())).toContain('Her Power, a national program of the Department of ICT (DoICT), under the ICT Division, trained 25,125 women across 130 sub-districts (upazilas), meeting its target. CodersTrust provided the curriculum, training manuals and mentorship guidelines and trained 2,400 women directly.');
   });
 
   test('the Her Power case study: heading "National Scale: The Wider Program"; "The national program’s reach is a separate measure: ... trained 25,125 women ..., meeting its target."', async ({ page }) => {

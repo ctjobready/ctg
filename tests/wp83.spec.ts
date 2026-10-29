@@ -180,10 +180,10 @@ test.describe('WP83 (WP85 wording): the pages that state the 25,125', () => {
     expect(compact(await page.locator('#why .jr__whynote').textContent())).toBe(SCOPE_NOTE);
   });
 
-  test('YouthWIDE: the national-scale answer says Her Power, a national program of DoICT, the ICT Division, trained 25,125 women, meeting its target', async ({ page }) => {
+  test('YouthWIDE: the national-scale answer says Her Power, a national program of the Department of ICT (DoICT), under the ICT Division, trained 25,125 women, meeting its target', async ({ page }) => {
     await open(page, 'programs/youthwide/');
     const faq = page.locator('#faq details, #faqs details', { has: page.locator('summary', { hasText: 'Can You Deliver at National Scale?' }) }).first();
-    expect(compact(await faq.textContent())).toContain('Her Power, a national program of DoICT, the ICT Division, trained 25,125 women across 130 sub-districts (upazilas), meeting its target. CodersTrust provided the curriculum, training manuals and mentorship guidelines and trained 2,400 women directly.');
+    expect(compact(await faq.textContent())).toContain('Her Power, a national program of the Department of ICT (DoICT), under the ICT Division, trained 25,125 women across 130 sub-districts (upazilas), meeting its target. CodersTrust provided the curriculum, training manuals and mentorship guidelines and trained 2,400 women directly.');
   });
 
   test('the Her Power case study: "National Scale: The Wider Program"; the tracked 372 of 800 from the 2,400 trained directly is unchanged', async ({ page }) => {

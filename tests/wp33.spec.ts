@@ -145,7 +145,7 @@ test.describe('Investors: the national-scale answer closes on two short sentence
     const sentences = body.split(/(?<=[.?!])\s+(?=[A-Z])/);
     expect(sentences).toHaveLength(3);
     expect(sentences[0]).toBe(
-      'In Her Power, a national program of DoICT, the ICT Division, CodersTrust provided the curriculum, training manuals and mentorship guidelines and trained 2,400 women directly; the national program trained 25,125 women across 130 sub-districts (upazilas), meeting its target.',
+      'In Her Power, a national program of the Department of ICT (DoICT), under the ICT Division, CodersTrust provided the curriculum, training manuals and mentorship guidelines and trained 2,400 women directly; the national program trained 25,125 women across 130 sub-districts (upazilas), meeting its target.',
     );
     // the 41-word closing sentence is now two, each short
     // WP45 (cycle-21 review): "are designed to run" (PD-06 states a design, not a delivered capacity)

@@ -172,7 +172,7 @@ test.describe('Programs', () => {
     await open(page, 'programs/youthwide/');
     expect(compact(await main(page))).not.toContain('designed to keep pace as AI changes entry-level tasks');
     await open(page, 'partner-with-us/investors/');
-    expect(compact(await everything(page))).toContain('we choose tracks from current employer demand, set per country, and agree each track’s AI content and work-entry plan with you before enrollment');
+    expect(compact(await everything(page))).toContain('we choose tracks from current employer demand, set per country, and agree each track’s AI content and work-entry plan with the program partner before enrollment');
   });
 });
 
