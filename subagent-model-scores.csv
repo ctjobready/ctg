@@ -380,3 +380,4 @@ timestamp,model_slug,reasoning_effort,score,task_complexity
 2026-10-29T08:27:25Z,claude-haiku-5-5,medium,5,low
 2026-10-29T09:13:43Z,claude-opus-5-5,medium,5,medium
 2026-10-29T09:17:29Z,claude-haiku-5-5,medium,5,low
+2026-10-29T11:26:49Z,claude-sonnet-5-5,high,4,medium
