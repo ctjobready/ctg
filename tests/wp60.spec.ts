@@ -9,7 +9,7 @@ import { listPages } from './support/pages';
 /**
  * WP60 behaviors (cycle-32 whole-site reviews: Grok R1, R2, R4, R5 and R6; Claude S3, S4 (owner answer 2026-10-20) and S6; GPT-6.1 Sol G1, G2, G3 and G5). Retrospective coverage (the owner exempted this project from test-first work);
  * each test states one observable behavior of the built site (run `npm run build` first, then `PORT=<port> npx playwright test tests/wp60.spec.ts --project=chromium`):
- *   - R1: Global Reach's note says "Rows that are a partnership, an announced cooperation or the launch say so in their note; the other rows are training programs." and the table's rows bear it out (Bangladesh's and Somaliland's notes describe training);
+ *   - R1: Global Reach's note says "Rows that are a partnership or the launch say so in their note; the other rows are training programs." and the table's rows bear it out (Bangladesh's and Somaliland's notes describe training);
  *   - R2: Maria Dewan "first came across Her Power, where CodersTrust was a training partner" on Success Stories and Universities (WP61, GPT-6.1 Sol G6: the Her Power case study’s card says "joined Her Power" in two plain sentences); no page says CodersTrust implemented the project;
  *   - R4: the JobReady Platform "In the Pipeline" tile reads "... in the onboarding pipeline, not learners trained by CodersTrust" (SC-04's own label plus the clause Home's slide 2 uses); the register's label and the other pages that show it are unchanged;
  *   - R5: YouthWIDE's country answer ends "CodersTrust has worked in 16 countries and territories; most delivery has been in Bangladesh.";
@@ -99,7 +99,7 @@ test.describe('R1 (Grok): Global Reach says which rows are partnerships, an anno
   test('the note says it in the new words, and the old sentence is gone', async ({ page }) => {
     await open(page, GLOBAL_REACH);
     const note = compact(await page.locator('#map .callout p[data-fact="SC-03"]').textContent());
-    expect(note).toContain('Rows that are a partnership, an announced cooperation or the launch say so in their note; the other rows are training programs, except Kenya, a feasibility study.');
+    expect(note).toContain('Rows that are a partnership or the launch say so in their note; the other rows are training programs, except Kenya, a feasibility study.');
     expect(note).toContain('New York is the headquarters, not one of the 16 locations.');
     expect(note).not.toContain('distinguishes training, partnerships and launch activity');
     expect(sitePages().filter((p) => visible(p.html).includes('distinguishes training, partnerships and launch activity')).map((p) => p.route)).toEqual([]);
@@ -119,12 +119,12 @@ test.describe('R1 (Grok): Global Reach says which rows are partnerships, an anno
     const kind = (note: string) => (/^Partners?:/.test(note) ? 'partnership' : /^Cooperation with .* announced/.test(note) ? 'cooperation' : /^Launch location/.test(note) ? 'launch' : /^Feasibility study/.test(note) ? 'feasibility' : 'training');
     const byKind = (k: string) => found.filter((r) => kind(r.note) === k).map((r) => r.name).sort();
     expect(byKind('partnership')).toEqual(['Benin', 'Egypt', 'Uganda']);
-    expect(byKind('cooperation')).toEqual(['Iraq']);
+    expect(byKind('cooperation'), 'WP125 (owner 2026-10-29: training delivered): Iraq is now a training row whose note also dates the announcement, so no row is a bare announced cooperation').toEqual([]);
     expect(byKind('launch')).toEqual(['Denmark']);
     expect(byKind('feasibility')).toEqual(['Kenya']);
     // the other ten are "training programs": no note (a dash), or a note that says it is training or a program
     const training = found.filter((r) => kind(r.note) === 'training');
-    expect(training.map((r) => r.name).sort()).toEqual(['Albania', 'Bangladesh', 'Bhutan', 'Honduras', 'India', 'Jordan', 'Kosovo', 'Malaysia', 'Poland', 'Somaliland']);
+    expect(training.map((r) => r.name).sort()).toEqual(['Albania', 'Bangladesh', 'Bhutan', 'Honduras', 'India', 'Iraq', 'Jordan', 'Kosovo', 'Malaysia', 'Poland', 'Somaliland']);
     for (const r of training) {
       if (r.note === '—' || r.note === '') continue;
       expect(r.note, `${r.name}'s note describes training or a program`).toMatch(/training|program/i);

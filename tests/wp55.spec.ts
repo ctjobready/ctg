@@ -158,7 +158,7 @@ test.describe('Global Reach: 16 locations, the owner’s corrected rows, and a p
     await expect(page.locator('.wmap__pins > li')).toHaveCount(16);
   });
 
-  test('Egypt and Benin are 2020 partnerships (CrossWorkers; SOS Children’s Villages), Uganda is 2020 (three partners), Somaliland is 2015–2016 (an Hour of Code, and an ICT program at Tima-ade University), Iraq is 2018 and says "announced" only', async ({ page }) => {
+  test('Egypt and Benin are 2020 partnerships (CrossWorkers; SOS Children’s Villages), Uganda is 2020 (three partners), Somaliland is 2015–2016 (an Hour of Code, and an ICT program at Tima-ade University), Iraq is 2018 (training delivered with the WFP; cooperation announced in March 2018; no outcome figure)', async ({ page }) => {
     await open(page, GLOBAL_REACH);
     const get = async (name: string) => ({
       years: compact(await cell(page, name, 'Years').textContent()),
@@ -177,8 +177,8 @@ test.describe('Global Reach: 16 locations, the owner’s corrected rows, and a p
     expect(somaliland.note).toBe('Hour of Code, and an ICT program at Tima-ade University (2015–2016); separately, a learning partnership announced in 2020');
     const iraq = await get('Iraq');
     expect(iraq.years).toBe('2018');
-    expect(iraq.note).toBe('Cooperation with the World Food Programme announced in March 2018');
-    expect(iraq.note, 'Iraq states no outcome').not.toMatch(/trained|graduat|enrolled|employ|completed|earned|earning|\d+ (people|refugees|learners)/i);
+    expect(iraq.note).toBe('Training delivered with the World Food Programme (WFP); cooperation announced in March 2018'); // WP125 (owner 2026-10-29: "Yes, training delivered")
+    expect(iraq.note, 'Iraq states no outcome figure').not.toMatch(/trained|graduat|enrolled|employ|completed|earned|earning|\d+ (people|refugees|learners)/i);
   });
 
   test('Albania names Digital Jobs Albania, a World Bank initiative, the Government of Albania and EuroPartners Development, and shows no photograph (none exists)', async ({ page }) => {

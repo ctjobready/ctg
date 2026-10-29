@@ -17,7 +17,7 @@ import { linkAttrs } from '../../../lib/url';
 // still SC-03's "Programs in 16 countries and territories ..."; a no-break space joins the count to "Countries", so the heading wraps after the colon and not between "16" and "Countries". The <title> stays "Global Reach: 16 Countries and Territories" (the H1's words and " | CodersTrust" are 64 characters, over the 60-character limit; the count is the same words), and the description is unchanged.
 // WP58 (cycle-30 reviews, Claude S1 e and GPT-6.1 Sol G1 f to h): the lead is SC-03's sentence, which now reads "CodersTrust has worked in 16 countries and territories across Asia, Africa, Europe and the Americas, including Bangladesh since 2014." (it began "Programs in ..."), and the description
 // begins the same way. The map section's eyebrow and the map's caption are "Where We Have Worked" (they said "Where Programs Have Run"); the note under the map says what a location is, that the table distinguishes training, partnerships and launch activity, and that New York is the headquarters, not one of the locations.
-// WP60 (cycle-32 review, Grok R1): the note no longer says the table "distinguishes training, partnerships and launch activity" (seven rows have no note, so it did not, row by row). It says what the notes mark: "Rows that are a partnership, an announced cooperation or the launch say so in their note;
+// WP60 (cycle-32 review, Grok R1): the note no longer says the table "distinguishes training, partnerships and launch activity" (seven rows have no note, so it did not, row by row). It says what the notes mark: "Rows that are a partnership or the launch say so in their note;
 // the other rows are training programs." (Benin, Egypt, Uganda, Albania and Kosovo name a partner, Iraq an announced cooperation, Denmark the launch; Bangladesh's and Somaliland's notes describe training, so the rule is "says so", not "has a note".)
 const path = '/impact/global-reach/';
 const headline = `${fact('SC-03').text}.`;
@@ -40,7 +40,7 @@ const d = discoveryCta();
     <div class="stack">
       <WorldMap />
       <Callout label="Locations Are Not Programs">
-        <p data-fact="SC-03">A location is a country or territory where CodersTrust has worked; most rows do not say how many programs ran there, or how large they were. Rows that are a partnership, an announced cooperation or the launch say so in their note; the other rows are training programs, except Kenya, a feasibility study. New York is the headquarters, not one of the {count} locations. Most delivery has been in Bangladesh.</p>
+        <p data-fact="SC-03">A location is a country or territory where CodersTrust has worked; most rows do not say how many programs ran there, or how large they were. Rows that are a partnership or the launch say so in their note; the other rows are training programs, except Kenya, a feasibility study. New York is the headquarters, not one of the {count} locations. Most delivery has been in Bangladesh.</p>
       </Callout>
       <p><a class="link" href={linkAttrs('/impact/case-studies/').href}>See the Case Studies, Starting with Kosovo<Icon name="arrow-right" size={16} /></a></p>
     </div>

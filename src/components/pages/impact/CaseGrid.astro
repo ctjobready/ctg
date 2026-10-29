@@ -9,6 +9,7 @@ import { fact } from '../../../data/facts';
 import { linkAttrs } from '../../../lib/url';
 import { CASE_STUDIES } from './case-studies';
 import { caseCardPhoto } from '../../../data/photos';
+import { CASE_CARD_LABELS } from '../home/caseStudies'; // WP125: the Her Power card reads the clause the other cards use
 import wsdfm from '../../../assets/images/pages/impact/wsdfm-training-group.jpg';
 import herPower from '../../../assets/images/pages/impact/her-power-training-lab.jpg';
 
@@ -31,7 +32,7 @@ import type { ImageMetadata } from 'astro';
 const cards = CASE_STUDIES.filter((c) => c.slug !== except).map((c) => {
   const s = fact(c.factId).stat;
   if (!s) throw new Error(`case card: ${c.factId} has no stat`);
-  return { ...c, stat: s, resultLabel: c.factId === 'PR-01' ? wsdfmFigureLabel() : s.label, evidence: evidenceOf(c.factId), photo: photos[c.slug] ?? caseCardPhoto(c.slug) };
+  return { ...c, stat: s, resultLabel: c.factId === 'PR-01' ? wsdfmFigureLabel() : c.factId === 'PR-05' ? CASE_CARD_LABELS['PR-05'] : s.label, evidence: evidenceOf(c.factId), photo: photos[c.slug] ?? caseCardPhoto(c.slug) };
 });
 ---
 

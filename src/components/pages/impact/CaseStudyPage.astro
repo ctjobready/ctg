@@ -32,8 +32,9 @@ interface Props {
   /**
    * Register facts whose stats form the outcome-first row. A program-results stat (PR-01, PR-02, PR-05) carries its evidence label from the
    * register, so it takes none here; `evidence` is for a stat whose register label has none (PR-03), and is shown under the figure.
+   * WP125: `label` replaces the register's label on this page (FactStat's own `label`), as Her Power's tile reads the clause the cards use.
    */
-  stats: { id: string; evidence?: string }[];
+  stats: { id: string; evidence?: string; label?: string }[];
   context: string[];
   challenges: string[];
   solution: string[];
@@ -85,7 +86,7 @@ const d = discoveryCta();
         stats.map((s) => (
           <div class="cs__stat">
             {evidenceOf(s.id) && <EvidenceTag type={evidenceOf(s.id)!} />}
-            <FactStat id={s.id} />
+            <FactStat id={s.id} label={s.label} />
             {s.evidence && <p class="cs__evidence">{s.evidence}</p>}
           </div>
         ))

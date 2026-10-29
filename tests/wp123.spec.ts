@@ -113,8 +113,8 @@ test.describe('WP123, programs: the closing line reads the same as on the other 
 });
 
 test.describe('WP123, polish', () => {
-  test('"a Danish Army captain" in the freelancing post; "Danish army" is on no page', () => {
-    expect(text(FREELANCING)).toContain('Ferdinand Kjærulff, a Danish Army captain');
+  test('"a former Danish Army captain" in the freelancing post; "Danish army" is on no page', () => {
+    expect(text(FREELANCING)).toContain('Ferdinand Kjærulff, a former Danish Army captain'); // WP125: "former", as the bios and the SDG post say
     expect(pagesMatching(/Danish army/)).toEqual([]);
   });
   test('the UPEACE post writes "San José" and "the UPEACE campus"; "San Jose" is on no page', () => {

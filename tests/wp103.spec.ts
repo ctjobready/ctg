@@ -105,7 +105,7 @@ test.describe('WP103 item 5: Global Reach names Kenya as a feasibility study', (
   test('the note under the map says the other rows are training programs, except Kenya, a feasibility study', async ({ page }) => {
     await open(page, 'impact/global-reach/');
     const note = compact(await page.locator('#map .callout p[data-fact="SC-03"]').textContent());
-    expect(note).toContain('Rows that are a partnership, an announced cooperation or the launch say so in their note; the other rows are training programs, except Kenya, a feasibility study.');
+    expect(note).toContain('Rows that are a partnership or the launch say so in their note; the other rows are training programs, except Kenya, a feasibility study.');
     expect(note).not.toMatch(/the other rows are training programs\. /);
   });
 
