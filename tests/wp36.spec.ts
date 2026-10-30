@@ -433,7 +433,9 @@ test.describe('option bands: program sizes are not a commitment', () => {
   // WP51 (cycle-26 review): "Program options are shown without prices." described the website itself and is gone from JobReady@Campus' lead; the pricing statement under the options stays (tests/wp51.spec.ts)
   test('Universities’ lead is its one line, not the note (its cost answer is in the FAQ); JobReady@Campus’ lead is the note alone, and its pricing statement stays beside the options', async ({ page }) => {
     await open(page, 'partner-with-us/universities/');
-    expect(compact(await page.locator('#offer .sh__lead').textContent())).toBe('Cohort size, tracks and labs are agreed in co-design.'); // WP133: the heading says "Start with One Campus" // WP132: tracks and labs are agreed in co-design (was "set in the discovery session")
+    // WP135 (Opus High run 10, Polish 3): the one-line band is folded into the pilot band (no #offer on this page); its line is the pilot band's first point. WP133: the heading said "Start with One Campus" // WP132: tracks and labs are agreed in co-design (was "set in the discovery session")
+    await expect(page.locator('#offer')).toHaveCount(0);
+    expect(compact(await page.locator('.risk__item', { hasText: 'A Pilot Comes First' }).textContent())).toContain('Start with one campus; cohort size, tracks and labs are agreed in co-design.');
     await open(page, 'programs/jobready-campus/');
     expect(compact(await page.locator('#offer .sh__lead').textContent())).toBe(NOTE);
     await expect(page.locator('#offer [data-fact="PD-02"]')).toHaveCount(1);
@@ -464,7 +466,7 @@ test.describe('dating lines', () => {
   // WP41 (cycle-18 review): the survey page's heading changed on October 15 (the survey's name moved to the eyebrow); its "Last updated" moved to October 20, 2026 with the refresh of its data (Impact Report 261014B); the source snapshot stays October 2026
   test('Impact Survey 2026 reads "Source snapshot: October 2026 · Last updated October 21, 2026"; no page says "Page last reviewed"', async ({ page }) => {
     await open(page, 'impact/outcomes-2026/');
-    expect(compact(await page.locator('.lf-updated').textContent())).toBe('Source snapshot: October 2026 · Last updated October 29, 2026'); // WP104
+    expect(compact(await page.locator('.lf-updated').textContent())).toBe('Source snapshot: October 2026 · Last updated October 31, 2026'); // WP104; WP135: October 31 (the closing line and "On This Page" changed)
     for (const route of ['impact/independent-evaluation/', 'our-model/talentleap/', 'programs/youthwide/', 'programs/superkids/']) {
       await open(page, route);
       expect(compact(await page.locator('.lf-updated, .updated').first().textContent()), route).toMatch(/^Last updated [A-Z][a-z]+ \d{1,2}, 2026$/);

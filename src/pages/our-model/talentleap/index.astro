@@ -14,7 +14,7 @@ import StagePipeline from '../../../components/pages/model/StagePipeline.astro';
 import { STAGE_STEPS } from '../../../components/pages/model/stagePipeline';
 import { articleNode, desc, title, discoveryCta } from '../../../components/pages/impact/page-utils';
 import { describedList } from '../../../components/pages/impact/jsonld';
-import { DISCOVERY_SESSION_LINE, MICRO_COMMITMENT } from '../../../data/copy';
+import { DISCOVERY_SESSION_ASK, MICRO_COMMITMENT } from '../../../data/copy';
 import { faqItems } from '../../../lib/faq';
 import { faqPage } from '../../../lib/schema';
 import { linkAttrs } from '../../../lib/url';
@@ -112,7 +112,7 @@ const d = discoveryCta();
     <Accordion items={faq} name="tl-faq" openFirst />
   </ReportSection>
 
-  <NextStep heading="See How TalentLEAP Would Run in Your Program" text={DISCOVERY_SESSION_LINE} cta={{ label: d.label, href: d.href }} secondary={{ label: 'How the model works end to end', href: '/our-model/' }} micro={MICRO_COMMITMENT} />
+  <NextStep heading="See How TalentLEAP Would Run in Your Program" text={DISCOVERY_SESSION_ASK} cta={{ label: d.label, href: d.href }} secondary={{ label: 'How the model works end to end', href: '/our-model/' }} micro={MICRO_COMMITMENT} />
 </LongformLayout>
 
 <style>

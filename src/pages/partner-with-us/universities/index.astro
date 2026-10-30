@@ -41,7 +41,6 @@ import PairedEvidence from '../../../components/pages/partners/PairedEvidence.as
 import GainsPains from '../../../components/pages/partners/GainsPains.astro';
 import PartnerGuideBand from '../../../components/pages/partners/PartnerGuideBand.astro';
 import RouteLink from '../../../components/pages/partners/RouteLink.astro';
-import OfferCards from '../../../components/pages/partners/OfferCards.astro';
 import StepsBand from '../../../components/pages/partners/StepsBand.astro';
 import Reinforcement from '../../../components/pages/partners/Reinforcement.astro';
 import PageEnhancements from '../../../components/pages/partners/PageEnhancements.astro';
@@ -63,9 +62,6 @@ const { title, description } = meta(
 
 // Q8-route: the one-line cost answer with a link to the partner hub FAQ, which keeps the full answer (WP36).
 const FAQ_IDS = ['Q1-campus', 'Q10-campus', 'Q8-route'];
-// WP57 (cycle-29 review, Grok R5): the one line that replaces the size cards of "Choose Where to Start".
-// WP132 (Opus High run 7, Minor): tracks and labs are agreed in co-design (Step 2), as the closing band and What Happens Next say.
-const START_LINE = 'Cohort size, tracks and labs are agreed in co-design.';
 ---
 
 <LandingLayout
@@ -170,16 +166,14 @@ const START_LINE = 'Cohort size, tracks and labs are agreed in co-design.';
 
   <!-- C10 · Differentiation: the positioning statement opens C6; the comparison table is on Home and Investors only (WP30c). -->
 
-  <!-- C11 · Offer. WP57 (cycle-29 review, Grok R5): no size cards, so no pilot size is recommended to a campus; the band is its heading and one line (OfferCards with no cards), and it holds no button of its own. -->
-  <!-- WP133 (Opus High run 8): one path, so the heading names it ("Choose Where to Start" heads three option cards on the other route pages). -->
-  <OfferCards eyebrow="" title="Start with One Campus" lead={START_LINE} cards={[]} />
+  <!-- WP135 (Opus High run 10, Polish 3): no separate "Start with One Campus" band: its one line (cohort size, tracks and labs are agreed in co-design) is the first point of the pilot band below, which says the same "start small" thing. The #offer anchor is gone with the band; nothing linked to it. -->
 
   <!-- C12 · Risk reversal (immediately before C13). WP34 (cycle-11 review): the four diligence cards repeated what this page's bands state, so one item and a link stand in -->
   <DueDiligenceView brief id="due-diligence" />
   <RiskReversalBand
     title="Start with a Pilot, Then Decide on Evidence"
     points={[
-      { icon: 'rocket', title: 'A Pilot Comes First', text: 'Start with a first campus program and see its results.' },
+      { icon: 'rocket', title: 'A Pilot Comes First', text: 'Start with one campus; cohort size, tracks and labs are agreed in co-design.' },
       { icon: 'target', title: 'Scorecard Thresholds', text: 'If a threshold is missed, a corrective plan is triggered.' },
       { icon: 'handshake', title: 'Expansion Is Your Decision', text: 'You decide whether to add campuses or tracks after the pilot.' },
       { icon: 'shield', title: 'Independent Evaluation Welcome', text: 'We support third-party evaluation of outcomes.' },

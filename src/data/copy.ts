@@ -842,6 +842,12 @@ export const MICRO_COMMITMENT = 'A discovery session is a conversation, not a co
  * commitment; the session "explores" what the visitor brings. It stands beside MICRO_COMMITMENT, which says the session is not a commitment.
  */
 export const DISCOVERY_SESSION_LINE = 'A discovery session explores your goals, priority groups and possible program scope.';
+/**
+ * WP135 (Opus High run 10, kit 102, Minor 1): the closing line before an email button asks for two suitable times, as the prefilled email's "Two suitable times for …:" field does (tests/wp135.spec.ts walks every built page).
+ * DISCOVERY_SESSION_ASK is DISCOVERY_SESSION_LINE plus that ask: the Impact, Outcomes 2026, Trial and TalentLEAP closing bands print it. DISCOVERY_SESSION_LINE stays as the sentence alone (tests/wp59.spec.ts pins it).
+ */
+export const INQUIRY_TIMES_LINE = 'In your inquiry, include two suitable times.';
+export const DISCOVERY_SESSION_ASK = `${DISCOVERY_SESSION_LINE} ${INQUIRY_TIMES_LINE}`;
 /** The closing bands' text link to the Impact page (WP59, cycle-31 review, Gemini GM1): Title Case, as the other text links are ("See the Evidence", "Read the Trial Results"). */
 export const READ_THE_EVIDENCE = 'Read the Evidence';
 
@@ -941,7 +947,8 @@ export const C14 = {
   // WP49 (cycle-24 review): Home's closing band prints the same action under a "Your First Step" label, so the line there does not say "Your first step" again (the audience pages' reinforcement strip has no such label and keeps `firstAction`).
   firstActionLabeled: 'A discovery session. In your inquiry, include two suitable times.',
   variants: {
-    governments: 'Your agency’s procurement timeline sets the pace; we start with a briefing.',
+    // WP135 (Opus High run 10, Minor 1): the briefing line asks for the times, as the Funders line does and as the Governments page's first-step line does; the procurement timeline stays the reason the pace is the agency's.
+    governments: 'In your inquiry, include two suitable times for a briefing; your agency’s procurement timeline sets the pace.',
     investors: 'Your first step: an introduction call.',
     // WP34 (cycle-11 review): the Employers closing band has two routes (team training, hiring), so the line names the route it is for.
     // WP54 (cycle-28 review, Kimi K5): the first step is a discovery session on both routes (the hiring route's first step is "Discovery Session" too, EMPLOYER_HIRING_STEPS; WP129), so the line says "for team training or hiring" and, like Home's labeled line, asks for "two suitable times".

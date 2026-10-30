@@ -46,7 +46,8 @@ test('Polish 2: Trial and Impact say the 100-hour tracks in the plural', () => {
 
 test('Polish 3: Universities "Start with One Campus"', () => {
   const raw = html('partner-with-us/universities/index.html');
-  expect(raw).toMatch(/<h2[^>]*>\s*Start with One Campus\s*<\/h2>/);
-  expect(main('partner-with-us/universities/index.html')).toContain('Cohort size, tracks and labs are agreed in co-design.');
+  // WP135 (Opus High run 10, Polish 3): the "Start with One Campus" band is folded into the pilot band ("A Pilot Comes First"); tests/wp135.spec.ts pins the new shape.
+  expect(/<h2[^>]*>\s*Start with One Campus\s*<\/h2>/.test(raw)).toBe(false);
+  expect(main('partner-with-us/universities/index.html')).toContain('Start with one campus; cohort size, tracks and labs are agreed in co-design.');
   expect(main('partner-with-us/universities/index.html')).not.toContain('Choose Where to Start');
 });

@@ -175,7 +175,7 @@ test.describe('YouthWIDE: the closing timing paragraph (item 7)', () => {
     expect(text).not.toContain('For grant-funded pilots: Discovery (Week 1)');
     expect(text).not.toContain('Discovery (Week 1)');
     // procurement timing is stated in the Governments entry card and in the timing answer
-    expect(compact(await page.locator('#cta-governments .entry__text').textContent())).toBe('Public procurement follows the agency’s own timeline, so we start with a briefing that fits it.');
+    expect(compact(await page.locator('#cta-governments .entry__text').textContent())).toBe('Public procurement follows the agency’s own timeline, so we start with a briefing that fits it. In your inquiry, include two suitable times for it.'); // WP135
     expect(await answerOf(page, 'How Fast Can We Start?')).toBe('Target timing for grant-funded pilots: training starts 6–8 weeks after signing. Public procurement follows the agency’s own timeline.');
     expect(await itemOf(page, 'How Fast Can We Start?').locator('.faq__a p').getAttribute('data-fact')).toBe('PD-04');
   });
@@ -297,10 +297,12 @@ test.describe('Governments: the briefing, not a discovery session (items 12, 28 
     // WP52 (cycle-27 review): the lead is the note alone ("Prefer to fund the platform? See JobReady Platform Grants below." is gone; the funding-route comparison above carries the platform-grant row; tests/wp52.spec.ts)
     expect(compact(await page.locator('#cohort-grants .sh__lead').textContent())).toBe(PROGRAM_SIZES_NOTE);
     await open(page, UNI);
-    expect(compact(await page.locator('#offer .sh__lead').textContent())).toBe('Cohort size, tracks and labs are agreed in co-design.'); // WP133: the heading says "Start with One Campus" // WP132: tracks and labs are agreed in co-design (was "set in the discovery session")
+    // WP135 (Opus High run 10, Polish 3): the one-line band is folded into the pilot band (no #offer on Universities); WP133: the heading said "Start with One Campus" // WP132: tracks and labs are agreed in co-design (was "set in the discovery session")
+    await expect(page.locator('#offer')).toHaveCount(0);
+    expect(compact(await page.locator('.risk__item', { hasText: 'A Pilot Comes First' }).textContent())).toContain('Start with one campus; cohort size, tracks and labs are agreed in co-design.');
     await open(page, DP);
     expect(compact(await page.locator('#offer .sh__lead').textContent())).toBe(PROGRAM_SIZES_NOTE);
-    for (const route of [GOV, FOUND, UNI]) {
+    for (const route of [GOV, FOUND]) { // WP135: Universities has no "Choose Where to Start" lead any more (the one line is in its pilot band)
       await open(page, route);
       expect(compact(await page.locator('#offer .sh__lead, #cohort-grants .sh__lead').first().textContent()), route).not.toContain('Pricing is set per program, and we share an indicative budget');
     }

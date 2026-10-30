@@ -249,7 +249,9 @@ test.describe('G1: the Investors and JobReady Platform "Contracted Scope" tiles 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 test.describe('G2: the closing bands say a discovery session "explores your goals, priority groups and possible program scope"', () => {
   const LINE = 'A discovery session explores your goals, priority groups and possible program scope.';
-  const ROUTES = ['impact/', 'impact/independent-evaluation/', OUTCOMES, 'impact/in-the-field/', 'impact/in-the-field/news-photos/', 'our-model/talentleap/'];
+  // WP135 (Opus High run 10, Minor 1): In the Field and News Photographs, which printed the line after "Seen a program like the one you need?", now ask for the times in their own words and no longer print it.
+  const ROUTES = ['impact/', 'impact/independent-evaluation/', OUTCOMES, 'our-model/talentleap/'];
+  const FIELD_ROUTES = ['impact/in-the-field/', 'impact/in-the-field/news-photos/'];
 
   test('DISCOVERY_SESSION_LINE is the sentence', () => {
     expect(DISCOVERY_SESSION_LINE).toBe(LINE);
@@ -261,9 +263,9 @@ test.describe('G2: the closing bands say a discovery session "explores your goal
       // the line is in the page's closing call-to-action band (#cta) or its next-step aside, once
       await expect(page.locator('#cta, aside.next').filter({ hasText: LINE }), route).toHaveCount(1);
     }
-    for (const route of ['impact/in-the-field/', 'impact/in-the-field/news-photos/']) {
+    for (const route of FIELD_ROUTES) {
       await open(page, route);
-      expect(compact(await page.locator('#cta .cta-band__text').textContent()), route).toBe(`Seen a program like the one you need? ${LINE}`);
+      expect(compact(await page.locator('#cta .cta-band__text').textContent()), route).toBe('Seen a program like the one you need? Tell us your goals, priority groups and two suitable times for a discovery session.');
     }
   });
 

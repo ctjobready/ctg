@@ -265,7 +265,7 @@ test.describe('WP104 item 8: meta descriptions name the full target group', () =
     {
       route: 'careers/',
       name: 'Careers',
-      text: 'Join CodersTrust and help prepare educated, unemployed and underemployed young people for paid digital work. How to apply, and speculative applications.',
+      text: 'Join CodersTrust and help prepare educated, unemployed and underemployed young people for paid digital work. We welcome speculative applications.', // WP135: the second sentence is whole (was "How to apply, and speculative applications.")
     },
   ];
   for (const c of CASES) {
@@ -322,7 +322,7 @@ test.describe('WP104 item 10: "Last updated" stamps match each page’s latest c
     { route: 'programs/youthwide/', selector: '.updated', text: 'Last updated October 31, 2026', iso: '2026-10-31' },
     { route: 'programs/jobready-work/', selector: '.updated', text: 'Last updated October 31, 2026', iso: '2026-10-31' },
     { route: 'programs/superkids/', selector: '.updated', text: 'Last updated October 31, 2026', iso: '2026-10-31' },
-    { route: 'impact/outcomes-2026/', selector: '.lf-updated', text: 'Source snapshot: October 2026 · Last updated October 29, 2026', iso: '2026-10-29' },
+    { route: 'impact/outcomes-2026/', selector: '.lf-updated', text: 'Source snapshot: October 2026 · Last updated October 31, 2026', iso: '2026-10-31' }, // WP135: the closing line and "On This Page" changed (was October 29)
     { route: 'impact/independent-evaluation/', selector: '.lf-updated', text: 'Last updated October 31, 2026', iso: '2026-10-31' }, // WP134: WP133 changed its text
   ];
   for (const s of STAMPED) {

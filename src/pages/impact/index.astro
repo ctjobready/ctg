@@ -16,7 +16,7 @@ import { wsdfmFigureLabel } from '../../components/pages/impact/evidence';
 import { articleNode, desc, title, discoveryCta } from '../../components/pages/impact/page-utils';
 import { CASE_STUDIES } from '../../components/pages/impact/case-studies';
 import PageNav from '../../components/pages/about/PageNav.astro';
-import { AIM_DEPENDENCY, AIM_SCOPE, CONTRACT_TOTAL_NOTE, DISCOVERY_SESSION_LINE, IMPACT_ANSWER, MICRO_COMMITMENT, WB_KOSOVO, WSDFM_NOT_TRIAL_NOTE, defineNewEarners } from '../../data/copy';
+import { AIM_DEPENDENCY, AIM_SCOPE, CONTRACT_TOTAL_NOTE, DISCOVERY_SESSION_ASK, IMPACT_ANSWER, MICRO_COMMITMENT, WB_KOSOVO, WSDFM_NOT_TRIAL_NOTE, defineNewEarners } from '../../data/copy';
 import { fact } from '../../data/facts';
 import { linkAttrs } from '../../lib/url';
 
@@ -161,7 +161,7 @@ const aimNote = `YouthWIDE ${AIM_SCOPE}, ${AIM_DEPENDENCY}. An ambition, not a r
     </ul>
   </Section>
 
-  <CTABand id="cta" heading={CLOSING_HEADING} text={DISCOVERY_SESSION_LINE} cta={d} secondary={{ label: 'See the Impact Survey 2026', href: '/impact/outcomes-2026/' }} micro={MICRO_COMMITMENT} />
+  <CTABand id="cta" heading={CLOSING_HEADING} text={DISCOVERY_SESSION_ASK} cta={d} secondary={{ label: 'See the Impact Survey 2026', href: '/impact/outcomes-2026/' }} micro={MICRO_COMMITMENT} />
 </BaseLayout>
 
 <style>

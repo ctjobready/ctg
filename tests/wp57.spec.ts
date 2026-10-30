@@ -570,24 +570,25 @@ test.describe('R2, the 30,000+ visibly includes Her Power’s national program (
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 test.describe('R5, Universities: "Choose Where to Start" is one line, with no size cards', () => {
-  const LINE = 'Cohort size, tracks and labs are agreed in co-design.'; // WP133: the heading carries "Start with One Campus" // WP132: was "...are set in the discovery session."
+  // WP135 (Opus High run 10, Polish 3): the one-line band ("Start with One Campus", #offer) is folded into the pilot band: its line is the first point of "A Pilot Comes First".
+  // The no-size-cards guarantee stays; the band and its anchor are gone (tests/wp135.spec.ts). WP133 headed the band "Start with One Campus"; WP132: was "...are set in the discovery session."
+  const LINE = 'Start with one campus; cohort size, tracks and labs are agreed in co-design.';
   const UNIVERSITIES = 'partner-with-us/universities/';
 
-  test('the band is its heading and the one line (id #offer kept): no cards, no size, no recommendation, no link or button of its own', async ({ page }) => {
+  test('no separate start band (no #offer); the pilot band carries the one line; no cards, no size, no recommendation', async ({ page }) => {
     await open(page, UNIVERSITIES);
-    await expect(page.locator('#offer h2')).toHaveText('Start with One Campus'); // WP133
-    await expect(page.locator('#offer .sh__lead')).toHaveText(LINE);
-    await expect(page.locator('#offer article, #offer .grid-cards, #offer .oc')).toHaveCount(0);
-    await expect(page.locator('#offer a, #offer button, #offer .btn')).toHaveCount(0);
-    expect(await texts(page, '#offer h2, #offer p')).toEqual(['Start with One Campus', LINE]);
+    await expect(page.locator('#offer')).toHaveCount(0);
+    const pilot = page.locator('.risk__item', { hasText: 'A Pilot Comes First' });
+    await expect(pilot).toHaveCount(1);
+    expect(compact(await pilot.locator('h3').textContent())).toBe('A Pilot Comes First');
+    expect(compact(await pilot.locator('p').textContent())).toBe(LINE);
     const main = compact(await page.locator('main').textContent());
-    for (const gone of ['1,000', '2,500', 'Recommended First Step', 'Multi-Cohort Pilot Program', 'Option 1', 'Option 2']) expect(main, gone).not.toContain(gone);
+    for (const gone of ['1,000', '2,500', 'Recommended First Step', 'Multi-Cohort Pilot Program', 'Option 1', 'Option 2', 'Start with One Campus']) expect(main, gone).not.toContain(gone);
     expect(LINE.endsWith('.')).toBe(true);
   });
 
-  test('the page keeps its own button: one primary button in the hero and one in the closing band, and none in the one-line band', async ({ page }) => {
+  test('the page keeps its own button: one primary button in the hero and one in the closing band', async ({ page }) => {
     await open(page, UNIVERSITIES);
-    await expect(page.locator('#offer .btn--primary')).toHaveCount(0);
     await expect(page.locator('#cta .btn--primary')).toHaveCount(1);
     expect(await page.locator('main .btn--primary').count()).toBeGreaterThanOrEqual(2);
   });
@@ -600,23 +601,14 @@ test.describe('R5, Universities: "Choose Where to Start" is one line, with no si
     }
   });
 
-  test('the slim band fits at 1280 and 390: it sits between the questions and the due-diligence item, with no empty gap under its header and no sideways scroll', async ({ page }) => {
+  test('the pilot band sits after the due-diligence item at 1280 and 390, with no sideways scroll', async ({ page }) => {
     for (const vp of [DESKTOP, MOBILE]) {
       await page.setViewportSize(vp);
       await open(page, UNIVERSITIES);
       await scrollThrough(page);
       const order = (await bandsOf(page)).map((b) => b.id);
-      const at = order.indexOf('offer');
-      expect(order[at - 1], 'the questions band comes before it').toBe('faq');
-      expect(order[at + 1], 'the due-diligence item comes after it').toBe('due-diligence');
-      const gap = await page.locator('#offer').evaluate((el) => {
-        const header = el.querySelector('header')!.getBoundingClientRect();
-        const band = el.getBoundingClientRect();
-        const cs = getComputedStyle(el);
-        return { below: band.bottom - header.bottom - parseFloat(cs.paddingBottom), pad: parseFloat(cs.paddingTop) };
-      });
-      // (a header with a gap under it, as every other band's, would leave about 32 px here; the few px are line-height rounding)
-      expect(Math.abs(gap.below), `${vp.width}px: nothing but the band's padding under the header`).toBeLessThanOrEqual(3);
+      expect(order, `${vp.width}px: the questions band comes before the due-diligence item`).toContain('faq');
+      expect(order.indexOf('due-diligence'), `${vp.width}px`).toBeGreaterThan(order.indexOf('faq'));
       expect(await noOverflow(page), `${vp.width}px`).toBe(true);
     }
   });

@@ -16,7 +16,7 @@ import Accordion from '../../../components/ui/Accordion.astro';
 import { desc, title, val, discoveryCta, articleNode } from '../../../components/pages/impact/page-utils';
 import * as D from '../../../components/pages/impact/outcomes-data';
 import { fact } from '../../../data/facts';
-import { DISCOVERY_SESSION_LINE, SURVEY_EMPLOYMENT, MICRO_COMMITMENT } from '../../../data/copy';
+import { DISCOVERY_SESSION_ASK, SURVEY_EMPLOYMENT, MICRO_COMMITMENT } from '../../../data/copy';
 import { dataset, webPage } from '../../../lib/schema';
 import { canonicalUrl, linkAttrs, url } from '../../../lib/url';
 
@@ -57,6 +57,9 @@ const jsonLd = [
   },
 ];
 
+// The discovery CTA is read above the list: a withheld call to action draws no closing band and so no entry. The band's heading is one constant for the entry and the band.
+const d = discoveryCta();
+const CLOSING_HEADING = 'Discuss the Evidence for Your Program';
 // Each label is the section's heading, word for word.
 const toc = [
   { id: 'summary', label: 'Results in Brief' },
@@ -69,6 +72,8 @@ const toc = [
   { id: 'experience', label: 'How Learners Rate the Experience' },
   { id: 'methodology', label: 'How to Read This Survey' },
   { id: 'download', label: 'Download the Data' },
+  // WP135 (Opus High run 10, Polish 2): the list ends with the closing band's heading, as Impact's and About's do.
+  ...(d.href ? [{ id: 'cta', label: CLOSING_HEADING }] : []),
 ];
 
 // Every chart shows the published shares (percentages only; no count is held or derived). Districts under 3% are already combined.
@@ -92,7 +97,6 @@ const oc03 = fact('OC-03').stat!;
 const directAnswer = `Among surveyed completers, employment rose from ${emp.from} before training to ${emp.value} at the October 2026 survey, and median monthly income rose from ${oc03.from} to ${oc03.value}. These are what respondents report: the survey describes outcomes among alumni who answered, and it does not show that training caused the change.`;
 const answerWords = directAnswer.split(/\s+/).length;
 if (answerWords < 40 || answerWords > 60) throw new Error(`Outcomes 2026 direct answer is ${answerWords} words (40 to 60)`);
-const d = discoveryCta();
 // How to read this survey (closed disclosure): the former evidence-ladder rung and the methodology list.
 // WP61 (cycle-33 review, GLM L4): the line names who answered by gender as well as education: "85.0% of respondents hold a bachelor’s degree or higher and 19.6% are women, so results describe a mostly graduate, majority-male group." Both figures are OC-09's,
 // the 85.0% as its stat value and the 19.6% read from its text ("... 19.6% women ..."), never retyped; the build stops if OC-09 stops stating the share of women.
@@ -221,7 +225,7 @@ const howToRead = `<ul>
     </a></p>
   </ReportSection>
 
-  <CTABand id="cta" heading="Discuss the Evidence for Your Program" text={DISCOVERY_SESSION_LINE} cta={d} secondary={{ label: 'Read the Randomized Trial Results', href: '/impact/independent-evaluation/' }} more={[{ label: 'Find the Partnership Route for Your Organization', href: '/partner-with-us/' }]} micro={MICRO_COMMITMENT} />
+  <CTABand id="cta" heading={CLOSING_HEADING} text={DISCOVERY_SESSION_ASK} cta={d} secondary={{ label: 'Read the Randomized Trial Results', href: '/impact/independent-evaluation/' }} more={[{ label: 'Find the Partnership Route for Your Organization', href: '/partner-with-us/' }]} micro={MICRO_COMMITMENT} />
 
 </LongformLayout>
 

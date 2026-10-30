@@ -291,7 +291,7 @@ test.describe('Governments: the closing call to action does not repeat the procu
   });
 
   test('the shared variant (C14.variants.governments) still stands in YouthWIDE’s "What Happens Next"', async ({ page }) => {
-    expect(C14.variants.governments).toBe('Your agency’s procurement timeline sets the pace; we start with a briefing.');
+    expect(C14.variants.governments).toBe('In your inquiry, include two suitable times for a briefing; your agency’s procurement timeline sets the pace.'); // WP135 (was "Your agency’s procurement timeline sets the pace; we start with a briefing.")
     await open(page, YOUTHWIDE);
     expect(await everything(page)).toContain(C14.variants.governments);
   });
@@ -563,8 +563,7 @@ test.describe('Development Partners: the glance is three tiles and the +10.3 til
       await expect(page.locator('#offer h2'), route).toHaveText('Choose Where to Start');
     }
     await open(page, UNI);
-    await expect(page.locator('#offer h2')).toHaveText('Start with One Campus'); // WP133: one path, so the heading names it
-    await expect(page.locator('#offer .sh .eyebrow')).toHaveCount(0);
+    await expect(page.locator('#offer')).toHaveCount(0); // WP135: the one-line band is folded into the pilot band (WP133 had headed it "Start with One Campus")
     await open(page, EMP);
     expect(compact(await page.locator('#offer .sh .eyebrow').textContent())).toBe('Start');
     await open(page, FOUND);

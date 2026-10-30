@@ -278,7 +278,7 @@ test.describe('Foundations: "What Happens Next" has the four steps, and the part
   test('JobReady Platform: its closing line also says "discovery session" where it said "introductory call"', async ({ page }) => {
     await open(page, 'our-model/jobready-platform/');
     const aside = compact(await page.locator('.jr__next').textContent());
-    expect(aside).toContain('A platform grant helps CodersTrust roll out the remaining modules; details are shared in the discovery session.');
+    expect(aside).toContain('A discovery session covers how JobReady fits your program, and a platform grant helps CodersTrust roll out the remaining modules. In your inquiry, include two suitable times.'); // WP135 (was "...; details are shared in the discovery session.")
     expect(aside).not.toContain('introductory call');
   });
 });

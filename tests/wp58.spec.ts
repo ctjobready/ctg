@@ -444,9 +444,14 @@ test.describe('K5, revised by WP59 G2: the closing bands say a discovery session
   test('Impact’s closing band, the other Impact pages’ closing bands and TalentLEAP’s next step carry the line; no built page says the session "sets" or "agrees" them', async ({ page }) => {
     await open(page, IMPACT);
     expect(compact(await page.locator('#cta').textContent())).toContain(LINE);
-    for (const route of ['impact/independent-evaluation/', 'impact/outcomes-2026/', 'impact/in-the-field/', 'impact/in-the-field/news-photos/', TALENTLEAP]) {
+    for (const route of ['impact/independent-evaluation/', 'impact/outcomes-2026/', TALENTLEAP]) {
       await open(page, route);
       expect(compact(await page.locator('main').textContent()), route).toContain(LINE);
+    }
+    // WP135 (Opus High run 10, Minor 1): In the Field and News Photographs ask for the times in their own words, "Tell us your goals, priority groups and two suitable times for a discovery session."
+    for (const route of ['impact/in-the-field/', 'impact/in-the-field/news-photos/']) {
+      await open(page, route);
+      expect(compact(await page.locator('main').textContent()), route).toContain('Tell us your goals, priority groups and two suitable times for a discovery session.');
     }
     const hits = sitePages().filter((p) => /A discovery session (?:sets priority groups|agrees your priority groups), tracks and the pilot scorecard/.test(visible(p.html))).map((p) => p.route);
     expect(hits).toEqual([]);

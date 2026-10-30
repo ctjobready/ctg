@@ -22,7 +22,7 @@ const main = (rel: string) => visible(/<main[\s\S]*<\/main>/.exec(html(rel))?.[0
 
 test('Minor 1: Universities says tracks and labs are agreed in co-design', () => {
   const text = main('partner-with-us/universities/index.html');
-  expect(text).toContain('Cohort size, tracks and labs are agreed in co-design.'); // WP133: the heading is "Start with One Campus"
+  expect(text).toContain('Start with one campus; cohort size, tracks and labs are agreed in co-design.'); // WP135: the line is the pilot band's first point (WP133 had it under a "Start with One Campus" heading)
   expect(text).not.toContain('are set in the discovery session');
 });
 
