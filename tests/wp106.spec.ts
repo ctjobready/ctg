@@ -297,8 +297,10 @@ test.describe('WP106 item 9: dateModified of the pages this WP changes reads 202
       const ld = await ldJson(page);
       // WP126 re-dated the first two news posts (countToday note; "exported labor"); WP127 the other two (serial-comma sweep); WP129 (owner rule 2026-10-31: any visible text change moves the date) re-dated the pages below to 2026-10-31
       const day = [CCNY, DIGITAL_FACTORY, UPEACE, FOREIGN_MINISTER].includes(route) ? '2026-10-30' : RE_DATED_31.includes(route) ? '2026-10-31' : '2026-10-29';
-      expect(ld).toMatch(new RegExp(`"dateModified"\\s*:\\s*"${day}"`));
-      expect(ld).not.toMatch(new RegExp(`"dateModified"\\s*:\\s*"(?!${day})[^"]*"`));
+      // on or after: later packages may re-date a page again (WP131 re-dated the CCNY post)
+      expect((/"dateModified"\s*:\s*"(\d{4}-\d{2}-\d{2})"/.exec(ld)?.[1] ?? '') >= day, route).toBe(true);
+      // every dateModified on the page is the same date
+      expect(new Set([...ld.matchAll(/"dateModified"\s*:\s*"([^"]*)"/g)].map((m) => m[1])).size, route).toBe(1);
     });
   }
 
@@ -311,7 +313,8 @@ test.describe('WP106 item 9: dateModified of the pages this WP changes reads 202
     for (const route of [CCNY, UPEACE, FOREIGN_MINISTER, DIGITAL_FACTORY]) {
       const slug = route.replace(/^news\/|\/$/g, '');
       const day = [CCNY, DIGITAL_FACTORY, UPEACE, FOREIGN_MINISTER].includes(route) ? '2026-10-30' : '2026-10-29'; // WP126, WP127
-      expect(readFileSync(`src/content/news/${slug}.md`, 'utf8'), slug).toMatch(new RegExp(`^updated: ${day}$`, 'm'));
+      // later packages may re-date a post again (WP131), so: on or after
+      expect((/^updated: (\S+)$/m.exec(readFileSync(`src/content/news/${slug}.md`, 'utf8'))?.[1] ?? '') >= day, slug).toBe(true);
     }
   });
 });

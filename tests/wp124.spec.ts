@@ -221,7 +221,7 @@ test.describe('WP124 B, the News archive proofread', () => {
     // WP126 re-dated the posts that carry `countToday` (and the Digital Factory post) to 2026-10-30: the date is the post's own `updated`
     for (const slug of changed) {
       const updated = /^updated: (\S+)$/m.exec(readFileSync(join('src/content/news', `${slug}.md`), 'utf8'))?.[1];
-      expect(['2026-10-29', '2026-10-30'], slug).toContain(updated);
+      expect((updated ?? '') >= '2026-10-29', slug).toBe(true); // later packages re-date posts again (WP126, WP127, WP131)
       expect(html(post(slug)), slug).toContain(`"dateModified":"${updated}"`);
     }
   });

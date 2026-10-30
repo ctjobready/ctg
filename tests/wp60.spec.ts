@@ -456,7 +456,7 @@ test.describe('L4 (GLM): Home’s "How Do You Prove Outcomes?" says a scorecard 
     await open(page, HOME);
     const item = page.locator('#faq details', { has: page.locator('summary', { hasText: 'How Do You Prove Outcomes?' }) }).first();
     const answer = compact(await item.locator('.faq__a').textContent());
-    expect(answer).toBe(`${OPENING} As agreed in the program scope, partners receive monthly reports and follow-up surveys at 3, 6 and 12 months, and independent evaluation is welcome.`);
+    expect(answer).toBe(`${OPENING} As agreed in the program scope, partners receive monthly reports and follow-up surveys at 3, 6 and 12 months. Independent evaluation is welcome.`);
     expect((await faqJsonLd(page)).find((q) => q.name === 'How Do You Prove Outcomes?')?.text).toBe(answer);
     expect(sitePages().filter((p) => visible(p.html).includes('Every cohort agrees a scorecard')).map((p) => p.route)).toEqual([]);
   });

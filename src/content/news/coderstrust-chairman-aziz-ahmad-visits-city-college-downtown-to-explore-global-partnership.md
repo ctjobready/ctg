@@ -1,7 +1,7 @@
 ---
-title: "CodersTrust Chairman Aziz Ahmad Visits City College Downtown to Explore Global Partnership"
+title: "CodersTrust Chairman Aziz Ahmad Visits City College Downtown to Discuss an Expanded Partnership"
 date: 2026-09-23
-updated: 2026-10-30
+updated: 2026-10-31
 countToday: true
 topic: leadership-advocacy
 excerpt: "Aziz Ahmad visits City College Downtown to discuss expanding the partnership with The City College of New York, an MOU partner since April 2024."
@@ -18,7 +18,7 @@ Aziz Ahmad, Chairman of CodersTrust and CEO of UTC Associates, recently visited 
 
 The meeting explored the possibility of making selected professional and career-focused courses available to an international audience through an expanded partnership. The initiative could leverage Mr. Ahmad’s global connections and experience in workforce development to expand access to industry-relevant learning opportunities for learners beyond the United States.
 
-Mr. Ahmad, an alumnus of CCNY, leads CodersTrust—a global workforce development and EdTech provider that has trained 130,000+ learners since 2014 and worked in 16 countries and territories. The organization specializes in digital skills development, ranging from K–12 STEM, coding and robotics to advanced technical and business training for the digital economy.
+Mr. Ahmad, an alumnus of CCNY, leads CodersTrust—a global workforce development and EdTech provider that has trained 130,000+ learners since 2014 and worked in 16 countries and territories. The organization specializes in digital skills development, ranging from STEAM, coding and robotics for young learners to advanced technical and business training for the digital economy.
 
 An expanded partnership would align closely with CodersTrust’s core mission to empower underrepresented communities, particularly youth and women, by equipping them with market-relevant skills and connecting them to global career opportunities to foster financial independence.
 

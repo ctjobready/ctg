@@ -1,7 +1,7 @@
 ---
 title: "CodersTrust Organizes Career Carnival for Students and Affiliates"
 date: 2024-10-08
-updated: 2026-10-30
+updated: 2026-10-31
 countToday: true
 topic: programs-events
 excerpt: "CodersTrust holds a Career Carnival at its Dhaka office in Banani to create job placement opportunities for students and alumni."
@@ -24,6 +24,6 @@ A representative from Priyo Shop remarked, “In most job applications, we see m
 
 Junaid, an alumnus of CodersTrust’s digital marketing course, shared his experience: “I completed the digital marketing course last year and now work in Facebook marketing. Today, I had two interviews for SEO Specialist and Digital Marketing roles, and submitted my CV to another company. This event gave me hope, and it was wonderful to reconnect with mentors and fellow coursemates.”
 
-CodersTrust is a global EdTech-based digital workforce development and skill-oriented education provider. It has trained learners since 2014 and worked in 16 countries and territories. Its programs range from K-12 STEM, coding and robotics to professional skills and advanced technology skills for the digital era.
+CodersTrust is a global EdTech-based digital workforce development and skill-oriented education provider. It has trained learners since 2014 and worked in 16 countries and territories. Its programs range from STEAM, coding and robotics for young learners to professional skills and advanced technology skills for the digital era.
 
 ![Participants and organizers at the CodersTrust Career Carnival, with a map of the world behind them](../../assets/images/news/coderstrust-organizes-career-carnival-for-students-and-affiliates/career-carnival-2.jpg)

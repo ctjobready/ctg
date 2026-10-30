@@ -89,7 +89,7 @@ test.describe('WP119 Minor 3: the five posts written in October 2026 carry their
       const b = banner(slug);
       expect(b, slug).toContain('Archived post, lightly edited.');
       // WP126: the posts that now say "The country count is today’s." were re-dated to October 30
-      expect(b, slug).toContain('updated October 30, 2026'); // WP127 re-dated the 2041 post (JU) too
+      expect(b, slug).toMatch(/updated October (30|31), 2026/); // WP127 re-dated the 2041 post (JU) too; WP131 re-dated Joyeeta and Carnival to October 31
     }
   });
 });

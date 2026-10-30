@@ -98,7 +98,7 @@ test.describe('Investors: the delivered figures lead the track-record band (item
     await expect(tile.locator('[data-evidence="Contract Scope"]')).toHaveCount(1);
     await expect(tile.locator('[data-status]')).toHaveCount(0);
     expect(compact(await page.locator('#reach p[data-fact="SC-04"]').textContent())).toMatch(/^Separately, and not counted in the delivered reach: 1\.5M\+ National University learners/);
-    await expect(page.locator('#reach .ir__badges li')).toHaveCount(2);
+    await expect(page.locator('#reach .ir__badges li')).toHaveCount(1); // WP130: the AWS badge is gone (the partner paragraph states it); the HolonIQ item stays
     // the band no longer calls itself reach to date, and nothing links to a heading that is gone
     expect(await mainText(page)).not.toContain('Reach to Date');
   });

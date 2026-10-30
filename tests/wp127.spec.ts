@@ -65,7 +65,6 @@ const PERSON_START = /^(?:Professor|Prof\.|Dr\.|Mr\.|Mrs\.|Ms\.|Md\.|Aziz Ahmad|
 const ALLOWED: { has: string; why: string }[] = [
   { has: 'youtube-nocookie.com, YouTube’s privacy-enhanced domain, and YouTube sees', why: 'an apposition, then a new clause' },
   { has: '78.2% at the October 2026 survey, and median monthly income rose', why: 'two clauses joined' },
-  { has: 'monthly reports and follow-up surveys at 3, 6 and 12 months, and independent evaluation is welcome', why: 'two clauses joined; the numbers are one phrase' },
   { has: 'Early press coverage, 2014–2016, and World Bank coverage', why: 'the years are set off as a parenthetical' },
   { has: 'spoke at a start-up event at In5, Dubai Internet City, and met investors', why: 'one subject, two verbs; the place name carries its own comma' },
   { has: 'STEM students must continually reskill themselves, and CodersTrust plays', why: 'two clauses joined' },
@@ -351,7 +350,8 @@ test.describe('WP127 item 2: the News posts the sweep changed are dated updated:
   });
   for (const slug of SWEPT_POSTS) {
     test(`${slug.slice(0, 80)}: front matter and structured data`, () => {
-      expect(readFileSync(join('src/content/news', `${slug}.md`), 'utf8')).toMatch(/^updated: 2026-10-30$/m);
+      // a later package may re-date a post again (WP131), so the front matter date is on or after 2026-10-30
+      expect((/^updated: (\d{4}-\d{2}-\d{2})$/m.exec(readFileSync(join('src/content/news', `${slug}.md`), 'utf8'))?.[1] ?? '') >= '2026-10-30').toBe(true);
       expect(onOrAfter(html(`news/${slug}/index.html`), '2026-10-30'), 'JSON-LD dateModified').toBe(true);
     });
   }

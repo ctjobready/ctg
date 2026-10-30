@@ -85,7 +85,7 @@ test.describe('WP126 item 1: archive posts that say "16 countries and territorie
   test('the posts are flagged in front matter (countToday: true) and dated updated: 2026-10-30; no other post carries the flag', () => {
     const flagged = NEWS_SLUGS.filter((s) => /^countToday: true$/m.test(source(s)));
     expect(flagged.sort()).toEqual([...COUNT_TODAY].sort());
-    for (const slug of COUNT_TODAY) expect(source(slug), slug).toMatch(/^updated: 2026-10-30$/m);
+    for (const slug of COUNT_TODAY) expect((/^updated: (\S+)$/m.exec(source(slug))?.[1] ?? '') >= '2026-10-30', slug).toBe(true); // on or after (WP131 re-dated three)
   });
 
   test('a written-from-sources post never carries the sentence (its banner has no archive sentences)', () => {

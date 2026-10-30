@@ -213,7 +213,7 @@ test.describe('WP128 item 7: Universities, "The National University Partnership"
 
   test('the lead keeps the disclaimer; the cards say it no more', () => {
     const b = visible(band());
-    expect(b).toContain('These figures describe National University’s size and the learners being onboarded; they are not learners trained by CodersTrust.');
+    expect(b).toContain('The first two cards describe National University’s size and the learners being onboarded; they are not learners trained by CodersTrust.');
     expect(b.split(DISCLAIMER).length - 1).toBe(1);
     expect(b).not.toContain('the university’s own learners');
   });

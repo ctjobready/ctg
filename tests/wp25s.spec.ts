@@ -328,7 +328,7 @@ test.describe('Our Model and Investors', () => {
     // WP48 (cycle-23 review): "... progressive levels as further levels are published." (it ended ", so completers can keep advancing as further levels are published"; tests/wp48.spec.ts).
     // WP49 (cycle-24 review): the shared "What Happens When Funding Ends?" answer no longer carries that TalentLEAP clause (tests/wp49.spec.ts); the page's own worked example states the levels
     expect(text).not.toContain('TalentLEAP is designed to organize skills into career paths with progressive levels as further levels are published');
-    expect(text).toContain('TalentLEAP organizes skills into career paths with progressive levels. In this example the levels are Competent, Proficient and Expert.');
+    expect(text).toContain('TalentLEAP organizes skills into career paths with progressive levels. In this example, Level 1 is Competent; Proficient and Expert are the planned next levels.');
     // WP80 (item 1): the FAQ answer now opens "Yes, for CodersTrust’s WSDFM program." and names the evaluator in its second sentence.
     expect(text).toContain('The BRAC Institute of Governance and Development (BIGD) at BRAC University ran a randomized controlled trial');
   });
