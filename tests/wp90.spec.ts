@@ -69,7 +69,7 @@ test.describe('WP90 A4: SuperKids "Who It Is For" drops the repeated clause', ()
   test('the row ends at "graphic design for kids."', async ({ page }) => {
     await open(page, 'programs/superkids/');
     const row = page.locator('.pg__row', { has: page.locator('dt', { hasText: 'Who It Is For' }) });
-    expect(compact(await row.locator('dd').textContent())).toBe('Schools and education partners that want young learners to build digital skills early, through block coding, robotics, and graphic design for kids.');
+    expect(compact(await row.locator('dd').textContent())).toBe('Schools and education partners that want young learners to build digital skills early, through block coding, robotics and graphic design for kids.');
   });
 });
 

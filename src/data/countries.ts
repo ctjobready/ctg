@@ -45,7 +45,7 @@ if (!launched) throw new Error('countries: TL-01 has no stat value (the launch d
 export const OFFICES_LINE = 'Headquarters: New York (CT USA, Inc.). Country office: Dhaka (CodersTrust Bangladesh Ltd.).';
 
 export const locations: ProgramLocation[] = [
-  { id: 'bangladesh', name: 'Bangladesh', region: 'South Asia', lat: 23.8103, lon: 90.4125, years: '2014–present', targetGroup: 'Unemployed graduates, women, and priority groups', skills: 'Digital marketing, graphic design, web development, freelancing and more', note: 'Direct training across 45 programs', noteFactId: 'SC-02' },
+  { id: 'bangladesh', name: 'Bangladesh', region: 'South Asia', lat: 23.8103, lon: 90.4125, years: '2014–present', targetGroup: 'Unemployed graduates, women and priority groups', skills: 'Digital marketing, graphic design, web development, freelancing and more', note: 'Direct training across 45 programs', noteFactId: 'SC-02' },
   { id: 'bhutan', name: 'Bhutan', region: 'South Asia', lat: 27.4728, lon: 89.6390, years: '2015–2016', targetGroup: 'Program participants', skills: 'Web development, mobile development and data analytics', photo: 'global/bhutan-batch-inauguration' },
   { id: 'india', name: 'India', region: 'South Asia', lat: 28.6139, lon: 77.2090, years: '2015–2017', targetGroup: 'Students, youth and people willing to create a career in online freelancing marketplaces', skills: 'Coding, development, mobile development and data analytics' },
   { id: 'malaysia', name: 'Malaysia', region: 'Southeast Asia', lat: 3.1390, lon: 101.6869, years: '2016', targetGroup: 'Students, youth and people willing to create a career in online freelancing marketplaces', skills: 'Front-end development and freelancing' },

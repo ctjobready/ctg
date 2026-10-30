@@ -12,6 +12,6 @@ legacyUrl: "https://coderstrust.global/team-member/rezaul-karim-khan/"
 
 Rezaul Karim Khan is the Chief Business Officer of CodersTrust and also mentors learners in artificial intelligence. He is a technologist and business innovator with 20+ years in global ICT projects and startups.
 
-He works on AI applications and champions the power of technology to transform productivity and prepare people for the future. His areas of expertise include prompt engineering, AI service design, cloud computing and solution architecture, business analysis, and project management.
+He works on AI applications and champions the power of technology to transform productivity and prepare people for the future. His areas of expertise include prompt engineering, AI service design, cloud computing and solution architecture, business analysis and project management.
 
 His certifications include AWS Certified AI Practitioner, AWS Certified Solutions Architect - Associate, Microsoft Certified Azure Fundamentals, and Google certifications in digital marketing and project management.

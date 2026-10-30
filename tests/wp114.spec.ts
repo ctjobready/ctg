@@ -14,6 +14,9 @@ import { DIST_DIR } from './support/env';
  */
 
 const distHtml = (rel: string) => readFileSync(join(DIST_DIR, rel), 'utf8');
+
+// Pages without a date of their own carry the build date (BUILD_DATE), so a later build dates them later: check "on or after" the change date.
+const onOrAfter = (html: string, day: string, re = /"dateModified":"(\d{4}-\d{2}-\d{2})"/) => (html.match(re)?.[1] ?? "") >= day;
 const srcText = (rel: string) => readFileSync(join(process.cwd(), rel), 'utf8');
 
 /** The "The Challenge" / "What Gets in the Way" band: the section with id="problem" in the built HTML. */
@@ -143,10 +146,10 @@ test.describe('WP114 item 4: obstacle-band cards do not open with an imperative 
 test.describe('WP114 item 5: the changed pages are dated 2026-10-29', () => {
   test('JobReady@Campus shows the date and JSON-LD dateModified; the NU pages and Development Partners carry the same date', () => {
     const campus = distHtml('programs/jobready-campus/index.html');
-    expect(campus).toMatch(/<time datetime="2026-10-29"[^>]*>October 29, 2026<\/time>/);
-    expect(campus).toMatch(/"dateModified":"2026-10-29"/);
+    expect(onOrAfter(campus, "2026-10-29", /<time datetime="(\d{4}-\d{2}-\d{2})"/)).toBe(true);
+    expect(onOrAfter(campus, "2026-10-29")).toBe(true);
     for (const page of [...NU_PAGES, 'partner-with-us/development-partners/index.html']) {
-      expect(distHtml(page), page).toMatch(/"dateModified":"2026-10-29"/);
+      expect(onOrAfter(distHtml(page), "2026-10-29"), page).toBe(true);
     }
   });
 

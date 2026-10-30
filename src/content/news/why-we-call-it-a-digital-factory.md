@@ -1,7 +1,7 @@
 ---
 title: "Why We Call It a Digital Factory"
 date: 2026-07-18
-updated: 2026-10-29
+updated: 2026-10-30
 topic: insights
 excerpt: "Why Bangladesh’s greatest natural resource is its young people, and what a digital factory means for them."
 cover: ../../assets/images/news/why-we-call-it-a-digital-factory/why-we-call-it-a-digital-factory.jpg
@@ -24,7 +24,7 @@ In this Digital Factory, every skilled young person becomes a creator of value. 
 
 ![Two men on a stage in front of an SDG Achievers banner, one holding a microphone](../../assets/images/news/why-we-call-it-a-digital-factory/why-we-call-it-a-digital-factory-3.jpg)
 
-For decades, developing countries exported (unskilled) labor. We believe the future belongs to nations that export knowledge, expertise, innovation, and digital services. Bangladesh has every ingredient needed to become a global leader in the digital economy if we invest in the right skills and empower our youth.
+For decades, developing countries exported labor. We believe the future belongs to nations that export knowledge, expertise, innovation, and digital services. Bangladesh has every ingredient needed to become a global leader in the digital economy if we invest in the right skills and empower our youth.
 
 As CodersTrust Co-Founder and Chairman Aziz Ahmad often says:
 

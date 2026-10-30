@@ -10,4 +10,4 @@ expertise: []
 legacyUrl: "https://coderstrust.global/team-member/md-fahim-sheikh/"
 ---
 
-Md. Fahim Sheikh works in marketing, project, and training operations at CodersTrust Bangladesh.
+Md. Fahim Sheikh works in marketing, project and training operations at CodersTrust Bangladesh.

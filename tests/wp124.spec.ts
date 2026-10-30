@@ -218,6 +218,11 @@ test.describe('WP124 B, the News archive proofread', () => {
   });
   test('every changed News post is dated 2026-10-29 (dateModified)', () => {
     const changed = [...new Set([JU, HER_POWER, CARNIVAL, FACTORY, FUTURE, ...EDITS.map((e) => e[0])])];
-    for (const slug of changed) expect(html(post(slug)), slug).toContain('"dateModified":"2026-10-29"');
+    // WP126 re-dated the posts that carry `countToday` (and the Digital Factory post) to 2026-10-30: the date is the post's own `updated`
+    for (const slug of changed) {
+      const updated = /^updated: (\S+)$/m.exec(readFileSync(join('src/content/news', `${slug}.md`), 'utf8'))?.[1];
+      expect(['2026-10-29', '2026-10-30'], slug).toContain(updated);
+      expect(html(post(slug)), slug).toContain(`"dateModified":"${updated}"`);
+    }
   });
 });

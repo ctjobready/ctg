@@ -98,7 +98,7 @@ test.describe('WP123, names in the News archive', () => {
 });
 
 test.describe('WP123, programs: the closing line reads the same as on the other route pages', () => {
-  const LINE = 'Your first step: a discovery session. In your inquiry, include two suitable times for a discovery conversation.';
+  const LINE = 'Your first step: a discovery session. In your inquiry, include two suitable times.'; // WP126: the programs’ closing line no longer names the discovery conversation twice
   for (const route of ['programs/jobready-campus/', 'programs/jobready-work/', 'programs/superkids/']) {
     test(`${route} ends What Happens Next on the shared "Your first step" line and no "First action." label remains`, () => {
       const t = text(`${route}index.html`);
@@ -137,7 +137,8 @@ test.describe('WP123, polish', () => {
   });
   test('changed News posts are dated 2026-10-29 (dateModified)', () => {
     for (const rel of [MOU_BASE, LEEDO, DISCOVERY, BUILD_PEACE, RECOGNITION_POST, FREELANCING, UPEACE]) {
-      expect(html(rel), rel).toContain('"dateModified":"2026-10-29"');
+      // WP126 re-dated the Discovery Education and HolonIQ 2023 posts (countToday note) to 2026-10-30
+      expect(html(rel), rel).toContain(rel === DISCOVERY || rel === RECOGNITION_POST ? '"dateModified":"2026-10-30"' : '"dateModified":"2026-10-29"');
     }
   });
 });

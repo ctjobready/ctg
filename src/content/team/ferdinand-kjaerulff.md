@@ -11,7 +11,7 @@ expertise: []
 legacyUrl: "https://coderstrust.global/ferdinand-kjaerulff/"
 ---
 
-Ferdinand Kjærulff, a former Danish Army captain, entrepreneur, and businessman, founded CodersTrust in 2014 together with Aziz Ahmad. He saw a gap between access to online learning and the financing people needed to prepare for online work.
+Ferdinand Kjærulff, a former Danish Army captain, entrepreneur and businessman, founded CodersTrust in 2014 together with Aziz Ahmad. He saw a gap between access to online learning and the financing people needed to prepare for online work.
 
 His aim was that, by capturing the return on investment from the online labor market, CodersTrust could make education universally accessible and an appealing investment for the capital market. He believed that building this inclusive financial system for bright students around the world could have a powerful impact on the poorest people in the world.
 

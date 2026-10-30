@@ -17,6 +17,9 @@ import { DIST_DIR } from './support/env';
  */
 
 const distHtml = (rel: string) => readFileSync(join(DIST_DIR, rel), 'utf8');
+
+// Pages without a date of their own carry the build date (BUILD_DATE), so a later build dates them later: check "on or after" the change date.
+const onOrAfter = (html: string, day: string, re = /"dateModified":"(\d{4}-\d{2}-\d{2})"/) => (html.match(re)?.[1] ?? "") >= day;
 const decode = (s: string) => s.replace(/&amp;/g, '&').replace(/&#39;|&#x27;/g, '’').replace(/&quot;/g, '"').replace(/&#x2B;|&#43;/g, '+');
 const visibleText = (html: string) => decode(html.replace(/<script[\s\S]*?<\/script>/g, ' ').replace(/<style[\s\S]*?<\/style>/g, ' ').replace(/<[^>]+>/g, ' ')).replace(/\s+/g, ' ').replace(/\s+([.,;:])/g, '$1');
 
@@ -153,7 +156,7 @@ test.describe('WP113 Polish 8: About meta description', () => {
 test.describe('WP113 Polish 9: changed pages carry dateModified 2026-10-29 (guard test, passes before the change)', () => {
   for (const page of ['index.html', 'partner-with-us/index.html', 'partner-with-us/governments/index.html', 'partner-with-us/local-partners/index.html', 'programs/index.html', 'programs/jobready-campus/index.html', 'about/index.html']) {
     test(page, () => {
-      expect(distHtml(page)).toMatch(/"dateModified":"2026-10-29"/);
+      expect(onOrAfter(distHtml(page), "2026-10-29")).toBe(true);
     });
   }
 });

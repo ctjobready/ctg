@@ -265,7 +265,7 @@ test.describe('Item 17: polish', () => {
   });
 
   test('"Co-Founder and Chairman." and the Ferdinand portrait alt', () => {
-    expect(visible(pageHtml('about/recognition/'))).toContain('Co-Founder and Chairman.');
+    expect(visible(pageHtml('about/recognition/'))).not.toContain('Co-Founder and Chairman.'); // WP126: the stray line under the honors heading is gone
     expect(visible(pageHtml('about/recognition/'))).not.toContain('Co-founder and Chairman.');
     for (const route of ['about/', 'about/team/', 'about/team/ferdinand-kjaerulff/', 'about/team/abdul-karim/', 'about/team/faruque-hossain/']) {
       const html = pageHtml(route);

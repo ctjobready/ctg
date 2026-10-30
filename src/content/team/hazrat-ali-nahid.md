@@ -12,6 +12,6 @@ legacyUrl: "https://coderstrust.global/team-member/md-hazrat-ali-nahid/"
 
 Md. Hazrat Ali Nahid is Team Lead of the Education Department at CodersTrust Bangladesh, where he also serves as Head of Digital Accounting and coordinates education mentors. He is a Cloud Accounting Expert and Tax Consultant.
 
-He holds a Master’s in Accounting and is a registered tax preparer in the U.S. with a Preparer Tax Identification Number (PTIN). With over 15 years of experience in bookkeeping, payroll, VAT, GST, and tax filing, he is proficient in accounting software including QuickBooks, Xero, Wave, Zoho Books, Sage 50, FreshBooks, QuickBooks Payroll, and Gusto Payroll.
+He holds a Master’s in Accounting and is a registered tax preparer in the U.S. with a Preparer Tax Identification Number (PTIN). With over 15 years of experience in bookkeeping, payroll, VAT, GST and tax filing, he is proficient in accounting software including QuickBooks, Xero, Wave, Zoho Books, Sage 50, FreshBooks, QuickBooks Payroll, and Gusto Payroll.
 
-He has trained students worldwide, and his expertise spans the U.S., UK, Australia, and Canada.
+He has trained students worldwide, and his expertise spans the U.S., UK, Australia and Canada.

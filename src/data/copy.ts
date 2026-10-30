@@ -935,7 +935,8 @@ export const C14 = {
     foundations: { text: 'Organizations that have worked with CodersTrust include the Rockefeller Foundation, DANIDA and Porticus.', facts: ['PA-01'] } as CopyBlock,
   },
   reminder: { text: 'Target timing for grant-funded pilots: the first cohort begins training 6–8 weeks after signing, and monthly reports follow from the first cohort.', facts: ['PD-04', 'PD-08'] } as CopyBlock,
-  firstAction: 'Your first step: a discovery session. In your inquiry, include two suitable times for a discovery conversation.',
+  // WP126 (Opus Medium run 8, Polish): the programs' closing line drops "for a discovery conversation" ("discovery" was in both short sentences); the lead after the colon is "a discovery session", as before.
+  firstAction: 'Your first step: a discovery session. In your inquiry, include two suitable times.',
   // WP93 (Perplexity cycle 42, triage A7): the partner-page closing strip (Development Partners, Foundations, Universities) says "for it", as Governments and Investors do, so the page does not name the discovery session twice in adjacent sentences. The programs pages keep `firstAction`, where the lead is removed and "for it" would have no noun.
   firstActionReinforce: 'Your first step: a discovery session. In your inquiry, include two suitable times for it.',
   // WP49 (cycle-24 review): Home's closing band prints the same action under a "Your First Step" label, so the line there does not say "Your first step" again (the audience pages' reinforcement strip has no such label and keeps `firstAction`).

@@ -70,7 +70,7 @@ export const CTAS: Record<CtaKey, CtaDef> = {
     key: 'briefing',
     label: 'Request a Briefing for Your Ministry',
     subject: 'Briefing request — [ministry/agency]',
-    body: ['Agency', 'Program/target', 'Contact person', 'Preferred dates'],
+    body: ['Agency', 'Program/target', 'Contact person', 'Two suitable times for a briefing'],
   },
   funding: {
     key: 'funding',
@@ -146,7 +146,7 @@ export const CTAS: Record<CtaKey, CtaDef> = {
       'District',
       'Groups you work with',
       'Facilities (labs, classrooms)',
-      'Best times to talk',
+      'Two suitable times for a discovery session',
     ],
   },
   /** Opens a conversation; no ready document set is promised (PD-13b is unverified, `U`). */

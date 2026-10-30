@@ -46,7 +46,7 @@ test.describe('WP109 item 4: Fahim Sheikh’s <title> names him without the abri
   test('the title is "Md. Fahim Sheikh | CodersTrust" and the description keeps his role', () => {
     const html = distHtml('about/team/fahim-sheikh/index.html');
     expect(titleOf(html)).toBe('Md. Fahim Sheikh | CodersTrust');
-    expect(descOf(html)).toContain('marketing, project, and training operations');
+    expect(descOf(html)).toContain('marketing, project and training operations');
   });
 });
 

@@ -9,7 +9,7 @@ import FactStat from '../../../components/facts/FactStat.astro';
 import StatusTag from '../../../components/system/StatusTag.astro';
 import EvidenceTag from '../../../components/system/EvidenceTag.astro';
 import ReportSection from '../../../components/pages/impact/ReportSection.astro';
-import { articleNode, desc, title, fundingCta, discoveryCta } from '../../../components/pages/impact/page-utils';
+import { articleNode, desc, title, platformGrantCta, discoveryCta } from '../../../components/pages/impact/page-utils';
 import { CONTRACT_TOTAL_NOTE_SHORT, MICRO_COMMITMENT, NU_NOT_TRAINED, withoutSince2014 } from '../../../data/copy';
 import { fact } from '../../../data/facts';
 import { faqItems, faqJsonLd } from '../../../lib/faq';
@@ -57,7 +57,7 @@ if (!onboardBase) throw new Error('jobready-platform: SC-04 no longer has a stat
 const onboardLabel = `${onboardBase}, ${NU_NOT_TRAINED}`;
 // WP64 (cycle-36 review, Grok; the same repeat as the Programs hub's and Investors' tiles): the group is headed "Delivered Since 2014", so the learners tile reads "130,000+ learners trained" (SC-01's label without " since 2014", read from the register).
 const learnersLabel = withoutSince2014(fact('SC-01').stat?.label ?? '');
-const f = fundingCta();
+const f = platformGrantCta();
 const d = discoveryCta();
 ---
 

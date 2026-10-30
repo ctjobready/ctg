@@ -88,7 +88,8 @@ test.describe('WP119 Minor 3: the five posts written in October 2026 carry their
     for (const slug of [DISCOVERY, JOYEETA, CARNIVAL, JU, MILESTONE]) {
       const b = banner(slug);
       expect(b, slug).toContain('Archived post, lightly edited.');
-      expect(b, slug).toContain('updated October 29, 2026');
+      // WP126: the posts that now say "The country count is today’s." were re-dated to October 30
+      expect(b, slug).toContain(slug === JU ? 'updated October 29, 2026' : 'updated October 30, 2026');
     }
   });
 });

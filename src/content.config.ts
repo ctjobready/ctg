@@ -63,6 +63,11 @@ const news = defineCollection({
        * an "Archived post ... Published <date>"; it says they were written in October 2026 from the dated sources linked in the text, and gives the event date (the post's `date`).
        */
       writtenFromSources: z.boolean().default(false),
+      /**
+       * WP126 (owner answer 2026-10-29, "Keep 16; adjust note"): true on the archive posts whose body says "16 countries and territories", today's count, though the post was written earlier. The archive banner then adds
+       * "The country count is today’s." after the sentence that says figures reflect the date of publication. Set it on exactly those posts (tests/wp126.spec.ts checks the set against the built pages).
+       */
+      countToday: z.boolean().default(false),
       /** More photographs from the old post that the body does not place inline; shown as a PhotoGallery under the text. */
       gallery: z.array(z.object({ image: image(), alt: z.string() })).default([]),
     }),

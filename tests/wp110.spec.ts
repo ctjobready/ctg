@@ -14,6 +14,9 @@ import { DIST_DIR } from './support/env';
  */
 
 const distHtml = (rel: string) => readFileSync(join(DIST_DIR, rel), 'utf8');
+
+// Pages without a date of their own carry the build date (BUILD_DATE), so a later build dates them later: check "on or after" the change date.
+const onOrAfter = (html: string, day: string, re = /"dateModified":"(\d{4}-\d{2}-\d{2})"/) => (html.match(re)?.[1] ?? "") >= day;
 const decode = (s: string) => s.replace(/&amp;/g, '&').replace(/&#39;|&#x27;/g, '’').replace(/&quot;/g, '"').replace(/&#x2B;|&#43;/g, '+');
 const visibleText = (html: string) => decode(html.replace(/<script[\s\S]*?<\/script>/g, ' ').replace(/<style[\s\S]*?<\/style>/g, ' ').replace(/<[^>]+>/g, ' ')).replace(/\s+/g, ' ').replace(/\s+([.,;:])/g, '$1');
 
@@ -79,8 +82,8 @@ test.describe('WP110 item 3: Trial page attenders income and the RC-04 wording',
 // --------------------------------------------------------------------------------------------------------------------------------
 test.describe('WP110 item 4: changed pages are dated 2026-10-29', () => {
   test('Governments, Trial and Home carry dateModified 2026-10-29', () => {
-    expect(distHtml('partner-with-us/governments/index.html')).toMatch(/"dateModified":"2026-10-29"/);
-    expect(distHtml('impact/independent-evaluation/index.html')).toMatch(/"dateModified":"2026-10-29"/);
-    expect(distHtml('index.html')).toMatch(/"dateModified":"2026-10-29"/);
+    expect(onOrAfter(distHtml('partner-with-us/governments/index.html'), "2026-10-29")).toBe(true);
+    expect(onOrAfter(distHtml('impact/independent-evaluation/index.html'), "2026-10-29")).toBe(true);
+    expect(onOrAfter(distHtml('index.html'), "2026-10-29")).toBe(true);
   });
 });

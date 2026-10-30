@@ -5,8 +5,10 @@ import { cta } from '../../../lib/mailto';
 
 /** C14 first action (N1): the lead of the shared C14 line, "Your first step: a discovery session." (WP123: the programs' closing line opens with it, in bold, in place of a "First action." label). */
 export const C14_LEAD = C14.firstAction.match(/^Your first step: a discovery session\./)![0];
-/** The rest of the shared C14 line (two suitable times for a discovery conversation); YouthWIDE prints it after its own role label, the three program pages after C14_LEAD. */
+/** The rest of the shared C14 line (WP126: "In your inquiry, include two suitable times."); the three program pages print it after C14_LEAD. */
 export const C14_FIRST = C14.firstAction.slice(C14_LEAD.length + 1);
+/** WP126: YouthWIDE's role-labelled "Funders." line keeps "for a discovery conversation" (the role label is not the discovery session, so the phrase names it once, not twice). */
+export const C14_FIRST_FUNDERS = `${C14_FIRST.replace(/\.$/, '')} for a discovery conversation.`;
 
 /**
  * "Last updated" date of a program page (doc 09 §3): the day its content last changed, shown on the page and used as JSON-LD dateModified.

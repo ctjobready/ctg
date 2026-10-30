@@ -257,11 +257,12 @@ test.describe('WP107: every news post changed here carries `updated: 2026-10-29`
   const SLUGS = [BASIS, DOICT, OSTITTO, UPEACE_MOU, NSU, NCTB, AMERICA_WEEK, PRESS_FREEDOM, DISCOVERY];
   for (const slug of SLUGS) {
     test(`${slug.slice(0, 60)}`, async ({ page }) => {
-      expect(post(slug)).toMatch(/^updated: 2026-10-29$/m);
+      const day = slug === DISCOVERY ? '2026-10-30' : '2026-10-29'; // WP126 re-dated the Discovery Education post (countToday note)
+      expect(post(slug)).toMatch(new RegExp(`^updated: ${day}$`, 'm'));
       await open(page, routeOf(slug));
       const ld = await ldJson(page);
-      expect(ld).toMatch(/"dateModified"\s*:\s*"2026-10-29"/);
-      expect(ld).not.toMatch(/"dateModified"\s*:\s*"(?!2026-10-29)[^"]*"/);
+      expect(ld).toMatch(new RegExp(`"dateModified"\\s*:\\s*"${day}"`));
+      expect(ld).not.toMatch(new RegExp(`"dateModified"\\s*:\\s*"(?!${day})[^"]*"`));
     });
   }
 

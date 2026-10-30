@@ -26,7 +26,8 @@ export function reportCta() {
   return { label, href };
 }
 export const discoveryCta = () => libCta('discovery');
-export const fundingCta = () => libCta('funding');
+/** The JobReady platform page's grant link opens the dedicated platform-grant email (WP126), not the generic funding template. */
+export const platformGrantCta = () => libCta('fundingPlatform');
 
 /** Article node authored by the organization (or a named team) with an optional page-specific author. */
 export function articleNode(o: { path: string; headline: string; description: string; datePublished: string; dateModified?: string; author?: string; about?: JsonLdNode; citation?: JsonLdNode[] }): JsonLdNode {

@@ -16,6 +16,9 @@ import { DIST_DIR } from './support/env';
  */
 
 const distHtml = (rel: string) => readFileSync(join(DIST_DIR, rel), 'utf8');
+
+// Pages without a date of their own carry the build date (BUILD_DATE), so a later build dates them later: check "on or after" the change date.
+const onOrAfter = (html: string, day: string, re = /"dateModified":"(\d{4}-\d{2}-\d{2})"/) => (html.match(re)?.[1] ?? "") >= day;
 const decode = (s: string) => s.replace(/&amp;/g, '&').replace(/&#39;|&#x27;/g, '’').replace(/&quot;/g, '"').replace(/&#x2B;|&#43;/g, '+');
 const visibleText = (html: string) => decode(html.replace(/<script[\s\S]*?<\/script>/g, ' ').replace(/<style[\s\S]*?<\/style>/g, ' ').replace(/<[^>]+>/g, ' ')).replace(/\s+/g, ' ').replace(/\s+([.,;:])/g, '$1');
 const h1 = (html: string) => visibleText(html.match(/<h1[^>]*>[\s\S]*?<\/h1>/)?.[0] ?? '').trim();
@@ -120,10 +123,10 @@ test.describe('WP111 item 6: Gardiner news item H1', () => {
 // --------------------------------------------------------------------------------------------------------------------------------
 test.describe('WP111 item 8: changed pages carry dateModified 2026-10-29', () => {
   test('Impact, Development Partners, Foundations, Universities and the Gardiner item carry 2026-10-29', () => {
-    expect(distHtml('impact/index.html')).toMatch(/"dateModified":"2026-10-29"/);
-    expect(distHtml('partner-with-us/development-partners/index.html')).toMatch(/"dateModified":"2026-10-29"/);
-    expect(distHtml('partner-with-us/foundations/index.html')).toMatch(/"dateModified":"2026-10-29"/);
-    expect(distHtml('partner-with-us/universities/index.html')).toMatch(/"dateModified":"2026-10-29"/);
-    expect(distHtml('news/gardinar-emphasizes-skill-development-and-access-for-bangladeshis-to-us-digital-platform/index.html')).toMatch(/"dateModified":"2026-10-29"/);
+    expect(onOrAfter(distHtml('impact/index.html'), "2026-10-29")).toBe(true);
+    expect(onOrAfter(distHtml('partner-with-us/development-partners/index.html'), "2026-10-29")).toBe(true);
+    expect(onOrAfter(distHtml('partner-with-us/foundations/index.html'), "2026-10-29")).toBe(true);
+    expect(onOrAfter(distHtml('partner-with-us/universities/index.html'), "2026-10-29")).toBe(true);
+    expect(onOrAfter(distHtml('news/gardinar-emphasizes-skill-development-and-access-for-bangladeshis-to-us-digital-platform/index.html'), "2026-10-29")).toBe(true);
   });
 });

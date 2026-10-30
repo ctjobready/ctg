@@ -1,7 +1,8 @@
 ---
 title: "The Man Behind CodersTrust Who Never Forgot His Roots"
 date: 2026-08-04
-updated: 2026-10-29
+updated: 2026-10-30
+countToday: true
 topic: insights
 excerpt: "A profile of Co-Founder and Chairman Aziz Ahmad and his belief that success means changing lives."
 cover: ../../assets/images/news/the-man-behind-coderstrust-who-never-forgot-his-roots/aziz-ahmad-farming.jpg

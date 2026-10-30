@@ -14,7 +14,7 @@ import { DESKTOP, MOBILE, open, scrollThrough } from './support/browser';
  *   - A4: YouthWIDE's Our Approach reporting promise is "..., as agreed in the program scope.";
  *   - A5: the Governments national-scale answer says "met its full target with CodersTrust’s curriculum; the contract table above gives the figures.";
  *   - A6: Programs' reach band links "See Global Reach" after the 16's note;
- *   - A7: the partner closing strips end "include two suitable times for it." (Programs keep "for a discovery conversation").
+ *   - A7: the partner closing strips end "include two suitable times for it." (Programs: "include two suitable times." since WP126).
  * Item 4 (headings flow from source): the only heading change (A0) is one string in InvestorEvidence.astro, and Investors renders no On This Page list, so nothing else needs the new wording.
  * Screenshots (1280 and 390): set WP93_SHOTS to a directory and run the "WP93 screenshots" test.
  */
@@ -31,7 +31,7 @@ const YOUTHWIDE_STATEMENT =
 const NATIONAL_ANSWER =
   'We scale in phases. Her Power, a national program, met its full target with CodersTrust’s curriculum; the contract table above gives the figures. A 100,000+ program is a design option we have not yet delivered.';
 const FIRST_ACTION_PARTNER = 'Your first step: a discovery session. In your inquiry, include two suitable times for it.';
-const FIRST_ACTION_PROGRAMS = 'Your first step: a discovery session. In your inquiry, include two suitable times for a discovery conversation.';
+const FIRST_ACTION_PROGRAMS = 'Your first step: a discovery session. In your inquiry, include two suitable times.'; // WP126: the programs’ line drops "for a discovery conversation"
 
 test.describe('WP93 A0: the Investors evidence band is headed "Evidence from the Youth Programs"', () => {
   test('the band heading is the new wording and "Independent Evidence" is no longer a heading on Investors', async ({ page }) => {
@@ -125,7 +125,7 @@ test.describe('WP93 A7: partner closing strips say "for it"', () => {
     });
   }
 
-  test('Programs keep the "for a discovery conversation" wording (their lead is removed, so "for it" would have no noun)', async ({ page }) => {
+  test('Programs end on "include two suitable times." (WP126: no "for a discovery conversation"; their lead is removed, so "for it" would have no noun)', async ({ page }) => {
     await open(page, 'programs/jobready-work/');
     await expect(page.locator('#next-steps .route').first().locator('.next__first')).toHaveText(FIRST_ACTION_PROGRAMS);
   });
