@@ -19,7 +19,7 @@ test.describe('Partner with Us hub', () => {
     await open(page, 'partner-with-us/');
     await expect(page.locator('.hero__lead').first()).toHaveText('Choose a partnership for youth employment, campus skills, team training, hiring or JobReady’s staged rollout.');
     const cta = compact(await page.locator('#cta').textContent());
-    expect(cta).toContain('Tell us your goals, and we will help you find the right partnership route.');
+    expect(cta).toContain('Tell us your goals and two suitable times, and we will help you find the right partnership route.');
     expect(cta).not.toMatch(/first cohort|priority groups/);
     await expect(page.locator('#audiences .grid-cards > a')).toHaveCount(7);
   });

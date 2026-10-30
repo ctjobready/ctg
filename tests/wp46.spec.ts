@@ -118,7 +118,7 @@ test.describe('Development Partners and Foundations: the final call to action do
     expect(await texts(page, '#cta .cta-band__notes li')).toEqual([]);
     expect(compact(await page.locator('#cta').textContent())).not.toContain('Public procurement follows the agency’s own timeline');
     await open(page, 'partner-with-us/universities/');
-    expect(await texts(page, '#cta .cta-band__notes li')).toContain('Timing follows your academic calendar: tracks and campus labs are agreed in co-design before the first cohort starts.');
+    expect(await texts(page, '#cta .cta-band__notes li')).toContain('Timing follows your academic calendar.' /* WP134 */);
   });
 });
 

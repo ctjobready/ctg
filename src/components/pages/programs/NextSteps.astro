@@ -23,10 +23,12 @@ interface Props {
   firstAction?: string;
   /** ... two or more short role-specific first actions under one shared sequence (YouthWIDE: governments and funders, WP24c). */
   roleActions?: { role: string; text: string }[];
+  /** WP134: one full first-action line printed after every route (the slot), for a page whose routes share the first step (JobReady@Work: team training and hiring). */
+  closingAction?: string;
   tone?: 'white' | 'airy';
   id?: string;
 }
-const { eyebrow = 'Next Steps', title = NEXT_STEPS_TITLE, lead, steps, route, firstAction, roleActions = [], tone = 'white', id = 'next-steps' } = Astro.props;
+const { eyebrow = 'Next Steps', title = NEXT_STEPS_TITLE, lead, steps, route, firstAction, roleActions = [], closingAction, tone = 'white', id = 'next-steps' } = Astro.props;
 ---
 
 <Section id={id} tone={tone} aria-labelledby={`${id}-h`}>
@@ -54,6 +56,7 @@ const { eyebrow = 'Next Steps', title = NEXT_STEPS_TITLE, lead, steps, route, fi
     )
   }
   <slot />
+  {closingAction && <p class="next__first" data-reveal>{closingAction}</p>}
 </Section>
 
 <style>

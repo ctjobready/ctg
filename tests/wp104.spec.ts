@@ -323,7 +323,7 @@ test.describe('WP104 item 10: "Last updated" stamps match each page’s latest c
     { route: 'programs/jobready-work/', selector: '.updated', text: 'Last updated October 31, 2026', iso: '2026-10-31' },
     { route: 'programs/superkids/', selector: '.updated', text: 'Last updated October 31, 2026', iso: '2026-10-31' },
     { route: 'impact/outcomes-2026/', selector: '.lf-updated', text: 'Source snapshot: October 2026 · Last updated October 29, 2026', iso: '2026-10-29' },
-    { route: 'impact/independent-evaluation/', selector: '.lf-updated', text: 'Last updated October 29, 2026', iso: '2026-10-29' },
+    { route: 'impact/independent-evaluation/', selector: '.lf-updated', text: 'Last updated October 31, 2026', iso: '2026-10-31' }, // WP134: WP133 changed its text
   ];
   for (const s of STAMPED) {
     test(`${s.route} reads "${s.text}" and its JSON-LD dateModified is ${s.iso}`, async ({ page }) => {

@@ -207,7 +207,7 @@ test.describe('WP105 item 9: stamps and dateModified of the pages this WP change
   // WP129: every page here except Independent Evaluation changed again on 30 October (WP126 to WP128) and moved on to 2026-10-31.
   const STAMPED = [
     { route: 'privacy-policy/', selector: '.lf-updated', day: 'October 31, 2026', iso: '2026-10-31' },
-    { route: 'impact/independent-evaluation/', selector: '.lf-updated', day: 'October 29, 2026', iso: '2026-10-29' },
+    { route: 'impact/independent-evaluation/', selector: '.lf-updated', day: 'October 31, 2026', iso: '2026-10-31' }, // WP134: WP133 changed its text
     { route: 'programs/youthwide/', selector: '.updated', day: 'October 31, 2026', iso: '2026-10-31' },
     { route: 'programs/nu-postgraduate-diploma/', selector: '.updated', day: 'October 31, 2026', iso: '2026-10-31' },
     { route: 'programs/jobready-campus/', selector: '.updated', day: 'October 31, 2026', iso: '2026-10-31' },

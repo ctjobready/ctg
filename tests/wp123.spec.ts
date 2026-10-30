@@ -99,7 +99,8 @@ test.describe('WP123, names in the News archive', () => {
 
 test.describe('WP123, programs: the closing line reads the same as on the other route pages', () => {
   const LINE = 'Your first step: a discovery session. In your inquiry, include two suitable times.'; // WP126: the programs’ closing line no longer names the discovery conversation twice
-  for (const route of ['programs/jobready-campus/', 'programs/jobready-work/', 'programs/superkids/']) {
+  // WP134: JobReady@Work prints the Employers line once after both routes (tests/wp134.spec.ts)
+  for (const route of ['programs/jobready-campus/', 'programs/superkids/']) {
     test(`${route} ends What Happens Next on the shared "Your first step" line and no "First action." label remains`, () => {
       const t = text(`${route}index.html`);
       expect(count(t, LINE)).toBe(1);

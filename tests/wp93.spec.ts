@@ -126,8 +126,8 @@ test.describe('WP93 A7: partner closing strips say "for it"', () => {
   }
 
   test('Programs end on "include two suitable times." (WP126: no "for a discovery conversation"; their lead is removed, so "for it" would have no noun)', async ({ page }) => {
-    await open(page, 'programs/jobready-work/');
-    await expect(page.locator('#next-steps .route').first().locator('.next__first')).toHaveText(FIRST_ACTION_PROGRAMS);
+    await open(page, 'programs/jobready-campus/'); // WP134: JobReady@Work uses the Employers line (tests/wp134.spec.ts); Campus has one route, so no route block
+    await expect(page.locator('#next-steps .next__first')).toHaveText(FIRST_ACTION_PROGRAMS);
   });
 });
 

@@ -733,7 +733,8 @@ export const EMPLOYER_HIRING_STEPS = [
 
 /** C13 urgency line for the universities page: a university's start follows its academic calendar, so it makes no grant-pilot timing claim (PD-04 is for grant-funded pilots). */
 export const SPEED_UNIVERSITIES: CopyBlock = {
-  text: 'Timing follows your academic calendar: tracks and campus labs are agreed in co-design before the first cohort starts.',
+  // WP134 (Opus High run 9): the start band says co-design once, so this line gives the timing only.
+  text: 'Timing follows your academic calendar.',
   facts: [],
 };
 

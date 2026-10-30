@@ -151,7 +151,8 @@ test.describe('WP126 item 4: the Digital Factory post says "exported labor"', ()
 
 test.describe('WP126 item 5: the programs’ closing line is "Your first step: a discovery session. In your inquiry, include two suitable times."', () => {
   const LINE = 'Your first step: a discovery session. In your inquiry, include two suitable times.';
-  for (const route of ['programs/jobready-campus/', 'programs/jobready-work/', 'programs/superkids/']) {
+  // WP134: JobReady@Work prints the Employers line once after both routes (tests/wp134.spec.ts)
+  for (const route of ['programs/jobready-campus/', 'programs/superkids/']) {
     test(`${route} ends What Happens Next on the tighter line (once), and the old wording is gone`, () => {
       const t = text(`${route}index.html`);
       expect(t.split(LINE).length - 1).toBe(1);

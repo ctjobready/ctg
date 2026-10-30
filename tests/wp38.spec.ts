@@ -302,7 +302,7 @@ test.describe('wording fixes', () => {
       await expect(cta).toHaveCount(1);
       const text = compact(await cta.textContent());
       expect(text).toContain(heading);
-      expect(text).toContain('Tell us your goals, and we will discuss the right partnership route.');
+      expect(text).toContain('Tell us your goals and two suitable times, and we will discuss the right partnership route.');
       expect(text).not.toMatch(/priority groups|first cohort/);
     });
   }

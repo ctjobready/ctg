@@ -277,7 +277,6 @@ test.describe('WP129 item 6: every dated page whose visible text changed carries
 
   // Dated pages whose visible text did not change since their date keep it (guard tests; they pass before the change).
   const KEEP: [string, string][] = [
-    ['impact/independent-evaluation/index.html', '2026-10-29'],
     ['impact/outcomes-2026/index.html', '2026-10-29'],
     ['about/team/abdul-karim/index.html', '2026-10-29'],
     ['about/team/faruque-hossain/index.html', '2026-10-29'],

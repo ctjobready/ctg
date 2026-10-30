@@ -80,12 +80,13 @@ test.describe('Employers and JobReady@Work: the closing steps name their routes'
     expect(compact(await page.locator('#reinforce .rf__first').textContent())).toBe('Your first step, for team training or hiring: a discovery session. In your inquiry, include two suitable times.');
   });
 
-  test('JobReady@Work: the first-action line sits inside the team-training route, before "For Hiring"', async ({ page }) => {
+  // WP134 (Opus High run 9): the line covers both routes, so it follows them, in the Employers wording
+  test('JobReady@Work: one first-action line, after both routes', async ({ page }) => {
     await open(page, 'programs/jobready-work/');
     const training = page.locator('#next-steps .route').first();
     await expect(training.locator('h3')).toHaveText('For Team Training');
-    expect(compact(await training.locator('.next__first').textContent())).toBe('Your first step: a discovery session. In your inquiry, include two suitable times.');
-    await expect(page.locator('#next-steps .route').nth(1).locator('.next__first')).toHaveCount(0);
+    await expect(page.locator('#next-steps .route .next__first')).toHaveCount(0);
+    expect(compact(await page.locator('#next-steps > .container > .next__first, #next-steps .next__first').last().textContent())).toBe('Your first step, for team training or hiring: a discovery session. In your inquiry, include two suitable times.');
   });
 
   test('the other pages that close on steps keep the plain band (no route labels): Universities, Governments, Development Partners, JobReady@Campus', async ({ page }) => {

@@ -23,8 +23,8 @@ import NextSteps from '../../components/pages/programs/NextSteps.astro';
 import RouteBlock from '../../components/ui/RouteBlock.astro';
 import StepFlow from '../../components/ui/StepFlow.astro';
 import { faqNode, type FaqSource } from '../../components/pages/programs/faq';
-import { C14_FIRST, PAGE_UPDATED, ctaFor, serviceNode, statValue } from '../../components/pages/programs/meta';
-import { EMPLOYER_HIRING_STEPS, MICRO_COMMITMENT, POSITIONING, statLabelUnder } from '../../data/copy';
+import { PAGE_UPDATED, ctaFor, serviceNode, statValue } from '../../components/pages/programs/meta';
+import { C14, EMPLOYER_HIRING_STEPS, MICRO_COMMITMENT, POSITIONING, statLabelUnder } from '../../data/copy';
 import { fact } from '../../data/facts';
 import { contractScope } from '../../components/sections/copyText';
 import { formatDate, isoDate } from '../../lib/format';
@@ -150,7 +150,7 @@ const approach = [
       { title: 'First Workshop or Cohort', text: 'Training starts on tasks from your roles.' },
       { title: 'Progress Evaluation', text: 'Results are checked against your measures.' },
     ]}
-    firstAction={C14_FIRST}
+    closingAction={C14.variants.employers}
   >
     <RouteBlock label="For Hiring">
       <div data-fact="IN-04"><StepFlow level={4} steps={EMPLOYER_HIRING_STEPS} /></div>
