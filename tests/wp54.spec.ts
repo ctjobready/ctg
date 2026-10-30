@@ -136,7 +136,7 @@ test.describe('Contact: step 1 asks for two suitable times; step 3 is four short
     await open(page, CONTACT);
     const third = compact(await page.locator('#next .steps__item').nth(2).textContent());
     expect(third).toContain(
-      'Program partners: a program scope, designed with you. Foundations: a cohort or platform grant. Employers: a needs assessment, or a talent request scoped against the candidate pool. Impact investors: the deck and data room, under NDA.',
+      'Program partners: a program scope, designed with you. Foundations: a cohort grant designed with you, or a platform-grant discussion. Employers: a needs assessment, or a talent request scoped against the candidate pool. Impact investors: the deck and data room, under NDA.',
     );
     for (const gone of ['Development partners, governments', 'Employers training a team', 'Employers hiring talent', 'follow under NDA', 'experience and credentials available']) expect(third, gone).not.toContain(gone);
     // the recap points to the route cards above it, which still name each kind of partner

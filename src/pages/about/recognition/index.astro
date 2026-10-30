@@ -228,7 +228,7 @@ const media = { href: ctaHref('media'), label: 'Media Inquiries' };
   <!-- WP87 (CLR review, Opus XHigh run 1): the World Bank pages (Kosovo 2016 and 2017, Albania 2021, PA-13) keep their links, in a section of their own so the 2021 release does not sit under the 2014–2016 heading. Home's pointer sentence still names this page for both. -->
   <Section id="world-bank" tone="white" pad="sm" aria-labelledby="wb-h">
     <SectionHeader id="wb-h" eyebrow="World Bank" title="Coverage of Our Work in Kosovo and Albania" />
-    <AsCoveredBy class="rec-covered" />
+    <AsCoveredBy class="rec-covered" skip={coverage.filter((p) => p.outlet === 'World Bank').map((p) => p.a.href)} />
   </Section>
 
   <Section id="press-kit" tone="ice" aria-labelledby="kit-h">

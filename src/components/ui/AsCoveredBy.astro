@@ -19,9 +19,11 @@ import { linkAttrs } from '../../lib/url';
 interface Props {
   class?: string;
   variant?: 'worldbank' | 'pointer';
+  /** WP132 (Opus High run 7): World Bank pages the host page already links elsewhere (Recognition: the 2016 feature is its early-coverage card), left out of the line so no link appears twice. */
+  skip?: string[];
 }
-const { class: className, variant = 'worldbank' } = Astro.props;
-const wb = COVERED_BY_WORLD_BANK.map((w) => ({ place: w.place, pages: w.pages.map((p) => ({ ...p, a: linkAttrs(p.href) })) }));
+const { class: className, variant = 'worldbank', skip = [] } = Astro.props;
+const wb = COVERED_BY_WORLD_BANK.map((w) => ({ place: w.place, pages: w.pages.filter((p) => !skip.includes(p.href)).map((p) => ({ ...p, a: linkAttrs(p.href) })) })).filter((w) => w.pages.length > 0);
 // The span of the outlets' years ("2014–2016"), so the lead-in cannot drift from the data.
 const years = COVERED_BY.map((c) => Number(c.year));
 const first = Math.min(...years);

@@ -77,7 +77,7 @@ test.describe('Foundations', () => {
     const band = page.locator('#next-steps');
     await expect(band.locator('h2')).toHaveText('What Happens Next');
     expect(compact(await band.locator('.lead').textContent())).toBe('For platform grants, the first conversation covers JobReady’s infrastructure and staged rollout. For cohort grants, the steps below show target timing for grant-funded pilots.');
-    expect((await texts(page, '#next-steps ol h3')).map((t) => t.replace(/^Step \d: /, ''))).toEqual(['Discovery', 'Co-Design', 'Agreement', 'Training Starts 6–8 Weeks After Signing']);
+    expect((await texts(page, '#next-steps ol h3')).map((t) => t.replace(/^Step \d: /, ''))).toEqual(['Discovery Session', 'Co-Design', 'Agreement', 'Training Starts 6–8 Weeks After Signing']); // WP132: step 1 is "Discovery Session" (PD-04 keeps "Discovery")
     expect(await band.locator('[data-fact]').first().getAttribute('data-fact')).toBe('PD-04');
     await expect(band.locator('.next__fn')).toHaveCount(0);
     // the timing is the steps' own; the call to action keeps its button, its links and the agenda, and no urgency line

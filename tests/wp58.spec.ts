@@ -428,7 +428,7 @@ test.describe('G7: TalentLEAP’s results paragraph opens with the evaluation se
     await open(page, TALENTLEAP);
     const results = page.locator('#results');
     expect(compact(await results.locator('p').first().textContent())).toBe(
-      'The current 100-hour track has not yet been independently evaluated. A pilot scorecard tracks agreed outcomes; independent evaluation is welcome.',
+      'Today’s 100-hour tracks have not yet been independently evaluated. A pilot scorecard tracks agreed outcomes; independent evaluation is welcome.',
     );
     expect(compact(await page.locator('main').textContent())).not.toContain('The results below are for CodersTrust programs');
     // At a Glance is above the results section, as the sentence says

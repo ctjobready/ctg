@@ -590,7 +590,7 @@ test.describe('Home and Governments: the closing band heading and link (items 25
     await open(page, '');
     await expect(page.locator('#next-steps h2')).toHaveText('What Happens Next');
     await expect(page.locator('#next-steps .eyebrow').first()).toHaveText('Target Timing for Grant-Funded Pilots');
-    await expect(page.locator('#next-steps ol h3')).toHaveText([/Discovery$/, /Co-Design$/, /Agreement$/, /Training Starts 6–8 Weeks After Signing/]);
+    await expect(page.locator('#next-steps ol h3')).toHaveText([/Discovery Session$/, /Co-Design$/, /Agreement$/, /Training Starts 6–8 Weeks After Signing/]); // WP132: step 1 is "Discovery Session"
     expect(sitePages().filter((p) => visible(p.html).includes('What Happens After You Contact Us')).map((p) => p.route)).toEqual([]);
   });
 

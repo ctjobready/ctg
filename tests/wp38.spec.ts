@@ -173,7 +173,7 @@ test.describe('Universities: the one evidence strip, the National University hea
   test('the first band is "The National University Partnership" and keeps its clarifying sentence and its three figures', async ({ page }) => {
     await open(page, 'partner-with-us/universities/');
     await expect(page.locator('#offer-evidence h2')).toHaveText('The National University Partnership');
-    expect(compact(await page.locator('#offer-evidence .sh__lead').textContent())).toBe('The first two cards describe National University’s size and the learners being onboarded; they are not learners trained by CodersTrust.');
+    expect(compact(await page.locator('#offer-evidence .sh__lead').textContent())).toBe('The first two cards describe the learners being onboarded and National University’s size, not learners trained by CodersTrust.'); // WP132: the lead names the first two cards in their order, no dangling "they"
     await expect(page.locator('#offer-evidence .pe__item')).toHaveCount(3);
   });
 });
@@ -289,7 +289,7 @@ test.describe('wording fixes', () => {
     await open(page, 'contact/');
     const third = compact(await page.locator('#next .steps__item').nth(2).textContent());
     // WP54 (cycle-28 review, GPT-6.1 Sol G7): the recap is four short lines; "Program partners" stands for the four partner types that share the program-scope sentence (tests/wp54.spec.ts)
-    expect(third).toContain('Program partners: a program scope, designed with you. Foundations: a cohort or platform grant. Employers: a needs assessment, or a talent request scoped against the candidate pool.');
+    expect(third).toContain('Program partners: a program scope, designed with you. Foundations: a cohort grant designed with you, or a platform-grant discussion. Employers: a needs assessment, or a talent request scoped against the candidate pool.');
     expect(third).not.toContain('a first cohort, designed with you');
     expect(third).toContain('Impact investors: the deck and data room, under NDA.');
   });

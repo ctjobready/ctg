@@ -199,7 +199,7 @@ test.describe('evidence pages end with a next step for every reader', () => {
     expect(steps).toEqual(['Your Inquiry', 'A Conversation', 'The Next Step Depends on Your Route']);
     const third = compact(await section.locator('.steps__item').nth(2).textContent());
     // WP54 (cycle-28 review, GPT-6.1 Sol G7): the recap is four short lines, one per kind of route (tests/wp54.spec.ts)
-    for (const route of ['Program partners: a program scope, designed with you.', 'Foundations: a cohort or platform grant.', 'Employers: a needs assessment, or a talent request scoped against the candidate pool.', 'Impact investors: the deck and data room, under NDA.']) expect(third).toContain(route);
+    for (const route of ['Program partners: a program scope, designed with you.', 'Foundations: a cohort grant designed with you, or a platform-grant discussion.', 'Employers: a needs assessment, or a talent request scoped against the candidate pool.', 'Impact investors: the deck and data room, under NDA.']) expect(third).toContain(route);
   });
 });
 

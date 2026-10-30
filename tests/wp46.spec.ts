@@ -262,7 +262,7 @@ test.describe('Foundations: "What Happens Next" has the four steps, and the part
     const foundations = await stepsOf();
     await open(page, 'partner-with-us/development-partners/');
     expect(foundations, 'the same four steps as Development Partners').toEqual(await stepsOf());
-    expect(foundations).toEqual(['Discovery', 'Co-Design', 'Agreement', 'Training Starts 6–8 Weeks After Signing']);
+    expect(foundations).toEqual(['Discovery Session', 'Co-Design', 'Agreement', 'Training Starts 6–8 Weeks After Signing']); // WP132: step 1 is "Discovery Session" (PD-04 keeps "Discovery")
     await open(page, 'partner-with-us/foundations/');
     expect(compact(await page.locator('#guide').textContent())).toContain('Organizations that have worked with CodersTrust include the Rockefeller Foundation, DANIDA and Porticus.');
     expect(compact(await page.locator('#reinforce').textContent())).not.toContain('Organizations that have worked with CodersTrust include');

@@ -65,8 +65,8 @@ test.describe('post-inquiry band (#next-steps)', () => {
     await expect(band(page).locator('.eyebrow').first()).toHaveText('Target Timing for Grant-Funded Pilots');
     // WP50 (cycle-25 review, item 25): "What Happens Next" (NEXT_STEPS_TITLE), the heading every other page gives this band (it was "What Happens After You Contact Us"; tests/wp50.spec.ts)
     await expect(band(page).locator('h2')).toHaveText('What Happens Next');
-    // WP29: each step names its starting point
-    await expect(band(page).locator('ol h3')).toHaveText([/Discovery$/, /Co-Design$/, /Agreement$/, /Training Starts 6–8 Weeks After Signing/]);
+    // WP29: each step names its starting point (WP132: step 1 is "Discovery Session")
+    await expect(band(page).locator('ol h3')).toHaveText([/Discovery Session$/, /Co-Design$/, /Agreement$/, /Training Starts 6–8 Weeks After Signing/]);
   });
 
   test('one line says ministries, employers and impact investors get a route-specific next step, each linked to its route page', async ({ page }) => {

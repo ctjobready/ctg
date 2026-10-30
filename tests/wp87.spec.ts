@@ -225,13 +225,13 @@ test.describe('Item 16: Recognition’s early-coverage cards link their articles
     expect(await links.evaluateAll((as) => as.every((a) => /noopener/.test(a.getAttribute('rel') ?? '') && !!a.querySelector('.sr-only')))).toBe(true);
     expect(compact(await page.locator('#coverage').textContent())).not.toMatch(/Early press coverage|Albania|2021/);
     await expect(page.locator('p.cov')).toHaveCount(1);
-    await expect(page.locator('#world-bank p.cov a')).toHaveCount(3);
+    await expect(page.locator('#world-bank p.cov a')).toHaveCount(2); // WP132: two links (was three; the 2016 Kosovo feature is linked by its card)
     const lineText = await page.locator('#world-bank p.cov').evaluate((el) => {
       const c = el.cloneNode(true) as HTMLElement;
       c.querySelectorAll('.sr-only').forEach((n) => n.remove());
       return (c.textContent ?? '').replace(/\s+/g, ' ').trim();
     });
-    expect(lineText).toBe('World Bank coverage: Kosovo (2016, 2017) and Albania (2021).');
+    expect(lineText).toBe('World Bank coverage: Kosovo (2017) and Albania (2021).'); // WP132: the 2016 Kosovo feature is the card’s link
     expect(await page.locator('nav a[href="#world-bank"]').count()).toBeGreaterThanOrEqual(1);
   });
 });

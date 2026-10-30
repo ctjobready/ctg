@@ -31,10 +31,11 @@ test.describe('timelines name their starting point', () => {
     { page: 'partner-with-us/foundations/', steps: '#next-steps ol h3' },
   ];
   for (const s of SEQUENCES) {
-    test(`${s.page || 'Home'}: the grant-funded steps read Discovery → Co-Design → Agreement → Training Starts 6–8 Weeks After Signing`, async ({ page }) => {
+    test(`${s.page || 'Home'}: the grant-funded steps read Discovery Session → Co-Design → Agreement → Training Starts 6–8 Weeks After Signing`, async ({ page }) => {
       await open(page, s.page);
       const titles = (await page.locator(s.steps).allTextContents()).map((t) => compact(t).replace(/^Step \d: /, ''));
-      expect(titles).toEqual(['Discovery', 'Co-Design', 'Agreement', 'Training Starts 6–8 Weeks After Signing']);
+      // WP132: the first step heading is "Discovery Session" (PD-04 keeps "Discovery", checked below)
+      expect(titles).toEqual(['Discovery Session', 'Co-Design', 'Agreement', 'Training Starts 6–8 Weeks After Signing']);
       expect(compact(await page.locator('main').textContent())).not.toMatch(/\bwk \d|First Cohort Starting Training|First Cohort · /);
     });
   }

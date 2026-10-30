@@ -57,7 +57,8 @@ export const NATIONWIDE_TARGET = statValue('IN-01');
 export function grantStartTitles(): [string, string, string, string] {
   const names = /(Discovery) → (Co-Design) → (Agreement);/.exec(fact('PD-04').text);
   if (!names) throw new Error(`grantStartTitles: PD-04 no longer reads "Discovery → Co-Design → Agreement; ...": "${fact('PD-04').text}"`);
-  return [names[1], names[2], names[3], `Training Starts ${FIRST_COHORT} After Signing`];
+  // WP132 (Opus High run 7): the first step is named "Discovery Session" everywhere (WP128); PD-04 keeps its own wording.
+  return [`${names[1]} Session`, names[2], names[3], `Training Starts ${FIRST_COHORT} After Signing`];
 }
 
 /**

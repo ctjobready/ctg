@@ -79,7 +79,7 @@ test.describe('WP130 Polish 3 and 4', () => {
 
   test('Universities NU band lead covers its first two cards only', () => {
     const text = main('partner-with-us/universities/index.html');
-    expect(text).toContain('The first two cards describe National University’s size and the learners being onboarded; they are not learners trained by CodersTrust.');
+    expect(text).toContain('The first two cards describe the learners being onboarded and National University’s size, not learners trained by CodersTrust.'); // WP132: the lead names the first two cards in their order, no dangling "they"
     expect(text).not.toContain('These figures describe National University’s size');
   });
 });

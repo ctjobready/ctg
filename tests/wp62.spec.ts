@@ -123,7 +123,8 @@ test.describe('Item 1 (GPT-6.1 Sol, Kimi): Home slide 1 says the 41% is monthly'
 // WP62 rework (R1, R2): the first pass named Kosovo alone on Home and left the ten press and World Bank links on no page, because Recognition and Media printed no Albania release; the full line is printed on that page now and Home’s pointer names both places.
 test.describe('Item 2 (Kimi, GPT-6.1 Sol, Gemini; rework R1 and R2): Home’s press line is one pointer sentence; Recognition and Media prints the line with its links', () => {
   const POINTER = 'Early press coverage, 2014–2016, and World Bank coverage of our work in Kosovo and Albania are on the Recognition and Media page.';
-  const LINE = 'World Bank coverage: Kosovo (2016, 2017) and Albania (2021).'; // WP87: the outlets sentence is gone; the links are on the cards
+  // WP132: the Kosovo 2016 feature is linked once, by its card, so the line lists Kosovo (2017) and Albania (2021)
+  const LINE = 'World Bank coverage: Kosovo (2017) and Albania (2021).'; // WP87: the outlets sentence is gone; the links are on the cards
   const TECHCRUNCH = 'https://techcrunch.com/2014/06/13/building-code-to-break-poverty-in-bangladesh/';
   const withoutSrOnly = (selector: string) => (page: Page) =>
     page.locator(selector).first().evaluate((el) => {
@@ -146,15 +147,15 @@ test.describe('Item 2 (Kimi, GPT-6.1 Sol, Gemini; rework R1 and R2): Home’s pr
     await expect(band.locator('a[href^="http"]')).toHaveCount(0);
   });
 
-  test('Recognition and Media: the World Bank line is one paragraph with its three links, each with rel and screen-reader text, in a section of its own after the coverage band (WP87)', async ({ page }) => {
+  test('Recognition and Media: the World Bank line is one paragraph with its two links, each with rel and screen-reader text, in a section of its own after the coverage band (WP87)', async ({ page }) => {
     await open(page, RECOGNITION);
     const line = page.locator('#world-bank p.cov');
     await expect(line).toHaveCount(1);
     expect(await withoutSrOnly('#world-bank p.cov')(page)).toBe(LINE);
     expect(await line.getAttribute('data-fact')).toBe('PA-13');
-    await expect(line.locator('a')).toHaveCount(3);
+    await expect(line.locator('a')).toHaveCount(2); // WP132: two links (was three; the 2016 story is the card’s link)
     expect(await line.locator('a').evaluateAll((as) => as.every((a) => /noopener/.test(a.getAttribute('rel') ?? '') && a.getAttribute('href')!.startsWith('https://')))).toBe(true);
-    expect(await line.locator('a .sr-only').count()).toBe(3);
+    expect(await line.locator('a .sr-only').count()).toBe(2);
     await expect(line.locator('img, svg, picture')).toHaveCount(0);
     const order = await page.evaluate(() => {
       const follows = (a: Element, b: Element) => !!(a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING);
@@ -163,13 +164,16 @@ test.describe('Item 2 (Kimi, GPT-6.1 Sol, Gemini; rework R1 and R2): Home’s pr
     expect(order).toEqual({ coverageThenLine: true, lineThenKit: true });
   });
 
-  // WP87: the cards link their articles themselves, so the line repeats only the one World Bank article a card also is (the 2016 Kosovo story)
-  test('the Kosovo 2016 story is the only link the World Bank line shares with a card', async ({ page }) => {
+  // WP87: the cards link their articles themselves. WP132: the 2016 Kosovo story is a card, so it is linked once, by its card, and the line shares no link with the cards
+  test('the World Bank line shares no link with a card: the Kosovo 2016 story is linked once, by its card', async ({ page }) => {
     await open(page, RECOGNITION);
     const cards = await page.locator('ul.rec-press .rec-press__headline a').evaluateAll((as) => as.map((a) => a.getAttribute('href')));
     const lineLinks = await page.locator('p.cov a').evaluateAll((as) => as.map((a) => a.getAttribute('href')));
     expect(cards).toHaveLength(8);
-    expect(lineLinks.filter((h) => cards.includes(h))).toEqual(['https://web.archive.org/web/20170504003520/http://www.worldbank.org/en/news/feature/2016/09/19/kosovos-women-go-wow-online-and-working']);
+    const KOSOVO_2016 = 'https://web.archive.org/web/20170504003520/http://www.worldbank.org/en/news/feature/2016/09/19/kosovos-women-go-wow-online-and-working';
+    expect(cards).toContain(KOSOVO_2016);
+    expect(lineLinks.filter((h) => cards.includes(h))).toEqual([]);
+    expect(await page.locator(`a[href="${KOSOVO_2016}"]`).count()).toBe(1);
     expect(await page.locator(`a[href="${TECHCRUNCH}"]`).count()).toBe(1);
   });
 

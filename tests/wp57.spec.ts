@@ -289,12 +289,12 @@ test.describe('P2, "As covered by" is two short sentences with every link kept, 
       const line = page.locator('p.cov');
       await expect(line).toHaveCount(1);
       const text = await visibleText(page, 'p.cov');
-      expect(text.split(/(?<=\.) (?=[A-Z])/)).toEqual(['World Bank coverage: Kosovo (2016, 2017) and Albania (2021).']);
+      expect(text.split(/(?<=\.) (?=[A-Z])/)).toEqual(['World Bank coverage: Kosovo (2017) and Albania (2021).']); // WP132: the 2016 Kosovo feature is linked by its early-coverage card only
       expect(text).not.toContain('As covered by');
       expect(text).not.toMatch(/Gulf News|TechCrunch|Forbes|Wall Street Journal|USA Today|Tech in Asia|Times of India/);
       // no stray space before a comma or a period (the links are followed directly by their punctuation)
       expect(text).not.toMatch(/ [,.]/);
-      // the three World Bank links are their years
+      // the two World Bank links are their years (WP132: the 2016 Kosovo feature is the early-coverage card's link, no longer also in the line)
       const linkTexts = await line.locator('a').evaluateAll((as) =>
         as.map((a) => {
           const c = a.cloneNode(true) as HTMLElement;
@@ -302,9 +302,9 @@ test.describe('P2, "As covered by" is two short sentences with every link kept, 
           return (c.textContent ?? '').trim();
         }),
       );
-      expect(linkTexts).toEqual(['2016', '2017', '2021']);
+      expect(linkTexts).toEqual(['2017', '2021']);
       expect(await line.getAttribute('data-fact')).toBe('PA-13');
-      expect(await line.locator('a .sr-only').count(), 'each link says where it goes').toBe(3);
+      expect(await line.locator('a .sr-only').count(), 'each link says where it goes').toBe(2);
       expect(await line.locator('a').evaluateAll((as) => as.every((a) => /noopener/.test(a.getAttribute('rel') ?? '')))).toBe(true);
     });
   }
@@ -570,7 +570,7 @@ test.describe('R2, the 30,000+ visibly includes Her Power’s national program (
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 test.describe('R5, Universities: "Choose Where to Start" is one line, with no size cards', () => {
-  const LINE = 'Start with one campus: cohort size, tracks and labs are set in the discovery session.';
+  const LINE = 'Start with one campus: cohort size, tracks and labs are agreed in co-design.'; // WP132: was "...are set in the discovery session."
   const UNIVERSITIES = 'partner-with-us/universities/';
 
   test('the band is its heading and the one line (id #offer kept): no cards, no size, no recommendation, no link or button of its own', async ({ page }) => {

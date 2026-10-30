@@ -245,7 +245,7 @@ test.describe('Contact', () => {
   test('step 3 names foundations’ two grants; the program partners share the program-scope sentence', async ({ page }) => {
     await open(page, 'contact/');
     expect(compact(await page.locator('#next .steps__item').nth(2).textContent())).toContain(
-      'Program partners: a program scope, designed with you. Foundations: a cohort or platform grant. Employers: a needs assessment, or a talent request scoped against the candidate pool.',
+      'Program partners: a program scope, designed with you. Foundations: a cohort grant designed with you, or a platform-grant discussion. Employers: a needs assessment, or a talent request scoped against the candidate pool.',
     );
     const third = compact(await page.locator('#next .steps__item').nth(2).textContent());
     expect(third).toContain('Impact investors: the deck and data room, under NDA.');
@@ -433,7 +433,7 @@ test.describe('option bands: program sizes are not a commitment', () => {
   // WP51 (cycle-26 review): "Program options are shown without prices." described the website itself and is gone from JobReady@Campus' lead; the pricing statement under the options stays (tests/wp51.spec.ts)
   test('Universities’ lead is its one line, not the note (its cost answer is in the FAQ); JobReady@Campus’ lead is the note alone, and its pricing statement stays beside the options', async ({ page }) => {
     await open(page, 'partner-with-us/universities/');
-    expect(compact(await page.locator('#offer .sh__lead').textContent())).toBe('Start with one campus: cohort size, tracks and labs are set in the discovery session.');
+    expect(compact(await page.locator('#offer .sh__lead').textContent())).toBe('Start with one campus: cohort size, tracks and labs are agreed in co-design.'); // WP132: tracks and labs are agreed in co-design (was "set in the discovery session")
     await open(page, 'programs/jobready-campus/');
     expect(compact(await page.locator('#offer .sh__lead').textContent())).toBe(NOTE);
     await expect(page.locator('#offer [data-fact="PD-02"]')).toHaveCount(1);

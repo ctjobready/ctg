@@ -14,7 +14,8 @@ import { listPages } from './support/pages';
  */
 
 const compact = (t: string | null | undefined) => (t ?? '').replace(/\s+/g, ' ').trim();
-const STEP_HEADINGS = [/^Discovery$/, /^Co-Design$/, /^Agreement$/, /^Training Starts 6–8 Weeks After Signing$/];
+// WP132: step 1 is "Discovery Session" (PD-04 keeps "Discovery")
+const STEP_HEADINGS = [/^Discovery Session$/, /^Co-Design$/, /^Agreement$/, /^Training Starts 6–8 Weeks After Signing$/];
 const OLD_TIMING_PHRASES = ['For grant-funded pilots, agreement typically takes', 'For grant-funded pilots, allow about three weeks', 'we plan for the first cohort to begin training'];
 
 async function stepHeadings(page: Page, selector: string) {
@@ -35,7 +36,7 @@ test.describe('WP68 RW1: the Universities band keeps its heading and takes a pag
     await expect(band).toHaveCount(1);
     await expect(band.locator('.eyebrow').first()).toHaveText('Our Partnerships');
     await expect(band.locator('h2')).toHaveText('The National University Partnership');
-    expect(compact(await band.locator('.sh__lead').textContent())).toContain('they are not learners trained by CodersTrust');
+    expect(compact(await band.locator('.sh__lead').textContent())).toContain('The first two cards describe the learners being onboarded and National University’s size, not learners trained by CodersTrust.'); // WP132: the lead names the first two cards in their order (was "...; they are not learners trained by CodersTrust")
     await expect(band.locator('.pe__item')).toHaveCount(3);
   });
 

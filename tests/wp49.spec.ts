@@ -297,7 +297,7 @@ test.describe('Governments: the briefing, not a discovery session (items 12, 28 
     // WP52 (cycle-27 review): the lead is the note alone ("Prefer to fund the platform? See JobReady Platform Grants below." is gone; the funding-route comparison above carries the platform-grant row; tests/wp52.spec.ts)
     expect(compact(await page.locator('#cohort-grants .sh__lead').textContent())).toBe(PROGRAM_SIZES_NOTE);
     await open(page, UNI);
-    expect(compact(await page.locator('#offer .sh__lead').textContent())).toBe('Start with one campus: cohort size, tracks and labs are set in the discovery session.');
+    expect(compact(await page.locator('#offer .sh__lead').textContent())).toBe('Start with one campus: cohort size, tracks and labs are agreed in co-design.'); // WP132: tracks and labs are agreed in co-design (was "set in the discovery session")
     await open(page, DP);
     expect(compact(await page.locator('#offer .sh__lead').textContent())).toBe(PROGRAM_SIZES_NOTE);
     for (const route of [GOV, FOUND, UNI]) {
@@ -380,7 +380,7 @@ test.describe('Home: the router card, the closing steps and the first-step line 
   test('the four closing steps carry the hub’s one-line descriptions (one shared source), and the "Your First Step" panel does not say "first step" twice', async ({ page }) => {
     await open(page, '');
     expect(await texts(page, '#next-steps .steps__text')).toEqual(DESCRIPTIONS);
-    expect((await texts(page, '#next-steps ol h3')).map((t) => t.replace(/^Step \d+: /, ''))).toEqual(['Discovery', 'Co-Design', 'Agreement', 'Training Starts 6–8 Weeks After Signing']);
+    expect((await texts(page, '#next-steps ol h3')).map((t) => t.replace(/^Step \d+: /, ''))).toEqual(['Discovery Session', 'Co-Design', 'Agreement', 'Training Starts 6–8 Weeks After Signing']); // WP132: step 1 is "Discovery Session" (PD-04 keeps "Discovery")
     expect(await texts(page, '#next-steps .ns__note--first p')).toEqual(['Your First Step', C14.firstActionLabeled]);
     expect(C14.firstActionLabeled).toBe('A discovery session. In your inquiry, include two suitable times.');
     await open(page, 'partner-with-us/');

@@ -17,7 +17,8 @@ import { inventory } from './support/pages';
 
 const compact = (t: string | null | undefined) => (t ?? '').replace(/\s+/g, ' ').trim();
 
-const STEP_TITLES = ['Discovery', 'Co-Design', 'Agreement', 'Training Starts 6–8 Weeks After Signing'];
+// WP132: the first step heading is "Discovery Session" (grantStartTitles); PD-04 keeps "Discovery"
+const STEP_TITLES = ['Discovery Session', 'Co-Design', 'Agreement', 'Training Starts 6–8 Weeks After Signing'];
 
 /** Pre-signature timing, in any wording the site used for it. Week numbers are matched only as "Week 1" to "Week 3" (not "Week 2025"). */
 const PRE_SIGNATURE_TIMING = [/\bWeek [1-3]\b/, /three weeks/i, /Counting from the first conversation/, /agreement typically/i, /from (the )?first conversation to agreement/i, /weeks from (the )?first conversation/i, /Discovery \(Week/];
@@ -63,7 +64,7 @@ test.describe('WP100: the grant-funded steps have no week numbers', () => {
     { page: 'partner-with-us/foundations/', steps: '#next-steps ol h3' },
   ];
   for (const s of SEQUENCES) {
-    test(`${s.page || 'Home'}: the grant-funded steps read Discovery, Co-Design, Agreement, Training Starts 6–8 Weeks After Signing`, async ({ page }) => {
+    test(`${s.page || 'Home'}: the grant-funded steps read Discovery Session, Co-Design, Agreement, Training Starts 6–8 Weeks After Signing`, async ({ page }) => {
       await open(page, s.page);
       expect(await stepTitles(page, s.steps)).toEqual(STEP_TITLES);
     });

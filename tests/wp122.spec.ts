@@ -56,7 +56,7 @@ test.describe('WP122, TalentLEAP: the caveat once, and no "planned" levels insid
     const t = text(TL);
     expect(count(t, 'not TalentLEAP’s features on their own')).toBe(1);
     expect(count(t, 'not individual TalentLEAP features')).toBe(0);
-    expect(t).toContain('Results from CodersTrust Programs The current 100-hour track has not yet been independently evaluated.');
+    expect(t).toContain('Results from CodersTrust Programs Today’s 100-hour tracks have not yet been independently evaluated.'); // WP132: "Today’s 100-hour tracks" (was "The current 100-hour track")
   });
   test('the Example band lists no "Proficient and Expert levels are planned." card, and its footnote is "Example only: the Digital Marketing career path."', () => {
     const h = html(TL);
