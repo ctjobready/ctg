@@ -1,7 +1,7 @@
 ---
 title: "CodersTrust Attends WSIS+20 Forum High-Level Event"
 date: 2024-05-29
-updated: 2026-10-29
+updated: 2026-10-30
 topic: leadership-advocacy
 excerpt: "CodersTrust takes part in the WSIS+20 Forum High-Level Event in Geneva, held May 27 to 31, 2024."
 cover: ../../assets/images/news/coderstrust-attends-wsis20-forum-high-level-event/wsis-2.jpg
@@ -17,7 +17,7 @@ CodersTrust participates in the Technological Achievements and Global Recognitio
 
 Geneva, Switzerland
 
-CodersTrust participated in the WSIS+20 Forum High-Level Event in Geneva, held May 27 to 31, 2024. This high-level event provided industry leaders, countries, and global organizations a platform to discuss the future of AI, IT, telecommunications, and digital governance. Aziz Ahmad, Chairman of CodersTrust, joined the event and engaged in meaningful dialogues on how to drive platform economies and ensure decent work for all, particularly in the Global South.
+CodersTrust participated in the WSIS+20 Forum High-Level Event in Geneva, held May 27 to 31, 2024. This high-level event provided industry leaders, countries and global organizations a platform to discuss the future of AI, IT, telecommunications and digital governance. Aziz Ahmad, Chairman of CodersTrust, joined the event and engaged in meaningful dialogues on how to drive platform economies and ensure decent work for all, particularly in the Global South.
 
 Speakers at the event emphasized the transformative potential of AI for the Global South, advocating for the closure of the digital divide and the promotion of emerging technologies. By embracing digital public goods and development-oriented technologies, the aim is to shape a future where 5.5 billion people are connected, striving to bridge the gap for the 2.6 billion individuals still offline.
 

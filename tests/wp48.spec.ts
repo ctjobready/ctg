@@ -470,7 +470,7 @@ test.describe('Home: the low-risk band, the FAQ trial answer, the hero line, the
     await expect(page.locator('#risk')).toHaveCount(0);
     expect(await mainText(page)).not.toContain('Start with a Multi-Cohort Pilot, Then Decide on Evidence');
     const cta = page.locator('#cta');
-    expect(compact(await cta.locator('.cta-band__text').textContent())).toBe('Start with a multi-cohort pilot, agree the scorecard up front, and decide on expansion from the evidence.');
+    expect(compact(await cta.locator('.cta-band__text').textContent())).toBe('Start with a multi-cohort pilot, agree the scorecard up front and decide on expansion from the evidence.');
     await expect(cta.locator('h2')).toHaveText('Let’s Design Your First Cohort');
     await expect(cta.locator('.btn--primary, .btn--inverse')).toHaveCount(1);
     expect(await texts(page, '#cta .cta-band__route')).toHaveLength(2);

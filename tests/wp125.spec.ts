@@ -104,7 +104,7 @@ test.describe('WP125 items 3 to 5 and 7, News post wording', () => {
     expect(t).not.toContain('the institute’s dedication');
   });
   test('each changed post carries dateModified 2026-10-29', () => {
-    for (const slug of [WSIS, AKIJ, FREELANCING, OSTITTO]) expect(dateModified(html(post(slug))), slug).toBe('2026-10-29');
+    for (const slug of [WSIS, AKIJ, FREELANCING, OSTITTO]) expect(dateModified(html(post(slug))), slug).toMatch(/^2026-10-(29|30)$/); // WP127 re-dated three of the four (serial-comma sweep)
   });
 });
 

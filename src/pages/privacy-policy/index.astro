@@ -10,7 +10,7 @@ import { url, linkAttrs } from '../../lib/url';
 const GITHUB_PRIVACY = 'https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement';
 const JOBREADY = 'https://jobready.global/';
 const UPDATED = '2026-10-29'; // WP122: YouTube named in the share, social and map-link row, the Links to Other Sites sentence and the Video line. WP106: "This website is run by CT USA, Inc. (CodersTrust)." (owner 2026-10-29). WP105: the Email Inquiries section names the careers and NU diploma help inboxes
-const description = 'How the CodersTrust website handles data: no analytics cookies, no trackers of its own, and a plain list of every service involved.';
+const description = 'How the CodersTrust website handles data: no analytics cookies, no trackers of its own and a plain list of every service involved.';
 const toc = [
   { id: 'summary', label: 'In Short' },
   { id: 'services', label: 'Every service involved' },
@@ -100,13 +100,13 @@ const jsonLd = [webPage({ path: '/privacy-policy/', name: 'Privacy Policy', desc
 
     <section id="storage" aria-labelledby="storage-h">
       <h2 id="storage-h">Your Browser Storage</h2>
-      <p>If you close the announcement bar at the top of the page, the site saves a small note in your browser’s local storage (the key is <code>{promo.storageKey}</code>) so that the bar stays closed on your next visit. It is a functional setting, it stays on your device, and we never receive it. That is why we do not ask for consent for it. You can remove it at any time by clearing this site’s data in your browser.</p>
+      <p>If you close the announcement bar at the top of the page, the site saves a small note in your browser’s local storage (the key is <code>{promo.storageKey}</code>) so that the bar stays closed on your next visit. It is a functional setting, it stays on your device and we never receive it. That is why we do not ask for consent for it. You can remove it at any time by clearing this site’s data in your browser.</p>
       <p>We set no cookies of our own.</p>
     </section>
 
     <section id="rights" aria-labelledby="rights-h">
       <h2 id="rights-h">Your Rights</h2>
-      <p>Depending on where you live, you may have the right to ask what personal data we hold about you, to have it corrected or deleted, to object to our use of it, and to complain to your local data-protection authority. To exercise these rights, email <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>.</p>
+      <p>Depending on where you live, you may have the right to ask what personal data we hold about you, to have it corrected or deleted, to object to our use of it and to complain to your local data-protection authority. To exercise these rights, email <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>.</p>
     </section>
 
     <section id="children" aria-labelledby="children-h">

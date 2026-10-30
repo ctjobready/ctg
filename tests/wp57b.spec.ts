@@ -160,7 +160,7 @@ test.describe('external statistics name their publisher and year inside the sent
 
   test('the register’s own wording is unchanged: only what renders carries the note', () => {
     expect(fact('PX-05').stat?.label).toBe('of employers globally reported difficulty finding talent in 2026');
-    expect(fact('PX-02').stat?.label).toBe('university-educated people of all working ages unemployed across South Asia, the Middle East and North Africa, and Sub-Saharan Africa');
+    expect(fact('PX-02').stat?.label).toBe('university-educated people of all working ages unemployed across South Asia, Sub-Saharan Africa and the Middle East and North Africa');
     expect(fact('PX-01').stat?.label).toMatch(/\(range 61–78 million\)$/);
     expect(fact('PX-08').text).toBe('Globally, job postings requiring AI skills grew 69% vs. 9% for all postings, and workers with AI skills earned a 62% wage premium');
     for (const id of Object.keys(NOTES)) {

@@ -51,7 +51,7 @@ test.describe('Impact overview: Results at a Glance and the jump list', () => {
     // WP42 (cycle-19 review): the goals entry is the full heading ("Seven Global Goals, Three at the Core"), which says which goals are the focus
     // WP57 (cycle-29 review, Kimi K3, item K1): the closing band is the last entry (tests/wp57.spec.ts)
     expect(await texts(page, 'nav[aria-label="On this page"] a')).toEqual(['Results at a Glance', 'Five Programs Across Kosovo, Albania and Bangladesh', 'Four Kinds of Evidence, Strongest First', 'Where We Are Heading', 'Seven Global Goals, Three at the Core', 'Discuss the Evidence for Your Program']);
-    expect(compact(await page.locator('#sdg').textContent())).toContain('CodersTrust’s training-to-employment model aligns with seven SDGs, with a primary focus on Quality Education, Gender Equality, and Decent Work and Economic Growth');
+    expect(compact(await page.locator('#sdg').textContent())).toContain('CodersTrust’s training-to-employment model aligns with seven SDGs, with a primary focus on Quality Education and Gender Equality, as well as Decent Work and Economic Growth');
     // the band order keeps its rhythm: no two dark bands in a row
     const dark = await page.evaluate(() => Array.from(document.querySelectorAll('main .band')).map((b) => /band--(klein|deep-ink)/.test(b.className)));
     for (let i = 1; i < dark.length; i++) expect(dark[i] && dark[i - 1], `band ${i}`).toBe(false);

@@ -418,7 +418,7 @@ test.describe('YouthWIDE: the briefing link names its audience (item 15) and the
     expect(fact('IN-02').text.endsWith('current outcome evidence comes from Bangladesh and Kosovo, with Bangladesh where most delivery has been')).toBe(true);
     await open(page, YOUTHWIDE);
     expect(compact(await page.locator('#program-glance .pg__row').first().textContent())).toContain(
-      'South Asia, the Middle East and North Africa, and Sub-Saharan Africa, as co-funded country cohorts. Bangladesh is where most delivery has been. YouthWIDE aims to train 1 million educated youth (Higher Secondary Certificate or above) for digital employment by 2030, in Bangladesh and similar countries in South Asia and the Middle East and North Africa, depending on government and donor commitments.',
+      'South Asia, Sub-Saharan Africa and the Middle East and North Africa, as co-funded country cohorts. Bangladesh is where most delivery has been. YouthWIDE aims to train 1 million educated youth (Higher Secondary Certificate or above) for digital employment by 2030, in Bangladesh and similar countries in South Asia and the Middle East and North Africa, depending on government and donor commitments.',
     );
     // WP53 (owner follow-up, 2026-10-16): the Bangladesh band’s heading had kept "Reference Country", the jargon this item removed from the glance row; it was "Bangladesh: Delivery Base and 2030 Aim"; WP99 (owner answer 2026-10-28, Q1): it is "Delivery Base in Bangladesh and the 2030 Aim"
     await expect(page.locator('section#governments').getByRole('heading', { level: 2 })).toHaveText('Delivery Base in Bangladesh and the 2030 Aim');
@@ -614,7 +614,7 @@ test.describe('The Programs hub lines (items 28 and 30)', () => {
   test('YouthWIDE’s "In Practice" line promises reports on progress toward paid work; JobReady@Work offers "a route to hire job-ready talent"', async ({ page }) => {
     await open(page, PROGRAMS);
     const text = await everything(page);
-    expect(text).toContain('Ministries can follow phased delivery from training to paid work, and funders get monthly reports on progress toward paid work, as agreed in the program scope, not only enrollment.');
+    expect(text).toContain('Ministries can follow phased delivery from training to paid work, and funders get monthly reports on progress toward paid work, not only enrollment, as agreed in the program scope.');
     expect(text).toContain('Corporate training custom-developed for each organization, plus a route to hire job-ready talent.');
     expect(pagesWith('monthly reports on paid-work outcomes', 'plus access to job-ready talent')).toEqual([]);
   });

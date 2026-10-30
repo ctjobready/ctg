@@ -110,12 +110,12 @@ test.describe('WP109 item 8: the Mentors lede keeps the instructors figure only'
 
 // --------------------------------------------------------------------------------------------------------------------------------
 test.describe('WP109 item 9: dates on the changed pages', () => {
-  test('the news posts changed here carry updated 2026-10-29', () => {
+  test('the news posts changed here carry updated 2026-10-30 (WP127 re-dated both; they were 2026-10-29)', () => {
     for (const slug of [
       'coderstrust-bangladesh-partners-with-us-based-remoteintegrity-llc-to-expand-global-career-opportunities',
       'gardinar-emphasizes-skill-development-and-access-for-bangladeshis-to-us-digital-platform',
     ]) {
-      expect(readFileSync(`src/content/news/${slug}.md`, 'utf8'), slug).toMatch(/^updated: 2026-10-29$/m);
+      expect(readFileSync(`src/content/news/${slug}.md`, 'utf8'), slug).toMatch(/^updated: 2026-10-30$/m);
     }
   });
   test('Recognition, Fahim Sheikh and the outcomes page are dated 2026-10-29', () => {

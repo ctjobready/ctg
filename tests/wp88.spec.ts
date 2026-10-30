@@ -180,7 +180,7 @@ test.describe('Item 13: News Photographs captions and meta', () => {
 test.describe('Item 14: the Uganda post names Somaliland', () => {
   test('the partnerships sentence lists Somaliland after Egypt', () => {
     const body = visibleText(htmlOf(UGANDA));
-    expect(body).toContain('It also announced partnerships in Benin, with SOS Children’s Villages, in Egypt, with CrossWorkers, and in Somaliland.');
+    expect(body).toContain('It also announced partnerships in Benin, with SOS Children’s Villages; in Egypt, with CrossWorkers; and in Somaliland.');
   });
 });
 

@@ -138,7 +138,7 @@ test.describe('WP123, polish', () => {
   test('changed News posts are dated 2026-10-29 (dateModified)', () => {
     for (const rel of [MOU_BASE, LEEDO, DISCOVERY, BUILD_PEACE, RECOGNITION_POST, FREELANCING, UPEACE]) {
       // WP126 re-dated the Discovery Education and HolonIQ 2023 posts (countToday note) to 2026-10-30
-      expect(html(rel), rel).toContain(rel === DISCOVERY || rel === RECOGNITION_POST ? '"dateModified":"2026-10-30"' : '"dateModified":"2026-10-29"');
+      expect(html(rel), rel).toMatch(rel === DISCOVERY || rel === RECOGNITION_POST ? /"dateModified":"2026-10-30"/ : /"dateModified":"2026-10-(29|30)"/); // WP127 re-dated more of these (serial-comma sweep)
     }
   });
 });

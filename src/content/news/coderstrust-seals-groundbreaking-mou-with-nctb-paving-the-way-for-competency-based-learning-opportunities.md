@@ -1,7 +1,7 @@
 ---
 title: "CodersTrust Seals Groundbreaking MOU with NCTB, Paving the Way for Competency-Based Learning Opportunities"
 date: 2023-12-12
-updated: 2026-10-29
+updated: 2026-10-30
 topic: partnerships
 excerpt: "CodersTrust and the National Curriculum and Textbook Board sign an MOU to develop competency-based experiential learning programs."
 cover: ../../assets/images/news/coderstrust-seals-groundbreaking-mou-with-nctb-paving-the-way-for-competency-based-learning-opportunities/mou-with-nctb-4.jpg
@@ -18,7 +18,7 @@ seoTitle: "NCTB MOU on Competency-Based Learning"
 
 Dhaka, Bangladesh
 
-CodersTrust will collaborate with NCTB to further revolutionize the education system with world-class competency-based, experiential, and hands-on learning across Robotics, Coding, Math, Science, Digital Technology, and ICT-related education.
+CodersTrust will collaborate with NCTB to further revolutionize the education system with world-class competency-based, experiential and hands-on learning across Robotics, Coding, Math, Science, Digital Technology and ICT-related education.
 
 CodersTrust inked a groundbreaking agreement with the esteemed National Curriculum and Textbook Board (NCTB), the apex body of curriculum and textbook development in Bangladesh, on November 26, 2023, at the NCTB office. Under the agreement, CodersTrust and NCTB will collaborate to transform Bangladesh’s primary and secondary level students with competency-based experiential learning and skills to meet the demands of local and global employment markets facing unprecedented changes in the ongoing Fourth Industrial Revolution.
 
@@ -34,6 +34,6 @@ CodersTrust Chairman Aziz Ahmad expressed gratitude for the collaboration and em
 
 ![CodersTrust and NCTB representatives seated around a table under the MOU Signing Ceremony banner](../../assets/images/news/coderstrust-seals-groundbreaking-mou-with-nctb-paving-the-way-for-competency-based-learning-opportunities/mou-with-nctb-2.jpg)
 
-Under the collaboration, CodersTrust will provide comprehensive training to school teachers for effective delivery of education on advanced competencies like robotics and jointly develop learning programs and countrywide pilots for hands-on, experiential learning, following NCTB’s well-developed curriculum framework, leading to learning outcomes including computational thinking, logical reasoning, algorithms, problem-solving, critical thinking, and creativity.
+Under the collaboration, CodersTrust will provide comprehensive training to school teachers for effective delivery of education on advanced competencies like robotics and jointly develop learning programs and countrywide pilots for hands-on, experiential learning, following NCTB’s well-developed curriculum framework, leading to learning outcomes including computational thinking, logical reasoning, algorithms, problem-solving, critical thinking and creativity.
 
 ![CodersTrust and NCTB representatives around a table at the MOU meeting](../../assets/images/news/coderstrust-seals-groundbreaking-mou-with-nctb-paving-the-way-for-competency-based-learning-opportunities/nctb-mou-meeting.jpg)

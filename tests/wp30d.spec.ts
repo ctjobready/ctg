@@ -60,7 +60,7 @@ test.describe('YouthWIDE leads with the global program', () => {
     await open(page, 'programs/youthwide/');
     const first = page.locator('#program-glance .pg__row').first();
     await expect(first).toContainText('Designed for Three Regions');
-    await expect(first).toContainText('South Asia, the Middle East and North Africa, and Sub-Saharan Africa');
+    await expect(first).toContainText('South Asia, Sub-Saharan Africa and the Middle East and North Africa');
     await expect(first).toContainText('Bangladesh is where most delivery has been');
   });
 

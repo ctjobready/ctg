@@ -1,9 +1,9 @@
 ---
 title: "CodersTrust Chairman Mr. Aziz Ahmad Joins a High-Level Discussion on Cybersecurity & Artificial Intelligence During UNGA Week"
 date: 2025-09-23
-updated: 2026-10-29
+updated: 2026-10-30
 topic: leadership-advocacy
-excerpt: "Aziz Ahmad joins a high-level discussion on cybersecurity, digital governance, and AI during UN General Assembly week in New York."
+excerpt: "Aziz Ahmad joins a high-level discussion on cybersecurity, digital governance and AI during UN General Assembly week in New York."
 cover: ../../assets/images/news/coderstrust-chairman-mr-aziz-ahmad-speaks-on-cybersecurity-artificial-intelligence-at-united-nations-general-assembly-unga-2025/cybersecurity-ai-at-unga-2025-4-2.jpg
 coverAlt: "Two men standing in front of a Digital Ambassadors Forum banner"
 coverInBody: true
@@ -16,8 +16,8 @@ seoTitle: "Aziz Ahmad on Cybersecurity, AI at UNGA Week"
 
 ![Invitation graphic for the Digital Ambassadors Forum 2025 at the UN General Assembly, September 23, 2025, in New York](../../assets/images/news/coderstrust-chairman-mr-aziz-ahmad-speaks-on-cybersecurity-artificial-intelligence-at-united-nations-general-assembly-unga-2025/cybersecurity-ai-at-unga-2025-1.jpg)
 
-CodersTrust Chairman and Co-founder Mr. Aziz Ahmad participated in a high-level discussion on cybersecurity, digital governance, and the opportunities and risks of Artificial Intelligence during the United Nations General Assembly (UNGA) week in New York. The session was hosted by BCIU (Business Council for International Understanding) and Mastercard International.
+CodersTrust Chairman and Co-founder Mr. Aziz Ahmad participated in a high-level discussion on cybersecurity, digital governance and the opportunities and risks of Artificial Intelligence during the United Nations General Assembly (UNGA) week in New York. The session was hosted by BCIU (Business Council for International Understanding) and Mastercard International.
 
-Mr. Ahmad highlighted the growing potential of emerging nations such as Bangladesh and Nigeria to leverage advanced technologies for a safer, more inclusive digital future. He emphasized the importance of strategic collaboration, innovation, and strong governance frameworks in navigating the evolving AI landscape.
+Mr. Ahmad highlighted the growing potential of emerging nations such as Bangladesh and Nigeria to leverage advanced technologies for a safer, more inclusive digital future. He emphasized the importance of strategic collaboration, innovation and strong governance frameworks in navigating the evolving AI landscape.
 
-The discussion concluded with a shared sense of optimism and a commitment from participants to strengthen cooperation in the areas of cybersecurity, digital capacity building, and responsible technology adoption.
+The discussion concluded with a shared sense of optimism and a commitment from participants to strengthen cooperation in the areas of cybersecurity, digital capacity building and responsible technology adoption.

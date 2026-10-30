@@ -1,7 +1,7 @@
 ---
 title: "CodersTrust and DoICT Shaping a Smart Future Through Trainer Empowerment"
 date: 2023-11-16
-updated: 2026-10-29
+updated: 2026-10-30
 topic: programs-events
 excerpt: "CodersTrust and the DoICT conclude a five-day Training of Trainers program with a closing ceremony at the ICT Tower in Agargaon, Dhaka."
 cover: ../../assets/images/news/coderstrust-and-doict-shaping-a-smart-future-through-trainer-empowerment/tot-closing-ceremony-at-ict-4.jpg
@@ -39,4 +39,4 @@ Participants expressed their appreciation for the program, highlighting the prov
 
 Mossammat Sabina Yasmin, an Assistant Programmer from Savar, articulated the positive impact of the training. “The DoICT and CodersTrust Bangladesh training is invaluable for our future roles as trainers, instilling confidence and expertise. This comprehensive program enhances our proficiency, anticipating a smoother district-level recruitment process,” she said.
 
-This collaborative effort signifies CodersTrust’s commitment to contributing significantly to the development of the country’s digital workforce, fostering a culture of continuous learning, and empowering trainers for a more proficient and knowledgeable society.
+This collaborative effort signifies CodersTrust’s commitment to contributing significantly to the development of the country’s digital workforce, fostering a culture of continuous learning and empowering trainers for a more proficient and knowledgeable society.

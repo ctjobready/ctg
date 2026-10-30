@@ -17,7 +17,7 @@ const htmlOf = (p: SitePage): string => readFileSync(p.file, 'utf8');
  *   - 4: the News boilerplate says "worked in 16 countries and territories", not "across 15" (Minor 4; the BCIU roundtable post keeps the Chairman's reported words, per the review);
  *   - 5: the WSDFM case-study caption uses the short form of the not-trial note on Development Partners, Foundations, Local Partners and YouthWIDE;
  *   - 6: Universities reads "outcome tracking for 12 months after each course, as agreed in the program scope";
- *   - 7: the About menu describes Recognition and Media as "Awards, recognition and press coverage".
+ *   - 7: the About menu describes Recognition and Media as "Listings, honors and press coverage".
  */
 
 const OVERLAP = 'Her Power’s 25,125 is the same group counted in the 150,000+ enrollments through CodersTrust’s curriculum, not additional people.';
@@ -118,10 +118,10 @@ test.describe('Item 6: Universities outcome tracking is scoped like the other pa
   });
 });
 
-test.describe('Item 7: the About menu describes Recognition and Media as "Awards, recognition and press coverage"', () => {
+test.describe('Item 7: the About menu describes Recognition and Media as "Listings, honors and press coverage"', () => {
   test('the built navigation carries the new description and not the old one', async () => {
     const html = pageHtml('');
-    expect(html).toContain('Awards, recognition and press coverage.');
+    expect(html).toContain('Listings, honors and press coverage.');
     expect(html).not.toContain('Awards, endorsements and press coverage.');
   });
 });

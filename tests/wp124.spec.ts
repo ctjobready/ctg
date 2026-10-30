@@ -102,7 +102,7 @@ test.describe('WP124 A3, the Digital Factory posts read as whole sentences', () 
     expect(t).toContain('Bangladesh’s greatest natural resource is not beneath the ground—it is in the minds of its young people.');
     expect(t).toContain('remain unemployed or underemployed—not because they lack ability, but because they lack access');
     expect(t).toContain('to transform Bangladesh into a Digital Factory—not a factory of buildings and machines, but a nationwide ecosystem');
-    expect(t).toContain('every motivated young person—regardless of geography, gender, or economic background—has access');
+    expect(t).toContain('every motivated young person—regardless of geography, gender or economic background—has access');
     expect(t).toContain('Let’s make Bangladesh a Digital Factory—empowering millions of skilled minds');
   });
   test('"The Future" has its dash and "knowledge-based"; "knowledge based" is on no page', () => {
@@ -168,7 +168,7 @@ const EDITS: [string, string, string][] = [
   [BCIU, 'Chairman and Co-Founder of CodersTrust participated', 'Chairman and Co-Founder of CodersTrust, participated'],
   [AMERICA_WEEK, 'partnership with the Embassy – including', 'partnership with the Embassy—including'],
   [MILESTONE, 'in Bangladesh and beyond and to many more', 'in Bangladesh and beyond, and to many more'],
-  [EDGE, 'build resiliency during future crisis,', 'build resiliency during future crises,'],
+  [EDGE, 'build resiliency during future crisis, and enable', 'build resiliency during future crises and enable'],
   [EDGE, 'Information Systems (PMIS) University of Dhaka', 'Information Systems (PMIS), University of Dhaka'],
   [TOP100, 'Government of Bangladesh-GoB', 'Government of Bangladesh (GoB)'],
   [UNGA, 'at the UN General Assembly, 23 September 2025, in New York', 'at the UN General Assembly, September 23, 2025, in New York'],

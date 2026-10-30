@@ -1,7 +1,7 @@
 ---
 title: "CodersTrust Students Were Invited to Apply to UPEACE’s “Young Leaders for Peace” Summer Programme 2026"
 date: 2026-04-17
-updated: 2026-10-14
+updated: 2026-10-30
 topic: programs-events
 excerpt: "CodersTrust learners were invited to apply for UPEACE’s Young Leaders for Peace Summer Programme 2026, which ran June 14 to 28 in San José, Costa Rica."
 cover: ../../assets/images/news/coderstrust-students-invited-to-join-upeaces-young-leaders-for-peace-summer-programme-2026/upace-students.jpg
@@ -30,22 +30,22 @@ UPEACE was accepting applications for its prestigious “Young Leaders for Peace
 
 ## About the Program
 
-The Young Leaders for Peace (YLP) program is an intensive, two-week immersive learning experience that empowers students with the knowledge, mindset, and practical skills required to become effective peacebuilders and socially responsible leaders.
+The Young Leaders for Peace (YLP) program is an intensive, two-week immersive learning experience that empowers students with the knowledge, mindset and practical skills required to become effective peacebuilders and socially responsible leaders.
 
-Participants engaged in interactive sessions, leadership development activities, and global discussions that encourage critical thinking, collaboration, and real-world problem-solving.
+Participants engaged in interactive sessions, leadership development activities and global discussions that encourage critical thinking, collaboration and real-world problem-solving.
 
 ## Program Details
 
 - Program Name: Young Leaders for Peace (YLP)
 - Dates: June 14 to June 28, 2026 (completed)
 - Location: UPEACE Headquarters, San José, Costa Rica
-- Eligibility: High school students (rising sophomores, juniors, and seniors)
+- Eligibility: High school students (rising sophomores, juniors and seniors)
 
 ## Why This Matters
 
-This program is more than just a summer learning experience. It offers students a unique opportunity to step into a global environment where they can develop leadership qualities, understand peacebuilding practices, and contribute to meaningful international conversations.
+This program is more than just a summer learning experience. It offers students a unique opportunity to step into a global environment where they can develop leadership qualities, understand peacebuilding practices and contribute to meaningful international conversations.
 
-Through this initiative, CodersTrust continues its mission to go beyond technical education by nurturing essential soft skills such as leadership, communication, and global awareness.
+Through this initiative, CodersTrust continues its mission to go beyond technical education by nurturing essential soft skills such as leadership, communication and global awareness.
 
 ## A Pathway to Global Leadership
 

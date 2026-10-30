@@ -1,7 +1,7 @@
 ---
 title: "UTC Associates, Led by Aziz Ahmad, Receives NYNJMSDC Partnership Award"
 date: 2022-10-20
-updated: 2026-10-29
+updated: 2026-10-30
 topic: recognition
 excerpt: "UTC Associates, led by Aziz Ahmad, received the Partnership Award from the New York New Jersey Minority Supplier Development Council."
 cover: ../../assets/images/news/aziz-ahmad-wins-the-nynjmsdc-partnership-award-in-the-united-states/aziz-ahmad.jpg
@@ -13,7 +13,7 @@ seoTitle: "UTC Associates Receives NYNJMSDC Award"
 
 ![A man speaking into a microphone in front of a New York and New Jersey Minority Supplier Development Council backdrop](../../assets/images/news/aziz-ahmad-wins-the-nynjmsdc-partnership-award-in-the-united-states/aziz-ahmad.jpg)
 
-Aziz Ahmad, a renowned entrepreneur, Chairman of CodersTrust, Technology Architect, and philanthropist, has been honored with the esteemed Partnership Award presented by the New York New Jersey Minority Supplier Development Council (NYNJMSDC/the Council).
+Aziz Ahmad, a renowned entrepreneur, Chairman of CodersTrust, Technology Architect and philanthropist, has been honored with the esteemed Partnership Award presented by the New York New Jersey Minority Supplier Development Council (NYNJMSDC/the Council).
 
 On Thursday, October 20, Ahmad was recognized for his outstanding achievements and contributions in the technology consulting field at an extravagant reception held in New York City. UTC Associates, the technology consulting company led by Ahmad, emerged as the top supplier in category two, surpassing 30 other nominees to secure the accolade.
 

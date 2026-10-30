@@ -68,7 +68,7 @@ const AUDIENCE = [
   { route: FOUNDATIONS, id: 'SC-11c', sentence: `${LEAD} 13 development partners and NGOs.`, list: ['PR-01 RC-01', 'PA-01', 'SC-11c'] },
   { route: EMPLOYERS, id: 'SC-11d', sentence: `${LEAD} 27 companies and industry bodies.`, list: ['GV-06', 'SC-11d'] },
 ] as const;
-const HUB_LINE = `${LEAD} 70+ organizations since 2014: 13 government bodies, 20 universities and colleges, 13 development partners and NGOs, and 27 companies and industry bodies.`;
+const HUB_LINE = `${LEAD} 70+ organizations since 2014: 13 government bodies; 20 universities and colleges; 13 development partners and NGOs; and 27 companies and industry bodies.`;
 
 /** Where each new figure renders: the page, the element that carries it, and the band that holds it. */
 const PLACES = [
@@ -100,7 +100,7 @@ test.describe('The register: signed agreements by category (SC-11 and SC-11a to 
     expect(f.status).toBe('V');
     expect(f.group).toBe('scale');
     expect(f.text).toBe(
-      '70+ organizations with signed MOUs, agreements or contracts since 2014: 13 government bodies, 20 universities and colleges, 13 development partners and NGOs, and 27 companies and industry bodies',
+      '70+ organizations with signed MOUs, agreements or contracts since 2014: 13 government bodies; 20 universities and colleges; 13 development partners and NGOs; and 27 companies and industry bodies',
     );
     expect(f.stat).toEqual({ value: '70+', numeric: 70, decimals: 0, suffix: '+', label: TOTAL_LABEL, detail: BREAKDOWN });
     expect(f.sourceIds).toEqual(['PARTNERREC']);
@@ -126,7 +126,7 @@ test.describe('The register: signed agreements by category (SC-11 and SC-11a to 
     expect(total).toBeGreaterThanOrEqual(headline);
     expect(total).toBeLessThan(headline + 10);
     expect(fact('SC-11').stat?.detail).toBe(`${CATEGORIES.map((c) => `${fact(c.id).stat?.value} ${c.who}`).join(', ')}.`);
-    expect(fact('SC-11').text).toContain(CATEGORIES.map((c) => `${fact(c.id).stat?.value} ${c.who}`).join(', ').replace(/, (27 )/, ', and $1'));
+    expect(fact('SC-11').text).toContain(CATEGORIES.map((c) => `${fact(c.id).stat?.value} ${c.who}`).join('; ').replace(/; (27 )/, '; and $1'));
   });
 
   test('the new register entries publish counts only: no amount, no pipeline wording, and no capitalized word but "MOUs" and "NGOs" (so no organization name)', () => {
@@ -165,7 +165,7 @@ test.describe('signedWith: the register’s wording as one sentence', () => {
 
   test('every count is joined to its noun with a no-break space, so a line never ends on a bare figure', () => {
     expect(signedWith('SC-11b')).toContain('with 20\u00A0universities and colleges');
-    expect(signedWith('SC-11')).toContain('with 70+\u00A0organizations since 2014: 13\u00A0government bodies, 20\u00A0universities and colleges, 13\u00A0development partners and NGOs, and 27\u00A0companies and industry bodies.');
+    expect(signedWith('SC-11')).toContain('with 70+\u00A0organizations since 2014: 13\u00A0government bodies; 20\u00A0universities and colleges; 13\u00A0development partners and NGOs; and 27\u00A0companies and industry bodies.');
   });
 
   test('a fact that is not in the signed form stops the build instead of printing a wrong sentence', () => {

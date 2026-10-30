@@ -6,7 +6,7 @@ import { webPage } from '../../lib/schema';
 import { url } from '../../lib/url';
 
 const UPDATED = '2026-10-23';
-const description = 'Our accessibility target (WCAG 2.2 AA), what we have done to meet it, known limitations such as the supplementary map, and how to tell us about a barrier.';
+const description = 'Our accessibility target (WCAG 2.2 AA), what we have done to meet it, known limitations such as the supplementary map and how to tell us about a barrier.';
 const toc = [
   { id: 'target', label: 'Our target' },
   { id: 'measures', label: 'What we have done' },
@@ -36,7 +36,7 @@ const jsonLd = [webPage({ path: '/accessibility/', name: 'Accessibility Statemen
     <section id="measures" aria-labelledby="measures-h">
       <h2 id="measures-h">What We Have Done</h2>
       <ul>
-        <li><strong>Structure.</strong> Pages are built with one main heading, a logical heading order and landmarks, and a “Skip to Main Content” link comes first.</li>
+        <li><strong>Structure.</strong> Pages are built with one main heading, a logical heading order and landmarks; a “Skip to Main Content” link comes first.</li>
         <li><strong>Keyboard.</strong> Menus, the mobile drawer, accordions, carousels and filters work with a keyboard. Focus is visible, and the sticky header and announcement bar are designed not to cover the element that has focus.</li>
         <li><strong>Color and type.</strong> Text and controls use a color theme designed to meet AA contrast. Pages are designed to reflow to a 320 px width without sideways scrolling, and text can be enlarged.</li>
         <li><strong>Motion.</strong> Animations stop for visitors who ask their device for reduced motion, and the final values of counters are in the page without animation. The logo marquee has a pause button.</li>
@@ -62,7 +62,7 @@ const jsonLd = [webPage({ path: '/accessibility/', name: 'Accessibility Statemen
 
     <section id="feedback" aria-labelledby="feedback-h">
       <h2 id="feedback-h">Tell Us About a Barrier</h2>
-      <p>If something on this site is hard to use, or you need information in another format, write to <CopyEmail email={CONTACT.email} trail="." /> Please tell us the page, what you were trying to do, and the device or assistive technology you use. We will look into it and tell you what we can do.</p>
+      <p>If something on this site is hard to use, or you need information in another format, write to <CopyEmail email={CONTACT.email} trail="." /> Please tell us the page, what you were trying to do and the device or assistive technology you use. We will look into it and tell you what we can do.</p>
       <p>You can also call <a href={CONTACT.phoneHref}>{CONTACT.phone}</a>.</p>
     </section>
   </div>

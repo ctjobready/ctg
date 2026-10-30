@@ -1,7 +1,7 @@
 ---
 title: "CodersTrust Bangladesh Signs Strategic MOU with Base Study Concern to Enhance Global Education Opportunities"
 date: 2025-11-04
-updated: 2026-10-29
+updated: 2026-10-30
 topic: partnerships
 excerpt: "CodersTrust Bangladesh signs an MOU with Base Study Concern, a foreign education consultancy and IELTS training organization."
 cover: ../../assets/images/news/coderstrust-bangladesh-signs-strategic-mou-with-base-study-concern-to-enhance-global-education-opportunities/mou-with-base-study-concern-1.jpg
@@ -11,7 +11,7 @@ tags: ["MOU Signing"]
 seoTitle: "Base Study Concern MOU on Global Education"
 ---
 
-CodersTrust Bangladesh is proud to announce the signing of a strategic Memorandum of Understanding (MOU) with Base Study Concern, a renowned foreign education consultancy, visa advisory, and IELTS training organization.
+CodersTrust Bangladesh is proud to announce the signing of a strategic Memorandum of Understanding (MOU) with Base Study Concern, a renowned foreign education consultancy, visa advisory and IELTS training organization.
 
 ![Six men holding a signed agreement folder together under a CodersTrust sign](../../assets/images/news/coderstrust-bangladesh-signs-strategic-mou-with-base-study-concern-to-enhance-global-education-opportunities/mou-with-base-study-concern-1.jpg)
 
@@ -32,4 +32,4 @@ What this partnership means for our students & alumni:
 
 This collaboration marks a significant milestone in empowering CodersTrust learners and program completers with global pathways to education and career development. Together, we aim to unlock international prospects and strengthen Bangladesh’s presence in the global talent market.
 
-We look forward to witnessing new journeys, ambitions, and success stories emerging from this partnership.
+We look forward to witnessing new journeys, ambitions and success stories emerging from this partnership.

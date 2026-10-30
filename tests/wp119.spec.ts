@@ -76,7 +76,7 @@ test.describe('WP119 Minor 3: the five posts written in October 2026 carry their
       const b = banner(a.slug);
       expect(b).toBe(`Written in October 2026 from the dated sources linked in the text. Event date: ${a.date}.`);
       expect(b).not.toMatch(/Archived post|Published|lightly edited|Added in October 2026/);
-      expect(source(a.slug)).toMatch(/^updated: 2026-10-29$/m);
+      expect(source(a.slug)).toMatch(/^updated: 2026-10-(29|30)$/m); // WP127 re-dated two of the five (serial-comma sweep)
     });
 
     test(`${a.slug}: the news index card keeps the event date`, () => {
@@ -84,12 +84,12 @@ test.describe('WP119 Minor 3: the five posts written in October 2026 carry their
     });
   }
 
-  test('an ordinary archived post keeps the standard banner, and the changed ones show updated October 29, 2026', () => {
+  test('an ordinary archived post keeps the standard banner, and the changed ones show updated October 30, 2026', () => {
     for (const slug of [DISCOVERY, JOYEETA, CARNIVAL, JU, MILESTONE]) {
       const b = banner(slug);
       expect(b, slug).toContain('Archived post, lightly edited.');
       // WP126: the posts that now say "The country count is today’s." were re-dated to October 30
-      expect(b, slug).toContain(slug === JU ? 'updated October 29, 2026' : 'updated October 30, 2026');
+      expect(b, slug).toContain('updated October 30, 2026'); // WP127 re-dated the 2041 post (JU) too
     }
   });
 });

@@ -294,7 +294,7 @@ test.describe('WP106 item 9: dateModified of the pages this WP changes reads 202
     test(`${route} has JSON-LD dateModified 2026-10-29 (the day it changed), not the build date`, async ({ page }) => {
       await open(page, route);
       const ld = await ldJson(page);
-      const day = route === CCNY || route === DIGITAL_FACTORY ? '2026-10-30' : '2026-10-29'; // WP126 re-dated these two posts (countToday note; "exported labor")
+      const day = [CCNY, DIGITAL_FACTORY, UPEACE, FOREIGN_MINISTER].includes(route) ? '2026-10-30' : '2026-10-29'; // WP126 re-dated the first two (countToday note; "exported labor"); WP127 the other two (serial-comma sweep)
       expect(ld).toMatch(new RegExp(`"dateModified"\\s*:\\s*"${day}"`));
       expect(ld).not.toMatch(new RegExp(`"dateModified"\\s*:\\s*"(?!${day})[^"]*"`));
     });
@@ -308,7 +308,7 @@ test.describe('WP106 item 9: dateModified of the pages this WP changes reads 202
   test('the four news posts carry `updated: 2026-10-29` in their front matter', () => {
     for (const route of [CCNY, UPEACE, FOREIGN_MINISTER, DIGITAL_FACTORY]) {
       const slug = route.replace(/^news\/|\/$/g, '');
-      const day = route === CCNY || route === DIGITAL_FACTORY ? '2026-10-30' : '2026-10-29'; // WP126
+      const day = [CCNY, DIGITAL_FACTORY, UPEACE, FOREIGN_MINISTER].includes(route) ? '2026-10-30' : '2026-10-29'; // WP126, WP127
       expect(readFileSync(`src/content/news/${slug}.md`, 'utf8'), slug).toMatch(new RegExp(`^updated: ${day}$`, 'm'));
     }
   });

@@ -1,7 +1,7 @@
 ---
 title: "Aziz Ahmad Joins the Jahangirnagar University MOU Signing"
 date: 2023-11-04
-updated: 2026-10-29
+updated: 2026-10-30
 topic: leadership-advocacy
 excerpt: "Aziz Ahmad joins the MOU signing between Jahangirnagar University’s Institute of IT and the Department of ICT (DoICT) and speaks on IT skills for youth."
 cover: ../../assets/images/news/coderstrust-is-committed-to-the-vision-of-a-smart-bangladesh-within-2041-aziz-ahmad/whatsapp-image-2023-11-05-at-10-28-23-am.jpg
@@ -26,4 +26,4 @@ Mr. Ahmad underlined the significance of developing IT skill sets in the competi
 
 CodersTrust’s years of experience in technology and entrepreneurship make it a relevant and trusted partner, Mr. Ahmad added.
 
-He concluded his speech by expressing his appreciation for the initiative and the ICT Ministry’s decision to involve CodersTrust as a training partner in this journey. He highlighted the necessity of focusing on advanced technologies such as artificial intelligence, data science, and machine learning to ensure that Bangladesh remains competitive on the global stage.
+He concluded his speech by expressing his appreciation for the initiative and the ICT Ministry’s decision to involve CodersTrust as a training partner in this journey. He highlighted the necessity of focusing on advanced technologies such as artificial intelligence, data science and machine learning to ensure that Bangladesh remains competitive on the global stage.

@@ -192,7 +192,7 @@ test.describe('Somaliland wording: "Hour of Code, and an ICT program at Tima-ade
     expect(tl.stat?.label).toBe(PHRASE);
     expect(tl.stat?.label.length).toBeLessThanOrEqual(60);
     expect(tl.stat?.value).toBe('2015');
-    expect(tl.text).toBe('In late 2015, CodersTrust’s work in Somaliland included an Hour of Code event for students, and an ICT program at Tima-ade University');
+    expect(tl.text).toBe('In late 2015, CodersTrust’s work in Somaliland included an Hour of Code event for students and an ICT program at Tima-ade University');
     expect(tl.sourceIds).toEqual(['TUMBLRHOC15', 'CTGALLERY23', 'JUBATV15']);
     expect(sources.JUBATV15.url).toBe('https://www.youtube.com/watch?v=-8MZdwf13HM');
     expect(WORLD_STRIP.find((t) => t.id === 'somaliland')?.line).toBe(PHRASE);
@@ -234,7 +234,7 @@ test.describe('Somaliland wording: "Hour of Code, and an ICT program at Tima-ade
     await open(page, NEWS_HOC);
     await expect(page.getByRole('heading', { level: 1 })).toHaveText('Hour of Code in Somaliland');
     const body = compact(await page.locator('article.art').textContent());
-    expect(body).toContain('In late 2015, CodersTrust’s work in Somaliland included an Hour of Code event for students, and an ICT program at Tima-ade University.');
+    expect(body).toContain('In late 2015, CodersTrust’s work in Somaliland included an Hour of Code event for students and an ICT program at Tima-ade University.');
     expect(body).toContain('The photograph shows a group in front of a Tima-ade University banner.');
     expect(body).toContain('names Coders Trust, the university (spelled “Timacade”) and its ICT program.');
     expect(body).not.toMatch(/\bwith Tima-ade|Partner: Tima-ade|programme/i);
@@ -244,7 +244,7 @@ test.describe('Somaliland wording: "Hour of Code, and an ICT program at Tima-ade
     for (const l of links) expect(l.rel).toMatch(/noopener/);
     // the news index card carries the same excerpt
     await open(page, 'news/');
-    expect(compact(await page.locator('main').textContent())).toContain('In late 2015, CodersTrust’s work in Somaliland included an Hour of Code event for students, and an ICT program at Tima-ade University.');
+    expect(compact(await page.locator('main').textContent())).toContain('In late 2015, CodersTrust’s work in Somaliland included an Hour of Code event for students and an ICT program at Tima-ade University.');
   });
 
   test('every place the built site names Tima-ade says "an ICT program at Tima-ade University" or describes the banner; none says the Hour of Code was "with" the university or calls it a partner', () => {

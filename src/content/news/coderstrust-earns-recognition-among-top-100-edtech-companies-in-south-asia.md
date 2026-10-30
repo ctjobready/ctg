@@ -14,7 +14,7 @@ seoTitle: "Named a Top 100 EdTech Company in South Asia"
 
 Dhaka, Bangladesh
 
-In HolonIQ’s latest report published in November, CodersTrust has secured its position among South Asia’s Top 100 EdTech companies. The report, focusing on growth, innovation, and impact, identifies the most promising EdTech startups in the region.
+In HolonIQ’s latest report published in November, CodersTrust has secured its position among South Asia’s Top 100 EdTech companies. The report, focusing on growth, innovation and impact, identifies the most promising EdTech startups in the region.
 
 ![Graphic of the HolonIQ 2023 South Asia EdTech 100 list](../../assets/images/news/coderstrust-earns-recognition-among-top-100-edtech-companies-in-south-asia/ct-in-top-100.jpg)
 

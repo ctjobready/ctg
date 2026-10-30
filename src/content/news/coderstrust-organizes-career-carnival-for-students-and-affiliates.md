@@ -16,7 +16,7 @@ CodersTrust recently organized a “Career Carnival” at its Dhaka office in Ba
 
 ![A large group of participants posing in front of the CodersTrust building entrance, decorated with balloons](../../assets/images/news/coderstrust-organizes-career-carnival-for-students-and-affiliates/coderstrust-organizes-career-carnival-1.jpg)
 
-Around 20 prominent companies, including Bdjobs, Priyo Shop, Technosoft, and House of Bookkeepers, participated in the event, offering over 60 job openings in fields such as Web Development, Accounts Management, Graphics Design, Digital Marketing, SEO, and Content Writing. The event saw an overwhelming response, with more than 1,000 students and alumni attending in person.
+Around 20 prominent companies, including Bdjobs, Priyo Shop, Technosoft and House of Bookkeepers, participated in the event, offering over 60 job openings in fields such as Web Development, Accounts Management, Graphics Design, Digital Marketing, SEO and Content Writing. The event saw an overwhelming response, with more than 1,000 students and alumni attending in person.
 
 For the past decade, CodersTrust has been dedicated to solving Bangladesh’s unemployment issue by developing skilled manpower focused on digital competencies. The organization’s approach blends concept-based education with practical assignments and projects, ensuring that students are equipped with both knowledge and hands-on experience. Program completers also benefit from job-placement support through CodersTrust’s extensive network of partner companies.
 
@@ -24,6 +24,6 @@ A representative from Priyo Shop remarked, “In most job applications, we see m
 
 Junaid, an alumnus of CodersTrust’s digital marketing course, shared his experience: “I completed the digital marketing course last year and now work in Facebook marketing. Today, I had two interviews for SEO Specialist and Digital Marketing roles, and submitted my CV to another company. This event gave me hope, and it was wonderful to reconnect with mentors and fellow coursemates.”
 
-CodersTrust is a global EdTech-based digital workforce development and skill-oriented education provider. It has trained learners since 2014 and worked in 16 countries and territories. Its programs range from K-12 STEM, coding, and robotics to professional skills and advanced technology skills for the digital era.
+CodersTrust is a global EdTech-based digital workforce development and skill-oriented education provider. It has trained learners since 2014 and worked in 16 countries and territories. Its programs range from K-12 STEM, coding and robotics to professional skills and advanced technology skills for the digital era.
 
 ![Participants and organizers at the CodersTrust Career Carnival, with a map of the world behind them](../../assets/images/news/coderstrust-organizes-career-carnival-for-students-and-affiliates/career-carnival-2.jpg)

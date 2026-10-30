@@ -133,7 +133,7 @@ test.describe('Foundations: the two funding routes as a comparison', () => {
     expect((await table(page).locator('thead th').allTextContents()).map(compact)).toEqual(['Funding Route', 'What It Supports', 'What the Evidence Covers']);
     const rows = await table(page).locator('tbody tr').evaluateAll((trs) => trs.map((tr) => Array.from(tr.querySelectorAll('th, td')).map((c) => (c.textContent ?? '').replace(/\s+/g, ' ').trim())));
     expect(rows).toEqual([
-      ['Funding Route 1 YouthWIDE Cohort Grants', 'Co-fundable country programs designed for South Asia, the Middle East and North Africa, and Sub-Saharan Africa.', 'Builds on results from earlier programs in Bangladesh and Kosovo.'],
+      ['Funding Route 1 YouthWIDE Cohort Grants', 'Co-fundable country programs designed for South Asia, Sub-Saharan Africa and the Middle East and North Africa.', 'Builds on results from earlier programs in Bangladesh and Kosovo.'],
       [
         'Funding Route 2 JobReady Platform Grants',
         'A grant toward platform infrastructure, not toward cohorts. Live today: partner portals and AI chat. In pre-launch: the employer marketplace and the gig-work marketplace.',

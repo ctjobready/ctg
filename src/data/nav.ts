@@ -17,7 +17,7 @@ const stat = (id: string) => {
 const trial = stat('RC-02');
 const trialPoints = `+${trial.numeric} Percentage Points`;
 /**
- * YouthWIDE's one-line description (the Programs menu and its featured panel; Home's carousel showed it on a seventh slide until WP53): co-funded country cohorts designed for three regions (IN-02; the YouthWIDE page names them: South Asia, the Middle East and North Africa, and Sub-Saharan Africa),
+ * YouthWIDE's one-line description (the Programs menu and its featured panel; Home's carousel showed it on a seventh slide until WP53): co-funded country cohorts designed for three regions (IN-02; the YouthWIDE page names them: South Asia, Sub-Saharan Africa and the Middle East and North Africa),
  * from training to paid digital work. The three regions are not listed here: with them spelled out (no "MENA") the line is longer than a menu line should be.
  * WP54 (cycle-28 review, Claude S7): the line no longer carries the Bangladesh aim. It said "..., with a Bangladesh initiative that aims to train ... by 2030" (IN-01; WP45, cycle-21 review: "a national initiative in Bangladesh" read as an existing national
  * program; WP48: IN-01's own wording), which put a Bangladesh target in the menu of every page of a global site. The aim stays on the YouthWIDE page, the Programs hub and Impact, where it is labeled as an aim; this line states IN-02 only.
@@ -76,7 +76,7 @@ export const navGroups: NavGroup[] = [
       { label: 'Leadership and Team', href: '/about/team/', description: 'Founders, advisors and the executive team.' },
       { label: 'Governance and Accountability', href: '/about/governance/', description: 'How CodersTrust is organized and reports to partners.' },
       { label: 'Instructors and Mentors', href: '/about/mentors/', description: 'The practitioners who teach and mentor learners.' },
-      { label: 'Recognition and Media', href: '/about/recognition/', description: 'Awards, recognition and press coverage.' },
+      { label: 'Recognition and Media', href: '/about/recognition/', description: 'Listings, honors and press coverage.' },
       { label: 'Careers', href: '/careers/', description: 'Working at CodersTrust and how to apply.' },
       { label: 'Contact', href: '/contact/', description: 'Offices, email and phone.' },
     ],

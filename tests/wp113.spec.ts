@@ -79,10 +79,10 @@ test.describe('WP113 Minor 1 to 6: each reporting promise says "as agreed in the
     expect(html).not.toContain('placements and first earnings."');
   });
 
-  test('6. Programs: funders "get monthly reports on progress toward paid work, as agreed in the program scope, not only enrollment."', () => {
+  test('6. Programs: funders "get monthly reports on progress toward paid work, not only enrollment, as agreed in the program scope."', () => {
     const text = visibleText(distHtml('programs/index.html'));
-    expect(text).toContain('funders get monthly reports on progress toward paid work, as agreed in the program scope, not only enrollment.');
-    expect(text).not.toContain('paid work, not only enrollment');
+    expect(text).toContain('funders get monthly reports on progress toward paid work, not only enrollment, as agreed in the program scope.');
+    expect(text).not.toContain('as agreed in the program scope, not only enrollment');
   });
 });
 

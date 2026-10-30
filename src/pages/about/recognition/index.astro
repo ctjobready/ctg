@@ -93,14 +93,14 @@ const kit = [
   { file: 'coderstrust-monogram', label: 'CT monogram', note: 'For small spaces and avatars', dark: false, w: 1200, h: 725 },
 ];
 
-const description = 'HolonIQ South Asia EdTech 100 listing, founder honors, media coverage from 2014 to 2016, and a press kit with logos and boilerplate for CodersTrust.';
+const description = 'HolonIQ South Asia EdTech 100 listing, founder honors, media coverage from 2014 to 2016 and a press kit with logos and boilerplate for CodersTrust.';
 const jsonLd = [webPage({ path: '/about/recognition/', name: 'Recognition and Media', description, dateModified: '2026-10-29', breadcrumb: [{ name: 'Home', path: '/' }, { name: 'About', path: '/about/' }, { name: 'Recognition and Media', path: '/about/recognition/' }] })];
 const media = { href: ctaHref('media'), label: 'Media Inquiries' };
 ---
 
 <BaseLayout title="Recognition and Media" description={description} breadcrumbs={[{ label: 'About', href: '/about/' }, { label: 'Recognition and Media' }]} jsonLd={jsonLd}>
   <!-- WP45 (cycle-21 review): the H1 states what the register supports (PA-08: listed in the HolonIQ South Asia EdTech 100 in 2023 and 2024), not "Recognized, Honored and Covered Worldwide", which claimed more than the listings, the founder's honors and the 2014 to 2016 press coverage show; the lead no longer repeats the listing (the Industry Recognition band below gives the years). -->
-  <Hero eyebrow="About Us" title="Twice Listed in the HolonIQ South Asia EdTech 100" lead="CodersTrust’s co-founder and Chairman, Aziz Ahmad, has received appointments and honors, and its work has been covered in the press." art={false}>
+  <Hero eyebrow="About Us" title="Twice Listed in the HolonIQ South Asia EdTech 100" lead="CodersTrust’s Co-Founder and Chairman, Aziz Ahmad, has received appointments and honors, and its work has been covered in the press." art={false}>
     <Fragment slot="actions">
       <Button href={media.href} icon="mail">{media.label}</Button>
       <a class="link" href="#press-kit">Press Kit<Icon name="arrow-right" size={16} /></a>
@@ -113,7 +113,7 @@ const media = { href: ctaHref('media'), label: 'Media Inquiries' };
     { label: 'Aziz Ahmad’s Appointments and Honors', href: '#honors' },
     ...(FORUMS.length > 0 ? [{ label: 'Where CodersTrust Has Taken Part', href: '#forums' }] : []),
     ...(quotes.length > 0 ? [{ label: 'What University for Peace Says', href: '#endorsements' }] : []),
-    { label: 'Awards and Forums in Photographs', href: '#photos' },
+    { label: 'Forums in Photographs', href: '#photos' },
     { label: 'Early Coverage of CodersTrust’s First Years, 2014–2016', href: '#coverage' },
     { label: 'Coverage of Our Work in Kosovo and Albania', href: '#world-bank' },
     { label: 'Press Kit', href: '#press-kit' },
@@ -192,7 +192,7 @@ const media = { href: ctaHref('media'), label: 'Media Inquiries' };
     )
   }
 
-  <PhotoGallery id="photos" tone="white" eyebrow="In the Field" title="Awards and Forums in Photographs" photos={galleryPhotos('recognition')} />
+  <PhotoGallery id="photos" tone="white" eyebrow="In the Field" title="Forums in Photographs" photos={galleryPhotos('recognition')} />
 
   <Section id="coverage" tone="airy" aria-labelledby="coverage-h">
     <SectionHeader id="coverage-h" eyebrow="For Journalists" title="Early Coverage of CodersTrust’s First Years, 2014–2016" />

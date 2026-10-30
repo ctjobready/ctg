@@ -1,7 +1,7 @@
 ---
 title: "CodersTrust Provides Corporate Training to Akij Group, One of the Largest Conglomerates of South Asia"
 date: 2023-08-16
-updated: 2026-10-29
+updated: 2026-10-30
 topic: programs-events
 excerpt: "CodersTrust delivers corporate training in digital marketing and soft skills to the Akij Group of Companies."
 cover: ../../assets/images/news/coderstrust-provides-corporate-training-to-akij-group-one-of-the-largest-conglomerates-of-south-asia/coderstrust-provide-corporate-training-to-akij-group.jpg
@@ -21,7 +21,7 @@ CodersTrust has conducted a corporate training on digital marketing and soft ski
 
 The collaborative training session aimed to equip Akij Group’s employees with the latest insights and strategies in the field of digital marketing. In today’s fast-paced business landscape, digital marketing is a critical skill for organizations looking to stay competitive and engage with their target audience effectively.
 
-The training covered a wide range of topics, including social media marketing, search engine optimization (SEO), content marketing, email marketing, and digital marketing analytics. Participants had the opportunity to learn from experts and gain hands-on experience through practical exercises and case studies.
+The training covered a wide range of topics, including social media marketing, search engine optimization (SEO), content marketing, email marketing and digital marketing analytics. Participants had the opportunity to learn from experts and gain hands-on experience through practical exercises and case studies.
 
 Akij Group’s Head of HR and Chief Marketing Officer expressed gratitude to CodersTrust for delivering the training. He highlighted the significance of upskilling the workforce to adapt to the rapidly evolving digital landscape and stressed the company’s commitment to nurturing talent within the organization.
 

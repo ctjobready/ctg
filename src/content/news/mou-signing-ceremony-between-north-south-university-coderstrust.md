@@ -1,7 +1,7 @@
 ---
 title: "MOU Signing Ceremony Between North South University & CodersTrust"
 date: 2025-01-04
-updated: 2026-10-29
+updated: 2026-10-30
 topic: partnerships
 excerpt: "North South University and CodersTrust sign a Memorandum of Understanding, signed by NSU Vice Chancellor Abdul Hannan Chowdhury and Aziz Ahmad."
 cover: ../../assets/images/news/mou-signing-ceremony-between-north-south-university-coderstrust/mou-signing-ceremony-between-north-south-university-coderstrust.jpg
@@ -23,4 +23,4 @@ The ceremony was witnessed and attended by Dr. Shazzad Hosain, Dean of North Sou
 
 This partnership aims to empower youth through cutting-edge skill development programs, equipping them with the tools to thrive in the global digital workforce. Together, we are committed to building a sustainable economic foundation both locally and globally.
 
-This collaboration holds immense potential to advance digital skills development, create impactful career pathways for students, and strengthen Bangladesh’s position in the global knowledge-based economy.
+This collaboration holds immense potential to advance digital skills development, create impactful career pathways for students and strengthen Bangladesh’s position in the global knowledge-based economy.
