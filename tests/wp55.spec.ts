@@ -582,10 +582,10 @@ test.describe('the former "Albania" photograph is the Kosovo pilot: cropped, re-
     }
   });
 
-  test('In the Field: the group is captioned "Women in Online Work trainees, Kosovo, 2016–17" under "Women’s Programs: Kosovo and Bangladesh", and the page lead no longer says Albania', async ({ page }) => {
+  test('In the Field: the group is captioned "Women in Online Work trainees, Kosovo, 2016–2017" under "Women’s Programs: Kosovo and Bangladesh", and the page lead no longer says Albania', async ({ page }) => {
     await open(page, FIELD);
     await expect(page.getByRole('heading', { level: 2, name: 'Women’s Programs: Kosovo and Bangladesh' })).toHaveCount(1);
-    expect(await texts(page, 'figure:has(img[alt*="Women in Online Work banners"]) figcaption')).toEqual(['Women in Online Work trainees, Kosovo, 2016–17']);
+    expect(await texts(page, 'figure:has(img[alt*="Women in Online Work banners"]) figcaption')).toEqual(['Women in Online Work trainees, Kosovo, 2016–2017']);
     expect(compact(await page.locator('main').textContent())).not.toMatch(/Albania/);
     expect(compact(await page.locator('main .hero__lead').first().textContent())).toContain('from Kosovo to Bangladesh');
   });

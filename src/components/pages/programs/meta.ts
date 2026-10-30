@@ -7,8 +7,8 @@ import { cta } from '../../../lib/mailto';
 export const C14_LEAD = C14.firstAction.match(/^Your first step: a discovery session\./)![0];
 /** The rest of the shared C14 line (WP126: "In your inquiry, include two suitable times."); the three program pages print it after C14_LEAD. */
 export const C14_FIRST = C14.firstAction.slice(C14_LEAD.length + 1);
-/** WP126: YouthWIDE's role-labelled "Funders." line keeps "for a discovery conversation" (the role label is not the discovery session, so the phrase names it once, not twice). */
-export const C14_FIRST_FUNDERS = `${C14_FIRST.replace(/\.$/, '')} for a discovery conversation.`;
+/** WP126, WP128: YouthWIDE's role-labelled "Funders." line keeps the closing clause, "for a discovery session" (WP128: the term is "discovery session" everywhere; the role label is not the session, so the phrase names it once, not twice). */
+export const C14_FIRST_FUNDERS = `${C14_FIRST.replace(/\.$/, '')} for a discovery session.`;
 
 /**
  * "Last updated" date of a program page (doc 09 §3): the day its content last changed, shown on the page and used as JSON-LD dateModified.

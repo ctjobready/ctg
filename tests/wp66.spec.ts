@@ -50,7 +50,7 @@ const FOUNDATIONS = 'partner-with-us/foundations/';
 const EMPLOYERS = 'partner-with-us/employers/';
 
 const TOTAL_LABEL = 'organizations with signed MOUs, agreements or contracts since 2014'; // WP67 (cycle-38 review): it was "... signed partnership agreements since 2014"
-const BREAKDOWN = '13 government bodies, 20 universities and colleges, 13 development partners and NGOs, 27 companies and industry bodies.';
+const BREAKDOWN = '13 government bodies; 20 universities and colleges; 13 development partners and NGOs; and 27 companies and industry bodies.';
 const BAND_HEADING = 'We’ve Built This Path Since 2014';
 const LEAD = 'CodersTrust has signed MOUs, agreements or contracts with';
 
@@ -125,7 +125,7 @@ test.describe('The register: signed agreements by category (SC-11 and SC-11a to 
     expect(headline).toBe(70);
     expect(total).toBeGreaterThanOrEqual(headline);
     expect(total).toBeLessThan(headline + 10);
-    expect(fact('SC-11').stat?.detail).toBe(`${CATEGORIES.map((c) => `${fact(c.id).stat?.value} ${c.who}`).join(', ')}.`);
+    expect(fact('SC-11').stat?.detail).toBe(`${CATEGORIES.map((c) => `${fact(c.id).stat?.value} ${c.who}`).join('; ').replace(/; (27 )/, '; and $1')}.`); // WP128: the detail line uses the hub's semicolon form
     expect(fact('SC-11').text).toContain(CATEGORIES.map((c) => `${fact(c.id).stat?.value} ${c.who}`).join('; ').replace(/; (27 )/, '; and $1'));
   });
 

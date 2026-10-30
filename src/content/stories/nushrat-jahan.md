@@ -1,6 +1,6 @@
 ---
 name: "Nushrat Jahan"
-outcome: "Won a first job through Upwork"
+outcome: "Won a first job through Upwork."
 pathway: freelance
 photo: ../../assets/images/stories/nushrat-jahan.jpg
 photoAlt: "Portrait of Nushrat Jahan"

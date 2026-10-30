@@ -98,7 +98,7 @@ test.describe('Item 2 (Sonnet, Grok): About’s enrollments tile has no detail l
     await open(page, ABOUT);
     expect(await texts(page, '#glance .about-stats .stat__note')).toEqual([
       'Most delivery has been in Bangladesh.',
-      '13 government bodies, 20 universities and colleges, 13 development partners and NGOs, 27 companies and industry bodies.',
+      '13 government bodies; 20 universities and colleges; 13 development partners and NGOs; and 27 companies and industry bodies.',
     ]);
     expect(await page.locator('#glance .about-stats [data-fact]').evaluateAll((els) => els.map((e) => e.getAttribute('data-fact')))).toEqual(['SC-01', 'SC-02', 'SC-03', 'SC-11', 'SC-09']);
   });

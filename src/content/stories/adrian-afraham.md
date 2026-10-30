@@ -1,6 +1,6 @@
 ---
 name: "Adrian Afraham"
-outcome: "Secured a first freelance job after the Graphic Designing course, followed by a job offer"
+outcome: "Secured a first freelance job after the Graphic Designing course, followed by a job offer."
 pathway: freelance
 photo: ../../assets/images/stories/adrian-afraham.jpg
 photoAlt: "Portrait of Adrian Afraham"

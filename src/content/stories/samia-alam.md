@@ -1,6 +1,6 @@
 ---
 name: "Samia Alam"
-outcome: "Works as a freelance professional specializing in digital accounting"
+outcome: "Works as a freelance professional specializing in digital accounting."
 pathway: freelance
 photo: ../../assets/images/stories/samia-alam.jpg
 photoAlt: "Portrait of Samia Alam"

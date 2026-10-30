@@ -133,9 +133,9 @@ test.describe('Learner Journeys (#journeys)', () => {
     await expect(cards.locator('.sc__name')).toHaveText(['Samina Tasneem Chowdhury', 'Erlisa Zherka', 'Maria Dewan']);
     await expect(cards.locator('.sc__role')).toHaveText(['WSDFM', 'Women in Online Work, Kosovo', 'Her Power']);
     await expect(cards.locator('.sc__outcome')).toHaveText([
-      'Completed 90+ projects as a freelance graphic designer on Fiverr',
+      'Completed 90+ projects as a freelance graphic designer on Fiverr.',
       'She landed a full-time online contract with a U.S.-based startup and was earning more than Kosovo’s average wage at the time.',
-      'Won a company logo design on Freelancer.com, then more clients',
+      'Won a company logo design on Freelancer.com, then more clients.',
     ]);
     // the individual-story caveat is stated once, in the strip's lead
     expect((await text(page, '#journeys')).match(/not typical or promised outcomes/g)?.length).toBe(1);

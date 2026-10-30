@@ -391,7 +391,7 @@ test.describe('plain words and plain claims', () => {
     await expect(page.locator('#faqs details', { has: page.locator('summary', { hasText: 'What About Safeguarding and Data Protection?' }) })).toHaveCount(0);
     await open(page, 'about/governance/');
     const text = await mainText(page);
-    expect(text).toContain('funders receive data with personal details protected and monthly reports');
+    expect(text).toContain('funders receive monthly reports and outcome data with personal details protected');
     expect(text).not.toContain('privacy-appropriate');
   });
 

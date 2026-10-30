@@ -12,6 +12,8 @@ import CertNote from '../ui/CertNote.astro';
  * own punctuation straight after the fact (`<Fact id="X" />.`, `<Fact id="X" />, which…`), the finished-page pass
  * (dropDoubledStops in src/lib/postprocess.ts) removes the added one, so a page that already punctuated its own sentence keeps
  * exactly one mark.
+ * WP128: `drop` removes a phrase from a sentence that the band around it already says (a lead that carries the same disclaimer); it throws when the register no longer holds the phrase, so a change to the register cannot leave a stale
+ * edit behind. The fact id stays on the element.
  */
 interface Props {
   id: string;
@@ -20,12 +22,16 @@ interface Props {
   as?: 'span' | 'p' | 'strong' | 'b' | 'div';
   /** The heading printed above this sentence in a card: the sentence's own "Heading: …" lead-in is not printed again (dropTitleEcho). */
   under?: string;
+  /** A phrase left out of the printed sentence (WP128); it must be in the register text. */
+  drop?: string;
   class?: string;
 }
-const { id, field = 'text', as: Tag = 'span', under, class: className } = Astro.props;
+const { id, field = 'text', as: Tag = 'span', under, drop, class: className } = Astro.props;
 const f = fact(id);
 let out: string;
-if (field === 'text') out = under ? dropTitleEcho(under, f.text) : f.text;
+if (drop !== undefined && !f.text.includes(drop)) throw new Error(`<Fact id="${id}" drop="${drop}">: the register text no longer holds that phrase`);
+const base = drop !== undefined ? f.text.replace(drop, '') : f.text;
+if (field === 'text') out = under ? dropTitleEcho(under, base) : base;
 else if (field === 'headline') out = f.headline ?? f.text;
 else {
   const v = f.stat?.[field];

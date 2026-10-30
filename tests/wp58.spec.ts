@@ -405,7 +405,7 @@ test.describe('G6: Development Partners’ Adrian Afraham card', () => {
 
   test('the same story keeps its summary line on the Impact page (the item named Development Partners only), and the other learner cards are unchanged', async ({ page }) => {
     await open(page, IMPACT);
-    expect(compact(await page.locator('#learner-voice .ls__outcome').textContent())).toBe('Secured a first freelance job after the Graphic Designing course, followed by a job offer');
+    expect(compact(await page.locator('#learner-voice .ls__outcome').textContent())).toBe('Secured a first freelance job after the Graphic Designing course, followed by a job offer.');
     for (const route of [GOVERNMENTS, FOUNDATIONS, 'partner-with-us/employers/', UNIVERSITIES]) {
       await open(page, route);
       await expect(page.locator('#learner-voice .ls__outcome'), route).toHaveCount(1);

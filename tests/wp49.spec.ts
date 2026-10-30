@@ -470,11 +470,11 @@ test.describe('Our Model: the definition band (item 21)', () => {
 });
 
 test.describe('"What Happens When Funding Ends?" (item 22)', () => {
-  const ENDING = 'completers join CodersTrust’s alumni network after their three months of mentoring.';
+  const ENDING = 'Completers join CodersTrust’s alumni network after their three months of mentoring.';
 
   test('Q10 and Q10-campus end after the alumni-network clause; the TalentLEAP clause and its fact are gone', () => {
     const q10 = faqs.find((f) => f.id === 'Q10')!;
-    expect(q10.a).toBe(`Where included in the program scope, what the program builds stays in place: certified local facilitators and localized curricula, and ${ENDING}`);
+    expect(q10.a).toBe(`Where included in the program scope, what the program builds stays in place: certified local facilitators and localized curricula. ${ENDING}`);
     expect(q10.evidence).toEqual(['PD-06', 'PD-01']);
     const campus = faqsFor('variants').find((f) => f.id === 'Q10-campus')!;
     expect(campus.a).toBe('Where included in the program scope, what the program builds stays on your campus: certified local facilitators, localized curricula and campus labs that serve as blended-learning centers. Completers join CodersTrust’s alumni network after their three months of mentoring.');

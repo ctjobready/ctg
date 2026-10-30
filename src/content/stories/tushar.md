@@ -1,6 +1,6 @@
 ---
 name: "Tushar"
-outcome: "Works as a freelance web designer"
+outcome: "Works as a freelance web designer."
 pathway: freelance
 photo: ../../assets/images/stories/tushar.jpg
 photoAlt: "Portrait of Tushar"

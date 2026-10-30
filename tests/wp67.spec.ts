@@ -80,7 +80,7 @@ test.describe('Item 1: the SC-11 tile says "signed MOUs, agreements or contracts
     expect(sc11.stat?.label).toBe(LABEL);
     expect(sc11.stat?.value).toBe('70+');
     expect(sc11.text).toBe('70+ organizations with signed MOUs, agreements or contracts since 2014: 13 government bodies; 20 universities and colleges; 13 development partners and NGOs; and 27 companies and industry bodies');
-    expect(sc11.stat?.detail).toBe('13 government bodies, 20 universities and colleges, 13 development partners and NGOs, 27 companies and industry bodies.');
+    expect(sc11.stat?.detail).toBe('13 government bodies; 20 universities and colleges; 13 development partners and NGOs; and 27 companies and industry bodies.');
   });
 
   for (const [route, selector] of [

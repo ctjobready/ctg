@@ -142,9 +142,9 @@ export const CAPTION: Record<string, string> = {
   'general/her-power-group': 'Her Power program event',
   'impact/her-power-training-lab': 'Her Power training lab',
   'general/kosovo-women-screens': 'Women learners in a computer room, Kosovo',
-  // WP55: the pilot ran from February 2016 to February 2017 (World Bank, Ministry of Economic Development of Kosovo), so both Kosovo group photographs say "2016–17" ("2017" was the year the pilot closed).
-  'general/kosovo-woman-training': 'Women in Online Work pilot, Kosovo, 2016–17',
-  'general/kosovo-wow-group': 'Women in Online Work trainees, Kosovo, 2016–17',
+  // WP55: the pilot ran from February 2016 to February 2017 (World Bank, Ministry of Economic Development of Kosovo), so both Kosovo group photographs say "2016–2017" ("2017" was the year the pilot closed).
+  'general/kosovo-woman-training': 'Women in Online Work pilot, Kosovo, 2016–2017',
+  'general/kosovo-wow-group': 'Women in Online Work trainees, Kosovo, 2016–2017',
   'global/copenhagen-launch-dinner': 'Launch dinner for Virgin Unite, Copenhagen, April 2014',
   'global/dubai-start-up-event': 'Start-up event at In5, Dubai Internet City, April 2014',
   // WP56 (owner decision 13, 2026-10-18): no source says the Hour of Code was held with the university; the photograph shows a Tima-ade University banner (see its alt text).

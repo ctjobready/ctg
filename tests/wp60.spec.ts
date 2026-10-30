@@ -575,7 +575,7 @@ test.describe('GM8 and GM9 (Gemini): the Governments and Foundations learner car
     await open(page, 'partner-with-us/foundations/');
     const card = page.locator('#learner-voice article.ls');
     await expect(card).toHaveCount(1);
-    expect(compact(await card.locator('.ls__outcome').textContent())).toBe('Completed 90+ projects as a freelance graphic designer on Fiverr');
+    expect(compact(await card.locator('.ls__outcome').textContent())).toBe('Completed 90+ projects as a freelance graphic designer on Fiverr.');
     await expect(card.locator('.ls__excerpt')).toHaveCount(0);
     expect(await texts(page, '#learner-voice .ls__name b, #learner-voice .ls__name span')).toEqual(['Samina Tasneem Chowdhury', 'WSDFM']);
     expect(compact(await page.locator('main').textContent())).not.toContain('She has completed 90+ projects on Fiverr so far.');

@@ -1,6 +1,6 @@
 ---
 name: "Mehedi Hasan Shakil"
-outcome: "Works as a freelance accounting expert"
+outcome: "Works as a freelance accounting expert."
 pathway: freelance
 photo: ../../assets/images/stories/mehedi-hasan-shakil.jpg
 photoAlt: "Portrait of Mehedi Hasan Shakil"

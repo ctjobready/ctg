@@ -1,6 +1,6 @@
 ---
 name: "Arfias Islam Rudro"
-outcome: "Works as a digital marketer"
+outcome: "Works as a digital marketer."
 pathway: unknown
 photo: ../../assets/images/stories/arfias-islam-rudro.jpg
 photoAlt: "Portrait of Arfias Islam Rudro"

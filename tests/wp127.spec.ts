@@ -246,7 +246,7 @@ const META: [string, string][] = [
   ['about/recognition/index.html', 'HolonIQ South Asia EdTech 100 listing, founder honors, media coverage from 2014 to 2016 and a press kit with logos and boilerplate for CodersTrust.'],
   ['accessibility/index.html', 'Our accessibility target (WCAG 2.2 AA), what we have done to meet it, known limitations such as the supplementary map and how to tell us about a barrier.'],
   ['privacy-policy/index.html', 'How the CodersTrust website handles data: no analytics cookies, no trackers of its own and a plain list of every service involved.'],
-  ['about/governance/index.html', 'CodersTrust’s offices; leadership; safeguarding and data-protection arrangements; and how funders can ask about due diligence.'],
+  ['about/governance/index.html', 'CodersTrust’s offices and leadership, with its safeguarding and data-protection arrangements, set out for funders doing due diligence.'],
   ['our-model/talentleap/index.html', 'TalentLEAP is CodersTrust’s competency-based model: assessed skill units, career paths and Learn, Earn, Prosper with three months of mentoring.'],
 ];
 const OLD_EVERYWHERE = [

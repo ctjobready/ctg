@@ -23,6 +23,7 @@
  * (UPEACE) and The City College of New York (CCNY).") is gone, because the three universities are already named above it: "The National University Partnership" band lists them in its University Partners tile (PA-05), and the Track Record band's logo strip (#guide) carries them as logo alt text.
  * WP57 (cycle-29 review, Grok R5): "Choose Where to Start" has no size cards. Its recommended card read as a 1,000–2,500 country-pilot size for a campus program; the band is now its heading and one line, "Start with one campus: cohort size, tracks
  * and labs are set in the discovery session.", and the page keeps its own one primary button (hero, call to action and sticky bar). The program-sizes note that qualified the cards (PROGRAM_SIZES_NOTE) is not on this page any more.
+ * WP128 (Opus High run 3, kit 95): "The National University Partnership" says its disclaimer once, in the lead; the first card leaves out the bracketed copy of it, and the second and third cards do not open with their own label.
  * WP66 (owner request 2026-10-20): the Track Record band has one proof line, the signed-agreement sentence for universities and colleges (SC-11b, `signed` on PartnerGuideBand: "CodersTrust has signed MOUs, agreements or contracts with ... universities and colleges."); the band's heading says "Since 2014", so the sentence leaves the year to it.
  */
 import DueDiligenceView from '../../../components/pages/hub/DueDiligenceView.astro';
@@ -92,7 +93,7 @@ const START_LINE = 'Start with one campus: cohort size, tracks and labs are set 
     title="The National University Partnership"
     lead="These figures describe National University’s size and the learners being onboarded; they are not learners trained by CodersTrust."
     items={[
-      { id: 'SC-04', label: 'Official Training Partner' },
+      { id: 'SC-04', label: 'Official Training Partner', drop: ' (the university’s own learners, not learners trained by CodersTrust)' },
       { id: 'SC-05', label: 'National University' },
       { id: 'PA-05', label: 'University Partners' },
     ]}

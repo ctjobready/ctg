@@ -1,6 +1,6 @@
 ---
 name: "Aysha Akter Bipasha"
-outcome: "Works as a freelance designer"
+outcome: "Works as a freelance designer."
 pathway: freelance
 photo: ../../assets/images/stories/aysha-akter-bipasha.jpg
 photoAlt: "Portrait of Aysha Akter Bipasha"

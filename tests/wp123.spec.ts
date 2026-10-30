@@ -108,7 +108,7 @@ test.describe('WP123, programs: the closing line reads the same as on the other 
     });
   }
   test('YouthWIDE keeps its role-labelled "Funders." line (not in this package)', () => {
-    expect(text('programs/youthwide/index.html')).toContain('Funders. In your inquiry, include two suitable times for a discovery conversation.');
+    expect(text('programs/youthwide/index.html')).toContain('Funders. In your inquiry, include two suitable times for a discovery session.');
   });
 });
 

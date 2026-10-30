@@ -1,6 +1,6 @@
 ---
 name: "Ashraful Alam Sani"
-outcome: "Works as a freelance graphic designer; attained Fiverr Level One Seller rank"
+outcome: "Works as a freelance graphic designer; attained Fiverr Level One Seller rank."
 pathway: freelance
 photo: ../../assets/images/stories/ashraful-alam-sani.jpg
 photoAlt: "Portrait of Ashraful Alam Sani"

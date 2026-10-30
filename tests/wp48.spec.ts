@@ -120,7 +120,7 @@ test.describe('The "what happens after" sentence (item 2)', () => {
   });
 
   test('the shared "What Happens When Funding Ends?" answer (Development Partners, Governments, Foundations, Local Partners, TalentLEAP, Governance) ends after the alumni-network clause, with no TalentLEAP clause', async ({ page }) => {
-    const ENDING = 'completers join CodersTrust’s alumni network after their three months of mentoring.';
+    const ENDING = 'Completers join CodersTrust’s alumni network after their three months of mentoring.';
     for (const route of ['partner-with-us/development-partners/', 'partner-with-us/governments/', 'partner-with-us/foundations/', 'partner-with-us/local-partners/', 'our-model/talentleap/', 'about/governance/']) {
       await open(page, route);
       const answer = await answerOf(page, 'What Happens When Funding Ends?');

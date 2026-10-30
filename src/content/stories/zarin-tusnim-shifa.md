@@ -1,6 +1,6 @@
 ---
 name: "Zarin Tusnim Shifa"
-outcome: "Completed a first freelancing task"
+outcome: "Completed a first freelancing task."
 pathway: freelance
 photo: ../../assets/images/stories/zarin-tusnim-shifa.jpg
 photoAlt: "Portrait of Zarin Tusnim Shifa"

@@ -407,9 +407,9 @@ test.describe('The FAQ eyebrow is "Questions, Answered" (item L9)', () => {
 // WP55 (owner decisions 2026-10-17/18): the photograph that WP54 kept captioned "CodersTrust trainees, World Bank project, Albania" is the Kosovo Women in Online Work pilot (the word ALBANIA was burned into the file). It is cropped, re-keyed and
 // captioned as Kosovo (tests/wp55.spec.ts), so no photograph is captioned or described as Albania any more; Global Reach now lists 16 locations (17 after WP55; WP56 removed Somalia), and the partner cells follow the owner's corrected rows.
 test.describe('Albania and Kosovo: no photograph is captioned as Albania, and Global Reach names the World Bank Group as the partner (item R1, revised by WP55)', () => {
-  const CAPTION = 'Women in Online Work trainees, Kosovo, 2016–17';
+  const CAPTION = 'Women in Online Work trainees, Kosovo, 2016–2017';
 
-  test('In the Field captions the former "Albania" photograph as Kosovo ("Women in Online Work trainees, Kosovo, 2016–17"), and no figure on YouthWIDE or In the Field says Albania', async ({ page }) => {
+  test('In the Field captions the former "Albania" photograph as Kosovo ("Women in Online Work trainees, Kosovo, 2016–2017"), and no figure on YouthWIDE or In the Field says Albania', async ({ page }) => {
     await open(page, FIELD);
     expect(await texts(page, 'figure:has(img[alt*="Women in Online Work banners"]) figcaption')).toEqual([CAPTION]);
     for (const route of [YOUTHWIDE, FIELD]) {

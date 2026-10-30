@@ -159,8 +159,8 @@ test.describe('WP126 item 5: the programs’ closing line is "Your first step: a
       expect(html(`${route}index.html`)).toMatch(/<p class="next__first"[^>]*><strong[^>]*>Your first step: a discovery session\.<\/strong> In your inquiry, include two suitable times\.<\/p>/);
     });
   }
-  test('YouthWIDE keeps its role-labelled "Funders." line, which names the discovery conversation once', () => {
-    expect(text('programs/youthwide/index.html')).toContain('Funders. In your inquiry, include two suitable times for a discovery conversation.');
+  test('YouthWIDE keeps its role-labelled "Funders." line, which names the discovery session once', () => {
+    expect(text('programs/youthwide/index.html')).toContain('Funders. In your inquiry, include two suitable times for a discovery session.');
   });
 });
 
@@ -229,7 +229,7 @@ test.describe('WP126 C: no serial comma in the six team bios', () => {
     ['asad-zaman', 'strategic partnerships, resource mobilization and digital transformation.'],
     ['asad-zaman', 'education, migration, e-governance and South-South Cooperation, organized'],
     ['hazrat-ali-nahid', 'bookkeeping, payroll, VAT, GST and tax filing'],
-    ['hazrat-ali-nahid', 'the U.S., UK, Australia and Canada.'],
+    ['hazrat-ali-nahid', 'the U.S., U.K., Australia and Canada.'],
     ['rezaul-karim-khan', 'business analysis and project management.'],
     ['shafqat-ullah', 'software engineering, cloud and edge computing.'],
     ['ferdinand-kjaerulff', 'a former Danish Army captain, entrepreneur and businessman, founded CodersTrust'],

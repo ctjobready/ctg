@@ -1,6 +1,6 @@
 ---
 name: "Mysha K. Diya"
-outcome: "Secured a remote bookkeeping job with a UK company after two months of Digital Accounting training"
+outcome: "Secured a remote bookkeeping job with a U.K. company after two months of Digital Accounting training."
 pathway: job
 photo: ../../assets/images/stories/mysha-k-diya.jpg
 photoAlt: "Portrait of Mysha K. Diya"

@@ -18,6 +18,8 @@ import { linkAttrs } from '../../../lib/url';
  * restated them is this strip of two links (`id="proof-band"` keeps the anchor).
  * WP38 (cycle-15 review): Universities stated its wider-evidence band the same way, as a strip with one line each for the trial and the survey (`statements`, read from the register by the page) above the two links, in place of the full evidence band.
  * WP42 (cycle-19 review): Local Partners uses `statements` for its evidence strip. WP43 (cycle-20 review): Universities' second strip is gone (its first band, "The National University Partnership", ends in the default linked block).
+ * WP128 (Opus High run 3, kit 95): a card's sentence does not repeat the card's own label (a register sentence "National University: the world’s ..." under "National University" prints without the echo, dropTitleEcho), and an item may `drop` a
+ * phrase the band's lead already says (Universities: the lead carries "not learners trained by CodersTrust", so the first card leaves out the same disclaimer in brackets).
  */
 interface Item {
   /** Register fact id. */
@@ -26,6 +28,8 @@ interface Item {
   label: string;
   /** Show the fact's stat tile (value and label) instead of its sentence. */
   stat?: boolean;
+  /** A phrase of the register sentence left out here because the band's lead says it (WP128). */
+  drop?: string;
 }
 interface Statement {
   /** One sentence, its figures read from the register (src/data/copy.ts), never typed on the page. */
@@ -86,7 +90,7 @@ const linksOnly = views.length === 0;
         {views.map((v) => (
           <li class="pe__item" data-fact={v.id} data-reveal>
             <p class="pe__label">{v.label}</p>
-            {v.stat ? <Stat value={v.stat.value} label={v.stat.label} size="lg" count={false} /> : <p class="pe__text"><Fact id={v.id} /></p>}
+            {v.stat ? <Stat value={v.stat.value} label={v.stat.label} size="lg" count={false} /> : <p class="pe__text"><Fact id={v.id} under={v.label} drop={v.drop} /></p>}
           </li>
         ))}
       </ul>

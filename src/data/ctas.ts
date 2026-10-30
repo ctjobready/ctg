@@ -63,7 +63,7 @@ export const CTAS: Record<CtaKey, CtaDef> = {
       'Priority groups',
       'Approx. number of trainees',
       'Preferred timeline',
-      'Two suitable times for a discovery conversation',
+      'Two suitable times for a discovery session',
     ],
   },
   briefing: {
@@ -176,7 +176,7 @@ export const CTAS: Record<CtaKey, CtaDef> = {
     key: 'superkids',
     label: 'Request a Discovery Session',
     subject: 'SuperKids discovery session request — [school or organization]',
-    body: ['School or organization', 'Location', 'Age groups', 'Approx. number of learners', 'Preferred timeline', 'Two suitable times for a discovery conversation'],
+    body: ['School or organization', 'Location', 'Age groups', 'Approx. number of learners', 'Preferred timeline', 'Two suitable times for a discovery session'],
   },
   'nu-pgd': {
     key: 'nu-pgd',
