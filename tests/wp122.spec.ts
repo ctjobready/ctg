@@ -35,10 +35,10 @@ test.describe('WP122, Privacy Policy: YouTube is named wherever the page lists s
     expect(t).toContain('If you never click play or the YouTube link, YouTube never hears from you.');
     expect(t).not.toContain('If you never click play, YouTube never hears from you.');
   });
-  test('the page is dated 2026-10-29 (Last updated and dateModified)', () => {
+  test('the page is dated 2026-10-31 (Last updated and dateModified)', () => {
     const h = html(PRIVACY);
-    expect(h).toContain('"dateModified":"2026-10-29"');
-    expect(text(PRIVACY)).toMatch(/Last updated:? 29 October 2026|Last updated:? October 29, 2026|2026-10-29/);
+    expect(h).toContain('"dateModified":"2026-10-31"');
+    expect(text(PRIVACY)).toMatch(/Last updated:? 31 October 2026|Last updated:? October 31, 2026|2026-10-31/);
   });
 });
 

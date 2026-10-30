@@ -469,7 +469,7 @@ test.describe('WP76 item 1: the two new course pages follow the course template'
       expect(JSON.stringify(course?.provider)).toContain('National University, Bangladesh');
       const crumbs = nodes.find((n) => n['@type'] === 'BreadcrumbList');
       expect(((crumbs?.itemListElement as { name: string }[]) ?? []).map((i) => i.name)).toEqual(['Home', 'Programs', 'NU Post Graduate Diploma', c.title]);
-      expect(nodes.filter((n) => n['@type'] === 'WebPage').some((n) => n.dateModified === '2026-10-29')).toBe(true);
+      expect(nodes.filter((n) => n['@type'] === 'WebPage').some((n) => n.dateModified === '2026-10-31')).toBe(true);
     });
 
     test(`${route}: the page is shorter than the 750-word cap the other course pages keep, shows its last-updated date, and does not scroll sideways at 1280 or 390`, async ({ page }) => {
@@ -480,7 +480,7 @@ test.describe('WP76 item 1: the two new course pages follow the course template'
         expect(await noOverflow(page), `${vp.width}px`).toBe(true);
       }
       expect(await wordsIn(page)).toBeLessThan(750);
-      expect(compact(await page.locator('.updated').textContent())).toBe('Last updated October 29, 2026'); // WP104: the course pages' wording last changed on 29 October (WP102)
+      expect(compact(await page.locator('.updated').textContent())).toBe('Last updated October 31, 2026'); // WP104: the course pages' wording last changed on 29 October (WP102)
     });
   }
 });

@@ -41,7 +41,7 @@ async function faqJsonLd(page: Page) {
 test.describe('TalentLEAP: the course-platform answer compares with a self-paced course alone (item 1)', () => {
   const QUESTION = 'How Is CodersTrust Different from an Online Course Platform?';
   const FIRST = 'Compared with a self-paced course alone, supported CodersTrust cohorts add mentoring, certification exam preparation and placement support.';
-  const SECOND = 'As agreed in the program scope, every supported TalentLEAP cohort pairs 100 training hours per certification with three months of milestone-based mentoring, certification exam preparation (with exam fees and attempts), placement support and outcome tracking for 12 months after each course.';
+  const SECOND = 'As agreed in the program scope, every supported TalentLEAP cohort pairs 100 training hours per certification, including certification exam preparation (with exam fees and attempts), with three months of milestone-based mentoring, placement support and outcome tracking for 12 months after each course.';
 
   test('the answer is the scoped comparison followed by the unchanged cohort sentence, in the page and in its FAQ JSON-LD; it no longer generalizes about every course platform', async ({ page }) => {
     await open(page, 'our-model/talentleap/');
@@ -412,7 +412,7 @@ test.describe('Employers: "For Hiring" has two steps in the training route’s s
   test('Discovery (the scoping sentence) and Introductions (the placement-team sentence), both wording the page already has, tied to IN-04, after the four training steps', async ({ page }) => {
     await open(page, 'partner-with-us/employers/');
     const hiring = page.locator('#next-steps .route', { has: page.locator('h3', { hasText: 'For Hiring' }) });
-    expect((await hiring.locator('ol h4').allTextContents()).map((t) => compact(t).replace(/^Step \d: /, ''))).toEqual(['Discovery', 'Introductions']);
+    expect((await hiring.locator('ol h4').allTextContents()).map((t) => compact(t).replace(/^Step \d: /, ''))).toEqual(['Discovery Session', 'Introductions']);
     expect((await hiring.locator('.steps__text').allTextContents()).map(compact)).toEqual([
       'A conversation about the roles you want to fill, to scope your talent request.',
       'Job-ready candidates are introduced through CodersTrust’s placement team.',

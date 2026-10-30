@@ -356,12 +356,12 @@ test.describe('Item 7 (GLM, Gemini, Claude): three polish fixes', () => {
     expect(compact(await page.locator('li[data-fact="RC-04"]').first().textContent())).toMatch(/^About \+\$27 a month/);
   });
 
-  test('Impact’s Learner Stories row ends "...; some stories are outliers, and their cards say so." in the matrix, and the story cards do say so', async ({ page }) => {
+  test('Impact’s Learner Stories row ends "...; one story is an outlier, and its card says so." in the matrix (WP129: one story card carries the label), and the story card does say so', async ({ page }) => {
     await open(page, IMPACT);
     const row = page.locator('section[aria-label="Evidence ladder matrix"] tbody tr').nth(3);
     await expect(row.locator('th a')).toHaveText('Learner Stories');
     expect(compact(await row.locator('td[data-label="What It Shows"]').textContent())).toBe('What the path can look like for one person.');
-    expect(compact(await row.locator('td[data-label="What It Does Not Show"]').textContent())).toBe('A typical or promised outcome; some stories are outliers, and their cards say so.');
+    expect(compact(await row.locator('td[data-label="What It Does Not Show"]').textContent())).toBe('A typical or promised outcome; one story is an outlier, and its card says so.');
     expect(pagesWith('some are outliers and say so')).toEqual([]);
     await open(page, 'impact/stories/');
     expect(compact(await page.locator('main').textContent())).toContain('Individual story; an outlier, not typical');

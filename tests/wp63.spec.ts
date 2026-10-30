@@ -307,7 +307,8 @@ test.describe('R5 (Grok): Home’s first offer is the "Multi-Cohort Pilot Progra
     const first = page.locator('#offer ol > li').first();
     await expect(first.locator('h3')).toHaveText('Multi-Cohort Pilot Program');
     await expect(first.locator('.eyebrow')).toHaveText('Option 1');
-    await expect(first).toContainText('Scope the number of cohorts and trainees with us in the discovery session.');
+    await expect(first).toContainText('Prove the model in one country or region.'); // WP129: the second sentence ("Scope the number of cohorts and trainees with us in the discovery session.") is gone; the band lead above says it
+    await expect(first).not.toContainText('Scope the number of cohorts');
     expect(pagesWith('First Multi-Cohort Pilot')).toEqual([]);
   });
 });
@@ -354,7 +355,7 @@ test.describe('R9 (Grok, not done): YouthWIDE keeps its "Last updated" line', ()
     expect(withLine).toContain('/programs/youthwide/');
     expect(withLine.length, `pages with a "Last updated" line: ${withLine.join(', ')}`).toBeGreaterThan(5);
     await open(page, YOUTHWIDE);
-    await expect(page.locator('.updated')).toHaveText('Last updated October 29, 2026'); // WP104
+    await expect(page.locator('.updated')).toHaveText('Last updated October 31, 2026'); // WP104
   });
 });
 

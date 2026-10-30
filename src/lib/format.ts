@@ -55,6 +55,11 @@ export function terminalStop(text: string): { body: string; close: string } | nu
   const m = /^([\s\S]*?)([”’"]+)$/.exec(t);
   return m ? { body: m[1], close: m[2] } : { body: t, close: '' };
 }
+/** The text with its final period, placed by `terminalStop` (inside a closing quotation mark): "“Earned $600 in 3 months”" becomes "“Earned $600 in 3 months.”". Text that already ends with terminal punctuation comes back unchanged. */
+export function withTerminalStop(text: string): string {
+  const stop = terminalStop(text);
+  return stop ? `${stop.body}.${stop.close}` : text;
+}
 /**
  * A card prints its heading above a register sentence that often opens with the same words and a colon ("Quality assurance" over
  * "Quality assurance: common practical-assessment rubrics, …"; "Placement Support" over "Placement support components: …";

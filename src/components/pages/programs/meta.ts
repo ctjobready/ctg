@@ -19,16 +19,17 @@ export const C14_FIRST_FUNDERS = `${C14_FIRST.replace(/\.$/, '')} for a discover
  * 2026-10-22 (WP76, owner answer: the diploma has four courses): the NU Post Graduate Diploma index and the NU course pages (two new course pages, and "Also Consider" naming the other three courses on each).
  * 2026-10-29 (WP104, from a build of the site before and after each commit): the NU index and course pages (WP102: NU learners "being onboarded", the affiliated-college wording; WP104: the Context heading) and JobReady@Campus (WP102: the same NU learners line);
  * JobReady@Work (WP104: AIvolve as an offering in the Training row, off the partners list). Pages whose text last changed on 28 October (TalentLEAP) are dated then.
+ * 2026-10-31 (WP129, owner rule: any change to visible text moves the date, copy edits included): JobReady@Campus, JobReady@Work, the NU index and the NU course pages, whose copy changed on 30 October (WP126 to WP128; the NU payment line's semicolons) and 31 October (WP129).
  */
 export const LAST_UPDATED = '2026-10-08';
 export const PAGE_UPDATED = {
   programs: '2026-10-10',
   youthwide: '2026-10-11',
-  campus: '2026-10-29',
-  work: '2026-10-29',
+  campus: '2026-10-31',
+  work: '2026-10-31',
   superkids: '2026-10-10',
-  nu: '2026-10-29',
-  nuCourse: '2026-10-29',
+  nu: '2026-10-31',
+  nuCourse: '2026-10-31',
 } as const;
 
 /** Page-level primary-CTA helper: label + href for a registered key. */

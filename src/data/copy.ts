@@ -722,10 +722,10 @@ export const EMPLOYER_HIRING_ROUTE = 'A conversation about the roles you want to
 
 /**
  * The hiring route's two steps, in the same step component as the training route's (WP46, cycle-22 review: Employers; WP47: JobReady@Work mirrors them, with the same wording and component). Both sentences are wording the pages
- * already had: "Discovery" is the scoping sentence above (IN-04) and "Introductions" is the placement-team sentence of the "Hire Talent" band's lead and of the "Talent Through the Placement Team" option.
+ * already had: "Discovery Session" (WP129: it was "Discovery") is the scoping sentence above (IN-04) and "Introductions" is the placement-team sentence of the "Hire Talent" band's lead and of the "Talent Through the Placement Team" option.
  */
 export const EMPLOYER_HIRING_STEPS = [
-  { title: 'Discovery', text: EMPLOYER_HIRING_ROUTE },
+  { title: 'Discovery Session', text: EMPLOYER_HIRING_ROUTE },
   { title: 'Introductions', text: 'Job-ready candidates are introduced through CodersTrust’s placement team.' },
 ];
 
@@ -836,8 +836,6 @@ export const STEPS = [
 export const STEPS_FACTS = ['PD-19', 'PD-01', 'PD-15', 'PD-08', 'PD-09'];
 
 export const MICRO_COMMITMENT = 'A discovery session is a conversation, not a commitment.';
-/** The same reassurance on the Employers page, whose first step may be a hiring request rather than a discovery session (WP36, cycle-13 review). */
-export const MICRO_COMMITMENT_EMPLOYERS = 'Your first step is a conversation, not a commitment.';
 /**
  * WP59 (cycle-31 review, GPT-6.1 Sol G2): what a discovery session does, in the one sentence the Impact pages' closing bands and TalentLEAP's next step print. "A discovery session agrees your priority groups, tracks and the pilot scorecard." (WP58, K5) made the first call sound like a
  * commitment; the session "explores" what the visitor brings. It stands beside MICRO_COMMITMENT, which says the session is not a commitment.
@@ -945,7 +943,7 @@ export const C14 = {
     governments: 'Your agency’s procurement timeline sets the pace; we start with a briefing.',
     investors: 'Your first step: an introduction call.',
     // WP34 (cycle-11 review): the Employers closing band has two routes (team training, hiring), so the line names the route it is for.
-    // WP54 (cycle-28 review, Kimi K5): the first step is a discovery session on both routes (the hiring route's first step is "Discovery" too, EMPLOYER_HIRING_STEPS), so the line says "for team training or hiring" and, like Home's labeled line, asks for "two suitable times".
+    // WP54 (cycle-28 review, Kimi K5): the first step is a discovery session on both routes (the hiring route's first step is "Discovery Session" too, EMPLOYER_HIRING_STEPS; WP129), so the line says "for team training or hiring" and, like Home's labeled line, asks for "two suitable times".
     employers: 'Your first step, for team training or hiring: a discovery session. In your inquiry, include two suitable times.',
   },
 };

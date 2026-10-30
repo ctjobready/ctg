@@ -48,7 +48,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     // WP76: the World Bank brief's two phases (February to August 2016: front-end web development; September to December 2016: three tracks, coding, graphic design and digital marketing), where the line had said digital literacy came first.
     scope: 'Two phases: front-end web development first, then tracks in coding, graphic design and digital marketing',
     note: WB_KOSOVO,
-    dateModified: '2026-10-29',
+    dateModified: '2026-10-31',
     related: { label: 'See How YouthWIDE Deploys the Model', href: '/programs/youthwide/' },
   },
   {
@@ -88,7 +88,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     path: `${base}undp-yes-korail/`,
     name: 'UNDP YES, Korail',
     heading: 'UNDP YES: Korail Youth Finding First Jobs, 2017',
-    dateModified: '2026-10-29',
+    dateModified: '2026-10-31',
     program: 'UNDP, Government of Bangladesh, Swanirvar Bangladesh',
     partner: '2017',
     factId: 'PR-03',

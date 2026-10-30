@@ -51,7 +51,7 @@ const INCLUSION = /exam fees? included|with the exam fees?\b|Supported youth coh
 test.describe('WP112 Minor 1: YouthWIDE glance row "Training and Mentoring"', () => {
   test('the row says the exam preparation with "exam fees and attempts as agreed in the program scope"', () => {
     const text = visibleText(distHtml('programs/youthwide/index.html'));
-    expect(text).toContain('100 training hours per certification, then certification exam preparation (exam fees and attempts as agreed in the program scope) and three months of milestone-based mentoring.');
+    expect(text).toContain('100 training hours per certification, including certification exam preparation (exam fees and attempts as agreed in the program scope), then three months of milestone-based mentoring.');
     expect(text).not.toContain('with the exam fee included');
   });
 });
@@ -117,15 +117,15 @@ test.describe('WP112 Polish 6: Universities campus FAQ says "students"', () => {
 
 // --------------------------------------------------------------------------------------------------------------------------------
 test.describe('WP112 Polish 7: dates', () => {
-  test('TalentLEAP, whose text changed, carries 2026-10-29 in JSON-LD and reads "Last updated October 29, 2026"', () => {
+  test('TalentLEAP, whose text changed, carries 2026-10-31 in JSON-LD and reads "Last updated October 31, 2026"', () => {
     const html = distHtml('our-model/talentleap/index.html');
-    expect(html).toMatch(/"dateModified":"2026-10-29"/);
+    expect(html).toMatch(/"dateModified":"2026-10-31"/);
     expect(html).not.toMatch(/"dateModified":"2026-10-28"/);
-    expect(visibleText(html)).toContain('Last updated October 29, 2026');
+    expect(visibleText(html)).toContain('Last updated October 31, 2026');
   });
 
-  test('Governance keeps "Last updated October 24, 2026" (its content has not changed; guard test, passes before the change)', () => {
-    expect(visibleText(distHtml('about/governance/index.html'))).toContain('Last updated October 24, 2026');
+  test('Governance reads "Last updated October 31, 2026" (WP127 and WP128 changed its text on 30 October; WP129 applied the owner rule that any visible text change moves the date)', () => {
+    expect(visibleText(distHtml('about/governance/index.html'))).toContain('Last updated October 31, 2026');
   });
 });
 
@@ -142,6 +142,6 @@ test.describe('WP112b: no built page says the exam fee is included', () => {
   });
 
   test('JobReady@Campus states the fee, eligibility, attempts and retakes as agreed in the program scope', () => {
-    expect(visibleText(distHtml('programs/jobready-campus/index.html'))).toContain('100 training hours per certification, then certification exam preparation and three months of milestone-based mentoring; exam fees, eligibility, attempts and retakes are agreed in the program scope.');
+    expect(visibleText(distHtml('programs/jobready-campus/index.html'))).toContain('100 training hours per certification, including certification exam preparation, then three months of milestone-based mentoring; exam fees, eligibility, attempts and retakes are agreed in the program scope.');
   });
 });

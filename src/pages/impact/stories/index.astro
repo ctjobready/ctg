@@ -8,6 +8,7 @@ import CTABand from '../../../components/ui/CTABand.astro';
 import StoryGallery from '../../../components/pages/impact/StoryGallery.astro';
 import type { StoryCardData } from '../../../components/pages/impact/story-types';
 import { linkAttrs } from '../../../lib/url';
+import { withTerminalStop } from '../../../lib/format';
 import { articleNode, desc, title, discoveryCta } from '../../../components/pages/impact/page-utils';
 import { fact } from '../../../data/facts';
 import { MICRO_COMMITMENT } from '../../../data/copy';
@@ -103,14 +104,14 @@ const legacyCards = named
 
 const anon: StoryCardData[] = [
   { key: 'wow-erlisa-zherka', name: 'Erlisa Zherka', role: 'Women in Online Work, Kosovo, 2016–2017', caveat: 'Individual story; not typical or promised.', pathway: 'job', outcome: `She ${fact('ST-05').text.split(' in Kosovo, ')[1].replace('; earning', ' and is earning')}.`, assetId: 'story-erlisa-zherka' },
-  { key: 'yes-aklima-akder', name: 'Aklima Akder', role: 'UNDP YES, Korail, 2017', caveat: 'Individual story; not typical or promised.', pathway: 'freelance', outcome: `“${quoted('ST-01')}”`, assetId: 'story-aklima-akder' },
-  { key: 'yes-shamim-ahmed', name: 'Shamim Ahmed', role: 'UNDP YES, Korail, 2017', caveat: 'Individual story; an outlier, not typical.', pathway: 'freelance', outcome: `“${quoted('ST-02')}” (${/\((about \$[\d,]+)/.exec(fact('ST-02').text)?.[1]})`, assetId: 'story-shamim-ahmed' },
+  { key: 'yes-aklima-akder', name: 'Aklima Akder', role: 'UNDP YES, Korail, 2017', caveat: 'Individual story; not typical or promised.', pathway: 'freelance', outcome: withTerminalStop(`“${quoted('ST-01')}”`), assetId: 'story-aklima-akder' },
+  { key: 'yes-shamim-ahmed', name: 'Shamim Ahmed', role: 'UNDP YES, Korail, 2017', caveat: 'Individual story; an outlier, not typical.', pathway: 'freelance', outcome: `${withTerminalStop(`“${quoted('ST-02')}”`)} (${/\((about \$[\d,]+)/.exec(fact('ST-02').text)?.[1]})`, assetId: 'story-shamim-ahmed' },
 ];
 const cards = [...anon, ...legacyCards];
 const description = desc('Learner stories and experiences from CodersTrust programs. Individual stories, not typical or promised outcomes.');
 const jsonLd = [
   webPage({ path, name: 'CodersTrust success stories', description, type: 'CollectionPage' }),
-  articleNode({ path, headline: 'Success Stories', description, datePublished: '2026-10-08', dateModified: '2026-10-29', author: 'CodersTrust' }),
+  articleNode({ path, headline: 'Success Stories', description, datePublished: '2026-10-08', dateModified: '2026-10-31', author: 'CodersTrust' }),
 ];
 const d = discoveryCta();
 ---

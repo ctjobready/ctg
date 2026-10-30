@@ -47,11 +47,11 @@ test.describe('Item 2: JobReady@Campus FAQ reads the bachelor’s share from OC-
 });
 
 test.describe('Item 3: TalentLEAP is dated October 21, 2026', () => {
-  test('the Last updated line and the JSON-LD dateModified both read October 29, 2026 (WP112; WP104 had October 28, WP73 had October 21)', async ({ page }) => {
+  test('the Last updated line and the JSON-LD dateModified both read October 31, 2026 (WP112; WP104 had October 28, WP73 had October 21)', async ({ page }) => {
     await open(page, 'our-model/talentleap/');
-    await expect(page.locator('.lf-updated')).toHaveText(/Last updated October 29, 2026/); // WP112: stamps follow each page's latest content change (tests/wp104.spec.ts) (TalentLEAP: 29 October)
+    await expect(page.locator('.lf-updated')).toHaveText(/Last updated October 31, 2026/); // WP112: stamps follow each page's latest content change (tests/wp104.spec.ts) (TalentLEAP: 29 October)
     const ld = (await page.locator('script[type="application/ld+json"]').allTextContents()).join(' ');
-    expect(ld).toContain('"dateModified":"2026-10-29"');
+    expect(ld).toContain('"dateModified":"2026-10-31"');
     expect(ld).not.toContain('"dateModified":"2026-10-15"');
   });
 

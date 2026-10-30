@@ -25,7 +25,7 @@ const headline = `${fact('SC-03').text}.`;
 // WP58: "... and 15 international locations" (it was ", plus 15 international locations"), so the sentence stays within the 155-character limit after "CodersTrust has worked in" replaced "Programs in".
 const count = val('SC-03');
 const description = desc(`CodersTrust has worked in ${count} countries and territories: Bangladesh since 2014 and ${Number(count) - 1} international locations, with each location’s target group and skills.`);
-const jsonLd = [articleNode({ path, headline: 'Global Reach', description, datePublished: '2026-10-08', dateModified: '2026-10-29', author: 'CodersTrust' })];
+const jsonLd = [articleNode({ path, headline: 'Global Reach', description, datePublished: '2026-10-08', dateModified: '2026-10-31', author: 'CodersTrust' })];
 // WP30e: the footprint leads. The locations beyond Bangladesh are listed from the same data as the map and the table, so the list cannot drift from them.
 const beyond = locations.filter((l) => l.id !== 'bangladesh').map((l) => l.name).sort((x, y) => x.localeCompare(y));
 const beyondLine = `${beyond.slice(0, -1).join(', ')} and ${beyond[beyond.length - 1]}`;

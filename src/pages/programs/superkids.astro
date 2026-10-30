@@ -33,7 +33,7 @@ import { webPage } from '../../lib/schema';
 import { linkAttrs } from '../../lib/url';
 
 const path = '/programs/superkids/';
-const LAST_UPDATED = '2026-10-29'; // WP104: the gallery's consent line was added. WP36: the cycle-13 wording changes (the two agreement targets, the safeguarding answer); WP20c had 2026-10-14 (PAGE_UPDATED.superkids is 2026-10-10)
+const LAST_UPDATED = '2026-10-31'; // WP129 (owner rule 2026-10-31: any change to visible text moves the date, copy edits included): the serial-comma, semicolon and copy edits of WP126 to WP128 and the WP129 edits. Earlier: WP104: the gallery's consent line was added. WP36: the cycle-13 wording changes (the two agreement targets, the safeguarding answer); WP20c had 2026-10-14 (PAGE_UPDATED.superkids is 2026-10-10)
 const title = 'SuperKids: STEAM, Coding and Robotics';
 const description = 'SuperKids brings STEAM, coding, robotics and digital art to young learners through schools. 400+ learners since 2021, plus DoICT and NCTB agreements.';
 const inquiry = ctaFor('superkids');
@@ -96,7 +96,7 @@ const courses = linkAttrs(COURSES_URL);
   />
 
   <!-- C6 (the positioning statement opens the band) -->
-  <MechanismSection title="A K-12 STEAM Program Offered Through Schools" positioning={POSITIONING.superkids} eyebrow="The Program">
+  <MechanismSection title="A School STEAM Program for Young Learners" positioning={POSITIONING.superkids} eyebrow="The Program">
     <p class="courses__more" data-reveal>
       Looking for courses for older learners? <a class="link" href={courses.href} rel={courses.rel}>Explore Courses at JobReady.global<Icon name="arrow-up-right" size={16} /><span class="sr-only"> {courses.srText}</span></a>
     </p>

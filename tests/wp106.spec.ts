@@ -274,7 +274,8 @@ test.describe('WP106 item 8: four team bios carry the role in the <title>', () =
 });
 
 // --------------------------------------------------------------------------------------------------------------------------------
-test.describe('WP106 item 9: dateModified of the pages this WP changes reads 2026-10-29', () => {
+test.describe('WP106 item 9: dateModified of the pages this WP changes reads 2026-10-29 (2026-10-31 where WP129 re-dated them)', () => {
+  const RE_DATED_31 = ['about/', 'about/recognition/', 'privacy-policy/', 'impact/global-reach/', 'programs/', 'about/team/ferdinand-kjaerulff/', 'about/team/fahim-sheikh/'];
   const ROUTES = [
     'about/', // WP105 had set it; the timeline band changes again today
     'about/recognition/',
@@ -294,15 +295,16 @@ test.describe('WP106 item 9: dateModified of the pages this WP changes reads 202
     test(`${route} has JSON-LD dateModified 2026-10-29 (the day it changed), not the build date`, async ({ page }) => {
       await open(page, route);
       const ld = await ldJson(page);
-      const day = [CCNY, DIGITAL_FACTORY, UPEACE, FOREIGN_MINISTER].includes(route) ? '2026-10-30' : '2026-10-29'; // WP126 re-dated the first two (countToday note; "exported labor"); WP127 the other two (serial-comma sweep)
+      // WP126 re-dated the first two news posts (countToday note; "exported labor"); WP127 the other two (serial-comma sweep); WP129 (owner rule 2026-10-31: any visible text change moves the date) re-dated the pages below to 2026-10-31
+      const day = [CCNY, DIGITAL_FACTORY, UPEACE, FOREIGN_MINISTER].includes(route) ? '2026-10-30' : RE_DATED_31.includes(route) ? '2026-10-31' : '2026-10-29';
       expect(ld).toMatch(new RegExp(`"dateModified"\\s*:\\s*"${day}"`));
       expect(ld).not.toMatch(new RegExp(`"dateModified"\\s*:\\s*"(?!${day})[^"]*"`));
     });
   }
 
-  test('the Privacy Policy still prints "Last updated October 29, 2026"', async ({ page }) => {
+  test('the Privacy Policy still prints "Last updated October 31, 2026"', async ({ page }) => {
     await open(page, 'privacy-policy/');
-    expect(compact(await page.locator('.lf-updated').first().textContent())).toBe('Last updated October 29, 2026');
+    expect(compact(await page.locator('.lf-updated').first().textContent())).toBe('Last updated October 31, 2026');
   });
 
   test('the four news posts carry `updated: 2026-10-29` in their front matter', () => {

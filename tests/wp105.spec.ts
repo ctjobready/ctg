@@ -204,26 +204,27 @@ test.describe('WP105 item 8: JobReady@Campus option 1 is "Multi-Cohort Pilot Pro
 
 // --------------------------------------------------------------------------------------------------------------------------------
 test.describe('WP105 item 9: stamps and dateModified of the pages this WP changes read 2026-10-29', () => {
+  // WP129: every page here except Independent Evaluation changed again on 30 October (WP126 to WP128) and moved on to 2026-10-31.
   const STAMPED = [
-    { route: 'privacy-policy/', selector: '.lf-updated' },
-    { route: 'impact/independent-evaluation/', selector: '.lf-updated' },
-    { route: 'programs/youthwide/', selector: '.updated' },
-    { route: 'programs/nu-postgraduate-diploma/', selector: '.updated' },
-    { route: 'programs/jobready-campus/', selector: '.updated' },
+    { route: 'privacy-policy/', selector: '.lf-updated', day: 'October 31, 2026', iso: '2026-10-31' },
+    { route: 'impact/independent-evaluation/', selector: '.lf-updated', day: 'October 29, 2026', iso: '2026-10-29' },
+    { route: 'programs/youthwide/', selector: '.updated', day: 'October 31, 2026', iso: '2026-10-31' },
+    { route: 'programs/nu-postgraduate-diploma/', selector: '.updated', day: 'October 31, 2026', iso: '2026-10-31' },
+    { route: 'programs/jobready-campus/', selector: '.updated', day: 'October 31, 2026', iso: '2026-10-31' },
   ];
   for (const s of STAMPED) {
-    test(`${s.route} reads "Last updated October 29, 2026" and its JSON-LD dateModified is 2026-10-29`, async ({ page }) => {
+    test(`${s.route} reads "Last updated ${s.day}" and its JSON-LD dateModified is ${s.iso}`, async ({ page }) => {
       await open(page, s.route);
-      expect(compact(await page.locator(s.selector).first().textContent())).toBe('Last updated October 29, 2026');
-      expect(await ldJson(page)).toMatch(/"dateModified"\s*:\s*"2026-10-29"/);
+      expect(compact(await page.locator(s.selector).first().textContent())).toBe(`Last updated ${s.day}`);
+      expect(await ldJson(page)).toMatch(new RegExp(`"dateModified"\\s*:\\s*"${s.iso}"`));
     });
   }
 
   // These three pages state no "Last updated" line, so their JSON-LD dateModified would otherwise be the build day (UTC).
   for (const route of ['about/', 'partner-with-us/governments/', 'about/recognition/']) {
-    test(`${route} pins its JSON-LD dateModified to 2026-10-29 (it changed that day), not the build date`, async ({ page }) => {
+    test(`${route} pins its JSON-LD dateModified to 2026-10-31 (the day it last changed), not the build date`, async ({ page }) => {
       await open(page, route);
-      expect(await ldJson(page)).toMatch(/"dateModified"\s*:\s*"2026-10-29"/);
+      expect(await ldJson(page)).toMatch(/"dateModified"\s*:\s*"2026-10-31"/);
     });
   }
 });

@@ -22,8 +22,8 @@ test.describe('Employers and JobReady@Work: the closing steps name their routes'
   // WP46 (cycle-22 review): Employers' hiring route is two steps in the training route's step component ("Discovery": the scoping sentence; "Introductions": the placement-team sentence); WP47: JobReady@Work's is the same two steps
   const PAGES = [
     // WP49 (cycle-24 review): the heading is "What Happens Next" on every page that had "What Happens After You Say Yes" (tests/wp49.spec.ts)
-    { route: 'partner-with-us/employers/', title: 'What Happens Next', steps: ['Discovery Session', 'Needs Assessment', 'Agreement', 'First Workshop or Cohort'], hiringSteps: ['Discovery', 'Introductions'] },
-    { route: 'programs/jobready-work/', title: 'What Happens Next', steps: ['Discovery Session', 'Needs Assessment', 'Agreement', 'First Workshop or Cohort', 'Progress Evaluation'], hiringSteps: ['Discovery', 'Introductions'] },
+    { route: 'partner-with-us/employers/', title: 'What Happens Next', steps: ['Discovery Session', 'Needs Assessment', 'Agreement', 'First Workshop or Cohort'], hiringSteps: ['Discovery Session', 'Introductions'] },
+    { route: 'programs/jobready-work/', title: 'What Happens Next', steps: ['Discovery Session', 'Needs Assessment', 'Agreement', 'First Workshop or Cohort', 'Progress Evaluation'], hiringSteps: ['Discovery Session', 'Introductions'] },
   ];
 
   for (const p of PAGES) {
@@ -304,7 +304,7 @@ test.describe('NU Post Graduate Diploma: a link to the wider programs, not their
   test('the page shows today as its last-updated date', async ({ page }) => {
     await open(page, 'programs/nu-postgraduate-diploma/');
     // WP76 (2026-10-22): the page's wording changed that day (four courses), so PAGE_UPDATED.nu moved from 2026-10-15
-    await expect(page.locator('.updated time')).toHaveAttribute('datetime', '2026-10-29'); // WP104: the page's wording last changed on 29 October (WP102; the Context heading, WP104)
+    await expect(page.locator('.updated time')).toHaveAttribute('datetime', '2026-10-31'); // WP104: the page's wording last changed on 29 October (WP102; the Context heading, WP104)
   });
 });
 

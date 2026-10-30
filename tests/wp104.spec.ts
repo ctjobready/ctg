@@ -311,17 +311,17 @@ test.describe('WP104 item 10: "Last updated" stamps match each page’s latest c
   // the NU overview and course pages, JobReady@Campus and JobReady Platform 2026-10-29 (WP102, 29 October: NU learners "being onboarded", the affiliated-college wording);
   // every page this WP changes (YouthWIDE, JobReady@Work, SuperKids, Outcomes 2026, Independent Evaluation, the NU overview, the UNDP YES case study) 2026-10-29.
   const STAMPED = [
-    { route: 'our-model/talentleap/', selector: '.lf-updated', text: 'Last updated October 29, 2026', iso: '2026-10-29' },
-    { route: 'our-model/jobready-platform/', selector: '.lf-updated', text: 'Last updated October 29, 2026', iso: '2026-10-29' },
-    { route: 'programs/nu-postgraduate-diploma/', selector: '.updated', text: 'Last updated October 29, 2026', iso: '2026-10-29' },
-    { route: 'programs/nu-postgraduate-diploma/cyber-security/', selector: '.updated', text: 'Last updated October 29, 2026', iso: '2026-10-29' },
-    { route: 'programs/nu-postgraduate-diploma/data-analytics/', selector: '.updated', text: 'Last updated October 29, 2026', iso: '2026-10-29' },
-    { route: 'programs/nu-postgraduate-diploma/digital-marketing/', selector: '.updated', text: 'Last updated October 29, 2026', iso: '2026-10-29' },
-    { route: 'programs/nu-postgraduate-diploma/ict/', selector: '.updated', text: 'Last updated October 29, 2026', iso: '2026-10-29' },
-    { route: 'programs/jobready-campus/', selector: '.updated', text: 'Last updated October 29, 2026', iso: '2026-10-29' },
-    { route: 'programs/youthwide/', selector: '.updated', text: 'Last updated October 29, 2026', iso: '2026-10-29' },
-    { route: 'programs/jobready-work/', selector: '.updated', text: 'Last updated October 29, 2026', iso: '2026-10-29' },
-    { route: 'programs/superkids/', selector: '.updated', text: 'Last updated October 29, 2026', iso: '2026-10-29' },
+    { route: 'our-model/talentleap/', selector: '.lf-updated', text: 'Last updated October 31, 2026', iso: '2026-10-31' },
+    { route: 'our-model/jobready-platform/', selector: '.lf-updated', text: 'Last updated October 31, 2026', iso: '2026-10-31' },
+    { route: 'programs/nu-postgraduate-diploma/', selector: '.updated', text: 'Last updated October 31, 2026', iso: '2026-10-31' },
+    { route: 'programs/nu-postgraduate-diploma/cyber-security/', selector: '.updated', text: 'Last updated October 31, 2026', iso: '2026-10-31' },
+    { route: 'programs/nu-postgraduate-diploma/data-analytics/', selector: '.updated', text: 'Last updated October 31, 2026', iso: '2026-10-31' },
+    { route: 'programs/nu-postgraduate-diploma/digital-marketing/', selector: '.updated', text: 'Last updated October 31, 2026', iso: '2026-10-31' },
+    { route: 'programs/nu-postgraduate-diploma/ict/', selector: '.updated', text: 'Last updated October 31, 2026', iso: '2026-10-31' },
+    { route: 'programs/jobready-campus/', selector: '.updated', text: 'Last updated October 31, 2026', iso: '2026-10-31' },
+    { route: 'programs/youthwide/', selector: '.updated', text: 'Last updated October 31, 2026', iso: '2026-10-31' },
+    { route: 'programs/jobready-work/', selector: '.updated', text: 'Last updated October 31, 2026', iso: '2026-10-31' },
+    { route: 'programs/superkids/', selector: '.updated', text: 'Last updated October 31, 2026', iso: '2026-10-31' },
     { route: 'impact/outcomes-2026/', selector: '.lf-updated', text: 'Source snapshot: October 2026 · Last updated October 29, 2026', iso: '2026-10-29' },
     { route: 'impact/independent-evaluation/', selector: '.lf-updated', text: 'Last updated October 29, 2026', iso: '2026-10-29' },
   ];
@@ -333,9 +333,9 @@ test.describe('WP104 item 10: "Last updated" stamps match each page’s latest c
     });
   }
 
-  test('the UNDP YES case study’s JSON-LD dateModified is 2026-10-29 (its heading changed that day); the other case studies keep theirs', async ({ page }) => {
+  test('the UNDP YES case study’s JSON-LD dateModified is 2026-10-31 (its heading changed that day); the other case studies keep theirs', async ({ page }) => {
     await open(page, 'impact/case-studies/undp-yes-korail/');
-    expect(await ldJson(page)).toMatch(/"dateModified"\s*:\s*"2026-10-29"/);
+    expect(await ldJson(page)).toMatch(/"dateModified"\s*:\s*"2026-10-31"/);
     await open(page, 'impact/case-studies/her-power/');
     expect(await ldJson(page)).toMatch(/"dateModified"\s*:\s*"2026-10-10"/);
   });

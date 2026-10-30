@@ -19,6 +19,6 @@ test.describe('WP118', () => {
 
   test('TalentLEAP’s inclusion sentence opens with the qualifier and covers every item', () => {
     const t = html('our-model/talentleap/index.html').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ');
-    expect(t).toContain('As agreed in the program scope, every supported TalentLEAP cohort pairs 100 training hours per certification with three months of milestone-based mentoring, certification exam preparation (with exam fees and attempts), placement support and outcome tracking for 12 months after each course.');
+    expect(t).toContain('As agreed in the program scope, every supported TalentLEAP cohort pairs 100 training hours per certification, including certification exam preparation (with exam fees and attempts), with three months of milestone-based mentoring, placement support and outcome tracking for 12 months after each course.');
   });
 });

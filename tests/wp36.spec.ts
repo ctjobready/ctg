@@ -474,18 +474,18 @@ test.describe('dating lines', () => {
 
   test('TalentLEAP and SuperKids carry today’s date, the day their wording changed', async ({ page }) => {
     await open(page, 'our-model/talentleap/');
-    expect(compact(await page.locator('.lf-updated').textContent())).toBe('Last updated October 29, 2026'); // WP112: TalentLEAP's wording last changed on 29 October (was 28 October, WP104)
+    expect(compact(await page.locator('.lf-updated').textContent())).toBe('Last updated October 31, 2026'); // WP112: TalentLEAP's wording last changed on 29 October (was 28 October, WP104)
     await open(page, 'programs/superkids/');
-    expect(compact(await page.locator('.updated').textContent())).toBe('Last updated October 29, 2026'); // WP104: SuperKids gained its consent line on 29 October
+    expect(compact(await page.locator('.updated').textContent())).toBe('Last updated October 31, 2026'); // WP104: SuperKids gained its consent line on 29 October
   });
 });
 
 test.describe('Employers', () => {
-  test('the closing reassurance reads "Your first step is a conversation, not a commitment."; the other pages keep the discovery-session line', async ({ page }) => {
+  test('the closing reassurance reads "A discovery session is a conversation, not a commitment." (WP129: it said "Your first step is a conversation, not a commitment."), as on the other pages', async ({ page }) => {
     await open(page, 'partner-with-us/employers/');
     const cta = compact(await page.locator('#cta').textContent());
-    expect(cta).toContain('Your first step is a conversation, not a commitment.');
-    expect(cta).not.toContain('A discovery session is a conversation, not a commitment.');
+    expect(cta).toContain('A discovery session is a conversation, not a commitment.');
+    expect(cta).not.toContain('Your first step is a conversation, not a commitment.');
     for (const route of ['partner-with-us/development-partners/', 'programs/jobready-work/']) {
       await open(page, route);
       expect(compact(await page.locator('#cta').textContent()), route).toContain('A discovery session is a conversation, not a commitment.');

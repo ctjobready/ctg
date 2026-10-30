@@ -51,7 +51,7 @@ if (description.length > 155) throw new Error(`Investors meta description is ${d
 const investor = cta('investor');
 // Q11-investor (WP39, cycle-16 review): the live / pre-launch / planned list is "What JobReady Does" directly above, so the answer points there; the shared Q11 (Employers, JobReady@Work, the platform page) keeps the list.
 const FAQ_IDS = ['Q11-investor', 'Q5', 'Q2-investor'];
-const jsonLd = [webPage({ path, name: `${title} | CodersTrust`, description, dateModified: '2026-10-29' }), faqJsonLd('investors', path, FAQ_IDS)]; // WP108: the page states no "last updated" date; its dateModified is the day SC-02's detail was reworded
+const jsonLd = [webPage({ path, name: `${title} | CodersTrust`, description, dateModified: '2026-10-31' }), faqJsonLd('investors', path, FAQ_IDS)]; // WP108: the page states no "last updated" date; its dateModified is the day SC-02's detail was reworded
 
 // "What JobReady Does" (WP40, cycle-17 review): three cards, one for each job the platform does for a reader of this page: learning, paid work, institutions. The status words are the register's (IN-04: "Live today: partner
 // portals, marketing automation, customer relationship management and AI chat. In pre-launch: the employer marketplace and the gig-work marketplace."; IN-06: personalized and adaptive learning is roadmap;

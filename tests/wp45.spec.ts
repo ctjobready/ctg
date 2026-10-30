@@ -285,8 +285,8 @@ test.describe('Recognition: the H1 is the listing the register supports (item 17
     expect('Twice Listed in the HolonIQ South Asia EdTech 100').toBe(titleCase('Twice Listed in the HolonIQ South Asia EdTech 100'));
     expect(fact('PA-08').text).toMatch(/2023 .*and 2024/);
     expect(await mainText(page)).not.toContain('Recognized, Honored and Covered Worldwide');
-    // the lead no longer repeats the listing the H1 states; the Industry Recognition band gives the years
-    expect(compact(await page.locator('main .hero').textContent())).not.toContain('was listed in the HolonIQ');
+    // WP129 (owner run 4): the lead now opens with the listing the H1 states, so it has a subject (WP45 had dropped it)
+    expect(compact(await page.locator('main .hero').textContent())).toContain('CodersTrust was listed in the HolonIQ South Asia EdTech 100 in 2023 and 2024.');
     expect(compact(await page.locator('main .hero').textContent())).toContain('has received appointments and honors');
     expect(compact(await page.locator('#listing').textContent())).toContain('listed in the HolonIQ South Asia EdTech 100 in 2023 (STEAM category) and 2024');
   });

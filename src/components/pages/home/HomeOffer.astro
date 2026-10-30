@@ -24,11 +24,9 @@ const pricing: CopyBlockData = {
   facts: ['PD-02', 'PD-02a'],
 };
 
-// WP25h: on Home the first option's size is scoped with us in the discovery session (the shared PROGRAM_OPTIONS entry keeps its own note for the other pages).
+// WP25h: on Home the first option's size was scoped with us in the discovery session by a second sentence; WP129 (Opus High run 4, Polish): Home prints the shared PROGRAM_OPTIONS note as it is, because the band lead above already says the scope is chosen in the discovery session.
 // WP63 (cycle-35 review, Grok R5): the option keeps the shared name, "Multi-Cohort Pilot Program", the one the audience pages use (Home called it "First Multi-Cohort Pilot").
-const options = PROGRAM_OPTIONS.map((o, i) =>
-  i === 0 ? { ...o, note: `${o.note} Scope the number of cohorts and trainees with us in the discovery session.` } : o,
-);
+const options = PROGRAM_OPTIONS;
 ---
 
 <Section id={id} tone="white" aria-labelledby={`${id}-h`}>

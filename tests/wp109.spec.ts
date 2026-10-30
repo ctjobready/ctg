@@ -32,12 +32,12 @@ function walkSrc(dir: string, out: string[] = []): string[] {
 }
 
 // --------------------------------------------------------------------------------------------------------------------------------
-test.describe('WP109 item 1: Governance is dated by its last content change (git: 2026-10-24)', () => {
-  test('the visible "Last updated" date and the JSON-LD dateModified are October 24, 2026', () => {
+test.describe('WP109 item 1: Governance is dated by its last content change (2026-10-24 until WP127 and WP128; 2026-10-31 since WP129)', () => {
+  test('the visible "Last updated" date and the JSON-LD dateModified are October 31, 2026', () => {
     const html = distHtml('about/governance/index.html');
-    expect(html).toMatch(/<time datetime="2026-10-24"[^>]*>October 24, 2026<\/time>/);
+    expect(html).toMatch(/<time datetime="2026-10-31"[^>]*>October 31, 2026<\/time>/);
     expect(html).not.toContain('October 17, 2026');
-    expect(html).toMatch(/"dateModified":"2026-10-24"/);
+    expect(html).toMatch(/"dateModified":"2026-10-31"/);
   });
 });
 
@@ -118,9 +118,9 @@ test.describe('WP109 item 9: dates on the changed pages', () => {
       expect(readFileSync(`src/content/news/${slug}.md`, 'utf8'), slug).toMatch(/^updated: 2026-10-30$/m);
     }
   });
-  test('Recognition, Fahim Sheikh and the outcomes page are dated 2026-10-29', () => {
-    expect(distHtml('about/recognition/index.html')).toMatch(/"dateModified":"2026-10-29"/);
-    expect(distHtml('about/team/fahim-sheikh/index.html')).toMatch(/"dateModified":"2026-10-29"/);
+  test('Recognition, Fahim Sheikh and the outcomes page are dated 2026-10-31', () => {
+    expect(distHtml('about/recognition/index.html')).toMatch(/"dateModified":"2026-10-31"/);
+    expect(distHtml('about/team/fahim-sheikh/index.html')).toMatch(/"dateModified":"2026-10-31"/);
     expect(distHtml('impact/outcomes-2026/index.html')).toContain('2026-10-29');
   });
 });

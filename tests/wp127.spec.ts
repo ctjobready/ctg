@@ -79,6 +79,7 @@ const ALLOWED: { has: string; why: string }[] = [
   { has: 'mentorship guidelines and trainer training, and trained 2,400 women directly', why: 'two verbs; the first object is a list of its own' },
   { has: 'which used CodersTrust’s curriculum, and 15,027 enrollments', why: 'two figures only; the first carries a relative clause' },
   { has: 'job postings requiring AI skills grew 69% vs. 9% for all postings, and workers with AI skills', why: 'two clauses joined' },
+  { has: 'has received appointments and honors, and CodersTrust’s work has been covered in the press', why: 'two clauses joined; "Aziz Ahmad" is an apposition (WP129)' },
   { has: 'fell 21% relative to manual-intensive jobs, and image-creation postings fell 17%', why: 'two clauses joined' },
 ];
 
@@ -238,7 +239,7 @@ const PAGE_TEXT: [string, string][] = [
 ];
 // Clause-joining commas the sweep keeps (see ALLOWED), pinned so a later sweep does not strip them.
 const KEPT: [string, string][] = [
-  ['about/recognition/index.html', 'has received appointments and honors, and its work has been covered in the press.'],
+  ['about/recognition/index.html', 'has received appointments and honors, and CodersTrust’s work has been covered in the press.'],
   ['news/coderstrust-is-committed-to-the-vision-of-a-smart-bangladesh-within-2041-aziz-ahmad/index.html', 'particularly the youth, and takes pride in contributing'],
   ['news/coderstrust-is-signing-mou-with-un-mandated-university-for-peace-on-academic-collaboration/index.html', 'Aziz Ahmad, Chairman of CodersTrust, and Professor Francisco Rojas Aravena'],
 ];
@@ -402,9 +403,9 @@ test.describe('WP127 items 3 to 7: copy polish', () => {
     expect(fact('PA-08').text).toBe('CodersTrust Was Listed in the HolonIQ South Asia EdTech 100 in 2023 (STEAM Category) and 2024');
   });
 
-  test('6. Recognition lede: "CodersTrust’s Co-Founder and Chairman, Aziz Ahmad,"', () => {
+  test('6. Recognition lede: "Its Co-Founder and Chairman, Aziz Ahmad," (WP129: the lede opens with the listing, so "Its" has an antecedent)', () => {
     const t = text('about/recognition/index.html');
-    expect(t).toContain('CodersTrust’s Co-Founder and Chairman, Aziz Ahmad, has received appointments and honors');
+    expect(t).toContain('Its Co-Founder and Chairman, Aziz Ahmad, has received appointments and honors');
     expect(t).not.toContain('co-founder and Chairman, Aziz Ahmad');
   });
 

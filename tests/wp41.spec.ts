@@ -177,7 +177,7 @@ test.describe('JobReady Platform: the status question points to "Rollout Status"
 
   test('the page carries today’s date, the day its wording changed', async ({ page }) => {
     await open(page, 'our-model/jobready-platform/');
-    expect(compact(await page.locator('.lf-updated').textContent())).toBe('Last updated October 29, 2026'); // WP104: the page's wording last changed on 29 October (WP102)
+    expect(compact(await page.locator('.lf-updated').textContent())).toBe('Last updated October 31, 2026'); // WP104: the page's wording last changed on 29 October (WP102)
   });
 });
 

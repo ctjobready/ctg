@@ -336,7 +336,7 @@ test.describe('About and Investors (items 37, 38, 39)', () => {
 
 test.describe('JobReady@Work: "For Hiring" is the Employers page’s two steps (item 40)', () => {
   test('both pages carry the same two steps, in the same step component, tied to IN-04, with the wording of the shared constant', async ({ page }) => {
-    expect(EMPLOYER_HIRING_STEPS.map((s) => s.title)).toEqual(['Discovery', 'Introductions']);
+    expect(EMPLOYER_HIRING_STEPS.map((s) => s.title)).toEqual(['Discovery Session', 'Introductions']);
     const read = async (route: string) => {
       await open(page, route);
       const hiring = page.locator('#next-steps .route', { has: page.locator('h3', { hasText: 'For Hiring' }) });

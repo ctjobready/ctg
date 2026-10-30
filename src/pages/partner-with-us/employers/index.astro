@@ -7,7 +7,7 @@
  * WP31 (cycle-8 review): the youth programs' trial, survey and paid-work pathway blocks are gone from this corporate offer page; "Broader Evidence from Our Youth Programs" is a two-link
  * group to the evidence pages (no figure from the youth programs is shown here).
  * WP32 (cycle-9 review): the employer credentials (Grameenphone Academy enrollments, AWS Authorized Training Partner, AIvolve) are stated once, in "Our Track Record"; the delivery-record cards that repeated them are gone.
- * WP36 (cycle-13 review): the three pains are statements; the closing reassurance reads "Your first step is a conversation, not a commitment." (the first step here may be a hiring request).
+ * WP36 (cycle-13 review): the three pains are statements; the closing reassurance read "Your first step is a conversation, not a commitment." (the first step may be a hiring request); WP129 (Opus High run 4): it reads "A discovery session is a conversation, not a commitment.", as on every other page, because the first step is a discovery session on both routes.
  * WP39 (cycle-16 review): "What Your Business Gets" is three short cards (IncludesBand), not the concern / inclusion / benefit matrix.
  * WP41 (cycle-18 review): "Our Track Record" leads with its delivered figure (the 23,000+ Grameenphone Academy enrollments, as the headline stat); the ministry contract keeps its "Contract scope:" wording (the register's
  * presentation rule: a scope of work is never worded as delivered training), the AIvolve partnership is the one other line, and "AWS Authorized Training Partner" is a line under the logo strip, beside the AWS logo.
@@ -53,7 +53,7 @@ import StepFlow from '../../../components/ui/StepFlow.astro';
 import Reinforcement from '../../../components/pages/partners/Reinforcement.astro';
 import PageEnhancements from '../../../components/pages/partners/PageEnhancements.astro';
 import { LINKS, meta } from '../../../components/pages/partners/partners';
-import { C14, EMPLOYER_HIRING_STEPS, HEADLINE, MICRO_COMMITMENT_EMPLOYERS, POSITIONING, VALUE_PROPOSITION, withSourceNote } from '../../../data/copy';
+import { C14, EMPLOYER_HIRING_STEPS, HEADLINE, MICRO_COMMITMENT, POSITIONING, VALUE_PROPOSITION, withSourceNote } from '../../../data/copy';
 import { contractScope } from '../../../components/sections/copyText';
 import { fact } from '../../../data/facts';
 import { faqJsonLd } from '../../../lib/faq';
@@ -217,7 +217,7 @@ if (aws !== 'AWS Authorized Training Partner') throw new Error('Employers: PA-06
     heading="Let’s Plan Your First Team Program"
     primary={{ label: primary.label, href: primary.href }}
     secondary={{ label: talent.label, href: talent.href }}
-    micro={MICRO_COMMITMENT_EMPLOYERS}
+    micro={MICRO_COMMITMENT}
   />
 
   <!-- C14 · Next steps. WP34 (cycle-11 review): the offer is training and hiring, so the steps are labeled "For Team Training" and hiring has its own short route; the "Hire JobReady Talent" link stays in the C13 band above. -->

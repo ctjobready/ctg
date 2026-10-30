@@ -64,11 +64,11 @@ test.describe('Item 2: the overlap sentence only where 150,000+ is printed', () 
 test.describe('Item 3: "Last updated" and the Her Power news date are October 24, 2026', () => {
   test('YouthWIDE and JobReady Platform show October 24, 2026', async ({ page }) => {
     await open(page, 'programs/youthwide/');
-    // WP104: both stamps moved on to October 29, 2026 with their later content changes (tests/wp104.spec.ts)
-    await expect(page.locator('.updated')).toHaveText('Last updated October 29, 2026');
+    // WP104: both stamps moved on to October 31, 2026 with their later content changes (tests/wp104.spec.ts)
+    await expect(page.locator('.updated')).toHaveText('Last updated October 31, 2026');
     await open(page, 'our-model/jobready-platform/');
-    await expect(page.locator('.lf-updated')).toHaveText('Last updated October 29, 2026');
-    expect(pageHtml('our-model/jobready-platform/')).toContain('"dateModified":"2026-10-29"');
+    await expect(page.locator('.lf-updated')).toHaveText('Last updated October 31, 2026');
+    expect(pageHtml('our-model/jobready-platform/')).toContain('"dateModified":"2026-10-31"');
   });
 
   // WP124: the Her Power post moved on to October 29, 2026 with its quotation-mark fix (tests/wp124.spec.ts)

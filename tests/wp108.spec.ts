@@ -160,16 +160,16 @@ test.describe('WP108 item 6: the pages changed here carry a date modified of 202
     ['Foundations', 'partner-with-us/foundations/', 'src/pages/partner-with-us/foundations/index.astro'],
   ]) {
     test(`${name}: the page states its modified date in the source and in its JSON-LD`, async ({ page }) => {
-      expect(readFileSync(file, 'utf8')).toMatch(/dateModified: '2026-10-29'/);
+      expect(readFileSync(file, 'utf8')).toMatch(/dateModified: '2026-10-31'/); // WP129 re-dated the page (WP128 changed its copy on 30 October)
       await open(page, route);
       const ld = await ldJson(page);
-      expect(ld).toMatch(/"dateModified"\s*:\s*"2026-10-29"/);
-      expect(ld).not.toMatch(/"dateModified"\s*:\s*"(?!2026-10-29)[^"]*"/);
+      expect(ld).toMatch(/"dateModified"\s*:\s*"2026-10-31"/);
+      expect(ld).not.toMatch(/"dateModified"\s*:\s*"(?!2026-10-31)[^"]*"/);
     });
   }
 
-  test('JobReady@Work still shows “Last updated October 29, 2026”', async ({ page }) => {
+  test('JobReady@Work still shows “Last updated October 31, 2026”', async ({ page }) => {
     await open(page, 'programs/jobready-work/');
-    await expect(page.locator('p.updated')).toHaveText(/Last updated\s+October 29, 2026/);
+    await expect(page.locator('p.updated')).toHaveText(/Last updated\s+October 31, 2026/);
   });
 });

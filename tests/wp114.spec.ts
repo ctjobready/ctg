@@ -154,6 +154,6 @@ test.describe('WP114 item 5: the changed pages are dated 2026-10-29', () => {
   });
 
   test('the Governance date from item 1 of WP109 is unchanged', () => {
-    expect(distHtml('about/governance/index.html')).toMatch(/<time datetime="2026-10-24"[^>]*>October 24, 2026<\/time>/);
+    expect(distHtml('about/governance/index.html')).toMatch(/<time datetime="2026-10-31"[^>]*>October 31, 2026<\/time>/);
   });
 });

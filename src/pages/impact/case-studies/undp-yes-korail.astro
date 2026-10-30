@@ -5,6 +5,7 @@ import Callout from '../../../components/pages/impact/Callout.astro';
 import Fact from '../../../components/facts/Fact.astro';
 import EvidenceTag from '../../../components/system/EvidenceTag.astro';
 import { fact } from '../../../data/facts';
+import { withTerminalStop } from '../../../lib/format';
 
 // ST-01 and ST-02 name the learners as the previous site did (Aklima Akder, Shamim Ahmed); the reported outcome is the quoted part.
 const quoteOf = (id: string) => {
@@ -49,9 +50,9 @@ if (!shamim) throw new Error('ST-02 no longer spells out its quoted amount');
   </Fragment>
 
   <Fragment slot="story">
-    <LearnerStory factId="ST-01" name="Aklima Akder" assetId="story-aklima-akder" program="UNDP YES, Korail" outcome={`“${quoteOf('ST-01')}”`} excerpt="Reported by the learner." tag />
+    <LearnerStory factId="ST-01" name="Aklima Akder" assetId="story-aklima-akder" program="UNDP YES, Korail" outcome={withTerminalStop(`“${quoteOf('ST-01')}”`)} excerpt="Reported by the learner." tag />
     <div class="uy__gap"></div>
-    <LearnerStory factId="ST-02" name="Shamim Ahmed" assetId="story-shamim-ahmed" program="UNDP YES, Korail" outcome={`“${quoteOf('ST-02')}”`} excerpt={`Reported earnings of ${shamim} over three years.`} outlier tag />
+    <LearnerStory factId="ST-02" name="Shamim Ahmed" assetId="story-shamim-ahmed" program="UNDP YES, Korail" outcome={withTerminalStop(`“${quoteOf('ST-02')}”`)} excerpt={`Reported earnings of ${shamim} over three years.`} outlier tag />
   </Fragment>
 </CaseStudyPage>
 
