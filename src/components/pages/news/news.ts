@@ -114,25 +114,25 @@ export const newsAudience = (post: NewsEntry): NewsAudience => AUDIENCE_BY_POST[
 export const NEWS_CTA: Record<NewsAudience, { heading: string; text: string; cta: 'discovery' | 'work' | 'campus' | 'briefing'; offer: { label: string; href: string } }> = {
   general: {
     heading: 'Working on Youth Employment?',
-    text: 'Tell us your goals and priority groups. A discovery session is a conversation, not a commitment.',
+    text: 'Tell us your goals, priority groups and two suitable times. A discovery session is a conversation, not a commitment.',
     cta: 'discovery',
     offer: { label: 'See Our Programs', href: '/programs/' },
   },
   corporate: {
     heading: 'Building Your Team’s Digital Skills?',
-    text: 'Tell us your company, team size, skills needed and timeline.',
+    text: 'Tell us your company, team size, skills needed and timeline, with two suitable times for a discovery session.',
     cta: 'work',
     offer: { label: 'Explore JobReady@Work', href: '/programs/jobready-work/' },
   },
   university: {
     heading: 'Preparing Students for Work?',
-    text: 'Tell us your institution, number of students and programs of interest.',
+    text: 'Tell us your institution, number of students and programs of interest, with two suitable times for a discovery session.',
     cta: 'campus',
     offer: { label: 'Explore JobReady@Campus', href: '/programs/jobready-campus/' },
   },
   government: {
     heading: 'Planning a Government Program?',
-    text: 'Tell us your agency, program target and preferred dates.',
+    text: 'Tell us your agency and program target, with two suitable times for a briefing.',
     cta: 'briefing',
     offer: { label: 'Explore Government Partnerships', href: '/partner-with-us/governments/' },
   },

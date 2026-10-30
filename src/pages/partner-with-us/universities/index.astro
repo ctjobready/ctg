@@ -65,7 +65,7 @@ const { title, description } = meta(
 const FAQ_IDS = ['Q1-campus', 'Q10-campus', 'Q8-route'];
 // WP57 (cycle-29 review, Grok R5): the one line that replaces the size cards of "Choose Where to Start".
 // WP132 (Opus High run 7, Minor): tracks and labs are agreed in co-design (Step 2), as the closing band and What Happens Next say.
-const START_LINE = 'Start with one campus: cohort size, tracks and labs are agreed in co-design.';
+const START_LINE = 'Cohort size, tracks and labs are agreed in co-design.';
 ---
 
 <LandingLayout
@@ -171,7 +171,8 @@ const START_LINE = 'Start with one campus: cohort size, tracks and labs are agre
   <!-- C10 · Differentiation: the positioning statement opens C6; the comparison table is on Home and Investors only (WP30c). -->
 
   <!-- C11 · Offer. WP57 (cycle-29 review, Grok R5): no size cards, so no pilot size is recommended to a campus; the band is its heading and one line (OfferCards with no cards), and it holds no button of its own. -->
-  <OfferCards eyebrow="" title="Choose Where to Start" lead={START_LINE} cards={[]} />
+  <!-- WP133 (Opus High run 8): one path, so the heading names it ("Choose Where to Start" heads three option cards on the other route pages). -->
+  <OfferCards eyebrow="" title="Start with One Campus" lead={START_LINE} cards={[]} />
 
   <!-- C12 · Risk reversal (immediately before C13). WP34 (cycle-11 review): the four diligence cards repeated what this page's bands state, so one item and a link stand in -->
   <DueDiligenceView brief id="due-diligence" />

@@ -563,7 +563,7 @@ test.describe('Development Partners: the glance is three tiles and the +10.3 til
       await expect(page.locator('#offer h2'), route).toHaveText('Choose Where to Start');
     }
     await open(page, UNI);
-    await expect(page.locator('#offer h2')).toHaveText('Choose Where to Start');
+    await expect(page.locator('#offer h2')).toHaveText('Start with One Campus'); // WP133: one path, so the heading names it
     await expect(page.locator('#offer .sh .eyebrow')).toHaveCount(0);
     await open(page, EMP);
     expect(compact(await page.locator('#offer .sh .eyebrow').textContent())).toBe('Start');

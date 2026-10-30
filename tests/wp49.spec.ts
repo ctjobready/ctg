@@ -297,7 +297,7 @@ test.describe('Governments: the briefing, not a discovery session (items 12, 28 
     // WP52 (cycle-27 review): the lead is the note alone ("Prefer to fund the platform? See JobReady Platform Grants below." is gone; the funding-route comparison above carries the platform-grant row; tests/wp52.spec.ts)
     expect(compact(await page.locator('#cohort-grants .sh__lead').textContent())).toBe(PROGRAM_SIZES_NOTE);
     await open(page, UNI);
-    expect(compact(await page.locator('#offer .sh__lead').textContent())).toBe('Start with one campus: cohort size, tracks and labs are agreed in co-design.'); // WP132: tracks and labs are agreed in co-design (was "set in the discovery session")
+    expect(compact(await page.locator('#offer .sh__lead').textContent())).toBe('Cohort size, tracks and labs are agreed in co-design.'); // WP133: the heading says "Start with One Campus" // WP132: tracks and labs are agreed in co-design (was "set in the discovery session")
     await open(page, DP);
     expect(compact(await page.locator('#offer .sh__lead').textContent())).toBe(PROGRAM_SIZES_NOTE);
     for (const route of [GOV, FOUND, UNI]) {

@@ -570,16 +570,16 @@ test.describe('R2, the 30,000+ visibly includes Her Power’s national program (
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 test.describe('R5, Universities: "Choose Where to Start" is one line, with no size cards', () => {
-  const LINE = 'Start with one campus: cohort size, tracks and labs are agreed in co-design.'; // WP132: was "...are set in the discovery session."
+  const LINE = 'Cohort size, tracks and labs are agreed in co-design.'; // WP133: the heading carries "Start with One Campus" // WP132: was "...are set in the discovery session."
   const UNIVERSITIES = 'partner-with-us/universities/';
 
   test('the band is its heading and the one line (id #offer kept): no cards, no size, no recommendation, no link or button of its own', async ({ page }) => {
     await open(page, UNIVERSITIES);
-    await expect(page.locator('#offer h2')).toHaveText('Choose Where to Start');
+    await expect(page.locator('#offer h2')).toHaveText('Start with One Campus'); // WP133
     await expect(page.locator('#offer .sh__lead')).toHaveText(LINE);
     await expect(page.locator('#offer article, #offer .grid-cards, #offer .oc')).toHaveCount(0);
     await expect(page.locator('#offer a, #offer button, #offer .btn')).toHaveCount(0);
-    expect(await texts(page, '#offer h2, #offer p')).toEqual(['Choose Where to Start', LINE]);
+    expect(await texts(page, '#offer h2, #offer p')).toEqual(['Start with One Campus', LINE]);
     const main = compact(await page.locator('main').textContent());
     for (const gone of ['1,000', '2,500', 'Recommended First Step', 'Multi-Cohort Pilot Program', 'Option 1', 'Option 2']) expect(main, gone).not.toContain(gone);
     expect(LINE.endsWith('.')).toBe(true);

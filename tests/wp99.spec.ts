@@ -317,7 +317,7 @@ test.describe('Item 5: CodersTrust’s WSDFM program, not "predecessor program"'
 
   test('where "predecessor" signalled that today’s tracks differ (200 against 100 hours), the caveat is kept in other words', async ({ page }) => {
     await open(page, TRIAL);
-    expect(compact(await page.locator('li[data-fact="RC-07 PD-01"]').textContent())).toBe('What was evaluated. CodersTrust’s 200-hour WSDFM program; today’s track is 100 hours.');
+    expect(compact(await page.locator('li[data-fact="RC-07 PD-01"]').textContent())).toBe('What was evaluated. CodersTrust’s 200-hour WSDFM program; today’s tracks are 100 hours.'); // WP133: plural
     expect(compact(await page.locator('.ie__type').textContent())).toContain('CodersTrust’s WSDFM program, women in Dhaka');
     expect(compact(await page.locator('main').textContent())).toContain('The trial evaluated CodersTrust’s 200-hour WSDFM program for women in Dhaka, not today’s 100-hour tracks.');
     expect(faqs.find((f) => f.id === 'Q15')?.a).toContain('evaluated CodersTrust’s 200-hour WSDFM program for women in Dhaka, not today’s 100-hour tracks');
@@ -328,7 +328,7 @@ test.describe('Item 5: CodersTrust’s WSDFM program, not "predecessor program"'
   });
 
   test('the two FitBrief components (not on a page today) carry the same caveat and the survey wording of item 6', () => {
-    expect(source('src/components/pages/impact/FitBrief.astro')).toContain('<dd>CodersTrust’s 200-hour WSDFM program; today’s track is 100 hours.</dd>');
+    expect(source('src/components/pages/impact/FitBrief.astro')).toContain('<dd>CodersTrust’s 200-hour WSDFM program; today’s tracks are 100 hours.</dd>'); // WP133: plural
     expect(source('src/components/pages/partners/FitBrief.astro')).toContain('<dd>CodersTrust’s {evaluatedHours}-hour WSDFM program; today’s track is {HOURS} hours.</dd>');
   });
 
