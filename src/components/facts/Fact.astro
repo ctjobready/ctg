@@ -14,6 +14,7 @@ import CertNote from '../ui/CertNote.astro';
  * exactly one mark.
  * WP128: `drop` removes a phrase from a sentence that the band around it already says (a lead that carries the same disclaimer); it throws when the register no longer holds the phrase, so a change to the register cannot leave a stale
  * edit behind. The fact id stays on the element.
+ * WP136: `swap` ([from, to]) puts a phrase of the sentence in other words (Outcomes 2026 says "surveyed new earners" where the register's text spells the term out); it throws, like `drop`, when the register no longer holds the phrase.
  */
 interface Props {
   id: string;
@@ -24,13 +25,17 @@ interface Props {
   under?: string;
   /** A phrase left out of the printed sentence (WP128); it must be in the register text. */
   drop?: string;
+  /** A phrase of the printed sentence said in other words (WP136); `from` must be in the register text. */
+  swap?: [from: string, to: string];
   class?: string;
 }
-const { id, field = 'text', as: Tag = 'span', under, drop, class: className } = Astro.props;
+const { id, field = 'text', as: Tag = 'span', under, drop, swap, class: className } = Astro.props;
 const f = fact(id);
 let out: string;
 if (drop !== undefined && !f.text.includes(drop)) throw new Error(`<Fact id="${id}" drop="${drop}">: the register text no longer holds that phrase`);
-const base = drop !== undefined ? f.text.replace(drop, '') : f.text;
+if (swap !== undefined && !f.text.includes(swap[0])) throw new Error(`<Fact id="${id}" swap="${swap[0]}">: the register text no longer holds that phrase`);
+const dropped = drop !== undefined ? f.text.replace(drop, '') : f.text;
+const base = swap !== undefined ? dropped.replace(swap[0], swap[1]) : dropped;
 if (field === 'text') out = under ? dropTitleEcho(under, base) : base;
 else if (field === 'headline') out = f.headline ?? f.text;
 else {

@@ -282,7 +282,7 @@ test.describe('Universities: the Guide band does not repeat the National Univers
   test('"The National University Partnership" band still states the relationship, once on the page', async ({ page }) => {
     await open(page, 'partner-with-us/universities/');
     await expect(page.locator('#offer-evidence h2')).toHaveText('The National University Partnership');
-    await expect(page.locator('#offer-evidence .pe__item')).toHaveCount(3);
+    await expect(page.locator('#offer-evidence .pe__item')).toHaveCount(2); // WP136: the University Partners card is gone
     expect(compact(await page.locator('#offer-evidence').textContent())).toContain('CodersTrust has been NU’s official training partner for digital career skills and credentials since 2023');
     expect(count(await mainText(page), 'since 2023'), 'the relationship is stated once, in the NU band').toBe(1);
   });
@@ -411,7 +411,7 @@ test.describe('YouthWIDE: one-sentence hero lead and one agenda line (items 7 an
     await expect(band.locator('#cta .btn--primary')).toHaveCount(1);
     await expect(band.locator('#cta a.link', { hasText: 'Read the Evidence' })).toHaveCount(1);
     await expect(band.locator('#cta-governments a.link', { hasText: 'Request a Briefing for Your Ministry' })).toHaveCount(1);
-    expect(compact(await band.locator('#cta-governments .entry__text').textContent())).toBe('Public procurement follows the agency’s own timeline, so we start with a briefing that fits it. In your inquiry, include two suitable times for it.'); // WP135
+    expect(compact(await band.locator('#cta-governments .entry__text').textContent())).toBe('Public procurement follows the agency’s own timeline, so we start with a briefing that fits it.'); // WP136 (owner answer 2026-10-31: the "two suitable times" request appears once per page; WP135 had added "In your inquiry, include two suitable times for it.")
     const agendas = band.locator('[data-session-agenda]');
     await expect(agendas).toHaveCount(1);
     expect(compact(await agendas.textContent())).toBe('We discuss your priority groups, locations, tracks, indicative budget, scorecard and reporting plan.');

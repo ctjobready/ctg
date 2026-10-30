@@ -433,7 +433,7 @@ test.describe('L1: Home slide 2 separates the National University’s learners f
 
   test('the same separation is on the Universities page’s own note (the qualifier is its shortest form)', async ({ page }) => {
     await open(page, 'partner-with-us/universities/');
-    expect(compact(await page.locator('main').textContent())).toContain('The first two cards describe the learners being onboarded and National University’s size, not learners trained by CodersTrust.'); // WP132: the lead names the first two cards in their order (was "...; they are not learners trained by CodersTrust")
+    expect(compact(await page.locator('main').textContent())).toContain('These cards describe the learners being onboarded and National University’s size, not learners trained by CodersTrust.'); // WP136: the band has two cards now, so the lead says "These cards" (WP132 had "The first two cards") (was "...; they are not learners trained by CodersTrust")
   });
 });
 

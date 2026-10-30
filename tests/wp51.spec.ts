@@ -328,7 +328,7 @@ test.describe('Home: the Outcome Tracking row, the positioning statement and the
     await open(page, '');
     await expect(page.locator('#compare h2')).toHaveText('How CodersTrust Compares with Self-Paced Courses');
     expect('How CodersTrust Compares with Self-Paced Courses').toBe(titleCase('How CodersTrust Compares with Self-Paced Courses'));
-    expect(await texts(page, '#compare thead th')).toEqual(['Approach', 'CodersTrust Supported Cohort', 'Self-Paced Course Platforms']);
+    expect(await texts(page, '#compare thead th')).toEqual(['What It Includes', 'CodersTrust Supported Cohort', 'Self-Paced Course Platforms']); // WP136 (Opus High run 11, Polish): the criteria column's heading was 'Approach'
     expect(sitePages().filter((p) => visible(p.html).includes('How the Approaches Compare')).map((p) => p.route)).toEqual([]);
   });
 

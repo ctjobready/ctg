@@ -24,6 +24,7 @@
  * WP57 (cycle-29 review, Grok R5): "Choose Where to Start" has no size cards. Its recommended card read as a 1,000–2,500 country-pilot size for a campus program; the band is now its heading and one line, "Start with one campus: cohort size, tracks
  * and labs are set in the discovery session.", and the page keeps its own one primary button (hero, call to action and sticky bar). The program-sizes note that qualified the cards (PROGRAM_SIZES_NOTE) is not on this page any more.
  * WP128 (Opus High run 3, kit 95): "The National University Partnership" says its disclaimer once, in the lead; the first card leaves out the bracketed copy of it, and the second and third cards do not open with their own label.
+ * WP136 (Opus High run 11, Polish): "The National University Partnership" has two cards, not three: the University Partners card (PA-05) is gone, because the band is headed for one partner and the three universities are named in the Track Record band's logo alt text; its lead reads "These cards describe ...".
  * WP66 (owner request 2026-10-20): the Track Record band has one proof line, the signed-agreement sentence for universities and colleges (SC-11b, `signed` on PartnerGuideBand: "CodersTrust has signed MOUs, agreements or contracts with ... universities and colleges."); the band's heading says "Since 2014", so the sentence leaves the year to it.
  */
 import DueDiligenceView from '../../../components/pages/hub/DueDiligenceView.astro';
@@ -88,11 +89,10 @@ const FAQ_IDS = ['Q1-campus', 'Q10-campus', 'Q8-route'];
   <PairedEvidence
     eyebrow="Our Partnerships"
     title="The National University Partnership"
-    lead="The first two cards describe the learners being onboarded and National University’s size, not learners trained by CodersTrust."
+    lead="These cards describe the learners being onboarded and National University’s size, not learners trained by CodersTrust."
     items={[
       { id: 'SC-04', label: 'Official Training Partner', drop: ' (the university’s own learners, not learners trained by CodersTrust)' },
       { id: 'SC-05', label: 'National University' },
-      { id: 'PA-05', label: 'University Partners' },
     ]}
   />
   <LearnerVoice story="maria-dewan" excerpt="Maria Dewan was a third-year Biology student when she first came across Her Power, where CodersTrust was a training partner." program="Her Power" tone="white" />

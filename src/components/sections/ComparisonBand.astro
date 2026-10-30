@@ -9,6 +9,7 @@ import ComparisonTable from '../ui/ComparisonTable.astro';
  * CodersTrust's own inclusions (`included`), never a verdict on another approach.
  * WP42 (cycle-19 review): every cell is a fragment in one style, in CodersTrust's column and in the comparison columns alike: sentence case (the heading cells are Title Case, the cells are running text) and no trailing period.
  * Home's own "Independent Evidence" cell (a page-specific `ownCells` wording) follows the same rule.
+ * WP136 (Opus High run 11, Polish): the criteria column's heading is "What It Includes" (it said "Approach", the word the lead uses for the other columns); the column holds the dimensions compared.
  * WP54 (cycle-28 review, Claude S25): the "Track Choice" cell says the work-entry plan is "agreed before enrollment" (it said "approved"), as every other page words PD-19.
  */
 type Cell = string | { text: string; included?: boolean; factId?: string };
@@ -37,7 +38,7 @@ interface Props {
 const {
   title = 'Approaches to Getting into Digital Work, and Their Trade-Offs',
   lead = 'Different routes suit different people. This is what each one typically includes.',
-  columns = ['Approach', 'CodersTrust Supported Cohort', 'Conventional Skills Programs', 'Self-Paced Course Platforms', 'Freelance Marketplaces Alone', 'Doing Nothing'],
+  columns = ['What It Includes', 'CodersTrust Supported Cohort', 'Conventional Skills Programs', 'Self-Paced Course Platforms', 'Freelance Marketplaces Alone', 'Doing Nothing'],
   rows = [
     { label: 'Track Choice', cells: [{ text: 'Set from current employer demand; work-entry plan agreed before enrollment', included: true }, 'Varies by program design', 'Learner chooses', 'Learner looks for work directly', 'No training'] },
     { label: 'Certification', cells: [{ text: 'Certification exam preparation (exam fees and attempts as agreed in the program scope)', included: true }, 'Varies', 'Often sold separately', 'Varies by platform', 'No credential'] },

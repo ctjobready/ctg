@@ -6,8 +6,8 @@ import { DIST_DIR } from './support/env';
 /**
  * WP135 (Opus High run 10, kit 102).
  * Test-first: run `npm run build`, then `PORT=<port> npx playwright test tests/wp135.spec.ts --project=chromium`.
- *   - Minor 1: every closing line that sits directly before an email button whose prefilled body asks for "Two suitable times" asks for two suitable times too.
- *     The site-wide rule test below walks every built page, so the sweep does not recur one page at a time.
+ *   - Minor 1: every closing line that sat directly before an email button whose prefilled body asks for "Two suitable times" asked for two suitable times too.
+ *     WP136 (owner answer 2026-10-31) replaced the per-band rule with a per-PAGE rule: the request appears ONCE per page. The site-wide rule test below walks every built page.
  *   - Polish 2: "On This Page" lists the closing H2 on the Trial and Outcomes 2026 pages, as Impact and About do.
  *   - Polish 3: Universities folds "Start with One Campus" into the pilot band ("A Pilot Comes First").
  *   - Polish 4: the Careers meta description is two full sentences.
@@ -28,115 +28,114 @@ const allPages = (dir = DIST_DIR): string[] =>
   });
 
 /* ---------------------------------------------------------------------------------------------------------------------------------------
- * The site-wide rule.
+ * The site-wide rule (WP136 rewrote the WP135 band rule as a PAGE rule; owner answer 2026-10-31: the "two suitable times" request appears ONCE per page).
  *
- * A "band" is the nearest enclosing <section> or <aside> of an email (mailto) link whose decoded body contains "Two suitable times"
- * (the Governments "for a briefing" and Investors "for an introduction call" emails included: the match is on the phrase, not on what follows).
- * Closing line: the paragraph directly before the link, once the wrapper tags that open the link's row (div, p, span, li) are skipped.
- * The rule: a band with a closing line asks for "suitable times" somewhere in its visible text (the button label, the sr-only text and the
- * other email links are not counted, so a button cannot satisfy the rule by naming the times).
+ * A page "asks" when one of its mailto links carries a prefilled body with the field "Two suitable times" (the Governments "for a briefing" and Investors
+ * "for an introduction call" emails included: the match is on the phrase, not on what follows). On such a page the visible text of <main>, with the email
+ * button labels and the sr-only text left out (so a button cannot satisfy the rule by naming the times), contains "suitable times" EXACTLY once.
+ * Where the page has a final "What Happens Next" block ("Your first step" line), that one occurrence sits in it; elsewhere it sits in the page's one closing
+ * line before the email button. The other bands rely on the prefilled email's "Two suitable times …" field.
  *
- * Deliberate exemptions, each with its reason (the test prints how many bands each one took out):
- *   hero        a hero band (class hero or hh, or the page's <h1>): its lead introduces the page; the ask sits in the closing band.
- *   no-band     a link outside every <section>/<aside> (the sticky mobile button): it carries no text of its own.
+ * Deliberate exemptions, each with its reason:
  *   styleguide  /styleguide/ is the design-system demo page, not content; its sample bands are placeholders.
- *   contact     /contact/ is the inquiry directory: six-plus route cards, each one audience line and one button. The page's own "Your Inquiry"
- *               step says "In your inquiry, include two suitable times." (asserted below), so the cards do not repeat it ten times.
- *   no-line     the paragraph directly before the link is absent: the heading, a table, a stat block or a list stands there. There is no closing
- *               line to complete (the route pages' heading-only bands, the case studies, Success Stories, Our Model; the mid-page text links on
- *               Foundations, Employers and YouthWIDE). Their pages carry the ask in "Your first step" / "What Happens Next".
+ *   no-line     pages with NO closing line at all: the case studies, Success Stories, Our Model and Mentors close on a heading with a button (or carry only
+ *               a hero button), so the sentence has no line to live in. They must carry the phrase ZERO times (asserted, so a new page cannot slip in).
  * ------------------------------------------------------------------------------------------------------------------------------------- */
-type Verdict = { page: string; heading: string; line: string; asks: boolean } | { page: string; exempt: 'hero' | 'no-band' | 'styleguide' | 'contact' | 'no-line' };
+const STYLEGUIDE = 'styleguide/index.html';
+const NO_LINE: Record<string, string> = {
+  'about/mentors/index.html': 'a hero button only; the page has no closing line',
+  'impact/case-studies/digital-jobs-albania/index.html': 'a heading-only closing band',
+  'impact/case-studies/her-power/index.html': 'a heading-only closing band',
+  'impact/case-studies/kosovo-women-in-online-work/index.html': 'a heading-only closing band',
+  'impact/case-studies/undp-yes-korail/index.html': 'a heading-only closing band',
+  'impact/case-studies/wsdfm-women-freelancers/index.html': 'a heading-only closing band',
+  'impact/stories/index.html': 'a heading-only closing band',
+  'our-model/index.html': 'a hero button and a heading-only closing band',
+};
 
-function bandVerdicts(page: string): Verdict[] {
-  const raw = html(page);
-  if (page === 'styleguide/index.html') return /href="mailto:[^"]*"/.test(raw) ? [{ page, exempt: 'styleguide' }] : [];
-  const spans: { s: number; e: number; open: string }[] = [];
-  const stack: { s: number; open: string }[] = [];
-  for (const m of raw.matchAll(/<(\/?)(?:section|aside)\b[^>]*>/gi)) {
-    if (m[1]) {
-      const o = stack.pop();
-      if (o) spans.push({ s: o.s, e: m.index! + m[0].length, open: o.open });
-    } else stack.push({ s: m.index!, open: m[0] });
-  }
-  const bands = new Map<number, { band: (typeof spans)[number]; closing: string | null }>();
-  const out: Verdict[] = [];
-  for (const a of raw.matchAll(/<a\b[^>]*?href="(mailto:[^"]*)"[^>]*>/gi)) {
-    let body = '';
+const mainRaw = (rel: string) => /<main[\s\S]*<\/main>/.exec(html(rel))?.[0] ?? '';
+/** The page's main text without the email button labels and the sr-only text: what the reader reads as the sentence, not as a button. */
+const proseText = (rel: string) =>
+  visible(
+    mainRaw(rel)
+      .replace(/<a\b[^>]*href="mailto:[^"]*"[^>]*>[\s\S]*?<\/a>/gi, ' ')
+      .replace(/<(\w+)\b[^>]*class="[^"]*\bsr-only\b[^"]*"[^>]*>[\s\S]*?<\/\1>/gi, ' '),
+  );
+const asksForTimes = (rel: string) => {
+  for (const a of html(rel).matchAll(/<a\b[^>]*?href="(mailto:[^"]*)"[^>]*>/gi)) {
     try {
-      body = new URL(decode(a[1])).searchParams.get('body') ?? '';
+      if (/two suitable times/i.test(new URL(decode(a[1])).searchParams.get('body') ?? '')) return true;
     } catch {
       /* a mailto without a query has no body */
     }
-    if (!/two suitable times/i.test(body)) continue;
-    const at = a.index!;
-    const band = spans.filter((x) => x.s < at && x.e > at).sort((x, y) => x.e - x.s - (y.e - y.s))[0];
-    if (!band) {
-      out.push({ page, exempt: 'no-band' });
-      continue;
-    }
-    const prior = raw.slice(band.s, at).replace(/(?:\s|<(?:div|p|span|li)\b[^>]*>)+$/i, '');
-    const closing = /<\/p>$/i.test(prior) ? (prior.match(/<p\b[^>]*>(?:(?!<p\b)[\s\S])*<\/p>$/i)?.[0] ?? '') : null;
-    const known = bands.get(band.s);
-    if (!known || (known.closing === null && closing !== null)) bands.set(band.s, { band, closing });
   }
-  for (const { band, closing } of bands.values()) {
-    const bandHtml = raw.slice(band.s, band.e);
-    if (/class="[^"]*\b(?:hero|hh)\b/.test(band.open) || /<h1\b/.test(bandHtml)) {
-      out.push({ page, exempt: 'hero' });
-      continue;
-    }
-    if (page === 'contact/index.html') {
-      out.push({ page, exempt: 'contact' });
-      continue;
-    }
-    if (closing === null) {
-      out.push({ page, exempt: 'no-line' });
-      continue;
-    }
-    const text = visible(
-      bandHtml
-        .replace(/<a\b[^>]*href="mailto:[^"]*"[^>]*>[\s\S]*?<\/a>/gi, ' ')
-        .replace(/<(\w+)\b[^>]*class="[^"]*\bsr-only\b[^"]*"[^>]*>[\s\S]*?<\/\1>/gi, ' '),
-    );
-    const heading = visible(/<h[1-6]\b[^>]*>([\s\S]*?)<\/h[1-6]>/i.exec(bandHtml)?.[1] ?? '(no heading)');
-    out.push({ page, heading, line: visible(closing), asks: /suitable times/i.test(text) });
-  }
-  return out;
-}
+  return false;
+};
+const timesAt = (text: string) => [...text.matchAll(/suitable times/gi)].map((m) => m.index!);
 
-test.describe('Minor 1: every closing line before an email button that asks for "Two suitable times" asks for them too', () => {
-  const verdicts = allPages().flatMap(bandVerdicts);
-  const checked = verdicts.filter((v): v is Extract<Verdict, { asks: boolean }> => 'asks' in v);
+test.describe('Owner answer 2026-10-31: the "two suitable times" request appears once per page', () => {
+  const pages = allPages().filter(asksForTimes);
 
-  test('no closing band leaves the two suitable times out (page-by-page offender list)', () => {
-    const offenders = checked.filter((v) => !v.asks).map((v) => `${v.page} | ${v.heading} | "${v.line}"`);
-    expect(offenders.length, `${offenders.length} closing band(s) with a closing line but no ask:\n${offenders.join('\n')}`).toBe(0);
+  test('every page whose emails ask for "Two suitable times" says "suitable times" exactly once (page-by-page offender list)', () => {
+    const offenders = pages
+      .filter((p) => p !== STYLEGUIDE && !(p in NO_LINE))
+      .map((p) => ({ p, n: timesAt(proseText(p)).length }))
+      .filter((x) => x.n !== 1)
+      .map((x) => `${x.p} | ${x.n} occurrence(s)`);
+    expect(offenders.length, `${offenders.length} page(s) without exactly one "suitable times":\n${offenders.join('\n')}`).toBe(0);
   });
 
-  test('the rule is not vacuous: it examines the closing bands it is meant to', () => {
-    expect(checked.length).toBeGreaterThanOrEqual(25);
-    const pages = new Set(checked.map((v) => v.page));
+  test('where a page has a final "What Happens Next" block, the one occurrence sits in it (the "Your first step" line)', () => {
+    const misplaced: string[] = [];
+    for (const p of pages.filter((x) => x !== STYLEGUIDE && !(x in NO_LINE))) {
+      const text = proseText(p);
+      const at = timesAt(text)[0];
+      const next = text.lastIndexOf('What Happens Next');
+      if (next >= 0 && at !== undefined && at < next) misplaced.push(`${p} | "suitable times" at ${at}, before the last "What Happens Next" at ${next}`);
+    }
+    expect(misplaced, misplaced.join('\n')).toEqual([]);
+  });
+
+  test('the pages without a closing line carry the phrase zero times, and they really ask by email', () => {
+    for (const p of Object.keys(NO_LINE)) {
+      expect(pages.includes(p), `${p} has a "Two suitable times" email (${NO_LINE[p]})`).toBe(true);
+      expect(timesAt(proseText(p)), `${p} (${NO_LINE[p]})`).toEqual([]);
+    }
+  });
+
+  test('the rule is not vacuous: it examines the pages it is meant to', () => {
+    const checked = pages.filter((p) => p !== STYLEGUIDE && !(p in NO_LINE));
+    expect(checked.length).toBeGreaterThanOrEqual(60);
     for (const p of [
       'index.html',
+      'about/index.html',
+      'contact/index.html',
       'impact/index.html',
       'impact/outcomes-2026/index.html',
       'impact/independent-evaluation/index.html',
       'our-model/talentleap/index.html',
       'our-model/jobready-platform/index.html',
       'partner-with-us/index.html',
+      'partner-with-us/development-partners/index.html',
+      'partner-with-us/foundations/index.html',
+      'partner-with-us/governments/index.html',
+      'partner-with-us/investors/index.html',
+      'partner-with-us/universities/index.html',
+      'partner-with-us/employers/index.html',
       'partner-with-us/local-partners/index.html',
+      'programs/index.html',
+      'programs/superkids/index.html',
       'programs/youthwide/index.html',
-      'about/index.html',
-    ]) expect(pages.has(p), `${p} is examined`).toBe(true);
-    // The Governments column on YouthWIDE (a text link with a briefing email) is examined, not exempted.
-    const yw = checked.filter((v) => v.page === 'programs/youthwide/index.html');
-    expect(yw.some((v) => /Public procurement follows/.test(v.line)), 'YouthWIDE government column is examined').toBe(true);
+      'programs/jobready-campus/index.html',
+      'programs/jobready-work/index.html',
+    ]) expect(checked.includes(p), `${p} is examined`).toBe(true);
+    const news = checked.filter((p) => p.startsWith('news/') && p !== 'news/index.html');
+    expect(news.length, 'the News posts are examined (their closing line is their one occurrence)').toBeGreaterThanOrEqual(40);
+    expect(asksForTimes(STYLEGUIDE), 'the styleguide exemption is for a page that would otherwise be examined').toBe(true);
   });
 
-  test('the exemptions are the documented ones, and the contact directory carries the ask in its own steps', () => {
-    const kinds = new Set(verdicts.filter((v) => 'exempt' in v).map((v) => (v as { exempt: string }).exempt));
-    expect([...kinds].sort()).toEqual(['contact', 'hero', 'no-band', 'no-line', 'styleguide']);
+  test('the contact directory carries the ask once, in its own "Your Inquiry" step', () => {
+    expect(timesAt(main('contact/index.html'))).toHaveLength(1);
     expect(main('contact/index.html')).toContain('In your inquiry, include two suitable times.');
   });
 });
@@ -156,26 +155,31 @@ test('Minor 1: In the Field and News Photographs close "Seen a program like the 
   }
 });
 
-test('Minor 1: the Case Studies index, the JobReady Platform and Local Partners closing lines ask', () => {
+test('Minor 1: the Case Studies index and the JobReady Platform closing lines ask; Local Partners asks once, in its last line (WP136)', () => {
   expect(main('impact/case-studies/index.html')).toContain(`A discovery session sets the scorecard for your own program. ${ASK}`);
   const platform = main('our-model/jobready-platform/index.html');
   expect(platform).toContain(`A discovery session covers how JobReady fits your program, and a platform grant helps CodersTrust roll out the remaining modules. ${ASK}`);
   expect(platform).not.toContain('details are shared in the discovery session');
   const local = main('partner-with-us/local-partners/index.html');
-  expect(local).toContain('Tell the Bangladesh team about your organization, your district, the groups you work with and two suitable times for a discovery session.');
-  expect(local).not.toContain('your district and the groups you work with.');
+  expect(local).toContain('In your inquiry, include two suitable times for a discovery session.');
+  expect(local).toContain('Tell the Bangladesh team about your organization, your district and the groups you work with.');
+  expect(local).not.toContain('the groups you work with and two suitable times for a discovery session.');
 });
 
-test('Minor 1: Home’s closing band, found by the rule, asks too', () => {
-  expect(main('index.html')).toContain(`Start with a multi-cohort pilot, agree the scorecard up front and decide on expansion from the evidence. ${ASK}`);
+test('Minor 1 (WP136): Home asks once, in the "First Step" line; its closing band leaves the ask to that line', () => {
+  const t = main('index.html');
+  expect(t).toContain('Start with a multi-cohort pilot, agree the scorecard up front and decide on expansion from the evidence.');
+  expect(t).not.toContain(`decide on expansion from the evidence. ${ASK}`);
+  expect(t).toContain(`First Step A discovery session. ${ASK}`);
 });
 
-test('Minor 1: YouthWIDE’s government column and its last "What Happens Next" line ask for two suitable times for a briefing', () => {
+test('Minor 1 (WP136): YouthWIDE asks once, in the funders line of "What Happens Next"; the government column and the government line leave it to the email', () => {
   const t = main('programs/youthwide/index.html');
-  expect(t).toContain(`Public procurement follows the agency’s own timeline, so we start with a briefing that fits it. In your inquiry, include two suitable times for it.`);
-  expect(t).toContain('Governments. In your inquiry, include two suitable times for a briefing; your agency’s procurement timeline sets the pace.');
-  expect(t).not.toContain('Governments. Your agency’s procurement timeline sets the pace; we start with a briefing.');
+  expect(t).toContain('Public procurement follows the agency’s own timeline, so we start with a briefing that fits it.');
+  expect(t).not.toContain('with a briefing that fits it. In your inquiry');
+  expect(t).toContain('Governments. Your agency’s procurement timeline sets the pace; we start with a briefing.');
   expect(t).toContain('Funders. In your inquiry, include two suitable times for a discovery session.');
+  expect(t).not.toContain('include two suitable times for a briefing');
 });
 
 /* ----------------------------------------------------------------------------------------------------------------------------------- */

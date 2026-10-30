@@ -173,8 +173,8 @@ test.describe('Universities: the one evidence strip, the National University hea
   test('the first band is "The National University Partnership" and keeps its clarifying sentence and its three figures', async ({ page }) => {
     await open(page, 'partner-with-us/universities/');
     await expect(page.locator('#offer-evidence h2')).toHaveText('The National University Partnership');
-    expect(compact(await page.locator('#offer-evidence .sh__lead').textContent())).toBe('The first two cards describe the learners being onboarded and National University’s size, not learners trained by CodersTrust.'); // WP132: the lead names the first two cards in their order, no dangling "they"
-    await expect(page.locator('#offer-evidence .pe__item')).toHaveCount(3);
+    expect(compact(await page.locator('#offer-evidence .sh__lead').textContent())).toBe('These cards describe the learners being onboarded and National University’s size, not learners trained by CodersTrust.'); // WP136: the band has two cards now, so the lead says "These cards" (WP132 had "The first two cards"), no dangling "they"
+    await expect(page.locator('#offer-evidence .pe__item')).toHaveCount(2); // WP136: the University Partners card is gone (its partners are the track-record logos)
   });
 });
 

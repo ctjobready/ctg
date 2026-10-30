@@ -36,8 +36,8 @@ test.describe('WP68 RW1: the Universities band keeps its heading and takes a pag
     await expect(band).toHaveCount(1);
     await expect(band.locator('.eyebrow').first()).toHaveText('Our Partnerships');
     await expect(band.locator('h2')).toHaveText('The National University Partnership');
-    expect(compact(await band.locator('.sh__lead').textContent())).toContain('The first two cards describe the learners being onboarded and National University’s size, not learners trained by CodersTrust.'); // WP132: the lead names the first two cards in their order (was "...; they are not learners trained by CodersTrust")
-    await expect(band.locator('.pe__item')).toHaveCount(3);
+    expect(compact(await band.locator('.sh__lead').textContent())).toContain('These cards describe the learners being onboarded and National University’s size, not learners trained by CodersTrust.'); // WP136: the band has two cards now, so the lead says "These cards" (WP132 had "The first two cards") (was "...; they are not learners trained by CodersTrust")
+    await expect(band.locator('.pe__item')).toHaveCount(2); // WP136: the University Partners card is gone
   });
 
   test('the Universities band no longer carries the "Evidence for This Offer" eyebrow', async ({ page }) => {

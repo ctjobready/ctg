@@ -213,7 +213,7 @@ test.describe('WP128 item 7: Universities, "The National University Partnership"
 
   test('the lead keeps the disclaimer; the cards say it no more', () => {
     const b = visible(band());
-    expect(b).toContain('The first two cards describe the learners being onboarded and National University’s size, not learners trained by CodersTrust.'); // WP132: the lead names the first two cards in their order (was "...size and the learners being onboarded; they are not learners trained by CodersTrust.")
+    expect(b).toContain('These cards describe the learners being onboarded and National University’s size, not learners trained by CodersTrust.'); // WP136: the band has two cards now, so the lead says "These cards" (WP132 had "The first two cards") (was "...size and the learners being onboarded; they are not learners trained by CodersTrust.")
     expect(b.split(DISCLAIMER).length - 1).toBe(1);
     expect(b).not.toContain('the university’s own learners');
   });
@@ -225,16 +225,15 @@ test.describe('WP128 item 7: Universities, "The National University Partnership"
   test('second card does not repeat its label: "The world’s second-largest university by enrollment — 3M+ students in 2,257 affiliated colleges."', () => {
     expect(body('SC-05')).toBe('The world’s second-largest university by enrollment — 3M+ students in 2,257 affiliated colleges.');
   });
-  test('third card does not repeat its label: starts "National University (official training partner; ..."', () => {
-    expect(body('PA-05')).toBe(
-      'National University (official training partner; post graduate diploma courses); University for Peace (UPEACE), the UN-mandated university; The City College of New York (CCNY), a memorandum of understanding (MOU) partner since 2024.',
-    );
+  // WP136 (Opus High run 11, Polish): the third card (PA-05, University Partners) is gone from the band; the register's PA-05 text is unchanged and the partners are named in the Track Record band's logo alt text.
+  test('the band has no third card; the second card does not carry the register’s "National University: " label either', () => {
+    expect(band()).not.toContain('data-fact="PA-05"');
     expect(visible(band())).not.toMatch(/University partners: |National University: the world/);
   });
   test('the cards keep their labels and their data-fact attributes; the register is unchanged', () => {
     const labels = [...band().matchAll(/<p class="pe__label"[^>]*>([^<]*)<\/p>/g)].map((m) => m[1]);
-    expect(labels).toEqual(['Official Training Partner', 'National University', 'University Partners']);
-    for (const id of ['SC-04', 'SC-05', 'PA-05']) {
+    expect(labels).toEqual(['Official Training Partner', 'National University']); // WP136: the 'University Partners' card is gone
+    for (const id of ['SC-04', 'SC-05']) {
       expect(item(id), id).toContain(`data-fact="${id}"`);
       expect(item(id), id).toMatch(new RegExp(`<span data-fact="${id}" class="fact"`));
     }

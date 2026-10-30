@@ -163,6 +163,6 @@ test.describe('audience pages', () => {
     expect(ids.indexOf('offer-evidence')).toBeLessThan(ids.indexOf('problem'));
     // WP38 (cycle-15 review): the heading names the partnership; the sentence under it still says the figures are National University's, not learners trained by CodersTrust
     await expect(page.locator('#offer-evidence h2')).toHaveText('The National University Partnership');
-    await expect(page.locator('#offer-evidence .sh__lead')).toContainText('The first two cards describe the learners being onboarded and National University’s size, not learners trained by CodersTrust.'); // WP132: the lead names the first two cards in their order (was "...; they are not learners trained by CodersTrust")
+    await expect(page.locator('#offer-evidence .sh__lead')).toContainText('These cards describe the learners being onboarded and National University’s size, not learners trained by CodersTrust.'); // WP136: the band has two cards now, so the lead says "These cards" (WP132 had "The first two cards") (was "...; they are not learners trained by CodersTrust")
   });
 });

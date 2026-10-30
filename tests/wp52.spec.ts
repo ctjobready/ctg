@@ -291,7 +291,7 @@ test.describe('Governments: the closing call to action does not repeat the procu
   });
 
   test('the shared variant (C14.variants.governments) still stands in YouthWIDE’s "What Happens Next"', async ({ page }) => {
-    expect(C14.variants.governments).toBe('In your inquiry, include two suitable times for a briefing; your agency’s procurement timeline sets the pace.'); // WP135 (was "Your agency’s procurement timeline sets the pace; we start with a briefing.")
+    expect(C14.variants.governments).toBe('Your agency’s procurement timeline sets the pace; we start with a briefing.'); // WP136 (owner answer 2026-10-31: the "two suitable times" request appears once per page; WP135 had "In your inquiry, include two suitable times for a briefing; your agency’s procurement timeline sets the pace.")
     await open(page, YOUTHWIDE);
     expect(await everything(page)).toContain(C14.variants.governments);
   });
@@ -487,10 +487,10 @@ test.describe('Home: "Progress You Can Check" promises reports (item 36) and the
   });
 });
 
-test.describe('Local Partners: the challenge lead begins "Pair your community reach" (item 18)', () => {
-  test('"Pair your community reach with CodersTrust’s curriculum, mentoring, placement support and reporting."', async ({ page }) => {
+test.describe('Local Partners: the challenge lead (item 18; WP136 replaced "Pair your community reach ..." with the reader’s obstacle)', () => {
+  test('"Your organization reaches young people, but a curriculum, certification and links to paid work are hard to build alone."', async ({ page }) => {
     await open(page, LOCAL);
-    expect(compact(await page.locator('#problem .sh__lead').textContent())).toBe('Pair your community reach with CodersTrust’s curriculum, mentoring, placement support and reporting.');
+    expect(compact(await page.locator('#problem .sh__lead').textContent())).toBe('Your organization reaches young people, but a curriculum, certification and links to paid work are hard to build alone.'); // WP136 (Opus High run 11, Minor): the lead states the reader's obstacle (WP52 had "Pair your community reach with ...")
     await expect(page.locator('#problem h2')).toHaveText('Connect Your Community to Paid Digital Work');
   });
 });

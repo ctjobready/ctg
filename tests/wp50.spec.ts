@@ -250,7 +250,7 @@ test.describe('Local Partners, YouthWIDE and Development Partners: the lines the
   test('Local Partners: the problem lead is the offer, under the unchanged heading', async ({ page }) => {
     await open(page, LOCAL);
     await expect(page.locator('#problem h2')).toHaveText('Connect Your Community to Paid Digital Work');
-    expect(compact(await page.locator('#problem .sh__lead').textContent())).toBe('Pair your community reach with CodersTrust’s curriculum, mentoring, placement support and reporting.');
+    expect(compact(await page.locator('#problem .sh__lead').textContent())).toBe('Your organization reaches young people, but a curriculum, certification and links to paid work are hard to build alone.'); // WP136 (Opus High run 11, Minor): the lead states the reader's obstacle, not the offer (WP50 had made it the offer)
     expect(await everything(page)).not.toContain('Local organizations often lack');
   });
 

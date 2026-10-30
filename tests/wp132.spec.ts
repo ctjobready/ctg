@@ -43,7 +43,7 @@ test('Polish 3: TalentLEAP says today’s 100-hour tracks (plural)', () => {
 
 test('Polish 4: Universities NU band lead', () => {
   const text = main('partner-with-us/universities/index.html');
-  expect(text).toContain('The first two cards describe the learners being onboarded and National University’s size, not learners trained by CodersTrust.');
+  expect(text).toContain('These cards describe the learners being onboarded and National University’s size, not learners trained by CodersTrust.');
   expect(text).not.toContain('; they are not learners trained by CodersTrust');
 });
 

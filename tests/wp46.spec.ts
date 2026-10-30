@@ -495,7 +495,7 @@ test.describe('OC-05: the six months are counted from the end of the course (ite
     expect(compact(await page.locator('#glance a[data-fact~="OC-05"]').textContent())).toContain(define(GLANCE));
     await open(page, 'impact/outcomes-2026/');
     expect(compact(await page.locator('#summary [data-fact="OC-05"]').textContent())).toContain(LABEL);
-    expect(compact(await page.locator('#speed p[data-fact="OC-05"]').textContent())).toContain(`${TEXT}.`);
+    expect(compact(await page.locator('#speed p[data-fact="OC-05"]').textContent())).toContain(`${TEXT.replace('surveyed completers who first earned during or after training', 'surveyed new earners')}.`); // WP136: the sentence uses the term the line above defines
     expect(compact(await page.locator('#speed .colc__note').textContent())).toBe('Months are counted from the end of the course; the shares are cumulative and include earnings during the course.');
     expect(await texts(page, '#speed .colc__label')).toEqual(['During the Course', 'By 3 Months', 'By 6 Months', 'By 12 Months', 'By 2 Years']);
     const csv = readFileSync('public/data/outcomes-2026-aggregates.csv', 'utf8');

@@ -120,7 +120,7 @@ test.describe('Home', () => {
 
   test('the comparison answers each row with its own cell: the self-paced Mentoring cell is not its Work Entry cell; WP31 dropped the freelance-marketplace column on Home', async ({ page }) => {
     await open(page, '');
-    expect((await page.locator('#compare thead th').allTextContents()).map(compact)).toEqual(['Approach', 'CodersTrust Supported Cohort', 'Self-Paced Course Platforms']);
+    expect((await page.locator('#compare thead th').allTextContents()).map(compact)).toEqual(['What It Includes', 'CodersTrust Supported Cohort', 'Self-Paced Course Platforms']); // WP136 (Opus High run 11, Polish): the criteria column's heading was 'Approach'
     const rows = await page.locator('#compare tbody tr').evaluateAll((trs) => trs.map((tr) => Array.from(tr.querySelectorAll('th, td')).map((c) => (c.textContent ?? '').replace(/\s+/g, ' ').trim())));
     const byLabel = new Map(rows.map((r) => [r[0], r]));
     const mentoring = byLabel.get('Mentoring')!;

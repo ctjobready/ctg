@@ -470,7 +470,7 @@ test.describe('Home: the low-risk band, the FAQ trial answer, the hero line, the
     await expect(page.locator('#risk')).toHaveCount(0);
     expect(await mainText(page)).not.toContain('Start with a Multi-Cohort Pilot, Then Decide on Evidence');
     const cta = page.locator('#cta');
-    expect(compact(await cta.locator('.cta-band__text').textContent())).toBe('Start with a multi-cohort pilot, agree the scorecard up front and decide on expansion from the evidence. In your inquiry, include two suitable times.'); // WP135
+    expect(compact(await cta.locator('.cta-band__text').textContent())).toBe('Start with a multi-cohort pilot, agree the scorecard up front and decide on expansion from the evidence.'); // WP136 (owner answer 2026-10-31: the "two suitable times" request appears once per page, in Home's "First Step" line; WP135 had added it here too)
     await expect(cta.locator('h2')).toHaveText('Let’s Design Your First Cohort');
     await expect(cta.locator('.btn--primary, .btn--inverse')).toHaveCount(1);
     expect(await texts(page, '#cta .cta-band__route')).toHaveLength(2);
@@ -600,7 +600,7 @@ test.describe('OC-05: "had started earning by six months after finishing" (item 
     expect(compact(await page.locator('#glance a[data-fact~="OC-05"]').textContent())).toContain(define(GLANCE));
     await open(page, 'impact/outcomes-2026/');
     expect(compact(await page.locator('#summary [data-fact="OC-05"]').textContent())).toContain(LABEL);
-    expect(compact(await page.locator('#speed p[data-fact="OC-05"]').textContent())).toContain(`${TEXT}.`);
+    expect(compact(await page.locator('#speed p[data-fact="OC-05"]').textContent())).toContain(`${TEXT.replace('surveyed completers who first earned during or after training', 'surveyed new earners')}.`); // WP136: the sentence uses the term the line above defines
     expect(compact(await page.locator('#speed .colc__note').textContent())).toBe(NOTE);
     const rows = readFileSync(resolve('public/data/outcomes-2026-aggregates.csv'), 'utf8').split('\n').filter((l) => l.startsWith('OC-05,'));
     expect(rows).toHaveLength(5);

@@ -116,7 +116,7 @@ test.describe('Governments, Universities and Local Partners: the wording the rev
     await expect(page.locator('#problem h2')).toHaveText('Connect Your Community to Paid Digital Work');
     expect('Connect Your Community to Paid Digital Work').toBe(titleCase('Connect Your Community to Paid Digital Work'));
     // WP50 (cycle-25 review): the problem band's lead is "Connect your community reach with CodersTrust’s curriculum, mentoring, placement support and reporting." (it was "Local organizations often lack ..."; tests/wp50.spec.ts)
-    expect(compact(await page.locator('#problem .sh__lead').textContent())).toBe('Pair your community reach with CodersTrust’s curriculum, mentoring, placement support and reporting.');
+    expect(compact(await page.locator('#problem .sh__lead').textContent())).toBe('Your organization reaches young people, but a curriculum, certification and links to paid work are hard to build alone.'); // WP136 (Opus High run 11, Minor): the lead states the reader's obstacle (it was WP52's "Pair your community reach with ...")
     // the track-record band opens with its method paragraph, which names the Bangladesh team; its empathy line is gone
     await expect(page.locator('#guide p.lead')).toHaveCount(0);
     expect(compact(await page.locator('#guide .guide__method').textContent())).toContain('CodersTrust Bangladesh, our country office in');
@@ -175,7 +175,7 @@ test.describe('YouthWIDE: the closing timing paragraph (item 7)', () => {
     expect(text).not.toContain('For grant-funded pilots: Discovery (Week 1)');
     expect(text).not.toContain('Discovery (Week 1)');
     // procurement timing is stated in the Governments entry card and in the timing answer
-    expect(compact(await page.locator('#cta-governments .entry__text').textContent())).toBe('Public procurement follows the agency’s own timeline, so we start with a briefing that fits it. In your inquiry, include two suitable times for it.'); // WP135
+    expect(compact(await page.locator('#cta-governments .entry__text').textContent())).toBe('Public procurement follows the agency’s own timeline, so we start with a briefing that fits it.'); // WP136 (owner answer 2026-10-31: the "two suitable times" request appears once per page; WP135 had added "In your inquiry, include two suitable times for it.")
     expect(await answerOf(page, 'How Fast Can We Start?')).toBe('Target timing for grant-funded pilots: training starts 6–8 weeks after signing. Public procurement follows the agency’s own timeline.');
     expect(await itemOf(page, 'How Fast Can We Start?').locator('.faq__a p').getAttribute('data-fact')).toBe('PD-04');
   });
@@ -520,7 +520,7 @@ test.describe('The OC-05 and RC-06a labels (items 24 and 26)', () => {
     const text = await mainText(page);
     expect(count(text, 'Surveyed new earners are the completers who first earned during or after training.'), 'the definition, once').toBe(1);
     expect(compact(await page.locator('#speed p').first().textContent())).toBe('Surveyed new earners are the completers who first earned during or after training.');
-    expect(compact(await page.locator('#speed p[data-fact="OC-05"]').textContent())).toContain(oc05.text);
+    expect(compact(await page.locator('#speed p[data-fact="OC-05"]').textContent())).toContain(oc05.text.replace('surveyed completers who first earned during or after training', 'surveyed new earners')); // WP136: the sentence uses the term the line above defines
     expect(compact(await page.locator('#summary [data-fact="OC-05"]').textContent())).toContain('surveyed new earners');
     await open(page, 'impact/');
     expect(compact(await page.locator('#glance a[data-fact~="OC-05"]').textContent())).toContain('surveyed new earners');

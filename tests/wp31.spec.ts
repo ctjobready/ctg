@@ -374,7 +374,7 @@ test.describe('smaller wording fixes', () => {
   test('Home: the evidence band is gone; the comparison drops the freelance-marketplace column', async ({ page }) => {
     await open(page, '');
     await expect(page.locator('#proof-band')).toHaveCount(0);
-    expect(await texts(page, '#compare thead th')).toEqual(['Approach', 'CodersTrust Supported Cohort', 'Self-Paced Course Platforms']);
+    expect(await texts(page, '#compare thead th')).toEqual(['What It Includes', 'CodersTrust Supported Cohort', 'Self-Paced Course Platforms']); // WP136 (Opus High run 11, Polish): the criteria column's heading was 'Approach'
   });
 
   test('Partner with Us hub: the hero asks for the choice of partnership (WP32) with one "See Partnership Routes" button and no email before the closing call to action (WP35), three evidence tiles (trial, survey, reach), the investor card says "we are building"', async ({ page }) => {
