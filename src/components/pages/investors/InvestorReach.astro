@@ -28,7 +28,8 @@ const stat = (sid: string) => {
   if (!s) throw new Error(`InvestorReach: ${sid} needs a stat`);
   return s;
 };
-const badges = ['PA-06', 'PA-08'];
+// WP130 (Opus High run 5, Minor): the AWS status (PA-06) is in the Scale and Partners paragraph just above, so this list keeps only the HolonIQ listing.
+const badges = ['PA-08'];
 // WP127 (Opus High run 2, kit 94, Polish): PA-08 is a sentence, so this list item reads like Home, About and Recognition write it ("Listed in the HolonIQ South Asia EdTech 100 in 2023 (STEAM category) and 2024."),
 // not the register's Title Case; PA-06 is a name and stays as the register has it.
 const pa08 = /^CodersTrust Was (Listed .+)$/.exec(fact('PA-08').text);

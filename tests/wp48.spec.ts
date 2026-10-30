@@ -134,7 +134,7 @@ test.describe('The "what happens after" sentence (item 2)', () => {
   test('no page says "so they can keep advancing" or "so completers can keep advancing", and TalentLEAP’s worked example is unchanged', async ({ page }) => {
     expect(builtPages().filter((p) => /so (?:they|completers) can keep advancing/.test(visible(p.html))).map((p) => p.route)).toEqual([]);
     await open(page, 'our-model/talentleap/');
-    expect(await mainText(page)).toContain('TalentLEAP organizes skills into career paths with progressive levels. In this example the levels are Competent, Proficient and Expert.');
+    expect(await mainText(page)).toContain('TalentLEAP organizes skills into career paths with progressive levels. In this example, Level 1 is Competent; Proficient and Expert are the planned next levels.');
   });
 });
 

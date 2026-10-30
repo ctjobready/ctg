@@ -1016,7 +1016,7 @@ function investorPartners(): CopyBlock {
     text: [
       'Government partners include Bangladesh’s ICT Division, the Department of ICT (DoICT) and the Bangladesh Hi-Tech Park Authority.',
       'Development partners include UNDP, the World Bank Group and the World Food Programme.',
-      'University partners include National University (official training partner) and The City College of New York, a memorandum of understanding (MOU) partner since 2024.',
+      'University partners include National University and The City College of New York, a memorandum of understanding (MOU) partner since 2024.',
       'Private-sector partners include Grameenphone Academy and Accenture, and CodersTrust is an AWS Authorized Training Partner.',
     ].join(' '),
     facts: ['PA-02', 'PA-01', 'PA-05', 'PA-03', 'PA-06'],

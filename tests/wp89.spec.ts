@@ -57,10 +57,10 @@ test.describe('Item 1: route emails ask for two suitable times', () => {
   ];
 
   for (const [route, subjectStart] of routeEmails) {
-    test(`${route} "${subjectStart}" prefilled body asks for two suitable times for a call`, () => {
+    test(`${route} "${subjectStart}" prefilled body asks for two suitable times (WP130: for a discovery session; Investors, for an introduction call)`, () => {
       const email = mailtos(htmlFor(route)).find((m) => m.subject.startsWith(subjectStart));
       expect(email, `${route}: mailto with subject starting "${subjectStart}"`).toBeDefined();
-      expect(email!.body).toContain('Two suitable times for a call: ');
+      expect(email!.body).toContain(route === '/partner-with-us/investors/' ? 'Two suitable times for an introduction call: ' : 'Two suitable times for a discovery session: ');
     });
   }
 

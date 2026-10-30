@@ -397,8 +397,8 @@ test.describe('WP127 items 3 to 7: copy polish', () => {
     expect(item).not.toBe('');
     expect(visible(item)).toBe('Listed in the HolonIQ South Asia EdTech 100 in 2023 (STEAM category) and 2024.');
     expect(visible(raw)).not.toContain('Was Listed in the HolonIQ');
-    // the other badge is a name and keeps the register’s words
-    expect(visible(/<li data-fact="PA-06"[^>]*>(?:(?!<\/li>)[\s\S])*<\/li>/.exec(raw)?.[0] ?? '')).toBe('AWS Authorized Training Partner');
+    // WP130 (Opus High run 5): the AWS badge is gone; the Scale and Partners paragraph states the AWS status once
+    expect(raw).not.toMatch(/<li data-fact="PA-06"/);
     // the register itself is unchanged: Home’s sentence is derived from it
     expect(fact('PA-08').text).toBe('CodersTrust Was Listed in the HolonIQ South Asia EdTech 100 in 2023 (STEAM Category) and 2024');
   });
