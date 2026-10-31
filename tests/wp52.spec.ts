@@ -286,7 +286,7 @@ test.describe('Governments: the closing call to action does not repeat the procu
     expect(text).toContain('Public procurement follows the agency’s own timeline, so the first step is a briefing for your ministry.');
     const steps = compact(await page.locator('#next-steps').textContent());
     expect(steps).toContain('A briefing for your ministry or agency, shaped to its procurement timeline.');
-    expect(steps).toContain('Scope and schedule follow the agency’s own procurement timeline.');
+    expect(steps).toContain('Scope, schedule and the pilot scorecard are agreed on the agency’s own procurement timeline.'); // WP138 (was "Scope and schedule follow the agency’s own procurement timeline.")
     expect(count(text, 'procurement')).toBe(3);
   });
 

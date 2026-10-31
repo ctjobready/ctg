@@ -181,7 +181,7 @@ test.describe('About, Governance, Recognition, Careers and Contact', () => {
     await open(page, 'about/');
     await expect(page.locator('main .hero .btn--primary')).toHaveCount(0);
     await expect(page.getByRole('link', { name: 'See Our Impact' }).first()).toBeVisible();
-    await expect(page.locator('#how-we-work')).toContainText('As agreed in the program scope');
+    await expect(page.locator('#how-we-work')).toContainText('as agreed in the program scope'); // WP138: "Partners agree the scorecard with us before the first cohort and, as agreed in the program scope, receive monthly reports."
     await expect(page.locator('#how-we-work')).not.toContainText('see progress in reports every month');
     // WP50 (cycle-25 review, item 21) gave the tile "Including 111,268 direct enrollments and 40,043 through courseware."; WP65 (cycle-37 review) took the line off About (tests/wp65.spec.ts)
     await expect(page.locator('#glance')).not.toContainText('Including 111,268 direct enrollments');

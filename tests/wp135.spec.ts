@@ -156,7 +156,7 @@ test('Minor 1: In the Field and News Photographs close "Seen a program like the 
 });
 
 test('Minor 1: the Case Studies index and the JobReady Platform closing lines ask; Local Partners asks once, in its last line (WP136)', () => {
-  expect(main('impact/case-studies/index.html')).toContain(`A discovery session sets the scorecard for your own program. ${ASK}`);
+  expect(main('impact/case-studies/index.html')).toContain(`In a discovery session, we start planning the scorecard for your own program. ${ASK}`);
   const platform = main('our-model/jobready-platform/index.html');
   expect(platform).toContain(`A discovery session covers how JobReady fits your program, and a platform grant helps CodersTrust roll out the remaining modules. ${ASK}`);
   expect(platform).not.toContain('details are shared in the discovery session');

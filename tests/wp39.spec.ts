@@ -102,7 +102,7 @@ const PAGES: PageSpec[] = [
   },
   {
     route: 'partner-with-us/universities/',
-    h2: 'What Your Students Get',
+    h2: 'What Your Students and Your Institution Get',
     cards: [
       { title: 'Certification Exam Preparation and Mentoring', text: CERT_AND_MENTORING, facts: ['PD-02', 'PD-01'] },
       { title: 'Skills Employers Ask For', text: EMPLOYER_SKILLS, facts: ['PD-10', 'PD-02'] },

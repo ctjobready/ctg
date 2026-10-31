@@ -805,7 +805,7 @@ export const SAFEGUARDING: CopyBlock = {
 };
 
 export const SCORECARD: CopyBlock = {
-  text: 'A pilot scorecard is agreed in co-design: completion, certification, first paid work, sustained work (for example, earnings in at least three of six months above an agreed minimum), and cost per completer and per verified outcome. Missed thresholds trigger a corrective plan, expansion is the funder’s decision, and independent evaluation is welcome.',
+  text: 'A pilot scorecard is agreed before the first cohort: completion, certification, first paid work, sustained work (for example, earnings in at least three of six months above an agreed minimum), and cost per completer and per verified outcome. Missed thresholds trigger a corrective plan, expansion is the funder’s decision, and independent evaluation is welcome.',
   facts: ['PD-11'],
 };
 /**
@@ -830,7 +830,7 @@ export const PROGRAM_OPTIONS_FACTS = ['PD-05'];
  * WP54 (cycle-28 review, Claude S25): the work-entry plan is "agreed before enrollment", as every other page says it (Employers, the FAQ answer on AI); it said "approved", which left open who approves.
  */
 export const STEPS = [
-  { title: 'Discover and Co-Design', text: 'A discovery session sets priority groups, tracks, the indicative budget and the pilot scorecard; each track’s demand and work-entry plan is agreed before enrollment.' },
+  { title: 'Discover and Co-Design', text: 'In a discovery session, we start planning priority groups, tracks, the indicative budget and the pilot scorecard; each track’s demand and work-entry plan is agreed before enrollment.' },
   { title: 'Train and Mentor', text: '100 training hours per certification, then three months of milestone-based one-to-one mentoring, with placement support alongside. Mentoring works toward each track’s agreed work-entry goal (for freelance tracks: profile live, first bids, first client).' },
   { title: 'Place and Report', text: 'Placement support, monthly reports and follow-up surveys at 3, 6 and 12 months.' },
 ] as const;

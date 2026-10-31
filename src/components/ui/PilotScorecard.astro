@@ -3,9 +3,9 @@ import Icon from '../system/Icon.astro';
 import { SCORECARD_LABELS } from '../../data/copy';
 
 /**
- * Pilot Scorecard (WP22, review cycle 4): the five measures of the pilot scorecard agreed in co-design, as one visual.
+ * Pilot Scorecard (WP22, review cycle 4): the five measures of the pilot scorecard (shaped in co-design, agreed before the first cohort), as one visual.
  * Source: PD-11 only. These are measures, not prices, and no figure or target is shown: the sustained-work example
- * ("earnings in at least three of six months above an agreed minimum") is PD-11's own wording; thresholds are set in co-design.
+ * ("earnings in at least three of six months above an agreed minimum") is PD-11's own wording; the scorecard is shaped in co-design and agreed before the first cohort (WP138).
  */
 interface Props {
   /** Optional lead line under the caption (plain sentence). */
@@ -27,7 +27,7 @@ const measures = [
 <figure class:list={['psc', className]} data-fact="PD-11" data-reveal>
   <figcaption class="psc__cap">
     <span class="psc__tag">Pilot Scorecard</span>
-    <span class="psc__sub">Five measures, agreed in co-design</span>
+    <span class="psc__sub">Five measures, agreed before the first cohort</span>
   </figcaption>
   {lead && <p class="psc__lead">{lead}</p>}
   <ol class="psc__list" role="list">
