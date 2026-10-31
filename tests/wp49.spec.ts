@@ -122,7 +122,7 @@ test.describe('Governments, Universities and Local Partners: the wording the rev
     expect(compact(await page.locator('#guide .guide__method').textContent())).toContain('CodersTrust Bangladesh, our country office in');
     const offer = compact(await page.locator('#offer').textContent());
     expect(offer).toContain('Mobilize Priority Groups');
-    expect(offer).toContain('Mobilize priority groups in your community, with women a priority in every group.');
+    expect(offer).toContain('Mobilize priority groups in your community, with women a priority in every program.');
     expect(offer).toContain('Open your labs or classrooms for blended training, so cohorts meet where young people already are.');
     expect(sitePages().filter((p) => /national programs miss/i.test(visible(p.html))).map((p) => p.route)).toEqual([]);
     expect(Object.keys(EMPATHY)).not.toContain('localPartners');

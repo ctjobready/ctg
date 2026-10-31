@@ -553,7 +553,7 @@ export const POSITIONING: Record<PositioningKey, CopyBlock> = {
   // supports a comparison with other approaches, so the statement stops at what GV-08 and the page definition already say.
   // WP42 (cycle-19 review): two plain sentences in place of one long qualified one: what the program offers, and that the two agreements set targets (GV-08: "target reach 20M+ students"), not delivered reach.
   superkids: {
-    text: 'SuperKids offers block coding, robotics and digital art through schools and education partners. DoICT and NCTB agreements set targets, not delivered reach.',
+    text: 'SuperKids offers block coding, robotics and digital art through schools and education partners.',
     facts: ['GV-08'],
   },
 };

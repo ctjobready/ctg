@@ -218,7 +218,7 @@ test.describe('About', () => {
     await open(page, 'about/');
     const text = compact(await page.locator('#how-we-work').innerText());
     // WP46 (cycle-22 review): scoped to the supported youth cohorts ("Programs" also covered the corporate, school and diploma programs)
-    expect(text).toContain('Supported youth cohorts are built so that people with fewer computer or English skills can still join, with women a priority in every group.');
+    expect(text).toContain('Supported youth cohorts are built so that people with fewer computer or English skills can still join, with women a priority in every program.');
     expect(text).not.toContain('interview guide selection and placement');
   });
 });

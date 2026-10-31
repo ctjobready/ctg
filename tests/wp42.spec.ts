@@ -194,7 +194,7 @@ test.describe('Development Partners, Governments and SuperKids: the approach in 
   const STATEMENTS: [string, string, string[]][] = [
     ['partner-with-us/development-partners/', 'We combine training, mentoring and placement support in existing labs and colleges. Partners receive monthly reports and outcome tracking after each course, as agreed in the program scope.', ['PD-01', 'PD-08', 'PD-09']],
     ['partner-with-us/governments/', 'We combine training, mentoring and placement support in existing labs and colleges. Your agency receives monthly reports on progress toward paid work, as agreed in the program scope.', ['PD-01', 'PD-08']],
-    ['programs/superkids/', 'SuperKids offers block coding, robotics and digital art through schools and education partners. DoICT and NCTB agreements set targets, not delivered reach.', ['GV-08']],
+    ['programs/superkids/', 'SuperKids offers block coding, robotics and digital art through schools and education partners.' /* WP137: the qualifier is said in its own band */, ['GV-08']],
   ];
   for (const [route, statement, facts] of STATEMENTS) {
     test(`${route}: "Our Approach" is exactly the two sentences, rests on ${facts.join(', ')}, and opens the band`, async ({ page }) => {
@@ -227,7 +227,7 @@ test.describe('Development Partners, Governments and SuperKids: the approach in 
   test('SuperKids still says the agreements are targets, not delivered reach, in its own block (the statement and that block are the page’s two mentions)', async ({ page }) => {
     await open(page, 'programs/superkids/');
     expect(await texts(page, '.agree__fact p')).toContain('These are agreement targets, not delivered reach.');
-    expect(count(await mainText(page), 'not delivered reach')).toBe(2);
+    expect(count(await mainText(page), 'not delivered reach')).toBe(1); // WP137: once, in its own band
   });
 
   // WP44 (cycle-21 review): Foundations and Universities are declared whole now (tests/wp44.spec.ts); the audience sentence is no longer on either page

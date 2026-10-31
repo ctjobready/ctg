@@ -289,10 +289,10 @@ test.describe('smaller wording fixes', () => {
     expect(await mainText(page)).not.toContain('tracking to month 23');
   });
 
-  test('Development Partners: priority groups are agreed in co-design, with women a priority in every group', async ({ page }) => {
+  test('Development Partners: priority groups are agreed in co-design, with women a priority in every program', async ({ page }) => {
     await open(page, 'partner-with-us/development-partners/');
     const block = page.locator('#mechanism .model__block', { hasText: 'Priority Groups' });
-    expect(compact(await block.textContent())).toContain('Priority groups are agreed with you in co-design; women are a priority in every group.');
+    expect(compact(await block.textContent())).toContain('Priority groups are agreed with you in co-design; women are a priority in every program.');
     expect(await mainText(page)).not.toMatch(/madrasah youth and third-gender people/);
   });
 

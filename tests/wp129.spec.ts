@@ -279,7 +279,6 @@ test.describe('WP129 item 6: every dated page whose visible text changed carries
   const KEEP: [string, string][] = [
     ['about/team/abdul-karim/index.html', '2026-10-29'],
     ['about/team/faruque-hossain/index.html', '2026-10-29'],
-    ['impact/case-studies/her-power/index.html', '2026-10-10'],
     ['impact/case-studies/wsdfm-women-freelancers/index.html', '2026-10-10'],
     ['impact/case-studies/digital-jobs-albania/index.html', '2026-10-10'],
   ];

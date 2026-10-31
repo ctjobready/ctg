@@ -100,6 +100,7 @@ export const CASE_STUDIES: CaseStudy[] = [
   },
   {
     slug: 'her-power',
+    dateModified: '2026-10-31', // WP137: "It aimed" (owner rule 2026-10-31: any visible text change moves the date)
     path: `${base}her-power/`,
     name: 'Her Power',
     heading: 'Her Power: Women’s Digital Skills with the Department of ICT (DoICT)',

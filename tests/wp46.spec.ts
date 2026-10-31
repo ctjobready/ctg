@@ -61,7 +61,7 @@ test.describe('About: "Inclusion by Design" is scoped to the supported youth coh
     await open(page, 'about/');
     const card = page.locator('#how-we-work article', { has: page.locator('h3', { hasText: 'Inclusion by Design' }) });
     await expect(card).toHaveCount(1);
-    expect(compact(await card.locator('.card__text').textContent())).toBe('Supported youth cohorts are built so that people with fewer computer or English skills can still join, with women a priority in every group.');
+    expect(compact(await card.locator('.card__text').textContent())).toBe('Supported youth cohorts are built so that people with fewer computer or English skills can still join, with women a priority in every program.');
     expect(compact(await card.locator('a').textContent())).toBe('How Our Model Works');
     expect(await mainText(page)).not.toContain('Programs are built so that');
     expect(await texts(page, '#how-we-work .principle h3')).toEqual(['Outcomes over Outputs', 'Inclusion by Design', 'Evidence Before Claims', 'Partnership and Accountability']);
