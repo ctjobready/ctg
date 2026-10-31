@@ -810,7 +810,7 @@ test.describe('WP76 item 3: the Kosovo program is described as the World Bank br
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 test.describe('WP76 item 4: the Governments "Who We Reach" card uses the settled target-group wording', () => {
   const HEADING = 'Educated, Unemployed and Underemployed Youth';
-  const BODY = 'Unemployed graduates and other priority groups, with women a priority in every program.';
+  const BODY = 'Unemployed and underemployed graduates and other priority groups, with women a priority in every program.';
 
   test('the card’s heading is "Educated, Unemployed and Underemployed Youth" (Title Case), its label and body unchanged, and no built page still says "Vulnerable and Unemployed Youth"', async ({ page }) => {
     expect(HEADING).toBe(titleCase(HEADING));

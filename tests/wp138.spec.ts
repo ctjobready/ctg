@@ -9,7 +9,7 @@ import { listPages } from './support/pages';
  * `PORT=<port> npx playwright test tests/wp138.spec.ts --project=chromium`.
  * One scorecard model site-wide: the pilot scorecard is SHAPED in co-design (Step 2) and AGREED in the agreement (Step 3), before the
  * first cohort. A discovery session never "sets" it, partners never "set" it alone, and it is never "agreed in co-design".
- *   - Minor 1: Case Studies closing: "In a discovery session, we start planning the scorecard for your own program."
+ *   - Minor 1: Case Studies closing: "In a discovery session, we start planning a first cohort for your own program."
  *   - Polish 2: the model everywhere (Home label, YouthWIDE lead and Step 3, Trial, Governments Steps 2-3) plus a site-wide sweep.
  *   - Polish 3: About "Partnership and Accountability": "Partners agree the scorecard with us ...".
  *   - Polish 4: Local Partners third card body.
@@ -62,9 +62,9 @@ function offenders(texts: string[]): string[] {
   return [...found];
 }
 
-test('Minor 1: Case Studies closing says a discovery session starts planning the scorecard, with the one times sentence', () => {
+test('Minor 1: Case Studies closing says a discovery session starts planning a first cohort (WP140), with the one times sentence', () => {
   const text = main('impact/case-studies/index.html');
-  expect(text).toContain('In a discovery session, we start planning the scorecard for your own program. In your inquiry, include two suitable times.');
+  expect(text).toContain('In a discovery session, we start planning a first cohort for your own program. In your inquiry, include two suitable times.');
   expect(text).not.toContain('A discovery session sets the scorecard for your own program.');
   expect(text.match(/two suitable times/g) ?? []).toHaveLength(1);
 });
