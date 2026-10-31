@@ -69,7 +69,7 @@ export function grantStartSteps(): { title: string; text: string }[] {
   const [discovery, codesign, agreement, training] = grantStartTitles();
   return [
     { title: discovery, text: 'A conversation about your goals, priority groups and timeline.' },
-    { title: codesign, text: 'We shape tracks, cohorts, safeguarding and reporting with you.' },
+    { title: codesign, text: 'We shape tracks, cohorts, safeguarding, reporting and the pilot scorecard with you.' },
     { title: agreement, text: 'Scope, schedule and the pilot scorecard are agreed.' },
     { title: training, text: 'The first cohort begins training; monthly reports follow.' },
   ];

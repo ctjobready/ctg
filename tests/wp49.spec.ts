@@ -364,7 +364,7 @@ test.describe('Impact evidence ladder: the first rung (item 14)', () => {
 test.describe('Home: the router card, the closing steps and the first-step line (items 15, 31 and 32)', () => {
   const DESCRIPTIONS = [
     'A conversation about your goals, priority groups and timeline.',
-    'We shape tracks, cohorts, safeguarding and reporting with you.',
+    'We shape tracks, cohorts, safeguarding, reporting and the pilot scorecard with you.', // WP139
     'Scope, schedule and the pilot scorecard are agreed.',
     'The first cohort begins training; monthly reports follow.',
   ];

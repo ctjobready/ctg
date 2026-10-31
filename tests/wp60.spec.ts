@@ -450,7 +450,7 @@ test.describe('K3 (Kimi; owner answer 2026-10-20: "Of the same 800 tracked"): He
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 test.describe('L4 (GLM): Home’s "How Do You Prove Outcomes?" says a scorecard is agreed for every cohort', () => {
-  const OPENING = 'A scorecard is agreed for every cohort before delivery.';
+  const OPENING = 'A pilot scorecard is agreed before the first cohort.'; // WP139: one pilot scorecard (PD-11)
 
   test('the answer opens with the sentence, in the page and in its FAQ structured data; "Every cohort agrees a scorecard" is on no built page', async ({ page }) => {
     await open(page, HOME);

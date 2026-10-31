@@ -1047,6 +1047,6 @@ export const LOCAL_PARTNER_EVIDENCE: CopyBlock[] = localPartnerEvidence();
 
 /** C11 on funder-facing pages (Home, development partners, foundations, YouthWIDE), after the program options. */
 export const ACCOUNTABILITY: CopyBlock = {
-  text: 'Every pilot is judged on cost per completer and per verified outcome, with thresholds agreed with you before the first cohort starts.',
+  text: 'Every pilot is judged against its scorecard, including cost per completer and per verified outcome, with thresholds agreed with you before the first cohort starts.',
   facts: ['PD-11'],
 };
