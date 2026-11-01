@@ -499,11 +499,16 @@ test.describe('GM1 (Gemini): the Programs hub’s evidence band is scoped to you
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 test.describe('GM4 (Gemini): Foundations’ "What Happens Next" says what the first conversation covers for a platform grant', () => {
-  test('the lead names the platform grant before the cohort sequence, and the four cohort steps stay', async ({ page }) => {
+  // WP144: the platform-grant first conversation is said in the funding-route table cell and the closing agenda, once each; the lead no longer repeats it
+  test('the lead names only the cohort sequence (the platform-grant first conversation is in the table cell and the closing agenda, once each), and the four cohort steps stay', async ({ page }) => {
     await open(page, 'partner-with-us/foundations/');
     const band = page.locator('#next-steps');
     await expect(band.locator('h2')).toHaveText('What Happens Next');
-    expect(compact(await band.locator('.lead').textContent())).toBe('For platform grants, the first conversation covers JobReady’s infrastructure and staged rollout. For cohort grants, the steps below show target timing for grant-funded pilots.');
+    expect(compact(await band.locator('.lead').textContent())).toBe('For cohort grants, the steps below show target timing for grant-funded pilots.');
+    expect(compact(await band.locator('.lead').textContent())).not.toMatch(/platform grant|infrastructure|staged rollout/);
+    const mainTxt = compact(await page.locator('main').textContent());
+    expect(mainTxt.split('A platform grant supports JobReady’s infrastructure and staged rollout, not cohorts.').length - 1, 'the table cell, once').toBe(1);
+    expect(compact(await page.locator('#cta [data-session-agenda]').textContent()).split('For a platform grant, we discuss JobReady’s staged rollout.').length - 1, 'the closing agenda, once').toBe(1);
     expect(await band.locator('[data-fact="PD-04"]').count()).toBe(1);
     expect(compact(await band.locator('[data-fact="PD-04"]').textContent())).toMatch(/Discovery.*Co-Design.*Agreement/);
   });

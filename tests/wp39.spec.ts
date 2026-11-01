@@ -337,7 +337,7 @@ test.describe('Investors: the platform-status question points to "What JobReady 
     expect(text).not.toContain('Live today: partner portals');
     expect(text).not.toContain('Partly — modules');
     // the status itself is still on the page, in "What JobReady Does" (the cards that the answer links; WP40: three short cards in place of the table)
-    expect(compact(await page.locator('#features').textContent())).toContain('Partner portals and AI chat are live.');
+    expect(compact(await page.locator('#features').textContent())).toContain('Partner portals are live, and AI chat is live across the platform.'); // WP144: Investors names AI chat as platform-wide
   });
 
   // WP43 (cycle-20 review): the mechanism band is headed "How JobReady Connects Learning to Work" (it was "A Multi-Sided Model: Learn, Earn, Prosper"), and the "How JobReady Builds on Delivery" band WP39 kept is gone (tests/wp43.spec.ts)

@@ -256,6 +256,7 @@ test.describe('WP129 item 6: every dated page whose visible text changed carries
     'partner-with-us/governments/index.html',
     'partner-with-us/investors/index.html',
     'programs/index.html',
+    'impact/case-studies/undp-yes-korail/index.html', // WP144: the learner band heading changed ("Two Learners in Their Own Words")
   ]);
   for (const [route, cls] of STAMPED) {
     const [day, long] = MOVED_1101.has(route) ? ['2026-11-01', 'November 1, 2026'] : ['2026-10-31', 'October 31, 2026'];

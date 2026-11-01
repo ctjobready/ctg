@@ -52,11 +52,11 @@ test.describe('WP122, Discovery Education post: every person is "Name, Title"', 
 });
 
 test.describe('WP122, TalentLEAP: the caveat once, and no "planned" levels inside the Level 1 example', () => {
-  test('the program caveat appears once (in At a Glance), and Results from CodersTrust Programs opens with the evaluation sentence', () => {
+  test('the program caveat appears once (in At a Glance), and Evidence for Today’s Tracks opens with the evaluation sentence', () => {
     const t = text(TL);
     expect(count(t, 'not TalentLEAP’s features on their own')).toBe(1);
     expect(count(t, 'not individual TalentLEAP features')).toBe(0);
-    expect(t).toContain('Results from CodersTrust Programs Today’s 100-hour tracks have not yet been independently evaluated.'); // WP132: "Today’s 100-hour tracks" (was "The current 100-hour track")
+    expect(t).toContain('Evidence for Today’s Tracks Today’s 100-hour tracks have not yet been independently evaluated.'); // WP144: the band is "Evidence for Today’s Tracks" (was "Results from CodersTrust Programs") // WP132: "Today’s 100-hour tracks" (was "The current 100-hour track")
   });
   test('the Example band lists no "Proficient and Expert levels are planned." card, and its footnote is "Example only: the Digital Marketing career path."', () => {
     const h = html(TL);

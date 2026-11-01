@@ -90,7 +90,7 @@ test.describe('WP142 items 1 and 2: the scope sentence names only what the page 
     expect(text).not.toContain('Personalized and adaptive learning is on the roadmap. Cohort inclusions');
     expect(text).not.toMatch(/\b(?:Inclusions and reporting|exam terms)\b/);
     // the platform status cards read as they did, with no qualifier between them
-    expect(text).toContain('Partner portals and AI chat are live. Personalized and adaptive learning is on the roadmap.');
+    expect(text).toContain('Partner portals are live, and AI chat is live across the platform. Personalized and adaptive learning is on the roadmap.'); // WP144: AI chat is named as platform-wide
   });
 
   test('Programs: the sentence follows the routing line ("Deciding as an institution? Start with Partner with Us."), not the SuperKids card', () => {

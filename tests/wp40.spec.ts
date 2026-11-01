@@ -54,7 +54,7 @@ test.describe('Investors: "What JobReady Does" is three short cards and one link
     },
     {
       title: 'Equip Partner Institutions',
-      text: 'Partner portals and AI chat are live. Personalized and adaptive learning is on the roadmap.',
+      text: 'Partner portals are live, and AI chat is live across the platform. Personalized and adaptive learning is on the roadmap.', // WP144: AI chat is named as platform-wide
       facts: ['IN-04', 'IN-06'],
     },
   ];
@@ -84,7 +84,7 @@ test.describe('Investors: "What JobReady Does" is three short cards and one link
     const band = compact(await page.locator('#features').textContent());
     expect(band).toContain('The employer marketplace and the gig-work marketplace are in pre-launch.');
     expect(band, 'the two marketplaces are named as two (tests/wp25s.spec.ts)').not.toMatch(/employer and gig-work/i);
-    expect(band).toContain('Partner portals and AI chat are live.');
+    expect(band).toContain('Partner portals are live, and AI chat is live across the platform.'); // WP144: AI chat is live across the platform (IN-04: live today)
     expect(band).toContain('marketplaces such as Upwork and Fiverr');
     expect(band, 'nothing is called live that IN-04 does not call live').not.toMatch(/marketplaces? (is|are) live/i);
   });

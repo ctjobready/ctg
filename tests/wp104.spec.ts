@@ -334,9 +334,10 @@ test.describe('WP104 item 10: "Last updated" stamps match each page’s latest c
     });
   }
 
-  test('the UNDP YES case study’s JSON-LD dateModified is 2026-10-31 (its heading changed that day); the other case studies keep theirs', async ({ page }) => {
+  // WP144: the Korail learner band heading changed again on 2026-11-01, so its JSON-LD dateModified is 2026-11-01 (it was 2026-10-31)
+  test('the UNDP YES case study’s JSON-LD dateModified is 2026-11-01 (its learner band heading changed that day); the other case studies keep theirs', async ({ page }) => {
     await open(page, 'impact/case-studies/undp-yes-korail/');
-    expect(await ldJson(page)).toMatch(/"dateModified"\s*:\s*"2026-10-31"/);
+    expect(await ldJson(page)).toMatch(/"dateModified"\s*:\s*"2026-11-01"/);
     await open(page, 'impact/case-studies/wsdfm-women-freelancers/'); // WP137 re-dated Her Power (its text changed)
     expect(await ldJson(page)).toMatch(/"dateModified"\s*:\s*"2026-10-10"/);
   });

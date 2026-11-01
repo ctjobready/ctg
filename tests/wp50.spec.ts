@@ -543,7 +543,8 @@ test.describe('Learner stories: the evidence tag takes the kicker’s place (ite
       await expect(page.locator('main article.ls [data-evidence="Individual Story"]'), slug).toHaveCount(n);
       await expect(page.locator('main article.ls .eyebrow'), slug).toHaveCount(0);
       await expect(page.locator('main article.ls .ls__caveat'), slug).toHaveCount(n);
-      await expect(page.locator('main h2', { hasText: 'A Learner Story' }).or(page.locator('main h2', { hasText: 'Two Learner Journeys' })), slug).toHaveCount(1);
+      // WP144: the Korail learner band is "Two Learners in Their Own Words" (Success Stories keeps "Two Learner Journeys")
+      await expect(page.locator('main h2', { hasText: 'A Learner Story' }).or(page.locator('main h2', { hasText: 'Two Learner Journeys' })).or(page.locator('main h2', { hasText: 'Two Learners in Their Own Words' })), slug).toHaveCount(1);
     }
   });
 });

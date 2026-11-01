@@ -76,7 +76,7 @@ test.describe('Foundations', () => {
     await open(page, 'partner-with-us/foundations/');
     const band = page.locator('#next-steps');
     await expect(band.locator('h2')).toHaveText('What Happens Next');
-    expect(compact(await band.locator('.lead').textContent())).toBe('For platform grants, the first conversation covers JobReady’s infrastructure and staged rollout. For cohort grants, the steps below show target timing for grant-funded pilots.');
+    expect(compact(await band.locator('.lead').textContent())).toBe('For cohort grants, the steps below show target timing for grant-funded pilots.'); // WP144: the platform-grant first conversation is no longer repeated in the lead (the table cell and the closing agenda say it)
     expect((await texts(page, '#next-steps ol h3')).map((t) => t.replace(/^Step \d: /, ''))).toEqual(['Discovery Session', 'Co-Design', 'Agreement', 'Training Starts 6–8 Weeks After Signing']); // WP132: step 1 is "Discovery Session" (PD-04 keeps "Discovery")
     expect(await band.locator('[data-fact]').first().getAttribute('data-fact')).toBe('PD-04');
     await expect(band.locator('.next__fn')).toHaveCount(0);

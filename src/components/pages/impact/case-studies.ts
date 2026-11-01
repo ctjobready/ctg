@@ -88,7 +88,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     path: `${base}undp-yes-korail/`,
     name: 'UNDP YES, Korail',
     heading: 'UNDP YES: Korail Youth Finding First Jobs, 2017',
-    dateModified: '2026-10-31',
+    dateModified: '2026-11-01', // WP144: "Two Learners in Their Own Words"
     program: 'UNDP, Government of Bangladesh, Swanirvar Bangladesh',
     partner: '2017',
     factId: 'PR-03',

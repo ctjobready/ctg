@@ -144,7 +144,7 @@ test.describe('Local Partners: the definition block (item 3)', () => {
     const p = page.locator('#definition p[data-fact="PD-06 GV-09"]');
     await expect(p).toHaveCount(1);
     expect(compact(await p.textContent())).toBe(
-      'Larger programs are designed to run through certified local facilitators in existing labs and colleges, coordinated centrally. CodersTrust Bangladesh supports local partners with curriculum, certification, mentoring, reporting and safeguarding.',
+      'Larger programs are designed to run through certified local facilitators in existing labs and colleges, coordinated centrally. CodersTrust Bangladesh supports local partners with curriculum, certification exam preparation, mentoring, reporting and safeguarding.', // WP144: "certification exam preparation" (was "certification")
     );
     expect(await mainText(page)).not.toContain('Larger programs run through');
   });

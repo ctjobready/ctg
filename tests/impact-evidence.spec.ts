@@ -230,7 +230,7 @@ test.describe('case studies', () => {
     const text = await page.locator('main').innerText();
     expect(text).not.toContain('awareness of the opportunity grew');
     expect(text).toContain('about $32,000 over three years');
-    await expect(page.getByRole('heading', { level: 2, name: 'Two Learner Journeys' })).toBeVisible();
+    await expect(page.getByRole('heading', { level: 2, name: 'Two Learners in Their Own Words' })).toBeVisible(); // WP144: the Korail learner band is "Two Learners in Their Own Words" (Success Stories keeps "Two Learner Journeys")
   });
 });
 
