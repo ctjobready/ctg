@@ -111,7 +111,8 @@ test.describe('3 Repetition: said once', () => {
     expect(text).not.toContain('Our admissions team contacts you with the next steps.');
     // WP152: the lead is "Submit the application form." and the "Admissions Contacts You" step carries the admissions sentence.
     expect(count(text, /Our admissions team (?:will )?contacts? you/)).toBe(0);
-    expect(text).toContain('Ready to Apply? Submit the application form.');
+    expect(text).not.toContain('Ready to Apply? Submit the application form.'); // WP153: the band has no lead (step 1 is the instruction)
+    expect(text).toContain('Submit the Application Form. It takes you to the standalone application form.');
     expect(text).toContain('Admissions Contacts You. Our admissions team shares the next steps.');
     // The other two FAQ questions stay, and the FAQ structured data matches the visible questions.
     expect(text).toContain('Is the NU Post Graduate Diploma Right for Me?');

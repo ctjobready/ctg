@@ -48,6 +48,9 @@ const PRIVACY = 'privacy-policy/index.html';
 const ACCESSIBILITY = 'accessibility/index.html';
 
 const LONG = 'facilitators trained by CodersTrust (Training of Trainers)';
+// WP153 (principle challenge, accepted): Governments’ long form has no parenthetical, because the adjacent "Trainers and Curriculum" card names Training of Trainers (tests/wp153.spec.ts).
+const BARE = 'facilitators trained by CodersTrust';
+const longCount = (p: string, text: string) => (p === GOVERNMENTS ? (count(text, LONG) === 0 ? count(text, BARE) : -1) : count(text, LONG));
 const SHORT = 'CodersTrust-trained facilitators';
 
 test.describe('1 The long facilitator form sits in the sentence where the page explains who delivers the training', () => {
@@ -72,9 +75,9 @@ test.describe('1 The long facilitator form sits in the sentence where the page e
     const DELIVERY: [string, string][] = [
       [OUR_MODEL, `programs are designed to run up to 10 certification cohorts in parallel, using existing labs and ${LONG}.`],
       // WP152 (Opus XHigh run 6): Governments’ delivery sentence is the "Government Digital Labs" card (How We Reach Them); its "Capacity Designed to Stay in Your System" card says "CodersTrust-trained facilitators".
-      [GOVERNMENTS, `Blended learning in government labs you already run, led by ${LONG}; lab access and seats are confirmed per program.`],
+      [GOVERNMENTS, `Blended learning in government labs you already run, led by ${BARE}; lab access and seats are confirmed per program.`],
       // WP152: Development Partners’ delivery sentence is the "Existing Labs and Colleges" card; its funding-ends answer says "CodersTrust-trained facilitators".
-      [DEV, `then blended delivery in existing labs and colleges by ${LONG}.`],
+      [DEV, `then blended delivery by ${LONG}.`],
       [INVESTORS, `larger programs are designed to run up to 10 cohorts in parallel through ${LONG} in existing labs and colleges.`],
       [LOCAL, `Larger programs are designed to run through ${LONG} in existing labs and colleges, coordinated centrally.`],
       [UNIVERSITIES, `On-campus labs become blended-learning centers with ${LONG}; faculty members act as coordinators.`],
@@ -89,10 +92,10 @@ test.describe('1 The long facilitator form sits in the sentence where the page e
     for (const [p, sentence] of DELIVERY) {
       const text = main(p);
       expect(text, p).toContain(sentence);
-      expect(count(text, LONG), p).toBe(1);
+      expect(longCount(p, text), p).toBe(1);
       // The long form is never later than a bare "CodersTrust-trained facilitators" on the page. WP151: except JobReady@Campus, whose "Illustrative" band (a success picture, before How It Works) uses the short form.
       const short = text.indexOf(SHORT);
-      if (short >= 0 && p !== CAMPUS) expect(short, `${p}: "${SHORT}" comes before the delivery sentence`).toBeGreaterThan(text.indexOf(LONG));
+      if (short >= 0 && p !== CAMPUS) expect(short, `${p}: "${SHORT}" comes before the delivery sentence`).toBeGreaterThan(text.indexOf(BARE));
     }
   });
 
@@ -103,13 +106,13 @@ test.describe('1 The long facilitator form sits in the sentence where the page e
       [CAMPUS, `Where On-Campus Labs Labs serve as blended-learning centers, with ${LONG} and faculty members as coordinators.`],
       [UNIVERSITIES, `Set Up Campus Labs as Learning Centers On-campus labs become blended-learning centers with ${LONG}; faculty members act as coordinators.`],
       [YOUTHWIDE, `Delivery Blended training in existing labs and colleges, with ${LONG};`],
-      [GOVERNMENTS, `How We Reach Them Government Digital Labs Blended learning in government labs you already run, led by ${LONG};`], // WP152: it was the "Capacity Designed to Stay in Your System" card
-      [DEV, `How We Reach Them Existing Labs and Colleges Outreach and selection with local partners, then blended delivery in existing labs and colleges by ${LONG}.`], // WP152
+      [GOVERNMENTS, `How We Reach Them Government Digital Labs Blended learning in government labs you already run, led by ${BARE};`], // WP152: it was the "Capacity Designed to Stay in Your System" card. WP153: no parenthetical (the "Trainers and Curriculum" card beside it names Training of Trainers)
+      [DEV, `How We Reach Them Existing Labs and Colleges Outreach and selection with local partners, then blended delivery by ${LONG}.`], // WP152. WP153: the body no longer repeats "in existing labs and colleges"
       [OUR_MODEL, `Local Labs, Coordinated Delivery After about five months of delivery, programs are designed to run up to 10 certification cohorts in parallel, using existing labs and ${LONG}.`],
     ];
     for (const [p, card] of CARDS) {
       expect(main(p), p).toContain(card);
-      expect(count(main(p), LONG), p).toBe(1);
+      expect(longCount(p, main(p)), p).toBe(1);
     }
   });
 
@@ -125,7 +128,7 @@ test.describe('1 The long facilitator form sits in the sentence where the page e
   test('Governments: an earlier, generic mention says "trained facilitators" (not the long form); the long form is in the "Government Digital Labs" card and the "Capacity Designed to Stay in Your System" card says "CodersTrust-trained facilitators" (WP152)', () => {
     const text = main(GOVERNMENTS);
     expect(text).toContain('National delivery needs trained facilitators and localized curricula.');
-    expect(text.indexOf('National delivery needs trained facilitators')).toBeLessThan(text.indexOf(LONG));
+    expect(text.indexOf('National delivery needs trained facilitators')).toBeLessThan(text.indexOf(BARE));
     expect(text).toContain(`Capacity Designed to Stay in Your System Where included: curriculum and manuals; ${SHORT};`);
     expect(text.indexOf('Government Digital Labs')).toBeLessThan(text.indexOf('Capacity Designed to Stay in Your System')); // the delivery card comes first
   });

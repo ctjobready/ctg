@@ -39,6 +39,7 @@ function allPages(dir: string = DIST_DIR): string[] {
 /** Real pages only: the build writes noindex redirect stubs (meta refresh) for the old URLs. */
 const realPages = () => allPages().filter((p) => !/http-equiv="refresh"/.test(html(p)));
 
+const HOME = 'index.html';
 const OUR_MODEL = 'our-model/index.html';
 const ABOUT = 'about/index.html';
 const DEV = 'partner-with-us/development-partners/index.html';
@@ -53,6 +54,9 @@ const NU_COURSES = ['cyber-security', 'data-analytics', 'digital-marketing', 'ic
 const STYLEGUIDE = 'styleguide/index.html';
 
 const LONG = 'facilitators trained by CodersTrust (Training of Trainers)';
+// WP153 (principle challenge, accepted): the parenthetical may drop when the same or the adjacent card names Training of Trainers (Governments; tests/wp153.spec.ts holds that rule). WP153 also adds Home to the table.
+const BARE = 'facilitators trained by CodersTrust';
+const longCount = (text: string) => count(text, BARE);
 const SHORT = 'CodersTrust-trained facilitators';
 const TODAY = '2026-11-02';
 
@@ -61,10 +65,10 @@ const TODAY = '2026-11-02';
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 /** Wording that explains how or where training is delivered: blended delivery, or a named kind of lab. */
-const DELIVERY_EXPLAINER = /\bblended\b|\b(?:existing|government|campus|on-campus|local) labs?\b|\blabs? and colleges\b/i;
+const DELIVERY_EXPLAINER = /\bblended\b|\b(?:existing|government|campus|on-campus|local) labs?\b|\blabs?,? (?:and )?colleges\b/i; // WP153: also "Labs, colleges and delivery ..." (Home’s Blended Training card)
 
 /** Audience (Partner with Us), program and Our Model pages: the pages the rule covers. */
-const inScope = (p: string) => /^partner-with-us\/[^/]+\/index\.html$/.test(p) || /^programs\/[^/]+\/index\.html$/.test(p) || /^programs\/nu-postgraduate-diploma\/[^/]+\/index\.html$/.test(p) || p === OUR_MODEL;
+const inScope = (p: string) => p === HOME || /^partner-with-us\/[^/]+\/index\.html$/.test(p) || /^programs\/[^/]+\/index\.html$/.test(p) || /^programs\/nu-postgraduate-diploma\/[^/]+\/index\.html$/.test(p) || p === OUR_MODEL;
 
 /** Pages in scope whose delivery wording is a summary that points to the program pages (a hub), not an explanation. */
 const HUBS = ['partner-with-us/index.html', 'programs/index.html'];
@@ -72,8 +76,9 @@ const HUBS = ['partner-with-us/index.html', 'programs/index.html'];
 test.describe('1 Facilitators: each page that explains delivery names who teaches', () => {
   /** [page, the delivery card or sentence, in the page order the reader meets it]. The long form is once on the page. */
   const DELIVERY: [string, string][] = [
-    [DEV, `How We Reach Them Existing Labs and Colleges Outreach and selection with local partners, then blended delivery in existing labs and colleges by ${LONG}.`],
-    [GOVERNMENTS, `How We Reach Them Government Digital Labs Blended learning in government labs you already run, led by ${LONG}; lab access and seats are confirmed per program.`],
+    [HOME, `How We Reach Them Blended Training Labs, colleges and delivery that works where connectivity is limited, led by ${LONG}.`], // WP153: Home’s first delivery explanation names who teaches (it was the one exemption)
+    [DEV, `How We Reach Them Existing Labs and Colleges Outreach and selection with local partners, then blended delivery by ${LONG}.`], // WP153: the body no longer repeats "in existing labs and colleges"
+    [GOVERNMENTS, `How We Reach Them Government Digital Labs Blended learning in government labs you already run, led by ${BARE}; lab access and seats are confirmed per program.`],
     [UNIVERSITIES, `Set Up Campus Labs as Learning Centers On-campus labs become blended-learning centers with ${LONG}; faculty members act as coordinators.`],
     [YOUTHWIDE, `Delivery Blended training in existing labs and colleges, with ${LONG};`],
     [CAMPUS, `Where On-Campus Labs Labs serve as blended-learning centers, with ${LONG} and faculty members as coordinators.`],
@@ -86,10 +91,11 @@ test.describe('1 Facilitators: each page that explains delivery names who teache
     test(`${p.split('/').slice(0, -1).join('/')}: the delivery card names the facilitators, and the long form is on the page once`, () => {
       const text = main(p);
       expect(text).toContain(card);
-      expect(count(text, LONG)).toBe(1);
+      expect(longCount(text)).toBe(1);
+      expect(count(text, LONG)).toBe(p === GOVERNMENTS ? 0 : 1);
       // "CodersTrust-trained facilitators" comes later on the page (JobReady@Campus’ success picture is the one earlier use, pinned by wp149).
       const short = text.indexOf(SHORT);
-      if (short >= 0 && p !== CAMPUS) expect(short, `"${SHORT}" comes before the delivery card`).toBeGreaterThan(text.indexOf(LONG));
+      if (short >= 0 && p !== CAMPUS) expect(short, `"${SHORT}" comes before the delivery card`).toBeGreaterThan(text.indexOf(BARE));
     });
   }
 
@@ -114,15 +120,15 @@ test.describe('1 Facilitators: each page that explains delivery names who teache
       const text = main(p);
       if (!DELIVERY_EXPLAINER.test(text)) continue;
       swept.push(p);
-      if (count(text, LONG) !== 1) offenders.push(`${p}: the long form appears ${count(text, LONG)} times`);
+      if (longCount(text) !== 1) offenders.push(`${p}: the long form appears ${longCount(text)} times`);
       // The block that carries the long form is itself a delivery explanation (blended delivery or a named kind of lab), not only a funding-ends or "what stays" answer.
-      const carrier = blocks(p).find((b) => b.includes(LONG));
+      const carrier = blocks(p).find((b) => b.includes(BARE));
       if (!carrier || !DELIVERY_EXPLAINER.test(carrier)) offenders.push(`${p}: the block with the long form is not a delivery explanation: ${carrier?.slice(0, 120)}`);
       const short = text.indexOf(SHORT);
-      if (short >= 0 && p !== CAMPUS && short < text.indexOf(LONG)) offenders.push(`${p}: the short form comes before the long form`);
+      if (short >= 0 && p !== CAMPUS && short < text.indexOf(BARE)) offenders.push(`${p}: the short form comes before the long form`);
     }
     expect(offenders).toEqual([]);
-    // Not vacuous, and it finds the eight pages above.
+    // Not vacuous, and it finds the nine pages above (WP153: Home is the ninth).
     expect(swept.sort()).toEqual([...DELIVERY.map(([p]) => p)].sort());
   });
 
@@ -309,11 +315,12 @@ test('5 About timeline 2025–2026: a period, not a semicolon, before "CodersTru
   expect(text).toContain('YouthWIDE aims to train 1 million educated youth (Higher Secondary Certificate or above) for digital employment by 2030, in Bangladesh and similar countries in South Asia and the Middle East and North Africa, depending on government and donor commitments.');
 });
 
-test.describe('6 NU Post Graduate Diploma: the "Ready to Apply?" lead does not repeat the "Admissions Contacts You" step', () => {
+test.describe('6 NU Post Graduate Diploma: the "Ready to Apply?" band does not repeat the "Admissions Contacts You" step (WP153: it has no lead)', () => {
   for (const p of [NU, ...NU_COURSES]) {
     test(p.replace('/index.html', ''), () => {
       const text = main(p);
-      expect(text).toContain('Ready to Apply? Submit the application form.');
+      // WP153: the band has no lead (it said "Submit the application form.", which repeated step 1); tests/wp153.spec.ts holds the rest.
+      expect(text).not.toContain('Ready to Apply? Submit the application form.');
       expect(text).not.toContain('Submit the application form. Our admissions team will contact you with the next steps.');
       expect(text).toContain('Admissions Contacts You. Our admissions team shares the next steps.');
       expect(text).toContain('Submit the Application Form. It takes you to the standalone application form.');

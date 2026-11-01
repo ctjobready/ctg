@@ -169,7 +169,7 @@ test.describe('Governments speaks to any ministry', () => {
   test('the labs card speaks of existing labs and colleges, not 9,000+ labs in Bangladesh', async ({ page }) => {
     await open(page, 'partner-with-us/governments/');
     const card = page.locator('#mechanism .model__block', { hasText: 'Government Digital Labs' });
-    expect(compact(await card.textContent())).toContain('Blended learning in government labs you already run, led by facilitators trained by CodersTrust (Training of Trainers); lab access and seats are confirmed per program.'); // WP152: the card names who teaches
+    expect(compact(await card.textContent())).toContain('Blended learning in government labs you already run, led by facilitators trained by CodersTrust; lab access and seats are confirmed per program.'); // WP152: the card names who teaches. WP153: no parenthetical (the "Trainers and Curriculum" card beside it names Training of Trainers)
     expect(await mainText(page)).not.toContain('9,000+');
   });
 

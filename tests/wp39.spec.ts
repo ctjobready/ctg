@@ -271,7 +271,7 @@ test.describe('Universities: the Guide band does not repeat the National Univers
     expect(text).not.toContain('official training partner');
     expect(text).toContain('From a Copenhagen launch to work in 16 countries and territories.'); // WP64 rework RW2 (coordinator): the heading says "Since 2014", so the line does not
     // WP46 (cycle-22 review): "with progressive levels" is gone from the Track Record bands (only the first level is published)
-    expect(text).toContain('JobReady@Campus runs training in parallel with academic studies, and TalentLEAP organizes skills into career paths.');
+    expect(text).toContain('Our TalentLEAP method organizes skills into career paths.'); // WP153 (Opus XHigh run 7): the line no longer repeats "in parallel with academic studies"
     await expect(guide.getByRole('link', { name: 'How TalentLEAP Works' })).toHaveCount(1);
     await expect(guide.locator('.partners__row img'), 'the logo strip stays: National University, UPEACE and CCNY').toHaveCount(3);
     await expect(guide.locator('.pg__proof')).toHaveCount(1);

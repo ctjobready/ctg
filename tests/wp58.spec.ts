@@ -359,7 +359,7 @@ test.describe('S10 and S11: headings', () => {
 
   test('Investors’ third thesis card is "AI Skills Are in Rising Demand" over PX-08 (with its source note), in Title Case', async ({ page }) => {
     await open(page, INVESTORS);
-    expect(await texts(page, '#thesis .card__title')).toEqual(['Young People Need Work and Employers Need Skills', 'Connect Learning to Paid Work', 'AI Skills Are in Rising Demand']);
+    expect(await texts(page, '#thesis .card__title')).toEqual(['Young People Need Work and Employers Need Skills', 'AI Skills Are in Rising Demand', 'Connect Learning to Paid Work']); // WP153: the answer card is last
     expect(compact(await page.locator('#thesis .th__more[data-fact="PX-08"]').textContent())).toBe('Globally, job postings requiring AI skills grew 69% vs. 9% for all postings, and workers with AI skills earned a 62% wage premium (PwC, 2026).');
     expect('AI Skills Are in Rising Demand').toBe(titleCase('AI Skills Are in Rising Demand'));
     expect(sitePages().filter((p) => visible(p.html).includes('AI Is Raising the Bar for Entry Work')).map((p) => p.route)).toEqual([]);

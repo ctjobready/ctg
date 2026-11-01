@@ -59,6 +59,8 @@ const POST_SLUG = 'aziz-ahmad-wins-the-nynjmsdc-partnership-award-in-the-united-
 const POST = `news/${POST_SLUG}/index.html`;
 
 const LONG = 'facilitators trained by CodersTrust (Training of Trainers)';
+// WP153 (principle challenge, accepted): the parenthetical may drop when the same or the adjacent card names Training of Trainers (Governments); tests/wp153.spec.ts holds that rule.
+const BARE = 'facilitators trained by CodersTrust';
 const SHORT = 'CodersTrust-trained facilitators';
 
 test.describe('1 Facilitators: trained by CodersTrust, never "local" and never "certified"', () => {
@@ -85,10 +87,12 @@ test.describe('1 Facilitators: trained by CodersTrust, never "local" and never "
   test('every page that explains the facilitator model says "trained by CodersTrust (Training of Trainers)" once, and the short form only after it', () => {
     for (const p of [GOVERNANCE, OUR_MODEL, TALENTLEAP, DEV, FOUNDATIONS, GOVERNMENTS, INVESTORS, LOCAL, UNIVERSITIES, CAMPUS, YOUTHWIDE]) {
       const text = main(p);
-      expect(count(text, LONG), p).toBe(1);
+      // WP153: the long form is "facilitators trained by CodersTrust (Training of Trainers)", or without the parenthetical on Governments (the adjacent card names Training of Trainers).
+      expect(count(text, BARE), p).toBe(1);
+      expect(count(text, LONG), p).toBe(p === GOVERNMENTS ? 0 : 1);
       const short = text.indexOf(SHORT);
       // WP151: except JobReady@Campus, whose "Illustrative" band (before How It Works) says "CodersTrust-trained facilitators" and whose How It Works card carries the long form.
-      if (short >= 0 && p !== CAMPUS) expect(short, `${p}: "${SHORT}" comes before the long form`).toBeGreaterThan(text.indexOf(LONG));
+      if (short >= 0 && p !== CAMPUS) expect(short, `${p}: "${SHORT}" comes before the long form`).toBeGreaterThan(text.indexOf(BARE));
     }
   });
 
@@ -117,8 +121,9 @@ test.describe('1 Facilitators: trained by CodersTrust, never "local" and never "
     expect(main(CAMPUS)).toContain(`Labs serve as blended-learning centers, with ${LONG} and faculty members as coordinators.`); // WP151: the How It Works card is the delivery sentence
     expect(main(UNIVERSITIES)).toContain(`On-campus labs become blended-learning centers with ${LONG}; faculty members act as coordinators.`);
     // WP152: Governments’ "Government Digital Labs" card is the delivery sentence; the "Capacity Designed to Stay in Your System" card says "CodersTrust-trained facilitators". Development Partners’ "Existing Labs and Colleges" card carries the long form.
-    expect(main(GOVERNMENTS)).toContain(`Blended learning in government labs you already run, led by ${LONG}; lab access and seats are confirmed per program.`);
-    expect(main(DEV)).toContain(`then blended delivery in existing labs and colleges by ${LONG}.`);
+    // WP153: Governments’ card drops the parenthetical (the "Trainers and Curriculum" card beside it names Training of Trainers); Development Partners’ card no longer repeats "in existing labs and colleges".
+    expect(main(GOVERNMENTS)).toContain(`Blended learning in government labs you already run, led by ${BARE}; lab access and seats are confirmed per program.`);
+    expect(main(DEV)).toContain(`then blended delivery by ${LONG}.`);
     expect(main(LOCAL)).toContain(`Larger programs are designed to run through ${LONG} in existing labs and colleges, coordinated centrally.`);
     expect(main(YOUTHWIDE)).toContain(`Blended training in existing labs and colleges, with ${LONG}; a central team coordinating local labs for larger programs.`);
   });
