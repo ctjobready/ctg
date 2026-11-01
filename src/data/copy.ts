@@ -492,7 +492,9 @@ export const POSITIONING: Record<PositioningKey, CopyBlock> = {
     // WP42 (cycle-19 review): the hero, the problem band and the glance above say who the page is for and what they need, so "Our Approach" states what the model does, in the two shared sentences with the tracking said as the page's
     // cards say it ("outcome tracking after each course, as agreed in the program scope"). scripts/check-facts.mjs declares it whole for /partner-with-us/development-partners/ (POSITION_WHOLE_STATEMENT). It rests on PD-01
     // (training, mentoring, placement support), PD-08 (monthly reports) and PD-09 (follow-up surveys at 3, 6 and 12 months).
-    text: 'We combine training, mentoring and placement support in existing labs and colleges. Partners receive monthly reports and outcome tracking after each course.',
+    // WP149 (Opus XHigh run 3, kit 116): "Partners receive monthly reports, and outcomes are tracked after each course." (it was "... monthly reports and outcome tracking after each course.": an odd object for "receive", and it could read as reports arriving only after each course);
+    // scripts/check-facts.mjs declares the new wording whole as well.
+    text: 'We combine training, mentoring and placement support in existing labs and colleges. Partners receive monthly reports, and outcomes are tracked after each course.',
     facts: ['PD-01', 'PD-08', 'PD-09'],
   },
   governments: {

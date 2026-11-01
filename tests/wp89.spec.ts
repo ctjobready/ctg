@@ -134,9 +134,9 @@ test.describe('Item 6: legal page dates match their last content change', () => 
     await expect(page.locator('body')).not.toContainText('Last updated October 10, 2026');
   });
 
-  test('Accessibility reads "Last updated October 31, 2026"', async ({ page }) => {
+  test('Accessibility reads "Last updated November 1, 2026" (WP149: the Known Limitations line names the National University Post Graduate Diploma)', async ({ page }) => {
     await open(page, 'accessibility/');
-    await expect(page.locator('body')).toContainText('Last updated October 31, 2026');
+    await expect(page.locator('body')).toContainText('Last updated November 1, 2026');
     await expect(page.locator('body')).not.toContainText('Last updated October 10, 2026');
   });
 });

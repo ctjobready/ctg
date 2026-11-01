@@ -52,7 +52,7 @@ const IMPACT = 'impact/';
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 test.describe('Item 1 (Sonnet, Grok, Kimi): the Our Model scale card says month 5 is a month of a program', () => {
-  const TEXT = 'After about five months of delivery, programs are designed to run up to 10 certification cohorts in parallel, using existing labs and CodersTrust-trained facilitators.'; // WP67 (cycle-38 review, Grok): it was "From about month 5 of a program, delivery is designed to run ..."
+  const TEXT = 'After about five months of delivery, programs are designed to run up to 10 certification cohorts in parallel, using existing labs and facilitators trained by CodersTrust (Training of Trainers).'; // WP67 (cycle-38 review, Grok): it was "From about month 5 of a program, delivery is designed to run ..."
 
   test('"Local Labs, Coordinated Delivery" reads as above, still rests on PD-06, and the earlier sentence is on no built page', async ({ page }) => {
     await open(page, OUR_MODEL);

@@ -21,7 +21,7 @@ const onOrAfter = (raw: string, day: string) => (raw.match(/"dateModified":"(\d{
 
 test('Minor 1: Accessibility names jobready.global as CodersTrust’s own separate site and only the Google Form as run by another organization', () => {
   const text = visible(html('accessibility/index.html'));
-  expect(text).toContain('Pages we link to may not meet the same standard. jobready.global, CodersTrust’s course storefront, is a separate site that this statement does not cover; the National University diploma application form is run by Google Forms.');
+  expect(text).toContain('Pages we link to may not meet the same standard. jobready.global, CodersTrust’s course storefront, is a separate site that this statement does not cover; the National University Post Graduate Diploma application form is run by Google Forms.');
   expect(text).not.toContain('are run by others');
   expect(onOrAfter(html('accessibility/index.html'), '2026-10-31')).toBe(true);
 });

@@ -282,7 +282,7 @@ test.describe('Item 7: the Programs hub says "Best For: Governments, Development
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 test.describe('Item 8: Our Model’s scale card says "After about five months of delivery, programs are designed to run ..."', () => {
-  const TEXT = 'After about five months of delivery, programs are designed to run up to 10 certification cohorts in parallel, using existing labs and CodersTrust-trained facilitators.';
+  const TEXT = 'After about five months of delivery, programs are designed to run up to 10 certification cohorts in parallel, using existing labs and facilitators trained by CodersTrust (Training of Trainers).';
 
   test('"Local Labs, Coordinated Delivery" reads as above, still rests on PD-06, and the earlier sentences are on no built page', async ({ page }) => {
     await open(page, OUR_MODEL);

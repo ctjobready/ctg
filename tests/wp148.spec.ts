@@ -7,7 +7,7 @@ import { DIST_DIR } from './support/env';
  * WP148 (Opus XHigh run 2, kit 115: 1 Minor, 7 Polish, and the facilitator principle challenge, accepted as the owner's literal words, "Trained by CodersTrust").
  * Test-first: run `npm run build`, then `PORT=<port> npx playwright test tests/wp148.spec.ts --project=chromium`. The tests read the built files; none opens a browser.
  *   1  Facilitators: "certified" no longer describes facilitators anywhere (the long form is "facilitators trained by CodersTrust (Training of Trainers)", later "CodersTrust-trained facilitators"; tests/wp147.spec.ts holds the
- *      per-page forms). Our Model's first facilitator mention is the long form; the Local Partners cards no longer ask a partner to "supply certified facilitators".
+ *      per-page forms). Our Model's long form is in its delivery card (WP149: it was the Foundation Tracks card, the first mention); the Local Partners cards no longer ask a partner to "supply certified facilitators".
  *   2  The NYNJMSDC post body says UTC Associates, led by Aziz Ahmad, received the Partnership Award (first, second and last paragraphs); "remarked Clark"; one spelling of the Council's name.
  *   3  "Post Graduate Diploma" is capitalised wherever it names the NU program (NU overview, four course pages, Privacy Policy, the social-preview card).
  *   4  YouthWIDE says "we have not yet delivered a 100,000+ program" once in its own words (the Option 3 card is the shared PROGRAM_OPTIONS note, unchanged).
@@ -58,14 +58,17 @@ test.describe('1 Facilitators are trained by CodersTrust, never "certified"', ()
     expect(hits).toEqual([]);
   });
 
-  test('Our Model: the first facilitator mention is the long form, in the Foundation Tracks card; the Local Labs card then says "CodersTrust-trained facilitators"', () => {
+  // WP149 (Opus XHigh run 3, kit 116 principle challenge, accepted): the long form sits in the sentence where the page explains who delivers the training, not in the page's first mention. Our Model's Foundation Tracks card says
+  // "facilitator support" again (PD-17's meaning) and the "Local Labs, Coordinated Delivery" card carries the long form (tests/wp149.spec.ts holds the rest of the rule).
+  test('Our Model: the delivery sentence (the "Local Labs, Coordinated Delivery" card) is the long form; the Foundation Tracks card says "facilitator support"', () => {
     const text = main(OUR_MODEL);
-    expect(text.search(/facilitator/i)).toBe(text.indexOf(LONG));
     expect(text).toContain(
-      `Foundation Tracks Learners with limited computer or English skills get extra foundation hours and ${LONG}, scoped in co-design. Their outcomes are reported by track.`,
+      'Foundation Tracks Learners with limited computer or English skills get extra foundation hours with facilitator support, scoped in co-design. Their outcomes are reported by track.',
     );
-    expect(text).toContain(`using existing labs and ${SHORT}.`);
+    expect(text).toContain(`using existing labs and ${LONG}.`);
+    expect(text).not.toContain(`using existing labs and ${SHORT}.`);
     expect(count(text, LONG)).toBe(1);
+    expect(text.indexOf('Local Labs, Coordinated Delivery')).toBeLessThan(text.indexOf(LONG));
   });
 
   test('Local Partners: the second "Three Ways to Partner with Us" card asks for trainers who join Training of Trainers, not for certified facilitators', () => {

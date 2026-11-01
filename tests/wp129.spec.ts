@@ -247,6 +247,7 @@ test.describe('WP129 item 6: every dated page whose visible text changed carries
   const MOVED_1101 = new Set([
     'programs/superkids/index.html', // WP143
     'privacy-policy/index.html', // WP148: "Post Graduate Diploma" is capitalised
+    'accessibility/index.html', // WP149: the Known Limitations line names the "National University Post Graduate Diploma"
     'programs/nu-postgraduate-diploma/index.html', // WP148
     'programs/nu-postgraduate-diploma/cyber-security/index.html', // WP148
     'programs/nu-postgraduate-diploma/data-analytics/index.html', // WP148

@@ -182,7 +182,7 @@ test.describe('WP105 item 7: the Privacy Policy names the careers inbox and the 
     const section = page.locator('#email');
     const text = compact(await section.textContent());
     expect(text).toContain('Applications from the Careers page go to career@coderstrustbd.com.');
-    expect(text).toContain('Help requests from the National University diploma page go to hello@coderstrustbd.com.');
+    expect(text).toContain('Help requests from the National University Post Graduate Diploma page go to hello@coderstrustbd.com.');
     await expect(section.locator('a[href="mailto:career@coderstrustbd.com"]')).toHaveCount(1);
     await expect(section.locator('a[href="mailto:hello@coderstrustbd.com"]')).toHaveCount(2); // the local-partners line and the NU line (the general line is contact@coderstrust.global)
   });

@@ -7,7 +7,8 @@ import { DIST_DIR } from './support/env';
 /**
  * WP147 (owner answer 2026-11-01 on facilitators; Opus XHigh run 1 and Opus High run 22 Polish, kit 114).
  * Test-first: run `npm run build`, then `PORT=<port> npx playwright test tests/wp147.spec.ts --project=chromium`. The tests read the built files; none opens a browser.
- *   1  Facilitators: "Trained by CodersTrust", never "local". The first explanation on a page says "facilitators trained by CodersTrust (Training of Trainers)"; later mentions say "CodersTrust-trained facilitators".
+ *   1  Facilitators: "Trained by CodersTrust", never "local". The sentence where a page explains who delivers the training says "facilitators trained by CodersTrust (Training of Trainers)" (WP149: it was "the first explanation on
+ *      a page"; tests/wp149.spec.ts holds the placement rule); other mentions say "CodersTrust-trained facilitators".
  *      No built file (HTML, JSON-LD, llms.txt) says "local facilitator" or "certified facilitator"; the register's PD-06 reads "facilitators trained by CodersTrust".
  *      WP148 (Opus XHigh run 2, kit 115 principle challenge, accepted): the guards moved from "trained and certified by CodersTrust" / "certified facilitators" to these forms; tests/wp148.spec.ts holds the rest of WP148.
  *   2  The NYNJMSDC award stays in Aziz Ahmad's bio: the News Photographs caption names UTC Associates; the archived post moves from "Recognition" to "Leadership and Advocacy".
@@ -108,8 +109,9 @@ test.describe('1 Facilitators: trained by CodersTrust, never "local" and never "
     expect(ldText(UNIVERSITIES)).toContain(CAMPUS_A);
   });
 
-  test('first explanations read in context', () => {
-    expect(main(OUR_MODEL)).toContain(`After about five months of delivery, programs are designed to run up to 10 certification cohorts in parallel, using existing labs and ${SHORT}.`);
+  test('delivery sentences read in context (WP149: the sentence where the page explains who delivers)', () => {
+    // WP149: Our Model's delivery sentence (the "Local Labs, Coordinated Delivery" card) is the long form; the Foundation Tracks card says "facilitator support"
+    expect(main(OUR_MODEL)).toContain(`After about five months of delivery, programs are designed to run up to 10 certification cohorts in parallel, using existing labs and ${LONG}.`);
     expect(main(CAMPUS)).toContain(`Campus labs work as blended-learning centers, with ${LONG}.`);
     expect(main(UNIVERSITIES)).toContain(`On-campus labs become blended-learning centers with ${LONG}; faculty members act as coordinators.`);
     expect(main(GOVERNMENTS)).toContain(`Where included: curriculum and manuals; ${LONG}; and blended learning in existing labs that works with limited connectivity, so rural labs can take part.`);

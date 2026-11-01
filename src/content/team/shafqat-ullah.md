@@ -14,4 +14,4 @@ Shafqat Ullah is the Chief Technology Officer of CodersTrust. He is a seasoned s
 
 As a researcher and author, he drives foundational work in software engineering, cloud and edge computing. He serves as an expert advisor to global initiatives, including the UN and the Government of Bangladesh.
 
-An Affiliate Member of Intel's Neuromorphic AI Research program, he graduated in Computer Science from the Indian Institute of Technology (IIT). His expertise spans AI and cloud-native SaaS and mobile app design and architecture, and large-scale tech skills training since 2002.
+An Affiliate Member of Intel's Neuromorphic AI Research program, he graduated in Computer Science from the Indian Institute of Technology (IIT). His expertise spans AI and cloud-native architecture; SaaS and mobile app design; and, since 2002, large-scale tech skills training.
