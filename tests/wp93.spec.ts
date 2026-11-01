@@ -27,7 +27,7 @@ const EVIDENCE_HEADING = 'Evidence from the Youth Programs';
 const ROUTE_2_EVIDENCE = 'Youth-program outcomes are not platform outcomes. The discovery session covers JobReady’s staged rollout.';
 const SURVEY_NOT = 'Cause: respondents are not a random sample and may over-represent successful learners. 19.6% are women.';
 const YOUTHWIDE_STATEMENT =
-  'YouthWIDE combines training, mentoring and placement support in existing labs and colleges. Partners receive monthly reports on progress toward paid work.';
+  'YouthWIDE combines training, mentoring and placement support. Partners receive monthly reports on progress toward paid work.'; // WP155 (Polish 1): was "... placement support in existing labs and colleges. ..."
 const NATIONAL_ANSWER =
   'We scale in phases. Her Power, a national program, met its full target with CodersTrust’s curriculum; the contract table above gives the figures. A 100,000+ program is a design option we have not yet delivered.';
 const FIRST_ACTION_PARTNER = 'Your first step: a discovery session. In your inquiry, include two suitable times for it.';

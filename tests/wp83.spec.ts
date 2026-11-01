@@ -175,7 +175,7 @@ test.describe('WP83 (WP85 wording): the pages that state the 25,125', () => {
     await open(page, 'partner-with-us/investors/');
     expect(compact(await page.locator('#reach .ir__note').textContent())).toBe(CONTRACT_NOTE_INVESTORS);
     const faq = page.locator('#faq details, #faqs details', { has: page.locator('summary', { hasText: 'Can You Deliver at National Scale?' }) }).first();
-    expect(compact(await faq.textContent())).toContain('trained 2,400 women directly; the national program trained 25,125 women across 130 sub-districts (upazilas), meeting its target.');
+    expect(compact(await faq.textContent())).toContain('trained women directly; the national program met its target (figures above).'); // WP155 (Polish 3): the answer no longer restates the counts ("... trained 2,400 women directly; the national program trained 25,125 women across 130 sub-districts (upazilas), meeting its target.")
     await open(page, 'our-model/jobready-platform/');
     expect(compact(await page.locator('#why .jr__whynote').textContent())).toBe(SCOPE_NOTE);
   });

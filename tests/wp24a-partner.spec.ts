@@ -112,7 +112,7 @@ test.describe('audience pages', () => {
     const card = page.locator('#mechanism .model__block', { hasText: 'Local, Remote and Global Work' });
     await expect(card).toHaveCount(1);
     // WP52 (cycle-27 review): the card scopes its reports and surveys ("....")
-    await expect(card).toContainText('Placement support into local, remote and global work, with monthly reports to the agency and follow-up surveys at 3, 6 and 12 months after each course.');
+    await expect(card).toContainText('Placement support, then follow-up surveys at 3, 6 and 12 months after each course.'); // WP155 (Polish 5): was "Placement support into local, remote and global work, with monthly reports to the agency and follow-up surveys ..."; the statement has the reports
   });
 
   test('governments: the contracts table becomes stacked rows on a phone', async ({ page }) => {

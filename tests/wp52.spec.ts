@@ -129,7 +129,7 @@ test.describe('Local Partners: what stays after funding, and what the monthly re
 });
 
 test.describe('Governments: the delivery card scopes its reports and surveys; the Her Power tile names its program (items 4 and 5)', () => {
-  const CARD = 'Placement support into local, remote and global work, with monthly reports to the agency and follow-up surveys at 3, 6 and 12 months after each course.';
+  const CARD = 'Placement support, then follow-up surveys at 3, 6 and 12 months after each course.'; // WP155 (Polish 5): was "Placement support into local, remote and global work, with monthly reports to the agency and follow-up surveys ..."; the statement has the reports and the heading says local, remote and global work
   const BASE_OF_FIGURE = 'tracked women in work (47%), among the 2,400 women CodersTrust trained directly';
   // WP63 (cycle-35 review, Gemini M6): the tile states the tracked base itself; the case cards keep BASE_OF_FIGURE
   const TILE_LABEL = 'Her Power: tracked women in work (47%), among the 2,400 women CodersTrust trained directly';
@@ -290,10 +290,11 @@ test.describe('Governments: the closing call to action does not repeat the procu
     expect(count(text, 'procurement')).toBe(3);
   });
 
-  test('the shared variant (C14.variants.governments) still stands in YouthWIDE’s "What Happens Next"', async ({ page }) => {
-    expect(C14.variants.governments).toBe('Your agency’s procurement timeline sets the pace; we start with a briefing.'); // WP136 (owner answer 2026-10-31: the "two suitable times" request appears once per page; WP135 had "In your inquiry, include two suitable times for a briefing; your agency’s procurement timeline sets the pace.")
+  // WP155 (Opus Max run 2, kit 122, Polish 7): the shared variant was YouthWIDE's closing Governments line; it is gone (the entry-point band and Step 1 say "we start with a briefing"), so the page's closing line is the Funders one alone.
+  test('the Governments closing variant is gone from C14 and from YouthWIDE’s "What Happens Next"', async ({ page }) => {
+    expect((C14.variants as Record<string, string>).governments).toBeUndefined();
     await open(page, YOUTHWIDE);
-    expect(await everything(page)).toContain(C14.variants.governments);
+    expect(await everything(page)).not.toContain('Your agency’s procurement timeline sets the pace');
   });
 });
 

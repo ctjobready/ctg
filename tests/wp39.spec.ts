@@ -131,7 +131,7 @@ const PAGES: PageSpec[] = [
       },
       {
         title: 'Mentoring and Placement Support',
-        text: 'Three months of milestone-based mentoring, with placement support alongside, gives your completers a route into work that your organization does not have to build alone.',
+        text: 'Three months of milestone-based mentoring, with placement support alongside, gives your completers a route into work.', // WP155 (Polish 11): was "... a route into work that your organization does not have to build alone."
         facts: ['PD-01', 'PD-15'],
         pain: 'P2',
       },

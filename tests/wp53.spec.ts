@@ -221,7 +221,7 @@ test.describe('The legal status of the two entities is a registered fact and the
     expect(fact('PD-13').text).not.toMatch(/polic(?:y|ies)/i);
     await open(page, GOVERNANCE);
     const hero = compact(await page.locator('#hero').textContent());
-    expect(hero).toContain('Legal status and due-diligence arrangements for a specific program are confirmed with the funder during co-design.');
+    expect(hero).toContain('The contracting entity, legal status and due-diligence arrangements for each program are confirmed with the funder during co-design.'); // WP155 (Polish 6): was "... Legal status and due-diligence arrangements for a specific program are confirmed ..."
     expect(hero).not.toMatch(/polic(?:y|ies)|due-diligence documents/i);
     const card = page.locator('#contracting .cp__item', { has: page.locator('.cp__title', { hasText: 'Due-Diligence Checklist' }) });
     expect(compact(await card.locator('.cp__text').textContent())).toBe('The items we confirm with you in co-design, from legal status to sanctions-screening arrangements.');

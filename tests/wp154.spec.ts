@@ -188,11 +188,11 @@ test.describe('3 Investors: the model band', () => {
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 test.describe('4 "How It Works": existing labs and colleges is said once per band', () => {
-  test('Development Partners: the statement is "We combine training, mentoring and placement support. Partners receive monthly reports, and outcomes are tracked after each course."; the card heading says "Existing Labs and Colleges" once', () => {
+  test('Development Partners: the statement is "We combine training, mentoring and placement support. Partners receive monthly reports." (WP155: it ended ", and outcomes are tracked after each course."); the card heading says "Existing Labs and Colleges" once', () => {
     const text = main(DEV);
     const band = text.slice(text.indexOf('An Integrated Path from Training to Earnings'), text.indexOf('See the Evidence Behind the Results'));
     expect(band.length).toBeGreaterThan(300);
-    expect(band).toContain('Our Approach We combine training, mentoring and placement support. Partners receive monthly reports, and outcomes are tracked after each course.');
+    expect(band).toContain('Our Approach We combine training, mentoring and placement support. Partners receive monthly reports.');
     expect(count(band, /existing labs and colleges/gi)).toBe(1);
     expect(band).toContain('How We Reach Them Existing Labs and Colleges Outreach and selection with local partners');
     expect(count(text, /placement support in existing labs and colleges/gi)).toBe(0);

@@ -25,12 +25,12 @@ test.describe('YouthWIDE (/programs/youthwide/)', () => {
     await expect(band.locator('#cta [data-session-agenda], #cta-governments [data-session-agenda]')).toHaveCount(0);
   });
 
-  test('one shared "What Happens Next" with two short role-specific actions', async ({ page }) => {
+  test('one shared "What Happens Next" with one short role-specific action (WP155: the Governments line is gone)', async ({ page }) => {
     await open(page, 'programs/youthwide/');
     const titles = await headingsOf(page);
     expect(titles.filter((t) => /What Happens Next/i.test(t))).toEqual(['What Happens Next']);
     const next = page.locator('section#next-steps');
-    await expect(next.locator('ul li strong')).toHaveText(['Governments.', 'Funders.']);
+    await expect(next.locator('ul li strong')).toHaveText(['Funders.']);
   });
 
   // WP48 (cycle-23 review): the hero's two links back to audience pages ("For Development Partners", "For Governments") are gone; the ministry briefing stays as the one text link beside the one button (tests/wp48.spec.ts)

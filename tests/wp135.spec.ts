@@ -177,7 +177,7 @@ test('Minor 1 (WP136): YouthWIDE asks once, in the funders line of "What Happens
   const t = main('programs/youthwide/index.html');
   expect(t).toContain('Public procurement follows the agency’s own timeline, so we start with a briefing that fits it.');
   expect(t).not.toContain('with a briefing that fits it. In your inquiry');
-  expect(t).toContain('Governments. Your agency’s procurement timeline sets the pace; we start with a briefing.');
+  expect(t).not.toContain('Governments. Your agency’s procurement timeline sets the pace; we start with a briefing.'); // WP155 (Polish 7): the closing government line is gone; Step 1 and the entry card say it
   expect(t).toContain('Funders. In your inquiry, include two suitable times for a discovery session.');
   expect(t).not.toContain('include two suitable times for a briefing');
 });

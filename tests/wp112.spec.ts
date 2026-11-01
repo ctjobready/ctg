@@ -77,7 +77,7 @@ test.describe('WP112 Polish 5: NU Post Graduate Diploma difficulty tile', () => 
 test.describe('WP112 Polish 6: Universities campus FAQ says "students"', () => {
   test('the campus answer reads "your students’ skills" and "your graduates’ skills" is gone', () => {
     const text = visibleText(distHtml('partner-with-us/universities/index.html'));
-    expect(text).toContain('We test local employer demand for your students’ skills and your campus labs first');
+    expect(text).toContain('We first test local employer demand for your students’ skills and check your campus labs, then choose'); // WP155 (Polish 9): was "... for your students’ skills and your campus labs first, and choose ..."
     expect(text).not.toContain('your graduates’ skills');
   });
 });
@@ -91,8 +91,8 @@ test.describe('WP112 Polish 7: dates', () => {
     expect(visibleText(html)).toContain('Last updated November 2, 2026');
   });
 
-  test('Governance reads "Last updated November 1, 2026" (WP127 and WP128 changed its text on 30 October, WP129 applied the owner rule that any visible text change moves the date; WP141 changed it again)', () => {
-    expect(visibleText(distHtml('about/governance/index.html'))).toContain('Last updated November 1, 2026');
+  test('Governance reads "Last updated November 2, 2026" (WP127 and WP128 changed its text on 30 October, WP129 applied the owner rule that any visible text change moves the date; WP141 changed it again; WP155 on 2 November)', () => {
+    expect(visibleText(distHtml('about/governance/index.html'))).toContain('Last updated November 2, 2026');
   });
 });
 

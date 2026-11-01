@@ -294,7 +294,7 @@ test.describe('TalentLEAP and YouthWIDE', () => {
   test('YouthWIDE: "Our Approach" is the two shared sentences with the program as subject, and opens the band', async ({ page }) => {
     await open(page, 'programs/youthwide/');
     await expect(page.locator('#mechanism .pos__label')).toHaveText('Our Approach');
-    await expect(page.locator('#mechanism .pos__text')).toHaveText('YouthWIDE combines training, mentoring and placement support in existing labs and colleges. Partners receive monthly reports on progress toward paid work.');
+    await expect(page.locator('#mechanism .pos__text')).toHaveText('YouthWIDE combines training, mentoring and placement support. Partners receive monthly reports on progress toward paid work.'); // WP155 (Polish 1): was "... placement support in existing labs and colleges. ..."; the band's "How We Reach Them" card says where and who teaches
     expect(await page.locator('#mechanism .pos').getAttribute('data-fact')).toBe('PD-01 PD-08');
     // WP44 (cycle-21 review): Foundations is declared whole too, with its own two sentences (tests/wp44.spec.ts), not the audience sentence it had here
     await open(page, 'partner-with-us/foundations/');

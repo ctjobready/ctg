@@ -136,9 +136,10 @@ test.describe('WP128 item 2: the 70+ partner breakdown uses the hub’s semicolo
 // 3. Governance, "How Outcome Records Are Used"
 // ---------------------------------------------------------------------------------------------------------------------------------
 test.describe('WP128 item 3: Governance, "How Outcome Records Are Used"', () => {
-  test('funders receive monthly reports and outcome data with personal details protected', () => {
+  test('outcome data shared with funders has personal details protected (WP155: the monthly reports are promised once, in the Independent Evaluation band)', () => {
     const t = text('about/governance/index.html');
-    expect(t).toContain('Funders receive monthly reports and outcome data with personal details protected.');
+    expect(t).toContain('outcome data shared with funders has personal details protected.');
+    expect(t).toContain('Funders receive monthly reports from the first cohort.');
     expect(t).not.toContain('funders receive data with personal details protected and monthly reports');
   });
 });

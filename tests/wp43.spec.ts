@@ -334,7 +334,7 @@ test.describe('JobReady@Campus: "Our Approach" is two sentences with the reporti
     await open(page, 'partner-with-us/universities/');
     const statement = compact(await page.locator('#mechanism .pos__text').textContent());
     expect(statement.startsWith('For universities and colleges that need to prepare their degree holders for paid digital work')).toBe(false);
-    expect(statement).toBe('JobReady@Campus combines training, mentoring and placement support in campus labs alongside academic studies. Your institution receives monthly reports on progress toward paid work.');
+    expect(statement).toBe('JobReady@Campus combines training, mentoring and placement support in campus labs. Your institution receives monthly reports on progress toward paid work.'); // WP155 (Polish 4): was "... in campus labs alongside academic studies. ..."
   });
 });
 

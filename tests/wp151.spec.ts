@@ -90,7 +90,7 @@ test.describe('3 Repetition: said once', () => {
       'Governments: Start with a Briefing',
       'Public procurement follows the agency’s own timeline, so we start with a briefing that fits it.',
       'Step 1: Briefing or Discovery Governments start with a briefing; funders start with a discovery session.',
-      'Governments. Your agency’s procurement timeline sets the pace; we start with a briefing.',
+      // WP155 (Polish 7): the Governments closing line ("Your agency’s procurement timeline sets the pace; we start with a briefing.") is gone.
       'Funders. In your inquiry, include two suitable times for a discovery session.',
     ]) {
       expect(text, s).toContain(s);

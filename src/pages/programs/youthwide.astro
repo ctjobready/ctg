@@ -64,7 +64,7 @@ import NextSteps from '../../components/pages/programs/NextSteps.astro';
 import { faqNode, type FaqSource } from '../../components/pages/programs/faq';
 import { KOSOVO_WOW_TILE_LABEL, WHERE_THEY_WORK_TEXT } from '../../components/pages/partners/partners';
 import { C14_FIRST_FUNDERS, ctaFor, serviceNode, statValue } from '../../components/pages/programs/meta';
-import { AIM_DEPENDENCY, AIM_STATEMENT, C14, FUNDER_PAINS, MICRO_COMMITMENT, POSITIONING, PROGRAM_OPTIONS, PROGRAM_SCOPE_STATEMENT_EXAMS, SAFEGUARDING, SCORECARD_LABELS, WB_KOSOVO, painForList } from '../../data/copy';
+import { AIM_DEPENDENCY, AIM_STATEMENT, FUNDER_PAINS, MICRO_COMMITMENT, POSITIONING, PROGRAM_OPTIONS, PROGRAM_SCOPE_STATEMENT_EXAMS, SAFEGUARDING, SCORECARD_LABELS, WB_KOSOVO, painForList } from '../../data/copy';
 import { fact } from '../../data/facts';
 import { galleryPhotos } from '../../data/photos';
 import { formatDate, isoDate } from '../../lib/format';
@@ -169,7 +169,7 @@ const measures = [...SCORECARD_LABELS];
     positioning={POSITIONING.youthwide}
     blocks={[
       { label: 'Who We Reach', title: 'Educated, Unemployed and Underemployed Youth', text: 'Priority groups are agreed with you in co-design; women are a priority in every program.', icon: 'users' },
-      { label: 'How We Reach Them', title: 'Accessible Selection, Blended Delivery', text: 'Outreach and an accessible readiness assessment, then training in existing labs and colleges.', icon: 'graduation-cap' },
+      { label: 'How We Reach Them', title: 'Accessible Selection, Blended Delivery', text: 'Outreach and an accessible readiness assessment, then blended training in existing labs and colleges, led by CodersTrust-trained facilitators.', icon: 'graduation-cap' }, // WP155 (Opus Max run 2, kit 122, Polish 1): the card says where and who teaches (the statement above no longer says "in existing labs and colleges"); the long form is in the Delivery row above (WP152)
       { label: 'What We Deliver', title: 'AI-Ready Training, Certification Preparation and Mentoring', text: 'Certification exam preparation by track, then three months of milestone-based mentoring.', icon: 'award' },
       { label: 'Where They Work', title: 'Local, Remote and Global Work', text: WHERE_THEY_WORK_TEXT, icon: 'globe' },
     ]}
@@ -296,7 +296,7 @@ const measures = [...SCORECARD_LABELS];
       { title: 'Monthly Reports', text: 'Reports are designed to show enrollment, completion, certification, placement and first earnings.' },
     ]}
     roleActions={[
-      { role: 'Governments', text: C14.variants.governments },
+      // WP155 (Opus Max run 2, kit 122, Polish 7): the Governments closing line is gone; the entry-point band and Step 1 say "we start with a briefing". The Funders line is the page's one request for two suitable times.
       { role: 'Funders', text: C14_FIRST_FUNDERS },
     ]}
   />

@@ -97,7 +97,7 @@ test.describe('Investors: the delivered figures lead the track-record band (item
     await expect(tile).toContainText('30,000+');
     await expect(tile.locator('[data-evidence="Contract Scope"]')).toHaveCount(1);
     await expect(tile.locator('[data-status]')).toHaveCount(0);
-    expect(compact(await page.locator('#reach p[data-fact="SC-04"]').textContent())).toMatch(/^Separately, and not counted in the delivered reach: 1\.5M\+ National University learners/);
+    expect(compact(await page.locator('#reach p[data-fact="SC-04"]').textContent())).toMatch(/^Not counted in the delivered reach: 1\.5M\+ National University learners/); // WP155 (Polish 2): was "Separately, and not counted in the delivered reach: ..."
     await expect(page.locator('#reach .ir__badges li')).toHaveCount(1); // WP130: the AWS badge is gone (the partner paragraph states it); the HolonIQ item stays
     // the band no longer calls itself reach to date, and nothing links to a heading that is gone
     expect(await mainText(page)).not.toContain('Reach to Date');
@@ -192,7 +192,7 @@ test.describe('Local Partners: the evidence is a two-line strip (item 2)', () =>
 
 test.describe('Development Partners, Governments and SuperKids: the approach in two plain sentences (items 3, 4 and 8)', () => {
   const STATEMENTS: [string, string, string[]][] = [
-    ['partner-with-us/development-partners/', 'We combine training, mentoring and placement support. Partners receive monthly reports, and outcomes are tracked after each course.', ['PD-01', 'PD-08', 'PD-09']],
+    ['partner-with-us/development-partners/', 'We combine training, mentoring and placement support. Partners receive monthly reports.', ['PD-01', 'PD-08']], // WP155 (Polish 5): was "... monthly reports, and outcomes are tracked after each course." resting on PD-09 as well; the "Where They Work" card states the tracking
     ['partner-with-us/governments/', 'We combine training, mentoring and placement support. Your agency receives monthly reports on progress toward paid work.', ['PD-01', 'PD-08']],
     ['programs/superkids/', 'SuperKids offers block coding, robotics and digital art through schools and education partners.' /* WP137: the qualifier is said in its own band */, ['GV-08']],
   ];

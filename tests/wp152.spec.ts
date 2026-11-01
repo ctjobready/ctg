@@ -99,6 +99,16 @@ test.describe('1 Facilitators: each page that explains delivery names who teache
     });
   }
 
+  // WP155 (Opus Max run 2, kit 122, Polish 1): YouthWIDE's "How We Reach Them" card (the how-it-works band, below the Delivery row that carries the long form) says who teaches, with the short form.
+  test('YouthWIDE: the how-it-works card names the facilitators with the short form, after the long form in the Delivery row', () => {
+    const text = main(YOUTHWIDE);
+    const card = 'How We Reach Them Accessible Selection, Blended Delivery Outreach and an accessible readiness assessment, then blended training in existing labs and colleges, led by CodersTrust-trained facilitators.';
+    expect(text).toContain(card);
+    expect(text.indexOf(card)).toBeGreaterThan(text.indexOf(BARE));
+    expect(count(text, SHORT)).toBe(2); // this card and the scale line ("10 cohorts in parallel, with CodersTrust-trained facilitators")
+    expect(longCount(text)).toBe(1);
+  });
+
   test('Development Partners and Governments: the funding-ends answer and the "what stays" card use the short form', () => {
     const dev = main(DEV);
     expect(dev).toContain('What Happens When Funding Ends? Where included, what the program builds stays in place: CodersTrust-trained facilitators and localized curricula. Completers join CodersTrust’s alumni network after their three months of mentoring.');

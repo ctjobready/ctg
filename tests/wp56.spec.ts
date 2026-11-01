@@ -38,7 +38,7 @@ const PHRASE = 'Hour of Code, and an ICT program at Tima-ade University';
 /** The alt text describes the visible banner; it does not say the Hour of Code was held with the university. */
 const BANNER_ALT = 'About 30 men and women, many in white caps, pose in two rows outdoors in front of a Tima-ade University banner';
 /** The owner's timeline line (decision 15). */
-const NIGERIA_TEXT = 'A Rockefeller Foundation grant supported a CodersTrust feasibility study in Kenya and Nigeria.';
+const NIGERIA_TEXT = 'A Rockefeller Foundation grant supports a CodersTrust feasibility study in Kenya and Nigeria.'; // WP155 (Polish 12): the About timeline is in the historic present (it said "supported"); the register's TL-07 keeps "supported"
 const RF_URL = 'https://web.archive.org/web/20231202123117/https://www.rockefellerfoundation.org/grant/grant-2015-213/';
 
 /** Every built page (archived news posts included), with its HTML. */
@@ -297,7 +297,7 @@ test.describe('Nigeria is a timeline line only (owner decision 15): About, "Our 
     expect(items.map((i) => i.year)).toEqual(['2014', '2014–2017', '2015–2016', '2018–2021', '2023–2025', '2025–2026']);
     expect(items.map((i) => i.year)).toEqual(timeline.map((t) => t.year));
     expect(items[2]).toEqual({ year: '2015–2016', title: 'Rockefeller Foundation Grant', text: NIGERIA_TEXT, fact: 'TL-07' });
-    expect(`${items[2].year}: ${items[2].text}`).toBe('2015–2016: A Rockefeller Foundation grant supported a CodersTrust feasibility study in Kenya and Nigeria.');
+    expect(`${items[2].year}: ${items[2].text}`).toBe('2015–2016: A Rockefeller Foundation grant supports a CodersTrust feasibility study in Kenya and Nigeria.');
     expect(titleCase(items[2].title)).toBe(items[2].title);
     expect(items.filter((i) => /Nigeria/.test(i.text))).toHaveLength(1);
     await expect(page.locator('main [data-fact~="TL-07"]')).toHaveCount(1);

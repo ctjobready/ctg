@@ -53,7 +53,7 @@ test.describe('Universities: "Our Approach" is one whole statement with the repo
   test('the statement is the declared JobReady@Campus wording for universities, keeps "as agreed in the program scope", and rests on IN-09, PD-01 and PD-08', async ({ page }) => {
     await open(page, 'partner-with-us/universities/');
     await expect(page.locator('#mechanism .pos__label')).toHaveText('Our Approach');
-    await expect(page.locator('#mechanism .pos__text')).toHaveText('JobReady@Campus combines training, mentoring and placement support in campus labs alongside academic studies. Your institution receives monthly reports on progress toward paid work.');
+    await expect(page.locator('#mechanism .pos__text')).toHaveText('JobReady@Campus combines training, mentoring and placement support in campus labs. Your institution receives monthly reports on progress toward paid work.'); // WP155 (Polish 4): was "... in campus labs alongside academic studies. ..."; the H2 and the "In Parallel with the Degree" card state the timing
     expect(await page.locator('#mechanism .pos').getAttribute('data-fact')).toBe('IN-09 PD-01 PD-08');
     await expect(page.locator('#mechanism .pos__text')).not.toContainText('For universities and colleges');
   });

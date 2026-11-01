@@ -11,6 +11,7 @@ import { CONTRACTING_ENTITIES, PROGRAM_SCOPE_REPORTING } from '../../../data/cop
  * (the register facts ID-07, PD-12, PD-13, PD-08 and PD-09); no document is promised as ready.
  * WP52 (cycle-27 review): the Leadership card names each leader's own organization, "The Chairman, Aziz Ahmad, leads CodersTrust. Md. Shamsul Haque leads CodersTrust Bangladesh." (it said the Chairman and "the CEO of CodersTrust
  * Bangladesh" together "lead the organization"), in line with the owner's direction: a global headquarters in New York and Bangladesh as a country office (ID-11).
+ * WP155 (Opus Max run 2, kit 122, Polish 6): the hero no longer repeats the Contracting Entities card (it says what is confirmed in co-design), and "How Outcome Records Are Used" no longer promises the monthly reports a second time (the Independent Evaluation band says it: "Funders receive monthly reports from the first cohort.").
  * WP147 (Opus XHigh run 1, Polish): the "How to Ask" card is gone; it asked for the same thing as the hero's "Ask About Due Diligence" button and the closing band, in other words. The panel no longer takes the request route.
  */
 interface Props {
@@ -21,7 +22,7 @@ const items = [
   { icon: 'building-2', title: 'Contracting Entities', text: `${CONTRACTING_ENTITIES}. The entity that contracts depends on the program’s country and the funder’s requirements.`, ids: 'ID-07 PD-13' },
   { icon: 'users', title: 'Leadership', text: 'The Chairman, Aziz Ahmad, leads CodersTrust. Md. Shamsul Haque leads CodersTrust Bangladesh.', ids: 'ID-03', link: { label: 'Who Leads CodersTrust', href: '#leadership' } },
   { icon: 'shield', title: 'Safeguarding and Data', text: 'Consent, protected records, grievance handling and referral pathways are agreed and documented for each program before enrollment.', ids: 'PD-12', link: { label: 'How People Are Protected', href: '#safeguarding' } },
-  { icon: 'file-check', title: 'How Outcome Records Are Used', text: 'Follow-up survey results are checked against documentary evidence where available. Funders receive monthly reports and outcome data with personal details protected.', ids: 'PD-08 PD-09 PD-12', link: { label: 'Evaluation and Funder Reporting', href: '#evidence' } },
+  { icon: 'file-check', title: 'How Outcome Records Are Used', text: 'Follow-up survey results are checked against documentary evidence where available, and outcome data shared with funders has personal details protected.', ids: 'PD-09 PD-12', link: { label: 'Evaluation and Funder Reporting', href: '#evidence' } },
   { icon: 'clipboard-list', title: 'Due-Diligence Checklist', text: 'The items we confirm with you in co-design, from legal status to sanctions-screening arrangements.', ids: 'PD-13', link: { label: 'See the Checklist', href: '#checklist' } },
 ];
 ---

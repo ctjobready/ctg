@@ -141,12 +141,14 @@ test.describe('Investors: the national-scale answer closes on two short sentence
     const answer = compact(await item.textContent());
     expect(answer).not.toContain('phase by phase');
     // CodersTrust's own role in Her Power comes before the national total, which is the program's (WP25s); the two statements are one sentence, so the answer stays within three sentences
-    expect(answer.indexOf('CodersTrust provided the curriculum')).toBeLessThan(answer.indexOf('25,125'));
+    // WP155 (Polish 3): the answer no longer restates the 25,125; it leads with CodersTrust’s role and points to the figures above (the contract-scope tile and the reach reconciliation state them).
+    expect(answer.indexOf('CodersTrust provided the curriculum')).toBeLessThan(answer.indexOf('the national program met its target (figures above)'));
+    expect(answer).not.toContain('25,125');
     const body = answer.slice(answer.indexOf('In Her Power'));
     const sentences = body.split(/(?<=[.?!])\s+(?=[A-Z])/);
     expect(sentences).toHaveLength(3);
     expect(sentences[0]).toBe(
-      'In Her Power, a national program of the Department of ICT (DoICT), under the ICT Division, CodersTrust provided the curriculum, training manuals and mentorship guidelines and trained 2,400 women directly; the national program trained 25,125 women across 130 sub-districts (upazilas), meeting its target.',
+      'In Her Power, a national program of the Department of ICT (DoICT), under the ICT Division, CodersTrust provided the curriculum, training manuals and mentorship guidelines and trained women directly; the national program met its target (figures above).' // WP155 (Polish 3): was "... trained 2,400 women directly; the national program trained 25,125 women across 130 sub-districts (upazilas), meeting its target.",
     );
     // the 41-word closing sentence is now two, each short
     // WP45 (cycle-21 review): "are designed to run" (PD-06 states a design, not a delivered capacity)

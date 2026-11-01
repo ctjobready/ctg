@@ -366,7 +366,7 @@ test.describe('plain words and plain claims', () => {
   test('Governments: the delivery card names the follow-up surveys at 3, 6 and 12 months; the contracts table and the services line use plain words', async ({ page }) => {
     await open(page, 'partner-with-us/governments/');
     await expect(page.locator('#ministry-sees')).toHaveCount(0);
-    await expect(page.locator('#mechanism .model__block', { hasText: 'Local, Remote and Global Work' })).toContainText('with monthly reports to the agency and follow-up surveys at 3, 6 and 12 months after each course.');
+    await expect(page.locator('#mechanism .model__block', { hasText: 'Local, Remote and Global Work' })).toContainText('Placement support, then follow-up surveys at 3, 6 and 12 months after each course.'); // WP155 (Polish 5): was "... with monthly reports to the agency and follow-up surveys at 3, 6 and 12 months after each course."
     const contracts = await texts(page, '#contracts tbody td:nth-child(2)');
     expect(contracts).toContain('Training in digital technologies');
     expect(contracts).toContain('Training for staff on the learning platform and lab operations');
@@ -392,7 +392,7 @@ test.describe('plain words and plain claims', () => {
     await expect(page.locator('#faqs details', { has: page.locator('summary', { hasText: 'What About Safeguarding and Data Protection?' }) })).toHaveCount(0);
     await open(page, 'about/governance/');
     const text = await mainText(page);
-    expect(text).toContain('Funders receive monthly reports and outcome data with personal details protected');
+    expect(text).toContain('outcome data shared with funders has personal details protected'); // WP155 (Polish 6): was "Funders receive monthly reports and outcome data with personal details protected"; the monthly reports are promised once, in the Independent Evaluation band
     expect(text).not.toContain('privacy-appropriate');
   });
 

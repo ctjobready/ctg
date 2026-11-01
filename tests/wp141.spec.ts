@@ -217,7 +217,7 @@ test.describe('WP141 item 1: the in-sentence copies are rewritten (spot checks)'
   test('the positioning statements read without the clause (Home, YouthWIDE, Development Partners, Governments, Universities, JobReady@Campus)', () => {
     expect(main('index.html')).toContain('with monthly reports on progress toward paid work. ');
     expect(main('programs/youthwide/index.html')).toContain('Partners receive monthly reports on progress toward paid work.');
-    expect(main('partner-with-us/development-partners/index.html')).toContain('Partners receive monthly reports, and outcomes are tracked after each course.');
+    expect(main('partner-with-us/development-partners/index.html')).toContain('We combine training, mentoring and placement support. Partners receive monthly reports.'); // WP155 (Polish 5): was "Partners receive monthly reports, and outcomes are tracked after each course."
     expect(main('partner-with-us/governments/index.html')).toContain('Your agency receives monthly reports on progress toward paid work.');
     expect(main('partner-with-us/universities/index.html')).toContain('Your institution receives monthly reports on progress toward paid work.');
     expect(main('programs/jobready-campus/index.html')).toContain('Institutions receive monthly reports on progress toward paid work.');

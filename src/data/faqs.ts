@@ -64,7 +64,8 @@ export const faqs: Faq[] = [
   { id: 'Q13', q: `Who Are Your Typical Learners?`, a: `Mostly university graduates from across Bangladesh, some of them already working before training. Among alumni who answered the October 2026 survey, 85.0% hold a bachelor’s degree or higher, 68.2% were aged 15–35 and 63.0% live outside Dhaka, across 58 of the country’s 64 districts. Among surveyed completers, 48.0% were working before training.`, evidence: ['OC-09', 'OC-01'], audiences: ['universities', 'all'] },
   // WP46 (cycle-22 review): the comparison is with a self-paced course alone, not a claim about every course platform.
   // WP129 (owner answer 2026-10-31): certification exam preparation is inside the 100 training hours per certification, so the sentence says "including".
-  { id: 'Q14', q: `How Is CodersTrust Different from an Online Course Platform?`, a: `Compared with a self-paced course alone, every supported TalentLEAP cohort pairs 100 training hours per certification, including certification exam preparation, with three months of milestone-based mentoring, placement support and outcome tracking for 12 months after each course.`, evidence: ['PD-01', 'PD-02', 'PD-02a'], audiences: ['all'] },
+  // WP155 (Opus Max run 2, kit 122, Polish 10): CodersTrust runs a course storefront itself (jobready.global, live), so the question compares a supported cohort with a self-paced course alone, as the answer does ("Compared with a self-paced course alone, every supported TalentLEAP cohort ..."), not CodersTrust with a kind of service.
+  { id: 'Q14', q: `How Is a Supported Cohort Different from a Self-Paced Course?`, a: `Compared with a self-paced course alone, every supported TalentLEAP cohort pairs 100 training hours per certification, including certification exam preparation, with three months of milestone-based mentoring, placement support and outcome tracking for 12 months after each course.`, evidence: ['PD-01', 'PD-02', 'PD-02a'], audiences: ['all'] },
   // Page-specific variants (not in the Q1–Q14 bank, so never listed in `all`).
   { id: 'Q8-employer', q: `What Does It Cost?`, a: `Pricing is set per program; we share an indicative budget in the discovery session and confirm it after the needs assessment. Standard inclusions are a needs assessment, a customized curriculum, interactive workshops, progress evaluation and post-training support; certification exam preparation and talent sourcing are scoped separately where needed.`, evidence: ['PD-02', 'IN-10'], audiences: ['variants'] },
   // WP36 (cycle-13 review): the cost (Q8) and safeguarding (Q9) answers were printed word for word on four to six route pages. The partner hub FAQ keeps the full answers; a route page gives one line and a link to where
@@ -111,7 +112,8 @@ const q1Variant = (id: string, opening: string): Faq => {
 faqs.push(
   q1Variant('Q1-development-partners', 'We test local employer demand in your portfolio countries first and choose each country’s tracks with local partners.'),
   q1Variant('Q1-government', 'We test local employer demand, lab access and facilitator supply first and choose each country’s tracks with local partners.'),
-  q1Variant('Q1-campus', 'We test local employer demand for your students’ skills and your campus labs first, and choose each country’s tracks with local partners.'),
+  // WP155 (Opus Max run 2, kit 122, Polish 9): "... and your campus labs first, and choose ..." could be read as testing employer demand for the labs; the demand is tested for the students’ skills and the labs are checked.
+  q1Variant('Q1-campus', 'We first test local employer demand for your students’ skills and check your campus labs, then choose each country’s tracks with local partners.'),
   // Employers (WP32, cycle-9 review): the bank answer is about youth-program evidence and country tracks, which does not answer an employer. This answer repeats the Employers page's own statements
   // (the needs assessment, IN-10; the candidate-pool scope of talent requests, which its positioning statement rests on IN-10 and IN-04 for), so it claims nothing the page does not already say.
   // WP69 (owner item 1, 2026-10-21): the question is "Will This Work for Our Roles?" on this page (the answer below is about roles, not countries); the shared Q1 keeps "Will This Work in Our Country?" for the other audiences.
@@ -150,7 +152,8 @@ faqs.push(
       ...q2,
       id: 'Q2-investor',
       a: q2.a
-        .replace(national, 'In Her Power, a national program of the Department of ICT (DoICT), under the ICT Division, CodersTrust provided the curriculum, training manuals and mentorship guidelines and trained 2,400 women directly; the national program trained 25,125 women across 130 sub-districts (upazilas), meeting its target.')
+        // WP155 (Opus Max run 2, kit 122, Polish 3): the page states Her Power's counts twice already (the contract-scope tile, with who trained whom, and the reach reconciliation), so the answer says what CodersTrust did and that the national program met its target, and points to the figures above.
+        .replace(national, 'In Her Power, a national program of the Department of ICT (DoICT), under the ICT Division, CodersTrust provided the curriculum, training manuals and mentorship guidelines and trained women directly; the national program met its target (figures above).')
         .replace(scale, 'We scale in phases: larger programs are designed to run up to 10 cohorts in parallel through facilitators trained by CodersTrust (Training of Trainers) in existing labs and colleges. A 100,000+ national program is a design option we have not yet delivered.'),
       audiences: ['variants'] as Faq['audiences'],
     };

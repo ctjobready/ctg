@@ -64,8 +64,9 @@ test.describe('WP102 1: SC-04 says the NU learners are being onboarded, not in a
     expect(text).toContain('National University learners being onboarded, not learners trained by CodersTrust');
   });
 
-  test('Investors reads SC-04 whole: the NU sentence is the new SC-04 text', () => {
-    expect(visibleOf('/partner-with-us/investors/')).toContain(SC04_NEW);
+  test('Investors reads SC-04 whole: the NU line is the new SC-04 text (WP155: split at its semicolon into two sentences, the wording unchanged)', () => {
+    const [learners, partnership] = SC04_NEW.split('; ');
+    expect(visibleOf('/partner-with-us/investors/')).toContain(`${learners}. ${partnership}.`);
   });
 });
 

@@ -37,6 +37,11 @@ if (!pa08) throw new Error('InvestorReach: PA-08 no longer reads "CodersTrust Wa
 const badgeText = (bid: string) => (bid === 'PA-08' ? `${pa08[1].replace('STEAM Category', 'STEAM category')}.` : fact(bid).text);
 // WP102 (owner answer 2026-10-28): this page reads SC-04 whole. SC-04 says the NU learners are being onboarded, not learners trained by CodersTrust (WP90 had this page's own sentence for it).
 const nuSentence = fact('SC-04').text;
+// WP155 (Opus Max run 2, kit 122, Polish 2): the 45-word sentence is two. SC-04 is read whole and split at its semicolon (the register text is unchanged): the NU learners and their qualifier, then the partnership. The build stops if SC-04 stops having that shape.
+const nuParts = nuSentence.split('; ');
+if (nuParts.length !== 2 || !nuParts[0].startsWith('1.5M+ National University learners being onboarded (') || !nuParts[1].startsWith('CodersTrust has been NU’s official training partner')) {
+  throw new Error('InvestorReach: SC-04 no longer reads "<NU learners being onboarded (...)>; <CodersTrust has been NU’s official training partner ...>"');
+}
 ---
 
 <Section id={id} tone="white" aria-labelledby={`${id}-h`}>
@@ -49,7 +54,7 @@ const nuSentence = fact('SC-04').text;
       <p class="ir__note" data-fact={CONTRACT_TOTAL_NOTE_INVESTORS.facts.join(' ')}>{CONTRACT_TOTAL_NOTE_INVESTORS.text}</p>
     </div>
   </div>
-  <p class="ir__p" data-fact="SC-04" data-reveal>Separately, and not counted in the delivered reach: {nuSentence}.</p>
+  <p class="ir__p" data-fact="SC-04" data-reveal>Not counted in the delivered reach: {nuParts[0]}. {nuParts[1]}.</p>
   <ul class="ir__badges" role="list" data-reveal>
     {
       badges.map((bid) => (

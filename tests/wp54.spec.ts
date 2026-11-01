@@ -369,7 +369,10 @@ test.describe('Universities: the meta description states only what the page stat
     expect(await page.locator('meta[property="og:description"]').getAttribute('content')).toBe(description);
     const body = await everything(page);
     expect(body).toContain('We help universities and colleges prepare students');
-    expect(body).toContain('JobReady@Campus combines training, mentoring and placement support in campus labs alongside academic studies.');
+    // WP155 (Polish 4): the statement is "... in campus labs."; the "alongside academic studies" of the description is the band's H2 ("Training Alongside the Degree") and its card ("Training runs in parallel with academic studies").
+    expect(body).toContain('JobReady@Campus combines training, mentoring and placement support in campus labs.');
+    expect(body).toContain('Training Alongside the Degree');
+    expect(body).toContain('Training runs in parallel with academic studies');
     expect(body).not.toContain('85.0');
   });
 });

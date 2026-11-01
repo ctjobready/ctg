@@ -111,9 +111,11 @@ test.describe('3 "In parallel with / alongside academic studies" stays where it 
     const text = main(UNIVERSITIES);
     expect(text).toContain('Our TalentLEAP method organizes skills into career paths. How TalentLEAP Works');
     expect(text).not.toContain('JobReady@Campus runs training in parallel with academic studies');
-    expect(text).toContain('JobReady@Campus combines training, mentoring and placement support in campus labs alongside academic studies.');
+    // WP155 (Polish 4): the approach line no longer repeats the idea ("... in campus labs." then the monthly reports); the "In Parallel with the Degree" card is the one place on the page that states it.
+    expect(text).toContain('JobReady@Campus combines training, mentoring and placement support in campus labs. Your institution receives monthly reports on progress toward paid work.');
+    expect(text).not.toContain('JobReady@Campus combines training, mentoring and placement support in campus labs alongside academic studies.');
     expect(text).toContain('In Parallel with the Degree Training runs in parallel with academic studies, with professional internships where employer placements are available.');
-    expect(count(text, WITH_STUDIES)).toBe(2);
+    expect(count(text, WITH_STUDIES)).toBe(1);
   });
 
   test('JobReady@Campus: the track-record line is "built on the TalentLEAP model" and the last step is "The first cohort begins in your campus labs."; the hero and the approach line keep the idea', () => {

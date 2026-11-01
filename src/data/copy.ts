@@ -512,8 +512,9 @@ export const POSITIONING: Record<PositioningKey, CopyBlock> = {
     // WP149 (Opus XHigh run 3, kit 116): "Partners receive monthly reports, and outcomes are tracked after each course." (it was "... monthly reports and outcome tracking after each course.": an odd object for "receive", and it could read as reports arriving only after each course);
     // scripts/check-facts.mjs declares the new wording whole as well.
     // WP154 (Opus Max run 1, kit 121, Polish): "... placement support." without "in existing labs and colleges": the band's "Existing Labs and Colleges" card heading says it once.
-    text: 'We combine training, mentoring and placement support. Partners receive monthly reports, and outcomes are tracked after each course.',
-    facts: ['PD-01', 'PD-08', 'PD-09'],
+    // WP155 (Opus Max run 2, kit 122, Polish 5): "Partners receive monthly reports." without ", and outcomes are tracked after each course": the band's last card ("Where They Work") states the outcome tracking (PD-02, 12 months after each course).
+    text: 'We combine training, mentoring and placement support. Partners receive monthly reports.',
+    facts: ['PD-01', 'PD-08'],
   },
   governments: {
     // WP42 (cycle-19 review): as Development Partners: the two shared sentences, the reader named in the second ("Your agency receives monthly reports on progress toward paid work"). Declared whole for /partner-with-us/governments/
@@ -531,7 +532,8 @@ export const POSITIONING: Record<PositioningKey, CopyBlock> = {
   universities: {
     // WP44 (cycle-21 review): as JobReady@Campus: the program is the subject, and the institution's reports are scoped as the program scope says. scripts/check-facts.mjs declares it whole for /partner-with-us/universities/ (POSITION_WHOLE_STATEMENT).
     // It rests on IN-09 (training in parallel with academic studies, in on-campus labs), PD-01 (mentoring, placement support) and PD-08 (monthly reports).
-    text: 'JobReady@Campus combines training, mentoring and placement support in campus labs alongside academic studies. Your institution receives monthly reports on progress toward paid work.',
+    // WP155 (Opus Max run 2, kit 122, Polish 4): "... in campus labs." without "alongside academic studies": the band's H2 ("Training Alongside the Degree") and its "In Parallel with the Degree" card state the timing. IN-09 (on-campus labs) still carries the statement.
+    text: 'JobReady@Campus combines training, mentoring and placement support in campus labs. Your institution receives monthly reports on progress toward paid work.',
     facts: ['IN-09', 'PD-01', 'PD-08'],
   },
   employers: {
@@ -549,7 +551,8 @@ export const POSITIONING: Record<PositioningKey, CopyBlock> = {
     // WP36 (cycle-13 review): YouthWIDE's hero lead and "at a Glance" rows already say who the program is for and where it runs, so "Our Approach" states only what the program does, in the two shared sentences
     // with the program named as the subject. This is the one page-specific statement of its kind: scripts/check-facts.mjs declares it whole for /programs/youthwide/ (POSITION_WHOLE_STATEMENT).
     // WP93 (triage A4): the reporting promise carries the scope guard, as the other Approach statements do.
-    text: 'YouthWIDE combines training, mentoring and placement support in existing labs and colleges. Partners receive monthly reports on progress toward paid work.',
+    // WP155 (Opus Max run 2, kit 122, Polish 1): "... placement support." without "in existing labs and colleges": the band's "How We Reach Them" card says where training happens and who teaches (PD-06), as the Home, Development Partners and Governments cards do.
+    text: 'YouthWIDE combines training, mentoring and placement support. Partners receive monthly reports on progress toward paid work.',
     facts: ['PD-01', 'PD-08'],
   },
   // No page uses this statement today (the YouthWIDE page's is `youthwide`, above). WP45 (cycle-21 review): it no longer calls the Bangladesh initiative "a national initiative" (IN-01 is an initiative that aims to train educated youth by 2030, in Bangladesh and similar countries).
@@ -813,13 +816,15 @@ export const WOMEN_INCLUSION: CopyBlock = {
 };
 
 /**
- * The two contracting entities as the register names them (ID-07, PD-13), in one phrase. The Governance hero (GOVERNANCE below), the due-diligence rows (DueDiligenceView, ContractingPanel) and the Investors
+ * The two contracting entities as the register names them (ID-07, PD-13), in one phrase. The due-diligence rows (DueDiligenceView, ContractingPanel; WP155: the Governance hero no longer names them) and the Investors
  * offer band's due-diligence line read it, so the names cannot drift (WP49, cycle-24 review).
  */
 export const CONTRACTING_ENTITIES = 'CT USA, Inc. in the United States or CodersTrust Bangladesh Ltd. in Bangladesh';
 
 export const GOVERNANCE: CopyBlock = {
-  text: `CodersTrust contracts through ${CONTRACTING_ENTITIES}; the contracting entity depends on the program’s country and the funder’s requirements. Legal status and due-diligence arrangements for a specific program are confirmed with the funder during co-design.`,
+  // WP155 (Opus Max run 2, kit 122, Polish 6): the hero no longer names the entities or says the entity depends on the program's country and the funder's requirements; the Contracting Entities card (ContractingPanel) says both once.
+  // The lead says what is confirmed with the funder in co-design (PD-13).
+  text: 'The contracting entity, legal status and due-diligence arrangements for each program are confirmed with the funder during co-design.',
   facts: ['ID-07', 'PD-13'],
 };
 
@@ -996,8 +1001,8 @@ export const C14 = {
   // WP49 (cycle-24 review): Home's closing band prints the same action under a "Your First Step" label, so the line there does not say "Your first step" again (the audience pages' reinforcement strip has no such label and keeps `firstAction`).
   firstActionLabeled: 'A discovery session. In your inquiry, include two suitable times.',
   variants: {
-    // WP136 (owner answer 2026-10-31): the "two suitable times" request appears once per page; YouthWIDE's one ask is the Funders line, so the briefing line is the pre-WP135 one (the briefing email's own field asks for the times).
-    governments: 'Your agency’s procurement timeline sets the pace; we start with a briefing.',
+    // WP155 (Opus Max run 2, kit 122, Polish 7): the Governments closing line ("Your agency’s procurement timeline sets the pace; we start with a briefing.") is gone. The entry-point band and Step 1 of "What Happens Next" say it,
+    // and YouthWIDE's closing line is the Funders one alone (the page's one request for two suitable times, WP136).
     investors: 'Your first step: an introduction call.',
     // WP34 (cycle-11 review): the Employers closing band has two routes (team training, hiring), so the line names the route it is for.
     // WP54 (cycle-28 review, Kimi K5): the first step is a discovery session on both routes (the hiring route's first step is "Discovery Session" too, EMPLOYER_HIRING_STEPS; WP129), so the line says "for team training or hiring" and, like Home's labeled line, asks for "two suitable times".

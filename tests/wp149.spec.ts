@@ -147,7 +147,7 @@ test.describe('1 The long facilitator form sits in the sentence where the page e
 
 test.describe('2 Development Partners: the reports and the tracking read as two plain clauses', () => {
   test('"Our Approach" says monthly reports arrive, and outcomes are tracked after each course', () => {
-    const S = 'We combine training, mentoring and placement support. Partners receive monthly reports, and outcomes are tracked after each course.';
+    const S = 'We combine training, mentoring and placement support. Partners receive monthly reports.'; // WP155 (Polish 5): was "... monthly reports, and outcomes are tracked after each course."; the band's "Where They Work" card states the outcome tracking
     expect(main(DEV)).toContain(S);
     expect(main(DEV)).not.toContain('monthly reports and outcome tracking after each course');
   });

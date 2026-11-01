@@ -41,7 +41,7 @@ test('Minor 3: YouthWIDE "What We Deliver"', () => {
 
 test('Minor 4: certification is a success measure only where the track offers one', () => {
   expect(main('programs/jobready-work/index.html')).toContain('Completion, any certification the track offers and the skills you name are agreed before you start and checked in the progress evaluation.');
-  expect(main('partner-with-us/employers/index.html')).toContain('Success measures are agreed before you start (completion, any certification the track offers and the role-specific skills you prioritize) and checked in the progress evaluation.');
+  expect(main('partner-with-us/employers/index.html')).toContain('Success measures cover completion, any certification the track offers and the role-specific skills you prioritize.'); // WP155 (Polish 8): the pilot band lead lists the measures; "agreed before you start" is in the Needs Assessment First card
 });
 
 test('Polish 5: Korail case study "Two Learners in Their Own Words"; Success Stories keeps "Two Learner Journeys"', () => {

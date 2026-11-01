@@ -39,7 +39,7 @@ async function faqJsonLd(page: Page) {
 }
 
 test.describe('TalentLEAP: the course-platform answer compares with a self-paced course alone (item 1)', () => {
-  const QUESTION = 'How Is CodersTrust Different from an Online Course Platform?';
+  const QUESTION = 'How Is a Supported Cohort Different from a Self-Paced Course?'; // WP155 (Polish 10): was 'How Is CodersTrust Different from an Online Course Platform?' (CodersTrust runs a course storefront itself)
   // WP146: the answer is one sentence now: the scoped comparison and the cohort sentence are joined ("…alone, every supported TalentLEAP cohort pairs…"); the separate first sentence ("supported CodersTrust cohorts add mentoring, …") is gone.
   const ANSWER = 'Compared with a self-paced course alone, every supported TalentLEAP cohort pairs 100 training hours per certification, including certification exam preparation, with three months of milestone-based mentoring, placement support and outcome tracking for 12 months after each course.';
 

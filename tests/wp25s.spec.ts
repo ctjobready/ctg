@@ -357,7 +357,9 @@ test.describe('Our Model and Investors', () => {
     await expect(item).toHaveCount(1);
     const answer = compact((await item.textContent()) ?? '');
     expect(answer.indexOf('CodersTrust provided the curriculum')).toBeGreaterThan(-1);
-    expect(answer.indexOf('CodersTrust provided the curriculum')).toBeLessThan(answer.indexOf('25,125'));
+    // WP155 (Polish 3): the answer no longer restates the 25,125 (the page states it in the contract-scope tile and the reach reconciliation); it leads with CodersTrust’s role and points to the figures above.
+    expect(answer.indexOf('CodersTrust provided the curriculum')).toBeLessThan(answer.indexOf('the national program met its target (figures above)'));
+    expect(answer).not.toContain('25,125');
   });
 
   test('the employer and gig-work marketplaces are named as two, wherever the page speaks of them', async ({ page }) => {
