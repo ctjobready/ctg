@@ -1,4 +1,4 @@
-import { existsSync, readFileSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
 import { expect, test } from '@playwright/test';
 import { DIST_DIR } from './support/env';
@@ -271,10 +271,17 @@ test.describe('O1 SuperKids learner portraits: no first names', () => {
     expect(readFileSync(join(DIST_DIR, 'llms.txt'), 'utf8')).not.toMatch(NAMES);
   });
 
+  test('no built page and no built asset filename carries the names in any letter case (image URLs, asset ids)', () => {
+    const ANY_CASE = /kolika|zuhaina|nihal|zaeem/i;
+    const hits = listPages().filter((p) => ANY_CASE.test(readFileSync(p.file, 'utf8'))).map((p) => p.route);
+    expect(hits).toEqual([]);
+    expect(readdirSync(join(DIST_DIR, '_astro')).filter((f) => ANY_CASE.test(f))).toEqual([]);
+  });
+
   test('SuperKids and In the Field show the four portraits with the alt "Portrait of a SuperKids learner" and the caption "SuperKids learner"', () => {
     for (const rel of [SUPERKIDS, IN_THE_FIELD]) {
       const raw = html(rel);
-      const imgs = [...raw.matchAll(/<img[^>]*data-asset="legacy-superkids-learner-[a-z]+"[^>]*>/g)].map((m) => m[0]);
+      const imgs = [...raw.matchAll(/<img[^>]*data-asset="legacy-superkids-learner-portrait-[1-4]"[^>]*>/g)].map((m) => m[0]);
       expect(imgs.length, `${rel} shows the four learner portraits`).toBe(4);
       for (const img of imgs) expect(decode(/alt="([^"]*)"/.exec(img)?.[1] ?? ''), rel).toBe('Portrait of a SuperKids learner');
       const caps = [...raw.matchAll(/<figcaption class="gd__cap"[^>]*>([^<]*)<\/figcaption>/g)].map((m) => decode(m[1])).filter((c) => /SuperKids learner/.test(c));

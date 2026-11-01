@@ -82,10 +82,10 @@ const ALT: Record<string, string> = {
   'superkids/hall-seated-2': 'Children sitting on colorful mats in a classroom, some resting their chins on their hands as they listen',
   'superkids/mat-activity': 'Children kneeling and sitting on colorful floor mats, working through printed activity sheets together',
   'superkids/plaques-group': 'CodersTrust staff and guests standing together with children holding plaques, in front of a SuperKids event backdrop',
-  'superkids/learner-kolika': 'Portrait of a SuperKids learner',
-  'superkids/learner-zuhaina': 'Portrait of a SuperKids learner',
-  'superkids/learner-nihal': 'Portrait of a SuperKids learner',
-  'superkids/learner-zaeem': 'Portrait of a SuperKids learner',
+  'superkids/learner-portrait-1': 'Portrait of a SuperKids learner',
+  'superkids/learner-portrait-2': 'Portrait of a SuperKids learner',
+  'superkids/learner-portrait-3': 'Portrait of a SuperKids learner',
+  'superkids/learner-portrait-4': 'Portrait of a SuperKids learner',
   'field/ccny-mou-signing': 'Two signatories seated at a table at the City College of New York and CT USA (CodersTrust) MOU ceremony, with three people applauding behind them',
   'field/team-award-presentation': 'A man in a white polo handing a trophy to a young man in a black CT t-shirt, with CodersTrust team members in white CT polos behind them',
   'field/plaque-presentation': 'A man in a navy suit presenting a framed medal in a red case to a man in a blazer, with three people standing beside them in front of a trophy cabinet',
@@ -128,10 +128,10 @@ export const CAPTION: Record<string, string> = {
   'superkids/hall-seated-2': 'SuperKids session',
   'superkids/mat-activity': 'Activity sheets on the floor mats, SuperKids session',
   'superkids/plaques-group': 'Staff, guests and children at the SuperKids art competition event',
-  'superkids/learner-kolika': 'SuperKids learner',
-  'superkids/learner-zuhaina': 'SuperKids learner',
-  'superkids/learner-nihal': 'SuperKids learner',
-  'superkids/learner-zaeem': 'SuperKids learner',
+  'superkids/learner-portrait-1': 'SuperKids learner',
+  'superkids/learner-portrait-2': 'SuperKids learner',
+  'superkids/learner-portrait-3': 'SuperKids learner',
+  'superkids/learner-portrait-4': 'SuperKids learner',
   'general/madrasa-students-lesson': 'Students in a classroom lesson',
   'general/madrasa-students-class': 'Students listening in class',
   'general/madrasa-students-hall': 'Students seated in a large hall',
@@ -281,7 +281,7 @@ for (const [page, keys] of Object.entries(FUTURE)) {
 /** "In the field" galleries, by page. */
 const GALLERY: Record<string, string[]> = {
   // SuperKids (WP18b): the set leads with lesson and project photographs (a hands-on lesson, a student presenting her project, group learning); the MOU photographs follow.
-  superkids: ['superkids/classroom-uniform', 'superkids/robotics-desk', 'superkids/stem-group', 'superkids/hall-seated', 'superkids/student-explains', 'superkids/steam-workshop', 'superkids/certificate-ceremony', 'superkids/art-competition', 'superkids/plaques-group', 'superkids/tree-planting', 'superkids/mou-signing', 'superkids/mou-signing-pen', 'superkids/learner-kolika', 'superkids/learner-zuhaina', 'superkids/learner-nihal', 'superkids/learner-zaeem'],
+  superkids: ['superkids/classroom-uniform', 'superkids/robotics-desk', 'superkids/stem-group', 'superkids/hall-seated', 'superkids/student-explains', 'superkids/steam-workshop', 'superkids/certificate-ceremony', 'superkids/art-competition', 'superkids/plaques-group', 'superkids/tree-planting', 'superkids/mou-signing', 'superkids/mou-signing-pen', 'superkids/learner-portrait-1', 'superkids/learner-portrait-2', 'superkids/learner-portrait-3', 'superkids/learner-portrait-4'],
   // YouthWIDE (WP21, item 1): programs and agreements with a known place (no photograph here is of a madrasah, and none implies a delivered madrasah program).
   // WP30b: the programs abroad lead, then the Bangladesh program and agreement.
   // WP55: the second photograph was the old "Albania" one (it is the Kosovo pilot, and is a Kosovo photograph only); the Somaliland Hour of Code, a program abroad, takes its place.
