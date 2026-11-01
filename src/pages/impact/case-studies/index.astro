@@ -19,7 +19,7 @@ const description = desc('Five CodersTrust case studies, each with its figure an
 const jsonLd = [
   webPage({ path, name: 'CodersTrust Case Studies', description, type: 'CollectionPage' }),
   itemList('CodersTrust case studies', CASE_STUDIES.map((c) => ({ name: c.name, path: c.path }))),
-  articleNode({ path, headline: 'CodersTrust Case Studies', description, datePublished: '2026-10-08', dateModified: '2026-10-31', author: 'CodersTrust' }),
+  articleNode({ path, headline: 'CodersTrust Case Studies', description, datePublished: '2026-10-08', dateModified: '2026-11-01', author: 'CodersTrust' }), // WP142 (2026-11-01): the card label "Partner and Place" (it read "Partner & Place"), so the date moves (owner rule: any visible text change)
 ];
 const d = discoveryCta();
 

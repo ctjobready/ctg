@@ -182,8 +182,8 @@ test.describe('WP107 item 5: the trial page ends with "How We Track Outcomes", t
     const children = section.locator('.rsec__body > *');
     await expect(children).toHaveCount(1);
     expect(await children.first().evaluate((el) => el.tagName)).toBe('P');
-    // WP141 (owner answer 2026-11-01): the paragraph closes with the page's one program-scope statement; the answer itself no longer carries the clause
-    expect(compact(await children.first().textContent())).toBe(`${ANSWER} Inclusions and reporting on this page are agreed in the program scope.`);
+    // WP141 (owner answer 2026-11-01): the paragraph closes with the page's one program-scope statement (WP142: "This tracking plan is agreed in each program’s scope."); the answer itself no longer carries the clause
+    expect(compact(await children.first().textContent())).toBe(`${ANSWER} This tracking plan is agreed in each program’s scope.`);
     expect(await children.first().getAttribute('data-fact')).toBe('PD-09 PD-08 RC-01');
     await expect(section.locator('details, summary, h3')).toHaveCount(0);
   });

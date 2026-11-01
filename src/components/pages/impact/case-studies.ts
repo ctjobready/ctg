@@ -16,7 +16,7 @@ export interface CaseStudy {
   /** Register fact whose stat is the outcome-first figure. */
   factId: string;
   summary: string;
-  /** Card fields, the same four on every card (WP20d): Partner & Place, Who, Scope & Delivery, then the Result (the register stat). Wording follows each case-study page. */
+  /** Card fields, the same four on every card (WP20d): Partner and Place, Who, Scope and Delivery, then the Result (the register stat). Wording follows each case-study page. */
   place: string;
   who: string;
   scope: string;

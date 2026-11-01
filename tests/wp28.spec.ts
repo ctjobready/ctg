@@ -22,7 +22,7 @@ test.describe('What a Supported Youth Cohort Includes (#features; WP41: it was "
     expect(t).not.toContain('Documentary Evidence of Earnings');
     expect(t).toContain('Monthly reports show progress toward paid work.');
     expect(t).not.toContain('program scope');
-    expect(compact(await page.locator('#features').textContent())).toContain('Inclusions, exam terms and reporting on this page are agreed in the program scope.');
+    expect(compact(await page.locator('#features').textContent())).toContain('Inclusions and reporting on this page are agreed in the program scope.'); // WP142: Home states no exam fees, attempts or eligibility, so the sentence names no exam terms
   });
 
   test('no card on Home claims an "Employer-Ready Portfolio" (WP30c: the hands-on-labs row is gone; three cards answer the three ranked pains)', async ({ page }) => {

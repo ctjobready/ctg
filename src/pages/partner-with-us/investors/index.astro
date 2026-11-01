@@ -36,7 +36,7 @@ import InvestorReach from '../../../components/pages/investors/InvestorReach.ast
 import InvestorFit from '../../../components/pages/investors/InvestorFit.astro';
 import InvestorOffer from '../../../components/pages/investors/InvestorOffer.astro';
 import FaqBlock from '../../../components/pages/hub/FaqBlock.astro';
-import { HEADLINE, PROGRAM_SCOPE_STATEMENT, VALUE_PROPOSITION } from '../../../data/copy';
+import { HEADLINE, PROGRAM_SCOPE_COHORT_INCLUSIONS, VALUE_PROPOSITION } from '../../../data/copy';
 import { cta } from '../../../lib/mailto';
 import { faqJsonLd } from '../../../lib/faq';
 import { linkAttrs } from '../../../lib/url';
@@ -62,7 +62,7 @@ const includes = [
     icon: 'graduation-cap',
     title: 'Learn Through TalentLEAP',
     // WP64 (cycle-36 review, Claude): the same sentence as the TalentLEAP page's opening, "The first published TalentLEAP level is Competent; Proficient and Expert levels are planned." (it said "Competent is the published first level; Proficient and Expert are planned.").
-    text: 'The first published TalentLEAP level is Competent; Proficient and Expert levels are planned. Supported cohorts include mentoring, certification exam preparation and placement support.',
+    text: `The first published TalentLEAP level is Competent; Proficient and Expert levels are planned. Supported cohorts include mentoring, certification exam preparation and placement support. ${PROGRAM_SCOPE_COHORT_INCLUSIONS}`,
     facts: ['IN-06', 'IN-08', 'PD-01', 'PD-02'],
   },
   {
@@ -126,7 +126,7 @@ const mechanismBlocks = [
   </Tone>
 
   <Tone cmf="C8">
-    <IncludesBand id="features" title="What JobReady Does" cards={includes} scope={PROGRAM_SCOPE_STATEMENT}>
+    <IncludesBand id="features" title="What JobReady Does" cards={includes}>
       <a slot="more" class="link" href={rollout.href}>See the Full Rollout Status<Icon name="arrow-right" size={16} /></a>
     </IncludesBand>
   </Tone>

@@ -102,7 +102,7 @@ export const CTAS: Record<CtaKey, CtaDef> = {
     key: 'investor',
     label: 'Request an Introduction Call',
     subject: 'Introduction call request — [firm]',
-    body: ['Firm', 'Name & role', 'Impact focus', 'Two suitable times for an introduction call'],
+    body: ['Firm', 'Name and role', 'Impact focus', 'Two suitable times for an introduction call'],
   },
   campus: {
     key: 'campus',

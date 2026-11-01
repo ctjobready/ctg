@@ -43,7 +43,7 @@ const allPages = (dir = DIST_DIR): string[] =>
  *
  * (a) no page has the qualifier more than once in the visible text of <main>;
  * (b) every page with an inclusion or reporting PROMISE has exactly one qualifier, and it is the page statement: its own sentence, ending
- *     "are agreed in the program scope.", one of the two allowed forms below;
+ *     "... agreed in the program scope." or (WP142) "... agreed in each program’s scope."; its nouns name what the page promises (the per-page map below pins each sentence);
  * (c) non-vacuous: at least 15 pages are examined, and the core route pages are among them;
  * (d) nothing outside the visible text of <main> carries the qualifier: JSON-LD, meta and og descriptions, llms.txt (they mirror the page).
  *
@@ -52,11 +52,13 @@ const allPages = (dir = DIST_DIR): string[] =>
  * follow-up surveys, outcome tracking, or "outcomes are reported", AND it is neither a heading (eight words or fewer, no closing punctuation) nor a
  * timeline step ("monthly reports follow"), which only describes sequence.
  * ------------------------------------------------------------------------------------------------------------------------------------- */
-const SCOPE = /\bprogram scope\b/g;
+// WP142: "program scope" and the possessive "each program’s scope" are both the qualifier (a sentence names what the page promises, e.g. "Cohort inclusions on this page are agreed in each program’s scope.").
+const SCOPE = /\bprogram(?:[’']s)? scope\b/g;
 const NOUN_USES = [/priority groups and possible program scope\./g, /Program partners: a program scope, designed with you\./g];
 const PROMISE = /monthly reports?\b|monthly reporting|progress reports|exam fees?\b|certification exam preparation|exam eligibility|supported (?:youth )?cohorts include|standard inclusions|follow-up surveys?|outcome tracking|outcomes? (?:are|is) reported/i;
 const TIMELINE = /monthly reports follow/i;
-const STATEMENT = /^(?:Inclusions and reporting|Inclusions, exam terms and reporting) on this page are agreed in the program scope\.$/;
+// WP142: the statement is ONE sentence of its own that ends "... agreed in the program scope." or "... agreed in each program’s scope."; its nouns name what the page promises (tests/wp142.spec.ts checks them).
+const STATEMENT = /^[A-Z][^.]{0,80}\b(?:is|are) agreed in (?:the|each) program(?:[’']s)? scope\.$/;
 const heading = (s: string) => !/[.!?]["”]?$/.test(s.trim()) && s.trim().split(/\s+/).length <= 8;
 
 const qualifierCount = (text: string) => (NOUN_USES.reduce((t, re) => t.replace(re, ' '), text).match(SCOPE) ?? []).length;
@@ -163,32 +165,47 @@ test.describe('WP141 item 1: the program-scope qualifier is stated once per page
     expect(isPromise('A discovery session explores your goals, priority groups and possible program scope.')).toBe(false);
     expect(STATEMENT.test('Inclusions and reporting on this page are agreed in the program scope.')).toBe(true);
     expect(STATEMENT.test('Inclusions, exam terms and reporting on this page are agreed in the program scope.')).toBe(true);
+    // WP142: the statement names what the page promises, in either number and with either scope noun
+    expect(STATEMENT.test('Reporting on this page is agreed in the program scope.')).toBe(true);
+    expect(STATEMENT.test('Cohort inclusions on this page are agreed in each program’s scope.')).toBe(true);
+    expect(STATEMENT.test('Inclusions and exam terms on this page are agreed in the program scope.')).toBe(true);
+    expect(STATEMENT.test('Inclusions on this page are agreed in the program scope.')).toBe(true);
+    expect(STATEMENT.test('This tracking plan is agreed in each program’s scope.')).toBe(true);
+    expect(qualifierCount('Cohort inclusions on this page are agreed in each program’s scope.')).toBe(1);
+    expect(qualifierCount('This tracking plan is agreed in each program’s scope. Where included in the program scope, it stays.')).toBe(2);
     expect(STATEMENT.test('As agreed in the program scope, partners receive monthly reports.')).toBe(false);
-    expect(STATEMENT.test('Exam fees are agreed in the program scope.')).toBe(false);
+    expect(STATEMENT.test('Partners receive monthly reports, as agreed in the program scope.')).toBe(false);
   });
 
   test('the statement on each page (page -> sentence)', () => {
+    // WP142 (Opus High run 17, kit 109): each page keeps ONE sentence, and its nouns name only what that page promises.
     const S1 = 'Inclusions and reporting on this page are agreed in the program scope.';
     const S2 = 'Inclusions, exam terms and reporting on this page are agreed in the program scope.';
+    const S3 = 'Reporting on this page is agreed in the program scope.';
+    const S4 = 'Cohort inclusions on this page are agreed in each program’s scope.';
+    const S5 = 'This tracking plan is agreed in each program’s scope.';
+    // Pages whose text has no reports to name (a progress evaluation, not monthly reports): inclusions only (Employers) or inclusions and exam terms (JobReady@Work, TalentLEAP)
+    const S6 = 'Inclusions on this page are agreed in the program scope.';
+    const S7 = 'Inclusions and exam terms on this page are agreed in the program scope.';
     const EXPECTED: Record<string, string> = {
-      'index.html': S2,
+      'index.html': S1,
       'partner-with-us/index.html': S2,
       'partner-with-us/development-partners/index.html': S2,
       'partner-with-us/governments/index.html': S1,
       'partner-with-us/foundations/index.html': S1,
       'partner-with-us/universities/index.html': S2,
       'partner-with-us/local-partners/index.html': S1,
-      'partner-with-us/employers/index.html': S1,
-      'partner-with-us/investors/index.html': S1,
-      'programs/index.html': S1,
+      'partner-with-us/employers/index.html': S6,
+      'partner-with-us/investors/index.html': S4,
+      'programs/index.html': S3,
       'programs/youthwide/index.html': S2,
       'programs/jobready-campus/index.html': S2,
-      'programs/jobready-work/index.html': S2,
+      'programs/jobready-work/index.html': S7,
       'our-model/index.html': S2,
-      'our-model/talentleap/index.html': S2,
-      'about/index.html': S1,
-      'about/governance/index.html': S1,
-      'impact/independent-evaluation/index.html': S1,
+      'our-model/talentleap/index.html': S7,
+      'about/index.html': S3,
+      'about/governance/index.html': S3,
+      'impact/independent-evaluation/index.html': S5,
     };
     const got = Object.fromEntries(R.filter((r) => r.statements.length > 0).map((r) => [r.page, r.statements[0]]));
     expect(got).toEqual(EXPECTED);

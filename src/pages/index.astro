@@ -50,7 +50,7 @@ import { futurePhotos } from '../data/photos';
 import { WORLD_STRIP } from '../data/globalStrip';
 import { HOME_SLIDES } from '../data/heroSlides';
 import GainsPains from '../components/pages/partners/GainsPains.astro';
-import { C14, FUNDER_PAINS, HOME_META, MICRO_COMMITMENT, NEXT_STEPS_TITLE, POSITIONING, PROGRAM_SCOPE_STATEMENT_EXAMS, PROGRAM_SIZES_NOTE, READ_THE_EVIDENCE, painForList, painForRow } from '../data/copy';
+import { C14, FUNDER_PAINS, HOME_META, MICRO_COMMITMENT, NEXT_STEPS_TITLE, POSITIONING, PROGRAM_SCOPE_STATEMENT, PROGRAM_SIZES_NOTE, READ_THE_EVIDENCE, painForList, painForRow } from '../data/copy';
 import { fact } from '../data/facts';
 import { CLAIM_PX06, CLAIM_RC06, freelancePostingsFinding } from '../components/sections/copyText';
 import { cta } from '../lib/mailto';
@@ -195,7 +195,7 @@ const includes = [
 
   <!-- WP38: three short cards (IncludesBand) in place of the concern / inclusion / benefit matrix; one band, so no `join` (it had left this band without bottom padding). -->
   <Tone cmf="C8" tone="airy">
-    <IncludesBand id="features" tone="airy" title="What a Supported Youth Cohort Includes" cards={includes} scope={PROGRAM_SCOPE_STATEMENT_EXAMS} />
+    <IncludesBand id="features" tone="airy" title="What a Supported Youth Cohort Includes" cards={includes} scope={PROGRAM_SCOPE_STATEMENT} />
   </Tone>
 
   <Tone cmf="C9" tone="white">

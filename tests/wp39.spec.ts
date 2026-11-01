@@ -114,7 +114,7 @@ const PAGES: PageSpec[] = [
     h2: 'What Your Business Gets',
     cards: [
       { title: 'Job-Ready Candidates for Your Roles', text: 'Access to candidates from CodersTrust’s placement team for your roles, plus trainees from employer-demand certification tracks.', facts: ['IN-04', 'PD-10'] },
-      { title: 'AI Content Agreed Before Enrollment', text: 'An AI-ready curriculum, designed to prepare people to work with AI tools. Each track’s AI content and work-entry plan are agreed before enrollment.', facts: ['PD-02', 'PD-19'] },
+      { title: 'AI Content Agreed Before Training', text: 'An AI-ready curriculum, designed to prepare people to work with AI tools. Each track’s AI content is agreed with you before training starts.', facts: ['PD-02', 'IN-10'] }, // WP142 (kit 109): team-training wording, no youth-cohort "work-entry plan" or "enrollment"
       { title: 'Customized Curriculum and Workshops', text: 'JobReady@Work builds a customized curriculum and interactive workshops, so your team learns on tasks from your own roles.', facts: ['IN-10'] },
     ],
   },

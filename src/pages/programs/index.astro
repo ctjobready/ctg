@@ -16,7 +16,7 @@ import CTABand from '../../components/ui/CTABand.astro';
 import EvidenceBand from '../../components/pages/home/EvidenceBand.astro';
 import { ctaFor } from '../../components/pages/programs/meta';
 import { NU_COURSE_ORDER, NU_COURSE_SUBJECT } from '../../components/pages/programs/nuPgd';
-import { AIM_DEPENDENCY, MICRO_COMMITMENT, NU_ELIGIBILITY, PROGRAM_SCOPE_STATEMENT, withoutSince2014 } from '../../data/copy';
+import { AIM_DEPENDENCY, MICRO_COMMITMENT, NU_ELIGIBILITY, PROGRAM_SCOPE_REPORTING, withoutSince2014 } from '../../data/copy';
 import { fact } from '../../data/facts';
 import { joinList } from '../../lib/format';
 import { linkAttrs } from '../../lib/url';
@@ -100,8 +100,8 @@ const jsonLd = [
         ))
       }
     </ul>
-    <p class="hub__scope">{PROGRAM_SCOPE_STATEMENT}</p>
     <p class="hub__more">Deciding as an institution? <a class="link" href={linkAttrs('/partner-with-us/').href}>Start with Partner with Us.</a> <a class="link" href={linkAttrs('/our-model/').href}>See How the Model Works<Icon name="arrow-right" size={16} /></a></p>
+    <p class="hub__scope">{PROGRAM_SCOPE_REPORTING}</p>
   </Section>
 
   <!-- WP31: the hub keeps the 78.2% tile without its detail line; the income paragraph (RC-01's headline) and the tile's detail line live on the evidence pages the band links.
@@ -192,7 +192,7 @@ const jsonLd = [
   }
   /* WP141: the page's one program-scope statement, set like the routing line under it */
   .hub__scope {
-    margin: var(--space-lg) 0 0;
+    margin: var(--space-md) 0 0;
     color: var(--on-surface-variant);
   }
   .hub__more {

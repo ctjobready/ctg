@@ -847,6 +847,20 @@ export const MICRO_COMMITMENT = 'A discovery session is a conversation, not a co
 export const PROGRAM_SCOPE_STATEMENT = 'Inclusions and reporting on this page are agreed in the program scope.';
 export const PROGRAM_SCOPE_STATEMENT_EXAMS = 'Inclusions, exam terms and reporting on this page are agreed in the program scope.';
 /**
+ * WP142 (Opus High run 17, kit 109; principle challenge accepted within the owner's once-per-page rule): each page keeps ONE sentence, and its nouns name only what that page promises. The forms above
+ * are for pages that list inclusions and promise reports (EXAMS: and state exam fees, eligibility or attempts). The forms below are for the pages whose promises differ; the page rule (tests/wp141.spec.ts)
+ * matches "agreed in the program scope." / "agreed in each program’s scope." once per page, and tests/wp142.spec.ts checks that each noun has a referent on the page.
+ *  - REPORTING: About, Governance and Programs make reporting promises but list no inclusions.
+ *  - INCLUSIONS / INCLUSIONS_EXAMS: Employers promises a progress evaluation, not reports (JobReady@Work and TalentLEAP add the exam terms they state).
+ *  - COHORT_INCLUSIONS: Investors has no program scope of its own to agree and makes no reporting promise; the sentence follows the cohort-inclusions sentence.
+ *  - TRACKING: the Trial page reports trial results; the sentence covers only the tracking plan ("How We Track Outcomes").
+ */
+export const PROGRAM_SCOPE_REPORTING = 'Reporting on this page is agreed in the program scope.';
+export const PROGRAM_SCOPE_INCLUSIONS = 'Inclusions on this page are agreed in the program scope.';
+export const PROGRAM_SCOPE_INCLUSIONS_EXAMS = 'Inclusions and exam terms on this page are agreed in the program scope.';
+export const PROGRAM_SCOPE_COHORT_INCLUSIONS = 'Cohort inclusions on this page are agreed in each program’s scope.';
+export const PROGRAM_SCOPE_TRACKING = 'This tracking plan is agreed in each program’s scope.';
+/**
  * WP59 (cycle-31 review, GPT-6.1 Sol G2): what a discovery session does, in the one sentence the Impact pages' closing bands and TalentLEAP's next step print. "A discovery session agrees your priority groups, tracks and the pilot scorecard." (WP58, K5) made the first call sound like a
  * commitment; the session "explores" what the visitor brings. It stands beside MICRO_COMMITMENT, which says the session is not a commitment.
  */
