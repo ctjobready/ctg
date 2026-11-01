@@ -35,7 +35,7 @@ test('Minor 2: Foundations says the platform-grant first conversation twice, not
 
 test('Minor 3: YouthWIDE "What We Deliver"', () => {
   const text = main('programs/youthwide/index.html');
-  expect(text).toContain('Certification exam preparation by track, then three months of milestone-based mentoring; exam eligibility and attempts are set per program.');
+  expect(text).toContain('Certification exam preparation by track, then three months of milestone-based mentoring.');
   expect(text).not.toContain('Each track prepares learners for an industry certification, then three months');
 });
 

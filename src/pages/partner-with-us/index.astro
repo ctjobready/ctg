@@ -103,10 +103,10 @@ const jsonLd = [
     </Section>
   </Tone>
 
-  <Tone cmf="DILIGENCE" tone="ice"><DueDiligenceView scope={PROGRAM_SCOPE_STATEMENT_EXAMS} /></Tone>
+  <Tone cmf="DILIGENCE" tone="ice"><DueDiligenceView /></Tone>
 
   <Tone cmf="FAQ">
-    <FaqBlock id="faqs" audience="all" ids={HUB_FAQ} tone="white" title="Partner FAQs" lead="Two questions partners ask first. Each route page answers the rest." />
+    <FaqBlock id="faqs" audience="all" ids={HUB_FAQ} tone="white" title="Partner FAQs" lead="Two questions partners ask first. Each route page answers the rest." closing={{ question: 'What Does It Cost?', text: PROGRAM_SCOPE_STATEMENT_EXAMS }} />
   </Tone>
 
   <Tone cmf="CTA">

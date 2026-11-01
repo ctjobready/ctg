@@ -78,9 +78,12 @@ export function signedWith(id: string, heading?: string): string {
 
 /**
  * Duration line of an offer card. The register's PD-05 wording for the pilot ("8–14 months (tracking to month 23)") reads as if the pilot
- * itself runs to month 23, so the card says what the pilot runs and what tracking covers. Other options print as registered.
+ * itself runs to month 23, so the card says what the pilot runs and what tracking covers. The National Design Option prints its duration without the register's qualifier (the card's note carries it);
+ * other options print as registered.
  */
 export function offerDurationText(name: string, duration: string): string {
+  // WP145: the National Design Option's duration reads "3–5 years" on every page (Home's wording); its "not yet delivered at this size" qualifier is the card's note (PROGRAM_OPTIONS[2].note).
+  if (/Design Option/.test(name)) return duration.replace(/\s*\(a design option — not yet delivered at this size\)$/, '');
   const m = /^(\d+–\d+ months) \(tracking to month \d+\)$/.exec(duration.trim());
   if (!/Pilot/.test(name) || !m) return duration;
   const months = fact('PD-02').text.match(/outcome tracking for (\d+) months/)?.[1];

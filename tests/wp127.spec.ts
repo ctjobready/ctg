@@ -212,7 +212,7 @@ test.describe('WP127 item 2: no serial comma on any built page, meta description
 const PAGE_TEXT: [string, string][] = [
   ['index.html', 'Start with a multi-cohort pilot, agree the scorecard up front and decide on expansion from the evidence.'],
   ['programs/youthwide/index.html', 'Missed thresholds trigger a corrective plan, expansion is your decision and independent evaluation is welcome.'],
-  ['our-model/jobready-platform/index.html', 'train youth through courses that prepare for industry certification; connect learners to local, remote and global work; supply employers with job-ready talent; and give institutions a digital delivery platform.'],
+  ['our-model/jobready-platform/index.html', 'train youth through courses, including preparation for industry certification where a track offers one; connect learners to local, remote and global work; supply employers with job-ready talent; and give institutions a digital delivery platform.'],
   ['accessibility/index.html', 'Please tell us the page, what you were trying to do and the device or assistive technology you use.'],
   ['accessibility/index.html', 'Pages are built with one main heading, a logical heading order and landmarks; a “Skip to Main Content” link comes first.'],
   ['about/team/hazrat-ali-nahid/index.html', 'FreshBooks, QuickBooks Payroll and Gusto Payroll.'],

@@ -4,7 +4,7 @@
  */
 import { fact } from '../../../data/facts';
 import { offerDurationText, parseProgramOptions } from '../../sections/copyText';
-import type { CopyBlock } from '../../../data/copy';
+import { PROGRAM_OPTIONS, type CopyBlock } from '../../../data/copy';
 
 /**
  * Pull a phrase out of a fact's canonical text. The first capture group is returned when the
@@ -109,7 +109,7 @@ export function programOptions(): { name: string; volume: string; duration: stri
  * list, which the features band and the FAQ state once). `blurbs` is one line per option; the duration line is PD-05's own, with the National "design option" note.
  */
 export function funderOptionCards(
-  blurbs: readonly [string, string, string] = ['Prove the model in one country or region.', 'Expand to more cohorts and locations on the pilot’s results.', 'A multi-year national program with government and partners.'],
+  blurbs: readonly [string, string, string] = [PROGRAM_OPTIONS[0].note, PROGRAM_OPTIONS[1].note, PROGRAM_OPTIONS[2].note], // WP145: Home's option notes, so the card reads the same on every page
 ): { eyebrow: string; title: string; headline: string; meta: string; text: string; facts: string[] }[] {
   return programOptions().map((o, i) => ({ eyebrow: `Option ${i + 1}`, title: o.name, headline: o.volume, meta: offerDurationText(o.name, o.duration), text: blurbs[i], facts: ['PD-05'] }));
 }

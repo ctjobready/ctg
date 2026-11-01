@@ -68,9 +68,10 @@ test.describe('"What Does It Cost?" and Home’s inclusions heading: standard in
   test('the partner hub FAQ says it for supported youth cohorts, in three sentences, and the FAQ JSON-LD says the same words', async ({ page }) => {
     await open(page, 'partner-with-us/');
     const item = page.locator('#faqs details', { has: page.locator('summary', { hasText: 'What Does It Cost?' }) });
+    // WP145: the hub's program-scope sentence closes the answer on the page; the answer proper is the three sentences.
     const answer = compact(await item.locator('.faq__a').textContent());
-    expect(answer).toBe(COST);
-    expect(sentences(answer)).toHaveLength(3);
+    expect(answer).toBe(`${COST} Inclusions, exam terms and reporting on this page are agreed in the program scope.`);
+    expect(sentences(answer.replace(' Inclusions, exam terms and reporting on this page are agreed in the program scope.', ''))).toHaveLength(3);
     expect((await faqJsonLd(page)).find((q) => q.name === 'What Does It Cost?')?.text).toBe(COST);
   });
 

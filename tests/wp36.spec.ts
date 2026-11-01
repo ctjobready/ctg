@@ -374,7 +374,8 @@ test.describe('cost and safeguarding: full on the hub, one line and a link on th
   // WP45 (cycle-21 review): the hub's FAQ block is two questions (the country and the cost); the full safeguarding answer is gone from it (the due-diligence view and Governance state it; tests/wp45.spec.ts)
   test('the Partner with Us hub keeps the full cost answer (three sentences) and no longer prints the full safeguarding answer', async ({ page }) => {
     await open(page, 'partner-with-us/');
-    const cost = await answerOf(page, 'What Does It Cost?');
+    // WP145: the hub's program-scope sentence closes this answer on the page; the answer proper (and its FAQ JSON-LD) is checked here.
+    const cost = (await answerOf(page, 'What Does It Cost?')).replace(' Inclusions, exam terms and reporting on this page are agreed in the program scope.', '');
     // WP41 (cycle-18 review): the list is scoped to supported youth cohorts; WP43 (cycle-20 review): "Supported youth cohorts include training, certification exam preparation and the exam fee, …"; WP45: "… include outreach and selection, training, …"
     expect(cost).toContain('Supported youth cohorts include outreach and selection, training, certification exam preparation (exam fees and attempts set per program)');
     expect(sentences(cost).length).toBeLessThanOrEqual(3);

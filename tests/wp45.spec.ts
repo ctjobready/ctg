@@ -326,7 +326,8 @@ test.describe('The cost inclusions are one sentence in the hub (item 21); Our Mo
       await open(page, route);
       const item = page.locator('details', { has: page.locator('summary', { hasText: 'What Does It Cost?' }) });
       await expect(item).toHaveCount(1);
-      expect(compact(await item.locator('.faq__a').textContent())).toBe(COST);
+      // WP145: the hub's program-scope sentence closes the answer on the page (not in the FAQ JSON-LD).
+      expect(compact(await item.locator('.faq__a').textContent())).toBe(`${COST} Inclusions, exam terms and reporting on this page are agreed in the program scope.`);
       // (the hub’s FAQ block also writes its FAQPage JSON-LD; the Our Model page prints the answers without structured data)
       if (route === 'partner-with-us/') expect((await faqJsonLd(page)).find((q) => q.name === 'What Does It Cost?')?.text).toBe(COST);
       const tagged = await item.evaluate((el) => [el, ...Array.from(el.querySelectorAll('[data-fact]'))].map((e) => e.getAttribute('data-fact') ?? '').join(' '));

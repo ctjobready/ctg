@@ -844,6 +844,7 @@ export const MICRO_COMMITMENT = 'A discovery session is a conversation, not a co
  * (IncludesBand's `scope`, or the first band that makes an inclusion or reporting promise), instead of at the end of each sentence. The other sentences, FAQ answers, JSON-LD, meta descriptions and llms.txt say the
  * promise plainly; the exam terms read "set per program". The EXAMS form is for pages that state exam fees, eligibility or attempts. tests/wp141.spec.ts walks every built page (news posts and the styleguide excluded).
  */
+// WP145: the hub (partner-with-us/index.astro) closes its "What Does It Cost?" answer with PROGRAM_SCOPE_STATEMENT_EXAMS (FaqBlock `closing`), the text it qualifies; the FAQ JSON-LD keeps the plain answer.
 export const PROGRAM_SCOPE_STATEMENT = 'Inclusions and reporting on this page are agreed in the program scope.';
 export const PROGRAM_SCOPE_STATEMENT_EXAMS = 'Inclusions, exam terms and reporting on this page are agreed in the program scope.';
 /**

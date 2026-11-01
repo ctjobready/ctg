@@ -23,9 +23,18 @@ interface Props {
   tone?: 'white' | 'airy' | 'ice';
   allLink?: { label: string; href: string };
   id?: string;
+  /**
+   * WP145: a sentence that closes one answer on the page (the hub's program-scope sentence closes "What Does It Cost?"). It is added to the visible answer only; the FAQ JSON-LD is built from the
+   * plain bank answer (WP141: the qualifier stays out of JSON-LD), and the plain answer is still a substring of the visible one, as scripts/validate-jsonld.mjs requires.
+   */
+  closing?: { question: string; text: string };
 }
-const { audience, ids, title, eyebrow = FAQ_EYEBROW, lead, tone = 'ice', allLink, id = 'faq' } = Astro.props;
-const items = faqItems(audience, ids);
+const { audience, ids, title, eyebrow = FAQ_EYEBROW, lead, tone = 'ice', allLink, id = 'faq', closing } = Astro.props;
+const items = faqItems(audience, ids).map((item) => {
+  if (!closing || item.q !== closing.question) return item;
+  if (!item.a.endsWith('</p>')) throw new Error(`FaqBlock: the answer to "${item.q}" does not end in a paragraph`);
+  return { ...item, a: `${item.a.slice(0, -4)} ${closing.text}</p>` };
+});
 ---
 
 <Section id={id} tone={tone} aria-labelledby={`${id}-h`}>

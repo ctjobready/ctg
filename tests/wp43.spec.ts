@@ -270,9 +270,10 @@ test.describe('Partner with Us hub: "What Does It Cost?" is three shorter senten
   test('the hub answer is the three sentences, the FAQ JSON-LD says the same words, and the delivery inventory is gone', async ({ page }) => {
     await open(page, 'partner-with-us/');
     const item = page.locator('#faqs details', { has: page.locator('summary', { hasText: 'What Does It Cost?' }) });
+    // WP145: the hub's program-scope sentence closes the answer on the page; the answer proper is the three sentences.
     const answer = compact(await item.locator('.faq__a').textContent());
-    expect(answer).toBe(COST);
-    expect(sentences(answer)).toHaveLength(3);
+    expect(answer).toBe(`${COST} Inclusions, exam terms and reporting on this page are agreed in the program scope.`);
+    expect(sentences(answer.replace(' Inclusions, exam terms and reporting on this page are agreed in the program scope.', ''))).toHaveLength(3);
     expect(answer).not.toMatch(/blended training|AI-ready curriculum|monthly reports/);
     expect((await faqJsonLd(page)).find((q) => q.name === 'What Does It Cost?')?.text).toBe(COST);
     const tagged = await item.evaluate((el) => [el, ...Array.from(el.querySelectorAll('[data-fact]'))].map((e) => e.getAttribute('data-fact') ?? '').join(' '));

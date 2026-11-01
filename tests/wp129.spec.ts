@@ -80,7 +80,7 @@ test.describe('WP129 item 1: the 100 training hours per certification include ex
     '100 training hours per certification, including certification exam preparation, then three months of milestone-based mentoring; exam fees, eligibility, attempts and retakes are set per program.';
   const UNIVERSITIES = '100 training hours per certification, including exam preparation; eligibility, attempts and terms are set per program.';
   const Q14 =
-    'Compared with a self-paced course alone, supported CodersTrust cohorts add mentoring, certification exam preparation and placement support. Every supported TalentLEAP cohort pairs 100 training hours per certification, including certification exam preparation (exam fees and attempts set per program), with three months of milestone-based mentoring, placement support and outcome tracking for 12 months after each course.';
+    'Compared with a self-paced course alone, supported CodersTrust cohorts add mentoring, certification exam preparation and placement support. Every supported TalentLEAP cohort pairs 100 training hours per certification, including certification exam preparation, with three months of milestone-based mentoring, placement support and outcome tracking for 12 months after each course.';
 
   test('YouthWIDE at a Glance, "Training and Mentoring"', () => {
     expect(text('programs/youthwide/index.html')).toContain(YOUTHWIDE);

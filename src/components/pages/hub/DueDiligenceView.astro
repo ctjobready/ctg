@@ -32,10 +32,8 @@ interface Props {
   tone?: 'white' | 'airy' | 'ice';
   id?: string;
   audience?: 'funders' | 'employers';
-  /** WP141: the page's one program-scope statement (PROGRAM_SCOPE_STATEMENT in src/data/copy.ts), printed under the full view's cards (the hub). */
-  scope?: string;
 }
-const { compact = false, brief = false, tone = 'ice', id = 'due-diligence', audience = 'funders', scope } = Astro.props;
+const { compact = false, brief = false, tone = 'ice', id = 'due-diligence', audience = 'funders' } = Astro.props;
 const diligence = cta('diligence');
 const entities = `${CONTRACTING_ENTITIES}, depending on the program’s country and`;
 const contracting = { icon: 'building-2', title: 'Contracting Entities', text: `${entities} the ${audience === 'funders' ? 'funder' : 'contracting party'}’s requirements.`, href: '/about/governance/#contracting', link: 'Contracting and Accountability', ids: 'ID-07 PD-13' };
@@ -78,7 +76,6 @@ const items = audience === 'employers' ? employerItems : funderItems;
       </li>
     ))}
   </ul>
-  {scope && <p class="ddv__scope">{scope}</p>}
   {!compact && (
     <p class="cluster ddv__more">
       <a class="link" href={linkAttrs('/impact/outcomes-2026/').href}>Impact Survey 2026<Icon name="arrow-right" size={16} /></a>
@@ -167,10 +164,6 @@ const items = audience === 'employers' ? employerItems : funderItems;
   .ddv__link {
     align-self: flex-start;
     min-height: 24px;
-  }
-  /* WP141: the page's one program-scope statement, one step under the cards */
-  .ddv__scope {
-    margin: var(--space-md) 0 0;
   }
   .ddv__more {
     margin: var(--space-md) 0 0;

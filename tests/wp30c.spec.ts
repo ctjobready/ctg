@@ -97,7 +97,9 @@ test.describe('FAQs: the decision questions, one to three sentences each', () =>
         els.map((d) => {
           const q = (d.querySelector('summary')?.textContent ?? '').replace(/\s+/g, ' ').trim();
           const all = (d.textContent ?? '').replace(/\s+/g, ' ').trim();
-          return { q, a: all.startsWith(q) ? all.slice(q.length).trim() : all };
+          // WP145: the hub's program-scope sentence closes "What Does It Cost?"; the three-sentence cap applies to the answer proper.
+          const a = (all.startsWith(q) ? all.slice(q.length).trim() : all).replace(' Inclusions, exam terms and reporting on this page are agreed in the program scope.', '');
+          return { q, a };
         }),
       );
       for (const { q, a } of answers) {
