@@ -585,7 +585,7 @@ test.describe('The Track Record bands of Governments and Investors start with th
     await open(page, INVEST);
     await expect(page.locator('#guide .ig__empathy')).toHaveCount(0);
     const kids = await page.locator('#guide .ig__copy').first().evaluate((el) => Array.from(el.children).map((c) => (c.textContent ?? '').replace(/\s+/g, ' ').trim()));
-    expect(kids.slice(0, 3)).toEqual(['Our Track Record', 'A Record Built Since 2014', 'From a Copenhagen launch to work in 16 countries and territories.']); // WP64 rework RW2 (coordinator): the heading says "Since 2014", so the line does not
+    expect(kids.slice(0, 3)).toEqual(['Our Track Record', 'A Record Built Since 2014', 'From a Copenhagen launch to work across Asia, Africa, Europe and the Americas.']); // WP150: the tile carries the 16; // WP64 rework RW2 (coordinator): the heading says "Since 2014", so the line does not
     expect(pagesWith('Impact investors need to see what is proven')).toEqual([]);
   });
 

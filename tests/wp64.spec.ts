@@ -385,6 +385,7 @@ test.describe('Item 7 (GLM, Gemini, Claude): three polish fixes', () => {
 test.describe('RW2 (coordinator): "Since 2014" is said once in the bands whose heading says it', () => {
   const HEADING = 'We’ve Built This Path Since 2014';
   const LINE = 'From a Copenhagen launch to work in 16 countries and territories.';
+  const LINE_REGIONS = 'From a Copenhagen launch to work across Asia, Africa, Europe and the Americas.'; // WP150: Development Partners and Investors show the SC-03 tile, so their line leaves the count to it
   const BANDS = [DEV_PARTNERS, GOVERNMENTS, FOUNDATIONS, UNIVERSITIES, EMPLOYERS];
 
   test('the helpers read the heading: a "since 2014" label and the origin line lose the year only under a heading that states it; the register’s ORIGIN_SHORT and labels are unchanged', () => {
@@ -392,6 +393,8 @@ test.describe('RW2 (coordinator): "Since 2014" is said once in the bands whose h
     expect(originShortUnder(HEADING)).toEqual({ ...ORIGIN_SHORT, text: LINE });
     expect(originShortUnder(HEADING).facts).toEqual(['ID-02', 'SC-03']);
     expect(originShortUnder('A Record Built Since 2014').text).toBe(LINE);
+    expect(originShortUnder(HEADING, { tile: true })).toEqual({ ...ORIGIN_SHORT, text: LINE_REGIONS }); // WP150
+    expect(originShortUnder('Why Join CodersTrust', { tile: true }).text).toBe('Since 2014, f' + LINE_REGIONS.slice(1));
     expect(originShortUnder('Why Join CodersTrust')).toBe(ORIGIN_SHORT);
     expect(statLabelUnder(HEADING, fact('SC-01').stat?.label)).toBe('learners trained');
     expect(statLabelUnder(HEADING, fact('SC-02').stat?.label)).toBe('enrollments');
@@ -407,7 +410,7 @@ test.describe('RW2 (coordinator): "Since 2014" is said once in the bands whose h
       await expect(page.locator('#guide h2')).toHaveText(HEADING);
       const line = page.locator('#guide p[data-fact="ID-02 SC-03"]');
       await expect(line).toHaveCount(1);
-      expect(compact(await line.textContent())).toBe(LINE);
+      expect(compact(await line.textContent())).toBe(route === DEV_PARTNERS ? LINE_REGIONS : LINE); // WP150: Development Partners shows the SC-03 tile, so its line names the regions
       expect(compact(await page.locator('#guide').textContent()).match(/since 2014/gi)).toHaveLength(1);
     });
   }
@@ -431,7 +434,7 @@ test.describe('RW2 (coordinator): "Since 2014" is said once in the bands whose h
     await expect(page.locator('#guide h2')).toHaveText('A Record Built Since 2014');
     const line = page.locator('#guide p[data-fact="ID-02 SC-03"]');
     await expect(line).toHaveCount(1);
-    expect(compact(await line.textContent())).toBe(LINE);
+    expect(compact(await line.textContent())).toBe(LINE_REGIONS); // WP150: the tile carries the 16
     expect(await texts(page, '#guide .ig__tile .stat__label')).toEqual(['learners trained', 'enrollments', 'countries and territories where CodersTrust has worked']);
   });
 
@@ -445,7 +448,8 @@ test.describe('RW2 (coordinator): "Since 2014" is said once in the bands whose h
 
   test('no built page prints the old origin line, "Since 2014, from a Copenhagen launch ...", because every page that prints it is headed with the year', () => {
     expect(pagesWith('Since 2014, from a Copenhagen launch')).toEqual([]);
-    expect(pagesWith(LINE).sort()).toEqual(['/partner-with-us/development-partners/', '/partner-with-us/employers/', '/partner-with-us/foundations/', '/partner-with-us/governments/', '/partner-with-us/investors/', '/partner-with-us/universities/']);
+    expect(pagesWith(LINE).sort()).toEqual(['/partner-with-us/employers/', '/partner-with-us/foundations/', '/partner-with-us/governments/', '/partner-with-us/universities/']); // WP150: Development Partners and Investors name the regions
+    expect(pagesWith(LINE_REGIONS).sort()).toEqual(['/partner-with-us/development-partners/', '/partner-with-us/investors/']);
   });
 
   test('the changed bands fit at 1280 and 390, with no sideways scroll', async ({ page }) => {

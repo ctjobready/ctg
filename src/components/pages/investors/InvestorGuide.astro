@@ -32,7 +32,7 @@ interface Props {
 const { id = 'guide' } = Astro.props;
 // WP64 rework RW2 (coordinator): the band's heading says the period, so the origin line below it drops its "Since 2014," lead-in ("From a Copenhagen launch to work in 16 countries and territories."; originShortUnder, src/data/copy.ts).
 const heading = 'A Record Built Since 2014';
-const origin = originShortUnder(heading);
+const origin = originShortUnder(heading, { tile: true }); // WP150: SC-03's tile (below) carries the count, so the line names the regions instead
 const talentleap = linkAttrs('/our-model/talentleap/');
 const team = linkAttrs('/about/team/');
 const delivered = ['SC-01', 'SC-02', 'SC-03'] as const;

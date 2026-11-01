@@ -78,10 +78,10 @@ test.describe('Investors: the delivered figures lead the track-record band (item
     await open(page, URL);
     const line = page.locator('#guide p[data-fact="ID-02 SC-03"]');
     await expect(line).toHaveCount(1);
-    expect(compact(await line.textContent())).toBe('From a Copenhagen launch to work in 16 countries and territories.'); // WP64 rework RW2 (coordinator): the band's heading, "A Record Built Since 2014", says the year, so the line does not
+    expect(compact(await line.textContent())).toBe('From a Copenhagen launch to work across Asia, Africa, Europe and the Americas.'); // WP150: the tile carries the 16; // WP64 rework RW2 (coordinator): the band's heading, "A Record Built Since 2014", says the year, so the line does not
     const guide = compact(await page.locator('#guide').textContent());
     expect(guide).not.toMatch(/Launched in Copenhagen|began (?:developing|training) freelancers|Korail settlement/);
-    expect(count(guide, 'countries and territories'), 'the origin line and the tile’s label (WP58, GLM L7: SC-03’s note is "Most delivery has been in Bangladesh.")').toBe(2);
+    expect(count(guide, 'countries and territories'), 'the tile’s label alone (WP150: the origin line names the regions; WP58, GLM L7: SC-03’s note is "Most delivery has been in Bangladesh.")').toBe(1);
     await expect(page.locator('#guide [data-fact="SC-03"]')).toHaveCount(1);
   });
 

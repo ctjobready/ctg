@@ -285,7 +285,7 @@ test.describe('TalentLEAP and YouthWIDE', () => {
 
   test('YouthWIDE: the Bangladesh band says "Designed for delivery through existing government digital labs and colleges", and the glance replaces "hub-and-spoke"', async ({ page }) => {
     await open(page, 'programs/youthwide/');
-    await expect(page.locator('#governments .sh__lead')).toHaveText('Designed for delivery through existing government digital labs and colleges; lab access and seats are confirmed per program.');
+    await expect(page.locator('#governments .sh__lead')).toHaveText('Designed for delivery through existing government digital labs and colleges.'); // WP150: the tile caption alone says "lab access and seats are confirmed per program"
     const row = page.locator('main').getByText('a central team coordinating local labs for larger programs');
     await expect(row).toHaveCount(1);
     expect(await mainText(page)).not.toMatch(/hub-and-spoke|the country already has/i);

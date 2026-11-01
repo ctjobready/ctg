@@ -523,7 +523,7 @@ test.describe('S1 extended: the other statements of the 16 say "work", not "prog
     for (const p of pages) {
       await open(page, p);
       // WP64 rework RW2 (coordinator): every one of these bands is headed "... Since 2014", so the line drops that lead-in (ORIGIN_SHORT.text above keeps it)
-      expect(compact(await page.locator('[data-fact="ID-02 SC-03"]').first().textContent()), p.route).toBe(originShortUnder('Since 2014').text);
+      expect(compact(await page.locator('[data-fact="ID-02 SC-03"]').first().textContent()), p.route).toBe(originShortUnder('Since 2014', { tile: ['/partner-with-us/development-partners/', '/partner-with-us/investors/'].includes(p.route) }).text); // WP150: where the SC-03 tile is shown the line names the regions
     }
   });
 

@@ -409,8 +409,25 @@ export const headingStatesSince2014 = (heading: string): boolean => /\bsince 201
 export function statLabelUnder(heading: string, label: string | undefined): string | undefined {
   return label !== undefined && headingStatesSince2014(heading) && label.endsWith(SINCE_2014) ? withoutSince2014(label) : undefined;
 }
-/** The band's origin line under `heading`: ORIGIN_SHORT as it is, or without its "Since 2014," lead-in when the heading already says it. */
-export function originShortUnder(heading: string): CopyBlock {
+/**
+ * WP150 (Opus XHigh run 4, kit 117, Polish; WP146's rule that a tile's figure is not repeated in the sentence above it): where the band also shows SC-03's tile (Development Partners, Investors),
+ * the origin line leaves the count to the tile and names the reach in the words SC-03 and Global Reach use: "..., from a Copenhagen launch to work across Asia, Africa, Europe and the Americas."
+ * The regions are read from SC-03's sentence, so the line cannot drift from the register; the builder throws if that sentence stops naming them.
+ */
+function originShortWithoutCount(): string {
+  const regions = /\bacross (.+?)(?:, including|$)/.exec(fact('SC-03').text)?.[1];
+  if (!regions) throw new Error('originShortUnder: SC-03 no longer says "across <regions>, including ..."');
+  return `a Copenhagen launch to work across ${regions}.`;
+}
+/**
+ * The band's origin line under `heading`: ORIGIN_SHORT as it is, or without its "Since 2014," lead-in when the heading already says it.
+ * `tile`: the band shows SC-03's tile, so the line does not repeat its count (WP150): "From a Copenhagen launch to work across Asia, Africa, Europe and the Americas." (or "Since 2014, from ..." under a heading without the year).
+ */
+export function originShortUnder(heading: string, opts: { tile?: boolean } = {}): CopyBlock {
+  if (opts.tile) {
+    const rest = originShortWithoutCount();
+    return { ...ORIGIN_SHORT, text: headingStatesSince2014(heading) ? `From ${rest}` : `Since ${fact('ID-02').stat?.value}, from ${rest}` };
+  }
   if (!headingStatesSince2014(heading)) return ORIGIN_SHORT;
   const lead = 'Since 2014, from ';
   if (!ORIGIN_SHORT.text.startsWith(lead)) throw new Error(`originShortUnder: ORIGIN_SHORT no longer opens "${lead}" ("${ORIGIN_SHORT.text}"); update the band lines that drop the repeated year`);
@@ -835,7 +852,7 @@ export const PROGRAM_OPTIONS_FACTS = ['PD-05'];
  */
 export const STEPS = [
   { title: 'Discover and Co-Design', text: 'In a discovery session, we start planning priority groups, tracks, the indicative budget and the pilot scorecard; each track’s demand and work-entry plan is agreed before enrollment.' },
-  { title: 'Train and Mentor', text: '100 training hours per certification, then three months of milestone-based one-to-one mentoring, with placement support alongside. Mentoring works toward each track’s agreed work-entry goal (for freelance tracks: profile live, first bids, first client).' },
+  { title: 'Train and Mentor', text: '100 training hours per certification, including exam preparation, then three months of milestone-based one-to-one mentoring, with placement support alongside. Mentoring works toward each track’s agreed work-entry goal (for freelance tracks: profile live, first bids, first client).' },
   { title: 'Place and Report', text: 'Placement support, monthly reports and follow-up surveys at 3, 6 and 12 months.' },
 ] as const;
 export const STEPS_FACTS = ['PD-19', 'PD-01', 'PD-15', 'PD-08', 'PD-09'];

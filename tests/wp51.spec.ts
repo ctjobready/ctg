@@ -371,7 +371,7 @@ test.describe('The shared origin line on Development Partners and Investors (ite
       const line = page.locator('#guide .pg__origin');
       await expect(line, route).toHaveCount(1);
       // WP64 rework RW2 (coordinator): the bands' heading says "Since 2014", so the line drops that lead-in (ORIGIN_SHORT.text above keeps it)
-      expect(compact(await line.textContent()), route).toBe(originShortUnder('We’ve Built This Path Since 2014').text);
+      expect(compact(await line.textContent()), route).toBe(originShortUnder('We’ve Built This Path Since 2014', { tile: route === DP }).text); // WP150: Development Partners shows the SC-03 tile, so its line names the regions
       expect(await line.getAttribute('data-fact'), route).toBe('ID-02 SC-03');
     }
   });
@@ -380,7 +380,7 @@ test.describe('The shared origin line on Development Partners and Investors (ite
     await open(page, DP);
     expect(compact(await page.locator('#guide').textContent())).not.toContain('Launched in Copenhagen in 2014.');
     const copy = await texts(page, '#guide .pg__copy > *');
-    expect(copy[0]).toBe(originShortUnder('We’ve Built This Path Since 2014').text); // WP64 rework RW2 (coordinator): the heading says "Since 2014", so the line drops that lead-in
+    expect(copy[0]).toBe(originShortUnder('We’ve Built This Path Since 2014', { tile: true }).text); // WP150: the tile carries the 16; // WP64 rework RW2 (coordinator): the heading says "Since 2014", so the line drops that lead-in
     expect(copy[1]).toContain('Our TalentLEAP method organizes skills into career paths.');
   });
 
@@ -388,7 +388,7 @@ test.describe('The shared origin line on Development Partners and Investors (ite
     await open(page, INVEST);
     const line = page.locator('#guide .ig__origin');
     await expect(line).toHaveCount(1);
-    expect(compact(await line.textContent())).toBe(originShortUnder('A Record Built Since 2014').text); // WP64 rework RW2 (coordinator): the band's heading says "Since 2014", so the line drops that lead-in
+    expect(compact(await line.textContent())).toBe(originShortUnder('A Record Built Since 2014', { tile: true }).text); // WP150: the tile carries the 16; // WP64 rework RW2 (coordinator): the band's heading says "Since 2014", so the line drops that lead-in
     expect(await line.getAttribute('data-fact')).toBe('ID-02 SC-03');
     expect(compact(await page.locator('#guide .ig__method').textContent())).toContain('TalentLEAP, our method, organizes skills into career paths.');
   });
@@ -548,7 +548,7 @@ test.describe('Foundations: the route table’s second column is "What the Evide
     expect('What the Evidence Covers').toBe(titleCase('What the Evidence Covers'));
     expect(await texts(page, '#funding-routes tbody td:nth-child(3)')).toEqual([
       'Builds on results from earlier programs in Bangladesh and Kosovo.',
-      'Youth-program outcomes are not platform outcomes. The first conversation covers JobReady’s staged rollout.', // WP93 A2 adds the staged-rollout sentence; WP65 (cycle-37 review, Gemini): the second sentence is gone (tests/wp65.spec.ts)
+      'Youth-program outcomes are not platform outcomes. The discovery session covers JobReady’s staged rollout.', // WP93 A2 adds the staged-rollout sentence; WP65 (cycle-37 review, Gemini): the second sentence is gone (tests/wp65.spec.ts)
     ]);
     expect(sitePages().filter((p) => visible(p.html).includes('Evidence Relationship') || p.html.includes('data-label="Evidence Relationship"')).map((p) => p.route)).toEqual([]);
   });

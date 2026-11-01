@@ -26,7 +26,7 @@ test.describe('Home: "What a Supported Youth Cohort Includes" (WP41: it was "Wha
     {
       title: 'Training, Mentoring and Placement Support',
       // WP54 (cycle-28 review, Claude S25): "agreed before enrollment" (it said "approved")
-      text: '100 training hours per certification, followed by three months of milestone-based mentoring and placement support. Each track’s work-entry plan is agreed before enrollment.',
+      text: '100 training hours per certification, including exam preparation, followed by three months of milestone-based mentoring and placement support. Each track’s work-entry plan is agreed before enrollment.',
       pain: 'P1',
       facts: ['PD-01', 'PD-15', 'PD-19'],
     },
@@ -220,7 +220,7 @@ test.describe('Guide band: one origin line on the audience pages, the two-senten
     await open(page, 'partner-with-us/development-partners/');
     const line = page.locator('#guide p[data-fact="ID-02 SC-03"]');
     await expect(line).toHaveCount(1);
-    expect(compact(await line.textContent())).toBe(ORIGIN_SHORT);
+    expect(compact(await line.textContent())).toBe('From a Copenhagen launch to work across Asia, Africa, Europe and the Americas.') /* WP150: the tile carries the 16 */;
     const guide = compact(await page.locator('#guide').textContent());
     expect(guide).not.toMatch(/Launched in Copenhagen|began (?:developing|training) freelancers|first UNDP-supported pilot|Korail settlement/);
     // the tile is the one element marked SC-03 alone; the origin line carries the pair "ID-02 SC-03"

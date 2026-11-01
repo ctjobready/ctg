@@ -83,7 +83,7 @@ test.describe('Development Partners: the problem band and the first portfolio ca
     expect(await texts(page, '#features li.card:nth-child(1) p')).toEqual(['Certification exam preparation, three months of mentoring and placement support in one program; exam fees and attempts set per program.']);
     expect(await card.getAttribute('data-fact')).toBe('PD-01');
     expect(compact(await page.locator('#features').textContent())).not.toContain('100 training hours');
-    expect(compact(await page.locator('#mechanism').textContent())).toContain('100 training hours per certification, then three months of milestone-based mentoring and placement support.');
+    expect(compact(await page.locator('#mechanism').textContent())).toContain('100 training hours per certification, including exam preparation, then three months of milestone-based mentoring and placement support.') // WP150: the 100 hours include exam preparation;
     expect(count(await mainText(page), '100 training hours per certification')).toBe(1);
   });
 });

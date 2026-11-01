@@ -227,7 +227,7 @@ test.describe('Item 4 (GLM; Sonnet in cycles 34 and 36): Investors names AWS by 
 test.describe('Item 5 (Gemini): the platform-grant row says one thing', () => {
   test('"What the Evidence Covers" for Funding Route 2 is "Youth-program outcomes are not platform outcomes." and the first-conversation line; Route 1’s cell is unchanged', async ({ page }) => {
     await open(page, FOUNDATIONS);
-    expect(await texts(page, '#funding-routes tbody td:nth-child(3)')).toEqual(['Builds on results from earlier programs in Bangladesh and Kosovo.', 'Youth-program outcomes are not platform outcomes. The first conversation covers JobReady’s staged rollout.']);
+    expect(await texts(page, '#funding-routes tbody td:nth-child(3)')).toEqual(['Builds on results from earlier programs in Bangladesh and Kosovo.', 'Youth-program outcomes are not platform outcomes. The discovery session covers JobReady’s staged rollout.']);
     expect(count(await mainText(page), 'Youth-program outcomes are not platform outcomes.')).toBe(1);
   });
 

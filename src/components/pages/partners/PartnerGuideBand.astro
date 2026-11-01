@@ -61,7 +61,7 @@ interface Props {
 const { title = 'We’ve Built This Path Since 2014', empathy, stats = [], statSize = 'md', statements = [], signed, captionNote, method, partnerGroup, strip = false, id = 'guide' } = Astro.props;
 const listed: Statement[] = signed ? [...statements, { facts: [signed], text: signedWith(signed, title) }] : statements;
 const hasProof = stats.length > 0 || listed.length > 0;
-const origin = originShortUnder(title);
+const origin = originShortUnder(title, { tile: stats.includes('SC-03') }); // WP150: SC-03's tile carries the count, so the line names the regions instead
 ---
 
 <Section id={id} aria-labelledby={`${id}-h`}>
