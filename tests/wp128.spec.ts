@@ -69,12 +69,12 @@ const read = (p: { file: string }) => readFileSync(p.file, 'utf8');
 // 1. "What Happens When Funding Ends?"
 // ---------------------------------------------------------------------------------------------------------------------------------
 test.describe('WP128 item 1: "What Happens When Funding Ends?" is two sentences, as on Universities', () => {
-  // WP147 (owner answer 2026-11-01): the answer says "facilitators trained and certified by CodersTrust (Training of Trainers)" where it is the page's first mention of the facilitator model, and "certified facilitators" (Q10-later)
+  // WP147 (owner answer 2026-11-01): the answer says "facilitators trained by CodersTrust (Training of Trainers)" where it is the page's first mention of the facilitator model, and "CodersTrust-trained facilitators" (Q10-later; WP148: it said "trained and certified" and "certified facilitators")
   // on Governments and Local Partners, which explain the model higher on the page.
   const NEW =
-    'Where included, what the program builds stays in place: facilitators trained and certified by CodersTrust (Training of Trainers) and localized curricula. Completers join CodersTrust’s alumni network after their three months of mentoring.';
+    'Where included, what the program builds stays in place: facilitators trained by CodersTrust (Training of Trainers) and localized curricula. Completers join CodersTrust’s alumni network after their three months of mentoring.';
   const LATER =
-    'Where included, what the program builds stays in place: certified facilitators and localized curricula. Completers join CodersTrust’s alumni network after their three months of mentoring.';
+    'Where included, what the program builds stays in place: CodersTrust-trained facilitators and localized curricula. Completers join CodersTrust’s alumni network after their three months of mentoring.';
   const wording = (route: string) => (route === 'partner-with-us/governments/' || route === 'partner-with-us/local-partners/' ? LATER : NEW);
   const OLD = 'localized curricula, and completers';
   const SIX = ['partner-with-us/development-partners/', 'partner-with-us/governments/', 'partner-with-us/foundations/', 'partner-with-us/local-partners/', 'about/governance/', 'our-model/talentleap/'];
@@ -83,7 +83,7 @@ test.describe('WP128 item 1: "What Happens When Funding Ends?" is two sentences,
     expect(faqs.find((f) => f.id === 'Q10')?.a).toBe(NEW);
     expect(faqs.find((f) => f.id === 'Q10-later')?.a).toBe(LATER);
     expect(faqs.find((f) => f.id === 'Q10-campus')?.a).toBe(
-      'Where included, what the program builds stays on your campus: certified facilitators, localized curricula and campus labs that serve as blended-learning centers. Completers join CodersTrust’s alumni network after their three months of mentoring.',
+      'Where included, what the program builds stays on your campus: CodersTrust-trained facilitators, localized curricula and campus labs that serve as blended-learning centers. Completers join CodersTrust’s alumni network after their three months of mentoring.',
     );
   });
   for (const route of SIX) {

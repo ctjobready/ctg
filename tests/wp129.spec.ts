@@ -246,6 +246,12 @@ test.describe('WP129 item 6: every dated page whose visible text changed carries
   // WP141 (owner answer 2026-11-01): these pages changed again on 1 November (the program-scope qualifier is stated once per page; the Governance, TalentLEAP and JobReady Platform "On This Page" lists gain their closing heading) and moved on to 2026-11-01.
   const MOVED_1101 = new Set([
     'programs/superkids/index.html', // WP143
+    'privacy-policy/index.html', // WP148: "Post Graduate Diploma" is capitalised
+    'programs/nu-postgraduate-diploma/index.html', // WP148
+    'programs/nu-postgraduate-diploma/cyber-security/index.html', // WP148
+    'programs/nu-postgraduate-diploma/data-analytics/index.html', // WP148
+    'programs/nu-postgraduate-diploma/digital-marketing/index.html', // WP148
+    'programs/nu-postgraduate-diploma/ict/index.html', // WP148
     'impact/index.html', // WP147: the 30,000+ tile reads as the register's label
     'about/governance/index.html',
     'our-model/talentleap/index.html',

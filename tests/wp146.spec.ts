@@ -19,8 +19,9 @@ const visible = (raw: string) =>
   decode(raw.replace(/<script[\s\S]*?<\/script>/g, ' ').replace(/<style[\s\S]*?<\/style>/g, ' ').replace(/<[^>]+>/g, ' ')).replace(/\s+/g, ' ').replace(/\s+([.,;:])/g, '$1');
 const main = (rel: string) => visible(/<main[\s\S]*<\/main>/.exec(html(rel))?.[0] ?? '');
 
-test('Minor 1: YouthWIDE national-scale answer plans a 100,000+ program phase by phase (page and JSON-LD)', () => {
-  const S = 'A 100,000+ program is a design option we plan phase by phase; we have not yet delivered a program at that size.';
+test('Minor 1: YouthWIDE national-scale answer says "a 100,000+ program", not "a 100,000+ phase" (page and JSON-LD)', () => {
+  // WP148: the sentence reads "Larger programs are designed to run in phases, ...; we have not yet delivered a 100,000+ program." (it read "A 100,000+ program is a design option we plan phase by phase; we have not yet delivered a program at that size.")
+  const S = 'we have not yet delivered a 100,000+ program.';
   expect(main('programs/youthwide/index.html')).toContain(S);
   expect(html('programs/youthwide/index.html')).toContain(S);
   expect(html('programs/youthwide/index.html')).not.toContain('phase is a design option');

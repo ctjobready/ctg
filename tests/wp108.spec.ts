@@ -74,7 +74,7 @@ test.describe('WP108 item 1: SC-02’s detail says what both courseware parts co
 test.describe('WP108 item 2: complete news meta descriptions; none ends in an ellipsis', () => {
   const CASES: [string, string, string][] = [
     ['Copenhagen', COPENHAGEN, 'CodersTrust launched in Copenhagen in April 2014 at a Virgin Unite dinner, in the presence of Sir Richard Branson and early Skype investor Morten Lund.'],
-    ['NYNJMSDC', NYNJMSDC, 'UTC Associates, led by Aziz Ahmad, received the Partnership Award from the New York New Jersey Minority Supplier Development Council.'],
+    ['NYNJMSDC', NYNJMSDC, 'UTC Associates, led by Aziz Ahmad, received the Partnership Award from the New York & New Jersey Minority Supplier Development Council.'], // WP148: one spelling of the Council’s name (the bio’s)
   ];
   for (const [name, slug, excerpt] of CASES) {
     test(`${name}: the post’s excerpt, meta description and Open Graph description are the complete sentence (≤155)`, async ({ page }) => {

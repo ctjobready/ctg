@@ -43,7 +43,7 @@ export const VALUE_PROPOSITION: Record<Audience, string> = {
   // The two marketplaces are named as two, as IN-04 and tests/wp25s.spec.ts ("named as two") have them: never "the employer and gig-work marketplaces".
   investors: 'Back JobReady’s staged rollout, built on CodersTrust’s training and mentoring programs. Partner portals and AI chat are live; the employer marketplace and the gig-work marketplace are in pre-launch.',
   localPartners: 'We help local organizations prepare young people for paid digital work through mentored, certification-focused training.',
-  nuPgd: 'We help learners prepare for digital work through a National University post graduate diploma.',
+  nuPgd: 'We help learners prepare for digital work through the National University Post Graduate Diploma.',
 };
 
 /** C1 identity-hook headlines — 6 to 12 words, about the reader (CMF). */
@@ -448,7 +448,7 @@ export const TRIAL_SCOPE = {
  * sentences are the shared wording on every page that uses it, verbatim; no page swaps in a different "we" clause.
  * WP31 (cycle-8 review): the long "Unlike approaches that typically focus on one part of the path …" sentence, which eight pages repeated, is two plain sentences now.
  * Built only from the approved positioning table and existing page copy: no figures and no named competitors.
- * The NU post graduate diploma page has no statement: its copy waits for National University sign-off.
+ * The NU Post Graduate Diploma page has no statement: its copy waits for National University sign-off.
  * WP39 (cycle-16 review): the Investors page has none either: its statement restated the hero lead and returned to cohort language on a page about backing the platform, and "How JobReady Builds on Delivery" said how the
  * platform relates to delivery once (WP43, cycle-20 review, removed that one-sentence band: the evidence block and "What JobReady Does" say it); scripts/check-facts.mjs exempts that one page (POSITION_EXEMPT_PAGES).
  * WP36: YouthWIDE's statement is the two shared sentences alone, with "YouthWIDE" in place of "We" (its audience and regions are in the hero and the glance right above it); the gate declares it whole for that page.
@@ -520,7 +520,7 @@ export const POSITIONING: Record<PositioningKey, CopyBlock> = {
   },
   localPartners: {
     // WP40 (cycle-17 review): what each side does, in the words of the four cards under it (Mobilizes and Hosts; Trains and Prepares for Certification; Mentoring and Placement; Monthly Reporting). scripts/check-facts.mjs declares it whole
-    // for /partner-with-us/local-partners/ (POSITION_WHOLE_STATEMENT). It rests on PD-06 (facilitators trained and certified by CodersTrust, in existing labs and colleges), PD-01 (mentoring, with placement support alongside) and PD-08 (monthly reports).
+    // for /partner-with-us/local-partners/ (POSITION_WHOLE_STATEMENT). It rests on PD-06 (facilitators trained by CodersTrust, in existing labs and colleges), PD-01 (mentoring, with placement support alongside) and PD-08 (monthly reports).
     text: 'Your organization mobilizes learners and hosts training. CodersTrust supports delivery, mentoring, placement and reporting.',
     facts: ['PD-01', 'PD-06', 'PD-08'],
   },
@@ -582,7 +582,7 @@ export const FUNDER_PAINS: Pain[] = [
 ];
 // WP54 (cycle-28 review, GPT-6.1 Sol G3): P3 says training is "often" measured by enrollment (it said "still", an unhedged generalization about all training).
 // WP61 (cycle-33 review, GPT-6.1 Sol G4): P1 is what CodersTrust adds, not a deficit presumed of the partner (it was "Missing curriculum, trainers and certification": "You reach the young people, but a ready curriculum, trained facilitators and a route to industry certification are
-// often out of reach."). It rests on the same register facts as the "Certified Facilitators and a Local Curriculum" card it still maps to (PD-06, PD-02: certified facilitators, a localized curriculum, preparation for industry certification).
+// often out of reach."). It rests on the same register facts as the "Facilitator Training and a Local Curriculum" card it still maps to (WP148: it was "Certified Facilitators and a Local Curriculum"; PD-06, PD-02: facilitators trained by CodersTrust, a localized curriculum, preparation for industry certification).
 export const LOCAL_PARTNER_PAINS: Pain[] = [
   { id: 'P1', name: 'Curriculum and certification take time to build', text: 'A ready curriculum, trained facilitators and a route to industry certification take time and specialist support to build.' },
   { id: 'P2', name: 'Missing work-entry connections', text: 'Training that stops at the classroom door leaves completers without links to employers, clients and platforms.' },
@@ -706,7 +706,7 @@ export const TRAINED_REACH: CopyBlock = trainedReach();
 
 export const SCALE: CopyBlock = {
   // WP21: short sentences with named actors (DoICT, the ICT Division, CodersTrust), as in the national-scale FAQ answer (Q2).
-  text: 'We scale in phases, starting from what we have done. Government contracts have training scopes ranging from 120+ professionals to 3,120+ digital-lab staff. Her Power, a national program of the Department of ICT (DoICT), under the ICT Division, trained 25,125 women across 130 sub-districts (upazilas), meeting its target. CodersTrust provided the curriculum, training manuals and mentorship guidelines and trained 2,400 women directly. Separately, 10,000 teachers were trained to teach online during COVID-19. Larger programs use existing labs and colleges, certified facilitators and blended delivery, and can run up to 10 cohorts in parallel.',
+  text: 'We scale in phases, starting from what we have done. Government contracts have training scopes ranging from 120+ professionals to 3,120+ digital-lab staff. Her Power, a national program of the Department of ICT (DoICT), under the ICT Division, trained 25,125 women across 130 sub-districts (upazilas), meeting its target. CodersTrust provided the curriculum, training manuals and mentorship guidelines and trained 2,400 women directly. Separately, 10,000 teachers were trained to teach online during COVID-19. Larger programs use existing labs and colleges, CodersTrust-trained facilitators and blended delivery, and can run up to 10 cohorts in parallel.',
   facts: ['GV-10', 'GV-01', 'GV-11', 'SC-08', 'PD-06'],
 };
 

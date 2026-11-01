@@ -206,10 +206,10 @@ test.describe('WP105 item 8: JobReady@Campus option 1 is "Multi-Cohort Pilot Pro
 test.describe('WP105 item 9: stamps and dateModified of the pages this WP changes read 2026-10-29', () => {
   // WP129: every page here except Independent Evaluation changed again on 30 October (WP126 to WP128) and moved on to 2026-10-31.
   const STAMPED = [
-    { route: 'privacy-policy/', selector: '.lf-updated', day: 'October 31, 2026', iso: '2026-10-31' },
+    { route: 'privacy-policy/', selector: '.lf-updated', day: 'November 1, 2026', iso: '2026-11-01' }, // WP148: "Post Graduate Diploma" capitalised
     { route: 'impact/independent-evaluation/', selector: '.lf-updated', day: 'November 1, 2026', iso: '2026-11-01' }, // WP134: WP133 changed its text
     { route: 'programs/youthwide/', selector: '.updated', day: 'November 1, 2026', iso: '2026-11-01' },
-    { route: 'programs/nu-postgraduate-diploma/', selector: '.updated', day: 'October 31, 2026', iso: '2026-10-31' },
+    { route: 'programs/nu-postgraduate-diploma/', selector: '.updated', day: 'November 1, 2026', iso: '2026-11-01' }, // WP148: as Privacy
     { route: 'programs/jobready-campus/', selector: '.updated', day: 'November 1, 2026', iso: '2026-11-01' },
   ];
   for (const s of STAMPED) {

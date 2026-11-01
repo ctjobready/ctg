@@ -51,10 +51,12 @@ import { BANGLADESH_HQ } from '../../../lib/site';
  * WP52 (cycle-27 review, Claude P4): the problem band's lead is "Pair your community reach with CodersTrust’s curriculum, mentoring, placement support and reporting." (it began "Connect your community reach with ...", the heading's own words).
  * WP60 (cycle-32 review, GPT-6.1 Sol G5): the "Certified Facilitators and a Local Curriculum" card no longer says what stays after funding ends (the "What Happens When Funding Ends?" answer on this page says it): "Certified-facilitator training, a localized curriculum and
  * preparation for industry certification. You do not have to build the curriculum or certification route yourself."
+ * WP148 (Opus XHigh run 2, kit 115; the owner's words were "Trained by CodersTrust"): facilitators are trained, not certified. The second "Three Ways to Partner with Us" card is "Put Your Trainers Through Our Training" ("Your trainers join CodersTrust’s Training of Trainers, so delivery capacity can stay in your
+ * community where the program includes it."; it was "Supply Certified Facilitators"); the support card is "Facilitator Training and a Local Curriculum" ("Training of Trainers, a localized curriculum and preparation for industry certification. ..."); the comparison tile says "CodersTrust-trained facilitators".
  */
 const local = localCta();
 // Q9-route: the one-line safeguarding answer with a link to the governance page, which keeps the full account (WP36).
-const FAQ_IDS = ['Q1-local', 'Q9-route', 'Q10-later']; // WP147: the definition block at the top of the page explains the facilitator model, so the funding-ends answer says "certified facilitators"
+const FAQ_IDS = ['Q1-local', 'Q9-route', 'Q10-later']; // WP147: the definition block at the top of the page explains the facilitator model, so the funding-ends answer says "CodersTrust-trained facilitators"
 const path = '/partner-with-us/local-partners/';
 const description = 'Bangladeshi NGOs, colleges and chambers can deliver CodersTrust’s mentored digital-skills programs in their communities.';
 const jsonLd = [
@@ -64,7 +66,7 @@ const jsonLd = [
 
 const ways = [
   { icon: 'building-2', title: 'Host a Cohort', text: 'Open your labs or classrooms for blended training, so cohorts meet where young people already are.' },
-  { icon: 'graduation-cap', title: 'Supply Certified Facilitators', text: 'Put trainers through certified facilitator training so delivery capacity can stay in your community where the program includes it.' },
+  { icon: 'graduation-cap', title: 'Put Your Trainers Through Our Training', text: 'Your trainers join CodersTrust’s Training of Trainers, so delivery capacity can stay in your community where the program includes it.' },
   { icon: 'users', title: 'Mobilize Priority Groups', text: 'Reach the young people your community serves; women are a priority in every program.' },
 ];
 ---
@@ -81,7 +83,7 @@ const ways = [
 
   <!-- GEO definition + page BLUF (WP22: before the fit check, as on every other audience page) -->
   <DefinitionPlus id="definition">
-    <p data-fact="PD-06 GV-09">Larger programs are designed to run through facilitators trained and certified by CodersTrust (Training of Trainers) in existing labs and colleges, coordinated centrally. CodersTrust Bangladesh supports local partners with curriculum, certification exam preparation, mentoring, reporting and safeguarding.</p>
+    <p data-fact="PD-06 GV-09">Larger programs are designed to run through facilitators trained by CodersTrust (Training of Trainers) in existing labs and colleges, coordinated centrally. CodersTrust Bangladesh supports local partners with curriculum, certification exam preparation, mentoring, reporting and safeguarding.</p>
   </DefinitionPlus>
 
   <LearnerVoice story="samina-tasneem-chowdhury" excerpt="During the training period, she began offering her services as a graphic designer on the freelance marketplace Fiverr." program="WSDFM" tone="white" />
@@ -117,7 +119,7 @@ const ways = [
       positioning={POSITIONING.localPartners}
       blocks={[
         { label: 'Your Organization', title: 'Mobilizes and Hosts', text: 'You reach young people and host cohorts in your labs, classrooms or centers.', icon: 'building-2' },
-        { label: 'With CodersTrust', title: 'Trains and Prepares for Certification', text: 'Certified facilitators, a localized curriculum and preparation for industry certification, delivered in blended classes.', icon: 'graduation-cap' },
+        { label: 'With CodersTrust', title: 'Trains and Prepares for Certification', text: 'CodersTrust-trained facilitators, a localized curriculum and preparation for industry certification, delivered in blended classes.', icon: 'graduation-cap' },
         { label: 'Together', title: 'Mentoring and Placement', text: 'Three months of milestone-based mentoring, with placement support into local, remote and global work.', icon: 'handshake' },
         { label: 'Throughout', title: 'Monthly Reporting', text: 'Where a funder is involved, monthly reports cover enrollment, completion, certification, placements and first earnings.', icon: 'chart-bar' },
       ]}
@@ -151,7 +153,7 @@ const ways = [
 
   <!-- C8 (review round 14, M4): one card per ranked pain of C2, keyed to the C6 elements "Trains and certifies", "Mentoring and placement" and "Monthly reporting".
        WP39 (cycle-16 review): three short cards in place of the concern / inclusion / benefit matrix; each keeps its pain's id (`data-relieves`, held by scripts/check-facts.mjs) and its register facts, and its sentences keep
-       the matrix rows' words (PD-06 and PD-02: certified facilitators, a localized curriculum, preparation for industry certification; PD-01 and PD-15: mentoring with placement support alongside; PD-08: monthly reports). -->
+       the matrix rows' words (PD-06 and PD-02: Training of Trainers, a localized curriculum, preparation for industry certification; PD-01 and PD-15: mentoring with placement support alongside; PD-08: monthly reports). -->
   <IncludesBand
     id="features"
     title="What Your Community Gets"
@@ -159,8 +161,8 @@ const ways = [
       {
         painId: painForRow(LOCAL_PARTNER_PAINS, 'P1').painId,
         icon: 'graduation-cap',
-        title: 'Certified Facilitators and a Local Curriculum',
-        text: 'Certified-facilitator training, a localized curriculum and preparation for industry certification. You do not have to build the curriculum or certification route yourself.',
+        title: 'Facilitator Training and a Local Curriculum',
+        text: 'Training of Trainers, a localized curriculum and preparation for industry certification. You do not have to build the curriculum or certification route yourself.',
         facts: ['PD-06', 'PD-02'],
       },
       {

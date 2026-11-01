@@ -121,8 +121,8 @@ interface NewCourse {
 const NEW_COURSES: Record<string, NewCourse> = {
   'cyber-security': {
     title: 'NU Post Graduate Diploma in Cyber Security',
-    lead: 'Cyber security knowledge, from cryptography and network security to digital forensics and cyber law, in a National University post graduate diploma delivered by CodersTrust.',
-    description: 'A National University post graduate diploma in cyber security, delivered by CodersTrust: cryptography, network security, digital forensics and cyber law.',
+    lead: 'Cyber security knowledge, from cryptography and network security to digital forensics and cyber law, in a National University Post Graduate Diploma delivered by CodersTrust.',
+    description: 'A National University Post Graduate Diploma in cyber security, delivered by CodersTrust: cryptography, network security, digital forensics and cyber law.',
     studyLead: 'Modules, in order. The final module is a capstone project or internship.',
     answer: 'Build a foundation in cryptography, network security, digital forensics and cyber risk management, then apply it in the final capstone project or internship.',
     answerModules: ['Cryptography and Data Security', 'Network and Communication Security', 'Cyber Crime Investigation and Digital Forensics', 'Cyber Risk Management and Crime Prevention'],
@@ -146,8 +146,8 @@ const NEW_COURSES: Record<string, NewCourse> = {
   },
   'data-analytics': {
     title: 'NU Post Graduate Diploma in Data Analytics',
-    lead: 'Practical data analytics skills, from analytics tools and databases to data visualization and machine learning, in a National University post graduate diploma delivered by CodersTrust.',
-    description: 'A National University post graduate diploma in data analytics, delivered by CodersTrust: analytics tools, databases, visualization and machine learning.',
+    lead: 'Practical data analytics skills, from analytics tools and databases to data visualization and machine learning, in a National University Post Graduate Diploma delivered by CodersTrust.',
+    description: 'A National University Post Graduate Diploma in data analytics, delivered by CodersTrust: analytics tools, databases, visualization and machine learning.',
     studyLead: 'Modules, in order. The final module is a special-topics thesis or project report.',
     answer: 'Build a foundation in analytics tools, databases, data visualization and machine learning, then apply it in the final special-topics thesis or project report.',
     answerModules: ['Data Analytics: Tools and Techniques', 'Database Systems', 'Data Visualization', 'Fundamentals of Machine Learning'],
@@ -469,7 +469,7 @@ test.describe('WP76 item 1: the two new course pages follow the course template'
       expect(JSON.stringify(course?.provider)).toContain('National University, Bangladesh');
       const crumbs = nodes.find((n) => n['@type'] === 'BreadcrumbList');
       expect(((crumbs?.itemListElement as { name: string }[]) ?? []).map((i) => i.name)).toEqual(['Home', 'Programs', 'NU Post Graduate Diploma', c.title]);
-      expect(nodes.filter((n) => n['@type'] === 'WebPage').some((n) => n.dateModified === '2026-10-31')).toBe(true);
+      expect(nodes.filter((n) => n['@type'] === 'WebPage').some((n) => n.dateModified === '2026-11-01')).toBe(true); // WP148: "Post Graduate Diploma" capitalised in the lead and the meta (it read 2026-10-31)
     });
 
     test(`${route}: the page is shorter than the 750-word cap the other course pages keep, shows its last-updated date, and does not scroll sideways at 1280 or 390`, async ({ page }) => {
@@ -480,7 +480,7 @@ test.describe('WP76 item 1: the two new course pages follow the course template'
         expect(await noOverflow(page), `${vp.width}px`).toBe(true);
       }
       expect(await wordsIn(page)).toBeLessThan(750);
-      expect(compact(await page.locator('.updated').textContent())).toBe('Last updated October 31, 2026'); // WP104: the course pages' wording last changed on 29 October (WP102)
+      expect(compact(await page.locator('.updated').textContent())).toBe('Last updated November 1, 2026'); // WP148: it read October 31, 2026; WP104: the course pages' wording last changed on 29 October (WP102)
     });
   }
 });

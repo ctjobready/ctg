@@ -304,9 +304,9 @@ test.describe('WP106 item 9: dateModified of the pages this WP changes reads 202
     });
   }
 
-  test('the Privacy Policy still prints "Last updated October 31, 2026"', async ({ page }) => {
+  test('the Privacy Policy prints "Last updated November 1, 2026" (WP148: the NU program name is capitalised; it read October 31, 2026)', async ({ page }) => {
     await open(page, 'privacy-policy/');
-    expect(compact(await page.locator('.lf-updated').first().textContent())).toBe('Last updated October 31, 2026');
+    expect(compact(await page.locator('.lf-updated').first().textContent())).toBe('Last updated November 1, 2026');
   });
 
   test('the four news posts carry `updated: 2026-10-29` in their front matter', () => {

@@ -83,8 +83,8 @@ const SAFE_FAQS: Record<string, number[]> = {
 export const NU_COURSE_COPY: Record<string, { short: string; lead: string; description: string; topics: string[]; titleTag: string; prefer: string; studyLead: string }> = {
   'digital-marketing': {
     short: 'Practical digital marketing: SEO, social media, advertising and analytics.',
-    lead: 'Practical digital marketing skills, from SEO and social media to advertising and analytics, in a National University post graduate diploma delivered by CodersTrust.',
-    description: 'A National University post graduate diploma in digital marketing, delivered by CodersTrust: SEO, social media, advertising and analytics.',
+    lead: 'Practical digital marketing skills, from SEO and social media to advertising and analytics, in a National University Post Graduate Diploma delivered by CodersTrust.',
+    description: 'A National University Post Graduate Diploma in digital marketing, delivered by CodersTrust: SEO, social media, advertising and analytics.',
     topics: ['SEO and analytics', 'Social media marketing', 'E-commerce'],
     titleTag: 'NU Post Graduate Diploma in Digital Marketing',
     prefer: 'Prefer SEO, social media and advertising?',
@@ -92,8 +92,8 @@ export const NU_COURSE_COPY: Record<string, { short: string; lead: string; descr
   },
   ict: {
     short: 'Practical information and communication technology (ICT): programming, databases, networks, mobile and web development.',
-    lead: 'Practical information and communication technology (ICT) skills, from programming and databases to networks, mobile apps and web design, in a National University post graduate diploma delivered by CodersTrust.',
-    description: 'National University post graduate diploma in information and communication technology (ICT), delivered by CodersTrust: programming, databases and networks.',
+    lead: 'Practical information and communication technology (ICT) skills, from programming and databases to networks, mobile apps and web design, in a National University Post Graduate Diploma delivered by CodersTrust.',
+    description: 'National University Post Graduate Diploma in information and communication technology (ICT), delivered by CodersTrust: programming, databases and networks.',
     topics: ['Programming and databases', 'Networks and troubleshooting', 'Mobile and web development'],
     // WP97: the <title> is capped at 60 characters with " | CodersTrust"; the full course name does not fit, so the title keeps the short "ICT" that NU itself uses (the H1 and the description carry the full name)
     titleTag: 'NU Post Graduate Diploma in ICT',
@@ -104,8 +104,8 @@ export const NU_COURSE_COPY: Record<string, { short: string; lead: string; descr
   // cyber risk management, cyber terrorism, financial cybercrime) and the final "Capstone Project/Internship" module. Everything below is worded from the module names; no outcome, role or service is promised.
   'cyber-security': {
     short: 'Cyber Security: cryptography, network security, digital forensics, cyber law and risk management.',
-    lead: 'Cyber security knowledge, from cryptography and network security to digital forensics and cyber law, in a National University post graduate diploma delivered by CodersTrust.',
-    description: 'A National University post graduate diploma in cyber security, delivered by CodersTrust: cryptography, network security, digital forensics and cyber law.',
+    lead: 'Cyber security knowledge, from cryptography and network security to digital forensics and cyber law, in a National University Post Graduate Diploma delivered by CodersTrust.',
+    description: 'A National University Post Graduate Diploma in cyber security, delivered by CodersTrust: cryptography, network security, digital forensics and cyber law.',
     topics: ['Cryptography and network security', 'Digital forensics and investigation', 'Cyber law and risk management'],
     titleTag: 'NU Post Graduate Diploma in Cyber Security',
     prefer: 'Prefer cryptography, network security and digital forensics?',
@@ -115,8 +115,8 @@ export const NU_COURSE_COPY: Record<string, { short: string; lead: string; descr
   // below names only what the module list does (analytics tools, databases, data visualization, machine learning, data governance and ethics).
   'data-analytics': {
     short: 'Practical data analytics: analytics tools, databases, data visualization and machine learning.',
-    lead: 'Practical data analytics skills, from analytics tools and databases to data visualization and machine learning, in a National University post graduate diploma delivered by CodersTrust.',
-    description: 'A National University post graduate diploma in data analytics, delivered by CodersTrust: analytics tools, databases, visualization and machine learning.',
+    lead: 'Practical data analytics skills, from analytics tools and databases to data visualization and machine learning, in a National University Post Graduate Diploma delivered by CodersTrust.',
+    description: 'A National University Post Graduate Diploma in data analytics, delivered by CodersTrust: analytics tools, databases, visualization and machine learning.',
     topics: ['Analytics tools and databases', 'Data visualization', 'Machine learning and data governance'],
     titleTag: 'NU Post Graduate Diploma in Data Analytics',
     prefer: 'Prefer analytics tools, data visualization and machine learning?',

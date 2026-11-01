@@ -137,7 +137,7 @@ test.describe('Programs', () => {
   test('the YouthWIDE fit answer names who it does not suit in one plain sentence', async ({ page }) => {
     await open(page, 'programs/youthwide/');
     const text = compact(await everything(page));
-    expect(text).toContain('YouthWIDE is not the right fit if you need a 100,000+ rollout delivered by one provider in a single phase; we plan national delivery phase by phase.');
+    expect(text).toContain('YouthWIDE is not the right fit if you need a 100,000+ rollout delivered by one provider in a single phase; national delivery is designed in phases.'); // WP148: it read "...; we plan national delivery phase by phase."
     expect(text).not.toContain('single-vendor');
   });
 

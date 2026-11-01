@@ -9,7 +9,7 @@ import { listPages } from './support/pages';
 
 /**
  * WP52 behaviors (the verified cycle-27 whole-site reviews, items 1-38): the employer track-record opener (Employers and JobReady@Work) without a speed comparison; JobReady@Campus's problem-band lead; the Local Partners
- * "Certified Facilitators and a Local Curriculum" card, "Monthly Reporting" block and challenge lead; the Governments delivery card, Her Power glance tile, contracts-table note, "Capacity Designed to Stay" card, closing call to action
+ * "Facilitator Training and a Local Curriculum" card, "Monthly Reporting" block and challenge lead; the Governments delivery card, Her Power glance tile, contracts-table note, "Capacity Designed to Stay" card, closing call to action
  * (no repeated procurement point), Track Record band (no empathy line) and "Options" eyebrow; the Foundations cohort-grant lead; the About timeline, identity sentences, meta description and "Start a Conversation" band; Home's hero line,
  * slides 2, 4 and 5, "Progress You Can Check" card and AWS line; "surveyed new earners" defined where the 58.7% appears; the Development Partners glance (no ">4×" tile) and "Where They Work" card; YouthWIDE's hero label and
  * glance row; the Governance leadership card; the Our Model cards; the Programs hub lines; the evidence ladder's first row; the Impact title; the Investors Track Record band and the IN-05 label. Retrospective coverage (the owner
@@ -96,18 +96,18 @@ test.describe('JobReady@Campus: the problem band’s lead says what the program 
 
 test.describe('Local Partners: what stays after funding, and what the monthly reports cover, are scoped (items 3 and 4)', () => {
   const CARD =
-    'Certified-facilitator training, a localized curriculum and preparation for industry certification. You do not have to build the curriculum or certification route yourself.';
+    'Training of Trainers, a localized curriculum and preparation for industry certification. You do not have to build the curriculum or certification route yourself.';
   const BLOCK = 'Where a funder is involved, monthly reports cover enrollment, completion, certification, placements and first earnings.';
 
   // WP60 (cycle-32 review, GPT-6.1 Sol G5): the card no longer says what remains after funding ends; the page’s funding-ends answer (Q10) says it, with the scope words, and still opens with them
-  test('"Certified Facilitators and a Local Curriculum" is training, a localized curriculum and certification preparation; what remains after funding ends is the page’s funding-ends answer (Q10)', async ({ page }) => {
+  test('"Facilitator Training and a Local Curriculum" is training, a localized curriculum and certification preparation; what remains after funding ends is the page’s funding-ends answer (Q10)', async ({ page }) => {
     await open(page, LOCAL);
-    const card = page.locator('#features li', { has: page.locator('.card__title', { hasText: 'Certified Facilitators and a Local Curriculum' }) });
+    const card = page.locator('#features li', { has: page.locator('.card__title', { hasText: 'Facilitator Training and a Local Curriculum' }) });
     await expect(card).toHaveCount(1);
     expect(compact(await card.locator('.card__text').textContent())).toBe(CARD);
     expect(await card.getAttribute('data-fact')).toBe('PD-06 PD-02');
     // Q10 ("What Happens When Funding Ends?") opens with the same scope words, and the page carries it
-    expect(faqs.find((f) => f.id === 'Q10')!.a).toContain('Where included, what the program builds stays in place: facilitators trained and certified by CodersTrust (Training of Trainers) and localized curricula'); // WP147: it read "certified local facilitators"; Local Partners prints the Q10-later variant ("certified facilitators"), as the definition block above it explains the model
+    expect(faqs.find((f) => f.id === 'Q10')!.a).toContain('Where included, what the program builds stays in place: facilitators trained by CodersTrust (Training of Trainers) and localized curricula'); // WP147: it read "certified local facilitators"; Local Partners prints the Q10-later variant ("CodersTrust-trained facilitators", WP148), as the definition block above it explains the model
     expect(compact(await page.locator('main').evaluate((el) => el.textContent ?? ''))).toContain('Where included, what the program builds stays in place');
   });
 

@@ -150,9 +150,9 @@ test.describe('Investors: the national-scale answer closes on two short sentence
     );
     // the 41-word closing sentence is now two, each short
     // WP45 (cycle-21 review): "are designed to run" (PD-06 states a design, not a delivered capacity)
-    expect(sentences[1]).toBe('We scale in phases: larger programs are designed to run up to 10 cohorts in parallel through facilitators trained and certified by CodersTrust (Training of Trainers) in existing labs and colleges.');
+    expect(sentences[1]).toBe('We scale in phases: larger programs are designed to run up to 10 cohorts in parallel through facilitators trained by CodersTrust (Training of Trainers) in existing labs and colleges.');
     expect(sentences[2]).toBe('A 100,000+ national program is a design option we have not yet delivered.');
-    expect(wordCount(sentences[1])).toBeLessThanOrEqual(31); // WP147 (owner answer 2026-11-01): "facilitators trained and certified by CodersTrust (Training of Trainers)" replaced "certified local facilitators" (+6 words); the cap was 25
+    expect(wordCount(sentences[1])).toBeLessThanOrEqual(31); // WP147 (owner answer 2026-11-01): "facilitators trained and certified by CodersTrust (Training of Trainers)" replaced "certified local facilitators" (+6 words); WP148: "facilitators trained by CodersTrust (Training of Trainers)" (+4 words); the cap was 25
     expect(wordCount(sentences[2])).toBeLessThanOrEqual(15);
     const ld = (await page.locator('script[type="application/ld+json"]').allTextContents()).join(' ');
     expect(ld).toContain('A 100,000+ national program is a design option we have not yet delivered.');

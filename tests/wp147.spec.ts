@@ -7,8 +7,9 @@ import { DIST_DIR } from './support/env';
 /**
  * WP147 (owner answer 2026-11-01 on facilitators; Opus XHigh run 1 and Opus High run 22 Polish, kit 114).
  * Test-first: run `npm run build`, then `PORT=<port> npx playwright test tests/wp147.spec.ts --project=chromium`. The tests read the built files; none opens a browser.
- *   1  Facilitators: "Trained by CodersTrust", never "local". The first explanation on a page says "facilitators trained and certified by CodersTrust (Training of Trainers)"; later mentions say "certified facilitators".
- *      No built file (HTML, JSON-LD, llms.txt) says "local facilitator"; the register's PD-06 reads "facilitators trained and certified by CodersTrust".
+ *   1  Facilitators: "Trained by CodersTrust", never "local". The first explanation on a page says "facilitators trained by CodersTrust (Training of Trainers)"; later mentions say "CodersTrust-trained facilitators".
+ *      No built file (HTML, JSON-LD, llms.txt) says "local facilitator" or "certified facilitator"; the register's PD-06 reads "facilitators trained by CodersTrust".
+ *      WP148 (Opus XHigh run 2, kit 115 principle challenge, accepted): the guards moved from "trained and certified by CodersTrust" / "certified facilitators" to these forms; tests/wp148.spec.ts holds the rest of WP148.
  *   2  The NYNJMSDC award stays in Aziz Ahmad's bio: the News Photographs caption names UTC Associates; the archived post moves from "Recognition" to "Leadership and Advocacy".
  *   3  XHigh Polish: Outcomes method line ("Impact Survey 2026") and the first use of "surveyed new earners"; the Employers FAQ answer; Governance "How to Ask"; Home FAQ ("follow-up survey results"),
  *      Home citation ("Hannane and Zhu"); the journal citation "(October 2026)" on TalentLEAP as on the Trial page; "NU Post Graduate Diploma courses".
@@ -56,9 +57,10 @@ const NEWS = 'news/index.html';
 const POST_SLUG = 'aziz-ahmad-wins-the-nynjmsdc-partnership-award-in-the-united-states';
 const POST = `news/${POST_SLUG}/index.html`;
 
-const LONG = 'facilitators trained and certified by CodersTrust (Training of Trainers)';
+const LONG = 'facilitators trained by CodersTrust (Training of Trainers)';
+const SHORT = 'CodersTrust-trained facilitators';
 
-test.describe('1 Facilitators: trained and certified by CodersTrust, never "local"', () => {
+test.describe('1 Facilitators: trained by CodersTrust, never "local" and never "certified"', () => {
   test('no built file says "local facilitator" (page text, meta, JSON-LD, llms.txt)', () => {
     const hits = walk(DIST_DIR)
       .filter((f) => /\blocal[ ,-]+(?:\w+ )?facilitators?\b/i.test(readFileSync(f, 'utf8')))
@@ -66,23 +68,31 @@ test.describe('1 Facilitators: trained and certified by CodersTrust, never "loca
     expect(hits).toEqual([]);
   });
 
-  test('the register: PD-06 says facilitators trained and certified by CodersTrust', () => {
+  test('no built file says "certified facilitator" or "trained and certified by CodersTrust" (CodersTrust prepares learners for third-party exams; it certifies no one, and facilitators are trained, not certified)', () => {
+    const hits = walk(DIST_DIR)
+      .filter((f) => /certified[ -]+(?:local )?facilitators?\b|trained and certified by CodersTrust/i.test(readFileSync(f, 'utf8')))
+      .map((f) => f.slice(DIST_DIR.length));
+    expect(hits).toEqual([]);
+  });
+
+  test('the register: PD-06 says facilitators trained by CodersTrust', () => {
     expect(fact('PD-06').text).toBe(
-      'Up to 10 certification cohorts in parallel from about month 5; classes of 20 (labs) and 40 (lectures); hub-and-spoke delivery with facilitators trained and certified by CodersTrust for larger programs',
+      'Up to 10 certification cohorts in parallel from about month 5; classes of 20 (labs) and 40 (lectures); hub-and-spoke delivery with facilitators trained by CodersTrust for larger programs',
     );
   });
 
-  test('every page that explains the facilitator model says "trained and certified by CodersTrust" once, on its first explanation', () => {
+  test('every page that explains the facilitator model says "trained by CodersTrust (Training of Trainers)" once, and the short form only after it', () => {
     for (const p of [GOVERNANCE, OUR_MODEL, TALENTLEAP, DEV, FOUNDATIONS, GOVERNMENTS, INVESTORS, LOCAL, UNIVERSITIES, CAMPUS, YOUTHWIDE]) {
       const text = main(p);
-      expect(count(text, 'trained and certified by CodersTrust'), p).toBe(1);
-      expect(text, p).toContain(LONG);
+      expect(count(text, LONG), p).toBe(1);
+      const short = text.indexOf(SHORT);
+      if (short >= 0) expect(short, `${p}: "${SHORT}" comes before the long form`).toBeGreaterThan(text.indexOf(LONG));
     }
   });
 
-  test('"What Happens When Funding Ends?" (page and FAQ JSON-LD): the long form where it is the page’s only mention, "certified facilitators" where the page has explained it above', () => {
+  test('"What Happens When Funding Ends?" (page and FAQ JSON-LD): the long form where it is the page’s only mention, "CodersTrust-trained facilitators" where the page has explained it above', () => {
     const LONG_A = `Where included, what the program builds stays in place: ${LONG} and localized curricula.`;
-    const SHORT_A = 'Where included, what the program builds stays in place: certified facilitators and localized curricula.';
+    const SHORT_A = `Where included, what the program builds stays in place: ${SHORT} and localized curricula.`;
     for (const p of [GOVERNANCE, TALENTLEAP, DEV, FOUNDATIONS]) {
       expect(main(p), p).toContain(LONG_A);
       expect(ldText(p), `${p} JSON-LD`).toContain(LONG_A);
@@ -93,13 +103,13 @@ test.describe('1 Facilitators: trained and certified by CodersTrust, never "loca
       expect(ldText(p), `${p} JSON-LD`).toContain(SHORT_A);
       expect(main(p), p).not.toContain(LONG_A);
     }
-    const CAMPUS_A = 'Where included, what the program builds stays on your campus: certified facilitators, localized curricula and campus labs that serve as blended-learning centers.';
+    const CAMPUS_A = `Where included, what the program builds stays on your campus: ${SHORT}, localized curricula and campus labs that serve as blended-learning centers.`;
     expect(main(UNIVERSITIES)).toContain(CAMPUS_A);
     expect(ldText(UNIVERSITIES)).toContain(CAMPUS_A);
   });
 
   test('first explanations read in context', () => {
-    expect(main(OUR_MODEL)).toContain(`After about five months of delivery, programs are designed to run up to 10 certification cohorts in parallel, using existing labs and ${LONG}.`);
+    expect(main(OUR_MODEL)).toContain(`After about five months of delivery, programs are designed to run up to 10 certification cohorts in parallel, using existing labs and ${SHORT}.`);
     expect(main(CAMPUS)).toContain(`Campus labs work as blended-learning centers, with ${LONG}.`);
     expect(main(UNIVERSITIES)).toContain(`On-campus labs become blended-learning centers with ${LONG}; faculty members act as coordinators.`);
     expect(main(GOVERNMENTS)).toContain(`Where included: curriculum and manuals; ${LONG}; and blended learning in existing labs that works with limited connectivity, so rural labs can take part.`);
@@ -107,10 +117,11 @@ test.describe('1 Facilitators: trained and certified by CodersTrust, never "loca
     expect(main(YOUTHWIDE)).toContain(`Blended training in existing labs and colleges, with ${LONG}; a central team coordinating local labs for larger programs.`);
   });
 
-  test('later mentions say "certified facilitators"', () => {
-    expect(main(LOCAL)).toContain('Certified facilitators, a localized curriculum and preparation for industry certification, delivered in blended classes.');
-    expect(main(YOUTHWIDE)).toContain('Larger programs are designed to run in phases, up to 10 cohorts in parallel, with certified facilitators.');
-    expect(ldText(YOUTHWIDE)).toContain('Larger programs are designed to run in phases, up to 10 cohorts in parallel, with certified facilitators.');
+  test('later mentions say "CodersTrust-trained facilitators"', () => {
+    expect(main(LOCAL)).toContain(`${SHORT[0].toUpperCase()}${SHORT.slice(1)}, a localized curriculum and preparation for industry certification, delivered in blended classes.`);
+    expect(main(YOUTHWIDE)).toContain(`Larger programs are designed to run in phases, up to 10 cohorts in parallel, with ${SHORT};`);
+    expect(ldText(YOUTHWIDE)).toContain(`Larger programs are designed to run in phases, up to 10 cohorts in parallel, with ${SHORT};`);
+    expect(main(UNIVERSITIES)).toContain(`${SHORT[0].toUpperCase()}${SHORT.slice(1)} begin the first cohort in your labs.`);
   });
 
   test('Investors: the national-scale answer says it once, in the long form (page and JSON-LD)', () => {

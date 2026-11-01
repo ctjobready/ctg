@@ -305,7 +305,7 @@ test.describe('NU Post Graduate Diploma: a link to the wider programs, not their
   test('the page shows today as its last-updated date', async ({ page }) => {
     await open(page, 'programs/nu-postgraduate-diploma/');
     // WP76 (2026-10-22): the page's wording changed that day (four courses), so PAGE_UPDATED.nu moved from 2026-10-15
-    await expect(page.locator('.updated time')).toHaveAttribute('datetime', '2026-10-31'); // WP104: the page's wording last changed on 29 October (WP102; the Context heading, WP104)
+    await expect(page.locator('.updated time')).toHaveAttribute('datetime', '2026-11-01'); // WP148: "Post Graduate Diploma" capitalised (it read 2026-10-31); WP104: the page's wording last changed on 29 October (WP102; the Context heading, WP104)
   });
 });
 
@@ -318,7 +318,7 @@ test.describe('Our Model: two delivery cards say what they mean', () => {
     await expect(scale).toHaveCount(1);
     // WP46 (cycle-22 review): "are designed to run" (as Q2 and Investors say it), not "can run"
     // WP65 (cycle-37 review): month 5 is a month of a program (PD-06); WP67 (cycle-38 review, Grok): "After about five months of delivery, programs are designed to run up to 10 certification cohorts in parallel, ..." (it said "From about month 5 of a program, delivery is designed to run ...")
-    expect(compact(await scale.textContent())).toContain('After about five months of delivery, programs are designed to run up to 10 certification cohorts in parallel, using existing labs and facilitators trained and certified by CodersTrust (Training of Trainers).');
+    expect(compact(await scale.textContent())).toContain('After about five months of delivery, programs are designed to run up to 10 certification cohorts in parallel, using existing labs and CodersTrust-trained facilitators.');
     expect(await scale.locator('[data-fact]').getAttribute('data-fact')).toBe('PD-06');
     const text = await mainText(page);
     expect(text).not.toMatch(/Hub-and-Spoke Delivery at Scale|Each certification takes|Larger programs use hub-and-spoke/);

@@ -21,6 +21,7 @@ export const C14_FIRST_FUNDERS = `${C14_FIRST.replace(/\.$/, '')} for a discover
  * JobReady@Work (WP104: AIvolve as an offering in the Training row, off the partners list). Pages whose text last changed on 28 October (TalentLEAP) are dated then.
  * 2026-10-31 (WP129, owner rule: any change to visible text moves the date, copy edits included): JobReady@Campus, JobReady@Work, the NU index and the NU course pages, whose copy changed on 30 October (WP126 to WP128; the NU payment line's semicolons) and 31 October (WP129).
  * 2026-11-01 (WP141, owner answer: the program-scope qualifier is stated once per page): JobReady@Campus and JobReady@Work (the programs index and YouthWIDE carry their own LAST_UPDATED).
+ * 2026-11-01 (WP148, "Post Graduate Diploma" capitalised in the leads and meta descriptions): the NU index and the NU course pages.
  */
 export const LAST_UPDATED = '2026-10-08';
 export const PAGE_UPDATED = {
@@ -29,8 +30,8 @@ export const PAGE_UPDATED = {
   campus: '2026-11-01', // WP141 (owner answer 2026-11-01): the program-scope qualifier is stated once per page
   work: '2026-11-01', // WP141: as campus
   superkids: '2026-10-10',
-  nu: '2026-10-31',
-  nuCourse: '2026-10-31',
+  nu: '2026-11-01', // WP148 (Opus XHigh run 2 Polish): "Post Graduate Diploma" is capitalised in the lead and the meta description
+  nuCourse: '2026-11-01', // WP148: as nu
 } as const;
 
 /** Page-level primary-CTA helper: label + href for a registered key. */

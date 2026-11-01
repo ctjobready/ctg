@@ -169,7 +169,7 @@ const CARDS = [
   { prefix: '/partner-with-us/', file: 'partner-with-us', label: 'Partner with Us', line: 'Choose a partnership for youth employment, campus skills, team training, hiring or JobReady’s staged rollout.' },
   { prefix: '/partner-with-us/investors/', file: 'investors', label: 'Investors', line: 'Back JobReady’s staged rollout, built on CodersTrust’s training and mentoring programs.' },
   { prefix: '/programs/', file: 'programs', label: 'Programs', line: 'Digital Skills Programs, from School to Work' },
-  { prefix: '/programs/nu-postgraduate-diploma/', file: 'nu-postgraduate-diploma', label: 'NU Post Graduate Diploma', line: 'We help learners prepare for digital work through a National University post graduate diploma.' },
+  { prefix: '/programs/nu-postgraduate-diploma/', file: 'nu-postgraduate-diploma', label: 'NU Post Graduate Diploma', line: 'We help learners prepare for digital work through the National University Post Graduate Diploma.' }, // WP148: it read "through a National University post graduate diploma"
   { prefix: '/our-model/', file: 'our-model', label: 'Our Model', line: 'One Path from Learning to Earning, with Outcomes Tracked' },
   { prefix: '/impact/', file: 'impact', label: 'Impact', line: 'Impact You Can Verify' },
   { prefix: '/about/', file: 'about', label: 'About', line: 'A Global Workforce Organization, Built on Evidence' },

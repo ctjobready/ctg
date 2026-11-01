@@ -18,7 +18,7 @@ import { listPages } from './support/pages';
  *   - S4: wherever WSDFM's program records show beside the trial, the trial's 833 women (RC-07) are named: Home slide 4 (one row at 1280), the audience-page cards, Impact's tile and the WSDFM case study's note;
  *   - S6: the Governments delivery card is "Trainers and Curriculum"; "Capacity Designed to Stay in Your System" stays the benefit card;
  *   - G1: Home slide 2 says the same facts in four plain sentences, within the carousel's height budget;
- *   - G2: YouthWIDE's national-scale answer says "Larger programs are designed to run in phases, up to 10 cohorts in parallel, with certified facilitators.";
+ *   - G2: YouthWIDE's national-scale answer says "Larger programs are designed to run in phases, up to 10 cohorts in parallel, with CodersTrust-trained facilitators; we have not yet delivered a 100,000+ program." (WP148; WP147 had "certified facilitators");
  *   - G3: Employers' first pain card says "AI skills are the hardest to find (ManpowerGroup, 2026).", from PX-05's source note;
  *   - G5: Local Partners' first "What Your Community Gets" card no longer repeats the funding-end answer;
  *   - K1: the Case Studies hub hero is the Kosovo training room (a case-study program's photograph), not the Bhutan inauguration, with Kosovo in its alt text;
@@ -364,9 +364,9 @@ test.describe('G2 (GPT-6.1 Sol): YouthWIDE’s national-scale answer says larger
     await open(page, YOUTHWIDE);
     const item = page.locator('#faq details, #faqs details', { has: page.locator('summary', { hasText: 'Can You Deliver at National Scale?' }) }).first();
     const answer = compact(await item.locator('.faq__a').textContent());
-    expect(answer).toContain('Larger programs are designed to run in phases, up to 10 cohorts in parallel, with certified facilitators. A 100,000+ program is a design option we plan phase by phase; we have not yet delivered a program at that size.'); // WP146: it read "A 100,000+ phase is a design option; …"
+    expect(answer).toContain('Larger programs are designed to run in phases, up to 10 cohorts in parallel, with CodersTrust-trained facilitators; we have not yet delivered a 100,000+ program.'); // WP148: it read "..., with certified facilitators. A 100,000+ program is a design option we plan phase by phase; we have not yet delivered a program at that size." (WP146: "A 100,000+ phase is a design option; …")
     expect(answer).not.toContain('We scale in phases, up to 10 cohorts');
-    expect((await faqJsonLd(page)).find((q) => q.name === 'Can You Deliver at National Scale?')?.text).toContain('Larger programs are designed to run in phases, up to 10 cohorts in parallel, with certified facilitators.');
+    expect((await faqJsonLd(page)).find((q) => q.name === 'Can You Deliver at National Scale?')?.text).toContain('Larger programs are designed to run in phases, up to 10 cohorts in parallel, with CodersTrust-trained facilitators;');
   });
 });
 
@@ -386,10 +386,10 @@ test.describe('G3 (GPT-6.1 Sol): Employers’ "AI skills are the hardest to find
 test.describe('G5 (GPT-6.1 Sol): Local Partners’ first "What Your Community Gets" card no longer repeats the funding-end answer', () => {
   test('the card is two sentences; the funding-end answer (Q10) is still on the page, with its scope words', async ({ page }) => {
     await open(page, LOCAL);
-    const card = page.locator('#features li', { has: page.locator('.card__title', { hasText: 'Certified Facilitators and a Local Curriculum' }) });
+    const card = page.locator('#features li', { has: page.locator('.card__title', { hasText: 'Facilitator Training and a Local Curriculum' }) });
     await expect(card).toHaveCount(1);
     const text = compact(await card.locator('.card__text').textContent());
-    expect(text).toBe('Certified-facilitator training, a localized curriculum and preparation for industry certification. You do not have to build the curriculum or certification route yourself.');
+    expect(text).toBe('Training of Trainers, a localized curriculum and preparation for industry certification. You do not have to build the curriculum or certification route yourself.');
     expect(text).not.toContain('funding ends');
     expect(await card.getAttribute('data-fact')).toBe('PD-06 PD-02');
     expect(compact(await page.locator('main').textContent())).toContain('Where included, what the program builds stays in place');
@@ -522,7 +522,7 @@ test.describe('GM5 (Gemini): Governments’ "Capacity Designed to Stay in Your S
     expect(await cards.locator('.card__title').allTextContents()).toEqual(['Certification Tracks and Placement Support', 'Spending Measured Against Outcomes', 'Capacity Designed to Stay in Your System']);
     const card = cards.nth(2);
     expect(compact(await card.locator('.card__text').textContent())).toBe(
-      'Where included: curriculum and manuals; facilitators trained and certified by CodersTrust (Training of Trainers); and blended learning in existing labs that works with limited connectivity, so rural labs can take part.',
+      'Where included: curriculum and manuals; facilitators trained by CodersTrust (Training of Trainers); and blended learning in existing labs that works with limited connectivity, so rural labs can take part.',
     );
     expect(await card.getAttribute('data-fact')).toBe('GV-11 PD-06 PD-07');
     expect(compact(await cards.nth(1).locator('.card__text').textContent())).toBe('A pilot scorecard with cost per completer and per verified outcome, and monthly reports. Your budget is assessed against the agreed scorecard.');

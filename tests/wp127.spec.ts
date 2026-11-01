@@ -234,7 +234,7 @@ const PAGE_TEXT: [string, string][] = [
   ['news/hour-of-code-in-somaliland/index.html', 'included an Hour of Code event for students and an ICT program at Tima-ade University.'],
   ['news/why-we-call-it-a-digital-factory/index.html', 'every district, town and village'],
   ['news/coderstrust-visited-bimstec-headquarter/index.html', 'Bangladesh, Bhutan, India, Myanmar, Nepal, Sri Lanka and Thailand'],
-  ['news/aziz-ahmad-wins-the-nynjmsdc-partnership-award-in-the-united-states/index.html', 'Chairman of CodersTrust, Technology Architect and philanthropist, has been honored'],
+  ['news/aziz-ahmad-wins-the-nynjmsdc-partnership-award-in-the-united-states/index.html', 'led by Aziz Ahmad, Chairman of CodersTrust, has been honored'], // WP148: the lead names UTC Associates (it listed "Chairman of CodersTrust, Technology Architect and philanthropist")
 ];
 // Clause-joining commas the sweep keeps (see ALLOWED), pinned so a later sweep does not strip them.
 const KEPT: [string, string][] = [

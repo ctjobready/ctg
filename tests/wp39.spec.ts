@@ -76,7 +76,7 @@ const PAGES: PageSpec[] = [
       {
         title: 'Capacity Designed to Stay in Your System',
         // WP60 (cycle-32 review, Gemini GM5): the list opens "Where included:" (it read as unconditional)
-        text: 'Where included: curriculum and manuals; facilitators trained and certified by CodersTrust (Training of Trainers); and blended learning in existing labs that works with limited connectivity, so rural labs can take part.',
+        text: 'Where included: curriculum and manuals; facilitators trained by CodersTrust (Training of Trainers); and blended learning in existing labs that works with limited connectivity, so rural labs can take part.',
         facts: ['GV-11', 'PD-06', 'PD-07'],
       },
     ],
@@ -123,9 +123,9 @@ const PAGES: PageSpec[] = [
     h2: 'What Your Community Gets',
     cards: [
       {
-        title: 'Certified Facilitators and a Local Curriculum',
+        title: 'Facilitator Training and a Local Curriculum',
         // WP52 (cycle-27 review): what stays after funding ends is scoped ("Where included, ..."); it read "Local capacity stays after a funded cohort ends, ..."
-        text: 'Certified-facilitator training, a localized curriculum and preparation for industry certification. You do not have to build the curriculum or certification route yourself.',
+        text: 'Training of Trainers, a localized curriculum and preparation for industry certification. You do not have to build the curriculum or certification route yourself.',
         facts: ['PD-06', 'PD-02'],
         pain: 'P1',
       },

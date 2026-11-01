@@ -287,10 +287,10 @@ test.describe('The WP52 follow-ups (items 6 to 9)', () => {
     }
   });
 
-  test('Local Partners: "Supply Certified Facilitators" scopes its promise to the program scope', async ({ page }) => {
+  test('Local Partners: "Put Your Trainers Through Our Training" scopes its promise to the program scope', async ({ page }) => {
     await open(page, LOCAL);
-    const card = page.locator('#offer .card, #offer article, #offer li', { has: page.locator('text=Supply Certified Facilitators') }).first();
-    expect(compact(await card.textContent())).toContain('Put trainers through certified facilitator training so delivery capacity can stay in your community where the program includes it.');
+    const card = page.locator('#offer .card, #offer article, #offer li', { has: page.locator('text=Put Your Trainers Through Our Training') }).first();
+    expect(compact(await card.textContent())).toContain('Your trainers join CodersTrust’s Training of Trainers, so delivery capacity can stay in your community where the program includes it.'); // WP148: the card was "Supply Certified Facilitators" ("Put trainers through certified facilitator training so ...")
     expect(compact(await page.locator('main').textContent())).not.toContain('so delivery capacity stays in your community');
   });
 

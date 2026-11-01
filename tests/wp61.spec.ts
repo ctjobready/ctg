@@ -227,7 +227,7 @@ test.describe('G4 (GPT-6.1 Sol): Local Partners’ first pain says what CodersTr
     await open(page, LOCAL);
     expect(await page.locator('#features li[data-relieves]').evaluateAll((els) => els.map((e) => e.getAttribute('data-relieves')))).toEqual(['P1', 'P2', 'P3']);
     expect(await page.locator('#features li[data-relieves="P1"]').getAttribute('data-fact')).toBe('PD-06 PD-02');
-    expect(compact(await page.locator('#features li[data-relieves="P1"] .card__title').textContent())).toBe('Certified Facilitators and a Local Curriculum');
+    expect(compact(await page.locator('#features li[data-relieves="P1"] .card__title').textContent())).toBe('Facilitator Training and a Local Curriculum');
   });
 
   test('the earlier heading and body are on no built page', () => {

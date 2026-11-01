@@ -78,7 +78,8 @@ const FORUMS = [
   'coderstrust-chairman-and-co-founder-aziz-ahmad-participates-in-u-s-energy-security-panel',
 ]
   .map(post)
-  .filter((p): p is NonNullable<typeof p> => !!p && !p.data.political);
+  .filter((p): p is NonNullable<typeof p> => !!p && !p.data.political)
+  .sort((x, y) => +y.data.date - +x.data.date); // WP148 (Opus XHigh run 2 Polish): newest first, as the honors above and the News index run
 
 // Public officials' endorsements stay out of evergreen pages: PA-10 (U.S. Department of State remarks) may appear only inside its
 // dated news item. (The Danish ambassador's entry is removed from the dataset itself, with its photo and permission row.)

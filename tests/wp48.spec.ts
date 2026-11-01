@@ -110,7 +110,7 @@ test.describe('Home slide 2 and the GV-12 note (items 1 and 12)', () => {
 // WP49 (cycle-24 review, GLM M3): both answers end after the alumni-network clause; the TalentLEAP clause ("... progressive levels as further levels are published.") that WP48 reworded does not answer the question and is gone (tests/wp49.spec.ts)
 test.describe('The "what happens after" sentence (item 2)', () => {
   const UNIVERSITIES =
-    'Where included, what the program builds stays on your campus: certified facilitators, localized curricula and campus labs that serve as blended-learning centers. Completers join CodersTrust’s alumni network after their three months of mentoring.'; // WP147: it read "certified local facilitators"
+    'Where included, what the program builds stays on your campus: CodersTrust-trained facilitators, localized curricula and campus labs that serve as blended-learning centers. Completers join CodersTrust’s alumni network after their three months of mentoring.'; // WP147: it read "certified local facilitators"
 
   test('Universities: "What Happens After the First Cohort?" ends after the alumni-network clause; the JSON-LD says the same', async ({ page }) => {
     await open(page, 'partner-with-us/universities/');
@@ -144,7 +144,7 @@ test.describe('Local Partners: the definition block (item 3)', () => {
     const p = page.locator('#definition p[data-fact="PD-06 GV-09"]');
     await expect(p).toHaveCount(1);
     expect(compact(await p.textContent())).toBe(
-      'Larger programs are designed to run through facilitators trained and certified by CodersTrust (Training of Trainers) in existing labs and colleges, coordinated centrally. CodersTrust Bangladesh supports local partners with curriculum, certification exam preparation, mentoring, reporting and safeguarding.', // WP144: "certification exam preparation" (was "certification")
+      'Larger programs are designed to run through facilitators trained by CodersTrust (Training of Trainers) in existing labs and colleges, coordinated centrally. CodersTrust Bangladesh supports local partners with curriculum, certification exam preparation, mentoring, reporting and safeguarding.', // WP144: "certification exam preparation" (was "certification")
     );
     expect(await mainText(page)).not.toContain('Larger programs run through');
   });

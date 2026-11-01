@@ -10,7 +10,7 @@ export const DEFAULT_OG: OgCard = { src: '/og/default.png', alt: 'CodersTrust: L
 
 /** Path prefix -> section card, longest prefix first. */
 const SECTION_CARDS: { prefix: string; card: OgCard }[] = [
-  { prefix: '/programs/nu-postgraduate-diploma/', card: { src: '/og/nu-postgraduate-diploma.png', alt: 'CodersTrust: NU Post Graduate Diploma. We help learners prepare for digital work through a National University post graduate diploma.' } },
+  { prefix: '/programs/nu-postgraduate-diploma/', card: { src: '/og/nu-postgraduate-diploma.png', alt: 'CodersTrust: NU Post Graduate Diploma. We help learners prepare for digital work through the National University Post Graduate Diploma.' } },
   { prefix: '/partner-with-us/investors/', card: { src: '/og/investors.png', alt: 'CodersTrust: Investors. Back JobReady’s staged rollout, built on CodersTrust’s training and mentoring programs.' } },
   { prefix: '/partner-with-us/', card: { src: '/og/partner-with-us.png', alt: 'CodersTrust: Partner with Us. Choose a partnership for youth employment, campus skills, team training, hiring or JobReady’s staged rollout.' } },
   { prefix: '/our-model/', card: { src: '/og/our-model.png', alt: 'CodersTrust: Our Model. One Path from Learning to Earning, with Outcomes Tracked.' } },
