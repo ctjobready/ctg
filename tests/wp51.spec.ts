@@ -184,9 +184,9 @@ test.describe('Home: the WSDFM card of "Proof in Practice" shows a context line 
 });
 
 test.describe('The pricing lines no longer describe the website itself (item 5)', () => {
-  test('YouthWIDE: "We share an indicative budget in the discovery session."', async ({ page }) => {
+  test('YouthWIDE: "We share an indicative budget in the briefing or discovery session."', async ({ page }) => {
     await open(page, YOUTHWIDE);
-    expect(compact(await page.locator('#offer .sh__lead').textContent())).toBe('Each phase is planned with the agency or funder on the results of the one before. We share an indicative budget in the discovery session.');
+    expect(compact(await page.locator('#offer .sh__lead').textContent())).toBe('Each phase is planned with the agency or funder on the results of the one before. We share an indicative budget in the briefing or discovery session.');
   });
 
   test('JobReady@Campus: the lead is the program-sizes note alone; the budget sentence under the options stays, tied to PD-02', async ({ page }) => {
@@ -210,7 +210,7 @@ test.describe('About: "On This Page" lists all eight bands (item 6)', () => {
     ['An Independent Randomized Trial', 'proof'],
     ['From a Copenhagen Launch to National Programs', 'story'],
     ['The People Who Started It', 'founders'],
-    ['Four Principles Behind Every Program', 'how-we-work'],
+    ['Four Principles Behind Our Youth Programs', 'how-we-work'],
     ['Industry Recognition', 'recognition'],
     ['Start a Conversation', 'about-cta'],
   ];

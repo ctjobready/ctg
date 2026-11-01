@@ -116,7 +116,8 @@ test.describe('WP142 items 1 and 2: the scope sentence names only what the page 
 
   test('Employers, JobReady@Work and TalentLEAP promise a progress evaluation or a pilot scorecard, not reports: their sentences name no reporting', () => {
     expect(main('partner-with-us/employers/index.html')).toContain('Inclusions on this page are agreed in the program scope.');
-    for (const p of ['programs/jobready-work/index.html', 'our-model/talentleap/index.html']) {
+    // WP143: TalentLEAP also names outcome tracking (tests/wp143.spec.ts)
+    for (const p of ['programs/jobready-work/index.html']) {
       expect(main(p), p).toContain('Inclusions and exam terms on this page are agreed in the program scope.');
       expect(main(p), p).not.toMatch(/exam terms and reporting/);
     }

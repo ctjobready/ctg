@@ -157,7 +157,7 @@ test.describe('NU diploma course pages: "What You Will Work On" is gone, "What Y
 
 test.describe('About: "On This Page" is back under the hero, one link for each of the main bands (item 7)', () => {
   // WP51 (cycle-26 review): the list had left out two existing H2s, "The People Who Started It" (#founders) and "Industry Recognition" (#recognition); it links all eight bands now
-  const LABELS = ['Why We Exist', 'Where We Are Today', 'An Independent Randomized Trial', 'From a Copenhagen Launch to National Programs', 'The People Who Started It', 'Four Principles Behind Every Program', 'Industry Recognition', 'Start a Conversation'];
+  const LABELS = ['Why We Exist', 'Where We Are Today', 'An Independent Randomized Trial', 'From a Copenhagen Launch to National Programs', 'The People Who Started It', 'Four Principles Behind Our Youth Programs', 'Industry Recognition', 'Start a Conversation'];
 
   test('the list sits directly after the hero and before the first band, links the eight H2s in page order, and every label is the heading it opens (Title Case)', async ({ page }) => {
     await open(page, 'about/');

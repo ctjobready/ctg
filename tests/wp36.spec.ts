@@ -478,7 +478,7 @@ test.describe('dating lines', () => {
     await open(page, 'our-model/talentleap/');
     expect(compact(await page.locator('.lf-updated').textContent())).toBe('Last updated November 1, 2026'); // WP112: TalentLEAP's wording last changed on 29 October (was 28 October, WP104); WP141 changed it on 1 November
     await open(page, 'programs/superkids/');
-    expect(compact(await page.locator('.updated').textContent())).toBe('Last updated October 31, 2026'); // WP104: SuperKids gained its consent line on 29 October
+    expect(compact(await page.locator('.updated').textContent())).toBe('Last updated November 1, 2026'); // WP143 moved it; WP104: SuperKids gained its consent line on 29 October
   });
 });
 

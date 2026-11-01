@@ -858,6 +858,8 @@ export const PROGRAM_SCOPE_STATEMENT_EXAMS = 'Inclusions, exam terms and reporti
 export const PROGRAM_SCOPE_REPORTING = 'Reporting on this page is agreed in the program scope.';
 export const PROGRAM_SCOPE_INCLUSIONS = 'Inclusions on this page are agreed in the program scope.';
 export const PROGRAM_SCOPE_INCLUSIONS_EXAMS = 'Inclusions and exam terms on this page are agreed in the program scope.';
+/** WP143 (Opus High run 18): TalentLEAP also promises outcome tracking for 12 months after each course, so its one sentence names it. */
+export const PROGRAM_SCOPE_INCLUSIONS_EXAMS_TRACKING = 'Inclusions, exam terms and outcome tracking on this page are agreed in the program scope.';
 export const PROGRAM_SCOPE_COHORT_INCLUSIONS = 'Cohort inclusions on this page are agreed in each program’s scope.';
 export const PROGRAM_SCOPE_TRACKING = 'This tracking plan is agreed in each program’s scope.';
 /**

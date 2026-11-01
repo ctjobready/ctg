@@ -14,7 +14,7 @@ import StagePipeline from '../../../components/pages/model/StagePipeline.astro';
 import { STAGE_STEPS } from '../../../components/pages/model/stagePipeline';
 import { articleNode, desc, title, discoveryCta } from '../../../components/pages/impact/page-utils';
 import { describedList } from '../../../components/pages/impact/jsonld';
-import { DISCOVERY_SESSION_ASK, MICRO_COMMITMENT, PROGRAM_SCOPE_INCLUSIONS_EXAMS } from '../../../data/copy';
+import { DISCOVERY_SESSION_ASK, MICRO_COMMITMENT, PROGRAM_SCOPE_INCLUSIONS_EXAMS_TRACKING } from '../../../data/copy';
 import { faqItems } from '../../../lib/faq';
 import { faqPage } from '../../../lib/schema';
 import { linkAttrs } from '../../../lib/url';
@@ -88,7 +88,7 @@ const d = discoveryCta();
 
   <ReportSection id="how" title="How TalentLEAP Works">
     <StagePipeline title="The Stage Pipeline" id="stage-pipeline" />
-    <p>{PROGRAM_SCOPE_INCLUSIONS_EXAMS}</p>
+    <p>{PROGRAM_SCOPE_INCLUSIONS_EXAMS_TRACKING}</p>
   </ReportSection>
 
   <ReportSection id="example" title="Example: The Digital Marketing Career Path">

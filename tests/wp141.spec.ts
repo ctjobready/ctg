@@ -202,7 +202,7 @@ test.describe('WP141 item 1: the program-scope qualifier is stated once per page
       'programs/jobready-campus/index.html': S2,
       'programs/jobready-work/index.html': S7,
       'our-model/index.html': S2,
-      'our-model/talentleap/index.html': S7,
+      'our-model/talentleap/index.html': 'Inclusions, exam terms and outcome tracking on this page are agreed in the program scope.', // WP143
       'about/index.html': S3,
       'about/governance/index.html': S3,
       'impact/independent-evaluation/index.html': S5,

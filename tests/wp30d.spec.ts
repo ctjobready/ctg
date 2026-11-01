@@ -31,7 +31,7 @@ test.describe('impactful H1s, Title Case, no trailing period', () => {
     // WP50 (cycle-25 review): "Digital Skills Programs, from School to Work" (the WP48 line did not cover SuperKids or people already employed; tests/wp50.spec.ts)
     ['programs/', 'Digital Skills Programs, from School to Work'],
     ['programs/youthwide/', 'From Training to Paid Digital Work, Country by Country'],
-    ['programs/jobready-campus/', 'Give Your Students a Degree and a Route into Digital Work'],
+    ['programs/jobready-campus/', 'Give Your Students a Route into Digital Work Alongside Their Degree'],
     ['programs/jobready-work/', 'Build AI-Ready Teams Around Your Own Roles'],
     ['programs/superkids/', 'Bring Coding, Robotics and Digital Art into Your Classroom'],
     ['programs/nu-postgraduate-diploma/', 'Build Practical Digital Skills After Your Degree'],

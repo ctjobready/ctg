@@ -33,7 +33,7 @@ import { webPage } from '../../lib/schema';
 import { linkAttrs } from '../../lib/url';
 
 const path = '/programs/superkids/';
-const LAST_UPDATED = '2026-10-31'; // WP129 (owner rule 2026-10-31: any change to visible text moves the date, copy edits included): the serial-comma, semicolon and copy edits of WP126 to WP128 and the WP129 edits. Earlier: WP104: the gallery's consent line was added. WP36: the cycle-13 wording changes (the two agreement targets, the safeguarding answer); WP20c had 2026-10-14 (PAGE_UPDATED.superkids is 2026-10-10)
+const LAST_UPDATED = '2026-11-01'; // WP143: the glance row with the repeated 400+ figure is gone. WP129 (owner rule 2026-10-31: any change to visible text moves the date, copy edits included): the serial-comma, semicolon and copy edits of WP126 to WP128 and the WP129 edits. Earlier: WP104: the gallery's consent line was added. WP36: the cycle-13 wording changes (the two agreement targets, the safeguarding answer); WP20c had 2026-10-14 (PAGE_UPDATED.superkids is 2026-10-10)
 const title = 'SuperKids: STEAM, Coding and Robotics';
 const description = 'SuperKids brings STEAM, coding, robotics and digital art to young learners through schools. 400+ learners since 2021, plus DoICT and NCTB agreements.';
 const inquiry = ctaFor('superkids');
@@ -78,7 +78,6 @@ const courses = linkAttrs(COURSES_URL);
     title="SuperKids at a Glance"
     rows={[
       { label: 'Who It Is For', text: 'Schools and education partners that want young learners to build digital skills early, through block coding, robotics and graphic design for kids.' },
-      { label: 'Delivered So Far', text: `${fact('SK-05').text}.`, facts: ['SK-05'] },
       { label: 'Agreements', text: 'Agreements with the Department of ICT (DoICT) and the National Curriculum and Textbook Board (NCTB); details below.', facts: ['GV-08'] },
     ]}
   />
