@@ -240,7 +240,7 @@ test.describe('Investors: the thesis card (item 3)', () => {
     expect(await texts(page, '#thesis .card__title')).toEqual(['Young People Need Work and Employers Need Skills', 'Connect Learning to Paid Work', 'AI Skills Are in Rising Demand']);
     for (const t of await texts(page, '#thesis .card__title')) expect(t, t).toBe(titleCase(t));
     const second = cards.nth(1);
-    expect(compact(await second.locator('.card__text').textContent())).toBe('JobReady is being built to connect learning with mentoring and placement support.');
+    expect(compact(await second.locator('.card__text').textContent())).toBe('JobReady is being built to connect learning to paid work, through mentoring and placement support.'); // WP151
     expect(await second.locator('.card__text').getAttribute('data-fact')).toBe('IN-04');
     expect(sitePages().filter((p) => /Online Learning Sells Content|Many online courses provide content/.test(visible(p.html))).map((p) => p.route)).toEqual([]);
   });
@@ -525,13 +525,13 @@ test.describe('Learner stories: the evidence tag takes the kicker’s place (ite
     expect(await mainText(page)).not.toContain('Individual Learner Story');
   });
 
-  test('the audience pages, which show no tag, print the kicker once: "Individual Learner Story"', async ({ page }) => {
+  test('the audience pages, which show no tag, print the kicker once: "Individual Story" (WP151; it read "Individual Learner Story")', async ({ page }) => {
     for (const route of [DP, FOUND, UNI, EMP, LOCAL, 'partner-with-us/governments/']) {
       await open(page, route);
       const card = page.locator('#learner-voice article.ls');
       await expect(card, route).toHaveCount(1);
       await expect(card.locator('[data-evidence]'), route).toHaveCount(0);
-      expect(await texts(page, '#learner-voice article.ls .eyebrow'), route).toEqual(['Individual Learner Story']);
+      expect(await texts(page, '#learner-voice article.ls .eyebrow'), route).toEqual(['Individual Story']);
     }
   });
 

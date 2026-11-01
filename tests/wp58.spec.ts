@@ -396,7 +396,7 @@ test.describe('G6: Development Partners’ Adrian Afraham card', () => {
     const card = page.locator('#learner-voice .ls');
     await expect(card).toHaveCount(1);
     await expect(card.locator('.ls__outcome')).toHaveCount(0);
-    expect(compact(await card.locator('.eyebrow').textContent())).toBe('Individual Learner Story');
+    expect(compact(await card.locator('.eyebrow').textContent())).toBe('Individual Story'); // WP151 (it read "Individual Learner Story")
     expect(compact(await card.locator('.ls__excerpt').textContent())).toBe('“Following my completion of the course, I successfully secured my very first freelance job, which was followed by an enticing job offer.”');
     expect(await texts(page, '#learner-voice .ls__name b, #learner-voice .ls__name span')).toEqual(['Adrian Afraham', 'Graphic Designing course, CodersTrust Bangladesh']);
     expect(compact(await card.locator('.ls__caveat').textContent())).toBe('Individual story; not typical or promised.');

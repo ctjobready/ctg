@@ -314,13 +314,13 @@ test.describe('WP104 item 10: "Last updated" stamps match each page’s latest c
   const STAMPED = [
     { route: 'our-model/talentleap/', selector: '.lf-updated', text: 'Last updated November 1, 2026', iso: '2026-11-01' },
     { route: 'our-model/jobready-platform/', selector: '.lf-updated', text: 'Last updated November 1, 2026', iso: '2026-11-01' },
-    { route: 'programs/nu-postgraduate-diploma/', selector: '.updated', text: 'Last updated November 1, 2026', iso: '2026-11-01' },
+    { route: 'programs/nu-postgraduate-diploma/', selector: '.updated', text: 'Last updated November 2, 2026', iso: '2026-11-02' }, // WP151: the FAQ "How Do I Apply?" is gone
     { route: 'programs/nu-postgraduate-diploma/cyber-security/', selector: '.updated', text: 'Last updated November 1, 2026', iso: '2026-11-01' },
     { route: 'programs/nu-postgraduate-diploma/data-analytics/', selector: '.updated', text: 'Last updated November 1, 2026', iso: '2026-11-01' },
     { route: 'programs/nu-postgraduate-diploma/digital-marketing/', selector: '.updated', text: 'Last updated November 1, 2026', iso: '2026-11-01' },
     { route: 'programs/nu-postgraduate-diploma/ict/', selector: '.updated', text: 'Last updated November 1, 2026', iso: '2026-11-01' },
-    { route: 'programs/jobready-campus/', selector: '.updated', text: 'Last updated November 1, 2026', iso: '2026-11-01' },
-    { route: 'programs/youthwide/', selector: '.updated', text: 'Last updated November 1, 2026', iso: '2026-11-01' },
+    { route: 'programs/jobready-campus/', selector: '.updated', text: 'Last updated November 2, 2026', iso: '2026-11-02' }, // WP151: the How It Works card names the facilitators
+    { route: 'programs/youthwide/', selector: '.updated', text: 'Last updated November 2, 2026', iso: '2026-11-02' }, // WP151: "Choose Your Entry Point" has no lead
     { route: 'programs/jobready-work/', selector: '.updated', text: 'Last updated November 1, 2026', iso: '2026-11-01' },
     { route: 'programs/superkids/', selector: '.updated', text: 'Last updated November 1, 2026', iso: '2026-11-01' }, // WP143
     { route: 'impact/outcomes-2026/', selector: '.lf-updated', text: 'Source snapshot: October 2026 · Last updated November 1, 2026', iso: '2026-11-01' }, // WP147: the method line and the Speed to Earning tile changed (was October 31 since WP135; October 29 before)

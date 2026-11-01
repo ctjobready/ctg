@@ -11,6 +11,8 @@
 // asked for placement results you cannot yet show.", which assumed the institution has none); the band's heading is about students, not about the reader, so it stays. The third vignette is "Capacity Designed to Stay on Campus" (it was
 // "Capacity That Stays on Campus", a promise with no scope; the Governments delivery card changed the same way).
 // WP53 (owner follow-up, 2026-10-16): the options band's eyebrow is "Options" (it was "Start", directly above "Two Ways to Start a Campus Program"), as on Governments, Development Partners, Universities and YouthWIDE.
+// WP151 (Opus XHigh run 5, kit 118): the How It Works "On-Campus Labs" card is this page's delivery sentence, so it names who teaches ("facilitators trained by CodersTrust (Training of Trainers) and faculty members as coordinators", as the Universities card does);
+// the "Illustrative" band's Capacity card says "CodersTrust-trained facilitators". The glance label is "Training and Certification Preparation" (CodersTrust prepares learners for third-party exams; WP144, WP150).
 import LandingLayout from '../../layouts/LandingLayout.astro';
 import CTABand from '../../components/ui/CTABand.astro';
 import HeroBand from '../../components/sections/HeroBand.astro';
@@ -87,7 +89,7 @@ const options = [
     title="JobReady@Campus at a Glance"
     rows={[
       { label: 'Who It Is For', text: 'Universities and colleges that need a practical route into digital work for their students, beside the degree.', facts: ['IN-09'] },
-      { label: 'Training and Certification', text: `${hours} training hours per certification, including certification exam preparation, then three months of milestone-based mentoring; exam fees, eligibility, attempts and retakes are set per program.`, facts: ['IN-09', 'PD-01', 'PD-03', 'PD-02a'] },
+      { label: 'Training and Certification Preparation', text: `${hours} training hours per certification, including certification exam preparation, then three months of milestone-based mentoring; exam fees, eligibility, attempts and retakes are set per program.`, facts: ['IN-09', 'PD-01', 'PD-03', 'PD-02a'] },
       { label: 'Reporting', text: 'Baseline data, follow-up surveys and monthly reports, so your institution builds placement evidence from its own students.', facts: ['PD-08', 'PD-09'] },
     ]}
     scope={PROGRAM_SCOPE_STATEMENT_EXAMS}
@@ -123,7 +125,7 @@ const options = [
     vignettes={[
       { kind: 'Functional', title: 'An Industry Certification Beside the Degree', text: 'Students who pass the exam add an industry certification beside their degree. Certification is not guaranteed.' },
       { kind: 'Emotional', title: 'A Stronger Employment Story', text: 'Every campus cohort includes baseline data and follow-up surveys at 3, 6 and 12 months, so your institution can build placement evidence from its own students.' },
-      { kind: 'Social', title: 'Capacity Designed to Stay on Campus', text: 'Campus labs work as blended-learning centers, with facilitators trained by CodersTrust (Training of Trainers).' },
+      { kind: 'Social', title: 'Capacity Designed to Stay on Campus', text: 'Campus labs keep working as blended-learning centers, with CodersTrust-trained facilitators.' },
     ]}
   />
 
@@ -133,7 +135,7 @@ const options = [
     positioning={POSITIONING.campus}
     blocks={[
       { label: 'When', title: 'In Parallel with Studies', text: 'Industry-oriented skills training runs alongside the academic program.', icon: 'calendar-check' },
-      { label: 'Where', title: 'On-Campus Labs', text: 'Labs serve as blended-learning centers, with faculty members as coordinators.', icon: 'school' },
+      { label: 'Where', title: 'On-Campus Labs', text: 'Labs serve as blended-learning centers, with facilitators trained by CodersTrust (Training of Trainers) and faculty members as coordinators.', icon: 'school' },
       { label: 'What', title: 'Certification Preparation and Internships', text: 'Preparation for industry-recognized certifications, plus professional internships where employer placements are available.', icon: 'award' },
       { label: 'After', title: 'Local, Remote and Global Work', text: 'Mentoring and placement support toward paid work.', icon: 'globe' },
     ]}

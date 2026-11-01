@@ -101,7 +101,7 @@ test.describe('WP129 item 1: the 100 training hours per certification include ex
   });
   test('Our Model keeps the pipeline that places "Prepare for Certification" inside the Learn stage of a track that includes the 100 hours (guard; passes before the change)', () => {
     const t = text('our-model/index.html');
-    expect(t).toContain('Each certification track includes 100 training hours over 3–6 months.');
+    expect(t).toContain('Each certification track includes 100 training hours, including exam preparation, over 3–6 months.'); // WP151: the sentence says "including exam preparation" itself
     expect(t).toContain('Blended Training and Certification Preparation');
     expect(t).toContain('Prepare for Certification');
   });
@@ -268,8 +268,17 @@ test.describe('WP129 item 6: every dated page whose visible text changed carries
     'programs/index.html',
     'impact/case-studies/undp-yes-korail/index.html', // WP144: the learner band heading changed ("Two Learners in Their Own Words")
   ]);
+  // WP151 (owner date rule, 2026-11-02): JobReady@Campus, YouthWIDE and the NU overview (own "Last updated"), and Governments, Foundations and Investors (their own dateModified) moved on to 2026-11-02.
+  const MOVED_1102 = new Set([
+    'programs/youthwide/index.html',
+    'programs/jobready-campus/index.html',
+    'programs/nu-postgraduate-diploma/index.html',
+    'partner-with-us/foundations/index.html',
+    'partner-with-us/governments/index.html',
+    'partner-with-us/investors/index.html',
+  ]);
   for (const [route, cls] of STAMPED) {
-    const [day, long] = MOVED_1101.has(route) ? ['2026-11-01', 'November 1, 2026'] : ['2026-10-31', 'October 31, 2026'];
+    const [day, long] = MOVED_1102.has(route) ? ['2026-11-02', 'November 2, 2026'] : MOVED_1101.has(route) ? ['2026-11-01', 'November 1, 2026'] : ['2026-10-31', 'October 31, 2026'];
     test(`${route} reads "Last updated ${long}" and its JSON-LD dateModified is ${day}`, () => {
       const raw = html(route);
       const m = new RegExp(`<p class="${cls}[^"]*"[^>]*>([\\s\\S]*?)</p>`).exec(raw);
@@ -298,7 +307,7 @@ test.describe('WP129 item 6: every dated page whose visible text changed carries
     'programs/index.html',
   ];
   for (const route of JSONLD_ONLY) {
-    const day = MOVED_1101.has(route) ? '2026-11-01' : '2026-10-31';
+    const day = MOVED_1102.has(route) ? '2026-11-02' : MOVED_1101.has(route) ? '2026-11-01' : '2026-10-31';
     test(`${route} pins its own JSON-LD dateModified to ${day}`, () => {
       expect(dateModified(html(route))).toContain(day);
     });

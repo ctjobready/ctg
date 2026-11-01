@@ -206,11 +206,11 @@ test.describe('G3 (GPT-6.1 Sol): JobReady@Work’s "Our Approach" is one sentenc
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 test.describe('G4 (GPT-6.1 Sol): Local Partners’ first pain says what CodersTrust adds, not a deficit', () => {
-  const HEADING = 'Curriculum and Certification Take Time to Build';
+  const HEADING = 'Curriculum and Certification Preparation Take Time to Build'; // WP151 (it read "Curriculum and Certification Take Time to Build"; a bare "Certification" label)
   const BODY = 'A ready curriculum, trained facilitators and a route to industry certification take time and specialist support to build.';
 
   test('the pain is written once in sentence case in the source and set in Title Case on the page; P2 and P3 are unchanged', async ({ page }) => {
-    expect(LOCAL_PARTNER_PAINS[0]).toEqual({ id: 'P1', name: 'Curriculum and certification take time to build', text: BODY });
+    expect(LOCAL_PARTNER_PAINS[0]).toEqual({ id: 'P1', name: 'Curriculum and certification preparation take time to build', text: BODY });
     await open(page, LOCAL);
     const pains = page.locator('#problem .gp__pains li');
     await expect(pains).toHaveCount(3);

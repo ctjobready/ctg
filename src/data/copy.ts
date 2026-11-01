@@ -602,8 +602,9 @@ export const FUNDER_PAINS: Pain[] = [
 // WP54 (cycle-28 review, GPT-6.1 Sol G3): P3 says training is "often" measured by enrollment (it said "still", an unhedged generalization about all training).
 // WP61 (cycle-33 review, GPT-6.1 Sol G4): P1 is what CodersTrust adds, not a deficit presumed of the partner (it was "Missing curriculum, trainers and certification": "You reach the young people, but a ready curriculum, trained facilitators and a route to industry certification are
 // often out of reach."). It rests on the same register facts as the "Facilitator Training and a Local Curriculum" card it still maps to (WP148: it was "Certified Facilitators and a Local Curriculum"; PD-06, PD-02: facilitators trained by CodersTrust, a localized curriculum, preparation for industry certification).
+// WP151 (Opus XHigh run 5, kit 118): P1 reads "Curriculum and Certification Preparation Take Time to Build" (a bare "Certification" read as something to build or award; CodersTrust prepares for third-party exams, WP144); the body is unchanged.
 export const LOCAL_PARTNER_PAINS: Pain[] = [
-  { id: 'P1', name: 'Curriculum and certification take time to build', text: 'A ready curriculum, trained facilitators and a route to industry certification take time and specialist support to build.' },
+  { id: 'P1', name: 'Curriculum and certification preparation take time to build', text: 'A ready curriculum, trained facilitators and a route to industry certification take time and specialist support to build.' },
   { id: 'P2', name: 'Missing work-entry connections', text: 'Training that stops at the classroom door leaves completers without links to employers, clients and platforms.' },
   { id: 'P3', name: 'Reporting and accountability demands', text: 'Funders ask who is earning, but training is often measured by enrollment, not earnings.' },
 ];

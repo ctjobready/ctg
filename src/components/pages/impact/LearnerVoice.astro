@@ -10,6 +10,7 @@ import Icon from '../../system/Icon.astro';
  * src/content/stories (nothing is invented): the quotation is a verbatim passage of the story file (checked at build time), and the name and
  * photograph follow the permissions rule of <LearnerStory> (a story that may not render is shown without name, quote or photograph).
  * Every story carries the individual-story caveat.
+ * WP151 (Opus XHigh run 5, kit 118): where no evidence tag shows (the six audience pages) the kicker is "Individual Story", the defined evidence-type tag (Home, Impact, the case studies and Success Stories use it); the section keeps "Individual Learner Story" as its accessible name.
  */
 interface Props {
   /** Story id (src/content/stories/<id>.md). */
@@ -50,7 +51,7 @@ const stories = linkAttrs('/impact/stories/');
     image={entry.data.photo}
     imageAlt={entry.data.photoAlt ?? `Portrait of ${entry.data.name}`}
     assetId={`story-${story}`}
-    eyebrow="Individual Learner Story"
+    eyebrow="Individual Story"
     tag={tag}
     summary={summary}
   />

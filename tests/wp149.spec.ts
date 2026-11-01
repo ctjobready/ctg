@@ -75,7 +75,8 @@ test.describe('1 The long facilitator form sits in the sentence where the page e
       [INVESTORS, `larger programs are designed to run up to 10 cohorts in parallel through ${LONG} in existing labs and colleges.`],
       [LOCAL, `Larger programs are designed to run through ${LONG} in existing labs and colleges, coordinated centrally.`],
       [UNIVERSITIES, `On-campus labs become blended-learning centers with ${LONG}; faculty members act as coordinators.`],
-      [CAMPUS, `Campus labs work as blended-learning centers, with ${LONG}.`],
+      // WP151 (Opus XHigh run 5): JobReady@Campus' delivery sentence is the How It Works "On-Campus Labs" card (it was the "Capacity Designed to Stay on Campus" card in the "Illustrative" band, which now says "CodersTrust-trained facilitators").
+      [CAMPUS, `Labs serve as blended-learning centers, with ${LONG} and faculty members as coordinators.`],
       [YOUTHWIDE, `Blended training in existing labs and colleges, with ${LONG}; a central team coordinating local labs for larger programs.`],
       // Pages whose only facilitator mention is the "What Happens When Funding Ends?" answer: that answer is their delivery sentence.
       [GOVERNANCE, LONG_A],
@@ -87,10 +88,35 @@ test.describe('1 The long facilitator form sits in the sentence where the page e
       const text = main(p);
       expect(text, p).toContain(sentence);
       expect(count(text, LONG), p).toBe(1);
-      // The long form is never later than a bare "CodersTrust-trained facilitators" on the page.
+      // The long form is never later than a bare "CodersTrust-trained facilitators" on the page. WP151: except JobReady@Campus, whose "Illustrative" band (a success picture, before How It Works) uses the short form.
       const short = text.indexOf(SHORT);
-      if (short >= 0) expect(short, `${p}: "${SHORT}" comes before the delivery sentence`).toBeGreaterThan(text.indexOf(LONG));
+      if (short >= 0 && p !== CAMPUS) expect(short, `${p}: "${SHORT}" comes before the delivery sentence`).toBeGreaterThan(text.indexOf(LONG));
     }
+  });
+
+  // WP151 (Opus XHigh run 5, Minor): a program or route page that specifies delivery does it in its How It Works / delivery CARD (title and body), and that card names the facilitators in the long form.
+  // JobReady@Work, SuperKids and the NU Post Graduate Diploma describe no facilitator model (their delivery is a custom employer program, a school program and a college course), so they have no such card.
+  test('each program or route page’s How It Works delivery card names the facilitators trained by CodersTrust', () => {
+    const CARDS: [string, string][] = [
+      [CAMPUS, `Where On-Campus Labs Labs serve as blended-learning centers, with ${LONG} and faculty members as coordinators.`],
+      [UNIVERSITIES, `Set Up Campus Labs as Learning Centers On-campus labs become blended-learning centers with ${LONG}; faculty members act as coordinators.`],
+      [YOUTHWIDE, `Delivery Blended training in existing labs and colleges, with ${LONG};`],
+      [GOVERNMENTS, `Capacity Designed to Stay in Your System Where included: curriculum and manuals; ${LONG};`],
+      [OUR_MODEL, `Local Labs, Coordinated Delivery After about five months of delivery, programs are designed to run up to 10 certification cohorts in parallel, using existing labs and ${LONG}.`],
+    ];
+    for (const [p, card] of CARDS) {
+      expect(main(p), p).toContain(card);
+      expect(count(main(p), LONG), p).toBe(1);
+    }
+  });
+
+  test('JobReady@Campus: the "Illustrative" band’s Capacity card uses the short form; the long form is in How It Works only', () => {
+    const text = main(CAMPUS);
+    expect(text).toContain('Capacity Designed to Stay on Campus Campus labs keep working as blended-learning centers, with CodersTrust-trained facilitators.');
+    expect(count(text, SHORT)).toBe(1);
+    expect(count(text, LONG)).toBe(1);
+    expect(text.indexOf('Illustrative:')).toBeLessThan(text.indexOf(SHORT));
+    expect(text.indexOf(SHORT)).toBeLessThan(text.indexOf(LONG));
   });
 
   test('Governments: an earlier, generic mention says "trained facilitators" (not the long form); the long form is in "Capacity Designed to Stay in Your System"', () => {

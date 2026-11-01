@@ -87,7 +87,8 @@ test.describe('1 Facilitators: trained by CodersTrust, never "local" and never "
       const text = main(p);
       expect(count(text, LONG), p).toBe(1);
       const short = text.indexOf(SHORT);
-      if (short >= 0) expect(short, `${p}: "${SHORT}" comes before the long form`).toBeGreaterThan(text.indexOf(LONG));
+      // WP151: except JobReady@Campus, whose "Illustrative" band (before How It Works) says "CodersTrust-trained facilitators" and whose How It Works card carries the long form.
+      if (short >= 0 && p !== CAMPUS) expect(short, `${p}: "${SHORT}" comes before the long form`).toBeGreaterThan(text.indexOf(LONG));
     }
   });
 
@@ -112,7 +113,7 @@ test.describe('1 Facilitators: trained by CodersTrust, never "local" and never "
   test('delivery sentences read in context (WP149: the sentence where the page explains who delivers)', () => {
     // WP149: Our Model's delivery sentence (the "Local Labs, Coordinated Delivery" card) is the long form; the Foundation Tracks card says "facilitator support"
     expect(main(OUR_MODEL)).toContain(`After about five months of delivery, programs are designed to run up to 10 certification cohorts in parallel, using existing labs and ${LONG}.`);
-    expect(main(CAMPUS)).toContain(`Campus labs work as blended-learning centers, with ${LONG}.`);
+    expect(main(CAMPUS)).toContain(`Labs serve as blended-learning centers, with ${LONG} and faculty members as coordinators.`); // WP151: the How It Works card is the delivery sentence
     expect(main(UNIVERSITIES)).toContain(`On-campus labs become blended-learning centers with ${LONG}; faculty members act as coordinators.`);
     expect(main(GOVERNMENTS)).toContain(`Where included: curriculum and manuals; ${LONG}; and blended learning in existing labs that works with limited connectivity, so rural labs can take part.`);
     expect(main(LOCAL)).toContain(`Larger programs are designed to run through ${LONG} in existing labs and colleges, coordinated centrally.`);

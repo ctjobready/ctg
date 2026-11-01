@@ -305,7 +305,7 @@ test.describe('NU Post Graduate Diploma: a link to the wider programs, not their
   test('the page shows today as its last-updated date', async ({ page }) => {
     await open(page, 'programs/nu-postgraduate-diploma/');
     // WP76 (2026-10-22): the page's wording changed that day (four courses), so PAGE_UPDATED.nu moved from 2026-10-15
-    await expect(page.locator('.updated time')).toHaveAttribute('datetime', '2026-11-01'); // WP148: "Post Graduate Diploma" capitalised (it read 2026-10-31); WP104: the page's wording last changed on 29 October (WP102; the Context heading, WP104)
+    await expect(page.locator('.updated time')).toHaveAttribute('datetime', '2026-11-02'); // WP151 (the FAQ "How Do I Apply?" is gone); WP148: "Post Graduate Diploma" capitalised (it read 2026-10-31); WP104: the page's wording last changed on 29 October (WP102; the Context heading, WP104)
   });
 });
 
@@ -313,7 +313,7 @@ test.describe('Our Model: two delivery cards say what they mean', () => {
   test('"Each certification track includes 100 training hours over 3–6 months." and the scale card is "Local Labs, Coordinated Delivery"', async ({ page }) => {
     await open(page, 'our-model/');
     const training = page.locator('#delivery .card', { hasText: 'Blended Training and Certification Preparation' });
-    expect(compact(await training.textContent())).toContain('Each certification track includes 100 training hours over 3–6 months.');
+    expect(compact(await training.textContent())).toContain('Each certification track includes 100 training hours, including exam preparation, over 3–6 months.'); // WP151: it ended "hours over 3–6 months."
     const scale = page.locator('#delivery .card', { hasText: 'Local Labs, Coordinated Delivery' });
     await expect(scale).toHaveCount(1);
     // WP46 (cycle-22 review): "are designed to run" (as Q2 and Investors say it), not "can run"

@@ -160,11 +160,11 @@ test.describe('WP108 item 6: the pages changed here carry a date modified of 202
     ['Foundations', 'partner-with-us/foundations/', 'src/pages/partner-with-us/foundations/index.astro'],
   ]) {
     test(`${name}: the page states its modified date in the source and in its JSON-LD`, async ({ page }) => {
-      expect(readFileSync(file, 'utf8')).toMatch(/dateModified: '2026-11-01'/); // WP129 re-dated the page (WP128 changed its copy on 30 October); WP141 moved it to 2026-11-01 (the program-scope qualifier is stated once per page)
+      expect(readFileSync(file, 'utf8')).toMatch(/dateModified: '2026-11-02'/); // WP129 re-dated the page (WP128 changed its copy on 30 October); WP141 moved it to 2026-11-01 (the program-scope qualifier is stated once per page); WP151 to 2026-11-02 (Foundations: the learner card label is "Individual Story"; Investors: the Not a Fit Yet clause and the thesis body)
       await open(page, route);
       const ld = await ldJson(page);
-      expect(ld).toMatch(/"dateModified"\s*:\s*"2026-11-01"/);
-      expect(ld).not.toMatch(/"dateModified"\s*:\s*"(?!2026-11-01)[^"]*"/);
+      expect(ld).toMatch(/"dateModified"\s*:\s*"2026-11-02"/);
+      expect(ld).not.toMatch(/"dateModified"\s*:\s*"(?!2026-11-02)[^"]*"/);
     });
   }
 

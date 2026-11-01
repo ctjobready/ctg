@@ -119,6 +119,134 @@ test.describe('1 Sweep: CodersTrust prepares for certification; it does not deli
   });
 });
 
+// ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+// WP151 (Opus XHigh run 5, kit 118): the WP150 sweep covered headings only and the "per certification" wording only. It now also covers (a) the labels and eyebrows of cards (a bare "Certification" in "Training and Certification", "Curriculum and Certification Take Time to Build")
+// and (b) every "N training hours" sentence, whatever its wording ("Each certification track includes 100 training hours ...").
+// Allowlisted on purpose: the pilot scorecard's measure labels (Home "Certification", YouthWIDE's measure list: SCORECARD_LABELS, pinned by wp138/wp140: the scorecard reports how many learners certify), the comparison table's criterion rows
+// ("Certification" as a row of what each approach offers: Home, styleguide), and "Certification Tracks ..." / "Industry Certification Tracks" (a modifier of "Tracks", as WP150 decided).
+
+const VOID_TAGS = new Set(['br', 'img', 'input', 'hr', 'meta', 'link', 'source', 'path', 'circle', 'rect', 'use', 'line', 'polyline', 'polygon']);
+const INLINE_TAGS = /^(?:a|b|strong|em|span|i|time|sup|sub|abbr|small|mark|code)$/;
+const LABEL_TAG = /^(?:h[1-6]|dt|th|summary|legend)$/;
+const LABEL_CLASS = /(?:eyebrow|label|kicker|__title|__name|__q|__kind)/;
+interface Leaf {
+  tag: string;
+  cls: string;
+  text: string;
+  /** Classes and ids of the ancestors, for the allowlist. */
+  anc: string;
+}
+
+/** The leaf elements of a page's <main> (no block child): their tag, class, text and ancestors. */
+function leaves(rel: string): Leaf[] {
+  const body = (/<main[\s\S]*<\/main>/.exec(html(rel))?.[0] ?? '')
+    .replace(/<!--[\s\S]*?-->/g, ' ')
+    .replace(/<script[\s\S]*?<\/script>/g, ' ')
+    .replace(/<style[\s\S]*?<\/style>/g, ' ')
+    .replace(/<svg[\s\S]*?<\/svg>/g, ' ');
+  const out: Leaf[] = [];
+  const stack: { tag: string; cls: string; id: string; text: string; blocks: number }[] = [];
+  for (const m of body.matchAll(/<(\/?)([a-zA-Z][a-zA-Z0-9-]*)\b([^>]*?)(\/?)>|([^<]+)/g)) {
+    if (m[5] !== undefined) {
+      if (stack.length) stack[stack.length - 1].text += m[5];
+      continue;
+    }
+    const [, close, rawTag, attrs, self] = m;
+    const tag = rawTag.toLowerCase();
+    if (!close) {
+      if (VOID_TAGS.has(tag) || self) continue;
+      stack.push({ tag, cls: /class="([^"]*)"/.exec(attrs)?.[1] ?? '', id: /\bid="([^"]*)"/.exec(attrs)?.[1] ?? '', text: '', blocks: 0 });
+    } else {
+      const el = stack.pop();
+      if (!el) continue;
+      const parent = stack[stack.length - 1];
+      if (parent) {
+        parent.text += ` ${el.text} `;
+        if (!INLINE_TAGS.test(el.tag)) parent.blocks++;
+      }
+      const text = decode(el.text).replace(/\s+/g, ' ').trim();
+      if (el.blocks === 0 && text) out.push({ tag: el.tag, cls: el.cls, text, anc: stack.map((a) => `${a.cls} ${a.id}`).join(' ') });
+    }
+  }
+  return out;
+}
+
+/** The labels of a page: headings, glance and table labels, eyebrows and card titles (leaf text of a heading, dt, th, summary, legend, or an element classed eyebrow, label, kicker, title, name, q or kind). */
+const labelTexts = (rel: string): string[] =>
+  leaves(rel)
+    .filter((l) => LABEL_TAG.test(l.tag) || LABEL_CLASS.test(l.cls))
+    .filter((l) => !/\bpsc|\bcmp|\bcompare\b/.test(`${l.cls} ${l.anc}`)) // the pilot scorecard's measure labels and the comparison table's criterion rows
+    .map((l) => l.text);
+
+/** A bare "Certification" as an item of a label ("Training and Certification", "Curriculum and Certification Take Time to Build"), not a modifier of Preparation, Exam(s), Track(s) or Course(s). */
+const BARE_LABEL = /(?:^|[,:]\s+|\band\s+|\bplus\s+)Certifications?\b(?!\s+(?:Preparation|Exams?|Tracks?|Courses?)\b)/i;
+
+/** "N training hours" (any wording after it): the sentence must say "including exam preparation" or "including certification exam preparation". */
+const TRAINING_HOURS = /\b\d+ training hours\b/g;
+const EXAM_PREP = /including (?:certification )?exam preparation/;
+
+test.describe('7 WP151: the sweep covers card labels and eyebrows, and every "N training hours" sentence', () => {
+  test('the label rule itself: "Training and Certification" and "Curriculum and Certification Take Time to Build" are caught; every preparation, track, course and third-party wording is not', () => {
+    for (const h of ['Training and Certification', 'Curriculum and Certification Take Time to Build', 'Certification and Mentoring', 'Mentoring, Certification and Support', 'Certification']) {
+      expect(BARE_LABEL.test(h), h).toBe(true);
+    }
+    for (const h of [
+      'Training and Certification Preparation',
+      'Curriculum and Certification Preparation Take Time to Build',
+      'Certification Preparation and Mentoring',
+      'Certification Exam Preparation and Mentoring',
+      'Certification Tracks and Placement Support',
+      'Industry Certification Tracks',
+      'Prepare for Certification',
+      'Trains and Prepares for Certification',
+      'Skills, Certification Preparation and Mentoring',
+      'An Industry Certification Beside the Degree',
+      'Introduction to Digital Marketing with Google and Meta Certifications',
+      'skill and certification courses delivered',
+      'First Earnings, Not Just Certificates',
+    ]) {
+      expect(BARE_LABEL.test(h), h).toBe(false);
+    }
+  });
+
+  test('(a) no built page has a heading, glance label, eyebrow or card title with a bare "Certification" as the deliverable', () => {
+    const offenders: string[] = [];
+    let examined = 0;
+    for (const p of allPages()) {
+      for (const t of labelTexts(p)) {
+        if (/certif/i.test(t)) examined++;
+        if (BARE_LABEL.test(t)) offenders.push(`${p}: ${t}`);
+      }
+    }
+    expect(offenders).toEqual([]);
+    expect(examined, 'not vacuous: many labels mention certification').toBeGreaterThanOrEqual(15);
+  });
+
+  test('(b) every "N training hours" sentence, whatever its wording, says "including exam preparation"', () => {
+    const offenders: string[] = [];
+    let compliant = 0;
+    for (const p of allPages()) {
+      const text = visible(html(p));
+      for (const m of text.matchAll(TRAINING_HOURS)) {
+        const rest = text.slice(m.index ?? 0);
+        const end = rest.search(/\.(?:\s|$)/);
+        const sentence = end < 0 ? rest : rest.slice(0, end);
+        if (EXAM_PREP.test(sentence)) compliant++;
+        else offenders.push(`${p}: ${sentence.slice(0, 140)}`);
+      }
+    }
+    expect(offenders).toEqual([]);
+    // Home, Development Partners, Universities, YouthWIDE, JobReady@Campus, TalentLEAP (Q14), Our Model and the styleguide.
+    expect(compliant).toBeGreaterThanOrEqual(8);
+  });
+
+  test('JobReady@Campus glance label is "Training and Certification Preparation"; Local Partners’ first pain is "Curriculum and Certification Preparation Take Time to Build"', () => {
+    expect(labelTexts(CAMPUS)).toContain('Training and Certification Preparation');
+    expect(labelTexts(CAMPUS)).not.toContain('Training and Certification');
+    expect(labelTexts('partner-with-us/local-partners/index.html')).toContain('Curriculum and Certification Preparation Take Time to Build');
+  });
+});
+
 test.describe('3 The origin line on Development Partners and Investors does not repeat the 16 tile', () => {
   const LINE = 'From a Copenhagen launch to work across Asia, Africa, Europe and the Americas.';
   const REGIONS = 'across Asia, Africa, Europe and the Americas';

@@ -72,7 +72,7 @@ import { webPage } from '../../lib/schema';
 import { url } from '../../lib/url';
 
 const path = '/programs/youthwide/';
-const LAST_UPDATED = '2026-11-01'; // WP141 (2026-11-01: the program-scope qualifier is stated once per page). Earlier: WP129 (owner rule 2026-10-31: any change to visible text moves the date, copy edits included): the serial-comma, semicolon and copy edits of WP126 to WP128 and the WP129 edits. 29 October 2026 (WP105: the 2030 aim tile is short; WP104: the meta description names the full target group; the page's wording last changed on 28 October, WP99 and WP101). 24 October 2026 (WP86, CLR run 3 Minor 3: the Her Power wording changed that day). 21 October 2026:the survey stat OC-03 (the before-training median, $82 to $98) changed in facts.ts; WP31: the cycle-8 review wording changes
+const LAST_UPDATED = '2026-11-02'; // WP151 ("Choose Your Entry Point" has no lead: the briefing-or-discovery routing is said once, in What Happens Next; the Delivery and Training rows are unchanged). Earlier: WP141 (2026-11-01: the program-scope qualifier is stated once per page). Earlier: WP129 (owner rule 2026-10-31: any change to visible text moves the date, copy edits included): the serial-comma, semicolon and copy edits of WP126 to WP128 and the WP129 edits. 29 October 2026 (WP105: the 2030 aim tile is short; WP104: the meta description names the full target group; the page's wording last changed on 28 October, WP99 and WP101). 24 October 2026 (WP86, CLR run 3 Minor 3: the Her Power wording changed that day). 21 October 2026:the survey stat OC-03 (the before-training median, $82 to $98) changed in facts.ts; WP31: the cycle-8 review wording changes
 const title = 'YouthWIDE: From Training to Paid Digital Work';
 // WP63 rework RW1: the hero lead and the glance row name the full group ("educated, unemployed and underemployed youth"); WP104 (Sonnet High run 1): the description names it too, in 154 characters ("trains" for "prepares"; "paid digital work" and "designed for three regions" stay). WP107 (Sonnet XHigh run 3, Polish 4): "2030 aim in Bangladesh" is "with a 2030 aim" (147 characters), so the description does not narrow the aim to Bangladesh (the aim reaches Bangladesh and similar countries, IN-01).
 const description = 'YouthWIDE trains educated, unemployed and underemployed youth for paid digital work: co-funded cohorts designed for three regions, with a 2030 aim.';
@@ -257,7 +257,7 @@ const measures = [...SCORECARD_LABELS];
        governments is a text link in its own card, so two primary buttons never stand in one view) and ONE shared "What Happens Next".
        The cards keep the ids #cta and #cta-governments. WP39 (cycle-16 review): the two near-identical session agendas (one in each card) are ONE line under both cards; scripts/check-facts.mjs pins it for the band (#entry-point). -->
   <Section id="entry-point" tone="airy" aria-labelledby="entry-point-h">
-    <SectionHeader id="entry-point-h" eyebrow="Get Started" title="Choose Your Entry Point" lead="Funders start with a discovery session. Governments start with a briefing that fits the agency’s timeline." />
+    <SectionHeader id="entry-point-h" eyebrow="Get Started" title="Choose Your Entry Point" />
     <div class="entry">
       {
         discovery.href && (
