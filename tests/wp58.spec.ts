@@ -181,7 +181,7 @@ test.describe('S1, G1 and L7: "16 countries and territories" is where CodersTrus
     await expect(page.locator('main h1')).toHaveText('Where We Have Worked: 16 Countries and Territories');
     expect(compact(await page.locator('main .hero__lead').first().textContent())).toBe('CodersTrust has worked in 16 countries and territories across Asia, Africa, Europe and the Americas, including Bangladesh since 2014.');
     const description = await page.locator('meta[name="description"]').getAttribute('content');
-    expect(description).toBe('CodersTrust has worked in 16 countries and territories: Bangladesh since 2014 and 15 international locations, with each location’s target group and skills.');
+    expect(description).toBe('CodersTrust has worked in 16 countries and territories: Bangladesh since 2014 and 15 international locations, with years and, where known, target groups.'); // WP157 (F6): Denmark has neither a target group nor skills
     expect(description!.length).toBeLessThanOrEqual(155);
     expect(await page.title()).toContain('Global Reach: 16 Countries and Territories');
   });

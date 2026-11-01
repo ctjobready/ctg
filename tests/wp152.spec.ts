@@ -17,7 +17,7 @@ import { DIST_DIR } from './support/env';
  *      Local Partners' lead "a curriculum, certification preparation and links to paid work", the styleguide sample card.
  *   3  Our Model: "Each certification track has 100 training hours, including exam preparation, over 3–6 months." (no "includes ... including").
  *   4  Investors "Connect Learning to Paid Work": the body no longer repeats its heading and has no comma before "through".
- *   5  About timeline 2025–2026: a period, not a semicolon, before "CodersTrust publishes Impact Survey 2026."
+ *   5  About timeline 2025–2026: a period, not a semicolon, before "CodersTrust published Impact Survey 2026."
  *   6  NU Post Graduate Diploma (overview and four course pages): the "Ready to Apply?" lead is "Submit the application form." (the "Admissions Contacts You" step carries the admissions sentence).
  *   7  Owner date rule: a page with its own "Last updated" or explicit dateModified moves to 2026-11-02 when its visible text changes; build-date pages are 2026-11-01 or later (UTC).
  */
@@ -317,9 +317,9 @@ test('4 Investors, "Connect Learning to Paid Work": the body does not repeat the
   expect(text).not.toMatch(/paid work, through mentoring/);
 });
 
-test('5 About timeline 2025–2026: a period, not a semicolon, before "CodersTrust publishes Impact Survey 2026."', () => {
+test('5 About timeline 2025–2026: a period, not a semicolon, before "CodersTrust published Impact Survey 2026."', () => {
   const text = main(ABOUT);
-  expect(text).toMatch(/depending on government and donor commitments\. CodersTrust publishes Impact Survey 2026\./);
+  expect(text).toMatch(/depending on government and donor commitments\. CodersTrust published Impact Survey 2026\./);
   expect(text).not.toContain('commitments; CodersTrust publishes');
   // The aim wording itself is unchanged.
   expect(text).toContain('YouthWIDE aims to train 1 million educated youth (Higher Secondary Certificate or above) for digital employment by 2030, in Bangladesh and similar countries in South Asia and the Middle East and North Africa, depending on government and donor commitments.');

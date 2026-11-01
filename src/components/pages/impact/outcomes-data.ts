@@ -26,7 +26,7 @@
  */
 export const SOURCE_SNAPSHOT = 'October 2026';
 export const DATE_PUBLISHED = '2026-10-07';
-export const PAGE_LAST_REVIEWED = '2026-11-01'; // 1 November 2026 (WP147: the method line uses the survey's public name and the 58.7% tile says who the surveyed new earners are in plain words). 31 October 2026 (WP135: the closing line asks for two suitable times; the "On This Page" list gains the closing heading). 29 October 2026 (WP104: the 70.8% sentence is stated once, in Results in Brief). 21 October 2026: the survey figures moved to Impact Report 261014B (before: 15 October, when the page heading changed, WP41)
+export const PAGE_LAST_REVIEWED = '2026-11-02'; // 2 November 2026 (WP157: the 48.0% is a share of surveyed completers, not of all respondents; the employment-by-type chart says its shares are rounded; the CSV says "base not available"). 1 November 2026 (WP147: the method line uses the survey's public name and the 58.7% tile says who the surveyed new earners are in plain words). 31 October 2026 (WP135: the closing line asks for two suitable times; the "On This Page" list gains the closing heading). 29 October 2026 (WP104: the 70.8% sentence is stated once, in Results in Brief). 21 October 2026: the survey figures moved to Impact Report 261014B (before: 15 October, when the page heading changed, WP41)
 
 export interface ShareCell {
   label: string;
@@ -297,7 +297,7 @@ interface Rec {
   note?: string;
 }
 
-const NOT_STATED = 'base not stated in the report';
+const NOT_STATED = 'base not available'; // WP157 (adversarial review F3): the CSV is public and "the report" (the internal Impact Report) is not something a reader can identify
 
 /** The stated base is repeated on a row only if the share does not imply a cell under MIN_CELL (see MIN_CELL). */
 const baseFor = (value: number, base?: number) => (base !== undefined && Math.round((value / 100) * base) >= MIN_CELL ? base : undefined);

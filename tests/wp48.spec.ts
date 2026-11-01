@@ -432,7 +432,7 @@ test.describe('PX-05 is dated, and UNDP YES says "three months" (items 19 and 20
     expect(await texts(page, 'main .pcs__label')).toContain('of employers globally reported difficulty finding talent in 2026 (ManpowerGroup, 2026)');
     await open(page, 'programs/jobready-work/');
     const description = await page.locator('meta[name="description"]').getAttribute('content');
-    expect(description).toBe('JobReady@Work builds custom AI-ready training and sources talent. In 2026, 72% of employers globally reported difficulty finding talent (ManpowerGroup).');
+    expect(description).toBe('JobReady@Work builds custom AI-ready training around your roles and sources job-ready talent through CodersTrust’s placement team.'); // WP157 (F8): the statistic is on the pages that state it, not in the JobReady@Work description
     expect([...description!].length).toBeLessThanOrEqual(155);
     expect(sitePages().filter((p) => /(?:employers|of employers) (?:globally|worldwide) report difficulty|Globally, 72% of employers report/.test(visible(p.html) + metaDescription(p.html))).map((p) => p.route)).toEqual([]);
   });

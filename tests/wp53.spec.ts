@@ -198,7 +198,7 @@ test.describe('The legal status of the two entities is a registered fact and the
     const f = fact('ID-12');
     expect(f.group).toBe('identity');
     expect(f.status).toBe('V');
-    expect(f.text).toBe('CT USA, Inc. is incorporated in New York. CodersTrust Bangladesh Ltd. is incorporated in Bangladesh.');
+    expect(f.text).toBe('CT USA, Inc. is a for-profit company incorporated in New York. CodersTrust Bangladesh Ltd. is incorporated in Bangladesh.'); // WP157 (owner decision 2026-11-02): "a for-profit company"
     expect(f.sourceIds).toEqual(['OWNERHQ']);
   });
 
@@ -207,7 +207,7 @@ test.describe('The legal status of the two entities is a registered fact and the
     await expect(page.locator('#check-h')).toHaveText('What We Confirm with You in Co-Design');
     expect(compact(await page.locator('#checklist .gov-check > p').first().textContent())).toBe('Tell us which documents you need and by when.');
     expect(await texts(page, '#checklist .gov-check__list li')).toEqual([
-      'Legal status: CT USA, Inc. is incorporated in New York. CodersTrust Bangladesh Ltd. is incorporated in Bangladesh.',
+      'Legal status: CT USA, Inc. is a for-profit company incorporated in New York. CodersTrust Bangladesh Ltd. is incorporated in Bangladesh.',
       'Audited accounts, on request.',
       'Safeguarding, anti-fraud, data-protection and sanctions-screening arrangements, agreed for each program in co-design.',
     ]);

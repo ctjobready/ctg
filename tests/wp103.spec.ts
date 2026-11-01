@@ -7,7 +7,7 @@ import { listPages } from './support/pages';
  * WP103 (Sonnet Medium run 2, kit 69, and owner answers of 2026-10-29). Test-first: run `npm run build`, then
  * `PORT=<port> npx playwright test tests/wp103.spec.ts --project=chromium`.
  *   - Item 1: Case Studies index says "figure", not "result", in its lead and meta description (Albania's figure is reported enrollment).
- *   - Item 2: the Kosovo case study H1 is "Women in Online Work, Kosovo: Preparing Young Women for Online Work".
+ *   - Item 2: the Kosovo case study H1 is "Women in Online Work, Kosovo: A World Bank Pilot for Young Women".
  *   - Item 3: the Stories H1 is "Learners Turning Training into Work".
  *   - Item 4: the consent line says "those pictured or their guardians" on In the Field and News Photographs.
  *   - Item 5: Global Reach's Kenya row is a feasibility study with a Rockefeller Foundation grant; the note's sentence says so.
@@ -45,15 +45,15 @@ test.describe('WP103 item 1: Case Studies index says "figure"', () => {
 });
 
 test.describe('WP103 item 2: Kosovo case study H1', () => {
-  test('the H1 is "Women in Online Work, Kosovo: Preparing Young Women for Online Work"', async ({ page }) => {
+  test('the H1 is "Women in Online Work, Kosovo: A World Bank Pilot for Young Women"', async ({ page }) => {
     await open(page, 'impact/case-studies/kosovo-women-in-online-work/');
-    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Women in Online Work, Kosovo: Preparing Young Women for Online Work');
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Women in Online Work, Kosovo: A World Bank Pilot for Young Women');
   });
 
   test('the JSON-LD headline repeats the new H1, and the old H1 is gone from the page and its JSON-LD', async ({ page }) => {
     await open(page, 'impact/case-studies/kosovo-women-in-online-work/');
     const ld = await ldJson(page);
-    expect(ld).toContain('Women in Online Work, Kosovo: Preparing Young Women for Online Work');
+    expect(ld).toContain('Women in Online Work, Kosovo: A World Bank Pilot for Young Women');
     expect(ld).not.toContain('Young Women Earning Online');
     expect(await page.content()).not.toContain('Young Women Earning Online');
   });

@@ -100,7 +100,7 @@ test.describe('WP108 item 2: complete news meta descriptions; none ends in an el
 
 // --------------------------------------------------------------------------------------------------------------------------------
 test.describe('WP108 item 3: the JobReady@Work meta description names the publisher of the 72%', () => {
-  const DESCRIPTION = 'JobReady@Work builds custom AI-ready training and sources talent. In 2026, 72% of employers globally reported difficulty finding talent (ManpowerGroup).';
+  const DESCRIPTION = 'JobReady@Work builds custom AI-ready training around your roles and sources job-ready talent through CodersTrust’s placement team.'; // WP157 (F8): the ManpowerGroup statistic is not in the description, because the page body never states it
 
   test('the description, its Open Graph copy and the structured data say it, within 155 characters, with the figure read from PX-05', async ({ page }) => {
     expect([...DESCRIPTION].length).toBeLessThanOrEqual(155);
@@ -168,8 +168,8 @@ test.describe('WP108 item 6: the pages changed here carry a date modified of 202
     });
   }
 
-  test('JobReady@Work shows “Last updated November 1, 2026” (WP141)', async ({ page }) => {
+  test('JobReady@Work shows “Last updated November 2, 2026” (WP141)', async ({ page }) => { // WP157: re-dated 2026-11-02
     await open(page, 'programs/jobready-work/');
-    await expect(page.locator('p.updated')).toHaveText(/Last updated\s+November 1, 2026/);
+    await expect(page.locator('p.updated')).toHaveText(/Last updated\s+November 2, 2026/); // WP157: re-dated 2026-11-02
   });
 });

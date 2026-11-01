@@ -59,7 +59,7 @@ test.describe('headings', () => {
     const wanted: [string, string][] = [
       ['', 'Turn Youth Unemployment into a Digital Workforce — with Evidence'],
       ['partner-with-us/governments/', 'Build a National Digital Workforce Through Graduates and Digital Labs'],
-      ['partner-with-us/investors/', 'Invest in the Platform Connecting Emerging-Market Youth to Work'],
+      ['partner-with-us/investors/', 'Invest in a Platform Built to Connect Emerging-Market Youth to Work'],
     ];
     for (const [route, h1] of wanted) {
       await open(page, route);

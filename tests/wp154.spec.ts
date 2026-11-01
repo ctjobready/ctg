@@ -253,7 +253,7 @@ test.describe('7 TalentLEAP: the planned levels are stated once', () => {
     expect(text).toContain('Prosper Career paths, continuing development and the alumni network.');
     // The example band goes straight from its heading to the Level 1 card.
     expect(text).toContain('Example: The Digital Marketing Career Path Level 1 · Competent');
-    expect(text).toContain('Example only: the Digital Marketing career path.');
+    expect(text).not.toContain('Example only: the Digital Marketing career path.'); // WP157 (F12): the caption repeated the H2
   });
 
   test('Our Model prints the same pipeline and states the planned levels once, in the TalentLEAP card', () => {

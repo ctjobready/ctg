@@ -67,8 +67,8 @@ test.describe('Item 3: "Last updated" and the Her Power news date are October 24
     // WP104: both stamps moved on with their later content changes (tests/wp104.spec.ts); WP141: November 1, 2026
     await expect(page.locator('.updated')).toHaveText('Last updated November 2, 2026'); // WP151
     await open(page, 'our-model/jobready-platform/');
-    await expect(page.locator('.lf-updated')).toHaveText('Last updated November 1, 2026');
-    expect(pageHtml('our-model/jobready-platform/')).toContain('"dateModified":"2026-11-01"');
+    await expect(page.locator('.lf-updated')).toHaveText('Last updated November 2, 2026'); // WP157: re-dated 2026-11-02
+    expect(pageHtml('our-model/jobready-platform/')).toContain('"dateModified":"2026-11-02"'); // WP157: re-dated 2026-11-02
   });
 
   // WP124: the Her Power post moved on to October 29, 2026 with its quotation-mark fix (tests/wp124.spec.ts)

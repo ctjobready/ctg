@@ -280,10 +280,10 @@ test.describe('11 Local Partners: "build alone" is said once, not twice', () => 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 test.describe('12 About timeline: the historic present throughout', () => {
-  test('"A Rockefeller Foundation grant supports a CodersTrust feasibility study in Kenya and Nigeria."', () => {
+  test('"A Rockefeller Foundation grant supports ..." (WP157, F7, reversed it: the completed period is in the past tense, "supported")', () => {
     const t = main(ABOUT);
-    expect(t).toContain('2015–2016 Rockefeller Foundation Grant A Rockefeller Foundation grant supports a CodersTrust feasibility study in Kenya and Nigeria. 2018–2021');
-    expect(t).not.toContain('grant supported a CodersTrust feasibility study');
+    expect(t).toContain('2015–2016 Rockefeller Foundation Grant A Rockefeller Foundation grant supported a CodersTrust feasibility study in Kenya and Nigeria. 2018–2021'); // WP157 (F7)
+    expect(t).not.toContain('grant supports a CodersTrust feasibility study');
   });
 });
 

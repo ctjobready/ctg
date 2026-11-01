@@ -143,7 +143,7 @@ test.describe('GP3 (GPT-6.1 Sol): the JobReady Platform roadmap sentence', () =>
     await expect(page.locator('#roadmap h2')).toHaveText('Planned Adaptive Learning');
     const body = page.locator('#roadmap p');
     await expect(body).toHaveCount(1);
-    await expect(body).toHaveText('Planned: personalized and adaptive learning based on TalentLEAP’s competency levels, not live yet.');
+    await expect(body).toHaveText('Personalized and adaptive learning based on TalentLEAP’s competency levels is planned and not live yet.'); // WP157 (F11)
     expect(await body.getAttribute('data-fact')).toBe('IN-06');
     expect(pagesWith('This is roadmap, not live.')).toEqual([]);
   });

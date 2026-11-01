@@ -23,7 +23,7 @@ import NextSteps from '../../components/pages/programs/NextSteps.astro';
 import RouteBlock from '../../components/ui/RouteBlock.astro';
 import StepFlow from '../../components/ui/StepFlow.astro';
 import { faqNode, type FaqSource } from '../../components/pages/programs/faq';
-import { PAGE_UPDATED, ctaFor, serviceNode, statValue } from '../../components/pages/programs/meta';
+import { PAGE_UPDATED, ctaFor, serviceNode } from '../../components/pages/programs/meta';
 import { C14, EMPLOYER_HIRING_STEPS, MICRO_COMMITMENT, POSITIONING, PROGRAM_SCOPE_INCLUSIONS_EXAMS, statLabelUnder } from '../../data/copy';
 import { fact } from '../../data/facts';
 import { contractScope } from '../../components/sections/copyText';
@@ -35,7 +35,8 @@ const LAST_UPDATED = PAGE_UPDATED.work;
 const title = 'JobReady@Work: Upskill Teams, Hire Talent';
 // WP48 (cycle-23 review): the employer-shortage figure is dated ("In 2026, 72% of employers globally reported ..."; PX-05's survey is the 2026 one). The first sentence says "sources talent" (it said "job-ready talent", which the hero lead keeps) so the
 // description stays within the 155 characters the SEO lint allows. WP108 (Sonnet XHigh run 4): the sentence names the publisher, "(ManpowerGroup)" (PX-05's source, MANPOWER26), and drops "for your team" to stay within the limit.
-const description = `JobReady@Work builds custom AI-ready training and sources talent. In 2026, ${statValue('PX-05')} of employers globally reported difficulty finding talent (ManpowerGroup).`;
+// WP157 (adversarial review F8): the ManpowerGroup statistic is out of the description, because the page body never states it (the National University overview does); the description says what the page says.
+const description = 'JobReady@Work builds custom AI-ready training around your roles and sources job-ready talent through CodersTrust’s placement team.';
 const work = ctaFor('work');
 const talent = ctaFor('talent');
 

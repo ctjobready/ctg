@@ -221,7 +221,7 @@ const PAGE_TEXT: [string, string][] = [
   ['about/team/rezaul-karim-khan/index.html', 'His certifications include AWS Certified AI Practitioner, AWS Certified Solutions Architect - Associate and Microsoft Certified Azure Fundamentals, as well as Google certifications in digital marketing and project management.'],
   ['about/team/asad-zaman/index.html', 'organized high-level UN events, built global partnerships and authored research on future skills and training reforms.'],
   ['about/index.html', 'NGO workforce programs (including WSDFM) and 10,000 teachers trained to teach online during COVID-19.'],
-  ['impact/index.html', 'with a primary focus on Quality Education and Gender Equality, as well as Decent Work and Economic Growth'],
+  ['impact/index.html', 'At its core are SDG 4 (Quality Education), SDG 5 (Gender Equality) and SDG 8 (Decent Work and Economic Growth)'], // WP157 (F5): the SDG introduction names the three core goals
   ['partner-with-us/index.html', '70+ organizations since 2014: 13 government bodies; 20 universities and colleges; 13 development partners and NGOs; and 27 companies and industry bodies.'],
   ['programs/youthwide/index.html', 'South Asia, Sub-Saharan Africa and the Middle East and North Africa, as co-funded country cohorts.'],
   ['partner-with-us/foundations/index.html', 'Co-fundable country programs designed for South Asia, Sub-Saharan Africa and the Middle East and North Africa.'],
@@ -295,7 +295,7 @@ test.describe('WP127 item 2: the review’s named strings and the hand-rewritten
   });
   test('the register’s own text follows (SC-11, ID-09, NU-05, the YouthWIDE regions)', () => {
     expect(fact('SC-11').text).toBe('70+ organizations with signed MOUs, agreements or contracts since 2014: 13 government bodies; 20 universities and colleges; 13 development partners and NGOs; and 27 companies and industry bodies');
-    expect(fact('ID-09').text).toBe('CodersTrust’s training-to-employment model aligns with seven SDGs, with a primary focus on Quality Education and Gender Equality, as well as Decent Work and Economic Growth');
+    expect(fact('ID-09').text).toBe('CodersTrust’s training-to-employment model aligns with seven SDGs. At its core are SDG 4 (Quality Education), SDG 5 (Gender Equality) and SDG 8 (Decent Work and Economic Growth)');
     expect(fact('NU-05').text).toBe('Pay instantly online; transfer via mobile merchant accounts; visit a CodersTrust Bangladesh (CTBD) campus for cash or POS payments; or make a bank deposit');
     expect(fact('IN-02').text).toContain('across South Asia, Sub-Saharan Africa and the Middle East and North Africa;');
     expect(fact('PX-02').text).toBe('19M+ university-educated people are unemployed across South Asia, Sub-Saharan Africa and the Middle East and North Africa');

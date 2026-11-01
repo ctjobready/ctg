@@ -467,7 +467,7 @@ test.describe('dating lines', () => {
   // WP41 (cycle-18 review): the survey page's heading changed on October 15 (the survey's name moved to the eyebrow); its "Last updated" moved to October 20, 2026 with the refresh of its data (Impact Report 261014B); the source snapshot stays October 2026
   test('Impact Survey 2026 reads "Source snapshot: October 2026 · Last updated October 21, 2026"; no page says "Page last reviewed"', async ({ page }) => {
     await open(page, 'impact/outcomes-2026/');
-    expect(compact(await page.locator('.lf-updated').textContent())).toBe('Source snapshot: October 2026 · Last updated November 1, 2026'); // WP104; WP135: October 31; WP147: November 1 (the closing line and "On This Page" changed)
+    expect(compact(await page.locator('.lf-updated').textContent())).toBe('Source snapshot: October 2026 · Last updated November 2, 2026'); // WP104; WP135: October 31; WP147: November 1 (the closing line and "On This Page" changed)
     for (const route of ['impact/independent-evaluation/', 'our-model/talentleap/', 'programs/youthwide/', 'programs/superkids/']) {
       await open(page, route);
       expect(compact(await page.locator('.lf-updated, .updated').first().textContent()), route).toMatch(/^Last updated [A-Z][a-z]+ \d{1,2}, 2026$/);
@@ -479,7 +479,7 @@ test.describe('dating lines', () => {
     await open(page, 'our-model/talentleap/');
     expect(compact(await page.locator('.lf-updated').textContent())).toBe('Last updated November 2, 2026'); // WP112: TalentLEAP's wording last changed on 29 October (was 28 October, WP104); WP141 changed it on 1 November; WP154 on 2 November
     await open(page, 'programs/superkids/');
-    expect(compact(await page.locator('.updated').textContent())).toBe('Last updated November 1, 2026'); // WP143 moved it; WP104: SuperKids gained its consent line on 29 October
+    expect(compact(await page.locator('.updated').textContent())).toBe('Last updated November 2, 2026'); // WP143 moved it; WP104: SuperKids gained its consent line on 29 October
   });
 });
 

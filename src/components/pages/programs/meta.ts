@@ -29,7 +29,7 @@ export const PAGE_UPDATED = {
   programs: '2026-10-10',
   youthwide: '2026-10-11',
   campus: '2026-11-02', // WP154 (the "When: In Parallel with Studies" card stops repeating the statement). Earlier: WP153 (the track-record line and the last step stop repeating "in parallel with academic studies"). Earlier: WP151 (the How It Works card names the facilitators; the glance label says Certification Preparation). Earlier: WP141 (owner answer 2026-11-01): the program-scope qualifier is stated once per page
-  work: '2026-11-01', // WP141: as campus
+  work: '2026-11-02', // WP157 (the meta description no longer carries the ManpowerGroup statistic). Earlier: WP141: as campus
   superkids: '2026-10-10',
   nu: '2026-11-02', // WP154 (the "Ready to Apply?" step names its subject: "The Apply Now button opens the standalone application form."). Earlier: WP153 (the "Ready to Apply?" band has no lead, because step 1 is the instruction). Earlier: WP152 (the "Ready to Apply?" lead is "Submit the application form."). Earlier: WP151 (the FAQ "How Do I Apply?" is gone). Earlier: WP148 (Opus XHigh run 2 Polish): "Post Graduate Diploma" is capitalised in the lead and the meta description
   nuCourse: '2026-11-02', // WP154 (as nu). Earlier: WP153 (as nu). Earlier: WP152 (the "Ready to Apply?" lead is "Submit the application form."). Earlier: WP148: as nu

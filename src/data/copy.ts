@@ -54,7 +54,7 @@ export const HEADLINE: Record<Audience, string> = {
   foundations: 'Fund a Supported Path from Learning to Earning',
   universities: 'Give Your Students a Route into Paid Digital Work',
   employers: 'Upskill Your Teams for AI — and Hire Job-Ready Digital Talent',
-  investors: 'Invest in the Platform Connecting Emerging-Market Youth to Work',
+  investors: 'Invest in a Platform Built to Connect Emerging-Market Youth to Work', // WP157 (adversarial review F9): the employer and gig-work marketplaces are pre-launch, so the H1 says what the platform is built to do (as the Platform page's "Built to Connect")
   localPartners: 'Bring Paid Digital Work Within Reach of Your Community',
   nuPgd: 'Build Practical Digital Skills After Your Degree',
 };

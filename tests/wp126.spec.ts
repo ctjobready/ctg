@@ -225,7 +225,7 @@ test.describe('WP126 B: the JobReady platform page’s grant link opens the dedi
 
 test.describe('WP126 C: no serial comma in the six team bios', () => {
   const BIOS: [string, string][] = [
-    ['aziz-ahmad', 'the U.S. Senate, the World Economic Forum, the European Parliament and Vatican City, on the Future of Work'],
+    ['aziz-ahmad', 'the European Parliament, Vatican City and events during World Economic Forum week in Davos, on the Future of Work'], // WP157 (O3): the U.S. Senate is dropped
     ['asad-zaman', 'technical and vocational education and training (TVET), labor-market and migration strategist'],
     ['asad-zaman', 'strategic partnerships, resource mobilization and digital transformation.'],
     ['asad-zaman', 'education, migration, e-governance and South-South Cooperation, organized'],

@@ -23,8 +23,8 @@ import { webPage } from '../../../lib/schema';
 const path = '/impact/in-the-field/';
 const description = desc('Photographs from CodersTrust programs, partner meetings and events, organized into program, partner and recognition collections.');
 const jsonLd = [
-  webPage({ path, name: 'In the field: CodersTrust programs in photographs', description, type: 'CollectionPage' }),
-  articleNode({ path, headline: 'In the Field: Programs in Action', description, datePublished: '2026-10-11', dateModified: '2026-10-31', author: 'CodersTrust' }),
+  webPage({ path, name: 'In the field: CodersTrust programs in photographs', description, type: 'CollectionPage', dateModified: '2026-11-02' }),
+  articleNode({ path, headline: 'In the Field: Programs in Action', description, datePublished: '2026-10-11', dateModified: '2026-11-02', author: 'CodersTrust' }), // WP157 (owner decision 2026-11-02): the four SuperKids learner portraits carry no first names
 ];
 
 const reg = (keys: string[]): Photo[] => keys.map(photo);

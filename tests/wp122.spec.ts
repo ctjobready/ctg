@@ -58,14 +58,14 @@ test.describe('WP122, TalentLEAP: the caveat once, and no "planned" levels insid
     expect(count(t, 'not individual TalentLEAP features')).toBe(0);
     expect(t).toContain('Evidence for Today’s Tracks Today’s 100-hour tracks have not yet been independently evaluated.'); // WP144: the band is "Evidence for Today’s Tracks" (was "Results from CodersTrust Programs") // WP132: "Today’s 100-hour tracks" (was "The current 100-hour track")
   });
-  test('the Example band lists no "Proficient and Expert levels are planned." card, and its footnote is "Example only: the Digital Marketing career path."', () => {
+  test('the Example band lists no "Proficient and Expert levels are planned." card, and it has no "Example only" footnote (WP157, F12)', () => {
     const h = html(TL);
     const band = h.slice(h.indexOf('id="example"'), h.indexOf('id="different"'));
     const t = decode(band.replace(/<[^>]+>/g, ' ')).replace(/\s+/g, ' ');
     expect(t).not.toContain('Proficient and Expert levels are planned.');
     expect(t).toContain('Level 1 · Competent');
     expect(t).toContain('Bonus mini-courses in essential business and leadership skills');
-    expect(t).toContain('Example only: the Digital Marketing career path.');
+    expect(t).not.toContain('Example only'); // WP157 (F12): the caption repeated the H2
     expect(t).not.toContain('Competent is the published first level');
   });
   test('the lede still says once that Proficient and Expert levels are planned', () => {
