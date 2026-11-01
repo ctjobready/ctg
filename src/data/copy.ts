@@ -639,9 +639,8 @@ function trialSentence(): CopyBlock {
   if (!employment || !/^\+[\d.]+ pp$/.test(employment.value) || !income || !/^\+\d+%$/.test(income.value)) {
     throw new Error(`TRIAL_SENTENCE: RC-02 or RC-01 no longer has the expected stat: ${JSON.stringify([employment?.value, income?.value])}`);
   }
-  const points = employment.value.replace(/^\+/, '').replace(/ pp$/, ' percentage points');
   return {
-    text: `In the randomized trial of CodersTrust’s WSDFM program by ${BIGD_FULL}, women offered a place were ${points} more likely to be employed and had an estimated ${income.value.replace(/^\+/, '')} higher monthly income than the control group.`,
+    text: `In the randomized trial of CodersTrust’s WSDFM program by ${BIGD_FULL}, women offered a place had an estimated ${income.value.replace(/^\+/, '')} higher monthly income than the control group, alongside the employment effect below.`,
     facts: ['RC-01', 'RC-02'],
   };
 }

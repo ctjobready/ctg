@@ -40,19 +40,19 @@ async function faqJsonLd(page: Page) {
 
 test.describe('TalentLEAP: the course-platform answer compares with a self-paced course alone (item 1)', () => {
   const QUESTION = 'How Is CodersTrust Different from an Online Course Platform?';
-  const FIRST = 'Compared with a self-paced course alone, supported CodersTrust cohorts add mentoring, certification exam preparation and placement support.';
-  const SECOND = 'Every supported TalentLEAP cohort pairs 100 training hours per certification, including certification exam preparation, with three months of milestone-based mentoring, placement support and outcome tracking for 12 months after each course.';
+  // WP146: the answer is one sentence now: the scoped comparison and the cohort sentence are joined ("…alone, every supported TalentLEAP cohort pairs…"); the separate first sentence ("supported CodersTrust cohorts add mentoring, …") is gone.
+  const ANSWER = 'Compared with a self-paced course alone, every supported TalentLEAP cohort pairs 100 training hours per certification, including certification exam preparation, with three months of milestone-based mentoring, placement support and outcome tracking for 12 months after each course.';
 
   test('the answer is the scoped comparison followed by the unchanged cohort sentence, in the page and in its FAQ JSON-LD; it no longer generalizes about every course platform', async ({ page }) => {
     await open(page, 'our-model/talentleap/');
     const item = page.locator('#faq details', { has: page.locator('summary', { hasText: QUESTION }) });
     await expect(item).toHaveCount(1);
-    expect(compact(await item.locator('.faq__a').textContent())).toBe(`${FIRST} ${SECOND}`);
-    expect((await faqJsonLd(page)).find((q) => q.name === QUESTION)?.text).toContain(FIRST);
+    expect(compact(await item.locator('.faq__a').textContent())).toBe(ANSWER);
+    expect((await faqJsonLd(page)).find((q) => q.name === QUESTION)?.text).toContain(ANSWER);
     const text = await mainText(page);
     expect(text).not.toMatch(/Self-paced course platforms|focus on content access/);
     // the objection bank (the one source) carries the same words
-    expect(faqs.find((f) => f.id === 'Q14')!.a).toBe(`${FIRST} ${SECOND}`);
+    expect(faqs.find((f) => f.id === 'Q14')!.a).toBe(ANSWER);
   });
 });
 

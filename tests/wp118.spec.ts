@@ -19,6 +19,7 @@ test.describe('WP118', () => {
 
   test('TalentLEAP’s inclusion sentence opens with the qualifier and covers every item', () => {
     const t = html('our-model/talentleap/index.html').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ');
-    expect(t).toContain('Every supported TalentLEAP cohort pairs 100 training hours per certification, including certification exam preparation, with three months of milestone-based mentoring, placement support and outcome tracking for 12 months after each course.');
+    // WP146: Q14 is one sentence now; the qualifier ("every supported TalentLEAP cohort") follows "Compared with a self-paced course alone," (it began the sentence with a capital "Every").
+    expect(t).toContain('Compared with a self-paced course alone, every supported TalentLEAP cohort pairs 100 training hours per certification, including certification exam preparation, with three months of milestone-based mentoring, placement support and outcome tracking for 12 months after each course.');
   });
 });

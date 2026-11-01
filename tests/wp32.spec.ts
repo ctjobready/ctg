@@ -138,7 +138,8 @@ test.describe('YouthWIDE', () => {
     await expect(band.locator('.eb__headline')).toHaveCount(1);
     await expect(band.locator('.eb__headline')).toHaveText(
       // WP54 (cycle-28 review, GPT-6.1 Sol G8): the evaluator is spelled out where YouthWIDE first names it (it said "In BIGD’s randomized trial of CodersTrust’s WSDFM program, ...")
-      'In the randomized trial of CodersTrust’s WSDFM program by the BRAC Institute of Governance and Development (BIGD), women offered a place were 10.3 percentage points more likely to be employed and had an estimated 41% higher monthly income than the control group.',
+      // WP146: the sentence gives the income result and points to the employment effect, which the +10.3 tile below states (it also said "were 10.3 percentage points more likely to be employed and").
+      'In the randomized trial of CodersTrust’s WSDFM program by the BRAC Institute of Governance and Development (BIGD), women offered a place had an estimated 41% higher monthly income than the control group, alongside the employment effect below.',
     );
     expect(await band.locator('.eb__headline').getAttribute('data-fact')).toBe('RC-01 RC-02');
     await expect(band.locator('[data-plain-line]')).toHaveCount(0);
@@ -146,7 +147,9 @@ test.describe('YouthWIDE', () => {
     expect(text).not.toMatch(/about 10 more were in work|For women who attended|A randomized trial by BIGD found/);
     // the chart's data table repeats the difference as a table cell; as a paragraph, the sentence is the only statement of the effect
     // (WP45: the RC-02 tile's figure line is a paragraph too, "+10.3" over "percentage points"; it is a tile, not a statement of the effect)
-    expect((await texts(page, '#proof-band p:not(.stat__value)')).filter((p) => p.includes('10.3 percentage points')), 'one paragraph states the effect').toHaveLength(1);
+    // WP146: the trial sentence no longer carries the +10.3 figure; as a paragraph, the RC-02 tile's value line ("+10.3 percentage points") is the only statement of the effect, and no other paragraph repeats it
+    expect((await texts(page, '#proof-band p:not(.stat__value)')).filter((p) => p.includes('10.3 percentage points')), 'no other paragraph states the effect').toHaveLength(0);
+    expect((await texts(page, '#proof-band .eb__stat .stat__value')).filter((p) => p.includes('10.3 percentage points')), 'the tile states the effect once').toHaveLength(1);
     await expect(band.locator('.eb__stat')).toHaveCount(2);
     await expect(band.locator('svg[role="img"]').first()).toBeVisible();
     expect(await texts(page, '#proof-band .eb__links a')).toEqual(['Impact Survey 2026', 'The Randomized Trial']);

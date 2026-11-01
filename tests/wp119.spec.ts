@@ -137,9 +137,10 @@ test.describe('WP119 Polish', () => {
   });
 
   test('11. TalentLEAP Q14 states "as agreed in the program scope" once: the comparison sentence no longer repeats it', () => {
-    const FIRST = 'Compared with a self-paced course alone, supported CodersTrust cohorts add mentoring, certification exam preparation and placement support.';
-    const SECOND = 'Every supported TalentLEAP cohort pairs 100 training hours per certification';
-    expect(text('our-model/talentleap/index.html')).toContain(`${FIRST} ${SECOND}`);
+    // WP146: Q14 is one comparison sentence now (the first sentence, "supported CodersTrust cohorts add mentoring, ...", is gone), so the scope wording is still stated at most once.
+    const ONE = 'Compared with a self-paced course alone, every supported TalentLEAP cohort pairs 100 training hours per certification';
+    expect(text('our-model/talentleap/index.html')).toContain(ONE);
+    expect(text('our-model/talentleap/index.html')).not.toContain('supported CodersTrust cohorts add mentoring, certification exam preparation and placement support');
     const offenders = walk(DIST_DIR).filter((f) => /placement support, agreed in each program’s scope/.test(html(relative(DIST_DIR, f)))).map((f) => relative(DIST_DIR, f));
     expect(offenders).toEqual([]);
     expect(existsSync(join(DIST_DIR, 'our-model/talentleap/index.html'))).toBe(true);

@@ -364,7 +364,7 @@ test.describe('G2 (GPT-6.1 Sol): YouthWIDE’s national-scale answer says larger
     await open(page, YOUTHWIDE);
     const item = page.locator('#faq details, #faqs details', { has: page.locator('summary', { hasText: 'Can You Deliver at National Scale?' }) }).first();
     const answer = compact(await item.locator('.faq__a').textContent());
-    expect(answer).toContain('Larger programs are designed to run in phases, up to 10 cohorts in parallel, with certified local facilitators. A 100,000+ phase is a design option; we have not yet delivered a program at that size.');
+    expect(answer).toContain('Larger programs are designed to run in phases, up to 10 cohorts in parallel, with certified local facilitators. A 100,000+ program is a design option we plan phase by phase; we have not yet delivered a program at that size.'); // WP146: it read "A 100,000+ phase is a design option; …"
     expect(answer).not.toContain('We scale in phases, up to 10 cohorts');
     expect((await faqJsonLd(page)).find((q) => q.name === 'Can You Deliver at National Scale?')?.text).toContain('Larger programs are designed to run in phases, up to 10 cohorts in parallel, with certified local facilitators.');
   });

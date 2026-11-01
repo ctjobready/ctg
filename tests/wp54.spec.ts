@@ -178,7 +178,8 @@ test.describe('BIGD is spelled out at its first mention on every page that names
     await open(page, YOUTHWIDE);
     const headline = page.locator('#proof-band .eb__headline');
     await expect(headline).toHaveText(
-      'In the randomized trial of CodersTrust’s WSDFM program by the BRAC Institute of Governance and Development (BIGD), women offered a place were 10.3 percentage points more likely to be employed and had an estimated 41% higher monthly income than the control group.',
+      // WP146: the sentence gives the income result and points to the employment effect below (the +10.3 tile states it); BIGD stays spelled out at the first mention
+      'In the randomized trial of CodersTrust’s WSDFM program by the BRAC Institute of Governance and Development (BIGD), women offered a place had an estimated 41% higher monthly income than the control group, alongside the employment effect below.',
     );
     expect(await headline.getAttribute('data-fact')).toBe('RC-01 RC-02');
     expect(await everything(page)).not.toContain('BIGD’s');

@@ -68,7 +68,8 @@ test.describe('Polish 2: the exam-terms qualifier is stated once per page beyond
   test('TalentLEAP FAQ drops its second statement (page and FAQ JSON-LD), the Step 3 pipeline keeps the referent', () => {
     const raw = html(TALENTLEAP);
     const text = main(TALENTLEAP);
-    const answer = 'Every supported TalentLEAP cohort pairs 100 training hours per certification, including certification exam preparation, with three months of milestone-based mentoring, placement support and outcome tracking for 12 months after each course.';
+    // WP146: Q14 is one sentence, "Compared with a self-paced course alone, every supported TalentLEAP cohort pairs …" (the sentence began "Every supported …")
+    const answer = 'Compared with a self-paced course alone, every supported TalentLEAP cohort pairs 100 training hours per certification, including certification exam preparation, with three months of milestone-based mentoring, placement support and outcome tracking for 12 months after each course.';
     expect(text).toContain(answer);
     expect(text).not.toContain('including certification exam preparation (exam fees and attempts set per program), with three months');
     expect(count(text, QUALIFIER), 'exam-terms statements').toBe(1);
