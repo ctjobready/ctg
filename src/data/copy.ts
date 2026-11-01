@@ -335,7 +335,8 @@ const SOURCE_NOTES: Record<string, { note: string; registered: string[]; textHas
   'PX-02': { note: 'ILOSTAT, 2019–2025', registered: ['ILOSTAT', '2019–2025'] },
   'PX-03': { note: 'BBS Labour Force Survey, 2024', registered: ['BBS', 'Labour Force Survey', '2024'] },
   'PX-05': { note: 'ManpowerGroup, 2026', registered: ['ManpowerGroup', '2026'] },
-  'PX-06': { note: 'Demirci, Hannane & Zhu, 2025', registered: ['Demirci, Hannane & Zhu', '2025'] },
+  'PX-06': { note: 'Demirci, Hannane and Zhu, 2025', // WP147 (Opus XHigh run 1, Polish): site-authored copy writes "and" in an author list (the Trial page's citation does); the register's source (DHZ25) keeps its own "&", which `registered` still checks
+     registered: ['Demirci, Hannane & Zhu', '2025'] },
   'PX-08': { note: 'PwC, 2026', registered: ['PwC', '2026'] },
   // `after`: the phrase the note attaches to; it goes directly after it, inside the text, not at the end (RW1: the count is DoICT's, "could host blended learning" is not)
   'GV-09': { note: 'Department of ICT count', registered: ['Department of ICT (DoICT)', '9,001'], after: 'government digital labs' },
@@ -519,7 +520,7 @@ export const POSITIONING: Record<PositioningKey, CopyBlock> = {
   },
   localPartners: {
     // WP40 (cycle-17 review): what each side does, in the words of the four cards under it (Mobilizes and Hosts; Trains and Prepares for Certification; Mentoring and Placement; Monthly Reporting). scripts/check-facts.mjs declares it whole
-    // for /partner-with-us/local-partners/ (POSITION_WHOLE_STATEMENT). It rests on PD-06 (certified local facilitators in existing labs and colleges), PD-01 (mentoring, with placement support alongside) and PD-08 (monthly reports).
+    // for /partner-with-us/local-partners/ (POSITION_WHOLE_STATEMENT). It rests on PD-06 (facilitators trained and certified by CodersTrust, in existing labs and colleges), PD-01 (mentoring, with placement support alongside) and PD-08 (monthly reports).
     text: 'Your organization mobilizes learners and hosts training. CodersTrust supports delivery, mentoring, placement and reporting.',
     facts: ['PD-01', 'PD-06', 'PD-08'],
   },
@@ -581,7 +582,7 @@ export const FUNDER_PAINS: Pain[] = [
 ];
 // WP54 (cycle-28 review, GPT-6.1 Sol G3): P3 says training is "often" measured by enrollment (it said "still", an unhedged generalization about all training).
 // WP61 (cycle-33 review, GPT-6.1 Sol G4): P1 is what CodersTrust adds, not a deficit presumed of the partner (it was "Missing curriculum, trainers and certification": "You reach the young people, but a ready curriculum, trained facilitators and a route to industry certification are
-// often out of reach."). It rests on the same register facts as the "Certified Facilitators and a Local Curriculum" card it still maps to (PD-06, PD-02: certified local facilitators, a localized curriculum, preparation for industry certification).
+// often out of reach."). It rests on the same register facts as the "Certified Facilitators and a Local Curriculum" card it still maps to (PD-06, PD-02: certified facilitators, a localized curriculum, preparation for industry certification).
 export const LOCAL_PARTNER_PAINS: Pain[] = [
   { id: 'P1', name: 'Curriculum and certification take time to build', text: 'A ready curriculum, trained facilitators and a route to industry certification take time and specialist support to build.' },
   { id: 'P2', name: 'Missing work-entry connections', text: 'Training that stops at the classroom door leaves completers without links to employers, clients and platforms.' },
@@ -705,7 +706,7 @@ export const TRAINED_REACH: CopyBlock = trainedReach();
 
 export const SCALE: CopyBlock = {
   // WP21: short sentences with named actors (DoICT, the ICT Division, CodersTrust), as in the national-scale FAQ answer (Q2).
-  text: 'We scale in phases, starting from what we have done. Government contracts have training scopes ranging from 120+ professionals to 3,120+ digital-lab staff. Her Power, a national program of the Department of ICT (DoICT), under the ICT Division, trained 25,125 women across 130 sub-districts (upazilas), meeting its target. CodersTrust provided the curriculum, training manuals and mentorship guidelines and trained 2,400 women directly. Separately, 10,000 teachers were trained to teach online during COVID-19. Larger programs use existing labs and colleges, certified local facilitators and blended delivery, and can run up to 10 cohorts in parallel.',
+  text: 'We scale in phases, starting from what we have done. Government contracts have training scopes ranging from 120+ professionals to 3,120+ digital-lab staff. Her Power, a national program of the Department of ICT (DoICT), under the ICT Division, trained 25,125 women across 130 sub-districts (upazilas), meeting its target. CodersTrust provided the curriculum, training manuals and mentorship guidelines and trained 2,400 women directly. Separately, 10,000 teachers were trained to teach online during COVID-19. Larger programs use existing labs and colleges, certified facilitators and blended delivery, and can run up to 10 cohorts in parallel.',
   facts: ['GV-10', 'GV-01', 'GV-11', 'SC-08', 'PD-06'],
 };
 

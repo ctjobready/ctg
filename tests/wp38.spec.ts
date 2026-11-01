@@ -131,7 +131,7 @@ test.describe('Home: the Guide band and the cost-of-waiting card', () => {
   test('the cost card states the 21% finding alone, still rests on PX-06, and keeps its "What It Means" line; the register keeps the whole fact', async ({ page }) => {
     await open(page, '');
     const card = page.locator('#cost article').first();
-    expect(compact(await card.locator('.cost__data').textContent())).toBe('On one major freelancing platform, automation-prone writing and coding postings fell 21% relative to manual-intensive jobs within eight months of ChatGPT’s release (Demirci, Hannane & Zhu, 2025).');
+    expect(compact(await card.locator('.cost__data').textContent())).toBe('On one major freelancing platform, automation-prone writing and coding postings fell 21% relative to manual-intensive jobs within eight months of ChatGPT’s release (Demirci, Hannane and Zhu, 2025).');
     expect(await card.locator('.cost__data').getAttribute('data-fact')).toBe('PX-06');
     expect(compact(await card.locator('.cost__impl').textContent())).toBe('What It Means Training has to follow current employer demand, not last year’s job market.');
     expect(await mainText(page)).not.toMatch(/image-creation|17%/);

@@ -7,25 +7,22 @@ import { CONTRACTING_ENTITIES, PROGRAM_SCOPE_REPORTING } from '../../../data/cop
 /**
  * Contracting and Accountability (WP17, item 10): the arrangements a procurement or due-diligence reader looks for, in one panel at the top of
  * /about/governance/: who contracts, who leads, how safeguarding and data are handled, how
- * outcome records are used, the due-diligence checklist and how to ask. Every statement restates the governance page's own sections
+ * outcome records are used and the due-diligence checklist. Every statement restates the governance page's own sections
  * (the register facts ID-07, PD-12, PD-13, PD-08 and PD-09); no document is promised as ready.
  * WP52 (cycle-27 review): the Leadership card names each leader's own organization, "The Chairman, Aziz Ahmad, leads CodersTrust. Md. Shamsul Haque leads CodersTrust Bangladesh." (it said the Chairman and "the CEO of CodersTrust
  * Bangladesh" together "lead the organization"), in line with the owner's direction: a global headquarters in New York and Bangladesh as a country office (ID-11).
+ * WP147 (Opus XHigh run 1, Polish): the "How to Ask" card is gone; it asked for the same thing as the hero's "Ask About Due Diligence" button and the closing band, in other words. The panel no longer takes the request route.
  */
 interface Props {
-  /** The due-diligence request route (mailto), a text link here: the page's primary button is in its hero. */
-  requestHref: string;
-  requestLabel: string;
   id?: string;
 }
-const { requestHref, requestLabel, id = 'contracting' } = Astro.props;
+const { id = 'contracting' } = Astro.props;
 const items = [
   { icon: 'building-2', title: 'Contracting Entities', text: `${CONTRACTING_ENTITIES}. The entity that contracts depends on the program’s country and the funder’s requirements.`, ids: 'ID-07 PD-13' },
   { icon: 'users', title: 'Leadership', text: 'The Chairman, Aziz Ahmad, leads CodersTrust. Md. Shamsul Haque leads CodersTrust Bangladesh.', ids: 'ID-03', link: { label: 'Who Leads CodersTrust', href: '#leadership' } },
   { icon: 'shield', title: 'Safeguarding and Data', text: 'Consent, protected records, grievance handling and referral pathways are agreed and documented for each program before enrollment.', ids: 'PD-12', link: { label: 'How People Are Protected', href: '#safeguarding' } },
   { icon: 'file-check', title: 'How Outcome Records Are Used', text: 'Follow-up survey results are checked against documentary evidence where available. Funders receive monthly reports and outcome data with personal details protected.', ids: 'PD-08 PD-09 PD-12', link: { label: 'Evaluation and Funder Reporting', href: '#evidence' } },
   { icon: 'clipboard-list', title: 'Due-Diligence Checklist', text: 'The items we confirm with you in co-design, from legal status to sanctions-screening arrangements.', ids: 'PD-13', link: { label: 'See the Checklist', href: '#checklist' } },
-  { icon: 'mail', title: 'How to Ask', text: 'Send the program or grant you are considering and the documents you need; we reply with what can be shared.', ids: 'PD-13', link: { label: requestLabel, href: requestHref, external: true } },
 ];
 ---
 
@@ -39,7 +36,7 @@ const items = [
           <h3 class="cp__title t-heading-m">{it.title}</h3>
           <p class="cp__text">{it.text}</p>
           {it.link && (
-            <a class="link cp__link" href={it.link.external ? it.link.href : it.link.href}>
+            <a class="link cp__link" href={it.link.href}>
               {it.link.label}
               <Icon name="arrow-right" size={16} />
             </a>

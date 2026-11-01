@@ -260,7 +260,7 @@ test.describe('Investors: the scale answer says larger programs are designed to 
     await open(page, 'partner-with-us/investors/');
     const item = page.locator('#faq details', { has: page.locator('summary', { hasText: 'Can You Deliver at National Scale?' }) });
     const answer = compact(await item.locator('.faq__a').textContent());
-    expect(answer).toContain('larger programs are designed to run up to 10 cohorts in parallel through certified local facilitators in existing labs and colleges.');
+    expect(answer).toContain('larger programs are designed to run up to 10 cohorts in parallel through facilitators trained and certified by CodersTrust (Training of Trainers) in existing labs and colleges.');
     expect(answer).not.toContain('larger programs run up to 10 cohorts');
     expect((await faqJsonLd(page)).find((q) => q.name === 'Can You Deliver at National Scale?')?.text).toContain('larger programs are designed to run up to 10 cohorts in parallel');
   });

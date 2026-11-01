@@ -106,7 +106,7 @@ test.describe('Home: the program-results slide lists four programs (item 10)', (
     await expect(slide(page).locator('.hs__lead')).toHaveText('Results from the records of four programs.');
     await expect(slide(page).locator('.hs__lines li')).toHaveText([
       'Women in Online Work, Kosovo (2016–2017): 68% in work (102 of 150).',
-      'WSDFM: 711 of 1,000 enrolled in work (71%), from program records.',
+      'WSDFM: 711 of 1,000 enrolled in work (71%).',
       'UNDP YES, Korail (2017): 67% of the 350 enrolled found a first job within three months.',
       'Her Power: 372 of 800 tracked in work (47%); 2,400 trained directly.',
     ]);
@@ -162,7 +162,7 @@ test.describe('Home: the program-results slide lists four programs (item 10)', (
 
 test.describe('Home: the reporting answer is two sentences, and the full answer stays elsewhere (item 12)', () => {
   // WP60 (cycle-32 review, GLM L4): "A scorecard is agreed for every cohort before delivery." (it said "Every cohort agrees a scorecard before delivery.", which gave the cohort the action)
-  const HOME_ANSWER = 'A pilot scorecard is agreed before the first cohort. Partners receive monthly reports and follow-up surveys at 3, 6 and 12 months. Independent evaluation is welcome.';
+  const HOME_ANSWER = 'A pilot scorecard is agreed before the first cohort. Partners receive monthly reports and follow-up survey results at 3, 6 and 12 months. Independent evaluation is welcome.'; // WP147: it read "follow-up surveys"
 
   test('Home’s "How Do You Prove Outcomes?" is the Q3-home variant, tied to PD-11, PD-08 and PD-09, and the FAQ JSON-LD says the same words', async ({ page }) => {
     const variant = faqsFor('variants').find((f) => f.id === 'Q3-home')!;

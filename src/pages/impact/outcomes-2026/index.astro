@@ -97,13 +97,20 @@ const oc03 = fact('OC-03').stat!;
 const directAnswer = `Among surveyed completers, employment rose from ${emp.from} before training to ${emp.value} at the October 2026 survey, and median monthly income rose from ${oc03.from} to ${oc03.value}. These are what respondents report: the survey describes outcomes among alumni who answered, and it does not show that training caused the change.`;
 const answerWords = directAnswer.split(/\s+/).length;
 if (answerWords < 40 || answerWords > 60) throw new Error(`Outcomes 2026 direct answer is ${answerWords} words (40 to 60)`);
+// WP147 (Opus XHigh run 1, Polish): Results in Brief comes before "How Fast Earnings Started", the one place that defines "surveyed new earners", so the Speed to Earning tile says the group in plain words (OC-05's own phrase for it, below).
+// The register's label is unchanged (Home's speed slide and the Impact tile still use the term, the Impact tile with its definition inserted); the build stops if either phrase leaves the register.
+const NEW_EARNERS_TERM = 'surveyed new earners';
+const NEW_EARNERS_PLAIN = 'surveyed completers who first earned during or after training';
+const oc05Label = fact('OC-05').stat!.label;
+if (!oc05Label.includes(NEW_EARNERS_TERM) || !fact('OC-05').text.includes(NEW_EARNERS_PLAIN)) throw new Error('Outcomes 2026: OC-05 no longer says "surveyed new earners" in its label and the plain phrase in its text; update the Speed to Earning tile');
+const speedTileLabel = oc05Label.replace(NEW_EARNERS_TERM, NEW_EARNERS_PLAIN);
 // How to read this survey (closed disclosure): the former evidence-ladder rung and the methodology list.
 // WP61 (cycle-33 review, GLM L4): the line names who answered by gender as well as education: "85.0% of respondents hold a bachelor’s degree or higher and 19.6% are women, so results describe a mostly graduate, majority-male group." Both figures are OC-09's,
 // the 85.0% as its stat value and the 19.6% read from its text ("... 19.6% women ..."), never retyped; the build stops if OC-09 stops stating the share of women.
 const womenShare = /(\d+(?:\.\d+)?)% women/.exec(fact('OC-09').text)?.[1];
 if (!womenShare) throw new Error('OC-09 no longer states the share of women respondents ("N% women")');
 const howToRead = `<ul>
-<li><strong>Survey.</strong> CodersTrust Impact Survey, October 2026: an online alumni survey, fielded in October 2026.</li>
+<li><strong>Survey.</strong> Impact Survey 2026: an online alumni survey, fielded in October 2026.</li>
 <li data-fact="OC-09"><strong>Who the respondents are.</strong> ${val('OC-09')} of respondents hold a bachelor’s degree or higher and ${womenShare}% are women, so results describe a mostly graduate, majority-male group.</li>
 <li><strong>What it does not show.</strong> Respondents are not a random sample and may over-represent successful learners, so the survey does not show that training caused any change.</li>
 </ul>`;
@@ -136,7 +143,7 @@ const howToRead = `<ul>
     </div>
     <h3 class="t-heading-l ro__group">Speed to Earning</h3>
     <div class="ro__stats ro__stats--one">
-      <FactStat id="OC-05" />
+      <FactStat id="OC-05" label={speedTileLabel} />
     </div>
     <h3 class="t-heading-l ro__group">Learner Experience</h3>
     <div class="ro__stats ro__stats--one">

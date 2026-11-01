@@ -146,7 +146,7 @@ test.describe('WP108 item 5: “Sheikh Kamal IT Center”, not “Centre”, in 
 test.describe('WP108 item 6: the pages changed here carry a date modified of 2026-10-29', () => {
   for (const [name, slug] of [['Copenhagen', COPENHAGEN], ['NYNJMSDC', NYNJMSDC], ['Sheikh Kamal', KAMAL]]) {
     test(`news post ${name}: front matter \`updated: 2026-10-29\` and JSON-LD dateModified 2026-10-29`, async ({ page }) => {
-      const day = slug === NYNJMSDC ? '2026-10-30' : '2026-10-29'; // WP127 re-dated the NYNJMSDC post (serial-comma sweep)
+      const day = slug === NYNJMSDC ? '2026-11-01' : '2026-10-29'; // WP127 re-dated the NYNJMSDC post (serial-comma sweep); WP147 re-dated it again (its topic moved to Leadership and Advocacy)
       expect(post(slug)).toMatch(new RegExp(`^updated: ${day}$`, 'm'));
       await open(page, `news/${slug}/`);
       const ld = await ldJson(page);

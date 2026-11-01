@@ -115,13 +115,13 @@ test.describe('Items 5 and 6: the 30,000+ contract-scope wording', () => {
   test('Impact\'s 30,000+ tile reads "six government contracts" and not "programs"', async ({ page }) => {
     await open(page, 'impact/');
     const body = compact(await page.locator('body').textContent());
-    expect(body).toContain('people in the contracted scopes of six government contracts');
+    expect(body).toContain('people in the training and curriculum scopes of six government contracts');
     expect(body).not.toContain('six government programs');
   });
 
   test('the Governments 30,000+ tile caption is in sentence case', async ({ page }) => {
     await open(page, 'partner-with-us/governments/');
-    await expect(page.locator('#glance li', { hasText: '30,000+' }).locator('.pg__desc')).toHaveText('people in the scopes of six government contracts');
+    await expect(page.locator('#glance li', { hasText: '30,000+' }).locator('.pg__desc')).toHaveText('people in the training and curriculum scopes of six government contracts');
   });
 });
 

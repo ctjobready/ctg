@@ -43,7 +43,7 @@ test.describe('UNDP YES, Korail: first job, not "in work" (PR-03, PR-06)', () =>
     // WP36 (cycle-13 review): every result names its base
     await expect(s.locator('.hs__lines li')).toHaveText([
       'Women in Online Work, Kosovo (2016–2017): 68% in work (102 of 150).',
-      'WSDFM: 711 of 1,000 enrolled in work (71%), from program records.',
+      'WSDFM: 711 of 1,000 enrolled in work (71%).',
       'UNDP YES, Korail (2017): 67% of the 350 enrolled found a first job within three months.',
       'Her Power: 372 of 800 tracked in work (47%); 2,400 trained directly.',
     ]);
@@ -171,8 +171,8 @@ test.describe('labels use "and", not "&"', () => {
       for (const el of Array.from(document.querySelectorAll('body *'))) {
         if (['SCRIPT', 'STYLE', 'NOSCRIPT'].includes(el.tagName)) continue;
         for (const n of Array.from(el.childNodes)) {
-          // WP58 (cycle-30 review, Claude S5): the one allowed " & " is the author list of the study PX-06 cites, "(Demirci, Hannane & Zhu, 2025)" (its registered citation, DHZ25, writes it so)
-          if (n.nodeType === 3 && / & /.test(n.textContent ?? '') && !/Demirci, Hannane & Zhu, 2025/.test(n.textContent ?? '')) hits.push(`${el.tagName.toLowerCase()}: ${(n.textContent ?? '').trim().slice(0, 80)}`);
+          // WP58 (cycle-30 review, Claude S5): the one allowed " & " is the author list of the study PX-06 cites, "(Demirci, Hannane and Zhu, 2025)" (WP147: site copy writes "and"; the register's citation, DHZ25, keeps its "&", which is not printed on Home)
+          if (n.nodeType === 3 && / & /.test(n.textContent ?? '') && !/Demirci, Hannane (?:&|and) Zhu, 2025/.test(n.textContent ?? '')) hits.push(`${el.tagName.toLowerCase()}: ${(n.textContent ?? '').trim().slice(0, 80)}`);
         }
       }
       return hits;

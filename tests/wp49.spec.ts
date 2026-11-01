@@ -476,10 +476,10 @@ test.describe('"What Happens When Funding Ends?" (item 22)', () => {
 
   test('Q10 and Q10-campus end after the alumni-network clause; the TalentLEAP clause and its fact are gone', () => {
     const q10 = faqs.find((f) => f.id === 'Q10')!;
-    expect(q10.a).toBe(`Where included, what the program builds stays in place: certified local facilitators and localized curricula. ${ENDING}`);
+    expect(q10.a).toBe(`Where included, what the program builds stays in place: facilitators trained and certified by CodersTrust (Training of Trainers) and localized curricula. ${ENDING}`); // WP147: it read "certified local facilitators"
     expect(q10.evidence).toEqual(['PD-06', 'PD-01']);
     const campus = faqsFor('variants').find((f) => f.id === 'Q10-campus')!;
-    expect(campus.a).toBe('Where included, what the program builds stays on your campus: certified local facilitators, localized curricula and campus labs that serve as blended-learning centers. Completers join CodersTrust’s alumni network after their three months of mentoring.');
+    expect(campus.a).toBe('Where included, what the program builds stays on your campus: certified facilitators, localized curricula and campus labs that serve as blended-learning centers. Completers join CodersTrust’s alumni network after their three months of mentoring.');
     expect(campus.evidence).toEqual(['PD-06', 'PD-01']);
   });
 
@@ -521,7 +521,7 @@ test.describe('The OC-05 and RC-06a labels (items 24 and 26)', () => {
     expect(count(text, 'Surveyed new earners are the completers who first earned during or after training.'), 'the definition, once').toBe(1);
     expect(compact(await page.locator('#speed p').first().textContent())).toBe('Surveyed new earners are the completers who first earned during or after training.');
     expect(compact(await page.locator('#speed p[data-fact="OC-05"]').textContent())).toContain(oc05.text.replace('surveyed completers who first earned during or after training', 'surveyed new earners')); // WP136: the sentence uses the term the line above defines
-    expect(compact(await page.locator('#summary [data-fact="OC-05"]').textContent())).toContain('surveyed new earners');
+    expect(compact(await page.locator('#summary [data-fact="OC-05"]').textContent())).toContain('surveyed completers who first earned during or after training'); // WP147: Results in Brief precedes the one definition, so the tile says the group in plain words
     await open(page, 'impact/');
     expect(compact(await page.locator('#glance a[data-fact~="OC-05"]').textContent())).toContain('surveyed new earners');
     await open(page, '');

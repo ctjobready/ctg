@@ -38,7 +38,7 @@ const NU_COURSES = [
 const NU_PAGES = [NU_OVERVIEW, ...NU_COURSES];
 
 const SC04_NEW =
-  '1.5M+ National University learners being onboarded (the university’s own learners, not learners trained by CodersTrust); CodersTrust has been NU’s official training partner for digital career skills and credentials since 2023 and delivers NU post graduate diploma courses';
+  '1.5M+ National University learners being onboarded (the university’s own learners, not learners trained by CodersTrust); CodersTrust has been NU’s official training partner for digital career skills and credentials since 2023 and delivers NU Post Graduate Diploma courses';
 
 test.describe('WP102 1: SC-04 says the NU learners are being onboarded, not in a pipeline', () => {
   test('SC-04 text opens with the new wording and keeps the rest of the sentence', () => {

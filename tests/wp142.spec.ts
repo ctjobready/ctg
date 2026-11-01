@@ -146,7 +146,7 @@ test.describe('WP142 item 3: "&" labels', () => {
   test('sweep: no site-authored " & " label on a built page (fixed names, quotes and citations are allowed, listed below)', () => {
     // Fixed names the site does not author: a citation's authors, a news headline or event title, an award, the National University syllabus module names, the styleguide demo.
     const ALLOWED: Array<[RegExp, RegExp]> = [
-      [/^index\.html$/, /Demirci, Hannane & Zhu, 2025/],
+      [/^index\.html$/, /Demirci, Hannane and Zhu, 2025/],
       [/^about\/recognition\//, /Cybersecurity & Artificial Intelligence/],
       [/^about\/team\/aziz-ahmad\//, /NYNJMSDC|Minority/],
       [/^programs\/nu-postgraduate-diploma\//, /.*/],

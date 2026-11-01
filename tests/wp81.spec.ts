@@ -9,7 +9,7 @@ import { listPages } from './support/pages';
  * WP81 behaviors (owner item, 2026-10-23): WSDFM's program record covers the 1,000 women enrolled, and the women offered a place in the randomized trial were among them (BIGD report p. 19).
  * The two are different evidence, not different people, so no page says the program records are "separate" from the trial. Retrospective coverage (the owner exempted this project from test-first work);
  * run `npm run build` first, then `PORT=<port> npx playwright test tests/wp81.spec.ts --project=chromium`:
- *   - 1: Home slide 4's WSDFM line is "WSDFM: 711 of 1,000 enrolled in work (71%), from program records.", from PR-01 only, and it is one row at 1280 (as tall as the Kosovo line);
+ *   - 1: Home slide 4's WSDFM line is "WSDFM: 711 of 1,000 enrolled in work (71%).", from PR-01 only, and it is one row at 1280 (as tall as the Kosovo line);
  *   - 2: the Impact WSDFM tile note and the WSDFM case-study hero note say the records are not trial results and that the trial's women were among the 1,000;
  *   - 3: the WSDFM caption on the Home case card reads "not trial results", and no built page says the WSDFM records are separate from, or a separate trial of, the women;
  *   - 4: the 1,000 in those notes is PR-01's value, and the 833 is RC-07's (TRIAL_WOMEN), never retyped.
@@ -34,11 +34,11 @@ const HOME = '';
 const IMPACT_WSDFM = 'impact/case-studies/wsdfm-women-freelancers/';
 
 test.describe('WP81: WSDFM program records are not "separate" from the trial; the trial’s women were among the 1,000', () => {
-  test('Home slide 4 reads "WSDFM: 711 of 1,000 enrolled in work (71%), from program records.", from PR-01 only, one row at 1280', async ({ page }) => {
+  test('Home slide 4 reads "WSDFM: 711 of 1,000 enrolled in work (71%).", from PR-01 only, one row at 1280', async ({ page }) => {
     await page.setViewportSize(DESKTOP);
     await open(page, HOME);
     const lines = slide(page, 4).locator('.hs__lines li');
-    expect(compact(await lines.nth(1).textContent())).toBe('WSDFM: 711 of 1,000 enrolled in work (71%), from program records.');
+    expect(compact(await lines.nth(1).textContent())).toBe('WSDFM: 711 of 1,000 enrolled in work (71%).');
     expect(await lines.nth(1).getAttribute('data-fact')).toBe('PR-01');
     const heights = await lines.evaluateAll((els) => els.map((e) => Math.round(e.getBoundingClientRect().height)));
     expect(heights[1], 'the WSDFM line wraps').toBe(heights[0]);

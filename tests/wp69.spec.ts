@@ -31,7 +31,7 @@ const HOME = '';
 
 const EMPLOYER_QUESTION = 'Will This Work for Our Roles?';
 const COUNTRY_QUESTION = 'Will This Work in Our Country?';
-const EMPLOYER_ANSWER = 'We start with a needs assessment of your roles, tasks and required tools. For hiring, talent requests are scoped against the experience and credentials available in the candidate pool.';
+const EMPLOYER_ANSWER = 'We start with a needs assessment of your roles, tasks and required tools.'; // WP147: the second sentence (the candidate-pool scope) is in the Hire Talent band, not repeated here
 const OPTION_NAME = 'National Design Option';
 const QUALIFIER = '(a design option — not yet delivered at this size)';
 

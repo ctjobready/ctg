@@ -76,7 +76,7 @@ const PAGES: PageSpec[] = [
       {
         title: 'Capacity Designed to Stay in Your System',
         // WP60 (cycle-32 review, Gemini GM5): the list opens "Where included:" (it read as unconditional)
-        text: 'Where included: Training of Trainers, curriculum and manuals; certified local facilitators; and blended learning in existing labs that works with limited connectivity, so rural labs can take part.',
+        text: 'Where included: curriculum and manuals; facilitators trained and certified by CodersTrust (Training of Trainers); and blended learning in existing labs that works with limited connectivity, so rural labs can take part.',
         facts: ['GV-11', 'PD-06', 'PD-07'],
       },
     ],

@@ -69,22 +69,28 @@ const read = (p: { file: string }) => readFileSync(p.file, 'utf8');
 // 1. "What Happens When Funding Ends?"
 // ---------------------------------------------------------------------------------------------------------------------------------
 test.describe('WP128 item 1: "What Happens When Funding Ends?" is two sentences, as on Universities', () => {
+  // WP147 (owner answer 2026-11-01): the answer says "facilitators trained and certified by CodersTrust (Training of Trainers)" where it is the page's first mention of the facilitator model, and "certified facilitators" (Q10-later)
+  // on Governments and Local Partners, which explain the model higher on the page.
   const NEW =
-    'Where included, what the program builds stays in place: certified local facilitators and localized curricula. Completers join CodersTrust’s alumni network after their three months of mentoring.';
+    'Where included, what the program builds stays in place: facilitators trained and certified by CodersTrust (Training of Trainers) and localized curricula. Completers join CodersTrust’s alumni network after their three months of mentoring.';
+  const LATER =
+    'Where included, what the program builds stays in place: certified facilitators and localized curricula. Completers join CodersTrust’s alumni network after their three months of mentoring.';
+  const wording = (route: string) => (route === 'partner-with-us/governments/' || route === 'partner-with-us/local-partners/' ? LATER : NEW);
   const OLD = 'localized curricula, and completers';
   const SIX = ['partner-with-us/development-partners/', 'partner-with-us/governments/', 'partner-with-us/foundations/', 'partner-with-us/local-partners/', 'about/governance/', 'our-model/talentleap/'];
 
   test('the register’s answer (Q10) is the new wording; the Universities variant is unchanged', () => {
     expect(faqs.find((f) => f.id === 'Q10')?.a).toBe(NEW);
+    expect(faqs.find((f) => f.id === 'Q10-later')?.a).toBe(LATER);
     expect(faqs.find((f) => f.id === 'Q10-campus')?.a).toBe(
-      'Where included, what the program builds stays on your campus: certified local facilitators, localized curricula and campus labs that serve as blended-learning centers. Completers join CodersTrust’s alumni network after their three months of mentoring.',
+      'Where included, what the program builds stays on your campus: certified facilitators, localized curricula and campus labs that serve as blended-learning centers. Completers join CodersTrust’s alumni network after their three months of mentoring.',
     );
   });
   for (const route of SIX) {
     test(`${route} prints the answer whole, and its FAQ JSON-LD says the same`, () => {
       const raw = html(`${route}index.html`);
-      expect(visible(raw)).toContain(NEW);
-      expect(jsonLdStrings(raw)).toContain(NEW);
+      expect(visible(raw)).toContain(wording(route));
+      expect(jsonLdStrings(raw)).toContain(wording(route));
     });
   }
   test('no built page, JSON-LD block or llms.txt has "localized curricula, and completers"', () => {
@@ -97,7 +103,7 @@ test.describe('WP128 item 1: "What Happens When Funding Ends?" is two sentences,
   test('every page that carries the answer carries the new wording', () => {
     const carriers = listPages().filter((p) => visible(read(p)).includes('what the program builds stays in place'));
     expect(carriers.length).toBeGreaterThanOrEqual(SIX.length);
-    expect(carriers.filter((p) => !visible(read(p)).includes(NEW)).map((p) => p.route)).toEqual([]);
+    expect(carriers.filter((p) => !visible(read(p)).includes(wording(p.route.replace(/^\//, '')))).map((p) => p.route)).toEqual([]);
   });
 });
 
@@ -219,7 +225,7 @@ test.describe('WP128 item 7: Universities, "The National University Partnership"
   });
   test('first card: "1.5M+ National University learners being onboarded; CodersTrust has been NU’s official training partner ..."', () => {
     expect(body('SC-04')).toBe(
-      '1.5M+ National University learners being onboarded; CodersTrust has been NU’s official training partner for digital career skills and credentials since 2023 and delivers NU post graduate diploma courses.',
+      '1.5M+ National University learners being onboarded; CodersTrust has been NU’s official training partner for digital career skills and credentials since 2023 and delivers NU Post Graduate Diploma courses.',
     );
   });
   test('second card does not repeat its label: "The world’s second-largest university by enrollment — 3M+ students in 2,257 affiliated colleges."', () => {
@@ -238,10 +244,10 @@ test.describe('WP128 item 7: Universities, "The National University Partnership"
       expect(item(id), id).toMatch(new RegExp(`<span data-fact="${id}" class="fact"`));
     }
     expect(fact('SC-04').text).toBe(
-      '1.5M+ National University learners being onboarded (the university’s own learners, not learners trained by CodersTrust); CodersTrust has been NU’s official training partner for digital career skills and credentials since 2023 and delivers NU post graduate diploma courses',
+      '1.5M+ National University learners being onboarded (the university’s own learners, not learners trained by CodersTrust); CodersTrust has been NU’s official training partner for digital career skills and credentials since 2023 and delivers NU Post Graduate Diploma courses',
     );
     expect(fact('SC-05').text).toBe('National University: the world’s second-largest university by enrollment — 3M+ students in 2,257 affiliated colleges');
-    expect(fact('PA-05').text.startsWith('University partners: National University (official training partner; post graduate diploma courses)')).toBe(true);
+    expect(fact('PA-05').text.startsWith('University partners: National University (official training partner; NU Post Graduate Diploma courses)')).toBe(true);
   });
 });
 

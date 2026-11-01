@@ -240,11 +240,13 @@ test.describe('WP141 item 1: the in-sentence copies are rewritten (spot checks)'
   });
 
   test('"Where included in the program scope" / "where the program scope includes it" become "Where included" / "where the program includes it"', () => {
-    for (const p of ['about/governance/index.html', 'partner-with-us/development-partners/index.html', 'partner-with-us/local-partners/index.html']) {
-      expect(main(p), p).toContain('Where included, what the program builds stays in place: certified local facilitators and localized curricula.');
+    // WP147 (owner answer 2026-11-01): Governance and Development Partners say who trains and certifies the facilitators; Local Partners explains it higher on the page, so its answer says "certified facilitators"
+    for (const p of ['about/governance/index.html', 'partner-with-us/development-partners/index.html']) {
+      expect(main(p), p).toContain('Where included, what the program builds stays in place: facilitators trained and certified by CodersTrust (Training of Trainers) and localized curricula.');
     }
+    expect(main('partner-with-us/local-partners/index.html')).toContain('Where included, what the program builds stays in place: certified facilitators and localized curricula.');
     expect(main('partner-with-us/local-partners/index.html')).toContain('so delivery capacity can stay in your community where the program includes it.');
-    expect(main('partner-with-us/governments/index.html')).toContain('Where included: Training of Trainers, curriculum and manuals;');
+    expect(main('partner-with-us/governments/index.html')).toContain('Where included: curriculum and manuals;'); // WP147: it read "Where included: Training of Trainers, curriculum and manuals;"
   });
 
   test('the Home comparison row and the hub due-diligence card read "Included for every cohort: ..."', () => {

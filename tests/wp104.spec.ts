@@ -323,7 +323,7 @@ test.describe('WP104 item 10: "Last updated" stamps match each page’s latest c
     { route: 'programs/youthwide/', selector: '.updated', text: 'Last updated November 1, 2026', iso: '2026-11-01' },
     { route: 'programs/jobready-work/', selector: '.updated', text: 'Last updated November 1, 2026', iso: '2026-11-01' },
     { route: 'programs/superkids/', selector: '.updated', text: 'Last updated November 1, 2026', iso: '2026-11-01' }, // WP143
-    { route: 'impact/outcomes-2026/', selector: '.lf-updated', text: 'Source snapshot: October 2026 · Last updated October 31, 2026', iso: '2026-10-31' }, // WP135: the closing line and "On This Page" changed (was October 29)
+    { route: 'impact/outcomes-2026/', selector: '.lf-updated', text: 'Source snapshot: October 2026 · Last updated November 1, 2026', iso: '2026-11-01' }, // WP147: the method line and the Speed to Earning tile changed (was October 31 since WP135; October 29 before)
     { route: 'impact/independent-evaluation/', selector: '.lf-updated', text: 'Last updated November 1, 2026', iso: '2026-11-01' }, // WP134: WP133 changed its text
   ];
   for (const s of STAMPED) {

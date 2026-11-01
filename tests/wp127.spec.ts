@@ -425,7 +425,7 @@ test.describe('WP127 item 8: the TalentLEAP FAQ citation ends with a period and 
   const DOI = 'https://doi.org/10.1086/741450';
   test('the answer in the register', () => {
     const q4 = faqs.find((f) => f.id === 'Q4');
-    expect(q4?.a.endsWith(`${CITATION}. ${DOI}`)).toBe(true);
+    expect(q4?.a.endsWith(`${CITATION} (October 2026). ${DOI}`)).toBe(true);
     expect(q4?.inlineLink).toEqual({ text: DOI, href: DOI });
   });
   test('the TalentLEAP page and every page that prints the answer: text, link and FAQ JSON-LD', () => {
@@ -433,10 +433,10 @@ test.describe('WP127 item 8: the TalentLEAP FAQ citation ends with a period and 
     expect(carriers.map((p) => p.route)).toContain('/our-model/talentleap/');
     for (const p of carriers) {
       const raw = readFileSync(p.file, 'utf8');
-      expect(visible(raw), p.route).toContain(`published in a peer-reviewed journal: ${CITATION}. ${DOI}`);
-      expect(raw, p.route).toMatch(new RegExp(`367–399\\. <a href="${DOI.replace(/[.]/g, '\\.')}"`));
+      expect(visible(raw), p.route).toContain(`published in a peer-reviewed journal: ${CITATION} (October 2026). ${DOI}`);
+      expect(raw, p.route).toMatch(new RegExp(`367–399 \\(October 2026\\)\\. <a href="${DOI.replace(/[.]/g, '\\.')}"`));
       const ld = [...raw.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map((m) => m[1]).join(' ');
-      expect(ld, p.route).toContain(`published in a peer-reviewed journal: ${CITATION}. ${DOI}"`);
+      expect(ld, p.route).toContain(`published in a peer-reviewed journal: ${CITATION} (October 2026). ${DOI}"`);
     }
   });
 });

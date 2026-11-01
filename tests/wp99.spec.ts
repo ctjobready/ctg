@@ -233,24 +233,24 @@ test.describe('Item 3: the Trial page and FAQ Q4 cite the peer-reviewed article;
   test('FAQ Q4 cites the article with its DOI link; the answer, its structured data and every page that prints it agree', async ({ page }) => {
     const q4 = faqs.find((f) => f.id === 'Q4');
     expect(q4?.a).toBe(
-      `Yes, for CodersTrust’s WSDFM program. The BRAC Institute of Governance and Development (BIGD) at BRAC University ran a randomized controlled trial of that 200-hour program, longer than today’s 100-hour tracks, with women in Dhaka trained in 2020. Women offered a place were more likely to be employed than the control group. The trial is also published in a peer-reviewed journal: ${CITATION}. ${DOI}`,
+      `Yes, for CodersTrust’s WSDFM program. The BRAC Institute of Governance and Development (BIGD) at BRAC University ran a randomized controlled trial of that 200-hour program, longer than today’s 100-hour tracks, with women in Dhaka trained in 2020. Women offered a place were more likely to be employed than the control group. The trial is also published in a peer-reviewed journal: ${CITATION} (October 2026). ${DOI}`,
     );
     expect(q4?.inlineLink).toEqual({ text: DOI, href: DOI });
     expect(q4?.evidence).toEqual(['RC-01', 'RC-02', 'RC-07', 'RC-15']);
     expect(q4?.a).not.toMatch(/3\.01|benefit\/cost/);
     await open(page, 'our-model/talentleap/');
     const item = page.locator('details', { hasText: 'Is There Independent Evidence?' }).first();
-    expect(compact(await item.textContent()).endsWith(`The trial is also published in a peer-reviewed journal: ${CITATION}. ${DOI}`), 'the citation ends with a full stop and the DOI link follows it, as on the Trial page; no full stop after the link').toBe(true);
+    expect(compact(await item.textContent()).endsWith(`The trial is also published in a peer-reviewed journal: ${CITATION} (October 2026). ${DOI}`), 'the citation ends with a full stop and the DOI link follows it, as on the Trial page; no full stop after the link').toBe(true);
     const link = item.locator(`a[href="${DOI}"]`);
     await expect(link).toHaveCount(1);
     await expect(link).toHaveAttribute('rel', /noopener/);
     const carriers = pages().filter((p) => visible(p.html).includes('Is There Independent Evidence?'));
     expect(carriers.length).toBeGreaterThan(0);
     for (const p of carriers) {
-      expect(visible(p.html), p.route).toContain(`published in a peer-reviewed journal: ${CITATION}. ${DOI}`);
+      expect(visible(p.html), p.route).toContain(`published in a peer-reviewed journal: ${CITATION} (October 2026). ${DOI}`);
       expect(p.html, p.route).toContain(`href="${DOI}"`);
       const ld = [...p.html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map((m) => m[1]).join(' ');
-      expect(ld, p.route).toContain(`published in a peer-reviewed journal: ${CITATION}. ${DOI}"`);
+      expect(ld, p.route).toContain(`published in a peer-reviewed journal: ${CITATION} (October 2026). ${DOI}"`);
     }
   });
 });

@@ -281,7 +281,7 @@ test.describe('WP76 item 1: the overview page, the Programs hub and the menus na
   test('the Programs hub card names all four courses; no built page names only "digital marketing and ICT"', async ({ page }) => {
     await open(page, 'programs/');
     const card = page.locator(`#programs-grid li:has(a[href$="${NU}"])`);
-    expect(compact(await card.textContent())).toContain('National University post graduate diploma courses delivered by CodersTrust, in digital marketing, information and communication technology (ICT), cyber security and data analytics.');
+    expect(compact(await card.textContent())).toContain('National University Post Graduate Diploma courses delivered by CodersTrust, in digital marketing, information and communication technology (ICT), cyber security and data analytics.');
     expect(sitePages().filter((p) => /digital marketing and ICT/i.test(visible(p.html))).map((p) => p.route)).toEqual([]);
   });
 
@@ -662,9 +662,9 @@ test.describe('WP76 item 2: the register says the 1,000 are the women enrolled (
 test.describe('WP76 item 2: every page that states the figure names its base', () => {
   const RECORD_LINE = 'Program records: 711 of the 1,000 women enrolled were in work (71%).';
   const CAPTION = 'WSDFM program records (not trial results; the trial’s 425 women offered a place were among these 1,000): 71% of enrolled women in work';
-  const SLIDE_LINE = 'WSDFM: 711 of 1,000 enrolled in work (71%), from program records.';
+  const SLIDE_LINE = 'WSDFM: 711 of 1,000 enrolled in work (71%).';
 
-  test('Home: slide 4 says "WSDFM: 711 of 1,000 enrolled in work (71%), from program records." and the WSDFM card "Program records: 711 of the 1,000 women enrolled were in work (71%)."', async ({ page }) => {
+  test('Home: slide 4 says "WSDFM: 711 of 1,000 enrolled in work (71%)." and the WSDFM card "Program records: 711 of the 1,000 women enrolled were in work (71%)."', async ({ page }) => {
     await open(page, HOME);
     const line = slide(page, 4).locator('.hs__lines li').nth(1);
     await expect(line).toHaveText(SLIDE_LINE);
@@ -756,7 +756,7 @@ test.describe('WP76 item 2: the longer wording keeps the carousel’s rows and i
           expect(lines[3].height, 'Her Power line is one row').toBe(lines[0].height);
           expect(Math.round((lines[2].height - lines[0].height) / lines[0].lineHeight), 'UNDP YES line takes at most one row more').toBeLessThanOrEqual(1);
         } else {
-          expect(lines[1].height, 'WSDFM line takes the rows the Kosovo line takes').toBe(lines[0].height);
+          expect(lines[1].height, 'WSDFM line takes no more rows than the Kosovo line').toBeLessThanOrEqual(lines[0].height); // WP147: the line lost ", from program records", so at 390px it takes fewer rows than the Kosovo line (it took the same)
         }
         for (let n = 1; n <= 4; n++) {
           await showSlide(page, n);

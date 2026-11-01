@@ -21,7 +21,7 @@ export const FIELD_NEWS_LABEL: Record<string, string> = {
   "a-proud-milestone-for-coderstrust": "A proud milestone for CodersTrust",
   "aziz-ahmad-advocates-technology-skills-for-peace-at-un-world-press-freedom-day": "UN World Press Freedom Day session",
   "aziz-ahmad-co-founder-and-global-chairman-of-coderstrust-appointed-as-global-upeace-ambassador": "UPEACE global ambassador appointment",
-  "aziz-ahmad-wins-the-nynjmsdc-partnership-award-in-the-united-states": "NYNJMSDC Partnership Award, United States",
+  "aziz-ahmad-wins-the-nynjmsdc-partnership-award-in-the-united-states": "UTC Associates, led by Aziz Ahmad, receives the NYNJMSDC Partnership Award", // WP147 (owner rule 2026-10-29, WP105: the award is Aziz Ahmad's bio only): the caption names the recipient
   "celebrating-america-week-with-the-u-s-embassy-dhaka": "America Week, U.S. Embassy Dhaka",
   "coderstrust-and-basis-asset-collaborate-to-build-bangladeshs-it-future": "BASIS-ASSET skills training contract signing",
   "coderstrust-and-doict-shaping-a-smart-future-through-trainer-empowerment": "DoICT trainer program closing ceremony",

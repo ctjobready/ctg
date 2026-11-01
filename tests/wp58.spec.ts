@@ -230,25 +230,25 @@ test.describe('S1, G1 and L7: "16 countries and territories" is where CodersTrus
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 test.describe('S5: the PX-06 sentence names its source inside it', () => {
   test('SOURCE_NOTE reads PX-06’s note from its registered source (DHZ25), and the register’s own wording is unchanged', () => {
-    expect(SOURCE_NOTE['PX-06']).toBe('(Demirci, Hannane & Zhu, 2025)');
+    expect(SOURCE_NOTE['PX-06']).toBe('(Demirci, Hannane and Zhu, 2025)'); // WP147: "and" in site-authored copy; the register's source keeps its "&" (checked below)
     expect(fact('PX-06').sourceIds).toEqual(['DHZ25']);
     expect(sources.DHZ25.citation).toContain('Demirci, Hannane & Zhu');
     expect(sources.DHZ25.citation).toContain('2025');
     expect(fact('PX-06').text).not.toContain('Demirci');
   });
 
-  test('Home’s cost-of-waiting card ends its sentence "... of ChatGPT’s release (Demirci, Hannane & Zhu, 2025).", still tied to PX-06, with no footnote or source list', async ({ page }) => {
+  test('Home’s cost-of-waiting card ends its sentence "... of ChatGPT’s release (Demirci, Hannane and Zhu, 2025).", still tied to PX-06, with no footnote or source list', async ({ page }) => {
     await open(page, HOME);
     const data = page.locator('#cost article').first().locator('.cost__data');
     expect(compact(await data.textContent())).toBe(
-      'On one major freelancing platform, automation-prone writing and coding postings fell 21% relative to manual-intensive jobs within eight months of ChatGPT’s release (Demirci, Hannane & Zhu, 2025).',
+      'On one major freelancing platform, automation-prone writing and coding postings fell 21% relative to manual-intensive jobs within eight months of ChatGPT’s release (Demirci, Hannane and Zhu, 2025).',
     );
     expect(await data.getAttribute('data-fact')).toBe('PX-06');
     expect(await page.locator('#cost sup, #cost .fn, #cost [role="doc-footnote"]').count()).toBe(0);
   });
 
   test('the note is in the card’s sentence only: no title or meta description carries it, and no built page prints the study twice', () => {
-    const hits = sitePages().filter((p) => (p.html.match(/Demirci, Hannane &amp; Zhu, 2025/g) ?? []).length > 1 || /<title>[^<]*Demirci|name="description" content="[^"]*Demirci/.test(p.html));
+    const hits = sitePages().filter((p) => (p.html.match(/Demirci, Hannane and Zhu, 2025/g) ?? []).length > 1 || /<title>[^<]*Demirci|name="description" content="[^"]*Demirci/.test(p.html));
     expect(hits.map((p) => p.route)).toEqual([]);
   });
 });

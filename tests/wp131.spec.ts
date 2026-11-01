@@ -28,7 +28,7 @@ test('Minor 1: Accessibility names jobready.global as CodersTrust’s own separa
 
 test('Polish 2: Home FAQ states the welcome for independent evaluation as its own sentence, in the page and its FAQ structured data', () => {
   const raw = html('index.html');
-  const answer = 'Partners receive monthly reports and follow-up surveys at 3, 6 and 12 months. Independent evaluation is welcome.';
+  const answer = 'Partners receive monthly reports and follow-up survey results at 3, 6 and 12 months. Independent evaluation is welcome.'; // WP147: it read "follow-up surveys"
   expect(visible(raw)).toContain(answer);
   expect(raw).toContain(answer);
   expect(raw).not.toContain('12 months, and independent evaluation is welcome');

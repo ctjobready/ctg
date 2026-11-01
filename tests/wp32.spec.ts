@@ -121,7 +121,9 @@ test.describe('Employers', () => {
     const item = page.locator('#faq details', { hasText: 'Will This Work for Our Roles?' });
     await expect(item).toHaveCount(1);
     const answer = compact(await item.textContent());
-    expect(answer).toContain('We start with a needs assessment of your roles, tasks and required tools. For hiring, talent requests are scoped against the experience and credentials available in the candidate pool.');
+    // WP147 (Opus XHigh run 1, Polish): the candidate-pool sentence is in the page's Hire Talent band only; the answer is the needs assessment
+    expect(answer).toContain('We start with a needs assessment of your roles, tasks and required tools.');
+    expect(answer).not.toContain('For hiring, talent requests are scoped');
     expect(answer).not.toMatch(/Bangladesh|Kosovo|local demand/);
     const ld = (await page.locator('script[type="application/ld+json"]').allTextContents()).join(' ');
     expect(ld).toContain('We start with a needs assessment of your roles, tasks and required tools.');

@@ -82,7 +82,7 @@ test.describe('Home: each figure once', () => {
     // WP50 (cycle-25 review, item 10): WSDFM is the second of four programs, with its base and the qualifier "program records, not trial data" (tests/wp50.spec.ts); WP60 (cycle-32 review, Claude S4): "program records; trial studied 833"
     expect(lines).toEqual([
       'Women in Online Work, Kosovo (2016–2017): 68% in work (102 of 150).',
-      'WSDFM: 711 of 1,000 enrolled in work (71%), from program records.',
+      'WSDFM: 711 of 1,000 enrolled in work (71%).',
       'UNDP YES, Korail (2017): 67% of the 350 enrolled found a first job within three months.',
       'Her Power: 372 of 800 tracked in work (47%); 2,400 trained directly.',
     ]);
@@ -151,9 +151,9 @@ test.describe('Development Partners and Governments: each figure once', () => {
     await expect(page.locator('#contracts tbody tr')).toHaveCount(6);
   });
 
-  test('Governments: the glance tile reads "people in the scopes of six government contracts"; "What Your Agency Gets" speaks of outcomes and the agreed scorecard', async ({ page }) => {
+  test('Governments: the glance tile reads "people in the training and curriculum scopes of six government contracts"; "What Your Agency Gets" speaks of outcomes and the agreed scorecard', async ({ page }) => {
     await open(page, 'partner-with-us/governments/');
-    await expect(page.locator('#glance li', { hasText: '30,000+' }).locator('.pg__desc')).toHaveText('people in the scopes of six government contracts');
+    await expect(page.locator('#glance li', { hasText: '30,000+' }).locator('.pg__desc')).toHaveText('people in the training and curriculum scopes of six government contracts');
     // WP39 (cycle-16 review): the features band is three short cards; the second one keeps "Spending Measured Against Outcomes" and the budget "assessed against the agreed scorecard"
     const card = page.locator('#features li.card', { has: page.locator('h3', { hasText: 'Spending Measured Against Outcomes' }) });
     await expect(card).toHaveCount(1);
@@ -467,7 +467,7 @@ test.describe('dating lines', () => {
   // WP41 (cycle-18 review): the survey page's heading changed on October 15 (the survey's name moved to the eyebrow); its "Last updated" moved to October 20, 2026 with the refresh of its data (Impact Report 261014B); the source snapshot stays October 2026
   test('Impact Survey 2026 reads "Source snapshot: October 2026 · Last updated October 21, 2026"; no page says "Page last reviewed"', async ({ page }) => {
     await open(page, 'impact/outcomes-2026/');
-    expect(compact(await page.locator('.lf-updated').textContent())).toBe('Source snapshot: October 2026 · Last updated October 31, 2026'); // WP104; WP135: October 31 (the closing line and "On This Page" changed)
+    expect(compact(await page.locator('.lf-updated').textContent())).toBe('Source snapshot: October 2026 · Last updated November 1, 2026'); // WP104; WP135: October 31; WP147: November 1 (the closing line and "On This Page" changed)
     for (const route of ['impact/independent-evaluation/', 'our-model/talentleap/', 'programs/youthwide/', 'programs/superkids/']) {
       await open(page, route);
       expect(compact(await page.locator('.lf-updated, .updated').first().textContent()), route).toMatch(/^Last updated [A-Z][a-z]+ \d{1,2}, 2026$/);

@@ -53,7 +53,7 @@ test.describe('figures say what they measure', () => {
     await open(page, '');
     const lead = compact(await page.locator('[data-hs-slide]').nth(0).locator('.hs__lead').textContent());
     expect(lead).toBe('In CodersTrust’s WSDFM program, women offered a place had an estimated 41% higher monthly income than the control group, about $27 more a month.'); // WP63 (cycle-35 review, GLM L4)
-    await expect(page.locator('[data-hs-slide]').nth(3)).toContainText('WSDFM: 711 of 1,000 enrolled in work (71%), from program records.');
+    await expect(page.locator('[data-hs-slide]').nth(3)).toContainText('WSDFM: 711 of 1,000 enrolled in work (71%).');
     // WP51 (cycle-26 review): the Home card shows delivery context in place of the figure and its caption ("WSDFM program records (not trial results; the trial’s 425 women offered a place were among these 1,000): 71% of enrolled women in work"), which the pages that keep the figure still print (below; tests/wp51.spec.ts)
     expect(compact(await page.locator('#cases article').first().textContent())).not.toContain('WSDFM program records');
   });
@@ -350,7 +350,7 @@ test.describe('smaller wording fixes', () => {
     await expect(page.locator('#cost h2')).toHaveText('Training and Evidence Fall Behind While You Wait');
     // WP38: Home's band is three short cards; WP45 (cycle-21 review): the reporting card is one line about the monthly reports (the "follow-up surveys" are in Home's FAQ answer)
     expect(compact(await page.locator('#features .card__text').nth(1).textContent())).toBe('Monthly reports show progress toward paid work.');
-    expect(compact(await page.locator('#faq').textContent())).toContain('follow-up surveys at 3, 6 and 12 months');
+    expect(compact(await page.locator('#faq').textContent())).toContain('follow-up survey results at 3, 6 and 12 months'); // WP147: it read "follow-up surveys"
     await open(page, 'programs/youthwide/');
     // WP39 (cycle-16 review): YouthWIDE's features band was three short cards; the second said "follow-up surveys". WP57 (cycle-29 review, GPT-6.1 Sol G2): the band is gone, and the glance's Reporting row says them
     await expect(page.locator('#features')).toHaveCount(0);

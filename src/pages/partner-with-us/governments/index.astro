@@ -77,6 +77,7 @@ import PageEnhancements from '../../../components/pages/partners/PageEnhancement
 import { KOSOVO_WOW_TILE_LABEL, LINKS, TRACER_MONTHS, funderOptionCards, meta } from '../../../components/pages/partners/partners';
 import { CONTRACT_TOTAL_NOTE_SHORT, HEADLINE, NU_PARTNERSHIP_STATEMENT, POSITIONING, PROGRAM_SCOPE_STATEMENT, PROGRAM_SIZES_NOTE_BRIEFING, VALUE_PROPOSITION, WB_KOSOVO } from '../../../data/copy';
 import { HER_POWER_TILE_LABEL } from '../../../components/pages/home/caseStudies';
+import { fact } from '../../../data/facts';
 import { faqJsonLd } from '../../../lib/faq';
 import { cta } from '../../../lib/mailto';
 import { webPage } from '../../../lib/schema';
@@ -101,7 +102,7 @@ const { title, description } = meta(
 const contractsNote = CONTRACT_TOTAL_NOTE_SHORT.text;
 const contractsNoteFacts = CONTRACT_TOTAL_NOTE_SHORT.facts.filter((f) => f !== 'GV-12');
 // Q8-government: the one-line cost answer with a link to the partner hub FAQ, which keeps the full answer (WP36); it says "in the briefing", the first step on this page (WP49, cycle-24 review; the other route pages use Q8-route).
-const FAQ_IDS = ['Q7-government', 'Q2-government', 'Q1-government', 'Q10', 'Q8-government'];
+const FAQ_IDS = ['Q7-government', 'Q2-government', 'Q1-government', 'Q10-later', 'Q8-government']; // WP147: the "Capacity Designed to Stay in Your System" card explains the facilitator model above, so the funding-ends answer says "certified facilitators"
 ---
 
 <LandingLayout
@@ -130,7 +131,7 @@ const FAQ_IDS = ['Q7-government', 'Q2-government', 'Q1-government', 'Q10', 'Q8-g
       { id: 'PR-05', href: '/impact/case-studies/her-power/', label: HER_POWER_TILE_LABEL },
       { id: 'PR-02', href: '/impact/case-studies/kosovo-women-in-online-work/', label: KOSOVO_WOW_TILE_LABEL, note: WB_KOSOVO.text, also: WB_KOSOVO.facts },
     ]}
-    more={[{ id: 'GV-12', href: '/partner-with-us/governments/#contracts', label: 'people in the scopes of six government contracts', note: contractsNote, also: ['SC-06', ...contractsNoteFacts] }]}
+    more={[{ id: 'GV-12', href: '/partner-with-us/governments/#contracts', label: fact('GV-12').stat!.label, note: contractsNote, also: ['SC-06', ...contractsNoteFacts] }]}
   />
   <LearnerVoice story="maria-dewan" outcome="Won logo-design work on Freelancer.com, then gained more clients." program="Her Power" tone="white" />
 
@@ -196,14 +197,14 @@ const FAQ_IDS = ['Q7-government', 'Q2-government', 'Q1-government', 'Q10', 'Q8-g
 
   <!-- C8 · Features to benefits. WP39 (cycle-16 review): three short cards in place of the concern / inclusion / benefit matrix, in the order of the three pains in C2 (graduates struggle to find work; budgets are measured by
        enrollment, not earnings; trainer and curriculum capacity takes time to build). The sentences keep the matrix rows' words; they rest on PD-10 and PD-01 (tracks from employer demand, mentoring and placement support), PD-11 and PD-08
-       (the pilot scorecard and its cost per completer and per verified outcome, monthly reports), GV-11, PD-06 and PD-07 (Training of Trainers, curriculum and manuals, certified local facilitators, limited connectivity). -->
+       (the pilot scorecard and its cost per completer and per verified outcome, monthly reports), GV-11, PD-06 and PD-07 (Training of Trainers, curriculum and manuals, facilitators trained and certified by CodersTrust, limited connectivity). -->
   <IncludesBand
     title="What Your Agency Gets"
     cards={[
       // WP62 (cycle-34 review, Gemini): "... mentoring and placement support toward local, remote and global work." (it said "... that point completers toward paid work."), the phrase the mechanism cards use for where placement leads.
       { icon: 'award', title: 'Certification Tracks and Placement Support', text: 'Certification tracks chosen from employer demand, then mentoring and placement support toward local, remote and global work.', facts: ['PD-10', 'PD-01'] },
       { icon: 'chart-bar', title: 'Spending Measured Against Outcomes', text: 'A pilot scorecard with cost per completer and per verified outcome, and monthly reports. Your budget is assessed against the agreed scorecard.', facts: ['PD-11', 'PD-08'] },
-      { icon: 'landmark', title: 'Capacity Designed to Stay in Your System', text: 'Where included: Training of Trainers, curriculum and manuals; certified local facilitators; and blended learning in existing labs that works with limited connectivity, so rural labs can take part.', facts: ['GV-11', 'PD-06', 'PD-07'] },
+      { icon: 'landmark', title: 'Capacity Designed to Stay in Your System', text: 'Where included: curriculum and manuals; facilitators trained and certified by CodersTrust (Training of Trainers); and blended learning in existing labs that works with limited connectivity, so rural labs can take part.', facts: ['GV-11', 'PD-06', 'PD-07'] },
     ]}
     scope={PROGRAM_SCOPE_STATEMENT}
   />

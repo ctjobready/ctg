@@ -395,7 +395,7 @@ test.describe('Outcomes 2026: the heading is the finding; the survey’s name is
       return out;
     });
     expect(headlines).toContain('Surveyed Completers Report More Work and Higher Income');
-    expect(compact(await page.locator('.lf-updated').textContent())).toBe('Source snapshot: October 2026 · Last updated October 31, 2026'); // WP104; WP135: October 31
+    expect(compact(await page.locator('.lf-updated').textContent())).toBe('Source snapshot: October 2026 · Last updated November 1, 2026'); // WP104; WP135: October 31; WP147: November 1
   });
 });
 

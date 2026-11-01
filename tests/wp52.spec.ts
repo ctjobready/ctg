@@ -107,7 +107,7 @@ test.describe('Local Partners: what stays after funding, and what the monthly re
     expect(compact(await card.locator('.card__text').textContent())).toBe(CARD);
     expect(await card.getAttribute('data-fact')).toBe('PD-06 PD-02');
     // Q10 ("What Happens When Funding Ends?") opens with the same scope words, and the page carries it
-    expect(faqs.find((f) => f.id === 'Q10')!.a).toContain('Where included, what the program builds stays in place: certified local facilitators and localized curricula');
+    expect(faqs.find((f) => f.id === 'Q10')!.a).toContain('Where included, what the program builds stays in place: facilitators trained and certified by CodersTrust (Training of Trainers) and localized curricula'); // WP147: it read "certified local facilitators"; Local Partners prints the Q10-later variant ("certified facilitators"), as the definition block above it explains the model
     expect(compact(await page.locator('main').evaluate((el) => el.textContent ?? ''))).toContain('Where included, what the program builds stays in place');
   });
 
@@ -236,7 +236,7 @@ test.describe('"Surveyed new earners" is defined where the 58.7% appears: the Im
     expect(oc05.stat?.label).toBe('of the 172 surveyed new earners had started earning by six months after finishing the course (October 2026 survey)');
     expect(oc05.stat?.glance?.label).toBe('of the 172 surveyed new earners had started earning by six months after finishing the course, including 23.3% who first earned during the course');
     await open(page, 'impact/outcomes-2026/');
-    expect(compact(await page.locator('#summary [data-fact="OC-05"]').textContent())).toContain(oc05.stat!.label);
+    expect(compact(await page.locator('#summary [data-fact="OC-05"]').textContent())).toContain(oc05.stat!.label.replace('surveyed new earners', 'surveyed completers who first earned during or after training')); // WP147: the tile (which comes before the one definition) says the group in plain words; the register's label is unchanged
     expect(count(await everything(page), 'Surveyed new earners are the completers who first earned during or after training.')).toBe(1);
   });
 

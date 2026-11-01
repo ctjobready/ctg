@@ -189,7 +189,7 @@ test.describe('the WSDFM 71% is off the glance tiles of Development Partners and
     // WP36 (cycle-13 review): each result names its base (Kosovo "(102 of 150)", WSDFM "(711 of 1,000 ...)", UNDP YES "of the 350 enrolled"; Her Power already said "of 800 tracked women")
     await expect(slide.locator('.hs__lines li')).toHaveText([
       'Women in Online Work, Kosovo (2016–2017): 68% in work (102 of 150).',
-      'WSDFM: 711 of 1,000 enrolled in work (71%), from program records.',
+      'WSDFM: 711 of 1,000 enrolled in work (71%).',
       'UNDP YES, Korail (2017): 67% of the 350 enrolled found a first job within three months.',
       'Her Power: 372 of 800 tracked in work (47%); 2,400 trained directly.',
     ]);
@@ -223,7 +223,7 @@ test.describe('the WSDFM 71% is off the glance tiles of Development Partners and
       expect((await texts(page, '#cases article')).join(' | '), route).toContain('WSDFM program records (not trial results; the trial’s 425 women offered a place were among these 1,000): 71% of enrolled women in work');
     }
     await open(page, '');
-    await expect(page.locator('[data-hs-slide]').nth(3)).toContainText('WSDFM: 711 of 1,000 enrolled in work (71%), from program records.');
+    await expect(page.locator('[data-hs-slide]').nth(3)).toContainText('WSDFM: 711 of 1,000 enrolled in work (71%).');
     await open(page, 'impact/case-studies/wsdfm-women-freelancers/');
     expect(await mainText(page)).toContain('711 of 1,000');
   });

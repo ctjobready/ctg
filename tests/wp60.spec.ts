@@ -18,7 +18,7 @@ import { listPages } from './support/pages';
  *   - S4: wherever WSDFM's program records show beside the trial, the trial's 833 women (RC-07) are named: Home slide 4 (one row at 1280), the audience-page cards, Impact's tile and the WSDFM case study's note;
  *   - S6: the Governments delivery card is "Trainers and Curriculum"; "Capacity Designed to Stay in Your System" stays the benefit card;
  *   - G1: Home slide 2 says the same facts in four plain sentences, within the carousel's height budget;
- *   - G2: YouthWIDE's national-scale answer says "Larger programs are designed to run in phases, up to 10 cohorts in parallel, with certified local facilitators.";
+ *   - G2: YouthWIDE's national-scale answer says "Larger programs are designed to run in phases, up to 10 cohorts in parallel, with certified facilitators.";
  *   - G3: Employers' first pain card says "AI skills are the hardest to find (ManpowerGroup, 2026).", from PX-05's source note;
  *   - G5: Local Partners' first "What Your Community Gets" card no longer repeats the funding-end answer;
  *   - K1: the Case Studies hub hero is the Kosovo training room (a case-study program's photograph), not the Bhutan inauguration, with Kosovo in its alt text;
@@ -249,7 +249,7 @@ test.describe('S3 (Claude): the 1 million 2030 aim carries its dependency on eve
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 test.describe('S4 (Claude; owner answer 2026-10-20: "711 of 1000 is correct. The BIGD study only studied 833."): WSDFM’s program records name the trial’s count beside them', () => {
-  const LINE = 'WSDFM: 711 of 1,000 enrolled in work (71%), from program records.'; // WP63 (cycle-35 review, Kimi K2): WP81 (owner item 2026-10-23): "separate trial: 833 women" is replaced by "from program records", which keeps the line one row at 1280 (this block's budget test)
+  const LINE = 'WSDFM: 711 of 1,000 enrolled in work (71%).'; // WP63 (cycle-35 review, Kimi K2): WP81 (owner item 2026-10-23): "separate trial: 833 women" is replaced by "from program records", which keeps the line one row at 1280 (this block's budget test)
   const CAPTION = 'WSDFM program records (not trial results; the trial’s 425 women offered a place were among these 1,000): 71% of enrolled women in work';
   const CARD_PAGES = ['partner-with-us/development-partners/', 'partner-with-us/foundations/', LOCAL, YOUTHWIDE];
 
@@ -364,9 +364,9 @@ test.describe('G2 (GPT-6.1 Sol): YouthWIDE’s national-scale answer says larger
     await open(page, YOUTHWIDE);
     const item = page.locator('#faq details, #faqs details', { has: page.locator('summary', { hasText: 'Can You Deliver at National Scale?' }) }).first();
     const answer = compact(await item.locator('.faq__a').textContent());
-    expect(answer).toContain('Larger programs are designed to run in phases, up to 10 cohorts in parallel, with certified local facilitators. A 100,000+ program is a design option we plan phase by phase; we have not yet delivered a program at that size.'); // WP146: it read "A 100,000+ phase is a design option; …"
+    expect(answer).toContain('Larger programs are designed to run in phases, up to 10 cohorts in parallel, with certified facilitators. A 100,000+ program is a design option we plan phase by phase; we have not yet delivered a program at that size.'); // WP146: it read "A 100,000+ phase is a design option; …"
     expect(answer).not.toContain('We scale in phases, up to 10 cohorts');
-    expect((await faqJsonLd(page)).find((q) => q.name === 'Can You Deliver at National Scale?')?.text).toContain('Larger programs are designed to run in phases, up to 10 cohorts in parallel, with certified local facilitators.');
+    expect((await faqJsonLd(page)).find((q) => q.name === 'Can You Deliver at National Scale?')?.text).toContain('Larger programs are designed to run in phases, up to 10 cohorts in parallel, with certified facilitators.');
   });
 });
 
@@ -456,7 +456,7 @@ test.describe('L4 (GLM): Home’s "How Do You Prove Outcomes?" says a scorecard 
     await open(page, HOME);
     const item = page.locator('#faq details', { has: page.locator('summary', { hasText: 'How Do You Prove Outcomes?' }) }).first();
     const answer = compact(await item.locator('.faq__a').textContent());
-    expect(answer).toBe(`${OPENING} Partners receive monthly reports and follow-up surveys at 3, 6 and 12 months. Independent evaluation is welcome.`);
+    expect(answer).toBe(`${OPENING} Partners receive monthly reports and follow-up survey results at 3, 6 and 12 months. Independent evaluation is welcome.`);
     expect((await faqJsonLd(page)).find((q) => q.name === 'How Do You Prove Outcomes?')?.text).toBe(answer);
     expect(sitePages().filter((p) => visible(p.html).includes('Every cohort agrees a scorecard')).map((p) => p.route)).toEqual([]);
   });
@@ -522,7 +522,7 @@ test.describe('GM5 (Gemini): Governments’ "Capacity Designed to Stay in Your S
     expect(await cards.locator('.card__title').allTextContents()).toEqual(['Certification Tracks and Placement Support', 'Spending Measured Against Outcomes', 'Capacity Designed to Stay in Your System']);
     const card = cards.nth(2);
     expect(compact(await card.locator('.card__text').textContent())).toBe(
-      'Where included: Training of Trainers, curriculum and manuals; certified local facilitators; and blended learning in existing labs that works with limited connectivity, so rural labs can take part.',
+      'Where included: curriculum and manuals; facilitators trained and certified by CodersTrust (Training of Trainers); and blended learning in existing labs that works with limited connectivity, so rural labs can take part.',
     );
     expect(await card.getAttribute('data-fact')).toBe('GV-11 PD-06 PD-07');
     expect(compact(await cards.nth(1).locator('.card__text').textContent())).toBe('A pilot scorecard with cost per completer and per verified outcome, and monthly reports. Your budget is assessed against the agreed scorecard.');

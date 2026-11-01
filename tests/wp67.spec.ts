@@ -282,7 +282,7 @@ test.describe('Item 7: the Programs hub says "Best For: Governments, Development
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 test.describe('Item 8: Our Model’s scale card says "After about five months of delivery, programs are designed to run ..."', () => {
-  const TEXT = 'After about five months of delivery, programs are designed to run up to 10 certification cohorts in parallel, using existing labs and certified local facilitators.';
+  const TEXT = 'After about five months of delivery, programs are designed to run up to 10 certification cohorts in parallel, using existing labs and facilitators trained and certified by CodersTrust (Training of Trainers).';
 
   test('"Local Labs, Coordinated Delivery" reads as above, still rests on PD-06, and the earlier sentences are on no built page', async ({ page }) => {
     await open(page, OUR_MODEL);
@@ -295,7 +295,7 @@ test.describe('Item 8: Our Model’s scale card says "After about five months of
 
   test('the register’s PD-06 text is unchanged ("from about month 5")', () => {
     expect(fact('PD-06').text).toBe(
-      'Up to 10 certification cohorts in parallel from about month 5; classes of 20 (labs) and 40 (lectures); hub-and-spoke delivery with certified local facilitators for larger programs',
+      'Up to 10 certification cohorts in parallel from about month 5; classes of 20 (labs) and 40 (lectures); hub-and-spoke delivery with facilitators trained and certified by CodersTrust for larger programs',
     );
   });
 });

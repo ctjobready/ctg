@@ -98,7 +98,7 @@ test.describe('WP90 item 3: Investors reach band', () => {
     const p = page.locator('#reach p.ir__p');
     const text = compact(await p.textContent());
     expect(text).toBe(
-      'Separately, and not counted in the delivered reach: 1.5M+ National University learners being onboarded (the university’s own learners, not learners trained by CodersTrust); CodersTrust has been NU’s official training partner for digital career skills and credentials since 2023 and delivers NU post graduate diploma courses.',
+      'Separately, and not counted in the delivered reach: 1.5M+ National University learners being onboarded (the university’s own learners, not learners trained by CodersTrust); CodersTrust has been NU’s official training partner for digital career skills and credentials since 2023 and delivers NU Post Graduate Diploma courses.',
     );
     expect(text).not.toContain('onboarding pipeline');
   });
