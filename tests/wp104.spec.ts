@@ -312,7 +312,7 @@ test.describe('WP104 item 10: "Last updated" stamps match each page’s latest c
   // the NU overview and course pages, JobReady@Campus and JobReady Platform 2026-10-29 (WP102, 29 October: NU learners "being onboarded", the affiliated-college wording);
   // every page this WP changes (YouthWIDE, JobReady@Work, SuperKids, Outcomes 2026, Independent Evaluation, the NU overview, the UNDP YES case study) 2026-10-29.
   const STAMPED = [
-    { route: 'our-model/talentleap/', selector: '.lf-updated', text: 'Last updated November 1, 2026', iso: '2026-11-01' },
+    { route: 'our-model/talentleap/', selector: '.lf-updated', text: 'Last updated November 2, 2026', iso: '2026-11-02' }, // WP154: the example lead and the Prosper step's planned-levels sentence are gone
     { route: 'our-model/jobready-platform/', selector: '.lf-updated', text: 'Last updated November 1, 2026', iso: '2026-11-01' },
     { route: 'programs/nu-postgraduate-diploma/', selector: '.updated', text: 'Last updated November 2, 2026', iso: '2026-11-02' }, // WP151: the FAQ "How Do I Apply?" is gone
     { route: 'programs/nu-postgraduate-diploma/cyber-security/', selector: '.updated', text: 'Last updated November 2, 2026', iso: '2026-11-02' }, // WP152: the "Ready to Apply?" lead

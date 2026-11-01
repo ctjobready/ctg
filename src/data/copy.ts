@@ -511,13 +511,15 @@ export const POSITIONING: Record<PositioningKey, CopyBlock> = {
     // (training, mentoring, placement support), PD-08 (monthly reports) and PD-09 (follow-up surveys at 3, 6 and 12 months).
     // WP149 (Opus XHigh run 3, kit 116): "Partners receive monthly reports, and outcomes are tracked after each course." (it was "... monthly reports and outcome tracking after each course.": an odd object for "receive", and it could read as reports arriving only after each course);
     // scripts/check-facts.mjs declares the new wording whole as well.
-    text: 'We combine training, mentoring and placement support in existing labs and colleges. Partners receive monthly reports, and outcomes are tracked after each course.',
+    // WP154 (Opus Max run 1, kit 121, Polish): "... placement support." without "in existing labs and colleges": the band's "Existing Labs and Colleges" card heading says it once.
+    text: 'We combine training, mentoring and placement support. Partners receive monthly reports, and outcomes are tracked after each course.',
     facts: ['PD-01', 'PD-08', 'PD-09'],
   },
   governments: {
     // WP42 (cycle-19 review): as Development Partners: the two shared sentences, the reader named in the second ("Your agency receives monthly reports on progress toward paid work"). Declared whole for /partner-with-us/governments/
     // (POSITION_WHOLE_STATEMENT); it rests on PD-01 and PD-08.
-    text: 'We combine training, mentoring and placement support in existing labs and colleges. Your agency receives monthly reports on progress toward paid work.',
+    // WP154 (Opus Max run 1, kit 121, Polish): without "in existing labs and colleges": the H2 ("Built on Labs That Already Exist") and the "Government Digital Labs" card carry the point.
+    text: 'We combine training, mentoring and placement support. Your agency receives monthly reports on progress toward paid work.',
     facts: ['PD-01', 'PD-08'],
   },
   foundations: {

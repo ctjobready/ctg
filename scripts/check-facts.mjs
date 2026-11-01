@@ -405,8 +405,8 @@ const POSITION_WHOLE_STATEMENT = {
   // WP93 (triage A4): the YouthWIDE statement carried the scope guard "as agreed in the program scope", as every Approach statement did; WP141 (owner answer 2026-11-01): the guard is stated once per page now (PROGRAM_SCOPE_STATEMENT), so the statements are declared without it.
   '/programs/youthwide/': 'YouthWIDE combines training, mentoring and placement support in existing labs and colleges. Partners receive monthly reports on progress toward paid work.',
   '/partner-with-us/local-partners/': 'Your organization mobilizes learners and hosts training. CodersTrust supports delivery, mentoring, placement and reporting.',
-  '/partner-with-us/development-partners/': 'We combine training, mentoring and placement support in existing labs and colleges. Partners receive monthly reports, and outcomes are tracked after each course.',
-  '/partner-with-us/governments/': 'We combine training, mentoring and placement support in existing labs and colleges. Your agency receives monthly reports on progress toward paid work.',
+  '/partner-with-us/development-partners/': 'We combine training, mentoring and placement support. Partners receive monthly reports, and outcomes are tracked after each course.',
+  '/partner-with-us/governments/': 'We combine training, mentoring and placement support. Your agency receives monthly reports on progress toward paid work.',
   // WP44 (cycle-21 review): Foundations' and Universities' statements are whole too (see the comment on the WP43 entry below)
   '/partner-with-us/foundations/': 'Fund a YouthWIDE cohort or JobReady’s platform infrastructure. For cohort grants, we agree a pilot scorecard and combine training, mentoring and placement support, with monthly progress reports.',
   '/partner-with-us/universities/': 'JobReady@Campus combines training, mentoring and placement support in campus labs alongside academic studies. Your institution receives monthly reports on progress toward paid work.',
@@ -1085,8 +1085,8 @@ function surveyEditionProblems(factsById, rows, pins = { facts: SURVEY_FACTS, ro
   // WP42: Development Partners and Governments declare theirs whole, with the same guarantees (the exact wording, nothing in front of it, each page its own text only)
   const wholeDp = POSITION_WHOLE_STATEMENT['/partner-with-us/development-partners/'];
   const wholeGov = POSITION_WHOLE_STATEMENT['/partner-with-us/governments/'];
-  if (wholeDp !== 'We combine training, mentoring and placement support in existing labs and colleges. Partners receive monthly reports, and outcomes are tracked after each course.') problems.push('self-test: the Development Partners whole statement is no longer the WP149 wording');
-  if (wholeGov !== 'We combine training, mentoring and placement support in existing labs and colleges. Your agency receives monthly reports on progress toward paid work.') problems.push('self-test: the Governments whole statement is no longer the WP42 wording');
+  if (wholeDp !== 'We combine training, mentoring and placement support. Partners receive monthly reports, and outcomes are tracked after each course.') problems.push('self-test: the Development Partners whole statement is no longer the WP154 wording');
+  if (wholeGov !== 'We combine training, mentoring and placement support. Your agency receives monthly reports on progress toward paid work.') problems.push('self-test: the Governments whole statement is no longer the WP154 wording');
   for (const [name, own, other, otherName] of [['Development Partners', wholeDp, wholeGov, 'Governments'], ['Governments', wholeGov, wholeDp, 'Development Partners']]) {
     posOk(`the declared whole statement on the page that declares it (${name})`, mech(`${headerHtml}${posBlock(own)}</header>`), { whole: own });
     posOk(`the declared ${name} statement with the statement before the header (nothing precedes it)`, mech(`${posBlock(own)}${headerHtml}</header>`), { whole: own });

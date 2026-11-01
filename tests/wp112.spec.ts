@@ -84,11 +84,11 @@ test.describe('WP112 Polish 6: Universities campus FAQ says "students"', () => {
 
 // --------------------------------------------------------------------------------------------------------------------------------
 test.describe('WP112 Polish 7: dates', () => {
-  test('TalentLEAP, whose text changed, carries 2026-11-01 in JSON-LD and reads "Last updated November 1, 2026" (WP141; it was 2026-10-31)', () => {
+  test('TalentLEAP, whose text changed, carries 2026-11-02 in JSON-LD and reads "Last updated November 2, 2026" (WP154; WP141 had 2026-11-01)', () => {
     const html = distHtml('our-model/talentleap/index.html');
-    expect(html).toMatch(/"dateModified":"2026-11-01"/);
+    expect(html).toMatch(/"dateModified":"2026-11-02"/);
     expect(html).not.toMatch(/"dateModified":"2026-10-28"/);
-    expect(visibleText(html)).toContain('Last updated November 1, 2026');
+    expect(visibleText(html)).toContain('Last updated November 2, 2026');
   });
 
   test('Governance reads "Last updated November 1, 2026" (WP127 and WP128 changed its text on 30 October, WP129 applied the owner rule that any visible text change moves the date; WP141 changed it again)', () => {

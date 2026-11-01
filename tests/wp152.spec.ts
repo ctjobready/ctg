@@ -76,7 +76,7 @@ const HUBS = ['partner-with-us/index.html', 'programs/index.html'];
 test.describe('1 Facilitators: each page that explains delivery names who teaches', () => {
   /** [page, the delivery card or sentence, in the page order the reader meets it]. The long form is once on the page. */
   const DELIVERY: [string, string][] = [
-    [HOME, `How We Reach Them Blended Training Labs, colleges and delivery that works where connectivity is limited, led by ${LONG}.`], // WP153: Home’s first delivery explanation names who teaches (it was the one exemption)
+    [HOME, `How We Reach Them Blended Training Training in existing labs and colleges, led by ${LONG}, with delivery designed to work where connectivity is limited.`], // WP154: the card names where (existing labs and colleges) and who teaches. WP153: Home’s first delivery explanation names who teaches (it was the one exemption)
     [DEV, `How We Reach Them Existing Labs and Colleges Outreach and selection with local partners, then blended delivery by ${LONG}.`], // WP153: the body no longer repeats "in existing labs and colleges"
     [GOVERNMENTS, `How We Reach Them Government Digital Labs Blended learning in government labs you already run, led by ${BARE}; lab access and seats are confirmed per program.`],
     [UNIVERSITIES, `Set Up Campus Labs as Learning Centers On-campus labs become blended-learning centers with ${LONG}; faculty members act as coordinators.`],
@@ -323,7 +323,7 @@ test.describe('6 NU Post Graduate Diploma: the "Ready to Apply?" band does not r
       expect(text).not.toContain('Ready to Apply? Submit the application form.');
       expect(text).not.toContain('Submit the application form. Our admissions team will contact you with the next steps.');
       expect(text).toContain('Admissions Contacts You. Our admissions team shares the next steps.');
-      expect(text).toContain('Submit the Application Form. It takes you to the standalone application form.');
+      expect(text).toContain('Submit the Application Form. The Apply Now button opens the standalone application form.');
       // The admissions sentence is said once on the page (the step).
       expect(count(text, /Our admissions team (?:will )?(?:contacts? you|shares)/)).toBe(1);
     });

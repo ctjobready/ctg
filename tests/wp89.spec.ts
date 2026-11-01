@@ -47,7 +47,8 @@ test.describe('Item 1: route emails ask for two suitable times', () => {
     ['/partner-with-us/foundations/', 'Funding partnership'],
     ['/partner-with-us/foundations/', 'YouthWIDE cohort grant'],
     ['/partner-with-us/foundations/', 'JobReady platform grant'],
-    ['/programs/youthwide/', 'YouthWIDE co-funding in Bangladesh'],
+    // WP154: ['/programs/youthwide/', 'YouthWIDE co-funding in Bangladesh'] is gone (the Governments band is the briefing route; tests/wp154.spec.ts). The YouthWIDE funder card's discovery email is pinned there.
+    ['/programs/youthwide/', 'Discovery session request'],
     ['/partner-with-us/universities/', 'JobReady@Campus inquiry'],
     ['/programs/jobready-campus/', 'JobReady@Campus inquiry'],
     ['/partner-with-us/employers/', 'JobReady@Work inquiry'],

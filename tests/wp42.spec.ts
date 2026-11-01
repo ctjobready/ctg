@@ -192,8 +192,8 @@ test.describe('Local Partners: the evidence is a two-line strip (item 2)', () =>
 
 test.describe('Development Partners, Governments and SuperKids: the approach in two plain sentences (items 3, 4 and 8)', () => {
   const STATEMENTS: [string, string, string[]][] = [
-    ['partner-with-us/development-partners/', 'We combine training, mentoring and placement support in existing labs and colleges. Partners receive monthly reports, and outcomes are tracked after each course.', ['PD-01', 'PD-08', 'PD-09']],
-    ['partner-with-us/governments/', 'We combine training, mentoring and placement support in existing labs and colleges. Your agency receives monthly reports on progress toward paid work.', ['PD-01', 'PD-08']],
+    ['partner-with-us/development-partners/', 'We combine training, mentoring and placement support. Partners receive monthly reports, and outcomes are tracked after each course.', ['PD-01', 'PD-08', 'PD-09']],
+    ['partner-with-us/governments/', 'We combine training, mentoring and placement support. Your agency receives monthly reports on progress toward paid work.', ['PD-01', 'PD-08']],
     ['programs/superkids/', 'SuperKids offers block coding, robotics and digital art through schools and education partners.' /* WP137: the qualifier is said in its own band */, ['GV-08']],
   ];
   for (const [route, statement, facts] of STATEMENTS) {

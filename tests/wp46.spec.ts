@@ -311,9 +311,10 @@ test.describe('Track Record bands: "with progressive levels" is gone (item 16)',
       }
     }
     expect(offenders, 'unqualified "organizes skills into career paths with progressive levels" outside TalentLEAP’s worked example').toEqual([]);
-    // the worked example on the TalentLEAP page stays as it was: it names the three levels it is an example of
+    // WP154: the worked example's two-sentence lead is gone (the opening says the planned levels once); the Level 1 card stays
     const talentleap = builtPages().find((p) => p.route === '/our-model/talentleap/')!;
-    expect(visibleText(talentleap.html)).toContain('TalentLEAP organizes skills into career paths with progressive levels. In this example, Level 1 is Competent; Proficient and Expert are the planned next levels.');
+    expect(visibleText(talentleap.html)).not.toContain('TalentLEAP organizes skills into career paths with progressive levels. In this example, Level 1 is Competent; Proficient and Expert are the planned next levels.');
+    expect(visibleText(talentleap.html)).toContain('Level 1 · Competent');
   });
 
   test('Home and Investors read "…organizes skills into career paths." and keep their TalentLEAP link', async ({ page }) => {

@@ -606,10 +606,10 @@ test.describe('Home and Governments: the closing band heading and link (items 25
   });
 });
 
-test.describe('TalentLEAP stage pipeline: "Further TalentLEAP levels are planned." (item 27)', () => {
-  const PROSPER = 'Career paths, continuing development and the alumni network. Further TalentLEAP levels are planned.';
+test.describe('TalentLEAP stage pipeline: the Prosper step (item 27; WP154: it no longer ends "Further TalentLEAP levels are planned.")', () => {
+  const PROSPER = 'Career paths, continuing development and the alumni network.';
 
-  test('Our Model and TalentLEAP print the same five steps from one source; the last step ends with the new sentence; the TalentLEAP structured data says the same', async ({ page }) => {
+  test('Our Model and TalentLEAP print the same five steps from one source; the last step is the one sentence; the TalentLEAP structured data says the same', async ({ page }) => {
     expect(STAGE_STEPS).toHaveLength(5);
     expect(STAGE_STEPS.map((s) => s.name)).toEqual(['Assess', 'Learn', 'Prepare for Certification', 'Earn', 'Prosper']);
     expect(STAGE_STEPS[4].text).toBe(PROSPER);
@@ -623,6 +623,7 @@ test.describe('TalentLEAP stage pipeline: "Further TalentLEAP levels are planned
     const ld = (await page.locator('script[type="application/ld+json"]').allTextContents()).join(' ');
     expect(ld).toContain(PROSPER);
     expect(ld).not.toContain('Progressive levels are planned beyond the first published level');
+    expect(ld).not.toContain('Further TalentLEAP levels are planned.');
   });
 
   test('the earlier sentence is on no page; the two related clauses that were not part of this review (the Our Model TalentLEAP card, the Investors Prosper step) are unchanged (WP153: the Prosper step no longer repeats the planned levels)', async ({ page }) => {
@@ -630,7 +631,7 @@ test.describe('TalentLEAP stage pipeline: "Further TalentLEAP levels are planned
     await open(page, 'our-model/');
     expect(await everything(page)).toContain('with progressive levels planned beyond the first published level.');
     await open(page, INVEST);
-    expect(await everything(page)).toContain('TalentLEAP career paths and continuing development.'); // WP153: the planned levels are stated once, in "What JobReady Does"
+    expect(await everything(page)).toContain('Career paths built on TalentLEAP’s assessed skill units, with continuing development.'); // WP153: the planned levels are stated once, in "What JobReady Does"; WP154: the Prosper body no longer repeats its heading
     expect(await everything(page)).not.toContain('progressive levels are planned');
   });
 });

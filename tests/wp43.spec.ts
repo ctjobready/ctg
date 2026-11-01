@@ -148,7 +148,7 @@ test.describe('Investors: the mechanism heading and the platform band (items 8 a
     await expect(page.locator('#mechanism h2')).toHaveText('How JobReady Connects Learning to Work');
     expect('How JobReady Connects Learning to Work').toBe(titleCase('How JobReady Connects Learning to Work'));
     expect(await mainText(page)).not.toMatch(/Multi-Sided Model|A Multi-Sided/);
-    expect(await texts(page, '#mechanism h3')).toEqual(['Courses, Bootcamps and University Programs', 'Jobs, Freelance Work and Gigs', 'Career Paths and Continuing Development', 'A Digital Delivery Platform']);
+    expect(await texts(page, '#mechanism h3')).toEqual(['Courses, Supported Cohorts and University Programs', 'Jobs, Freelance Work and Gigs', 'Career Paths and Continuing Development', 'A Digital Delivery Platform']);
   });
 
   test('the one-sentence platform band is gone: the FAQ is followed by the offer; the platform-outcomes sentence closes the evidence block once; the first FAQ answer still links "What JobReady Does" (#features)', async ({ page }) => {

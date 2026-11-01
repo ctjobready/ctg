@@ -28,7 +28,7 @@ const bluf = 'TalentLEAP organizes learning around assessed skill units and care
 const description = desc('TalentLEAP is CodersTrust’s competency-based model: assessed skill units, career paths and Learn, Earn, Prosper with three months of mentoring.');
 
 // The steps of the visible stage pipeline (StagePipeline), for the structured data. WP50 (cycle-25 review): read from the pipeline's own source (components/pages/model/stagePipeline.ts), where they were restated by hand;
-// the last one ends "Further TalentLEAP levels are planned."
+// WP154 (Opus Max run 1, kit 121, Polish): the planned levels are stated once on this page, in the opening (the example band has no lead and the Prosper step no longer ends "Further TalentLEAP levels are planned."); dates 2026-11-02 (the owner date rule).
 const steps = STAGE_STEPS;
 const levels = [
   { name: 'Level 1 · Competent', description: 'Introduction to Digital Marketing with Google and Meta Certifications: three months of mentorship by an experienced professional, three months of membership in a digital-marketing expertise community and bonus mini-courses in essential business and leadership skills. Proficient and Expert levels are planned.' },
@@ -50,7 +50,7 @@ const faq = faqItems('foundations', ['Q14', 'Q10', 'Q4']).map((f) => {
   return f;
 });
 const jsonLd = [
-  articleNode({ path, headline: 'TalentLEAP: A Skill-by-Skill Path from Learning to Earning', description, datePublished: '2026-10-08', dateModified: '2026-11-01', author: 'CodersTrust Learning Design', about: { '@type': 'Thing', name: 'TalentLEAP' } }),
+  articleNode({ path, headline: 'TalentLEAP: A Skill-by-Skill Path from Learning to Earning', description, datePublished: '2026-10-08', dateModified: '2026-11-02', author: 'CodersTrust Learning Design', about: { '@type': 'Thing', name: 'TalentLEAP' } }),
   describedList('How TalentLEAP Works', steps.map((s) => ({ name: s.name, description: s.text })), `${path}#steps`),
   describedList('TalentLEAP example: Digital Marketing career path levels', levels, `${path}#levels`),
   faqPage(faq, path),
@@ -74,7 +74,7 @@ const d = discoveryCta();
   lead={bluf}
   description={description}
   path={path}
-  updated="2026-11-01"
+  updated="2026-11-02"
   toc={toc}
   breadcrumbs={[{ label: 'Our Model', href: '/our-model/' }, { label: 'TalentLEAP' }]}
   jsonLd={jsonLd}
@@ -92,7 +92,6 @@ const d = discoveryCta();
   </ReportSection>
 
   <ReportSection id="example" title="Example: The Digital Marketing Career Path">
-    <p>TalentLEAP organizes skills into career paths with progressive levels. In this example, Level 1 is Competent; Proficient and Expert are the planned next levels.</p>
     <CompetencyLevels />
   </ReportSection>
 

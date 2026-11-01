@@ -282,6 +282,7 @@ test.describe('WP129 item 6: every dated page whose visible text changed carries
     'partner-with-us/foundations/index.html',
     'partner-with-us/governments/index.html',
     'partner-with-us/investors/index.html',
+    'our-model/talentleap/index.html', // WP154 (2026-11-02): the example lead and the Prosper step's planned-levels sentence are gone
   ]);
   for (const [route, cls] of STAMPED) {
     const [day, long] = MOVED_1102.has(route) ? ['2026-11-02', 'November 2, 2026'] : MOVED_1101.has(route) ? ['2026-11-01', 'November 1, 2026'] : ['2026-10-31', 'October 31, 2026'];

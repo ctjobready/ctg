@@ -95,8 +95,8 @@ test('2 Development Partners: the "Existing Labs and Colleges" card body does no
   const text = main(DEV);
   expect(text).toContain(`How We Reach Them Existing Labs and Colleges Outreach and selection with local partners, then blended delivery by ${LONG}.`);
   expect(text).not.toContain('then blended delivery in existing labs and colleges');
-  // The lead says it once and the card heading names it; the body that follows does not say it a third time.
-  expect(count(text, /existing labs and colleges/gi)).toBe(2);
+  // WP154: the closing statement no longer says it; the card heading names it once and the body that follows does not say it again.
+  expect(count(text, /existing labs and colleges/gi)).toBe(1);
   expect(count(text, LONG)).toBe(1);
 });
 
@@ -133,9 +133,9 @@ test.describe('3 "In parallel with / alongside academic studies" stays where it 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 test.describe('4 Investors', () => {
-  test('the planned TalentLEAP levels are stated once, in "What JobReady Does"; the Prosper card is "TalentLEAP career paths and continuing development."', () => {
+  test('the planned TalentLEAP levels are stated once, in "What JobReady Does"; the Prosper card body is "Career paths built on TalentLEAP’s assessed skill units, with continuing development." (WP154; it repeated its heading)', () => {
     const text = main(INVESTORS);
-    expect(text).toContain('Prosper Career Paths and Continuing Development TalentLEAP career paths and continuing development.');
+    expect(text).toContain('Prosper Career Paths and Continuing Development Career paths built on TalentLEAP’s assessed skill units, with continuing development.');
     expect(text).not.toContain('progressive levels are planned beyond the first published level');
     expect(text).toContain('The first published TalentLEAP level is Competent; Proficient and Expert levels are planned.');
     expect(count(text, /Proficient and Expert/g)).toBe(1);
@@ -169,7 +169,7 @@ test.describe('5 NU Post Graduate Diploma: "Ready to Apply?" has no lead repeati
       expect(text).not.toContain('Ready to Apply? Submit the application form.');
       // The instruction is said once, as step 1; step 2 carries the admissions sentence.
       expect(count(text, /Submit the application form/i)).toBe(1);
-      expect(text).toContain('Submit the Application Form. It takes you to the standalone application form.');
+      expect(text).toContain('Submit the Application Form. The Apply Now button opens the standalone application form.');
       expect(text).toContain('Admissions Contacts You. Our admissions team shares the next steps.');
       expect(visible(band).startsWith('Ready to Apply? Apply Now')).toBe(true);
     });
@@ -182,7 +182,7 @@ test.describe('5 NU Post Graduate Diploma: "Ready to Apply?" has no lead repeati
 
 test('6 Home: the "Blended Training" card (Home’s first explanation of delivery) names who teaches, in the long form, once', () => {
   const text = main(HOME);
-  expect(text).toContain(`How We Reach Them Blended Training Labs, colleges and delivery that works where connectivity is limited, led by ${LONG}.`);
+  expect(text).toContain(`How We Reach Them Blended Training Training in existing labs and colleges, led by ${LONG}, with delivery designed to work where connectivity is limited.`); // WP154: reworded; tests/wp154.spec.ts holds the new text
   expect(count(text, LONG)).toBe(1);
   expect(count(text, SHORT_FORM)).toBe(0);
   // It is Home’s first delivery explanation: no earlier block names labs, colleges or blended delivery.

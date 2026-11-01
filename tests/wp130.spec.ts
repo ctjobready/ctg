@@ -71,9 +71,10 @@ test.describe('WP130 Minor 2: Investors states each credential once', () => {
 });
 
 test.describe('WP130 Polish 3 and 4', () => {
-  test('TalentLEAP example lead: Level 1 is Competent; Proficient and Expert are planned', () => {
+  test('TalentLEAP example lead: WP154 removed it (the opening says Proficient and Expert are planned, once); the old WP130 wording stays off the page', () => {
     const text = main('our-model/talentleap/index.html');
-    expect(text).toContain('TalentLEAP organizes skills into career paths with progressive levels. In this example, Level 1 is Competent; Proficient and Expert are the planned next levels.');
+    expect(text).not.toContain('TalentLEAP organizes skills into career paths with progressive levels. In this example, Level 1 is Competent; Proficient and Expert are the planned next levels.');
+    expect(text).toContain('The first published TalentLEAP level is Competent; Proficient and Expert levels are planned.');
     expect(text).not.toContain('In this example the levels are Competent, Proficient and Expert.');
   });
 

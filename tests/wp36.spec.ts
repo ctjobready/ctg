@@ -211,7 +211,7 @@ test.describe('Investors', () => {
     // WP39 (cycle-16 review): the band carries no "Our Approach" statement any more (tests/wp39.spec.ts)
     await expect(page.locator('#mechanism .pos__text')).toHaveCount(0);
     await expect(page.locator('#mechanism').getByRole('link', { name: 'How Our Model Works' })).toHaveCount(1);
-    expect(await texts(page, '#mechanism h3'), 'the four model blocks are the band’s only sub-headings').toEqual(['Courses, Bootcamps and University Programs', 'Jobs, Freelance Work and Gigs', 'Career Paths and Continuing Development', 'A Digital Delivery Platform']);
+    expect(await texts(page, '#mechanism h3'), 'the four model blocks are the band’s only sub-headings').toEqual(['Courses, Supported Cohorts and University Programs', 'Jobs, Freelance Work and Gigs', 'Career Paths and Continuing Development', 'A Digital Delivery Platform']);
   });
 
   test('no two dark bands meet, and the evidence band sits between the reach band and the features band', async ({ page }) => {
@@ -477,7 +477,7 @@ test.describe('dating lines', () => {
 
   test('TalentLEAP and SuperKids carry today’s date, the day their wording changed', async ({ page }) => {
     await open(page, 'our-model/talentleap/');
-    expect(compact(await page.locator('.lf-updated').textContent())).toBe('Last updated November 1, 2026'); // WP112: TalentLEAP's wording last changed on 29 October (was 28 October, WP104); WP141 changed it on 1 November
+    expect(compact(await page.locator('.lf-updated').textContent())).toBe('Last updated November 2, 2026'); // WP112: TalentLEAP's wording last changed on 29 October (was 28 October, WP104); WP141 changed it on 1 November; WP154 on 2 November
     await open(page, 'programs/superkids/');
     expect(compact(await page.locator('.updated').textContent())).toBe('Last updated November 1, 2026'); // WP143 moved it; WP104: SuperKids gained its consent line on 29 October
   });
