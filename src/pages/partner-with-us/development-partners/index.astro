@@ -87,7 +87,8 @@ const benchmarkNote = `${benchmark[0].toUpperCase()}${benchmark.slice(1)}.`;
 
 // Q8-route: the one-line cost answer with a link to the partner hub FAQ, which keeps the full answer (WP36).
 // Q6-development-partners: the women-and-marginalized-groups answer points to Proof in Practice above instead of stating its three program figures again (WP37); the bank's shared Q6 keeps the figures.
-const FAQ_IDS = ['Q1-development-partners', 'Q6-development-partners', 'Q3', 'Q10', 'Q8-route'];
+// WP152 (Opus XHigh run 6): the "How We Reach Them" card is the delivery explanation and names the facilitators trained by CodersTrust (Training of Trainers); the funding-ends answer is Q10-later ("CodersTrust-trained facilitators").
+const FAQ_IDS = ['Q1-development-partners', 'Q6-development-partners', 'Q3', 'Q10-later', 'Q8-route'];
 ---
 
 <LandingLayout
@@ -153,7 +154,7 @@ const FAQ_IDS = ['Q1-development-partners', 'Q6-development-partners', 'Q3', 'Q1
     lead="YouthWIDE is the program through which funders deploy the CodersTrust model in a country; it builds on results from earlier programs in Bangladesh and Kosovo."
     blocks={[
       { label: 'Who We Reach', title: 'Priority Groups', text: 'Priority groups are agreed with you in co-design; women are a priority in every program.', icon: 'users' },
-      { label: 'How We Reach Them', title: 'Existing Labs and Colleges', text: 'Outreach and selection with local partners, then blended delivery in existing labs and colleges.', icon: 'graduation-cap' },
+      { label: 'How We Reach Them', title: 'Existing Labs and Colleges', text: 'Outreach and selection with local partners, then blended delivery in existing labs and colleges by facilitators trained by CodersTrust (Training of Trainers).', icon: 'graduation-cap' },
       { label: 'What We Deliver', title: 'Certification Preparation and Mentoring', text: `${HOURS} training hours per certification, including exam preparation, then three months of milestone-based mentoring and placement support.`, icon: 'award' },
       { label: 'Where They Work', title: 'Local, Remote and Global Work', text: WHERE_THEY_WORK_TEXT, icon: 'globe' },
     ]}

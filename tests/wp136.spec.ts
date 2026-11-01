@@ -32,7 +32,7 @@ const band = (rel: string, id: string) => {
 test('Minor 2: Local Partners "Challenge" lead states the reader’s obstacle, not CodersTrust’s offer', () => {
   const rel = 'partner-with-us/local-partners/index.html';
   const t = main(rel);
-  expect(t).toContain('Connect Your Community to Paid Digital Work Your organization reaches young people, but a curriculum, certification and links to paid work are hard to build alone.');
+  expect(t).toContain('Connect Your Community to Paid Digital Work Your organization reaches young people, but a curriculum, certification preparation and links to paid work are hard to build alone.');
   expect(t).not.toContain('Pair your community reach with CodersTrust’s curriculum, mentoring, placement support and reporting.');
 });
 

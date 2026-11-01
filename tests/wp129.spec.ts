@@ -101,7 +101,7 @@ test.describe('WP129 item 1: the 100 training hours per certification include ex
   });
   test('Our Model keeps the pipeline that places "Prepare for Certification" inside the Learn stage of a track that includes the 100 hours (guard; passes before the change)', () => {
     const t = text('our-model/index.html');
-    expect(t).toContain('Each certification track includes 100 training hours, including exam preparation, over 3–6 months.'); // WP151: the sentence says "including exam preparation" itself
+    expect(t).toContain('Each certification track has 100 training hours, including exam preparation, over 3–6 months.'); // WP151: the sentence says "including exam preparation" itself
     expect(t).toContain('Blended Training and Certification Preparation');
     expect(t).toContain('Prepare for Certification');
   });
@@ -273,6 +273,12 @@ test.describe('WP129 item 6: every dated page whose visible text changed carries
     'programs/youthwide/index.html',
     'programs/jobready-campus/index.html',
     'programs/nu-postgraduate-diploma/index.html',
+    // WP152 (2026-11-02): the four NU course pages and About moved on as well.
+    'programs/nu-postgraduate-diploma/cyber-security/index.html',
+    'programs/nu-postgraduate-diploma/data-analytics/index.html',
+    'programs/nu-postgraduate-diploma/digital-marketing/index.html',
+    'programs/nu-postgraduate-diploma/ict/index.html',
+    'about/index.html',
     'partner-with-us/foundations/index.html',
     'partner-with-us/governments/index.html',
     'partner-with-us/investors/index.html',

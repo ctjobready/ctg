@@ -240,7 +240,7 @@ test.describe('Investors: the thesis card (item 3)', () => {
     expect(await texts(page, '#thesis .card__title')).toEqual(['Young People Need Work and Employers Need Skills', 'Connect Learning to Paid Work', 'AI Skills Are in Rising Demand']);
     for (const t of await texts(page, '#thesis .card__title')) expect(t, t).toBe(titleCase(t));
     const second = cards.nth(1);
-    expect(compact(await second.locator('.card__text').textContent())).toBe('JobReady is being built to connect learning to paid work, through mentoring and placement support.'); // WP151
+    expect(compact(await second.locator('.card__text').textContent())).toBe('JobReady is being built to link learners to paid work through mentoring and placement support.'); // WP152 (WP151: "connect learning to paid work, through ...")
     expect(await second.locator('.card__text').getAttribute('data-fact')).toBe('IN-04');
     expect(sitePages().filter((p) => /Online Learning Sells Content|Many online courses provide content/.test(visible(p.html))).map((p) => p.route)).toEqual([]);
   });
@@ -250,7 +250,7 @@ test.describe('Local Partners, YouthWIDE and Development Partners: the lines the
   test('Local Partners: the problem lead is the offer, under the unchanged heading', async ({ page }) => {
     await open(page, LOCAL);
     await expect(page.locator('#problem h2')).toHaveText('Connect Your Community to Paid Digital Work');
-    expect(compact(await page.locator('#problem .sh__lead').textContent())).toBe('Your organization reaches young people, but a curriculum, certification and links to paid work are hard to build alone.'); // WP136 (Opus High run 11, Minor): the lead states the reader's obstacle, not the offer (WP50 had made it the offer)
+    expect(compact(await page.locator('#problem .sh__lead').textContent())).toBe('Your organization reaches young people, but a curriculum, certification preparation and links to paid work are hard to build alone.'); // WP136 (Opus High run 11, Minor): the lead states the reader's obstacle, not the offer (WP50 had made it the offer)
     expect(await everything(page)).not.toContain('Local organizations often lack');
   });
 

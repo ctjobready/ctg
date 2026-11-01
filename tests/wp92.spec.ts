@@ -91,7 +91,7 @@ test.describe('WP92 A5: the Our Model certification card has the preparation hea
     const card = page.locator('#delivery .card', { hasText: BLENDED_TITLE });
     await expect(card).toHaveCount(1);
     await expect(page.locator('body')).not.toContainText('Blended Training with Certification');
-    await expect(card).toContainText('Each certification track includes');
+    await expect(card).toContainText('Each certification track has'); // WP152: "has" (it read "includes")
   });
 });
 

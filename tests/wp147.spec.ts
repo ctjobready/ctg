@@ -95,12 +95,13 @@ test.describe('1 Facilitators: trained by CodersTrust, never "local" and never "
   test('"What Happens When Funding Ends?" (page and FAQ JSON-LD): the long form where it is the page’s only mention, "CodersTrust-trained facilitators" where the page has explained it above', () => {
     const LONG_A = `Where included, what the program builds stays in place: ${LONG} and localized curricula.`;
     const SHORT_A = `Where included, what the program builds stays in place: ${SHORT} and localized curricula.`;
-    for (const p of [GOVERNANCE, TALENTLEAP, DEV, FOUNDATIONS]) {
+    // WP152: Development Partners’ delivery card carries the long form, so its answer is the short wording.
+    for (const p of [GOVERNANCE, TALENTLEAP, FOUNDATIONS]) {
       expect(main(p), p).toContain(LONG_A);
       expect(ldText(p), `${p} JSON-LD`).toContain(LONG_A);
       expect(main(p), p).not.toContain(SHORT_A);
     }
-    for (const p of [GOVERNMENTS, LOCAL]) {
+    for (const p of [DEV, GOVERNMENTS, LOCAL]) {
       expect(main(p), p).toContain(SHORT_A);
       expect(ldText(p), `${p} JSON-LD`).toContain(SHORT_A);
       expect(main(p), p).not.toContain(LONG_A);
@@ -115,7 +116,9 @@ test.describe('1 Facilitators: trained by CodersTrust, never "local" and never "
     expect(main(OUR_MODEL)).toContain(`After about five months of delivery, programs are designed to run up to 10 certification cohorts in parallel, using existing labs and ${LONG}.`);
     expect(main(CAMPUS)).toContain(`Labs serve as blended-learning centers, with ${LONG} and faculty members as coordinators.`); // WP151: the How It Works card is the delivery sentence
     expect(main(UNIVERSITIES)).toContain(`On-campus labs become blended-learning centers with ${LONG}; faculty members act as coordinators.`);
-    expect(main(GOVERNMENTS)).toContain(`Where included: curriculum and manuals; ${LONG}; and blended learning in existing labs that works with limited connectivity, so rural labs can take part.`);
+    // WP152: Governments’ "Government Digital Labs" card is the delivery sentence; the "Capacity Designed to Stay in Your System" card says "CodersTrust-trained facilitators". Development Partners’ "Existing Labs and Colleges" card carries the long form.
+    expect(main(GOVERNMENTS)).toContain(`Blended learning in government labs you already run, led by ${LONG}; lab access and seats are confirmed per program.`);
+    expect(main(DEV)).toContain(`then blended delivery in existing labs and colleges by ${LONG}.`);
     expect(main(LOCAL)).toContain(`Larger programs are designed to run through ${LONG} in existing labs and colleges, coordinated centrally.`);
     expect(main(YOUTHWIDE)).toContain(`Blended training in existing labs and colleges, with ${LONG}; a central team coordinating local labs for larger programs.`);
   });

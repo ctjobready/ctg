@@ -177,7 +177,7 @@ test.describe('Foundations: the cohort-grant offer’s lead is the program-sizes
 });
 
 test.describe('About: the 2025–2026 timeline entry is sentences, not a semicolon chain (item 7)', () => {
-  const TEXT = 'JobReady rolls out in stages. YouthWIDE aims to train 1 million educated youth (Higher Secondary Certificate or above) for digital employment by 2030, in Bangladesh and similar countries in South Asia and the Middle East and North Africa, depending on government and donor commitments; CodersTrust publishes Impact Survey 2026.';
+  const TEXT = 'JobReady rolls out in stages. YouthWIDE aims to train 1 million educated youth (Higher Secondary Certificate or above) for digital employment by 2030, in Bangladesh and similar countries in South Asia and the Middle East and North Africa, depending on government and donor commitments. CodersTrust publishes Impact Survey 2026.';
 
   test('the last entry reads as above, from data/timeline.ts, under its unchanged heading, and cites the facts its sentences rest on (IN-02 is no longer among them)', async ({ page }) => {
     const last = timeline[timeline.length - 1];
@@ -488,9 +488,9 @@ test.describe('Home: "Progress You Can Check" promises reports (item 36) and the
 });
 
 test.describe('Local Partners: the challenge lead (item 18; WP136 replaced "Pair your community reach ..." with the reader’s obstacle)', () => {
-  test('"Your organization reaches young people, but a curriculum, certification and links to paid work are hard to build alone."', async ({ page }) => {
+  test('"Your organization reaches young people, but a curriculum, certification preparation and links to paid work are hard to build alone."', async ({ page }) => {
     await open(page, LOCAL);
-    expect(compact(await page.locator('#problem .sh__lead').textContent())).toBe('Your organization reaches young people, but a curriculum, certification and links to paid work are hard to build alone.'); // WP136 (Opus High run 11, Minor): the lead states the reader's obstacle (WP52 had "Pair your community reach with ...")
+    expect(compact(await page.locator('#problem .sh__lead').textContent())).toBe('Your organization reaches young people, but a curriculum, certification preparation and links to paid work are hard to build alone.'); // WP136 (Opus High run 11, Minor): the lead states the reader's obstacle (WP52 had "Pair your community reach with ...")
     await expect(page.locator('#problem h2')).toHaveText('Connect Your Community to Paid Digital Work');
   });
 });

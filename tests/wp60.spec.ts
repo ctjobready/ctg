@@ -230,7 +230,7 @@ test.describe('S3 (Claude): the 1 million 2030 aim carries its dependency on eve
     expect(compact(await tile.locator('.glance__note').textContent())).toBe(`YouthWIDE in Bangladesh and similar countries in South Asia and the Middle East and North Africa, ${AIM_DEPENDENCY}. An ambition, not a result.`);
     await open(page, 'about/');
     expect(compact(await page.locator('#story .timeline__item').last().locator('.timeline__text').textContent())).toBe(
-      `JobReady rolls out in stages. YouthWIDE aims to train 1 million educated youth (Higher Secondary Certificate or above) for digital employment by 2030, in Bangladesh and similar countries in South Asia and the Middle East and North Africa, ${AIM_DEPENDENCY}; CodersTrust publishes Impact Survey 2026.`,
+      `JobReady rolls out in stages. YouthWIDE aims to train 1 million educated youth (Higher Secondary Certificate or above) for digital employment by 2030, in Bangladesh and similar countries in South Asia and the Middle East and North Africa, ${AIM_DEPENDENCY}. CodersTrust publishes Impact Survey 2026.`,
     );
     await open(page, YOUTHWIDE);
     expect(compact(await page.locator('#program-glance .pg__row').first().textContent())).toContain(`YouthWIDE aims to train 1 million educated youth (Higher Secondary Certificate or above) for digital employment by 2030, in Bangladesh and similar countries in South Asia and the Middle East and North Africa, ${AIM_DEPENDENCY}.`);
@@ -519,10 +519,10 @@ test.describe('GM5 (Gemini): Governments’ "Capacity Designed to Stay in Your S
   test('the card text is "Where included: ..." and keeps its list and facts; the other two "What Your Agency Gets" cards are unchanged', async ({ page }) => {
     await open(page, GOVERNMENTS);
     const cards = page.locator('main section:has(h2:text-is("What Your Agency Gets")) li');
-    expect(await cards.locator('.card__title').allTextContents()).toEqual(['Certification Tracks and Placement Support', 'Spending Measured Against Outcomes', 'Capacity Designed to Stay in Your System']);
+    expect(await cards.locator('.card__title').allTextContents()).toEqual(['Certification Preparation and Placement Support', 'Spending Measured Against Outcomes', 'Capacity Designed to Stay in Your System']);
     const card = cards.nth(2);
     expect(compact(await card.locator('.card__text').textContent())).toBe(
-      'Where included: curriculum and manuals; facilitators trained by CodersTrust (Training of Trainers); and blended learning in existing labs that works with limited connectivity, so rural labs can take part.',
+      'Where included: curriculum and manuals; CodersTrust-trained facilitators; and blended learning in existing labs that works with limited connectivity, so rural labs can take part.',
     );
     expect(await card.getAttribute('data-fact')).toBe('GV-11 PD-06 PD-07');
     expect(compact(await cards.nth(1).locator('.card__text').textContent())).toBe('A pilot scorecard with cost per completer and per verified outcome, and monthly reports. Your budget is assessed against the agreed scorecard.');

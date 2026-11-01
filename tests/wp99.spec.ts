@@ -87,7 +87,7 @@ test.describe('Item 1: the YouthWIDE aim is 1 million educated youth (Higher Sec
     // WP106 (Polish, accepted): the Programs card is sibling length, so it states the short aim (the figure from IN-01, the 2030 date and the clause); the full statement stays on About and YouthWIDE
     expect(compact(await page.locator('main').textContent())).toContain(`It aims to train 1 million educated youth by 2030, ${AIM_DEPENDENCY}.`);
     await open(page, 'about/');
-    expect(compact(await page.locator('#story .timeline__item').last().locator('.timeline__text').textContent())).toBe(`JobReady rolls out in stages. YouthWIDE aims to train ${IN01_STATEMENT}; CodersTrust publishes Impact Survey 2026.`);
+    expect(compact(await page.locator('#story .timeline__item').last().locator('.timeline__text').textContent())).toBe(`JobReady rolls out in stages. YouthWIDE aims to train ${IN01_STATEMENT}. CodersTrust publishes Impact Survey 2026.`);
     await open(page, 'impact/');
     const tile = page.locator('#heading a[data-fact~="IN-01"]');
     await expect(tile).toHaveCount(1);

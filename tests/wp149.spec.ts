@@ -71,7 +71,10 @@ test.describe('1 The long facilitator form sits in the sentence where the page e
     const LONG_A = `Where included, what the program builds stays in place: ${LONG} and localized curricula.`;
     const DELIVERY: [string, string][] = [
       [OUR_MODEL, `programs are designed to run up to 10 certification cohorts in parallel, using existing labs and ${LONG}.`],
-      [GOVERNMENTS, `Where included: curriculum and manuals; ${LONG}; and blended learning in existing labs that works with limited connectivity, so rural labs can take part.`],
+      // WP152 (Opus XHigh run 6): Governments’ delivery sentence is the "Government Digital Labs" card (How We Reach Them); its "Capacity Designed to Stay in Your System" card says "CodersTrust-trained facilitators".
+      [GOVERNMENTS, `Blended learning in government labs you already run, led by ${LONG}; lab access and seats are confirmed per program.`],
+      // WP152: Development Partners’ delivery sentence is the "Existing Labs and Colleges" card; its funding-ends answer says "CodersTrust-trained facilitators".
+      [DEV, `then blended delivery in existing labs and colleges by ${LONG}.`],
       [INVESTORS, `larger programs are designed to run up to 10 cohorts in parallel through ${LONG} in existing labs and colleges.`],
       [LOCAL, `Larger programs are designed to run through ${LONG} in existing labs and colleges, coordinated centrally.`],
       [UNIVERSITIES, `On-campus labs become blended-learning centers with ${LONG}; faculty members act as coordinators.`],
@@ -81,7 +84,6 @@ test.describe('1 The long facilitator form sits in the sentence where the page e
       // Pages whose only facilitator mention is the "What Happens When Funding Ends?" answer: that answer is their delivery sentence.
       [GOVERNANCE, LONG_A],
       [TALENTLEAP, LONG_A],
-      [DEV, LONG_A],
       [FOUNDATIONS, LONG_A],
     ];
     for (const [p, sentence] of DELIVERY) {
@@ -101,7 +103,8 @@ test.describe('1 The long facilitator form sits in the sentence where the page e
       [CAMPUS, `Where On-Campus Labs Labs serve as blended-learning centers, with ${LONG} and faculty members as coordinators.`],
       [UNIVERSITIES, `Set Up Campus Labs as Learning Centers On-campus labs become blended-learning centers with ${LONG}; faculty members act as coordinators.`],
       [YOUTHWIDE, `Delivery Blended training in existing labs and colleges, with ${LONG};`],
-      [GOVERNMENTS, `Capacity Designed to Stay in Your System Where included: curriculum and manuals; ${LONG};`],
+      [GOVERNMENTS, `How We Reach Them Government Digital Labs Blended learning in government labs you already run, led by ${LONG};`], // WP152: it was the "Capacity Designed to Stay in Your System" card
+      [DEV, `How We Reach Them Existing Labs and Colleges Outreach and selection with local partners, then blended delivery in existing labs and colleges by ${LONG}.`], // WP152
       [OUR_MODEL, `Local Labs, Coordinated Delivery After about five months of delivery, programs are designed to run up to 10 certification cohorts in parallel, using existing labs and ${LONG}.`],
     ];
     for (const [p, card] of CARDS) {
@@ -119,11 +122,12 @@ test.describe('1 The long facilitator form sits in the sentence where the page e
     expect(text.indexOf(SHORT)).toBeLessThan(text.indexOf(LONG));
   });
 
-  test('Governments: an earlier, generic mention says "trained facilitators" (not the long form); the long form is in "Capacity Designed to Stay in Your System"', () => {
+  test('Governments: an earlier, generic mention says "trained facilitators" (not the long form); the long form is in the "Government Digital Labs" card and the "Capacity Designed to Stay in Your System" card says "CodersTrust-trained facilitators" (WP152)', () => {
     const text = main(GOVERNMENTS);
     expect(text).toContain('National delivery needs trained facilitators and localized curricula.');
     expect(text.indexOf('National delivery needs trained facilitators')).toBeLessThan(text.indexOf(LONG));
-    expect(text).toContain(`Capacity Designed to Stay in Your System Where included: curriculum and manuals; ${LONG};`);
+    expect(text).toContain(`Capacity Designed to Stay in Your System Where included: curriculum and manuals; ${SHORT};`);
+    expect(text.indexOf('Government Digital Labs')).toBeLessThan(text.indexOf('Capacity Designed to Stay in Your System')); // the delivery card comes first
   });
 
   test('no page puts the long form in a card about learners (Foundation Tracks) and none says "certified" or "local" facilitators', () => {

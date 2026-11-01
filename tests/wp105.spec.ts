@@ -221,9 +221,9 @@ test.describe('WP105 item 9: stamps and dateModified of the pages this WP change
   }
 
   // These three pages state no "Last updated" line, so their JSON-LD dateModified would otherwise be the build day (UTC).
-  // WP151: Governments moved on to 2026-11-02 (the learner card label is "Individual Story").
-  for (const [route, day] of [['about/', '2026-11-01'], ['partner-with-us/governments/', '2026-11-02'], ['about/recognition/', '2026-11-01']]) {
-    test(`${route} pins its JSON-LD dateModified to ${day} (the day it last changed: WP141, WP151), not the build date`, async ({ page }) => {
+  // WP151: Governments moved on to 2026-11-02 (the learner card label is "Individual Story"). WP152: About moved on to 2026-11-02 (the 2025–2026 timeline item is two sentences).
+  for (const [route, day] of [['about/', '2026-11-02'], ['partner-with-us/governments/', '2026-11-02'], ['about/recognition/', '2026-11-01']]) {
+    test(`${route} pins its JSON-LD dateModified to ${day} (the day it last changed: WP141, WP151, WP152), not the build date`, async ({ page }) => {
       await open(page, route);
       expect(await ldJson(page)).toMatch(new RegExp(`"dateModified"\\s*:\\s*"${day}"`));
     });

@@ -31,8 +31,8 @@ export const PAGE_UPDATED = {
   campus: '2026-11-02', // WP151 (the How It Works card names the facilitators; the glance label says Certification Preparation). Earlier: WP141 (owner answer 2026-11-01): the program-scope qualifier is stated once per page
   work: '2026-11-01', // WP141: as campus
   superkids: '2026-10-10',
-  nu: '2026-11-02', // WP151 (the FAQ "How Do I Apply?" is gone). Earlier: WP148 (Opus XHigh run 2 Polish): "Post Graduate Diploma" is capitalised in the lead and the meta description
-  nuCourse: '2026-11-01', // WP148: as nu
+  nu: '2026-11-02', // WP152 (the "Ready to Apply?" lead is "Submit the application form."). Earlier: WP151 (the FAQ "How Do I Apply?" is gone). Earlier: WP148 (Opus XHigh run 2 Polish): "Post Graduate Diploma" is capitalised in the lead and the meta description
+  nuCourse: '2026-11-02', // WP152 (the "Ready to Apply?" lead is "Submit the application form."). Earlier: WP148: as nu
 } as const;
 
 /** Page-level primary-CTA helper: label + href for a registered key. */

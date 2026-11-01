@@ -65,8 +65,8 @@ test.describe('1 Sweep: CodersTrust prepares for certification; it does not deli
       'Certification Exam Preparation and Mentoring',
       'Prepare for Certification',
       'Trains and Prepares for Certification',
-      'Industry Certification Tracks',
-      'Certification Tracks and Placement Support',
+      'Certification Preparation and Placement Support',
+      'Certification Preparation by Track',
       'An Industry Certification Beside the Degree',
       'Introduction to Digital Marketing with Google and Meta Certifications',
       'Skills, Certification Preparation and Mentoring',
@@ -123,7 +123,7 @@ test.describe('1 Sweep: CodersTrust prepares for certification; it does not deli
 // WP151 (Opus XHigh run 5, kit 118): the WP150 sweep covered headings only and the "per certification" wording only. It now also covers (a) the labels and eyebrows of cards (a bare "Certification" in "Training and Certification", "Curriculum and Certification Take Time to Build")
 // and (b) every "N training hours" sentence, whatever its wording ("Each certification track includes 100 training hours ...").
 // Allowlisted on purpose: the pilot scorecard's measure labels (Home "Certification", YouthWIDE's measure list: SCORECARD_LABELS, pinned by wp138/wp140: the scorecard reports how many learners certify), the comparison table's criterion rows
-// ("Certification" as a row of what each approach offers: Home, styleguide), and "Certification Tracks ..." / "Industry Certification Tracks" (a modifier of "Tracks", as WP150 decided).
+// ("Certification" as a row of what each approach offers: Home, styleguide). WP152: "Certification Tracks ..." / "Industry Certification Tracks" left the allowlist (the headings say Preparation; wp152 holds the meaning-based sweep).
 
 const VOID_TAGS = new Set(['br', 'img', 'input', 'hr', 'meta', 'link', 'source', 'path', 'circle', 'rect', 'use', 'line', 'polyline', 'polygon']);
 const INLINE_TAGS = /^(?:a|b|strong|em|span|i|time|sup|sub|abbr|small|mark|code)$/;
@@ -179,7 +179,7 @@ const labelTexts = (rel: string): string[] =>
     .map((l) => l.text);
 
 /** A bare "Certification" as an item of a label ("Training and Certification", "Curriculum and Certification Take Time to Build"), not a modifier of Preparation, Exam(s), Track(s) or Course(s). */
-const BARE_LABEL = /(?:^|[,:]\s+|\band\s+|\bplus\s+)Certifications?\b(?!\s+(?:Preparation|Exams?|Tracks?|Courses?)\b)/i;
+const BARE_LABEL = /(?:^|[,:]\s+|\band\s+|\bplus\s+)Certifications?\b(?!\s+(?:Preparation|Exams?|Courses?)\b)/i; // WP152: "Tracks?" left the allowlist (the Governments and Universities headings now say Preparation)
 
 /** "N training hours" (any wording after it): the sentence must say "including exam preparation" or "including certification exam preparation". */
 const TRAINING_HOURS = /\b\d+ training hours\b/g;
@@ -187,7 +187,7 @@ const EXAM_PREP = /including (?:certification )?exam preparation/;
 
 test.describe('7 WP151: the sweep covers card labels and eyebrows, and every "N training hours" sentence', () => {
   test('the label rule itself: "Training and Certification" and "Curriculum and Certification Take Time to Build" are caught; every preparation, track, course and third-party wording is not', () => {
-    for (const h of ['Training and Certification', 'Curriculum and Certification Take Time to Build', 'Certification and Mentoring', 'Mentoring, Certification and Support', 'Certification']) {
+    for (const h of ['Training and Certification', 'Curriculum and Certification Take Time to Build', 'Certification and Mentoring', 'Mentoring, Certification and Support', 'Certification', 'Certification Tracks and Placement Support']) { // WP152: a "Certification Tracks" heading is caught now ("Industry Certification Tracks" is caught by wp152’s meaning-based sweep)
       expect(BARE_LABEL.test(h), h).toBe(true);
     }
     for (const h of [
@@ -195,8 +195,8 @@ test.describe('7 WP151: the sweep covers card labels and eyebrows, and every "N 
       'Curriculum and Certification Preparation Take Time to Build',
       'Certification Preparation and Mentoring',
       'Certification Exam Preparation and Mentoring',
-      'Certification Tracks and Placement Support',
-      'Industry Certification Tracks',
+      'Certification Preparation and Placement Support',
+      'Certification Preparation by Track',
       'Prepare for Certification',
       'Trains and Prepares for Certification',
       'Skills, Certification Preparation and Mentoring',

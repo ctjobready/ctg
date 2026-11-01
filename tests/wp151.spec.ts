@@ -58,7 +58,7 @@ test.describe('1 JobReady@Campus: the How It Works card says who teaches', () =>
 test.describe('2 Labels and training hours (the sweep itself is in wp150, section 7)', () => {
   test('Our Model states the hours with exam preparation inside them', () => {
     const text = main(OUR_MODEL);
-    expect(text).toContain('Blended Training and Certification Preparation Each certification track includes 100 training hours, including exam preparation, over 3–6 months.');
+    expect(text).toContain('Blended Training and Certification Preparation Each certification track has 100 training hours, including exam preparation, over 3–6 months.'); // WP152: "has" (it read "includes 100 training hours, including")
     expect(text).not.toContain('100 training hours over 3–6 months');
   });
 
@@ -109,8 +109,9 @@ test.describe('3 Repetition: said once', () => {
     const text = main(NU);
     expect(text).not.toContain('How Do I Apply?');
     expect(text).not.toContain('Our admissions team contacts you with the next steps.');
-    expect(count(text, /Our admissions team (?:will )?contacts? you/)).toBe(1);
-    expect(text).toContain('Ready to Apply? Submit the application form. Our admissions team will contact you with the next steps.');
+    // WP152: the lead is "Submit the application form." and the "Admissions Contacts You" step carries the admissions sentence.
+    expect(count(text, /Our admissions team (?:will )?contacts? you/)).toBe(0);
+    expect(text).toContain('Ready to Apply? Submit the application form.');
     expect(text).toContain('Admissions Contacts You. Our admissions team shares the next steps.');
     // The other two FAQ questions stay, and the FAQ structured data matches the visible questions.
     expect(text).toContain('Is the NU Post Graduate Diploma Right for Me?');
@@ -121,7 +122,7 @@ test.describe('3 Repetition: said once', () => {
 
 test('4 Investors, "Connect Learning to Paid Work": the body says paid work', () => {
   const text = main(INVESTORS);
-  expect(text).toContain('Connect Learning to Paid Work JobReady is being built to connect learning to paid work, through mentoring and placement support.');
+  expect(text).toContain('Connect Learning to Paid Work JobReady is being built to link learners to paid work through mentoring and placement support.'); // WP152: no heading echo, no comma before "through"
   expect(text).not.toContain('connect learning with mentoring and placement support');
 });
 

@@ -116,7 +116,7 @@ test.describe('Governments, Universities and Local Partners: the wording the rev
     await expect(page.locator('#problem h2')).toHaveText('Connect Your Community to Paid Digital Work');
     expect('Connect Your Community to Paid Digital Work').toBe(titleCase('Connect Your Community to Paid Digital Work'));
     // WP50 (cycle-25 review): the problem band's lead is "Connect your community reach with CodersTrust’s curriculum, mentoring, placement support and reporting." (it was "Local organizations often lack ..."; tests/wp50.spec.ts)
-    expect(compact(await page.locator('#problem .sh__lead').textContent())).toBe('Your organization reaches young people, but a curriculum, certification and links to paid work are hard to build alone.'); // WP136 (Opus High run 11, Minor): the lead states the reader's obstacle (it was WP52's "Pair your community reach with ...")
+    expect(compact(await page.locator('#problem .sh__lead').textContent())).toBe('Your organization reaches young people, but a curriculum, certification preparation and links to paid work are hard to build alone.'); // WP136 (Opus High run 11, Minor): the lead states the reader's obstacle (it was WP52's "Pair your community reach with ...")
     // the track-record band opens with its method paragraph, which names the Bangladesh team; its empathy line is gone
     await expect(page.locator('#guide p.lead')).toHaveCount(0);
     expect(compact(await page.locator('#guide .guide__method').textContent())).toContain('CodersTrust Bangladesh, our country office in');

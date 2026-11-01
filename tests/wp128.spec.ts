@@ -75,7 +75,8 @@ test.describe('WP128 item 1: "What Happens When Funding Ends?" is two sentences,
     'Where included, what the program builds stays in place: facilitators trained by CodersTrust (Training of Trainers) and localized curricula. Completers join CodersTrust’s alumni network after their three months of mentoring.';
   const LATER =
     'Where included, what the program builds stays in place: CodersTrust-trained facilitators and localized curricula. Completers join CodersTrust’s alumni network after their three months of mentoring.';
-  const wording = (route: string) => (route === 'partner-with-us/governments/' || route === 'partner-with-us/local-partners/' ? LATER : NEW);
+  // WP152: Development Partners’ delivery card names the facilitators trained by CodersTrust, so its funding-ends answer is the later wording too.
+  const wording = (route: string) => (['partner-with-us/development-partners/', 'partner-with-us/governments/', 'partner-with-us/local-partners/'].includes(route) ? LATER : NEW);
   const OLD = 'localized curricula, and completers';
   const SIX = ['partner-with-us/development-partners/', 'partner-with-us/governments/', 'partner-with-us/foundations/', 'partner-with-us/local-partners/', 'about/governance/', 'our-model/talentleap/'];
 
