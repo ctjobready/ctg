@@ -115,7 +115,7 @@ test('Polish 2: the sweep itself catches the three banned shapes (self-check)', 
 
 test('Polish 3: About "Partnership and Accountability" says partners agree the scorecard with us', () => {
   const text = main('about/index.html');
-  expect(text).toContain('Partners agree the scorecard with us before the first cohort and, as agreed in the program scope, receive monthly reports.');
+  expect(text).toContain('Partners agree the scorecard with us before the first cohort and receive monthly reports.');
   expect(text).not.toContain('partners set the scorecard');
 });
 

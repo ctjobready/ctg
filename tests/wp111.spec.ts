@@ -7,7 +7,7 @@ import { DIST_DIR } from './support/env';
  * WP111 (Opus Low run 3, kit 77: Minor and Polish). Test-first: run `npm run build`, then
  * `PORT=<port> npx playwright test tests/wp111.spec.ts --project=chromium`.
  *   - Minor 1: the SDG 9 name is "Industry, Innovation and Infrastructure" everywhere it appears (Impact, "Seven Global Goals").
- *   - Minor 2: Development Partners' first "What Your Portfolio Gets" card names the exam preparation, mentoring and placement support, with exam fees and attempts as agreed in the program scope.
+ *   - Minor 2: Development Partners' first "What Your Portfolio Gets" card names the exam preparation, mentoring and placement support, with exam fees and attempts set per program.
  *   - Minor 3: Foundations' "Two Ways to Fund the Path" lead and its "What Your Cohort Grant Gets" reporting card carry "as agreed in the program scope"; the "What Gets in the Way" card names an outsider's check.
  *   - Polish 4: Universities' H1 is "Give Your Students a Route into Paid Digital Work"; the menu description reads "Make students job-ready."; no built page keeps "Graduates" in either.
  *   - Polish 5: Universities' "Expansion Is Your Decision" card reads "You decide whether to add campuses or tracks after the pilot."
@@ -49,7 +49,7 @@ test.describe('WP111 item 1: SDG 9 is named "Industry, Innovation and Infrastruc
 test.describe('WP111 item 2: Development Partners first portfolio card', () => {
   test('the card reads the new sentence and the old one is gone', () => {
     const html = visibleText(distHtml('partner-with-us/development-partners/index.html'));
-    expect(html).toContain('Certification exam preparation, three months of mentoring and placement support in one program; exam fees and attempts as agreed in the program scope.');
+    expect(html).toContain('Certification exam preparation, three months of mentoring and placement support in one program; exam fees and attempts set per program.');
     expect(html).not.toContain('Certification exam preparation with the exam fee included, three months of mentoring and placement support, in one program.');
   });
 });
@@ -58,15 +58,15 @@ test.describe('WP111 item 2: Development Partners first portfolio card', () => {
 test.describe('WP111 item 3: Foundations lead, reporting card and funder pain', () => {
   const html = () => visibleText(distHtml('partner-with-us/foundations/index.html'));
 
-  test('the "Two Ways to Fund the Path" lead says "as agreed in the program scope"', () => {
+  test('the "Two Ways to Fund the Path" lead says the reports without the clause (WP141: the qualifier is stated once per page)', () => {
     const raw = distHtml('partner-with-us/foundations/index.html');
-    expect(raw).toContain('with monthly progress reports, as agreed in the program scope.');
-    expect(html()).not.toContain('and combine training, mentoring and placement support, with monthly progress reports.');
+    expect(raw).toContain('with monthly progress reports.');
+    expect(html()).not.toContain('with monthly progress reports, as agreed in the program scope');
   });
 
-  test('the "What Your Cohort Grant Gets" reporting card names the program scope', () => {
-    expect(html()).toContain('Monthly reports and quarterly reviews, as agreed in the program scope, keep progress visible.');
-    expect(html()).not.toContain('Monthly reports and quarterly reviews keep progress visible.');
+  test('the "What Your Cohort Grant Gets" reporting card reads without the clause (WP141: the qualifier is stated once per page)', () => {
+    expect(html()).toContain('Monthly reports and quarterly reviews keep progress visible.');
+    expect(html()).not.toContain('Monthly reports and quarterly reviews, as agreed in the program scope, keep progress visible.');
   });
 
   test('the "What Gets in the Way" card 2 says "evidence an outsider can check"', () => {

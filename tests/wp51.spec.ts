@@ -315,13 +315,13 @@ test.describe('Closing partner lines (items 9 and 17)', () => {
 
 test.describe('Home: the Outcome Tracking row, the positioning statement and the Compare heading (items 10, 11 and 12)', () => {
   // WP63 (cycle-35 review, Grok R1): "... for educated, unemployed and underemployed youth, ..." (the group ID-01 names)
-  const CLOSING = 'CodersTrust connects training, mentoring and placement support for educated, unemployed and underemployed youth, with monthly reports on progress toward paid work, as agreed in the program scope.';
+  const CLOSING = 'CodersTrust connects training, mentoring and placement support for educated, unemployed and underemployed youth, with monthly reports on progress toward paid work.';
 
   test('the Outcome Tracking row carries the scope qualifier and puts the reports first', async ({ page }) => {
     await open(page, '');
     const row = page.locator('#compare tbody tr', { has: page.locator('th', { hasText: 'Outcome Tracking' }) });
     await expect(row).toHaveCount(1);
-    expect(compact(await row.locator('td').first().textContent())).toBe('Included for every cohort, as agreed in the program scope: monthly reports and follow-up surveys at 3, 6 and 12 months');
+    expect(compact(await row.locator('td').first().textContent())).toBe('Included for every cohort: monthly reports and follow-up surveys at 3, 6 and 12 months');
   });
 
   test('the Compare heading names the one approach the table compares with', async ({ page }) => {
@@ -347,7 +347,7 @@ test.describe('Home: the first Imagine card and the Learner Journeys lead (items
     await open(page, '');
     expect(await texts(page, '#future .card__text')).toEqual([
       'A young woman in your cohort invoices her first foreign client from her own laptop.',
-      'You review monthly reports, as agreed in the program scope, showing who is earning, not only who completed.',
+      'You review monthly reports showing who is earning, not only who completed.',
       'You see employers hire completers whose skills match current employer demand.',
     ]);
     expect(await mainText(page)).not.toContain('You hear from a young woman');

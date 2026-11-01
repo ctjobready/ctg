@@ -137,7 +137,7 @@ test.describe('Development Partners and Governments: each figure once', () => {
   // WP53 (owner follow-up, 2026-10-16): "local, remote and global work" is said once, in the card's title; the text is "Placement support and outcome tracking for 12 months after each course." (tests/wp53.spec.ts)
   test('Development Partners: the mechanism card says "Placement support ..." with its 12 months of outcome tracking, not "Placement into local ..."', async ({ page }) => {
     await open(page, 'partner-with-us/development-partners/');
-    const card = page.locator('#mechanism').getByText('Placement support, then outcome tracking for 12 months after each course, as agreed in the program scope.');
+    const card = page.locator('#mechanism').getByText('Placement support, then outcome tracking for 12 months after each course.');
     await expect(card).toHaveCount(1);
     expect(await mainText(page)).not.toMatch(/Placement into local/);
   });
@@ -294,11 +294,11 @@ test.describe('TalentLEAP and YouthWIDE', () => {
   test('YouthWIDE: "Our Approach" is the two shared sentences with the program as subject, and opens the band', async ({ page }) => {
     await open(page, 'programs/youthwide/');
     await expect(page.locator('#mechanism .pos__label')).toHaveText('Our Approach');
-    await expect(page.locator('#mechanism .pos__text')).toHaveText('YouthWIDE combines training, mentoring and placement support in existing labs and colleges. Partners receive monthly reports on progress toward paid work, as agreed in the program scope.');
+    await expect(page.locator('#mechanism .pos__text')).toHaveText('YouthWIDE combines training, mentoring and placement support in existing labs and colleges. Partners receive monthly reports on progress toward paid work.');
     expect(await page.locator('#mechanism .pos').getAttribute('data-fact')).toBe('PD-01 PD-08');
     // WP44 (cycle-21 review): Foundations is declared whole too, with its own two sentences (tests/wp44.spec.ts), not the audience sentence it had here
     await open(page, 'partner-with-us/foundations/');
-    expect(compact(await page.locator('#mechanism .pos__text').textContent())).toBe('Fund a YouthWIDE cohort or JobReady’s platform infrastructure. For cohort grants, we agree a pilot scorecard and combine training, mentoring and placement support, with monthly progress reports, as agreed in the program scope.');
+    expect(compact(await page.locator('#mechanism .pos__text').textContent())).toBe('Fund a YouthWIDE cohort or JobReady’s platform infrastructure. For cohort grants, we agree a pilot scorecard and combine training, mentoring and placement support, with monthly progress reports.');
   });
 });
 
@@ -376,7 +376,7 @@ test.describe('cost and safeguarding: full on the hub, one line and a link on th
     await open(page, 'partner-with-us/');
     const cost = await answerOf(page, 'What Does It Cost?');
     // WP41 (cycle-18 review): the list is scoped to supported youth cohorts; WP43 (cycle-20 review): "Supported youth cohorts include training, certification exam preparation and the exam fee, …"; WP45: "… include outreach and selection, training, …"
-    expect(cost).toContain('As agreed in the program scope, supported youth cohorts include outreach and selection, training, certification exam preparation (with exam fees and attempts)');
+    expect(cost).toContain('Supported youth cohorts include outreach and selection, training, certification exam preparation (exam fees and attempts set per program)');
     expect(sentences(cost).length).toBeLessThanOrEqual(3);
     expect(await mainText(page)).not.toContain('Guardian consent and supervision apply to anyone under 18');
     const ld = await faqJsonLd(page);
@@ -476,7 +476,7 @@ test.describe('dating lines', () => {
 
   test('TalentLEAP and SuperKids carry today’s date, the day their wording changed', async ({ page }) => {
     await open(page, 'our-model/talentleap/');
-    expect(compact(await page.locator('.lf-updated').textContent())).toBe('Last updated October 31, 2026'); // WP112: TalentLEAP's wording last changed on 29 October (was 28 October, WP104)
+    expect(compact(await page.locator('.lf-updated').textContent())).toBe('Last updated November 1, 2026'); // WP112: TalentLEAP's wording last changed on 29 October (was 28 October, WP104); WP141 changed it on 1 November
     await open(page, 'programs/superkids/');
     expect(compact(await page.locator('.updated').textContent())).toBe('Last updated October 31, 2026'); // WP104: SuperKids gained its consent line on 29 October
   });

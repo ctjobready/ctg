@@ -26,8 +26,10 @@ interface Props {
   id?: string;
   /** The band's ground: white on the audience pages, airy on Home. */
   tone?: 'white' | 'airy' | 'ice';
+  /** WP141: the page's one program-scope statement (PROGRAM_SCOPE_STATEMENT in src/data/copy.ts), printed under the cards. */
+  scope?: string;
 }
-const { title, cards, id = 'features', tone = 'white' } = Astro.props;
+const { title, cards, id = 'features', tone = 'white', scope } = Astro.props;
 ---
 
 <Section id={id} tone={tone} aria-labelledby={`${id}-h`}>
@@ -45,6 +47,7 @@ const { title, cards, id = 'features', tone = 'white' } = Astro.props;
       ))
     }
   </ul>
+  {scope && <p class="inc__scope">{scope}</p>}
   {Astro.slots.has('more') && <p class="inc__more"><slot name="more" /></p>}
 </Section>
 
@@ -56,6 +59,10 @@ const { title, cards, id = 'features', tone = 'white' } = Astro.props;
   }
   .inc__card :global(.inc__icon) {
     color: var(--primary);
+  }
+  /* WP141: the page's one program-scope statement, one step under the cards */
+  .inc__scope {
+    margin: var(--space-md) 0 0;
   }
   /* the band's own link sits inside the band, one step under the cards (as Case Studies' "see all" link does) */
   .inc__more {

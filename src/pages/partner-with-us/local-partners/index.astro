@@ -20,7 +20,7 @@ import GainsPains from '../../../components/pages/partners/GainsPains.astro';
 import PairedEvidence from '../../../components/pages/partners/PairedEvidence.astro';
 import { LINKS } from '../../../components/pages/partners/partners';
 import { localCta } from '../../../components/pages/about/routes';
-import { LOCAL_PARTNER_EVIDENCE, LOCAL_PARTNER_PAINS, HEADLINE, MICRO_COMMITMENT, NEXT_STEPS_TITLE, POSITIONING, VALUE_PROPOSITION, painForList, painForRow } from '../../../data/copy';
+import { LOCAL_PARTNER_EVIDENCE, LOCAL_PARTNER_PAINS, HEADLINE, MICRO_COMMITMENT, NEXT_STEPS_TITLE, POSITIONING, PROGRAM_SCOPE_STATEMENT, VALUE_PROPOSITION, painForList, painForRow } from '../../../data/copy';
 import { faqJsonLd } from '../../../lib/faq';
 import { webPage } from '../../../lib/schema';
 import { BANGLADESH_HQ } from '../../../lib/site';
@@ -64,7 +64,7 @@ const jsonLd = [
 
 const ways = [
   { icon: 'building-2', title: 'Host a Cohort', text: 'Open your labs or classrooms for blended training, so cohorts meet where young people already are.' },
-  { icon: 'graduation-cap', title: 'Supply Certified Facilitators', text: 'Put trainers through certified facilitator training so delivery capacity can stay in your community where the program scope includes it.' },
+  { icon: 'graduation-cap', title: 'Supply Certified Facilitators', text: 'Put trainers through certified facilitator training so delivery capacity can stay in your community where the program includes it.' },
   { icon: 'users', title: 'Mobilize Priority Groups', text: 'Reach the young people your community serves; women are a priority in every program.' },
 ];
 ---
@@ -119,7 +119,7 @@ const ways = [
         { label: 'Your Organization', title: 'Mobilizes and Hosts', text: 'You reach young people and host cohorts in your labs, classrooms or centers.', icon: 'building-2' },
         { label: 'With CodersTrust', title: 'Trains and Prepares for Certification', text: 'Certified local facilitators, a localized curriculum and preparation for industry certification, delivered in blended classes.', icon: 'graduation-cap' },
         { label: 'Together', title: 'Mentoring and Placement', text: 'Three months of milestone-based mentoring, with placement support into local, remote and global work.', icon: 'handshake' },
-        { label: 'Throughout', title: 'Monthly Reporting', text: 'Where a funder is involved, monthly reports cover enrollment, completion, certification, placements and first earnings, as agreed in the program scope.', icon: 'chart-bar' },
+        { label: 'Throughout', title: 'Monthly Reporting', text: 'Where a funder is involved, monthly reports cover enrollment, completion, certification, placements and first earnings.', icon: 'chart-bar' },
       ]}
       link={{ label: 'How Our Model Works', href: '/our-model/' }}
     />
@@ -174,10 +174,11 @@ const ways = [
         painId: painForRow(LOCAL_PARTNER_PAINS, 'P3').painId,
         icon: 'chart-bar',
         title: 'Monthly Reports and Program Updates',
-        text: 'Where a funder is involved, it receives monthly reports as agreed in the program scope, and your organization receives agreed program updates on enrollment, completion, certification and placement.',
+        text: 'Where a funder is involved, it receives monthly reports, and your organization receives agreed program updates on enrollment, completion, certification and placement.',
         facts: ['PD-08'],
       },
     ]}
+    scope={PROGRAM_SCOPE_STATEMENT}
   />
 
   <!-- C9 -->

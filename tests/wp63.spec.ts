@@ -92,7 +92,7 @@ test.describe('G1 (GPT-6.1 Sol): an offer letter documents work, not earnings', 
     await open(page, YOUTHWIDE);
     const row = page.locator('.pg__row', { has: page.locator('dt', { hasText: 'Reporting' }) });
     await expect(row).toHaveCount(1);
-    expect(compact(await row.locator('dd').textContent())).toBe('Monthly reports and follow-up surveys, with work and earnings checked against offer letters, payslips, platform logs or bank receipts where available, as agreed in the program scope.');
+    expect(compact(await row.locator('dd').textContent())).toBe('Monthly reports and follow-up surveys, with work and earnings checked against offer letters, payslips, platform logs or bank receipts where available.');
     expect(await row.getAttribute('data-fact')).toBe('PD-08 PD-09');
   });
 
@@ -272,7 +272,7 @@ test.describe('M6 (Gemini): the Governments Her Power tile states the tracked ba
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 test.describe('R1 (Grok): Home’s "Our Approach" names the group as ID-01 does', () => {
-  const STATEMENT = 'CodersTrust connects training, mentoring and placement support for educated, unemployed and underemployed youth, with monthly reports on progress toward paid work, as agreed in the program scope.';
+  const STATEMENT = 'CodersTrust connects training, mentoring and placement support for educated, unemployed and underemployed youth, with monthly reports on progress toward paid work.';
 
   test('the statement is one sentence on Home, in the source, and declared whole in the facts gate, independently of the source', async ({ page }) => {
     expect(POSITIONING.home.text).toBe(STATEMENT);
@@ -355,7 +355,7 @@ test.describe('R9 (Grok, not done): YouthWIDE keeps its "Last updated" line', ()
     expect(withLine).toContain('/programs/youthwide/');
     expect(withLine.length, `pages with a "Last updated" line: ${withLine.join(', ')}`).toBeGreaterThan(5);
     await open(page, YOUTHWIDE);
-    await expect(page.locator('.updated')).toHaveText('Last updated October 31, 2026'); // WP104
+    await expect(page.locator('.updated')).toHaveText('Last updated November 1, 2026'); // WP104; WP141 moved it to November 1
   });
 });
 

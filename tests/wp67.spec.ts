@@ -10,7 +10,7 @@ import { listPages } from './support/pages';
  * a courtesy, not a gate); each test states one observable behavior of the register or of the built site (run `npm run build` first, then `PORT=<port> npx playwright test tests/wp67.spec.ts --project=chromium`):
  *   - 1: the SC-11 tile (About, Careers, Local Partners) reads "organizations with signed MOUs, agreements or contracts since 2014", as the hub line and SC-11's text do;
  *   - 2: OC-03's before-training median is worded "the median before training was $98", never "up from $98", on Home slide 3, the Impact and Foundations glance tiles, the Impact Survey 2026 tile and the YouthWIDE tile;
- *   - 3: the "Where They Work" card (Home, YouthWIDE, Development Partners and the shared mechanism band) closes "..., as agreed in the program scope.";
+ *   - 3: the "Where They Work" card (Home, YouthWIDE, Development Partners and the shared mechanism band) closes "....";
  *   - 4: "MoU" is "MOU" wherever it is printed (the one exception is a person's words, quoted verbatim in an archived news post);
  *   - 5: YouthWIDE's track-record heading is "We’ve Built This Path Since 2014", as on the other pages;
  *   - 6: Governments' "Can You Deliver at National Scale?" answer gives Her Power's figures from the register (three sentences, no link);
@@ -165,7 +165,7 @@ test.describe('Item 2: OC-03’s before-training median is "the median before tr
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 test.describe('Item 3: the "Where They Work" card closes "as agreed in the program scope"', () => {
-  const TEXT = 'Placement support, then outcome tracking for 12 months after each course, as agreed in the program scope.';
+  const TEXT = 'Placement support, then outcome tracking for 12 months after each course.';
 
   test('the months are still PD-02’s', () => {
     expect(fact('PD-02').text).toContain('outcome tracking for 12 months after each course');

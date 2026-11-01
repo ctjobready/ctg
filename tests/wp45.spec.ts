@@ -111,7 +111,7 @@ test.describe('Home: the trial slide leads with income and keeps its scope (item
     await open(page, '');
     const card = page.locator('#features li.card', { has: page.locator('h3', { hasText: 'Progress You Can Check' }) });
     await expect(card).toHaveCount(1);
-    await expect(card.locator('.card__text')).toHaveText('Monthly reports show progress toward paid work, as agreed in the program scope.');
+    await expect(card.locator('.card__text')).toHaveText('Monthly reports show progress toward paid work.');
     expect(await card.getAttribute('data-fact')).toBe('PD-08');
     expect(await card.getAttribute('data-relieves')).toBe('P2');
   });
@@ -235,7 +235,7 @@ test.describe('Partner with Us hub: no reporting band, two FAQs, no dead link (i
       await open(page, route);
       const callout = page.locator('.callout', { has: page.locator('.eyebrow', { hasText: 'Reporting and Review' }) });
       await expect(callout).toHaveCount(1);
-      expect(compact(await callout.locator('.callout__body p').first().textContent())).toBe('For supported cohorts, monthly reports track progress; quarterly reviews, as agreed in the program scope, guide corrective action and any expansion.');
+      expect(compact(await callout.locator('.callout__body p').first().textContent())).toBe('For supported cohorts, monthly reports track progress; quarterly reviews guide corrective action and any expansion.');
       await expect(callout.locator('a')).toHaveCount(0);
       expect(compact(await callout.textContent())).not.toContain('See Reporting and Review');
       expect((await hrefs(page, 'main a')).some((h) => h.includes('#review-cycle'))).toBe(false);
@@ -318,7 +318,7 @@ test.describe('News: the Her Power post carries a delivery note (item 20)', () =
 
 // WP46 (cycle-22 review): Our Model no longer prints the hub's inclusion answer word for word; its "What Does It Cost?" is the one-line route answer with a link to the hub's FAQ (tests/wp46.spec.ts)
 test.describe('The cost inclusions are one sentence in the hub (item 21); Our Model links to it (WP46)', () => {
-  const SENTENCE = 'As agreed in the program scope, supported youth cohorts include outreach and selection, training, certification exam preparation (with exam fees and attempts), three months of mentoring, placement support and 12 months of outcome tracking after each course.';
+  const SENTENCE = 'Supported youth cohorts include outreach and selection, training, certification exam preparation (exam fees and attempts set per program), three months of mentoring, placement support and 12 months of outcome tracking after each course.';
   const COST = `Pricing is set per program; we share an indicative budget in the discovery session. ${SENTENCE} Devices, stipends, connectivity and independent evaluation are budgeted separately where needed.`;
 
   for (const route of ['partner-with-us/']) {
@@ -347,7 +347,7 @@ test.describe('The cost inclusions are one sentence in the hub (item 21); Our Mo
 
   test('every inclusion in the sentence is one of PD-02’s standard inclusions', async () => {
     const pd02 = fact('PD-02').text.toLowerCase();
-    for (const phrase of ['outreach and selection', 'certification exam preparation (exam fees and attempts as agreed in the program scope)', 'three months of mentoring', 'placement support', 'outcome tracking for 12 months after each course']) expect(pd02, phrase).toContain(phrase);
+    for (const phrase of ['outreach and selection', 'certification exam preparation (exam fees and attempts set per program)', 'three months of mentoring', 'placement support', 'outcome tracking for 12 months after each course']) expect(pd02, phrase).toContain(phrase);
   });
 });
 

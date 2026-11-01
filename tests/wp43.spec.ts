@@ -265,7 +265,7 @@ test.describe('Home: the survey slide’s timing line is one sentence that repea
 
 test.describe('Partner with Us hub: "What Does It Cost?" is three shorter sentences (item 5)', () => {
   const COST =
-    'Pricing is set per program; we share an indicative budget in the discovery session. As agreed in the program scope, supported youth cohorts include outreach and selection, training, certification exam preparation (with exam fees and attempts), three months of mentoring, placement support and 12 months of outcome tracking after each course. Devices, stipends, connectivity and independent evaluation are budgeted separately where needed.';
+    'Pricing is set per program; we share an indicative budget in the discovery session. Supported youth cohorts include outreach and selection, training, certification exam preparation (exam fees and attempts set per program), three months of mentoring, placement support and 12 months of outcome tracking after each course. Devices, stipends, connectivity and independent evaluation are budgeted separately where needed.';
 
   test('the hub answer is the three sentences, the FAQ JSON-LD says the same words, and the delivery inventory is gone', async ({ page }) => {
     await open(page, 'partner-with-us/');
@@ -281,7 +281,7 @@ test.describe('Partner with Us hub: "What Does It Cost?" is three shorter senten
 
   test('every claim in the answer rests on the register (PD-02, PD-02a): the same items, the 12 months after each course, the separately budgeted items', async () => {
     const pd02 = fact('PD-02').text;
-    for (const phrase of ['Pricing is set per program', 'certification exam preparation (exam fees and attempts as agreed in the program scope)', 'three months of mentoring', 'placement support', 'outcome tracking for 12 months after each course', 'devices, stipends, connectivity and independent evaluation are budgeted separately where needed']) {
+    for (const phrase of ['Pricing is set per program', 'certification exam preparation (exam fees and attempts set per program)', 'three months of mentoring', 'placement support', 'outcome tracking for 12 months after each course', 'devices, stipends, connectivity and independent evaluation are budgeted separately where needed']) {
       expect(pd02.toLowerCase(), phrase).toContain(phrase.toLowerCase());
     }
     expect(fact('PD-02a').text).toContain('exam fee');
@@ -300,14 +300,14 @@ test.describe('Partner with Us hub: "What Does It Cost?" is three shorter senten
 
 test.describe('JobReady@Campus: "Our Approach" is two sentences with the reporting scoped (item 6)', () => {
   const STATEMENT =
-    'JobReady@Campus combines certification exam preparation, mentoring and placement support in campus labs alongside academic studies. Institutions receive monthly reports on progress toward paid work, as agreed in the program scope.';
+    'JobReady@Campus combines certification exam preparation, mentoring and placement support in campus labs alongside academic studies. Institutions receive monthly reports on progress toward paid work.';
 
   test('the statement is exactly these two sentences, tied to IN-09, PD-01 and PD-08, with the program as the subject and the scope clause on the reporting claim', async ({ page }) => {
     await open(page, 'programs/jobready-campus/');
     expect(compact(await page.locator('#mechanism .pos__text').textContent())).toBe(STATEMENT);
     expect(sentences(STATEMENT)).toHaveLength(2);
     expect(await page.locator('#mechanism .pos').getAttribute('data-fact')).toBe('IN-09 PD-01 PD-08');
-    expect(STATEMENT).toMatch(/monthly reports on progress toward paid work, as agreed in the program scope\.$/);
+    expect(STATEMENT).toMatch(/monthly reports on progress toward paid work\.$/);
     const text = await mainText(page);
     expect(text).not.toMatch(/For universities and colleges who need their degree holders|We combine training, mentoring and placement support in existing labs and colleges/);
     // nothing but the eyebrow and the H2 comes before the statement in its band (scripts/check-facts.mjs holds this for every page; the first thing in the band here is the statement)
@@ -333,7 +333,7 @@ test.describe('JobReady@Campus: "Our Approach" is two sentences with the reporti
     await open(page, 'partner-with-us/universities/');
     const statement = compact(await page.locator('#mechanism .pos__text').textContent());
     expect(statement.startsWith('For universities and colleges that need to prepare their degree holders for paid digital work')).toBe(false);
-    expect(statement).toBe('JobReady@Campus combines training, mentoring and placement support in campus labs alongside academic studies. Your institution receives monthly reports on progress toward paid work, as agreed in the program scope.');
+    expect(statement).toBe('JobReady@Campus combines training, mentoring and placement support in campus labs alongside academic studies. Your institution receives monthly reports on progress toward paid work.');
   });
 });
 

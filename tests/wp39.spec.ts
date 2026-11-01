@@ -50,7 +50,7 @@ interface PageSpec {
   cards: CardSpec[];
 }
 
-const SCOPE_RESULTS = 'Follow-up surveys, monthly reports and documentary evidence where available, as agreed in the program scope, give your institution outcome data it can report.';
+const SCOPE_RESULTS = 'Follow-up surveys, monthly reports and documentary evidence where available give your institution outcome data it can report.';
 const CERT_AND_MENTORING = 'Industry certification exam preparation by track, followed by three months of milestone-based mentoring toward a first client or a first job.';
 const EMPLOYER_SKILLS = 'Tracks are set from employer demand in an AI-ready curriculum, built around the skills employers say they cannot find.';
 
@@ -61,9 +61,9 @@ const PAGES: PageSpec[] = [
     h2: 'What Your Portfolio Gets',
     cards: [
       // WP49 (cycle-24 review): the 100 hours per certification stay in the delivery model above (tests/wp49.spec.ts); WP65 (cycle-37 review, Gemini, Sonnet): "CodersTrust connects training, mentoring and placement support in one program." (it said "One delivery partner connects ...")
-      { title: 'Training, Mentoring and Placement Support', text: 'Certification exam preparation, three months of mentoring and placement support in one program; exam fees and attempts as agreed in the program scope.', facts: ['PD-01'] },
+      { title: 'Training, Mentoring and Placement Support', text: 'Certification exam preparation, three months of mentoring and placement support in one program; exam fees and attempts set per program.', facts: ['PD-01'] },
       { title: 'Accessible Local Delivery', text: 'Outreach, accessible selection and tracks chosen from employer demand, with safeguarding agreed for each program.', facts: ['PD-02', 'PD-10', 'PD-12'] },
-      { title: 'Progress Your Evaluators Can Check', text: 'Baseline data, follow-up surveys and monthly reports, with documentary evidence where available, as agreed in the program scope.', facts: ['PD-08', 'PD-09'] },
+      { title: 'Progress Your Evaluators Can Check', text: 'Baseline data, follow-up surveys and monthly reports, with documentary evidence where available.', facts: ['PD-08', 'PD-09'] },
     ],
   },
   {
@@ -72,11 +72,11 @@ const PAGES: PageSpec[] = [
     cards: [
       // WP49 (cycle-24 review): "completers", the site's word for people who finished a program (it said "graduates"); WP62 (cycle-34 review, Gemini): "... placement support toward local, remote and global work." (it said "... that point completers toward paid work.")
       { title: 'Certification Tracks and Placement Support', text: 'Certification tracks chosen from employer demand, then mentoring and placement support toward local, remote and global work.', facts: ['PD-10', 'PD-01'] },
-      { title: 'Spending Measured Against Outcomes', text: 'A pilot scorecard with cost per completer and per verified outcome, and monthly reports, as agreed in the program scope. Your budget is assessed against the agreed scorecard.', facts: ['PD-11', 'PD-08'] },
+      { title: 'Spending Measured Against Outcomes', text: 'A pilot scorecard with cost per completer and per verified outcome, and monthly reports. Your budget is assessed against the agreed scorecard.', facts: ['PD-11', 'PD-08'] },
       {
         title: 'Capacity Designed to Stay in Your System',
-        // WP60 (cycle-32 review, Gemini GM5): the list opens "Where included in your program scope:" (it read as unconditional)
-        text: 'Where included in your program scope: Training of Trainers, curriculum and manuals; certified local facilitators; and blended learning in existing labs that works with limited connectivity, so rural labs can take part.',
+        // WP60 (cycle-32 review, Gemini GM5): the list opens "Where included:" (it read as unconditional)
+        text: 'Where included: Training of Trainers, curriculum and manuals; certified local facilitators; and blended learning in existing labs that works with limited connectivity, so rural labs can take part.',
         facts: ['GV-11', 'PD-06', 'PD-07'],
       },
     ],
@@ -88,14 +88,14 @@ const PAGES: PageSpec[] = [
       {
         title: 'Mentoring, Placement Support and Outcome Tracking',
         // WP49 (cycle-24 review): the scorecard also covers completion, certification and sustained work (PD-11), so results are measured against it, "including first paid work, not attendance alone"
-        text: 'Mentoring and placement support are standard inclusions, and outcomes are tracked for 12 months after each course, as agreed in the program scope. Results are measured against the agreed scorecard, including first paid work, not attendance alone.',
+        text: 'Mentoring and placement support are standard inclusions, and outcomes are tracked for 12 months after each course. Results are measured against the agreed scorecard, including first paid work, not attendance alone.',
         facts: ['PD-01', 'PD-02', 'PD-11'],
       },
       { title: 'A Pilot Scorecard Agreed with You', text: 'Cost per completer and per verified outcome, with thresholds agreed before the first cohort starts.', facts: ['PD-11'] },
       {
         title: 'Progress You Can See Every Month',
         // WP49 (cycle-24 review): two sentences; the scorecard and the contracting entity and due-diligence confirmation are stated elsewhere on the page (the first two cards, the Due Diligence band), so the card rests on PD-08 and PD-18 alone
-        text: 'Monthly reports and quarterly reviews, as agreed in the program scope, keep progress visible. Where agreed, SDG-mapped reporting follows your CSR framework, with co-branded certificates and events.',
+        text: 'Monthly reports and quarterly reviews keep progress visible. Where agreed, SDG-mapped reporting follows your CSR framework, with co-branded certificates and events.',
         facts: ['PD-08', 'PD-18'],
       },
     ],
@@ -124,7 +124,7 @@ const PAGES: PageSpec[] = [
     cards: [
       {
         title: 'Certified Facilitators and a Local Curriculum',
-        // WP52 (cycle-27 review): what stays after funding ends is scoped ("Where included in the program scope, ..."); it read "Local capacity stays after a funded cohort ends, ..."
+        // WP52 (cycle-27 review): what stays after funding ends is scoped ("Where included, ..."); it read "Local capacity stays after a funded cohort ends, ..."
         text: 'Certified-facilitator training, a localized curriculum and preparation for industry certification. You do not have to build the curriculum or certification route yourself.',
         facts: ['PD-06', 'PD-02'],
         pain: 'P1',
@@ -137,7 +137,7 @@ const PAGES: PageSpec[] = [
       },
       {
         title: 'Monthly Reports and Program Updates',
-        text: 'Where a funder is involved, it receives monthly reports as agreed in the program scope, and your organization receives agreed program updates on enrollment, completion, certification and placement.',
+        text: 'Where a funder is involved, it receives monthly reports, and your organization receives agreed program updates on enrollment, completion, certification and placement.',
         facts: ['PD-08'],
         pain: 'P3',
       },
@@ -258,7 +258,7 @@ test.describe('Partner with Us hub: no reporting band, and no page links to one 
       expect((await hrefs(page, 'main a')).some((h) => h.includes('#review-cycle')), route).toBe(false);
     }
     await open(page, 'partner-with-us/development-partners/');
-    expect(await mainText(page)).toContain('For supported cohorts, monthly reports track progress; quarterly reviews, as agreed in the program scope, guide corrective action and any expansion.');
+    expect(await mainText(page)).toContain('For supported cohorts, monthly reports track progress; quarterly reviews guide corrective action and any expansion.');
   });
 });
 
@@ -399,7 +399,7 @@ test.describe('YouthWIDE: one-sentence hero lead and one agenda line (items 7 an
     await expect(row).toHaveCount(1);
     // WP57 (cycle-29 review, GPT-6.1 Sol G2): the removed C8 card's verification detail is in this row
     // WP63 (cycle-35 review, GPT-6.1 Sol G1): "work and earnings checked against offer letters, payslips, ..."
-    expect(compact(await row.locator('dd').textContent())).toBe('Monthly reports and follow-up surveys, with work and earnings checked against offer letters, payslips, platform logs or bank receipts where available, as agreed in the program scope.');
+    expect(compact(await row.locator('dd').textContent())).toBe('Monthly reports and follow-up surveys, with work and earnings checked against offer letters, payslips, platform logs or bank receipts where available.');
     expect(await row.getAttribute('data-fact')).toBe('PD-08 PD-09');
   });
 

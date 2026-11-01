@@ -28,7 +28,7 @@ import { listPages } from './support/pages';
  *   - L7: the JobReady Platform rollout table's first row (the course storefront) is "Live", not "Operating";
  *   - GM1: the Programs hub's evidence band is "Evidence from Youth-Employment Programs", with the scope line "These results are from youth-employment programs, not evidence for every program listed above.";
  *   - GM4: Foundations' "What Happens Next" opens "For platform grants, the first conversation covers JobReady's infrastructure and staged rollout. For cohort grants, the steps are below.";
- *   - GM5: Governments' "Capacity Designed to Stay in Your System" opens "Where included in your program scope:";
+ *   - GM5: Governments' "Capacity Designed to Stay in Your System" opens "Where included:";
  *   - GM6: Development Partners' first challenge card is "Connect training to a first job, freelance client or business.";
  *   - GM7: Home's "Our Approach" is one sentence that keeps the audience, declared whole for Home in scripts/check-facts.mjs;
  *   - GM8 and GM9: the Governments and Foundations learner cards show the outcome line once (no narrative sentence repeating it).
@@ -392,7 +392,7 @@ test.describe('G5 (GPT-6.1 Sol): Local Partners’ first "What Your Community Ge
     expect(text).toBe('Certified-facilitator training, a localized curriculum and preparation for industry certification. You do not have to build the curriculum or certification route yourself.');
     expect(text).not.toContain('funding ends');
     expect(await card.getAttribute('data-fact')).toBe('PD-06 PD-02');
-    expect(compact(await page.locator('main').textContent())).toContain('Where included in the program scope, what the program builds stays in place');
+    expect(compact(await page.locator('main').textContent())).toContain('Where included, what the program builds stays in place');
   });
 });
 
@@ -456,7 +456,7 @@ test.describe('L4 (GLM): Home’s "How Do You Prove Outcomes?" says a scorecard 
     await open(page, HOME);
     const item = page.locator('#faq details', { has: page.locator('summary', { hasText: 'How Do You Prove Outcomes?' }) }).first();
     const answer = compact(await item.locator('.faq__a').textContent());
-    expect(answer).toBe(`${OPENING} As agreed in the program scope, partners receive monthly reports and follow-up surveys at 3, 6 and 12 months. Independent evaluation is welcome.`);
+    expect(answer).toBe(`${OPENING} Partners receive monthly reports and follow-up surveys at 3, 6 and 12 months. Independent evaluation is welcome.`);
     expect((await faqJsonLd(page)).find((q) => q.name === 'How Do You Prove Outcomes?')?.text).toBe(answer);
     expect(sitePages().filter((p) => visible(p.html).includes('Every cohort agrees a scorecard')).map((p) => p.route)).toEqual([]);
   });
@@ -511,16 +511,16 @@ test.describe('GM4 (Gemini): Foundations’ "What Happens Next" says what the fi
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 test.describe('GM5 (Gemini): Governments’ "Capacity Designed to Stay in Your System" opens with its scope', () => {
-  test('the card text is "Where included in your program scope: ..." and keeps its list and facts; the other two "What Your Agency Gets" cards are unchanged', async ({ page }) => {
+  test('the card text is "Where included: ..." and keeps its list and facts; the other two "What Your Agency Gets" cards are unchanged', async ({ page }) => {
     await open(page, GOVERNMENTS);
     const cards = page.locator('main section:has(h2:text-is("What Your Agency Gets")) li');
     expect(await cards.locator('.card__title').allTextContents()).toEqual(['Certification Tracks and Placement Support', 'Spending Measured Against Outcomes', 'Capacity Designed to Stay in Your System']);
     const card = cards.nth(2);
     expect(compact(await card.locator('.card__text').textContent())).toBe(
-      'Where included in your program scope: Training of Trainers, curriculum and manuals; certified local facilitators; and blended learning in existing labs that works with limited connectivity, so rural labs can take part.',
+      'Where included: Training of Trainers, curriculum and manuals; certified local facilitators; and blended learning in existing labs that works with limited connectivity, so rural labs can take part.',
     );
     expect(await card.getAttribute('data-fact')).toBe('GV-11 PD-06 PD-07');
-    expect(compact(await cards.nth(1).locator('.card__text').textContent())).toBe('A pilot scorecard with cost per completer and per verified outcome, and monthly reports, as agreed in the program scope. Your budget is assessed against the agreed scorecard.');
+    expect(compact(await cards.nth(1).locator('.card__text').textContent())).toBe('A pilot scorecard with cost per completer and per verified outcome, and monthly reports. Your budget is assessed against the agreed scorecard.');
   });
 });
 
@@ -540,7 +540,7 @@ test.describe('GM6 (Gemini): Development Partners’ first challenge card no lon
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 test.describe('GM7 (Gemini): Home’s "Our Approach" is one sentence that keeps the audience', () => {
   // WP63 (cycle-35 review, Grok R1): the audience is "educated, unemployed and underemployed youth" (it was "educated, unemployed youth"), the group ID-01 and the hero name
-  const STATEMENT = 'CodersTrust connects training, mentoring and placement support for educated, unemployed and underemployed youth, with monthly reports on progress toward paid work, as agreed in the program scope.';
+  const STATEMENT = 'CodersTrust connects training, mentoring and placement support for educated, unemployed and underemployed youth, with monthly reports on progress toward paid work.';
 
   test('the statement is the one sentence, in the source and on Home; the gate declares it whole for Home, independently of the source', async ({ page }) => {
     expect(POSITIONING.home.text).toBe(STATEMENT);

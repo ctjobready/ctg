@@ -248,9 +248,9 @@ test.describe('L3, Home: slide 4 reads "Results from the records of four program
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 test.describe('L5, Development Partners: the quarterly reviews carry the scope qualifier', () => {
-  const SENTENCE = 'For supported cohorts, monthly reports track progress; quarterly reviews, as agreed in the program scope, guide corrective action and any expansion.';
+  const SENTENCE = 'For supported cohorts, monthly reports track progress; quarterly reviews guide corrective action and any expansion.';
 
-  test('the callout says "quarterly reviews, as agreed in the program scope, guide corrective action and any expansion", tied to PD-08 and PD-11, and names the reviews once on the page', async ({ page }) => {
+  test('the callout says "quarterly reviews guide corrective action and any expansion", tied to PD-08 and PD-11, and names the reviews once on the page', async ({ page }) => {
     await open(page, DP);
     const line = page.locator('main p[data-fact="PD-08 PD-11"]');
     await expect(line).toHaveCount(1);
@@ -258,8 +258,8 @@ test.describe('L5, Development Partners: the quarterly reviews carry the scope q
     expect(compact(await page.locator('main').textContent()).split('quarterly').length - 1).toBe(1);
   });
 
-  test('no built page keeps the unqualified sentence', () => {
-    expect(sitePages().filter((p) => mainText(p.html).includes('quarterly reviews guide corrective action and any expansion')).map((p) => p.route)).toEqual([]);
+  test('no built page keeps the in-sentence clause (WP141: the qualifier is stated once per page)', () => {
+    expect(sitePages().filter((p) => mainText(p.html).includes('quarterly reviews, as agreed in the program scope, guide corrective action and any expansion')).map((p) => p.route)).toEqual([]);
   });
 });
 

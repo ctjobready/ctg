@@ -290,7 +290,7 @@ test.describe('The WP52 follow-ups (items 6 to 9)', () => {
   test('Local Partners: "Supply Certified Facilitators" scopes its promise to the program scope', async ({ page }) => {
     await open(page, LOCAL);
     const card = page.locator('#offer .card, #offer article, #offer li', { has: page.locator('text=Supply Certified Facilitators') }).first();
-    expect(compact(await card.textContent())).toContain('Put trainers through certified facilitator training so delivery capacity can stay in your community where the program scope includes it.');
+    expect(compact(await card.textContent())).toContain('Put trainers through certified facilitator training so delivery capacity can stay in your community where the program includes it.');
     expect(compact(await page.locator('main').textContent())).not.toContain('so delivery capacity stays in your community');
   });
 
@@ -298,7 +298,7 @@ test.describe('The WP52 follow-ups (items 6 to 9)', () => {
     await open(page, DP);
     const card = page.locator('#mechanism li', { has: page.locator('.model__title', { hasText: 'Local, Remote and Global Work' }) });
     await expect(card.locator('.model__title')).toHaveText('Local, Remote and Global Work');
-    expect(compact(await card.locator('.model__text').textContent())).toBe('Placement support, then outcome tracking for 12 months after each course, as agreed in the program scope.');
+    expect(compact(await card.locator('.model__text').textContent())).toBe('Placement support, then outcome tracking for 12 months after each course.');
     expect(count(compact(await card.textContent()).toLowerCase(), 'local, remote and global work')).toBe(1);
   });
 });

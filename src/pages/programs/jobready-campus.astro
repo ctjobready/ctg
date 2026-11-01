@@ -32,7 +32,7 @@ import NextSteps from '../../components/pages/programs/NextSteps.astro';
 import Section from '../../components/ui/Section.astro';
 import { faqNode, type FaqSource } from '../../components/pages/programs/faq';
 import { C14_FIRST, PAGE_UPDATED, ctaFor, serviceNode, statValue } from '../../components/pages/programs/meta';
-import { EMPATHY, MICRO_COMMITMENT, POSITIONING, PRICING, PROGRAM_OPTIONS, PROGRAM_SIZES_NOTE, SPEED_UNIVERSITIES } from '../../data/copy';
+import { EMPATHY, MICRO_COMMITMENT, POSITIONING, PRICING, PROGRAM_OPTIONS, PROGRAM_SCOPE_STATEMENT_EXAMS, PROGRAM_SIZES_NOTE, SPEED_UNIVERSITIES } from '../../data/copy';
 import { fact } from '../../data/facts';
 import { formatDate, isoDate } from '../../lib/format';
 import { webPage } from '../../lib/schema';
@@ -87,9 +87,10 @@ const options = [
     title="JobReady@Campus at a Glance"
     rows={[
       { label: 'Who It Is For', text: 'Universities and colleges that need a practical route into digital work for their students, beside the degree.', facts: ['IN-09'] },
-      { label: 'Training and Certification', text: `${hours} training hours per certification, including certification exam preparation, then three months of milestone-based mentoring; exam fees, eligibility, attempts and retakes are agreed in the program scope.`, facts: ['IN-09', 'PD-01', 'PD-03', 'PD-02a'] },
-      { label: 'Reporting', text: 'Baseline data, follow-up surveys and monthly reports, as agreed in the program scope, so your institution builds placement evidence from its own students.', facts: ['PD-08', 'PD-09'] },
+      { label: 'Training and Certification', text: `${hours} training hours per certification, including certification exam preparation, then three months of milestone-based mentoring; exam fees, eligibility, attempts and retakes are set per program.`, facts: ['IN-09', 'PD-01', 'PD-03', 'PD-02a'] },
+      { label: 'Reporting', text: 'Baseline data, follow-up surveys and monthly reports, so your institution builds placement evidence from its own students.', facts: ['PD-08', 'PD-09'] },
     ]}
+    scope={PROGRAM_SCOPE_STATEMENT_EXAMS}
   />
 
   <!-- C2 (WP24c): a short problem band, built only from content this page already states. WP34 (cycle-11 review): the Bangladesh graduate-unemployment tile (PX-03) is gone from this global page. -->
@@ -120,8 +121,8 @@ const options = [
     title="What a Campus Cohort Can Produce"
     lead="Illustrative: a certification beside the degree, and placement evidence from your own students."
     vignettes={[
-      { kind: 'Functional', title: 'An Industry Certification Beside the Degree', text: 'Students who pass the exam add an industry certification beside their degree. Certification is not guaranteed; eligibility, attempts and retakes are agreed in the program scope.' },
-      { kind: 'Emotional', title: 'A Stronger Employment Story', text: 'As agreed in the program scope, every campus cohort includes baseline data and follow-up surveys at 3, 6 and 12 months, so your institution can build placement evidence from its own students.' },
+      { kind: 'Functional', title: 'An Industry Certification Beside the Degree', text: 'Students who pass the exam add an industry certification beside their degree. Certification is not guaranteed; eligibility, attempts and retakes are set per program.' },
+      { kind: 'Emotional', title: 'A Stronger Employment Story', text: 'Every campus cohort includes baseline data and follow-up surveys at 3, 6 and 12 months, so your institution can build placement evidence from its own students.' },
       { kind: 'Social', title: 'Capacity Designed to Stay on Campus', text: 'Campus labs work as blended-learning centers, with certified local facilitators.' },
     ]}
   />
@@ -158,7 +159,7 @@ const options = [
     cards={[
       { icon: 'award', title: 'Certification Exam Preparation and Mentoring', text: 'Industry certification exam preparation by track, followed by three months of milestone-based mentoring toward a first client or a first job.', facts: ['PD-02', 'PD-01'] },
       { icon: 'briefcase', title: 'Skills Employers Ask For', text: 'Tracks are set from employer demand in an AI-ready curriculum, built around the skills employers say they cannot find.', facts: ['PD-10', 'PD-02'] },
-      { icon: 'clipboard-check', title: 'Placement Evidence You Can Report', text: 'Follow-up surveys, monthly reports and documentary evidence where available, as agreed in the program scope, give your institution outcome data it can report.', facts: ['PD-08', 'PD-09'] },
+      { icon: 'clipboard-check', title: 'Placement Evidence You Can Report', text: 'Follow-up surveys, monthly reports and documentary evidence where available give your institution outcome data it can report.', facts: ['PD-08', 'PD-09'] },
     ]}
   />
 

@@ -46,7 +46,7 @@ import StepsBand from '../../../components/pages/partners/StepsBand.astro';
 import Reinforcement from '../../../components/pages/partners/Reinforcement.astro';
 import PageEnhancements from '../../../components/pages/partners/PageEnhancements.astro';
 import { HOURS, LINKS, TRACKING_MONTHS, meta } from '../../../components/pages/partners/partners';
-import { HEADLINE, POSITIONING, READ_THE_EVIDENCE, SPEED_UNIVERSITIES, VALUE_PROPOSITION } from '../../../data/copy';
+import { HEADLINE, POSITIONING, PROGRAM_SCOPE_STATEMENT_EXAMS, READ_THE_EVIDENCE, SPEED_UNIVERSITIES, VALUE_PROPOSITION } from '../../../data/copy';
 import { faqJsonLd } from '../../../lib/faq';
 import { cta } from '../../../lib/mailto';
 import { webPage } from '../../../lib/schema';
@@ -135,8 +135,8 @@ const FAQ_IDS = ['Q1-campus', 'Q10-campus', 'Q8-route'];
     positioning={POSITIONING.universities}
     blocks={[
       { label: 'Set Up', title: 'Campus Labs as Learning Centers', text: 'On-campus labs become blended-learning centers with certified local facilitators; faculty members act as coordinators.', icon: 'landmark' },
-      { label: 'Prepare for Certification', title: 'Industry Certification Tracks', text: `${HOURS} training hours per certification, including exam preparation; eligibility, attempts and terms are agreed in the program scope.`, icon: 'award' },
-      { label: 'Mentor and Place', title: 'Mentoring and Placement', text: `Three months of milestone-based mentoring and placement support, with outcome tracking for ${TRACKING_MONTHS} months after each course, as agreed in the program scope.`, icon: 'users' },
+      { label: 'Prepare for Certification', title: 'Industry Certification Tracks', text: `${HOURS} training hours per certification, including exam preparation; eligibility, attempts and terms are set per program.`, icon: 'award' },
+      { label: 'Mentor and Place', title: 'Mentoring and Placement', text: `Three months of milestone-based mentoring and placement support, with outcome tracking for ${TRACKING_MONTHS} months after each course.`, icon: 'users' },
       { label: 'Alongside Studies', title: 'In Parallel with the Degree', text: 'Training runs in parallel with academic studies, with professional internships where employer placements are available.', icon: 'graduation-cap' },
     ]}
     link={{ label: 'About JobReady@Campus', href: LINKS.campus }}
@@ -153,8 +153,9 @@ const FAQ_IDS = ['Q1-campus', 'Q10-campus', 'Q8-route'];
     cards={[
       { icon: 'award', title: 'Certification Exam Preparation and Mentoring', text: 'Industry certification exam preparation by track, followed by three months of milestone-based mentoring toward a first client or a first job.', facts: ['PD-02', 'PD-01'] },
       { icon: 'briefcase', title: 'Skills Employers Ask For', text: 'Tracks are set from employer demand in an AI-ready curriculum, built around the skills employers say they cannot find.', facts: ['PD-10', 'PD-02'] },
-      { icon: 'clipboard-check', title: 'Placement Evidence You Can Report', text: 'Follow-up surveys, monthly reports and documentary evidence where available, as agreed in the program scope, give your institution outcome data it can report.', facts: ['PD-08', 'PD-09'] },
+      { icon: 'clipboard-check', title: 'Placement Evidence You Can Report', text: 'Follow-up surveys, monthly reports and documentary evidence where available give your institution outcome data it can report.', facts: ['PD-08', 'PD-09'] },
     ]}
+    scope={PROGRAM_SCOPE_STATEMENT_EXAMS}
   />
 
   <!-- C9 · Objections -->

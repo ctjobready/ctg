@@ -26,7 +26,7 @@ const description = desc('JobReady is CodersTrust’s digital learning and earni
 // WP41 (cycle-18 review): the answer points to "Rollout Status" (#status) above it instead of listing the status a second time (the table says it).
 const faqIds = ['Q11-platform'];
 const jsonLd = [
-  articleNode({ path, headline: 'JobReady: A Platform Built to Connect Learning to Work', description, datePublished: '2026-10-08', dateModified: '2026-10-31', author: 'CodersTrust', about: { '@type': 'Thing', name: 'JobReady Platform' } }),
+  articleNode({ path, headline: 'JobReady: A Platform Built to Connect Learning to Work', description, datePublished: '2026-10-08', dateModified: '2026-11-01', author: 'CodersTrust', about: { '@type': 'Thing', name: 'JobReady Platform' } }),
   faqJsonLd('foundations', path, faqIds),
 ];
 const faq = faqItems('foundations', faqIds);
@@ -50,6 +50,7 @@ const toc = [
   { id: 'why', label: 'The Record Behind JobReady' },
   { id: 'roadmap', label: 'Planned Adaptive Learning' },
   { id: 'faq', label: 'Questions About the Platform' },
+  { id: 'cta', label: 'Talk to Us About JobReady' },
 ];
 // WP60 (cycle-32 review, Grok R4): the tile says the 1.5M+ are not CodersTrust's learners: SC-04's label plus NU_NOT_TRAINED (src/data/copy.ts). WP102: headed "Being Onboarded"; the label reads "National University learners being onboarded, not learners trained by CodersTrust".
 const onboardBase = fact('SC-04').stat?.label;
@@ -68,7 +69,7 @@ const d = discoveryCta();
   lead="JobReady is CodersTrust’s digital learning and earning platform. Modules are rolling out in stages."
   description={description}
   path={path}
-  updated="2026-10-31"
+  updated="2026-11-01"
   toc={toc}
   breadcrumbs={[{ label: 'Our Model', href: '/our-model/' }, { label: 'JobReady Platform' }]}
   jsonLd={jsonLd}
@@ -122,7 +123,7 @@ const d = discoveryCta();
     <Accordion items={faq} name="jr-faq" openFirst />
   </ReportSection>
 
-  <aside class="jr__next" aria-label="Talk to us about JobReady">
+  <aside class="jr__next" id="cta" aria-label="Talk to us about JobReady">
     <h2 class="jr__nexttitle">Talk to Us About JobReady</h2>
     <p>A discovery session covers how JobReady fits your program, and a platform grant helps CodersTrust roll out the remaining modules. In your inquiry, include two suitable times.</p>
     <div class="jr__actions">

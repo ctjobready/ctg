@@ -458,6 +458,8 @@ export const TRIAL_SCOPE = {
  * WP43 (cycle-20 review): JobReady@Campus' statement is two sentences too, with the program as the subject ("JobReady@Campus combines certification exam preparation, mentoring and placement support in campus labs alongside
  * academic studies. Institutions receive monthly reports on progress toward paid work, as agreed in the program scope."); the gate declares it whole as well.
  * SuperKids' statement is two plain sentences, what the program offers and what the agreements are (the gate asks nothing of its wording: it carries no comparison clause).
+ * WP141 (owner answer 2026-11-01): the statements above no longer end ", as agreed in the program scope" (their quoted wording in this comment is the earlier form): the qualifier is stated once per page (PROGRAM_SCOPE_STATEMENT), and the gate
+ * (scripts/check-facts.mjs) declares the statements whole without it.
  */
 export type PositioningKey = Exclude<Audience, 'nuPgd' | 'investors'> | 'youthwide' | 'nationwide' | 'campus' | 'work' | 'superkids';
 
@@ -478,7 +480,7 @@ const UNLIKE_APPROVED =
  * WP63 (cycle-35 review, Grok R1): the audience is "educated, unemployed and underemployed youth", the group ID-01 and the hero's value proposition name ("... for educated, unemployed and underemployed youth, with monthly reports ..."); the declaration in scripts/check-facts.mjs changed with it.
  */
 const HOME_POSITIONING =
-  'CodersTrust connects training, mentoring and placement support for educated, unemployed and underemployed youth, with monthly reports on progress toward paid work, as agreed in the program scope.';
+  'CodersTrust connects training, mentoring and placement support for educated, unemployed and underemployed youth, with monthly reports on progress toward paid work.';
 
 export const POSITIONING: Record<PositioningKey, CopyBlock> = {
   home: {
@@ -489,25 +491,25 @@ export const POSITIONING: Record<PositioningKey, CopyBlock> = {
     // WP42 (cycle-19 review): the hero, the problem band and the glance above say who the page is for and what they need, so "Our Approach" states what the model does, in the two shared sentences with the tracking said as the page's
     // cards say it ("outcome tracking after each course, as agreed in the program scope"). scripts/check-facts.mjs declares it whole for /partner-with-us/development-partners/ (POSITION_WHOLE_STATEMENT). It rests on PD-01
     // (training, mentoring, placement support), PD-08 (monthly reports) and PD-09 (follow-up surveys at 3, 6 and 12 months).
-    text: 'We combine training, mentoring and placement support in existing labs and colleges. Partners receive monthly reports and outcome tracking after each course, as agreed in the program scope.',
+    text: 'We combine training, mentoring and placement support in existing labs and colleges. Partners receive monthly reports and outcome tracking after each course.',
     facts: ['PD-01', 'PD-08', 'PD-09'],
   },
   governments: {
     // WP42 (cycle-19 review): as Development Partners: the two shared sentences, the reader named in the second ("Your agency receives monthly reports on progress toward paid work"). Declared whole for /partner-with-us/governments/
     // (POSITION_WHOLE_STATEMENT); it rests on PD-01 and PD-08.
-    text: 'We combine training, mentoring and placement support in existing labs and colleges. Your agency receives monthly reports on progress toward paid work, as agreed in the program scope.',
+    text: 'We combine training, mentoring and placement support in existing labs and colleges. Your agency receives monthly reports on progress toward paid work.',
     facts: ['PD-01', 'PD-08'],
   },
   foundations: {
     // WP44 (cycle-21 review): the hero and the Funding Route chooser already say who the page is for, so "Our Approach" states what the two grants fund and what they agree, in two sentences. scripts/check-facts.mjs declares it whole
     // for /partner-with-us/foundations/ (POSITION_WHOLE_STATEMENT). It rests on IN-04 (the platform grant), PD-01 (training, mentoring, placement support), PD-08 (monthly reports) and PD-11 (the pilot scorecard agreed in co-design).
-    text: 'Fund a YouthWIDE cohort or JobReady’s platform infrastructure. For cohort grants, we agree a pilot scorecard and combine training, mentoring and placement support, with monthly progress reports, as agreed in the program scope.',
+    text: 'Fund a YouthWIDE cohort or JobReady’s platform infrastructure. For cohort grants, we agree a pilot scorecard and combine training, mentoring and placement support, with monthly progress reports.',
     facts: ['IN-04', 'PD-01', 'PD-08', 'PD-11'],
   },
   universities: {
     // WP44 (cycle-21 review): as JobReady@Campus: the program is the subject, and the institution's reports are scoped as the program scope says. scripts/check-facts.mjs declares it whole for /partner-with-us/universities/ (POSITION_WHOLE_STATEMENT).
     // It rests on IN-09 (training in parallel with academic studies, in on-campus labs), PD-01 (mentoring, placement support) and PD-08 (monthly reports).
-    text: 'JobReady@Campus combines training, mentoring and placement support in campus labs alongside academic studies. Your institution receives monthly reports on progress toward paid work, as agreed in the program scope.',
+    text: 'JobReady@Campus combines training, mentoring and placement support in campus labs alongside academic studies. Your institution receives monthly reports on progress toward paid work.',
     facts: ['IN-09', 'PD-01', 'PD-08'],
   },
   employers: {
@@ -525,7 +527,7 @@ export const POSITIONING: Record<PositioningKey, CopyBlock> = {
     // WP36 (cycle-13 review): YouthWIDE's hero lead and "at a Glance" rows already say who the program is for and where it runs, so "Our Approach" states only what the program does, in the two shared sentences
     // with the program named as the subject. This is the one page-specific statement of its kind: scripts/check-facts.mjs declares it whole for /programs/youthwide/ (POSITION_WHOLE_STATEMENT).
     // WP93 (triage A4): the reporting promise carries the scope guard, as the other Approach statements do.
-    text: 'YouthWIDE combines training, mentoring and placement support in existing labs and colleges. Partners receive monthly reports on progress toward paid work, as agreed in the program scope.',
+    text: 'YouthWIDE combines training, mentoring and placement support in existing labs and colleges. Partners receive monthly reports on progress toward paid work.',
     facts: ['PD-01', 'PD-08'],
   },
   // No page uses this statement today (the YouthWIDE page's is `youthwide`, above). WP45 (cycle-21 review): it no longer calls the Bangladesh initiative "a national initiative" (IN-01 is an initiative that aims to train educated youth by 2030, in Bangladesh and similar countries).
@@ -538,7 +540,7 @@ export const POSITIONING: Record<PositioningKey, CopyBlock> = {
     // sentences, with the program as the subject (as YouthWIDE's does) and the reporting scoped as the Development Partners and Governments statements scope it ("as agreed in the program scope"; PD-08 states the reports for
     // funders and the page's cards state them for the institution, in the program scope). scripts/check-facts.mjs declares it whole for /programs/jobready-campus/ (POSITION_WHOLE_STATEMENT). It rests on IN-09 (training in parallel
     // with academic studies, in on-campus labs, with preparation for industry-recognized certifications), PD-01 (mentoring, placement support) and PD-08 (monthly reports).
-    text: 'JobReady@Campus combines certification exam preparation, mentoring and placement support in campus labs alongside academic studies. Institutions receive monthly reports on progress toward paid work, as agreed in the program scope.',
+    text: 'JobReady@Campus combines certification exam preparation, mentoring and placement support in campus labs alongside academic studies. Institutions receive monthly reports on progress toward paid work.',
     facts: ['IN-09', 'PD-01', 'PD-08'],
   },
   work: {
@@ -837,6 +839,13 @@ export const STEPS = [
 export const STEPS_FACTS = ['PD-19', 'PD-01', 'PD-15', 'PD-08', 'PD-09'];
 
 export const MICRO_COMMITMENT = 'A discovery session is a conversation, not a commitment.';
+/**
+ * WP141 (owner answer 2026-11-01, "as agreed in the program scope" ONCE per page): the program-scope qualifier is stated once on a page, as its own short sentence in the page's inclusions band
+ * (IncludesBand's `scope`, or the first band that makes an inclusion or reporting promise), instead of at the end of each sentence. The other sentences, FAQ answers, JSON-LD, meta descriptions and llms.txt say the
+ * promise plainly; the exam terms read "set per program". The EXAMS form is for pages that state exam fees, eligibility or attempts. tests/wp141.spec.ts walks every built page (news posts and the styleguide excluded).
+ */
+export const PROGRAM_SCOPE_STATEMENT = 'Inclusions and reporting on this page are agreed in the program scope.';
+export const PROGRAM_SCOPE_STATEMENT_EXAMS = 'Inclusions, exam terms and reporting on this page are agreed in the program scope.';
 /**
  * WP59 (cycle-31 review, GPT-6.1 Sol G2): what a discovery session does, in the one sentence the Impact pages' closing bands and TalentLEAP's next step print. "A discovery session agrees your priority groups, tracks and the pilot scorecard." (WP58, K5) made the first call sound like a
  * commitment; the session "explores" what the visitor brings. It stands beside MICRO_COMMITMENT, which says the session is not a commitment.

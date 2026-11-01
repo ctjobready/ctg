@@ -64,11 +64,11 @@ test.describe('Item 2: the overlap sentence only where 150,000+ is printed', () 
 test.describe('Item 3: "Last updated" and the Her Power news date are October 24, 2026', () => {
   test('YouthWIDE and JobReady Platform show October 24, 2026', async ({ page }) => {
     await open(page, 'programs/youthwide/');
-    // WP104: both stamps moved on to October 31, 2026 with their later content changes (tests/wp104.spec.ts)
-    await expect(page.locator('.updated')).toHaveText('Last updated October 31, 2026');
+    // WP104: both stamps moved on with their later content changes (tests/wp104.spec.ts); WP141: November 1, 2026
+    await expect(page.locator('.updated')).toHaveText('Last updated November 1, 2026');
     await open(page, 'our-model/jobready-platform/');
-    await expect(page.locator('.lf-updated')).toHaveText('Last updated October 31, 2026');
-    expect(pageHtml('our-model/jobready-platform/')).toContain('"dateModified":"2026-10-31"');
+    await expect(page.locator('.lf-updated')).toHaveText('Last updated November 1, 2026');
+    expect(pageHtml('our-model/jobready-platform/')).toContain('"dateModified":"2026-11-01"');
   });
 
   // WP124: the Her Power post moved on to October 29, 2026 with its quotation-mark fix (tests/wp124.spec.ts)
@@ -114,7 +114,7 @@ test.describe('Item 5: the WSDFM caption uses the short form of the not-trial no
 test.describe('Item 6: Universities outcome tracking is scoped like the other pages', () => {
   test('the Mentoring and Placement card says "after each course, as agreed in the program scope"', async ({ page }) => {
     await open(page, 'partner-with-us/universities/');
-    await expect(page.locator('body')).toContainText('with outcome tracking for 12 months after each course, as agreed in the program scope.');
+    await expect(page.locator('body')).toContainText('with outcome tracking for 12 months after each course.');
   });
 });
 

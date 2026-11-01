@@ -32,8 +32,10 @@ interface Props {
   tone?: 'white' | 'airy' | 'ice';
   id?: string;
   audience?: 'funders' | 'employers';
+  /** WP141: the page's one program-scope statement (PROGRAM_SCOPE_STATEMENT in src/data/copy.ts), printed under the full view's cards (the hub). */
+  scope?: string;
 }
-const { compact = false, brief = false, tone = 'ice', id = 'due-diligence', audience = 'funders' } = Astro.props;
+const { compact = false, brief = false, tone = 'ice', id = 'due-diligence', audience = 'funders', scope } = Astro.props;
 const diligence = cta('diligence');
 const entities = `${CONTRACTING_ENTITIES}, depending on the program’s country and`;
 const contracting = { icon: 'building-2', title: 'Contracting Entities', text: `${entities} the ${audience === 'funders' ? 'funder' : 'contracting party'}’s requirements.`, href: '/about/governance/#contracting', link: 'Contracting and Accountability', ids: 'ID-07 PD-13' };
@@ -41,14 +43,14 @@ const independent = { icon: 'search-check', title: 'Independent Evaluation Welco
 const funderItems = [
   contracting,
   // WP45 (cycle-21 review): the hub's "Monthly Reports and Quarterly Reviews" band (#review-cycle) is gone, so this card links to where Governance answers how outcomes are tracked and reported (its FAQ, #faq).
-  { icon: 'file-check', title: 'Monthly Reports and Follow-Up Surveys', text: `Included for every cohort, as agreed in the program scope: follow-up surveys at ${TRACER_MONTHS} and monthly reports.`, href: '/about/governance/#faq', link: 'How We Track Outcomes', ids: 'PD-08 PD-09' },
+  { icon: 'file-check', title: 'Monthly Reports and Follow-Up Surveys', text: `Included for every cohort: follow-up surveys at ${TRACER_MONTHS} and monthly reports.`, href: '/about/governance/#faq', link: 'How We Track Outcomes', ids: 'PD-08 PD-09' },
   { icon: 'shield', title: 'Safeguarding Agreed per Program', text: 'Consent, protected records and grievance handling are specified for each program.', href: '/about/governance/#safeguarding', link: 'How People Are Protected', ids: 'PD-12' },
   independent,
 ];
 const employerItems = [
   contracting,
   { icon: 'clipboard-check', title: 'Needs Assessment First', text: 'A needs assessment scopes the skills and team size, and success measures are agreed before you start.', href: '/programs/jobready-work/#mechanism', link: 'How a Program Is Built', ids: 'IN-10' },
-  { icon: 'chart-bar', title: 'Progress Evaluation', text: 'A progress evaluation checks results against the measures you set, as agreed in the program scope.', href: '/programs/jobready-work/#next-steps', link: 'What Happens Next', ids: 'IN-10' },
+  { icon: 'chart-bar', title: 'Progress Evaluation', text: 'A progress evaluation checks results against the measures you set.', href: '/programs/jobready-work/#next-steps', link: 'What Happens Next', ids: 'IN-10' },
 ];
 const items = audience === 'employers' ? employerItems : funderItems;
 ---
@@ -76,6 +78,7 @@ const items = audience === 'employers' ? employerItems : funderItems;
       </li>
     ))}
   </ul>
+  {scope && <p class="ddv__scope">{scope}</p>}
   {!compact && (
     <p class="cluster ddv__more">
       <a class="link" href={linkAttrs('/impact/outcomes-2026/').href}>Impact Survey 2026<Icon name="arrow-right" size={16} /></a>
@@ -164,6 +167,10 @@ const items = audience === 'employers' ? employerItems : funderItems;
   .ddv__link {
     align-self: flex-start;
     min-height: 24px;
+  }
+  /* WP141: the page's one program-scope statement, one step under the cards */
+  .ddv__scope {
+    margin: var(--space-md) 0 0;
   }
   .ddv__more {
     margin: var(--space-md) 0 0;

@@ -299,7 +299,7 @@ test.describe('Item 17: polish', () => {
   });
 
   test('Foundations: outcome tracking carries "as agreed in the program scope"', () => {
-    expect(visible(pageHtml('partner-with-us/foundations/'))).toContain('outcomes are tracked for 12 months after each course, as agreed in the program scope.');
+    expect(visible(pageHtml('partner-with-us/foundations/'))).toContain('outcomes are tracked for 12 months after each course.');
   });
 });
 

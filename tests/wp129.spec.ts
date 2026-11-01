@@ -75,12 +75,12 @@ const sentences = (t: string) => t.split(/(?<=\.)\s+(?=[A-Z“"])/);
 // ---------------------------------------------------------------------------------------------------------------------------------
 test.describe('WP129 item 1: the 100 training hours per certification include exam preparation', () => {
   const YOUTHWIDE =
-    '100 training hours per certification, including certification exam preparation (exam fees and attempts as agreed in the program scope), then three months of milestone-based mentoring.';
+    '100 training hours per certification, including certification exam preparation (exam fees and attempts set per program), then three months of milestone-based mentoring.';
   const CAMPUS =
-    '100 training hours per certification, including certification exam preparation, then three months of milestone-based mentoring; exam fees, eligibility, attempts and retakes are agreed in the program scope.';
-  const UNIVERSITIES = '100 training hours per certification, including exam preparation; eligibility, attempts and terms are agreed in the program scope.';
+    '100 training hours per certification, including certification exam preparation, then three months of milestone-based mentoring; exam fees, eligibility, attempts and retakes are set per program.';
+  const UNIVERSITIES = '100 training hours per certification, including exam preparation; eligibility, attempts and terms are set per program.';
   const Q14 =
-    'Compared with a self-paced course alone, supported CodersTrust cohorts add mentoring, certification exam preparation and placement support. As agreed in the program scope, every supported TalentLEAP cohort pairs 100 training hours per certification, including certification exam preparation (with exam fees and attempts), with three months of milestone-based mentoring, placement support and outcome tracking for 12 months after each course.';
+    'Compared with a self-paced course alone, supported CodersTrust cohorts add mentoring, certification exam preparation and placement support. Every supported TalentLEAP cohort pairs 100 training hours per certification, including certification exam preparation (exam fees and attempts set per program), with three months of milestone-based mentoring, placement support and outcome tracking for 12 months after each course.';
 
   test('YouthWIDE at a Glance, "Training and Mentoring"', () => {
     expect(text('programs/youthwide/index.html')).toContain(YOUTHWIDE);
@@ -241,14 +241,30 @@ test.describe('WP129 item 6: every dated page whose visible text changed carries
     ['programs/nu-postgraduate-diploma/digital-marketing/index.html', 'updated'],
     ['programs/nu-postgraduate-diploma/ict/index.html', 'updated'],
   ];
+  // WP141 (owner answer 2026-11-01): these pages changed again on 1 November (the program-scope qualifier is stated once per page; the Governance, TalentLEAP and JobReady Platform "On This Page" lists gain their closing heading) and moved on to 2026-11-01.
+  const MOVED_1101 = new Set([
+    'about/governance/index.html',
+    'our-model/talentleap/index.html',
+    'our-model/jobready-platform/index.html',
+    'programs/youthwide/index.html',
+    'programs/jobready-campus/index.html',
+    'programs/jobready-work/index.html',
+    'about/index.html',
+    'about/recognition/index.html',
+    'partner-with-us/foundations/index.html',
+    'partner-with-us/governments/index.html',
+    'partner-with-us/investors/index.html',
+    'programs/index.html',
+  ]);
   for (const [route, cls] of STAMPED) {
-    test(`${route} reads "Last updated October 31, 2026" and its JSON-LD dateModified is 2026-10-31`, () => {
+    const [day, long] = MOVED_1101.has(route) ? ['2026-11-01', 'November 1, 2026'] : ['2026-10-31', 'October 31, 2026'];
+    test(`${route} reads "Last updated ${long}" and its JSON-LD dateModified is ${day}`, () => {
       const raw = html(route);
       const m = new RegExp(`<p class="${cls}[^"]*"[^>]*>([\\s\\S]*?)</p>`).exec(raw);
-      expect(visible(m?.[1] ?? '')).toBe('Last updated October 31, 2026');
-      expect(raw).toMatch(/<time datetime="2026-10-31"/);
-      expect(dateModified(raw)).toContain('2026-10-31');
-      expect(dateModified(raw).filter((d) => d < '2026-10-31')).toEqual([]);
+      expect(visible(m?.[1] ?? '')).toBe(`Last updated ${long}`);
+      expect(raw).toMatch(new RegExp(`<time datetime="${day}"`));
+      expect(dateModified(raw)).toContain(day);
+      expect(dateModified(raw).filter((d) => d < day)).toEqual([]);
     });
   }
 
@@ -270,8 +286,9 @@ test.describe('WP129 item 6: every dated page whose visible text changed carries
     'programs/index.html',
   ];
   for (const route of JSONLD_ONLY) {
-    test(`${route} pins its own JSON-LD dateModified to 2026-10-31`, () => {
-      expect(dateModified(html(route))).toContain('2026-10-31');
+    const day = MOVED_1101.has(route) ? '2026-11-01' : '2026-10-31';
+    test(`${route} pins its own JSON-LD dateModified to ${day}`, () => {
+      expect(dateModified(html(route))).toContain(day);
     });
   }
 

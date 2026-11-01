@@ -170,7 +170,7 @@ test.describe('WP107 item 4: the YouthWIDE meta description does not narrow the 
 // --------------------------------------------------------------------------------------------------------------------------------
 test.describe('WP107 item 5: the trial page ends with "How We Track Outcomes", the answer directly under the H2', () => {
   const ANSWER =
-    'For every cohort, as agreed in the program scope, we plan a baseline at enrollment, follow-up surveys at 3, 6 and 12 months and monthly reports. Where available, offer letters, payslips, platform logs or bank receipts document work and earnings.';
+    'For every cohort, we plan a baseline at enrollment, follow-up surveys at 3, 6 and 12 months and monthly reports. Where available, offer letters, payslips, platform logs or bank receipts document work and earnings.';
 
   test('the last H2 is "How We Track Outcomes"; the section holds the answer paragraph and nothing else (no accordion, no H3, no question)', async ({ page }) => {
     await open(page, 'impact/independent-evaluation/');
@@ -182,7 +182,8 @@ test.describe('WP107 item 5: the trial page ends with "How We Track Outcomes", t
     const children = section.locator('.rsec__body > *');
     await expect(children).toHaveCount(1);
     expect(await children.first().evaluate((el) => el.tagName)).toBe('P');
-    expect(compact(await children.first().textContent())).toBe(ANSWER);
+    // WP141 (owner answer 2026-11-01): the paragraph closes with the page's one program-scope statement; the answer itself no longer carries the clause
+    expect(compact(await children.first().textContent())).toBe(`${ANSWER} Inclusions and reporting on this page are agreed in the program scope.`);
     expect(await children.first().getAttribute('data-fact')).toBe('PD-09 PD-08 RC-01');
     await expect(section.locator('details, summary, h3')).toHaveCount(0);
   });

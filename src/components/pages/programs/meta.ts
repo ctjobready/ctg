@@ -20,13 +20,14 @@ export const C14_FIRST_FUNDERS = `${C14_FIRST.replace(/\.$/, '')} for a discover
  * 2026-10-29 (WP104, from a build of the site before and after each commit): the NU index and course pages (WP102: NU learners "being onboarded", the affiliated-college wording; WP104: the Context heading) and JobReady@Campus (WP102: the same NU learners line);
  * JobReady@Work (WP104: AIvolve as an offering in the Training row, off the partners list). Pages whose text last changed on 28 October (TalentLEAP) are dated then.
  * 2026-10-31 (WP129, owner rule: any change to visible text moves the date, copy edits included): JobReady@Campus, JobReady@Work, the NU index and the NU course pages, whose copy changed on 30 October (WP126 to WP128; the NU payment line's semicolons) and 31 October (WP129).
+ * 2026-11-01 (WP141, owner answer: the program-scope qualifier is stated once per page): JobReady@Campus and JobReady@Work (the programs index and YouthWIDE carry their own LAST_UPDATED).
  */
 export const LAST_UPDATED = '2026-10-08';
 export const PAGE_UPDATED = {
   programs: '2026-10-10',
   youthwide: '2026-10-11',
-  campus: '2026-10-31',
-  work: '2026-10-31',
+  campus: '2026-11-01', // WP141 (owner answer 2026-11-01): the program-scope qualifier is stated once per page
+  work: '2026-11-01', // WP141: as campus
   superkids: '2026-10-10',
   nu: '2026-10-31',
   nuCourse: '2026-10-31',

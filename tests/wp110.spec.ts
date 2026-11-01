@@ -43,7 +43,7 @@ test.describe('WP110 item 1: Her Power contract scope on Governments includes di
 test.describe('WP110 item 2: Home reporting card reads "Monthly reports show"', () => {
   test('Home prints the new sentence and no built page keeps "Monthly reports will show progress"', () => {
     const home = distHtml('index.html');
-    expect(visibleText(home)).toContain('Monthly reports show progress toward paid work, as agreed in the program scope.');
+    expect(visibleText(home)).toContain('Monthly reports show progress toward paid work.');
     expect(visibleText(home)).not.toContain('Monthly reports will show progress toward paid work');
     const offenders = walk(DIST_DIR).filter((f) => visibleText(readFileSync(f, 'utf8')).includes('Monthly reports will show progress toward paid work'));
     expect(offenders).toEqual([]);

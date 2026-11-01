@@ -80,7 +80,7 @@ test.describe('Development Partners: the problem band and the first portfolio ca
     await open(page, DP);
     const card = page.locator('#features li.card').first();
     await expect(card.locator('h3')).toHaveText('Training, Mentoring and Placement Support');
-    expect(await texts(page, '#features li.card:nth-child(1) p')).toEqual(['Certification exam preparation, three months of mentoring and placement support in one program; exam fees and attempts as agreed in the program scope.']);
+    expect(await texts(page, '#features li.card:nth-child(1) p')).toEqual(['Certification exam preparation, three months of mentoring and placement support in one program; exam fees and attempts set per program.']);
     expect(await card.getAttribute('data-fact')).toBe('PD-01');
     expect(compact(await page.locator('#features').textContent())).not.toContain('100 training hours');
     expect(compact(await page.locator('#mechanism').textContent())).toContain('100 training hours per certification, then three months of milestone-based mentoring and placement support.');
@@ -133,7 +133,7 @@ test.describe('Foundations: the first and third "What Your Cohort Grant Gets" ca
   test('the first card measures results against the agreed scorecard, including first paid work, not attendance alone', async ({ page }) => {
     await open(page, FOUND);
     expect(await texts(page, '#features li.card:nth-child(1) p')).toEqual([
-      'Mentoring and placement support are standard inclusions, and outcomes are tracked for 12 months after each course, as agreed in the program scope. Results are measured against the agreed scorecard, including first paid work, not attendance alone.',
+      'Mentoring and placement support are standard inclusions, and outcomes are tracked for 12 months after each course. Results are measured against the agreed scorecard, including first paid work, not attendance alone.',
     ]);
     expect(await mainText(page)).not.toContain('using the agreed scorecard');
   });
@@ -142,7 +142,7 @@ test.describe('Foundations: the first and third "What Your Cohort Grant Gets" ca
     await open(page, FOUND);
     const card = page.locator('#features li.card').nth(2);
     await expect(card.locator('h3')).toHaveText('Progress You Can See Every Month');
-    expect(await texts(page, '#features li.card:nth-child(3) p')).toEqual(['Monthly reports and quarterly reviews, as agreed in the program scope, keep progress visible. Where agreed, SDG-mapped reporting follows your CSR framework, with co-branded certificates and events.']);
+    expect(await texts(page, '#features li.card:nth-child(3) p')).toEqual(['Monthly reports and quarterly reviews keep progress visible. Where agreed, SDG-mapped reporting follows your CSR framework, with co-branded certificates and events.']);
     expect(((await card.getAttribute('data-fact')) ?? '').split(' ').sort()).toEqual(['PD-08', 'PD-18']);
     // the scorecard: the second card (the Accountability callout was removed in WP90, triage A2); the due-diligence confirmation: the Due Diligence band
     await expect(page.locator('#features li.card:nth-child(2) h3')).toHaveText('A Pilot Scorecard Agreed with You');
@@ -476,10 +476,10 @@ test.describe('"What Happens When Funding Ends?" (item 22)', () => {
 
   test('Q10 and Q10-campus end after the alumni-network clause; the TalentLEAP clause and its fact are gone', () => {
     const q10 = faqs.find((f) => f.id === 'Q10')!;
-    expect(q10.a).toBe(`Where included in the program scope, what the program builds stays in place: certified local facilitators and localized curricula. ${ENDING}`);
+    expect(q10.a).toBe(`Where included, what the program builds stays in place: certified local facilitators and localized curricula. ${ENDING}`);
     expect(q10.evidence).toEqual(['PD-06', 'PD-01']);
     const campus = faqsFor('variants').find((f) => f.id === 'Q10-campus')!;
-    expect(campus.a).toBe('Where included in the program scope, what the program builds stays on your campus: certified local facilitators, localized curricula and campus labs that serve as blended-learning centers. Completers join CodersTrust’s alumni network after their three months of mentoring.');
+    expect(campus.a).toBe('Where included, what the program builds stays on your campus: certified local facilitators, localized curricula and campus labs that serve as blended-learning centers. Completers join CodersTrust’s alumni network after their three months of mentoring.');
     expect(campus.evidence).toEqual(['PD-06', 'PD-01']);
   });
 

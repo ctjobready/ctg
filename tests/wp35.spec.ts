@@ -366,7 +366,7 @@ test.describe('plain words and plain claims', () => {
   test('Governments: the delivery card names the follow-up surveys at 3, 6 and 12 months; the contracts table and the services line use plain words', async ({ page }) => {
     await open(page, 'partner-with-us/governments/');
     await expect(page.locator('#ministry-sees')).toHaveCount(0);
-    await expect(page.locator('#mechanism .model__block', { hasText: 'Local, Remote and Global Work' })).toContainText('with monthly reports to the agency and follow-up surveys at 3, 6 and 12 months after each course, as agreed in the program scope.');
+    await expect(page.locator('#mechanism .model__block', { hasText: 'Local, Remote and Global Work' })).toContainText('with monthly reports to the agency and follow-up surveys at 3, 6 and 12 months after each course.');
     const contracts = await texts(page, '#contracts tbody td:nth-child(2)');
     expect(contracts).toContain('Training in digital technologies');
     expect(contracts).toContain('Training for staff on the learning platform and lab operations');
@@ -385,13 +385,13 @@ test.describe('plain words and plain claims', () => {
     const cost = await answer('What Does It Cost?');
     expect(cost).toBe(
       // WP41 (cycle-18 review): "For supported youth cohorts, standard inclusions are …"; WP43 (cycle-20 review): "Supported youth cohorts include training, certification exam preparation and the exam fee, …"
-      'Pricing is set per program; we share an indicative budget in the discovery session. As agreed in the program scope, supported youth cohorts include outreach and selection, training, certification exam preparation (with exam fees and attempts), three months of mentoring, placement support and 12 months of outcome tracking after each course. Devices, stipends, connectivity and independent evaluation are budgeted separately where needed.',
+      'Pricing is set per program; we share an indicative budget in the discovery session. Supported youth cohorts include outreach and selection, training, certification exam preparation (exam fees and attempts set per program), three months of mentoring, placement support and 12 months of outcome tracking after each course. Devices, stipends, connectivity and independent evaluation are budgeted separately where needed.',
     );
     expect(cost.split(/(?<=[.!?])\s+(?=[A-Z“])/).length).toBeLessThanOrEqual(3);
     await expect(page.locator('#faqs details', { has: page.locator('summary', { hasText: 'What About Safeguarding and Data Protection?' }) })).toHaveCount(0);
     await open(page, 'about/governance/');
     const text = await mainText(page);
-    expect(text).toContain('funders receive monthly reports and outcome data with personal details protected');
+    expect(text).toContain('Funders receive monthly reports and outcome data with personal details protected');
     expect(text).not.toContain('privacy-appropriate');
   });
 

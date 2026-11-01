@@ -102,13 +102,13 @@ test.describe('G2, YouthWIDE: "Built Around What Funders and Agencies Ask" is go
     expect(linkingToIt.length, 'pages still link to #governments').toBeGreaterThan(0);
   });
 
-  test('"YouthWIDE at a Glance" Reporting row says what earnings are checked against, where available, as agreed in the program scope, and stays tied to PD-08 and PD-09', async ({ page }) => {
+  test('"YouthWIDE at a Glance" Reporting row says what earnings are checked against, where available and stays tied to PD-08 and PD-09', async ({ page }) => {
     await open(page, YOUTHWIDE);
     const row = page.locator('.pg__row', { has: page.locator('dt', { hasText: 'Reporting' }) });
     await expect(row).toHaveCount(1);
     const text = compact(await row.locator('dd').textContent());
     // WP63 (cycle-35 review, GPT-6.1 Sol G1): "work and earnings checked against offer letters, payslips, ..." (an offer letter documents work, not earnings)
-    expect(text).toBe('Monthly reports and follow-up surveys, with work and earnings checked against offer letters, payslips, platform logs or bank receipts where available, as agreed in the program scope.');
+    expect(text).toBe('Monthly reports and follow-up surveys, with work and earnings checked against offer letters, payslips, platform logs or bank receipts where available.');
     expect(text.endsWith('.')).toBe(true);
     expect(await row.getAttribute('data-fact')).toBe('PD-08 PD-09');
     // the same detail is stated once on the page (the removed card said it too)

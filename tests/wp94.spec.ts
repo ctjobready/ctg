@@ -58,7 +58,7 @@ test.describe('WP94 A3: due-diligence card reads Included', () => {
   test('the Monthly Reports card opens "Included for every cohort" and "Planned" is gone', async ({ page }) => {
     await open(page, 'partner-with-us/');
     const text = compact(await page.locator('main').textContent());
-    expect(text).toContain('Included for every cohort, as agreed in the program scope: follow-up surveys at 3, 6 and 12 months and monthly reports.');
+    expect(text).toContain('Included for every cohort: follow-up surveys at 3, 6 and 12 months and monthly reports.');
     expect(text).not.toContain('Planned for every cohort');
   });
 });
@@ -84,11 +84,12 @@ test.describe('WP94 A4: Investors points back to its reconciliation; Impact keep
 });
 
 test.describe('WP94 A5: Governments Launch in Existing Labs step', () => {
-  test('the step body says the first cohort begins training and monthly reports follow, then the caveat', async ({ page }) => {
+  test('the step body says the first cohort begins training and monthly reports follow (WP141 dropped the seats caveat)', async ({ page }) => {
     await open(page, 'partner-with-us/governments/');
     const text = compact(await page.locator('main').textContent());
     expect(text).toContain('Launch in Existing Labs');
-    expect(text).toContain('The first cohort begins training; monthly reports follow. Seats are confirmed per program.');
+    expect(text).toContain('The first cohort begins training; monthly reports follow.');
+    expect(text).not.toContain('monthly reports follow. Seats are confirmed per program.');
   });
 });
 

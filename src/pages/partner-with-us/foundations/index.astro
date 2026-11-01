@@ -76,7 +76,7 @@ import FundingRoutes from '../../../components/pages/partners/FundingRoutes.astr
 import Reinforcement from '../../../components/pages/partners/Reinforcement.astro';
 import PageEnhancements from '../../../components/pages/partners/PageEnhancements.astro';
 import { KOSOVO_WOW_TILE_LABEL, LINKS, TRACKING_MONTHS, UNDP_YES_TILE_LABEL, factPart, funderOptionCards, meta } from '../../../components/pages/partners/partners';
-import { BIGD_NAME, C14, HEADLINE, POSITIONING, PROGRAM_SIZES_NOTE, VALUE_PROPOSITION, WB_KOSOVO } from '../../../data/copy';
+import { BIGD_NAME, C14, HEADLINE, POSITIONING, PROGRAM_SCOPE_STATEMENT, PROGRAM_SIZES_NOTE, VALUE_PROPOSITION, WB_KOSOVO } from '../../../data/copy';
 import { faqJsonLd } from '../../../lib/faq';
 import { cta } from '../../../lib/mailto';
 import { webPage } from '../../../lib/schema';
@@ -104,7 +104,7 @@ const FAQ_IDS = ['Q3', 'Q8-route', 'Q9-route', 'Q10'];
   description={description}
   path={PATH}
   breadcrumbs={[{ label: 'Partner with Us', href: LINKS.hub }, { label: 'Foundations and CSR' }]}
-  jsonLd={[webPage({ path: PATH, name: title, description, dateModified: '2026-10-31' }), faqJsonLd('foundations', PATH, FAQ_IDS)]}
+  jsonLd={[webPage({ path: PATH, name: title, description, dateModified: '2026-11-01' }), faqJsonLd('foundations', PATH, FAQ_IDS)]}
   stickyCta={{ label: primary.label, href: primary.href }}
 >
   <!-- C1 · Identity hook -->
@@ -209,7 +209,7 @@ const FAQ_IDS = ['Q3', 'Q8-route', 'Q9-route', 'Q10'];
       {
         icon: 'target',
         title: 'Mentoring, Placement Support and Outcome Tracking',
-        text: `Mentoring and placement support are standard inclusions, and outcomes are tracked for ${TRACKING_MONTHS} months after each course, as agreed in the program scope. Results are measured against the agreed scorecard, including first paid work, not attendance alone.`,
+        text: `Mentoring and placement support are standard inclusions, and outcomes are tracked for ${TRACKING_MONTHS} months after each course. Results are measured against the agreed scorecard, including first paid work, not attendance alone.`,
         facts: ['PD-01', 'PD-02', 'PD-11'],
       },
       {
@@ -221,10 +221,11 @@ const FAQ_IDS = ['Q3', 'Q8-route', 'Q9-route', 'Q10'];
       {
         icon: 'file-check',
         title: 'Progress You Can See Every Month',
-        text: 'Monthly reports and quarterly reviews, as agreed in the program scope, keep progress visible. Where agreed, SDG-mapped reporting follows your CSR framework, with co-branded certificates and events.',
+        text: 'Monthly reports and quarterly reviews keep progress visible. Where agreed, SDG-mapped reporting follows your CSR framework, with co-branded certificates and events.',
         facts: ['PD-08', 'PD-18'],
       },
     ]}
+    scope={PROGRAM_SCOPE_STATEMENT}
   />
 
   <!-- C9 · Objections -->

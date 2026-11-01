@@ -14,7 +14,7 @@ import StagePipeline from '../../../components/pages/model/StagePipeline.astro';
 import { STAGE_STEPS } from '../../../components/pages/model/stagePipeline';
 import { articleNode, desc, title, discoveryCta } from '../../../components/pages/impact/page-utils';
 import { describedList } from '../../../components/pages/impact/jsonld';
-import { DISCOVERY_SESSION_ASK, MICRO_COMMITMENT } from '../../../data/copy';
+import { DISCOVERY_SESSION_ASK, MICRO_COMMITMENT, PROGRAM_SCOPE_STATEMENT_EXAMS } from '../../../data/copy';
 import { faqItems } from '../../../lib/faq';
 import { faqPage } from '../../../lib/schema';
 import { linkAttrs } from '../../../lib/url';
@@ -50,7 +50,7 @@ const faq = faqItems('foundations', ['Q14', 'Q10', 'Q4']).map((f) => {
   return f;
 });
 const jsonLd = [
-  articleNode({ path, headline: 'TalentLEAP: A Skill-by-Skill Path from Learning to Earning', description, datePublished: '2026-10-08', dateModified: '2026-10-31', author: 'CodersTrust Learning Design', about: { '@type': 'Thing', name: 'TalentLEAP' } }),
+  articleNode({ path, headline: 'TalentLEAP: A Skill-by-Skill Path from Learning to Earning', description, datePublished: '2026-10-08', dateModified: '2026-11-01', author: 'CodersTrust Learning Design', about: { '@type': 'Thing', name: 'TalentLEAP' } }),
   describedList('How TalentLEAP Works', steps.map((s) => ({ name: s.name, description: s.text })), `${path}#steps`),
   describedList('TalentLEAP example: Digital Marketing career path levels', levels, `${path}#levels`),
   faqPage(faq, path),
@@ -62,6 +62,7 @@ const toc = [
   { id: 'different', label: 'What Makes TalentLEAP Different' },
   { id: 'results', label: 'Results from CodersTrust Programs' },
   { id: 'faq', label: 'Questions About TalentLEAP' },
+  { id: 'cta', label: 'See How TalentLEAP Would Run in Your Program' },
 ];
 const d = discoveryCta();
 ---
@@ -73,7 +74,7 @@ const d = discoveryCta();
   lead={bluf}
   description={description}
   path={path}
-  updated="2026-10-31"
+  updated="2026-11-01"
   toc={toc}
   breadcrumbs={[{ label: 'Our Model', href: '/our-model/' }, { label: 'TalentLEAP' }]}
   jsonLd={jsonLd}
@@ -87,6 +88,7 @@ const d = discoveryCta();
 
   <ReportSection id="how" title="How TalentLEAP Works">
     <StagePipeline title="The Stage Pipeline" id="stage-pipeline" />
+    <p>{PROGRAM_SCOPE_STATEMENT_EXAMS}</p>
   </ReportSection>
 
   <ReportSection id="example" title="Example: The Digital Marketing Career Path">
@@ -112,7 +114,7 @@ const d = discoveryCta();
     <Accordion items={faq} name="tl-faq" openFirst />
   </ReportSection>
 
-  <NextStep heading="See How TalentLEAP Would Run in Your Program" text={DISCOVERY_SESSION_ASK} cta={{ label: d.label, href: d.href }} secondary={{ label: 'How the model works end to end', href: '/our-model/' }} micro={MICRO_COMMITMENT} />
+  <NextStep id="cta" heading="See How TalentLEAP Would Run in Your Program" text={DISCOVERY_SESSION_ASK} cta={{ label: d.label, href: d.href }} secondary={{ label: 'How the model works end to end', href: '/our-model/' }} micro={MICRO_COMMITMENT} />
 </LongformLayout>
 
 <style>

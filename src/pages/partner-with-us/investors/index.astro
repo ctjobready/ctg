@@ -36,7 +36,7 @@ import InvestorReach from '../../../components/pages/investors/InvestorReach.ast
 import InvestorFit from '../../../components/pages/investors/InvestorFit.astro';
 import InvestorOffer from '../../../components/pages/investors/InvestorOffer.astro';
 import FaqBlock from '../../../components/pages/hub/FaqBlock.astro';
-import { HEADLINE, VALUE_PROPOSITION } from '../../../data/copy';
+import { HEADLINE, PROGRAM_SCOPE_STATEMENT, VALUE_PROPOSITION } from '../../../data/copy';
 import { cta } from '../../../lib/mailto';
 import { faqJsonLd } from '../../../lib/faq';
 import { linkAttrs } from '../../../lib/url';
@@ -51,7 +51,7 @@ if (description.length > 155) throw new Error(`Investors meta description is ${d
 const investor = cta('investor');
 // Q11-investor (WP39, cycle-16 review): the live / pre-launch / planned list is "What JobReady Does" directly above, so the answer points there; the shared Q11 (Employers, JobReady@Work, the platform page) keeps the list.
 const FAQ_IDS = ['Q11-investor', 'Q5', 'Q2-investor'];
-const jsonLd = [webPage({ path, name: `${title} | CodersTrust`, description, dateModified: '2026-10-31' }), faqJsonLd('investors', path, FAQ_IDS)]; // WP108: the page states no "last updated" date; its dateModified is the day SC-02's detail was reworded
+const jsonLd = [webPage({ path, name: `${title} | CodersTrust`, description, dateModified: '2026-11-01' }), faqJsonLd('investors', path, FAQ_IDS)]; // WP108: the page states no "last updated" date; its dateModified is the day SC-02's detail was reworded
 
 // "What JobReady Does" (WP40, cycle-17 review): three cards, one for each job the platform does for a reader of this page: learning, paid work, institutions. The status words are the register's (IN-04: "Live today: partner
 // portals, marketing automation, customer relationship management and AI chat. In pre-launch: the employer marketplace and the gig-work marketplace."; IN-06: personalized and adaptive learning is roadmap;
@@ -62,7 +62,7 @@ const includes = [
     icon: 'graduation-cap',
     title: 'Learn Through TalentLEAP',
     // WP64 (cycle-36 review, Claude): the same sentence as the TalentLEAP page's opening, "The first published TalentLEAP level is Competent; Proficient and Expert levels are planned." (it said "Competent is the published first level; Proficient and Expert are planned.").
-    text: 'The first published TalentLEAP level is Competent; Proficient and Expert levels are planned. Supported cohorts include mentoring, certification exam preparation and placement support, as agreed in the program scope.',
+    text: 'The first published TalentLEAP level is Competent; Proficient and Expert levels are planned. Supported cohorts include mentoring, certification exam preparation and placement support.',
     facts: ['IN-06', 'IN-08', 'PD-01', 'PD-02'],
   },
   {
@@ -126,7 +126,7 @@ const mechanismBlocks = [
   </Tone>
 
   <Tone cmf="C8">
-    <IncludesBand id="features" title="What JobReady Does" cards={includes}>
+    <IncludesBand id="features" title="What JobReady Does" cards={includes} scope={PROGRAM_SCOPE_STATEMENT}>
       <a slot="more" class="link" href={rollout.href}>See the Full Rollout Status<Icon name="arrow-right" size={16} /></a>
     </IncludesBand>
   </Tone>

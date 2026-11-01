@@ -11,7 +11,7 @@ import { DESKTOP, MOBILE, open, scrollThrough } from './support/browser';
  *   - A1: SC-02's detail reads "Another 40,152 ... Counted once, the total is 150,678 enrollments." (every figure stays; the arithmetic closes);
  *   - A2: Foundations' Route 2 evidence cell adds "The first conversation covers JobReady’s staged rollout.";
  *   - A3: the Impact ladder's survey row says "19.6% are women." (OC-09's share, read from its text, as Outcomes 2026 words it);
- *   - A4: YouthWIDE's Our Approach reporting promise is "..., as agreed in the program scope.";
+ *   - A4: YouthWIDE's Our Approach reporting promise is "....";
  *   - A5: the Governments national-scale answer says "met its full target with CodersTrust’s curriculum; the contract table above gives the figures.";
  *   - A6: Programs' reach band links "See Global Reach" after the 16's note;
  *   - A7: the partner closing strips end "include two suitable times for it." (Programs: "include two suitable times." since WP126).
@@ -27,7 +27,7 @@ const EVIDENCE_HEADING = 'Evidence from the Youth Programs';
 const ROUTE_2_EVIDENCE = 'Youth-program outcomes are not platform outcomes. The first conversation covers JobReady’s staged rollout.';
 const SURVEY_NOT = 'Cause: respondents are not a random sample and may over-represent successful learners. 19.6% are women.';
 const YOUTHWIDE_STATEMENT =
-  'YouthWIDE combines training, mentoring and placement support in existing labs and colleges. Partners receive monthly reports on progress toward paid work, as agreed in the program scope.';
+  'YouthWIDE combines training, mentoring and placement support in existing labs and colleges. Partners receive monthly reports on progress toward paid work.';
 const NATIONAL_ANSWER =
   'We scale in phases. Her Power, a national program, met its full target with CodersTrust’s curriculum; the contract table above gives the figures. A 100,000+ program is a design option we have not yet delivered.';
 const FIRST_ACTION_PARTNER = 'Your first step: a discovery session. In your inquiry, include two suitable times for it.';

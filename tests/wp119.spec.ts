@@ -138,7 +138,7 @@ test.describe('WP119 Polish', () => {
 
   test('11. TalentLEAP Q14 states "as agreed in the program scope" once: the comparison sentence no longer repeats it', () => {
     const FIRST = 'Compared with a self-paced course alone, supported CodersTrust cohorts add mentoring, certification exam preparation and placement support.';
-    const SECOND = 'As agreed in the program scope, every supported TalentLEAP cohort pairs 100 training hours per certification';
+    const SECOND = 'Every supported TalentLEAP cohort pairs 100 training hours per certification';
     expect(text('our-model/talentleap/index.html')).toContain(`${FIRST} ${SECOND}`);
     const offenders = walk(DIST_DIR).filter((f) => /placement support, agreed in each program’s scope/.test(html(relative(DIST_DIR, f)))).map((f) => relative(DIST_DIR, f));
     expect(offenders).toEqual([]);

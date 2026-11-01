@@ -64,7 +64,7 @@ import NextSteps from '../../components/pages/programs/NextSteps.astro';
 import { faqNode, type FaqSource } from '../../components/pages/programs/faq';
 import { KOSOVO_WOW_TILE_LABEL, WHERE_THEY_WORK_TEXT } from '../../components/pages/partners/partners';
 import { C14_FIRST_FUNDERS, ctaFor, serviceNode, statValue } from '../../components/pages/programs/meta';
-import { AIM_DEPENDENCY, AIM_STATEMENT, C14, FUNDER_PAINS, MICRO_COMMITMENT, POSITIONING, PROGRAM_OPTIONS, SAFEGUARDING, SCORECARD_LABELS, WB_KOSOVO, painForList } from '../../data/copy';
+import { AIM_DEPENDENCY, AIM_STATEMENT, C14, FUNDER_PAINS, MICRO_COMMITMENT, POSITIONING, PROGRAM_OPTIONS, PROGRAM_SCOPE_STATEMENT_EXAMS, SAFEGUARDING, SCORECARD_LABELS, WB_KOSOVO, painForList } from '../../data/copy';
 import { fact } from '../../data/facts';
 import { galleryPhotos } from '../../data/photos';
 import { formatDate, isoDate } from '../../lib/format';
@@ -72,7 +72,7 @@ import { webPage } from '../../lib/schema';
 import { url } from '../../lib/url';
 
 const path = '/programs/youthwide/';
-const LAST_UPDATED = '2026-10-31'; // WP129 (owner rule 2026-10-31: any change to visible text moves the date, copy edits included): the serial-comma, semicolon and copy edits of WP126 to WP128 and the WP129 edits. 29 October 2026 (WP105: the 2030 aim tile is short; WP104: the meta description names the full target group; the page's wording last changed on 28 October, WP99 and WP101). 24 October 2026 (WP86, CLR run 3 Minor 3: the Her Power wording changed that day). 21 October 2026:the survey stat OC-03 (the before-training median, $82 to $98) changed in facts.ts; WP31: the cycle-8 review wording changes
+const LAST_UPDATED = '2026-11-01'; // WP141 (2026-11-01: the program-scope qualifier is stated once per page). Earlier: WP129 (owner rule 2026-10-31: any change to visible text moves the date, copy edits included): the serial-comma, semicolon and copy edits of WP126 to WP128 and the WP129 edits. 29 October 2026 (WP105: the 2030 aim tile is short; WP104: the meta description names the full target group; the page's wording last changed on 28 October, WP99 and WP101). 24 October 2026 (WP86, CLR run 3 Minor 3: the Her Power wording changed that day). 21 October 2026:the survey stat OC-03 (the before-training median, $82 to $98) changed in facts.ts; WP31: the cycle-8 review wording changes
 const title = 'YouthWIDE: From Training to Paid Digital Work';
 // WP63 rework RW1: the hero lead and the glance row name the full group ("educated, unemployed and underemployed youth"); WP104 (Sonnet High run 1): the description names it too, in 154 characters ("trains" for "prepares"; "paid digital work" and "designed for three regions" stay). WP107 (Sonnet XHigh run 3, Polish 4): "2030 aim in Bangladesh" is "with a 2030 aim" (147 characters), so the description does not narrow the aim to Bangladesh (the aim reaches Bangladesh and similar countries, IN-01).
 const description = 'YouthWIDE trains educated, unemployed and underemployed youth for paid digital work: co-funded cohorts designed for three regions, with a 2030 aim.';
@@ -93,7 +93,7 @@ const faqSources: FaqSource[] = [
     html: `Her Power, a national program of the Department of ICT (DoICT), under the ICT Division, trained 25,125 women across 130 sub-districts (upazilas), meeting its target. CodersTrust provided the curriculum, training manuals and mentorship guidelines and trained 2,400 women directly.</p><p data-fact="PD-06 PD-05">Larger programs are designed to run in phases, up to 10 cohorts in parallel, with certified local facilitators. A ${nationalSize} phase is a design option; we have not yet delivered a program at that size.`,
     evidence: ['GV-01', 'GV-11'],
   },
-  { q: 'How Do You Prove Outcomes?', html: 'As agreed in the program scope, we plan a baseline at enrollment, follow-up surveys at 3, 6 and 12 months and monthly reports for every cohort, with documentary evidence of earnings where available. Independent evaluation is welcome.', evidence: ['PD-09', 'PD-08', 'RC-01'] },
+  { q: 'How Do You Prove Outcomes?', html: 'We plan a baseline at enrollment, follow-up surveys at 3, 6 and 12 months and monthly reports for every cohort, with documentary evidence of earnings where available. Independent evaluation is welcome.', evidence: ['PD-09', 'PD-08', 'RC-01'] },
   { audience: 'variants' as const, id: 'Q7-model' },
 ];
 
@@ -138,12 +138,13 @@ const measures = [...SCORECARD_LABELS];
       { label: 'Designed for Three Regions', text: `South Asia, Sub-Saharan Africa and the Middle East and North Africa, as co-funded country cohorts. Bangladesh is where most delivery has been. YouthWIDE aims to train ${AIM_STATEMENT}.`, facts: ['IN-02', 'IN-01'] },
       { label: 'Who It Is For', text: 'Governments, development partners and funders who want to report on educated, unemployed and underemployed young people moving into paid digital work.' },
       { label: 'Delivery', text: 'Blended training in existing labs and colleges, with certified local facilitators; a central team coordinating local labs for larger programs.', facts: ['PD-06'] },
-      { label: 'Training and Mentoring', text: `${hours} training hours per certification, including certification exam preparation (exam fees and attempts as agreed in the program scope), then three months of milestone-based mentoring.`, facts: ['PD-01', 'PD-02', 'PD-02a'] },
+      { label: 'Training and Mentoring', text: `${hours} training hours per certification, including certification exam preparation (exam fees and attempts set per program), then three months of milestone-based mentoring.`, facts: ['PD-01', 'PD-02', 'PD-02a'] },
       { label: 'Placement Support', text: 'Placement support into local, remote and global work.', facts: ['PD-15'] },
       // WP57 (cycle-29 review, GPT-6.1 Sol G2): the verification detail of the removed C8 card ("Results Your Evaluators Can Check") is here: what earnings are checked against, where available.
       // WP63 (cycle-35 review, GPT-6.1 Sol G1): "work and earnings checked against offer letters, payslips, ..." (an offer letter documents work, not earnings; PD-09: "offer letters, payslips and platform or bank records document work and earnings").
-      { label: 'Reporting', text: 'Monthly reports and follow-up surveys, with work and earnings checked against offer letters, payslips, platform logs or bank receipts where available, as agreed in the program scope.', facts: ['PD-08', 'PD-09'] },
+      { label: 'Reporting', text: 'Monthly reports and follow-up surveys, with work and earnings checked against offer letters, payslips, platform logs or bank receipts where available.', facts: ['PD-08', 'PD-09'] },
     ]}
+    scope={PROGRAM_SCOPE_STATEMENT_EXAMS}
   />
 
   <!-- C2 (ranked pains P1–P3, checked by scripts/check-facts.mjs) -->
@@ -170,7 +171,7 @@ const measures = [...SCORECARD_LABELS];
     blocks={[
       { label: 'Who We Reach', title: 'Educated, Unemployed and Underemployed Youth', text: 'Priority groups are agreed with you in co-design; women are a priority in every program.', icon: 'users' },
       { label: 'How We Reach Them', title: 'Accessible Selection, Blended Delivery', text: 'Outreach and an accessible readiness assessment, then training in existing labs and colleges.', icon: 'graduation-cap' },
-      { label: 'What We Deliver', title: 'AI-Ready Training, Certification Preparation and Mentoring', text: 'Each track prepares learners for an industry certification, then three months of milestone-based mentoring; exam eligibility and attempts are agreed in the program scope.', icon: 'award' },
+      { label: 'What We Deliver', title: 'AI-Ready Training, Certification Preparation and Mentoring', text: 'Each track prepares learners for an industry certification, then three months of milestone-based mentoring; exam eligibility and attempts are set per program.', icon: 'award' },
       { label: 'Where They Work', title: 'Local, Remote and Global Work', text: WHERE_THEY_WORK_TEXT, icon: 'globe' },
     ]}
     factIds={['PD-14', 'PD-06', 'PD-01', 'PD-02', 'PD-15']}

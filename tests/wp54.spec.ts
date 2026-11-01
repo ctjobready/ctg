@@ -118,7 +118,7 @@ test.describe('The readiness-assessment step routes "applicants" (item G4)', () 
 
   test('Our Model still says some applicants may not be selected, which "each applicant" contradicted', async ({ page }) => {
     await open(page, MODEL);
-    expect(await everything(page)).toContain('Some applicants may not be selected, and the reasons are reported.');
+    expect(await everything(page)).toContain('Some applicants may not be selected.');
   });
 });
 
@@ -378,7 +378,7 @@ test.describe('Home: the first Imagine card is in the reader’s cohort (item L2
     await open(page, HOME);
     expect(await texts(page, '#future .card__text')).toEqual([
       'A young woman in your cohort invoices her first foreign client from her own laptop.',
-      'You review monthly reports, as agreed in the program scope, showing who is earning, not only who completed.',
+      'You review monthly reports showing who is earning, not only who completed.',
       'You see employers hire completers whose skills match current employer demand.',
     ]);
   });

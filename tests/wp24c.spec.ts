@@ -181,7 +181,7 @@ test.describe('About, Governance, Recognition, Careers and Contact', () => {
     await open(page, 'about/');
     await expect(page.locator('main .hero .btn--primary')).toHaveCount(0);
     await expect(page.getByRole('link', { name: 'See Our Impact' }).first()).toBeVisible();
-    await expect(page.locator('#how-we-work')).toContainText('as agreed in the program scope'); // WP138: "Partners agree the scorecard with us before the first cohort and, as agreed in the program scope, receive monthly reports."
+    await expect(page.locator('#how-we-work')).toContainText('Inclusions and reporting on this page are agreed in the program scope.'); // WP141: the page statement; WP138: "Partners agree the scorecard with us before the first cohort and receive monthly reports."
     await expect(page.locator('#how-we-work')).not.toContainText('see progress in reports every month');
     // WP50 (cycle-25 review, item 21) gave the tile "Including 111,268 direct enrollments and 40,043 through courseware."; WP65 (cycle-37 review) took the line off About (tests/wp65.spec.ts)
     await expect(page.locator('#glance')).not.toContainText('Including 111,268 direct enrollments');
@@ -193,10 +193,10 @@ test.describe('About, Governance, Recognition, Careers and Contact', () => {
     // WP30e: the two leaders are shown once, as cards (name and role), not repeated in a lead sentence; the anti-fraud cards repeated the contracting panel and the safeguarding section.
     await expect(page.locator('#leadership')).toContainText('Aziz Ahmad');
     await expect(page.locator('#leadership')).toContainText('CEO, CodersTrust Bangladesh');
-    await expect(page.locator('#evidence')).toContainText('As agreed in the program scope, funders receive monthly reports');
+    await expect(page.locator('#evidence')).toContainText('Funders receive monthly reports');
     await expect(page.locator('#anti-fraud')).toHaveCount(0);
     await expect(page.locator('#safeguarding')).toContainText('consent, protected records, grievance handling, harassment and fraud response');
-    await expect(page.locator('#faq')).toContainText('as agreed in the program scope, we plan a baseline');
+    await expect(page.locator('#faq')).toContainText('we plan a baseline');
     await expect(page.getByRole('heading', { level: 2, name: 'Common Due-Diligence Questions' })).toBeVisible();
     await expect(page.locator('#faq summary', { hasText: 'How Do You Track and Verify Outcomes?' })).toHaveCount(1);
     const links = page.locator('#on-this-page a[href^="#"]');

@@ -53,7 +53,7 @@ import StepFlow from '../../../components/ui/StepFlow.astro';
 import Reinforcement from '../../../components/pages/partners/Reinforcement.astro';
 import PageEnhancements from '../../../components/pages/partners/PageEnhancements.astro';
 import { LINKS, meta } from '../../../components/pages/partners/partners';
-import { C14, EMPLOYER_HIRING_STEPS, HEADLINE, MICRO_COMMITMENT, POSITIONING, VALUE_PROPOSITION, withSourceNote } from '../../../data/copy';
+import { C14, EMPLOYER_HIRING_STEPS, HEADLINE, MICRO_COMMITMENT, POSITIONING, PROGRAM_SCOPE_STATEMENT, VALUE_PROPOSITION, withSourceNote } from '../../../data/copy';
 import { contractScope } from '../../../components/sections/copyText';
 import { fact } from '../../../data/facts';
 import { faqJsonLd } from '../../../lib/faq';
@@ -181,6 +181,7 @@ if (aws !== 'AWS Authorized Training Partner') throw new Error('Employers: PA-06
       { icon: 'cpu', title: 'AI Content Agreed Before Enrollment', text: 'An AI-ready curriculum, designed to prepare people to work with AI tools. Each track’s AI content and work-entry plan are agreed before enrollment.', facts: ['PD-02', 'PD-19'] },
       { icon: 'presentation', title: 'Customized Curriculum and Workshops', text: 'JobReady@Work builds a customized curriculum and interactive workshops, so your team learns on tasks from your own roles.', facts: ['IN-10'] },
     ]}
+    scope={PROGRAM_SCOPE_STATEMENT}
   />
 
   <!-- C9 · Objections -->

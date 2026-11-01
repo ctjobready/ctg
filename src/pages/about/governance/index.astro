@@ -22,13 +22,13 @@ import { webPage } from '../../../lib/schema';
 import { OFFICES } from '../../../lib/site';
 import { linkAttrs } from '../../../lib/url';
 
-const UPDATED = '2026-10-31'; // WP129 (owner rule 2026-10-31: any change to visible text moves the date, copy edits included): WP127 and WP128 changed the page's copy and meta description on 2026-10-30 (it was 2026-10-24).
+const UPDATED = '2026-11-01'; // WP141 (owner answer 2026-11-01): the program-scope qualifier is stated once per page and the "On This Page" list gains its closing heading, so the date moves to 2026-11-01. Earlier: WP129 (owner rule 2026-10-31: any change to visible text moves the date, copy edits included): WP127 and WP128 changed the page's copy and meta description on 2026-10-30 (it was 2026-10-24).
 // WP24c: Q3 reads "How Do You Track and Verify Outcomes?" here (the shared answer is kept)
 // WP30e: two decision questions. Tracking gets the short answer (the shared Q3 reduced to its two claims); safeguarding is answered in its own section above.
 const faqSources: FaqSource[] = [
   {
     q: 'How Do You Track and Verify Outcomes?',
-    html: para('For every cohort, as agreed in the program scope, we plan a baseline at enrollment, follow-up surveys at 3, 6 and 12 months and monthly reports. Where available, offer letters, payslips, platform logs or bank receipts document work and earnings.'),
+    html: para('For every cohort, we plan a baseline at enrollment, follow-up surveys at 3, 6 and 12 months and monthly reports. Where available, offer letters, payslips, platform logs or bank receipts document work and earnings.'),
     evidence: ['PD-09', 'PD-08', 'RC-01'],
   },
   { audience: 'governments', id: 'Q10' },
@@ -73,6 +73,7 @@ const jsonLd = [
     { label: 'Independent Evaluation and Funder Reporting', href: '#evidence' },
     { label: 'Common Due-Diligence Questions', href: '#faq' },
     { label: 'What We Confirm with You in Co-Design', href: '#checklist' },
+    { label: 'Ask About Due Diligence', href: '#diligence-cta' },
   ]} />
 
   <ContractingPanel requestHref={diligence.href} requestLabel={diligence.label} />
@@ -104,7 +105,7 @@ const jsonLd = [
     <SectionHeader id="evid-h" eyebrow="Independent Evidence" title="Independent Evaluation and Funder Reporting" />
     <div class="gov-text">
       <p class="lead" data-fact="RC-01"><strong>Independent evaluation is welcome.</strong> {trialLine}</p>
-      <p data-fact="PD-08">As agreed in the program scope, funders receive monthly reports from the first cohort.</p>
+      <p data-fact="PD-08">Funders receive monthly reports from the first cohort.</p>
       <p><a class="link" href={linkAttrs('/impact/independent-evaluation/').href}>The Randomized Trial<Icon name="arrow-right" size={16} /></a></p>
     </div>
   </Section>

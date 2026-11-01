@@ -15,7 +15,7 @@ const text = (rel: string) => decode(readFileSync(join(DIST_DIR, rel), 'utf8').r
 
 test.describe('WP120', () => {
   test('Investors: the supported-cohort inclusions carry the qualifier', () => {
-    expect(text('partner-with-us/investors/index.html')).toContain('Supported cohorts include mentoring, certification exam preparation and placement support, as agreed in the program scope.');
+    expect(text('partner-with-us/investors/index.html')).toContain('Supported cohorts include mentoring, certification exam preparation and placement support.');
   });
   test('BCIU post: "since 2014" once in the closing sentence, and the title says "Washington, D.C."', () => {
     const t = text('news/coderstrust-chairman-mr-aziz-ahmad-joins-bciu-roundtable-in-washington-d-c/index.html');
@@ -24,7 +24,7 @@ test.describe('WP120', () => {
   });
   test('Employers and JobReady@Work: standard inclusions as agreed in the program scope', () => {
     for (const p of ['partner-with-us/employers/index.html', 'programs/jobready-work/index.html']) {
-      expect(text(p), p).toContain('Standard inclusions, as agreed in the program scope, are a needs assessment, a customized curriculum, interactive workshops, progress evaluation and post-training support;');
+      expect(text(p), p).toContain('Standard inclusions are a needs assessment, a customized curriculum, interactive workshops, progress evaluation and post-training support;');
     }
   });
   test('SKIT post sentence ends with a full stop; Career Carnival says "Program completers"', () => {

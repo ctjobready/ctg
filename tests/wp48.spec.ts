@@ -110,7 +110,7 @@ test.describe('Home slide 2 and the GV-12 note (items 1 and 12)', () => {
 // WP49 (cycle-24 review, GLM M3): both answers end after the alumni-network clause; the TalentLEAP clause ("... progressive levels as further levels are published.") that WP48 reworded does not answer the question and is gone (tests/wp49.spec.ts)
 test.describe('The "what happens after" sentence (item 2)', () => {
   const UNIVERSITIES =
-    'Where included in the program scope, what the program builds stays on your campus: certified local facilitators, localized curricula and campus labs that serve as blended-learning centers. Completers join CodersTrust’s alumni network after their three months of mentoring.';
+    'Where included, what the program builds stays on your campus: certified local facilitators, localized curricula and campus labs that serve as blended-learning centers. Completers join CodersTrust’s alumni network after their three months of mentoring.';
 
   test('Universities: "What Happens After the First Cohort?" ends after the alumni-network clause; the JSON-LD says the same', async ({ page }) => {
     await open(page, 'partner-with-us/universities/');
@@ -276,7 +276,7 @@ test.describe('Governments: the contracts column and the glance heading (items 6
 
 test.describe('"Reporting and Review" (item 7)', () => {
   // WP57b (cycle-29 review, GLM L5): the quarterly reviews carry the scope qualifier "as agreed in the program scope"
-  const SENTENCE = 'For supported cohorts, monthly reports track progress; quarterly reviews, as agreed in the program scope, guide corrective action and any expansion.';
+  const SENTENCE = 'For supported cohorts, monthly reports track progress; quarterly reviews guide corrective action and any expansion.';
   const callout = (page: Page) => page.locator('.callout', { has: page.locator('.eyebrow', { hasText: 'Reporting and Review' }) });
 
   test('Foundations has no "Reporting and Review" callout; its "Progress You Can See Every Month" card already says monthly reports and a quarterly steering review; the due-diligence band is followed by the call to action', async ({ page }) => {
@@ -285,8 +285,8 @@ test.describe('"Reporting and Review" (item 7)', () => {
     const text = await mainText(page);
     expect(text).not.toContain(SENTENCE);
     expect(text).toContain('Progress You Can See Every Month');
-    // WP49 (cycle-24 review): the card is two sentences: "Monthly reports and quarterly reviews, as agreed in the program scope, keep progress visible. Where agreed, SDG-mapped reporting follows your CSR framework, with co-branded certificates and events." (tests/wp49.spec.ts)
-    expect(text).toContain('Monthly reports and quarterly reviews, as agreed in the program scope, keep progress visible');
+    // WP49 (cycle-24 review): the card is two sentences: "Monthly reports and quarterly reviews keep progress visible. Where agreed, SDG-mapped reporting follows your CSR framework, with co-branded certificates and events." (tests/wp49.spec.ts)
+    expect(text).toContain('Monthly reports and quarterly reviews keep progress visible');
     const ids = await sectionIds(page);
     expect(ids.indexOf('cta')).toBe(ids.indexOf('due-diligence') + 1);
   });

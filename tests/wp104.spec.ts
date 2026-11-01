@@ -307,23 +307,24 @@ test.describe('WP104 item 9: "1,000" in the two 1,000-trainees news posts', () =
 
 // --------------------------------------------------------------------------------------------------------------------------------
 test.describe('WP104 item 10: "Last updated" stamps match each page’s latest content change', () => {
+  // WP141 (owner answer 2026-11-01): the pages whose text changed that day (TalentLEAP, JobReady Platform, JobReady@Campus, YouthWIDE, JobReady@Work, the Trial page) read November 1, 2026.
   // Dates: TalentLEAP 2026-10-29 (WP112: its FAQ answer and pipeline step changed on 29 October; it was 2026-10-28 from WP98 to WP101);
   // the NU overview and course pages, JobReady@Campus and JobReady Platform 2026-10-29 (WP102, 29 October: NU learners "being onboarded", the affiliated-college wording);
   // every page this WP changes (YouthWIDE, JobReady@Work, SuperKids, Outcomes 2026, Independent Evaluation, the NU overview, the UNDP YES case study) 2026-10-29.
   const STAMPED = [
-    { route: 'our-model/talentleap/', selector: '.lf-updated', text: 'Last updated October 31, 2026', iso: '2026-10-31' },
-    { route: 'our-model/jobready-platform/', selector: '.lf-updated', text: 'Last updated October 31, 2026', iso: '2026-10-31' },
+    { route: 'our-model/talentleap/', selector: '.lf-updated', text: 'Last updated November 1, 2026', iso: '2026-11-01' },
+    { route: 'our-model/jobready-platform/', selector: '.lf-updated', text: 'Last updated November 1, 2026', iso: '2026-11-01' },
     { route: 'programs/nu-postgraduate-diploma/', selector: '.updated', text: 'Last updated October 31, 2026', iso: '2026-10-31' },
     { route: 'programs/nu-postgraduate-diploma/cyber-security/', selector: '.updated', text: 'Last updated October 31, 2026', iso: '2026-10-31' },
     { route: 'programs/nu-postgraduate-diploma/data-analytics/', selector: '.updated', text: 'Last updated October 31, 2026', iso: '2026-10-31' },
     { route: 'programs/nu-postgraduate-diploma/digital-marketing/', selector: '.updated', text: 'Last updated October 31, 2026', iso: '2026-10-31' },
     { route: 'programs/nu-postgraduate-diploma/ict/', selector: '.updated', text: 'Last updated October 31, 2026', iso: '2026-10-31' },
-    { route: 'programs/jobready-campus/', selector: '.updated', text: 'Last updated October 31, 2026', iso: '2026-10-31' },
-    { route: 'programs/youthwide/', selector: '.updated', text: 'Last updated October 31, 2026', iso: '2026-10-31' },
-    { route: 'programs/jobready-work/', selector: '.updated', text: 'Last updated October 31, 2026', iso: '2026-10-31' },
+    { route: 'programs/jobready-campus/', selector: '.updated', text: 'Last updated November 1, 2026', iso: '2026-11-01' },
+    { route: 'programs/youthwide/', selector: '.updated', text: 'Last updated November 1, 2026', iso: '2026-11-01' },
+    { route: 'programs/jobready-work/', selector: '.updated', text: 'Last updated November 1, 2026', iso: '2026-11-01' },
     { route: 'programs/superkids/', selector: '.updated', text: 'Last updated October 31, 2026', iso: '2026-10-31' },
     { route: 'impact/outcomes-2026/', selector: '.lf-updated', text: 'Source snapshot: October 2026 · Last updated October 31, 2026', iso: '2026-10-31' }, // WP135: the closing line and "On This Page" changed (was October 29)
-    { route: 'impact/independent-evaluation/', selector: '.lf-updated', text: 'Last updated October 31, 2026', iso: '2026-10-31' }, // WP134: WP133 changed its text
+    { route: 'impact/independent-evaluation/', selector: '.lf-updated', text: 'Last updated November 1, 2026', iso: '2026-11-01' }, // WP134: WP133 changed its text
   ];
   for (const s of STAMPED) {
     test(`${s.route} reads "${s.text}" and its JSON-LD dateModified is ${s.iso}`, async ({ page }) => {

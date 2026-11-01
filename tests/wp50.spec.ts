@@ -77,7 +77,7 @@ test.describe('Home: the challenge band and the positioning statement (items 1 a
     const expected =
       // WP51 (cycle-26 review): the reports are scoped like every other reporting statement on the site ("..., as agreed in the program scope"; tests/wp51.spec.ts)
       // WP63 (cycle-35 review, Grok R1): "... for educated, unemployed and underemployed youth, ..." (the group ID-01 names)
-      'CodersTrust connects training, mentoring and placement support for educated, unemployed and underemployed youth, with monthly reports on progress toward paid work, as agreed in the program scope.';
+      'CodersTrust connects training, mentoring and placement support for educated, unemployed and underemployed youth, with monthly reports on progress toward paid work.';
     expect(POSITIONING.home.text).toBe(expected);
     expect(POSITIONING.home.facts).toEqual(['PD-08']);
     await open(page, '');
@@ -162,7 +162,7 @@ test.describe('Home: the program-results slide lists four programs (item 10)', (
 
 test.describe('Home: the reporting answer is two sentences, and the full answer stays elsewhere (item 12)', () => {
   // WP60 (cycle-32 review, GLM L4): "A scorecard is agreed for every cohort before delivery." (it said "Every cohort agrees a scorecard before delivery.", which gave the cohort the action)
-  const HOME_ANSWER = 'A pilot scorecard is agreed before the first cohort. As agreed in the program scope, partners receive monthly reports and follow-up surveys at 3, 6 and 12 months. Independent evaluation is welcome.';
+  const HOME_ANSWER = 'A pilot scorecard is agreed before the first cohort. Partners receive monthly reports and follow-up surveys at 3, 6 and 12 months. Independent evaluation is welcome.';
 
   test('Home’s "How Do You Prove Outcomes?" is the Q3-home variant, tied to PD-11, PD-08 and PD-09, and the FAQ JSON-LD says the same words', async ({ page }) => {
     const variant = faqsFor('variants').find((f) => f.id === 'Q3-home')!;
@@ -183,7 +183,7 @@ test.describe('Home: the reporting answer is two sentences, and the full answer 
   test('the shared answer (Q3) is unchanged in the bank (the hub’s full list) and on the pages that print it: Development Partners and Foundations', async ({ page }) => {
     const full = faqs.find((f) => f.id === 'Q3')!.a;
     expect(full).toBe(
-      'For every cohort, as agreed in the program scope, we plan a baseline at enrollment, follow-up surveys at 3, 6 and 12 months and monthly reports. Documentary evidence of work and earnings, such as offer letters, payslips, platform logs or bank receipts, is collected where available. Independent evaluation is welcome.',
+      'For every cohort, we plan a baseline at enrollment, follow-up surveys at 3, 6 and 12 months and monthly reports. Documentary evidence of work and earnings, such as offer letters, payslips, platform logs or bank receipts, is collected where available. Independent evaluation is welcome.',
     );
     expect(faqsFor('all').map((f) => f.id)).toContain('Q3');
     for (const route of [DP, FOUND]) {
@@ -295,7 +295,7 @@ test.describe('Employers and JobReady@Work: the pricing sentence is said once, i
       expect(count(await everything(page), PRICING), route).toBe(1);
       const answer = await answerOf(page, 'What Does It Cost?');
       expect(answer.startsWith(PRICING), route).toBe(true);
-      expect(answer, route).toContain('Standard inclusions, as agreed in the program scope, are a needs assessment, a customized curriculum, interactive workshops, progress evaluation and post-training support');
+      expect(answer, route).toContain('Standard inclusions are a needs assessment, a customized curriculum, interactive workshops, progress evaluation and post-training support');
     }
   });
 
@@ -576,7 +576,7 @@ test.describe('Programs: no "Last updated" line on the overview (item 24)', () =
     await expect(page.locator('main .updated, main .lf-updated')).toHaveCount(0);
     expect(await everything(page)).not.toMatch(/Last updated/);
     const ld = (await page.locator('script[type="application/ld+json"]').allTextContents()).join(' ');
-    expect(ld).toContain('"dateModified":"2026-10-31"'); // WP106: the YouthWIDE card changed on 2026-10-29 (it was 2026-10-15)
+    expect(ld).toContain('"dateModified":"2026-11-01"'); // WP141 moved it to 2026-11-01; WP106: the YouthWIDE card changed on 2026-10-29 (it was 2026-10-15)
     for (const route of ['programs/youthwide/', 'programs/superkids/', 'programs/jobready-work/', 'programs/nu-postgraduate-diploma/', 'impact/independent-evaluation/', 'privacy-policy/']) {
       await open(page, route);
       expect(await page.locator('.updated, .lf-updated').count(), route).toBeGreaterThan(0);

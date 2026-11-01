@@ -401,16 +401,16 @@ const POSITION_WHOLE_STATEMENT = {
   // WP60 (cycle-32 review, Gemini GM7; raised in nearly every cycle): Home's "Our Approach" is one sentence that keeps the audience ("... for educated, unemployed youth, ..."), with the monthly reports scoped as every statement on the site scopes them; it replaces the audience sentence
   // ("For funders who need educated, unemployed youth in paid digital work, CodersTrust offers an integrated training-to-earnings model.") and the closing sentence that followed it.
   // WP63 (cycle-35 review, Grok R1): the audience is "educated, unemployed and underemployed youth", the group ID-01 and the hero's value proposition name; POSITIONING.home in src/data/copy.ts changed with it.
-  '/': 'CodersTrust connects training, mentoring and placement support for educated, unemployed and underemployed youth, with monthly reports on progress toward paid work, as agreed in the program scope.',
-  // WP93 (triage A4): the YouthWIDE statement carries the scope guard ("as agreed in the program scope"), as every other Approach statement does.
-  '/programs/youthwide/': 'YouthWIDE combines training, mentoring and placement support in existing labs and colleges. Partners receive monthly reports on progress toward paid work, as agreed in the program scope.',
+  '/': 'CodersTrust connects training, mentoring and placement support for educated, unemployed and underemployed youth, with monthly reports on progress toward paid work.',
+  // WP93 (triage A4): the YouthWIDE statement carried the scope guard "as agreed in the program scope", as every Approach statement did; WP141 (owner answer 2026-11-01): the guard is stated once per page now (PROGRAM_SCOPE_STATEMENT), so the statements are declared without it.
+  '/programs/youthwide/': 'YouthWIDE combines training, mentoring and placement support in existing labs and colleges. Partners receive monthly reports on progress toward paid work.',
   '/partner-with-us/local-partners/': 'Your organization mobilizes learners and hosts training. CodersTrust supports delivery, mentoring, placement and reporting.',
-  '/partner-with-us/development-partners/': 'We combine training, mentoring and placement support in existing labs and colleges. Partners receive monthly reports and outcome tracking after each course, as agreed in the program scope.',
-  '/partner-with-us/governments/': 'We combine training, mentoring and placement support in existing labs and colleges. Your agency receives monthly reports on progress toward paid work, as agreed in the program scope.',
+  '/partner-with-us/development-partners/': 'We combine training, mentoring and placement support in existing labs and colleges. Partners receive monthly reports and outcome tracking after each course.',
+  '/partner-with-us/governments/': 'We combine training, mentoring and placement support in existing labs and colleges. Your agency receives monthly reports on progress toward paid work.',
   // WP44 (cycle-21 review): Foundations' and Universities' statements are whole too (see the comment on the WP43 entry below)
-  '/partner-with-us/foundations/': 'Fund a YouthWIDE cohort or JobReady’s platform infrastructure. For cohort grants, we agree a pilot scorecard and combine training, mentoring and placement support, with monthly progress reports, as agreed in the program scope.',
-  '/partner-with-us/universities/': 'JobReady@Campus combines training, mentoring and placement support in campus labs alongside academic studies. Your institution receives monthly reports on progress toward paid work, as agreed in the program scope.',
-  '/programs/jobready-campus/': 'JobReady@Campus combines certification exam preparation, mentoring and placement support in campus labs alongside academic studies. Institutions receive monthly reports on progress toward paid work, as agreed in the program scope.',
+  '/partner-with-us/foundations/': 'Fund a YouthWIDE cohort or JobReady’s platform infrastructure. For cohort grants, we agree a pilot scorecard and combine training, mentoring and placement support, with monthly progress reports.',
+  '/partner-with-us/universities/': 'JobReady@Campus combines training, mentoring and placement support in campus labs alongside academic studies. Your institution receives monthly reports on progress toward paid work.',
+  '/programs/jobready-campus/': 'JobReady@Campus combines certification exam preparation, mentoring and placement support in campus labs alongside academic studies. Institutions receive monthly reports on progress toward paid work.',
   // WP61 (cycle-33 review, GPT-6.1 Sol G3): JobReady@Work's "Our Approach" is one sentence (it was an audience sentence and a three-part closing that repeated the four cards under it).
   '/programs/jobready-work/': 'JobReady@Work builds training around your roles, from needs assessment to workshops and progress evaluation.',
 };
@@ -1062,7 +1062,7 @@ function surveyEditionProblems(factsById, rows, pins = { facts: SURVEY_FACTS, ro
   posBad('a statement that is not in the #mechanism band', `<main><section class="band" id="mechanism"><p>x</p></section>${posBlock()}</main>`);
   // WP36: a page-specific whole statement (YouthWIDE) passes only with exactly its declared text, and the declaration never loosens the rule for any other page
   const wholeYw = POSITION_WHOLE_STATEMENT['/programs/youthwide/'];
-  if (wholeYw !== 'YouthWIDE combines training, mentoring and placement support in existing labs and colleges. Partners receive monthly reports on progress toward paid work, as agreed in the program scope.') problems.push('self-test: the YouthWIDE whole statement is no longer the WP36 wording');
+  if (wholeYw !== 'YouthWIDE combines training, mentoring and placement support in existing labs and colleges. Partners receive monthly reports on progress toward paid work.') problems.push('self-test: the YouthWIDE whole statement is no longer the WP36 wording');
   posOk('the declared whole statement on the page that declares it (YouthWIDE)', mech(`${headerHtml}${posBlock(wholeYw)}</header>`), { whole: wholeYw });
   posOk('the declared whole statement with the statement before the header (nothing precedes it)', mech(`${posBlock(wholeYw)}${headerHtml}</header>`), { whole: wholeYw });
   posBad('the shared audience-plus-[UNLIKE] statement on the page that declares a whole statement', mech(`${headerHtml}${posBlock()}</header>`), { whole: wholeYw });
@@ -1085,8 +1085,8 @@ function surveyEditionProblems(factsById, rows, pins = { facts: SURVEY_FACTS, ro
   // WP42: Development Partners and Governments declare theirs whole, with the same guarantees (the exact wording, nothing in front of it, each page its own text only)
   const wholeDp = POSITION_WHOLE_STATEMENT['/partner-with-us/development-partners/'];
   const wholeGov = POSITION_WHOLE_STATEMENT['/partner-with-us/governments/'];
-  if (wholeDp !== 'We combine training, mentoring and placement support in existing labs and colleges. Partners receive monthly reports and outcome tracking after each course, as agreed in the program scope.') problems.push('self-test: the Development Partners whole statement is no longer the WP42 wording');
-  if (wholeGov !== 'We combine training, mentoring and placement support in existing labs and colleges. Your agency receives monthly reports on progress toward paid work, as agreed in the program scope.') problems.push('self-test: the Governments whole statement is no longer the WP42 wording');
+  if (wholeDp !== 'We combine training, mentoring and placement support in existing labs and colleges. Partners receive monthly reports and outcome tracking after each course.') problems.push('self-test: the Development Partners whole statement is no longer the WP42 wording');
+  if (wholeGov !== 'We combine training, mentoring and placement support in existing labs and colleges. Your agency receives monthly reports on progress toward paid work.') problems.push('self-test: the Governments whole statement is no longer the WP42 wording');
   for (const [name, own, other, otherName] of [['Development Partners', wholeDp, wholeGov, 'Governments'], ['Governments', wholeGov, wholeDp, 'Development Partners']]) {
     posOk(`the declared whole statement on the page that declares it (${name})`, mech(`${headerHtml}${posBlock(own)}</header>`), { whole: own });
     posOk(`the declared ${name} statement with the statement before the header (nothing precedes it)`, mech(`${posBlock(own)}${headerHtml}</header>`), { whole: own });
@@ -1100,12 +1100,12 @@ function surveyEditionProblems(factsById, rows, pins = { facts: SURVEY_FACTS, ro
   posBad('the YouthWIDE statement on Governments (each page carries only its own)', mech(`${headerHtml}${posBlock(wholeYw)}</header>`), { whole: wholeGov });
   // WP43: JobReady@Campus declares its statement whole, with the same guarantees (the exact wording including its scope clause, nothing in front of it, each page its own text only)
   const wholeCampus = POSITION_WHOLE_STATEMENT['/programs/jobready-campus/'];
-  if (wholeCampus !== 'JobReady@Campus combines certification exam preparation, mentoring and placement support in campus labs alongside academic studies. Institutions receive monthly reports on progress toward paid work, as agreed in the program scope.') problems.push('self-test: the JobReady@Campus whole statement is no longer the WP43 wording');
+  if (wholeCampus !== 'JobReady@Campus combines certification exam preparation, mentoring and placement support in campus labs alongside academic studies. Institutions receive monthly reports on progress toward paid work.') problems.push('self-test: the JobReady@Campus whole statement is no longer the WP43 wording');
   posOk('the declared whole statement on the page that declares it (JobReady@Campus)', mech(`${headerHtml}${posBlock(wholeCampus)}</header>`), { whole: wholeCampus });
   posOk('the declared JobReady@Campus statement with the statement before the header (nothing precedes it)', mech(`${posBlock(wholeCampus)}${headerHtml}</header>`), { whole: wholeCampus });
   posBad('the shared audience-plus-[UNLIKE] statement on JobReady@Campus, which declares a whole statement', mech(`${headerHtml}${posBlock()}</header>`), { whole: wholeCampus });
   posBad('a reworded JobReady@Campus statement', mech(`${headerHtml}${posBlock(wholeCampus.replace('combines', 'blends'))}</header>`), { whole: wholeCampus });
-  posBad('a JobReady@Campus statement that drops its scope clause ("as agreed in the program scope")', mech(`${headerHtml}${posBlock(wholeCampus.replace(', as agreed in the program scope', ''))}</header>`), { whole: wholeCampus });
+  posBad('a JobReady@Campus statement that puts the in-sentence scope clause back (WP141: the qualifier is stated once per page, not in the statement)', mech(`${headerHtml}${posBlock(`${wholeCampus.slice(0, -1)}, as agreed in the program scope.`)}</header>`), { whole: wholeCampus });
   posBad('a JobReady@Campus statement with the audience sentence in front of it', mech(`${headerHtml}${posBlock(`${posFor} ${wholeCampus}`)}</header>`), { whole: wholeCampus });
   posBad('a lead line before the JobReady@Campus statement', mech(`${headerHtml}<p class="sh__lead lead">A lead line.</p>${posBlock(wholeCampus)}</header>`), { whole: wholeCampus });
   posBad('the Governments statement on JobReady@Campus (each page carries only its own)', mech(`${headerHtml}${posBlock(wholeGov)}</header>`), { whole: wholeCampus });
@@ -1114,8 +1114,8 @@ function surveyEditionProblems(factsById, rows, pins = { facts: SURVEY_FACTS, ro
   // WP44: Foundations and Universities declare theirs whole, with the same guarantees (the exact wording, nothing in front of it, each page its own text only); Universities keeps its scope clause
   const wholeFdn = POSITION_WHOLE_STATEMENT['/partner-with-us/foundations/'];
   const wholeUni = POSITION_WHOLE_STATEMENT['/partner-with-us/universities/'];
-  if (wholeFdn !== 'Fund a YouthWIDE cohort or JobReady’s platform infrastructure. For cohort grants, we agree a pilot scorecard and combine training, mentoring and placement support, with monthly progress reports, as agreed in the program scope.') problems.push('self-test: the Foundations whole statement is no longer the WP44 wording');
-  if (wholeUni !== 'JobReady@Campus combines training, mentoring and placement support in campus labs alongside academic studies. Your institution receives monthly reports on progress toward paid work, as agreed in the program scope.') problems.push('self-test: the Universities whole statement is no longer the WP44 wording');
+  if (wholeFdn !== 'Fund a YouthWIDE cohort or JobReady’s platform infrastructure. For cohort grants, we agree a pilot scorecard and combine training, mentoring and placement support, with monthly progress reports.') problems.push('self-test: the Foundations whole statement is no longer the WP44 wording');
+  if (wholeUni !== 'JobReady@Campus combines training, mentoring and placement support in campus labs alongside academic studies. Your institution receives monthly reports on progress toward paid work.') problems.push('self-test: the Universities whole statement is no longer the WP44 wording');
   for (const [name, own, other, otherName] of [['Foundations', wholeFdn, wholeUni, 'Universities'], ['Universities', wholeUni, wholeFdn, 'Foundations']]) {
     posOk(`the declared whole statement on the page that declares it (${name})`, mech(`${headerHtml}${posBlock(own)}</header>`), { whole: own });
     posOk(`the declared ${name} statement with the statement before the header (nothing precedes it)`, mech(`${posBlock(own)}${headerHtml}</header>`), { whole: own });
@@ -1126,16 +1126,16 @@ function surveyEditionProblems(factsById, rows, pins = { facts: SURVEY_FACTS, ro
     posBad(`the ${otherName} statement on ${name} (each page carries only its own)`, mech(`${headerHtml}${posBlock(other)}</header>`), { whole: own });
     posBad(`the ${name} statement on a page that must carry the audience sentence and [UNLIKE]`, mech(`${headerHtml}${posBlock(own)}</header>`));
   }
-  posBad('a Universities statement that drops its scope clause ("as agreed in the program scope")', mech(`${headerHtml}${posBlock(wholeUni.replace(', as agreed in the program scope', ''))}</header>`), { whole: wholeUni });
+  posBad('a Universities statement that puts the in-sentence scope clause back (WP141: the qualifier is stated once per page, not in the statement)', mech(`${headerHtml}${posBlock(`${wholeUni.slice(0, -1)}, as agreed in the program scope.`)}</header>`), { whole: wholeUni });
   // WP60: Home declares its statement whole too (one sentence that keeps the audience), with the same guarantees: the exact wording including its audience and its scope clause, nothing in front of it, each page its own text only, and the earlier two-sentence statement is refused
   const wholeHome = POSITION_WHOLE_STATEMENT['/'];
-  if (wholeHome !== 'CodersTrust connects training, mentoring and placement support for educated, unemployed and underemployed youth, with monthly reports on progress toward paid work, as agreed in the program scope.') problems.push('self-test: the Home whole statement is no longer the WP63 wording');
+  if (wholeHome !== 'CodersTrust connects training, mentoring and placement support for educated, unemployed and underemployed youth, with monthly reports on progress toward paid work.') problems.push('self-test: the Home whole statement is no longer the WP63 wording');
   posOk('the declared whole statement on the page that declares it (Home)', mech(`${headerHtml}${posBlock(wholeHome)}</header>`), { whole: wholeHome });
   posOk('the declared Home statement with the statement before the header (nothing precedes it)', mech(`${posBlock(wholeHome)}${headerHtml}</header>`), { whole: wholeHome });
   posBad('the shared audience-plus-[UNLIKE] statement on Home, which declares a whole statement', mech(`${headerHtml}${posBlock()}</header>`), { whole: wholeHome });
   posBad('the earlier two-sentence Home statement (an audience sentence in front of the connecting sentence)', mech(`${headerHtml}${posBlock('For funders who need educated, unemployed youth in paid digital work, CodersTrust offers an integrated training-to-earnings model. CodersTrust connects training, mentoring and placement support in one program, and partners receive monthly reports on progress toward paid work, as agreed in the program scope.')}</header>`), { whole: wholeHome });
   posBad('a reworded Home statement', mech(`${headerHtml}${posBlock(wholeHome.replace('connects', 'links'))}</header>`), { whole: wholeHome });
-  posBad('a Home statement that drops its scope clause ("as agreed in the program scope")', mech(`${headerHtml}${posBlock(wholeHome.replace(', as agreed in the program scope', ''))}</header>`), { whole: wholeHome });
+  posBad('a Home statement that puts the in-sentence scope clause back (WP141: the qualifier is stated once per page, not in the statement)', mech(`${headerHtml}${posBlock(`${wholeHome.slice(0, -1)}, as agreed in the program scope.`)}</header>`), { whole: wholeHome });
   posBad('a Home statement that drops its audience ("for educated, unemployed and underemployed youth")', mech(`${headerHtml}${posBlock(wholeHome.replace(' for educated, unemployed and underemployed youth', ''))}</header>`), { whole: wholeHome });
   posBad('a Home statement that drops "underemployed" from its audience ("for educated, unemployed youth")', mech(`${headerHtml}${posBlock(wholeHome.replace('unemployed and underemployed youth', 'unemployed youth'))}</header>`), { whole: wholeHome });
   posBad('a lead line before the Home statement', mech(`${headerHtml}<p class="sh__lead lead">A lead line.</p>${posBlock(wholeHome)}</header>`), { whole: wholeHome });

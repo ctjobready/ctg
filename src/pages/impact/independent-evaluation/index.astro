@@ -11,7 +11,7 @@ import Callout from '../../../components/pages/impact/Callout.astro';
 import NextStep from '../../../components/pages/impact/NextStep.astro';
 import { articleNode, desc, title, discoveryCta } from '../../../components/pages/impact/page-utils';
 import { fact, sources } from '../../../data/facts';
-import { BIGD_FULL, DISCOVERY_SESSION_ASK, MICRO_COMMITMENT } from '../../../data/copy';
+import { BIGD_FULL, DISCOVERY_SESSION_ASK, MICRO_COMMITMENT, PROGRAM_SCOPE_STATEMENT } from '../../../data/copy';
 import { hostOf, linkAttrs } from '../../../lib/url';
 
 const path = '/impact/independent-evaluation/';
@@ -31,7 +31,7 @@ for (const c of classes) if (!rc08.includes(`${c.value}%`)) throw new Error(`RC-
 
 // WP30e: one decision question with a short answer (the page itself answers "Is there independent evidence?"). The answer is the shared Q3 shortened to its two claims.
 // WP107 (Sonnet XHigh run 3, Polish 5): one question does not make a FAQ, so the closing band is headed "How We Track Outcomes" and the answer sits directly under the H2 (no accordion, no FAQPage JSON-LD: the schema.org FAQPage needs a visible question and this page no longer prints one).
-const trackingAnswer = 'For every cohort, as agreed in the program scope, we plan a baseline at enrollment, follow-up surveys at 3, 6 and 12 months and monthly reports. Where available, offer letters, payslips, platform logs or bank receipts document work and earnings.';
+const trackingAnswer = 'For every cohort, we plan a baseline at enrollment, follow-up surveys at 3, 6 and 12 months and monthly reports. Where available, offer letters, payslips, platform logs or bank receipts document work and earnings.';
 const bigdReport = sources.BIGD22;
 // WP73: the follow-up study is under way (BIGD's study page, BIGDSTUDY), so RC-10's sentence links that page.
 const bigdStudy = sources.BIGDSTUDY;
@@ -45,7 +45,7 @@ const jsonLd = [
     headline: h1,
     description,
     datePublished: '2026-10-08',
-    dateModified: '2026-10-31', // WP134: WP133 changed the page text (owner rule 2026-10-31)
+    dateModified: '2026-11-01', // WP141 (2026-11-01: the program-scope qualifier is stated once per page). Earlier: WP134: WP133 changed the page text (owner rule 2026-10-31)
     author: 'CodersTrust',
     citation: [
       {
@@ -113,7 +113,7 @@ if (!/^Their monthly income/.test(incomeLine)) throw new Error('Independent eval
   path={path}
   heading={h1}
   eyebrow="Independent Evaluation"
-  updated="2026-10-31"
+  updated="2026-11-01"
   toc={toc}
   breadcrumbs={[{ label: 'Impact', href: '/impact/' }, { label: 'Independent Evaluation' }]}
   jsonLd={jsonLd}
@@ -177,7 +177,7 @@ if (!/^Their monthly income/.test(incomeLine)) throw new Error('Independent eval
   </ReportSection>
 
   <ReportSection id="outcomes" title="How We Track Outcomes">
-    <p data-fact="PD-09 PD-08 RC-01">{trackingAnswer}</p>
+    <p data-fact="PD-09 PD-08 RC-01">{trackingAnswer} {PROGRAM_SCOPE_STATEMENT}</p>
   </ReportSection>
 
   <NextStep

@@ -41,7 +41,7 @@ async function faqJsonLd(page: Page) {
 test.describe('TalentLEAP: the course-platform answer compares with a self-paced course alone (item 1)', () => {
   const QUESTION = 'How Is CodersTrust Different from an Online Course Platform?';
   const FIRST = 'Compared with a self-paced course alone, supported CodersTrust cohorts add mentoring, certification exam preparation and placement support.';
-  const SECOND = 'As agreed in the program scope, every supported TalentLEAP cohort pairs 100 training hours per certification, including certification exam preparation (with exam fees and attempts), with three months of milestone-based mentoring, placement support and outcome tracking for 12 months after each course.';
+  const SECOND = 'Every supported TalentLEAP cohort pairs 100 training hours per certification, including certification exam preparation (exam fees and attempts set per program), with three months of milestone-based mentoring, placement support and outcome tracking for 12 months after each course.';
 
   test('the answer is the scoped comparison followed by the unchanged cohort sentence, in the page and in its FAQ JSON-LD; it no longer generalizes about every course platform', async ({ page }) => {
     await open(page, 'our-model/talentleap/');
@@ -205,7 +205,7 @@ test.describe('JobReady Platform: the record band is "The Record Behind JobReady
     const toc = page.locator('.lf-toc nav a', { hasText: 'The Record Behind JobReady' });
     await expect(toc).toHaveCount(1);
     expect(await toc.getAttribute('href')).toMatch(/#why$/);
-    expect(await texts(page, '.lf-toc nav a')).toEqual(['Four Jobs, One Platform', 'Rollout Status', 'The Record Behind JobReady', 'Planned Adaptive Learning', 'Questions About the Platform']);
+    expect(await texts(page, '.lf-toc nav a')).toEqual(['Four Jobs, One Platform', 'Rollout Status', 'The Record Behind JobReady', 'Planned Adaptive Learning', 'Questions About the Platform', 'Talk to Us About JobReady']); // WP141: the list ends with the closing heading
     // the band still shows the three labelled groups (delivered, in the pipeline, contracted scope)
     expect(await texts(page, '#why .jr__whyh')).toEqual(['Delivered Since 2014', 'Being Onboarded', 'Contracted Scope']);
     expect(await mainText(page)).not.toContain('Why Institutions Choose JobReady');

@@ -23,7 +23,8 @@ const photoFor = (rel: string) => {
   return key ? photos[key].default : undefined;
 };
 // Light edit for the claims gate ("dashboard" is reserved wording): "Dashboard Design & Visualization" shows as "Data Visualization".
-const tidyExpertise = (e: string) => e.replace(/^dashboard design\s*&\s*visualization$/i, 'Data Visualization');
+// WP141 (Opus High run 16, Polish 6): the tags are site-authored labels, which spell out "and" (as the Team page's tags do), so any other "&" in a tag shows as "and".
+const tidyExpertise = (e: string) => e.replace(/^dashboard design\s*&\s*visualization$/i, 'Data Visualization').replace(/\s&\s/g, ' and ');
 const mentors = (await getCollection('mentors'))
   .map((m) => ({ ...m.data, expertise: m.data.expertise.map(tidyExpertise) }))
   .sort((a, b) => a.name.localeCompare(b.name));

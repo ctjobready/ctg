@@ -31,10 +31,10 @@ test('Minor 1: the five closing lines ask for two suitable times', () => {
   for (const [page, line] of lines) expect(main(page), page).toContain(line);
 });
 
-test('Minor 2: the Trial page is dated October 31, 2026 (visible stamp and JSON-LD)', () => {
+test('Minor 2: the Trial page is dated November 1, 2026 (visible stamp and JSON-LD; October 31 until WP141 changed its text)', () => {
   const raw = html('impact/independent-evaluation/index.html');
-  expect(visible(raw)).toContain('Last updated October 31, 2026');
-  expect(raw).toMatch(/"dateModified":"2026-10-31"/);
+  expect(visible(raw)).toContain('Last updated November 1, 2026');
+  expect(raw).toMatch(/"dateModified":"2026-11-01"/);
   expect(raw).not.toMatch(/"dateModified":"2026-10-29"/);
 });
 

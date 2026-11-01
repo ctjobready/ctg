@@ -13,7 +13,7 @@ import { listPages } from './support/pages';
  *      as "Listings, honors and press coverage."
  *   2  No serial comma anywhere (owner style): a site-wide scan of every built page (body text, meta and Open Graph descriptions, titles, JSON-LD) and llms.txt, News and
  *      team bios included, plus pinned assertions for the strings the review named.
- *   3  Programs, YouthWIDE card: "...progress toward paid work, not only enrollment, as agreed in the program scope."
+ *   3  Programs, YouthWIDE card: "...progress toward paid work, not only enrollment."
  *   4  Local Partners, "Mentoring and Placement": "with placement support into local, remote and global work."
  *   5  Investors, "Contracts and Recognition": the HolonIQ item is a sentence ("Listed in ... (STEAM category) and 2024.")
  *   6  Recognition lede: "CodersTrust’s Co-Founder and Chairman, Aziz Ahmad,"
@@ -379,9 +379,9 @@ test.describe('WP127 item 1: Recognition photo band and the About menu', () => {
 });
 
 test.describe('WP127 items 3 to 7: copy polish', () => {
-  test('3. Programs, YouthWIDE card: "...not only enrollment, as agreed in the program scope."', () => {
+  test('3. Programs, YouthWIDE card: "...not only enrollment."', () => {
     const t = text('programs/index.html');
-    expect(t).toContain('funders get monthly reports on progress toward paid work, not only enrollment, as agreed in the program scope.');
+    expect(t).toContain('funders get monthly reports on progress toward paid work, not only enrollment.');
     expect(t).not.toContain('as agreed in the program scope, not only enrollment');
   });
 

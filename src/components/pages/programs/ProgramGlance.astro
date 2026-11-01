@@ -18,8 +18,10 @@ interface Props {
   title?: string;
   lead?: string;
   id?: string;
+  /** WP141: the page's one program-scope statement (PROGRAM_SCOPE_STATEMENT in src/data/copy.ts), printed under the rows. */
+  scope?: string;
 }
-const { rows, title = 'Program at a Glance', lead, id = 'program-glance' } = Astro.props;
+const { rows, title = 'Program at a Glance', lead, id = 'program-glance', scope } = Astro.props;
 ---
 
 <Section id={id} tone="airy" aria-labelledby={`${id}-h`}>
@@ -34,9 +36,14 @@ const { rows, title = 'Program at a Glance', lead, id = 'program-glance' } = Ast
       ))
     }
   </dl>
+  {scope && <p class="pg__scope">{scope}</p>}
 </Section>
 
 <style>
+  /* WP141: the page's one program-scope statement, one step under the rows */
+  .pg__scope {
+    margin: var(--space-md) 0 0;
+  }
   .pg {
     margin: 0;
     display: grid;

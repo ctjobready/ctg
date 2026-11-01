@@ -65,7 +65,7 @@ import RouteLink from '../../../components/pages/partners/RouteLink.astro';
 import Reinforcement from '../../../components/pages/partners/Reinforcement.astro';
 import PageEnhancements from '../../../components/pages/partners/PageEnhancements.astro';
 import { HOURS, KOSOVO_WOW_TILE_LABEL, LINKS, UNDP_YES_TILE_LABEL, WHERE_THEY_WORK_TEXT, funderOptionCards, meta } from '../../../components/pages/partners/partners';
-import { ACCOUNTABILITY, HEADLINE, MICRO_COMMITMENT, POSITIONING, PROGRAM_SIZES_NOTE, READ_THE_EVIDENCE, VALUE_PROPOSITION, WB_KOSOVO } from '../../../data/copy';
+import { ACCOUNTABILITY, HEADLINE, MICRO_COMMITMENT, POSITIONING, PROGRAM_SCOPE_STATEMENT_EXAMS, PROGRAM_SIZES_NOTE, READ_THE_EVIDENCE, VALUE_PROPOSITION, WB_KOSOVO } from '../../../data/copy';
 import { fact } from '../../../data/facts';
 import { faqJsonLd } from '../../../lib/faq';
 import { cta } from '../../../lib/mailto';
@@ -189,10 +189,11 @@ const FAQ_IDS = ['Q1-development-partners', 'Q6-development-partners', 'Q3', 'Q1
   <IncludesBand
     title="What Your Portfolio Gets"
     cards={[
-      { icon: 'route', title: 'Training, Mentoring and Placement Support', text: 'Certification exam preparation, three months of mentoring and placement support in one program; exam fees and attempts as agreed in the program scope.', facts: ['PD-01'] },
+      { icon: 'route', title: 'Training, Mentoring and Placement Support', text: 'Certification exam preparation, three months of mentoring and placement support in one program; exam fees and attempts set per program.', facts: ['PD-01'] },
       { icon: 'map-pin', title: 'Accessible Local Delivery', text: 'Outreach, accessible selection and tracks chosen from employer demand, with safeguarding agreed for each program.', facts: ['PD-02', 'PD-10', 'PD-12'] },
-      { icon: 'clipboard-check', title: 'Progress Your Evaluators Can Check', text: 'Baseline data, follow-up surveys and monthly reports, with documentary evidence where available, as agreed in the program scope.', facts: ['PD-08', 'PD-09'] },
+      { icon: 'clipboard-check', title: 'Progress Your Evaluators Can Check', text: 'Baseline data, follow-up surveys and monthly reports, with documentary evidence where available.', facts: ['PD-08', 'PD-09'] },
     ]}
+    scope={PROGRAM_SCOPE_STATEMENT_EXAMS}
   />
 
   <!-- C9 · Objections -->
@@ -215,7 +216,7 @@ const FAQ_IDS = ['Q1-development-partners', 'Q6-development-partners', 'Q3', 'Q1
   <DueDiligenceView brief id="due-diligence" />
   <SubBand>
     <Callout eyebrow="Reporting and Review">
-      <p data-fact="PD-08 PD-11">For supported cohorts, monthly reports track progress; quarterly reviews, as agreed in the program scope, guide corrective action and any expansion.</p>
+      <p data-fact="PD-08 PD-11">For supported cohorts, monthly reports track progress; quarterly reviews guide corrective action and any expansion.</p>
     </Callout>
   </SubBand>
 

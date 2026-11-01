@@ -128,7 +128,7 @@ test.describe('Home mechanism card 3', () => {
     expect(compact(await card.textContent())).toContain('Industry certification exam preparation by track, then three months of milestone-based mentoring.');
     expect(await mainText(page)).not.toContain('eligibility and attempts agreed in the program scope');
     await open(page, 'programs/youthwide/');
-    expect(await mainText(page)).toContain('exam eligibility and attempts are agreed in the program scope');
+    expect(await mainText(page)).toContain('exam eligibility and attempts are set per program');
   });
 });
 

@@ -111,8 +111,8 @@ test.describe('audience pages', () => {
     await expect(page.locator('#ministry-sees')).toHaveCount(0);
     const card = page.locator('#mechanism .model__block', { hasText: 'Local, Remote and Global Work' });
     await expect(card).toHaveCount(1);
-    // WP52 (cycle-27 review): the card scopes its reports and surveys ("..., as agreed in the program scope.")
-    await expect(card).toContainText('Placement support into local, remote and global work, with monthly reports to the agency and follow-up surveys at 3, 6 and 12 months after each course, as agreed in the program scope.');
+    // WP52 (cycle-27 review): the card scopes its reports and surveys ("....")
+    await expect(card).toContainText('Placement support into local, remote and global work, with monthly reports to the agency and follow-up surveys at 3, 6 and 12 months after each course.');
   });
 
   test('governments: the contracts table becomes stacked rows on a phone', async ({ page }) => {

@@ -11,7 +11,7 @@ import { listPages } from './support/pages';
  * (run `npm run build` first, then `PORT=<port> npx playwright test tests/wp74.spec.ts --project=chromium`):
  *   - 1: the Kosovo case study links the World Bank's February 2017 release (WBKOSOVO17), the source of the 77 in PR-02b, and no other built page links it;
  *   - 2: the 77 fact (PR-02b) cites WBKOSOVO17, and the "World Bank: 77 trainees" line is built from it;
- *   - 3: the "Where They Work" card reads "Placement support, then outcome tracking for 12 months after each course, as agreed in the program scope.",
+ *   - 3: the "Where They Work" card reads "Placement support, then outcome tracking for 12 months after each course.",
  *        on Home, YouthWIDE and Development Partners, and the old sentence is on no built page.
  */
 
@@ -19,7 +19,7 @@ const KOSOVO = 'impact/case-studies/kosovo-women-in-online-work/';
 const HOME = '';
 const YOUTHWIDE = 'programs/youthwide/';
 const DP = 'partner-with-us/development-partners/';
-const WHERE_THEY_WORK = 'Placement support, then outcome tracking for 12 months after each course, as agreed in the program scope.';
+const WHERE_THEY_WORK = 'Placement support, then outcome tracking for 12 months after each course.';
 const OLD_WHERE_THEY_WORK = 'Placement support and outcome tracking for 12 months after each course';
 
 const compact = (t: string | null | undefined) => (t ?? '').replace(/\s+/g, ' ').trim();

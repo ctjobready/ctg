@@ -63,7 +63,7 @@ test.describe('YouthWIDE: no "What Success Looks Like" band (item 1; WP48: the b
 test.describe('"What Does It Cost?" and Home’s inclusions heading: standard inclusions are for supported youth cohorts (item 2)', () => {
   // WP43 (cycle-20 review): the answer is three shorter sentences; the inclusions are still said for "Supported youth cohorts" ("include ..."), and the separately budgeted items stay
   const COST =
-    'Pricing is set per program; we share an indicative budget in the discovery session. As agreed in the program scope, supported youth cohorts include outreach and selection, training, certification exam preparation (with exam fees and attempts), three months of mentoring, placement support and 12 months of outcome tracking after each course. Devices, stipends, connectivity and independent evaluation are budgeted separately where needed.';
+    'Pricing is set per program; we share an indicative budget in the discovery session. Supported youth cohorts include outreach and selection, training, certification exam preparation (exam fees and attempts set per program), three months of mentoring, placement support and 12 months of outcome tracking after each course. Devices, stipends, connectivity and independent evaluation are budgeted separately where needed.';
 
   test('the partner hub FAQ says it for supported youth cohorts, in three sentences, and the FAQ JSON-LD says the same words', async ({ page }) => {
     await open(page, 'partner-with-us/');
@@ -80,7 +80,7 @@ test.describe('"What Does It Cost?" and Home’s inclusions heading: standard in
       expect(await mainText(page), route).not.toMatch(/standard inclusions are outreach and selection|Supported youth cohorts include (outreach and selection, )?training/);
     }
     await open(page, 'partner-with-us/employers/');
-    expect(await mainText(page)).toContain('Standard inclusions, as agreed in the program scope, are a needs assessment, a customized curriculum');
+    expect(await mainText(page)).toContain('Standard inclusions are a needs assessment, a customized curriculum');
   });
 
   test('Home’s band is headed "What a Supported Youth Cohort Includes" (Title Case) and keeps its id and its three cards', async ({ page }) => {
@@ -177,7 +177,7 @@ test.describe('JobReady Platform: the status question points to "Rollout Status"
 
   test('the page carries today’s date, the day its wording changed', async ({ page }) => {
     await open(page, 'our-model/jobready-platform/');
-    expect(compact(await page.locator('.lf-updated').textContent())).toBe('Last updated October 31, 2026'); // WP104: the page's wording last changed on 29 October (WP102)
+    expect(compact(await page.locator('.lf-updated').textContent())).toBe('Last updated November 1, 2026'); // WP104: the page's wording last changed on 29 October (WP102); WP141 changed it on 1 November
   });
 });
 

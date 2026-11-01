@@ -44,7 +44,7 @@ test.describe('Investors: "What JobReady Does" is three short cards and one link
   const CARDS = [
     {
       title: 'Learn Through TalentLEAP',
-      text: 'The first published TalentLEAP level is Competent; Proficient and Expert levels are planned. Supported cohorts include mentoring, certification exam preparation and placement support, as agreed in the program scope.', // WP64 (cycle-36 review, Claude): it said "Competent is the published first level; Proficient and Expert are planned."
+      text: 'The first published TalentLEAP level is Competent; Proficient and Expert levels are planned. Supported cohorts include mentoring, certification exam preparation and placement support.', // WP64 (cycle-36 review, Claude): it said "Competent is the published first level; Proficient and Expert are planned."
       facts: ['IN-06', 'IN-08', 'PD-01', 'PD-02'],
     },
     {
@@ -219,7 +219,7 @@ test.describe('Foundations: the links and the pain (items 3 and 5; WP48: the "Re
 
 test.describe('"Reporting and Review" says what the reports and reviews do (item 4)', () => {
   // WP57b (cycle-29 review, GLM L5): the quarterly reviews carry the scope qualifier "as agreed in the program scope"
-  const SENTENCE = 'For supported cohorts, monthly reports track progress; quarterly reviews, as agreed in the program scope, guide corrective action and any expansion.';
+  const SENTENCE = 'For supported cohorts, monthly reports track progress; quarterly reviews guide corrective action and any expansion.';
   // WP45 (cycle-21 review): the hub's reporting band (#review-cycle) the callouts linked to is gone, so the callouts carry the sentence and no link (tests/wp45.spec.ts)
   // WP48 (cycle-23 review): Foundations' callout is gone (its "Progress You Can See Every Month" card says the same; tests/wp48.spec.ts); Development Partners keeps its callout
   for (const route of ['partner-with-us/development-partners/']) {
@@ -258,8 +258,8 @@ test.describe('Local Partners: the positioning statement divides the work (item 
   // WP44 (cycle-21 review): Foundations and Universities are declared whole too (tests/wp44.spec.ts), so neither keeps the audience sentence any more
   test('Foundations and Universities carry their own declared statements, not the audience sentence (the declaration is for the pages the gate lists only)', async ({ page }) => {
     const WHOLE: [string, string][] = [
-      ['partner-with-us/foundations/', 'Fund a YouthWIDE cohort or JobReady’s platform infrastructure. For cohort grants, we agree a pilot scorecard and combine training, mentoring and placement support, with monthly progress reports, as agreed in the program scope.'],
-      ['partner-with-us/universities/', 'JobReady@Campus combines training, mentoring and placement support in campus labs alongside academic studies. Your institution receives monthly reports on progress toward paid work, as agreed in the program scope.'],
+      ['partner-with-us/foundations/', 'Fund a YouthWIDE cohort or JobReady’s platform infrastructure. For cohort grants, we agree a pilot scorecard and combine training, mentoring and placement support, with monthly progress reports.'],
+      ['partner-with-us/universities/', 'JobReady@Campus combines training, mentoring and placement support in campus labs alongside academic studies. Your institution receives monthly reports on progress toward paid work.'],
     ];
     for (const [route, statement] of WHOLE) {
       await open(page, route);

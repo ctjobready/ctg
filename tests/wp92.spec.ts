@@ -25,10 +25,10 @@ const SC02_DETAIL =
   'Of 150,000+ enrollments, 112,926 were direct. Another 40,152 came through CodersTrust curriculum and courseware: 25,125 in Her Power’s national program, which used CodersTrust’s curriculum, and 15,027 enrollments in six CodersTrust-designed courses on UNDP’s FutureNation platform. Her Power’s 2,400 directly trained women are in both the 112,926 and the 25,125. Counted once, the total is 150,678 enrollments.';
 const HER_POWER_TILE = 'Her Power: tracked women in work (47%), among the 2,400 women CodersTrust trained directly';
 const WHERE_THEY_WORK_BODY =
-  'Placement support into local, remote and global work, with monthly reports to the agency and follow-up surveys at 3, 6 and 12 months after each course, as agreed in the program scope.';
+  'Placement support into local, remote and global work, with monthly reports to the agency and follow-up surveys at 3, 6 and 12 months after each course.';
 const BLENDED_TITLE = 'Blended Training and Certification Preparation';
 const GLOBAL_REACH_NOTE_END = 'New York is the headquarters, not one of the 16 locations. Most delivery has been in Bangladesh.';
-const PORTFOLIO_CARD_1 = 'Certification exam preparation, three months of mentoring and placement support in one program; exam fees and attempts as agreed in the program scope.';
+const PORTFOLIO_CARD_1 = 'Certification exam preparation, three months of mentoring and placement support in one program; exam fees and attempts set per program.';
 const DOICT_LINE = 'DoICT agreement target: 20M+ students through 9,000+ digital labs in Bangladesh.';
 const NCTB_LINE = 'NCTB agreement target: 20M+ students.';
 const SUPERKIDS_MEANS = 'A school can bring these into the classroom, so children build digital skills early.';

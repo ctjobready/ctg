@@ -19,7 +19,7 @@ const main = (rel: string) => visible(/<main[\s\S]*<\/main>/.exec(html(rel))?.[0
 
 test('Minor 1: Home FAQ opens with the one pilot scorecard, in the page and its FAQ structured data', () => {
   const raw = html('index.html');
-  expect(main('index.html')).toContain('A pilot scorecard is agreed before the first cohort. As agreed in the program scope');
+  expect(main('index.html')).toContain('A pilot scorecard is agreed before the first cohort. Partners receive monthly reports');
   expect(raw).toContain('"text":"A pilot scorecard is agreed before the first cohort.');
   expect(raw).not.toContain('A scorecard is agreed for every cohort before delivery.');
 });

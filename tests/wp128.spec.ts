@@ -70,14 +70,14 @@ const read = (p: { file: string }) => readFileSync(p.file, 'utf8');
 // ---------------------------------------------------------------------------------------------------------------------------------
 test.describe('WP128 item 1: "What Happens When Funding Ends?" is two sentences, as on Universities', () => {
   const NEW =
-    'Where included in the program scope, what the program builds stays in place: certified local facilitators and localized curricula. Completers join CodersTrust’s alumni network after their three months of mentoring.';
+    'Where included, what the program builds stays in place: certified local facilitators and localized curricula. Completers join CodersTrust’s alumni network after their three months of mentoring.';
   const OLD = 'localized curricula, and completers';
   const SIX = ['partner-with-us/development-partners/', 'partner-with-us/governments/', 'partner-with-us/foundations/', 'partner-with-us/local-partners/', 'about/governance/', 'our-model/talentleap/'];
 
   test('the register’s answer (Q10) is the new wording; the Universities variant is unchanged', () => {
     expect(faqs.find((f) => f.id === 'Q10')?.a).toBe(NEW);
     expect(faqs.find((f) => f.id === 'Q10-campus')?.a).toBe(
-      'Where included in the program scope, what the program builds stays on your campus: certified local facilitators, localized curricula and campus labs that serve as blended-learning centers. Completers join CodersTrust’s alumni network after their three months of mentoring.',
+      'Where included, what the program builds stays on your campus: certified local facilitators, localized curricula and campus labs that serve as blended-learning centers. Completers join CodersTrust’s alumni network after their three months of mentoring.',
     );
   });
   for (const route of SIX) {
@@ -131,7 +131,7 @@ test.describe('WP128 item 2: the 70+ partner breakdown uses the hub’s semicolo
 test.describe('WP128 item 3: Governance, "How Outcome Records Are Used"', () => {
   test('funders receive monthly reports and outcome data with personal details protected', () => {
     const t = text('about/governance/index.html');
-    expect(t).toContain('As agreed in the program scope, funders receive monthly reports and outcome data with personal details protected.');
+    expect(t).toContain('Funders receive monthly reports and outcome data with personal details protected.');
     expect(t).not.toContain('funders receive data with personal details protected and monthly reports');
   });
 });

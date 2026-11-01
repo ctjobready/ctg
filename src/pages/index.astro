@@ -50,7 +50,7 @@ import { futurePhotos } from '../data/photos';
 import { WORLD_STRIP } from '../data/globalStrip';
 import { HOME_SLIDES } from '../data/heroSlides';
 import GainsPains from '../components/pages/partners/GainsPains.astro';
-import { C14, FUNDER_PAINS, HOME_META, MICRO_COMMITMENT, NEXT_STEPS_TITLE, POSITIONING, PROGRAM_SIZES_NOTE, READ_THE_EVIDENCE, painForList, painForRow } from '../data/copy';
+import { C14, FUNDER_PAINS, HOME_META, MICRO_COMMITMENT, NEXT_STEPS_TITLE, POSITIONING, PROGRAM_SCOPE_STATEMENT_EXAMS, PROGRAM_SIZES_NOTE, READ_THE_EVIDENCE, painForList, painForRow } from '../data/copy';
 import { fact } from '../data/facts';
 import { CLAIM_PX06, CLAIM_RC06, freelancePostingsFinding } from '../components/sections/copyText';
 import { cta } from '../lib/mailto';
@@ -96,7 +96,7 @@ const includes = [
     icon: 'route',
     // WP23, item 5: placement support, not matching, toward local, remote and global work.
     title: 'Training, Mentoring and Placement Support',
-    text: `${hours} training hours per certification, followed by three months of milestone-based mentoring and placement support, as agreed in the program scope. Each track’s work-entry plan is agreed before enrollment.`,
+    text: `${hours} training hours per certification, followed by three months of milestone-based mentoring and placement support. Each track’s work-entry plan is agreed before enrollment.`,
     facts: ['PD-15', 'PD-01', 'PD-19'],
   },
   {
@@ -107,7 +107,7 @@ const includes = [
     // WP52 (cycle-27 review, Grok M3): "Monthly reports will show ..." (it said "show", which states the reports as an existing standard; elsewhere the same promise is planned for every cohort).
     // WP58 (cycle-30 review, Claude S10): "Progress You Can Check" (it was "Results You Can Check": the card promises monthly reports, a reporting plan, not results).
     title: 'Progress You Can Check',
-    text: 'Monthly reports show progress toward paid work, as agreed in the program scope.',
+    text: 'Monthly reports show progress toward paid work.',
     facts: ['PD-08'],
   },
   {
@@ -161,7 +161,7 @@ const includes = [
       lead="Three illustrative scenarios, not case studies."
       vignettes={[
         { kind: 'Functional', title: 'A First Foreign Client, Billed from Home', text: 'A young woman in your cohort invoices her first foreign client from her own laptop.' },
-        { kind: 'Emotional', title: 'First Earnings, Not Just Certificates', text: 'You review monthly reports, as agreed in the program scope, showing who is earning, not only who completed.' },
+        { kind: 'Emotional', title: 'First Earnings, Not Just Certificates', text: 'You review monthly reports showing who is earning, not only who completed.' },
         // WP48 (cycle-23 review, three reviewers): not "AI-Ready Talent" ("AI-ready" is a positioning term explained on Employers and JobReady@Work, which Home does not carry); the scenario says what the reader sees.
         { kind: 'Social', title: 'Employers Hiring from Your Cohort', text: 'You see employers hire completers whose skills match current employer demand.' },
       ]}
@@ -195,7 +195,7 @@ const includes = [
 
   <!-- WP38: three short cards (IncludesBand) in place of the concern / inclusion / benefit matrix; one band, so no `join` (it had left this band without bottom padding). -->
   <Tone cmf="C8" tone="airy">
-    <IncludesBand id="features" tone="airy" title="What a Supported Youth Cohort Includes" cards={includes} />
+    <IncludesBand id="features" tone="airy" title="What a Supported Youth Cohort Includes" cards={includes} scope={PROGRAM_SCOPE_STATEMENT_EXAMS} />
   </Tone>
 
   <Tone cmf="C9" tone="white">

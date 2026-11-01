@@ -97,7 +97,7 @@ test.describe('JobReady@Campus: the problem band’s lead says what the program 
 test.describe('Local Partners: what stays after funding, and what the monthly reports cover, are scoped (items 3 and 4)', () => {
   const CARD =
     'Certified-facilitator training, a localized curriculum and preparation for industry certification. You do not have to build the curriculum or certification route yourself.';
-  const BLOCK = 'Where a funder is involved, monthly reports cover enrollment, completion, certification, placements and first earnings, as agreed in the program scope.';
+  const BLOCK = 'Where a funder is involved, monthly reports cover enrollment, completion, certification, placements and first earnings.';
 
   // WP60 (cycle-32 review, GPT-6.1 Sol G5): the card no longer says what remains after funding ends; the page’s funding-ends answer (Q10) says it, with the scope words, and still opens with them
   test('"Certified Facilitators and a Local Curriculum" is training, a localized curriculum and certification preparation; what remains after funding ends is the page’s funding-ends answer (Q10)', async ({ page }) => {
@@ -107,8 +107,8 @@ test.describe('Local Partners: what stays after funding, and what the monthly re
     expect(compact(await card.locator('.card__text').textContent())).toBe(CARD);
     expect(await card.getAttribute('data-fact')).toBe('PD-06 PD-02');
     // Q10 ("What Happens When Funding Ends?") opens with the same scope words, and the page carries it
-    expect(faqs.find((f) => f.id === 'Q10')!.a).toContain('Where included in the program scope, what the program builds stays in place: certified local facilitators and localized curricula');
-    expect(compact(await page.locator('main').evaluate((el) => el.textContent ?? ''))).toContain('Where included in the program scope, what the program builds stays in place');
+    expect(faqs.find((f) => f.id === 'Q10')!.a).toContain('Where included, what the program builds stays in place: certified local facilitators and localized curricula');
+    expect(compact(await page.locator('main').evaluate((el) => el.textContent ?? ''))).toContain('Where included, what the program builds stays in place');
   });
 
   test('"Monthly Reporting" says what the reports cover, with the measures list as before, and scopes it; it no longer says a funder "sees" each measure "every month"', async ({ page }) => {
@@ -129,12 +129,12 @@ test.describe('Local Partners: what stays after funding, and what the monthly re
 });
 
 test.describe('Governments: the delivery card scopes its reports and surveys; the Her Power tile names its program (items 4 and 5)', () => {
-  const CARD = 'Placement support into local, remote and global work, with monthly reports to the agency and follow-up surveys at 3, 6 and 12 months after each course, as agreed in the program scope.';
+  const CARD = 'Placement support into local, remote and global work, with monthly reports to the agency and follow-up surveys at 3, 6 and 12 months after each course.';
   const BASE_OF_FIGURE = 'tracked women in work (47%), among the 2,400 women CodersTrust trained directly';
   // WP63 (cycle-35 review, Gemini M6): the tile states the tracked base itself; the case cards keep BASE_OF_FIGURE
   const TILE_LABEL = 'Her Power: tracked women in work (47%), among the 2,400 women CodersTrust trained directly';
 
-  test('"Local, Remote and Global Work" ends "..., as agreed in the program scope." and keeps the survey months', async ({ page }) => {
+  test('"Local, Remote and Global Work" ends "...." and keeps the survey months', async ({ page }) => {
     await open(page, GOV);
     const card = page.locator('#mechanism .model__block', { hasText: 'Local, Remote and Global Work' });
     await expect(card).toHaveCount(1);
@@ -469,9 +469,9 @@ test.describe('Home: slide 2 is plain sentences (items 17 and 25; four since WP6
 });
 
 test.describe('Home: "Progress You Can Check" promises reports (item 36) and the recognition band gives the AWS item its line (item 24)', () => {
-  test('"Monthly reports show progress toward paid work, as agreed in the program scope."', async ({ page }) => {
+  test('"Monthly reports show progress toward paid work."', async ({ page }) => {
     await open(page, HOME);
-    expect(compact(await page.locator('#features .card__text').nth(1).textContent())).toBe('Monthly reports show progress toward paid work, as agreed in the program scope.');
+    expect(compact(await page.locator('#features .card__text').nth(1).textContent())).toBe('Monthly reports show progress toward paid work.');
     expect(pagesWith('Monthly reports will show progress toward paid work')).toEqual([]);
   });
 
@@ -499,9 +499,9 @@ test.describe('Our Model: the readiness assessment promises no quantity (item 19
   test('the two card sentences read as below; the register’s PD-14 and PD-07 wording and the placement-support list are unchanged', async ({ page }) => {
     await open(page, MODEL);
     const text = await everything(page);
-    expect(text).toContain('Tests and an interview route applicants to a career track or a foundation track. Some applicants may not be selected, and the reasons are reported.');
+    expect(text).toContain('Tests and an interview route applicants to a career track or a foundation track. Some applicants may not be selected.');
     expect(text).toContain('Lessons work over a 1.5 Mbps connection, and 720p lessons can be downloaded for offline viewing.');
-    expect(text).toContain('Support includes assessment-based career advising, resume writing, job-application and interview preparation, industry internships and apprenticeships, job fairs, employer matching and freelance-marketplace onboarding.');
+    expect(text).toContain('Support includes assessment-based career advising, resume writing, job-application and interview preparation, job fairs, employer matching and freelance-marketplace onboarding, with internships or apprenticeships where employer placements are available.');
     expect(text).not.toContain('A small number may not be selected');
     expect(text).not.toContain('Lessons run on a 1.5 Mbps connection');
     expect(fact('PD-14').text).toContain('a small number of applicants may not be selected, and the reasons are reported');
@@ -548,10 +548,10 @@ test.describe('Development Partners: the glance is three tiles and the +10.3 til
   });
 
   // WP53 (owner follow-up, 2026-10-16): the card said "local, remote and global work" in its title and again in its text; the text is "Placement support and outcome tracking for 12 months after each course." (tests/wp53.spec.ts)
-  test('"Placement support, then outcome tracking for 12 months after each course, as agreed in the program scope." (the title says "local, remote and global work" once)', async ({ page }) => {
+  test('"Placement support, then outcome tracking for 12 months after each course." (the title says "local, remote and global work" once)', async ({ page }) => {
     await open(page, DP);
     const card = page.locator('#mechanism li', { has: page.locator('.model__title', { hasText: 'Local, Remote and Global Work' }) });
-    expect(compact(await card.locator('.model__text').textContent())).toBe('Placement support, then outcome tracking for 12 months after each course, as agreed in the program scope.');
+    expect(compact(await card.locator('.model__text').textContent())).toBe('Placement support, then outcome tracking for 12 months after each course.');
     expect(pagesWith('local, remote, overseas and freelance work')).toEqual([]);
   });
 
@@ -613,7 +613,7 @@ test.describe('The Programs hub lines (items 28 and 30)', () => {
   test('YouthWIDE’s "In Practice" line promises reports on progress toward paid work; JobReady@Work offers "a route to hire job-ready talent"', async ({ page }) => {
     await open(page, PROGRAMS);
     const text = await everything(page);
-    expect(text).toContain('Ministries can follow phased delivery from training to paid work, and funders get monthly reports on progress toward paid work, not only enrollment, as agreed in the program scope.');
+    expect(text).toContain('Ministries can follow phased delivery from training to paid work, and funders get monthly reports on progress toward paid work, not only enrollment.');
     expect(text).toContain('Corporate training custom-developed for each organization, plus a route to hire job-ready talent.');
     expect(pagesWith('monthly reports on paid-work outcomes', 'plus access to job-ready talent')).toEqual([]);
   });

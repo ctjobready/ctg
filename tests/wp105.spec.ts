@@ -207,10 +207,10 @@ test.describe('WP105 item 9: stamps and dateModified of the pages this WP change
   // WP129: every page here except Independent Evaluation changed again on 30 October (WP126 to WP128) and moved on to 2026-10-31.
   const STAMPED = [
     { route: 'privacy-policy/', selector: '.lf-updated', day: 'October 31, 2026', iso: '2026-10-31' },
-    { route: 'impact/independent-evaluation/', selector: '.lf-updated', day: 'October 31, 2026', iso: '2026-10-31' }, // WP134: WP133 changed its text
-    { route: 'programs/youthwide/', selector: '.updated', day: 'October 31, 2026', iso: '2026-10-31' },
+    { route: 'impact/independent-evaluation/', selector: '.lf-updated', day: 'November 1, 2026', iso: '2026-11-01' }, // WP134: WP133 changed its text
+    { route: 'programs/youthwide/', selector: '.updated', day: 'November 1, 2026', iso: '2026-11-01' },
     { route: 'programs/nu-postgraduate-diploma/', selector: '.updated', day: 'October 31, 2026', iso: '2026-10-31' },
-    { route: 'programs/jobready-campus/', selector: '.updated', day: 'October 31, 2026', iso: '2026-10-31' },
+    { route: 'programs/jobready-campus/', selector: '.updated', day: 'November 1, 2026', iso: '2026-11-01' },
   ];
   for (const s of STAMPED) {
     test(`${s.route} reads "Last updated ${s.day}" and its JSON-LD dateModified is ${s.iso}`, async ({ page }) => {
@@ -222,9 +222,9 @@ test.describe('WP105 item 9: stamps and dateModified of the pages this WP change
 
   // These three pages state no "Last updated" line, so their JSON-LD dateModified would otherwise be the build day (UTC).
   for (const route of ['about/', 'partner-with-us/governments/', 'about/recognition/']) {
-    test(`${route} pins its JSON-LD dateModified to 2026-10-31 (the day it last changed), not the build date`, async ({ page }) => {
+    test(`${route} pins its JSON-LD dateModified to 2026-11-01 (the day it last changed: WP141), not the build date`, async ({ page }) => {
       await open(page, route);
-      expect(await ldJson(page)).toMatch(/"dateModified"\s*:\s*"2026-10-31"/);
+      expect(await ldJson(page)).toMatch(/"dateModified"\s*:\s*"2026-11-01"/);
     });
   }
 });
