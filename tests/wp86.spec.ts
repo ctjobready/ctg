@@ -135,18 +135,16 @@ test.describe('Item 8: the Gulf News card carries the article headline', () => {
   });
 });
 
+// WP162 (owner decision 2026-11-03): the Albania card has no figure at all now (the World Bank's May 2022 figures count the whole program), so it has no tag row; the other four keep theirs.
 test.describe('Item 9: the Digital Jobs Albania card takes no Delivered tag', () => {
-  test('four of the five case cards carry a Delivered tag; Digital Jobs Albania carries none', async ({ page }) => {
+  test('four of the five case cards carry a Delivered tag; Digital Jobs Albania carries none (WP162: no figure, so no tag row)', async ({ page }) => {
     await open(page, 'impact/case-studies/');
-    expect(await page.locator('.case__tags').count()).toBe(5);
+    expect(await page.locator('.case__tags').count()).toBe(4);
     expect(await page.locator('.case__tags .status-tag').count()).toBe(4);
-    // The card that links to Digital Jobs Albania: its own tags hold no status tag.
-    const albaniaTags = await page.evaluate(() => {
-      let el: Element | null = document.querySelector('a[href*="digital-jobs-albania"]');
-      while (el && !el.querySelector('.case__tags')) el = el.parentElement;
-      return el ? el.querySelectorAll('.case__tags .status-tag').length : -1;
-    });
-    expect(albaniaTags).toBe(0);
+    // The card that links to Digital Jobs Albania: no tag row and no status tag.
+    const albania = page.locator('article.case', { has: page.locator('a[href*="digital-jobs-albania"]') });
+    await expect(albania).toHaveCount(1);
+    await expect(albania.locator('.case__tags, .status-tag')).toHaveCount(0);
   });
 });
 

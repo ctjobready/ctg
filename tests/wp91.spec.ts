@@ -13,7 +13,7 @@ import { DESKTOP, MOBILE, open } from './support/browser';
  *   - A4: the Funding Route 2 body has the sentence about the cohort grants before the register line;
  *   - A5: the Governments mechanism band carries the YouthWIDE sentence after the positioning statement;
  *   - A6: the Governments "What Happens Next" band ends with the first-step prompt;
- *   - A7: the Albania card carries PR-07's wording only (no "Delivered" tag, no completion claim);
+ *   - A7: the Albania card carries PR-07's wording only (no "Delivered" tag, no completion claim); WP162 (owner decision 2026-11-03): PR-07 was removed, so the card carries no figure at all;
  *   - A8: the hiring route's first step says what the conversation covers; the hire band and FAQ keep their hedge;
  *   - A9: Home's AWS recognition badge is titled "Amazon Web Services (AWS)" and states the status under it;
  *   - A10: the first Foundations pain reads "Earnings Must Be Tracked, Not Only Training Hours";
@@ -33,8 +33,8 @@ const YOUTHWIDE_SENTENCE =
   'YouthWIDE is the program through which governments and funders deploy the CodersTrust model in a country; it builds on results from earlier programs in Bangladesh and Kosovo.';
 const FIRST_STEP =
   'Your first step: a briefing for your ministry. In your inquiry, include two suitable times for it.';
-const ALBANIA_SCOPE =
-  'Three-month online training in graphic design, web development and digital marketing, with mentoring. The World Bank reported in May 2022, while the program was still running, that more than 500 students had enrolled.';
+// WP162: the World Bank's whole-program enrollment sentence is gone from the scope line (it ended "... The World Bank reported in May 2022, while the program was still running, that more than 500 students had enrolled.")
+const ALBANIA_SCOPE = 'Three-month online training in graphic design, web development and digital marketing, with mentoring.';
 const HIRING_STEP = 'A conversation about the roles you want to fill, to scope your talent request.';
 const FOUNDATIONS_PAIN = 'Earnings Must Be Tracked, Not Only Training Hours';
 
@@ -107,14 +107,16 @@ test.describe('WP91 A6: Governments ends What Happens Next with the first-step p
   });
 });
 
-test.describe('WP91 A7: the Albania card carries PR-07 wording only', () => {
-  test('the card reads the World Bank figure, with no Delivered tag or completion claim', async ({ page }) => {
+test.describe('WP91 A7: the Albania card carries PR-07 wording only (WP162: no figure at all)', () => {
+  test('the card reads its scope line with no figure, no Delivered tag and no completion claim', async ({ page }) => {
     await open(page, 'impact/');
-    await expect(page.locator('#cases')).toContainText(ALBANIA_SCOPE);
+    const card = page.locator('#cases article', { hasText: 'Digital Jobs Albania' });
+    expect(compact(await card.locator('.card__text').textContent())).toBe(ALBANIA_SCOPE);
+    await expect(card).not.toContainText(/500|enrolled|completed|Delivered/);
   });
-  test('PR-07 keeps the 500+ figure the card states', () => {
-    expect(fact('PR-07').stat?.value).toBe('500+');
-    expect(fact('PR-07').text).toContain('more than 500 students had enrolled');
+  // WP162: this pinned PR-07's 500+ figure; PR-07 was removed from the register (owner decision 2026-11-03), so it now pins its absence.
+  test('PR-07, the 500+ figure the card stated, is no longer in the register', () => {
+    expect(() => fact('PR-07')).toThrow();
   });
 });
 

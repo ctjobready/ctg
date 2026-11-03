@@ -156,7 +156,7 @@ test.describe('Item 3 (GPT-6.1 Sol), skipped: Home has no Digital Jobs Albania c
     const tile = page.locator('#world [data-tile="albania"]');
     await expect(tile).toHaveCount(1);
     expect(await tile.getAttribute('data-fact')).toBe('TL-05');
-    expect(compact(await tile.locator('figcaption').textContent())).toBe('Albania, 2021–2022. A World Bank initiative, delivered online.');
+    expect(compact(await tile.locator('figcaption').textContent())).toBe('Albania, 2021. A World Bank initiative, delivered online.'); // WP162: 2021 only (it was 2021–2022)
     expect(fact('TL-05').stat?.label).toBe('A World Bank initiative, delivered online');
     expect(compact(await tile.locator('.wst__mark').textContent())).toBe('Digital Jobs Albania');
     expect(compact(await tile.textContent())).not.toMatch(/%|enrolled|students|in work/i);

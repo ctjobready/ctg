@@ -795,7 +795,7 @@ test.describe('WP76 item 3: the Kosovo program is described as the World Bank br
     expect(compact(await cards.first().locator('.card__text').textContent())).toBe(`${CARD}.`);
     expect(await texts(page, '#cases article .card__text')).toEqual([
       `${CARD}.`,
-      'Three-month online training in graphic design, web development and digital marketing, with mentoring. The World Bank reported in May 2022, while the program was still running, that more than 500 students had enrolled.',
+      'Three-month online training in graphic design, web development and digital marketing, with mentoring.', // WP162: the World Bank's whole-program enrollment sentence is gone
       'ICT skills for freelancing marketplaces and local jobs, with one-to-one mentoring.',
       'Skills training linked to freelance marketplaces, in a fully equipped lab with one-to-one mentoring.',
       'Curriculum, training manuals, mentorship guidelines and trainer training; 2,400 trained directly.',

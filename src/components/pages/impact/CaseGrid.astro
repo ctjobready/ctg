@@ -15,7 +15,8 @@ import herPower from '../../../assets/images/pages/impact/her-power-training-lab
 
 /**
  * Grid of the published case-study cards (five since WP55): outcome-first stat from the register, then the program.
- * WP60 (cycle-32 review, Kimi K2): the figure's label is "Result" on every card but Digital Jobs Albania's, whose figure is the World Bank's enrollment count, so its card says "Reported Enrollment" (CaseStudy.resultTitle).
+ * WP162 (owner decision 2026-11-03): a case with no register figure (Digital Jobs Albania: the World Bank's May 2022 figures count the whole program, and CodersTrust took part in 2021 only) has no Result block,
+ * so its card shows the program, its partner and place, and the link; every card with a figure labels it "Result". (WP60 had labelled Albania's World Bank enrollment figure "Reported Enrollment", and WP86 left it without the "Delivered" tag.)
  * No `grid-cards--2` modifier: five cards read 3 + 2 in the system's default three columns (a two-column grid would leave the fifth alone in its row), and a set of four still reads 2 × 2 by the system's own rule (utilities.css).
  */
 interface Props {
@@ -30,13 +31,15 @@ const photos: Record<string, { src: ImageMetadata; alt: string; assetId: string 
 };
 import type { ImageMetadata } from 'astro';
 const cards = CASE_STUDIES.filter((c) => c.slug !== except).map((c) => {
+  const photo = photos[c.slug] ?? caseCardPhoto(c.slug);
+  if (!c.factId) return { ...c, result: undefined, photo };
   const s = fact(c.factId).stat;
   if (!s) throw new Error(`case card: ${c.factId} has no stat`);
-  return { ...c, stat: s, resultLabel: c.factId === 'PR-01' ? wsdfmFigureLabel() : c.factId === 'PR-05' ? CASE_CARD_LABELS['PR-05'] : s.label, evidence: evidenceOf(c.factId), photo: photos[c.slug] ?? caseCardPhoto(c.slug) };
+  return { ...c, result: { stat: s, label: c.factId === 'PR-01' ? wsdfmFigureLabel() : c.factId === 'PR-05' ? CASE_CARD_LABELS['PR-05'] : s.label, evidence: evidenceOf(c.factId) }, photo };
 });
 ---
 
-<div class:list={['grid-cards', className]} data-fact={[...cards.map((c) => c.factId), ...cards.flatMap((c) => c.note?.facts ?? [])].join(' ')}>
+<div class:list={['grid-cards', className]} data-fact={[...cards.flatMap((c) => (c.factId ? [c.factId] : [])), ...cards.flatMap((c) => c.note?.facts ?? [])].join(' ')}>
   {
     cards.map((c) => {
       const a = linkAttrs(c.path);
@@ -49,14 +52,16 @@ const cards = CASE_STUDIES.filter((c) => c.slug !== except).map((c) => {
             <h3 class="card__title"><a class="card__link" href={a.href}>{c.name}</a></h3>
             <dl class="case__fields">
               <div><dt>Partner and Place</dt><dd>{c.place}</dd></div>
-              <div class="case__result">
-                <dt>{c.resultTitle ?? 'Result'}</dt>
-                <dd>
-                  <span class="case__tags">{!c.reported && <StatusTag status="Delivered" />}{c.evidence && <EvidenceTag type={c.evidence} />}</span>
-                  <span class="case__value">{c.stat.value}</span>{' '}<span class="case__label">{c.resultLabel}</span>
-                  {c.note && <span class="case__second" data-fact={c.note.facts.join(' ')}>{c.note.text}</span>}
-                </dd>
-              </div>
+              {c.result && (
+                <div class="case__result">
+                  <dt>Result</dt>
+                  <dd>
+                    <span class="case__tags"><StatusTag status="Delivered" />{c.result.evidence && <EvidenceTag type={c.result.evidence} />}</span>
+                    <span class="case__value">{c.result.stat.value}</span>{' '}<span class="case__label">{c.result.label}</span>
+                    {c.note && <span class="case__second" data-fact={c.note.facts.join(' ')}>{c.note.text}</span>}
+                  </dd>
+                </div>
+              )}
             </dl>
             <span class="card__more" aria-hidden="true">Read the Case Study<span class="sr-only">: {c.name}</span><Icon name="arrow-right" size={16} /></span>
           </div>

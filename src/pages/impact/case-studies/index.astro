@@ -14,13 +14,15 @@ import { linkAttrs } from '../../../lib/url';
 import { webPage } from '../../../lib/schema';
 
 const path = '/impact/case-studies/';
-// WP103 (Sonnet Medium run 2, kit 69): "figure", not "result", because Albania's figure is reported enrollment, not a result.
-const description = desc('Five CodersTrust case studies, each with its figure and its base: Women in Online Work, Digital Jobs Albania, WSDFM, UNDP YES and Her Power.');
+// WP103 (Sonnet Medium run 2, kit 69): "figure", not "result", because Albania's figure was reported enrollment, not a result.
+// WP162 (owner decision 2026-11-03): the Albania case study has no figure now (the World Bank's figures count the whole program; CodersTrust took part in 2021 only), so the description and the lead say
+// "with the figures and bases where they exist" (they said "each with its figure and its base").
+const description = desc('Five CodersTrust case studies, with the figures and bases where they exist: Women in Online Work, Digital Jobs Albania, WSDFM, UNDP YES and Her Power.');
 // WP161-A (adversarial review A-04): the Article headline is the H1 (it was "CodersTrust Case Studies"); the CollectionPage and ItemList names stay.
 const jsonLd = [
   webPage({ path, name: 'CodersTrust Case Studies', description, type: 'CollectionPage' }),
   itemList('CodersTrust case studies', CASE_STUDIES.map((c) => ({ name: c.name, path: c.path }))),
-  articleNode({ path, headline: 'Five Programs Across Kosovo, Albania and Bangladesh', description, datePublished: '2026-10-08', dateModified: '2026-11-01', author: 'CodersTrust' }), // WP142 (2026-11-01): the card label "Partner and Place" (it read "Partner & Place"), so the date moves (owner rule: any visible text change)
+  articleNode({ path, headline: 'Five Programs Across Kosovo, Albania and Bangladesh', description, datePublished: '2026-10-08', dateModified: '2026-11-03', author: 'CodersTrust' }), // WP162 (2026-11-03): the lead, and the Albania card's years and figure. Earlier: WP142 (2026-11-01): the card label "Partner and Place" (it read "Partner & Place"), so the date moves (owner rule: any visible text change)
 ];
 const d = discoveryCta();
 
@@ -28,9 +30,9 @@ const d = discoveryCta();
 
 <BaseLayout title={title('Case Studies: Kosovo, Albania and Bangladesh')} description={description} path={path} breadcrumbs={[{ label: 'Impact', href: '/impact/' }, { label: 'Case Studies' }]} jsonLd={jsonLd}>
   <!-- WP60 (cycle-32 review, Kimi K1 and K2): the H1 was "Five Programs, from Kosovo to Bangladesh" (it said "Learners Reaching Paid Work, ...", but the Albania card shows an enrollment figure, not a work result) and the hero photograph is the Kosovo training room (HERO["case-studies-hub"] in
-       src/data/photos.ts; it was the Bhutan inauguration, and no Bhutan case study exists). The grid's H2 is "Results First, Program by Program" (it said "Five Programs, Results First", which repeated the H1's and the lead's first words). The Albania card's figure is labelled "Reported Enrollment" (CaseGrid).
+       src/data/photos.ts; it was the Bhutan inauguration, and no Bhutan case study exists). The grid's H2 is "Results First, Program by Program" (it said "Five Programs, Results First", which repeated the H1's and the lead's first words). The Albania card's figure was labelled "Reported Enrollment" (CaseGrid); since WP162 (owner decision 2026-11-03) the Albania card has no figure.
        WP63 (cycle-35 review, Kimi K5; also Kimi in cycle 34): the H1 is "Five Programs Across Kosovo, Albania and Bangladesh" (the range "from Kosovo to Bangladesh" left Albania, one of the five, unnamed), as the Impact page's "Five Programs" band is headed; the <title> names the same three countries. -->
-  <Hero variant="inner" eyebrow="Impact" title="Five Programs Across Kosovo, Albania and Bangladesh" lead="Five programs, each with its figure and its base."artSeed="case-studies-hub" />
+  <Hero variant="inner" eyebrow="Impact" title="Five Programs Across Kosovo, Albania and Bangladesh" lead="Five programs, with the figures and bases where they exist." artSeed="case-studies-hub" />
 
   <Section aria-labelledby="cases-h">
     <SectionHeader id="cases-h" eyebrow="Case Studies" title="Results First, Program by Program" />

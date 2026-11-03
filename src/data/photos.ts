@@ -151,7 +151,8 @@ export const CAPTION: Record<string, string> = {
   // WP56 (owner decision 13, 2026-10-18): no source says the Hour of Code was held with the university; the photograph shows a Tima-ade University banner (see its alt text).
   'global/somaliland-hour-of-code': 'Hour of Code, and an ICT program at Tima-ade University, Somaliland, 2015',
   'global/bhutan-batch-inauguration': 'Trainee batch inauguration ceremony, Bhutan',
-  'global/digital-jobs-albania': 'Digital Jobs Albania, an online training program for women, 2021–2022',
+  // WP162 (owner, 2026-11-02/03): no years (they were 2021–2022, the World Bank program's span; CodersTrust took part in 2021 only, and the caption describes the program, not CodersTrust's part).
+  'global/digital-jobs-albania': 'Digital Jobs Albania, an online training program for women',
   'impact/kosovo-graduate-portrait': 'Erlisa Zherka, Women in Online Work program completer, Kosovo',
   'general/yes-trainees-group': 'UNDP YES (Youth Employment through Skills) trainees, Korail',
   'general/yes-collage': 'UNDP YES (Youth Employment through Skills) trainees in class and in group portraits',

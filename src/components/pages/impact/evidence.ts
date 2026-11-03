@@ -14,8 +14,11 @@ import { fact } from '../../../data/facts';
 /** The kinds of evidence an Impact page badges (see <EvidenceTag>). */
 export type Evidence = 'Randomized Trial' | 'Surveyed Completers' | 'Program Record' | 'Contract Scope' | 'Individual Story';
 
-/** WP55: figures the World Bank reports for a program (the Kosovo 77, the Digital Jobs Albania 500+ and 5,000+) are not CodersTrust program records, so they take no "Program Record" pill; their wording names the World Bank. */
-const WORLD_BANK_REPORTED = new Set(['PR-02b', 'PR-07', 'PR-08']);
+/**
+ * WP55: figures the World Bank reports for a program (the Kosovo 77) are not CodersTrust program records, so they take no "Program Record" pill; their wording names the World Bank.
+ * WP162 (owner decision 2026-11-03): the Digital Jobs Albania figures (PR-07, PR-08) left the register's public dataset (they count the whole program; CodersTrust took part in 2021 only), so the set holds PR-02b alone.
+ */
+const WORLD_BANK_REPORTED = new Set(['PR-02b']);
 
 export function evidenceOf(id: string): Evidence | undefined {
   if (WORLD_BANK_REPORTED.has(id)) return undefined;

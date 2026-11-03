@@ -13,19 +13,18 @@ export interface CaseStudy {
   heading: string;
   program: string;
   partner: string;
-  /** Register fact whose stat is the outcome-first figure. */
-  factId: string;
+  /**
+   * Register fact whose stat is the outcome-first figure. WP162 (owner decision 2026-11-03): optional, because Digital Jobs Albania has no figure (the World Bank's published figures count the whole program,
+   * and CodersTrust took part in 2021 only), so its card has no Result block (CaseGrid) and its page no stat tile (CaseStudyPage).
+   */
+  factId?: string;
   summary: string;
-  /** Card fields, the same four on every card (WP20d): Partner and Place, Who, Scope and Delivery, then the Result (the register stat). Wording follows each case-study page. */
+  /** Card fields, the same four on every card (WP20d): Partner and Place, Who, Scope and Delivery, then the Result (the register stat), where the case has one. Wording follows each case-study page. */
   place: string;
   who: string;
   scope: string;
   /** WP55 ("Show both"): a second source's figure for the same program, as one short line under the card's result (Kosovo: the World Bank's 77 trainees with an online contract). */
   note?: { text: string; facts: string[] };
-  /** WP60 (cycle-32 review, Kimi K2): the card's name for its figure when it is not a result ("Reported Enrollment": Albania's figure is the World Bank's enrollment count, PR-07). Cards without one say "Result". */
-  resultTitle?: string;
-  /** WP86 (coordinator item 9): a figure the World Bank reported while the program was still running; the card takes no "Delivered" tag (CaseGrid). */
-  reported?: boolean;
   /** WP104: the day the page's content last changed, for the JSON-LD dateModified, where it is later than the case studies' shared 2026-10-10 (UNDP YES: its heading). */
   dateModified?: string;
   related: { label: string; href: string };
@@ -56,18 +55,15 @@ export const CASE_STUDIES: CaseStudy[] = [
     path: `${base}digital-jobs-albania/`,
     name: 'Digital Jobs Albania',
     heading: 'Digital Jobs Albania: Online Skills for Women, with the World Bank',
-    program: 'World Bank, 2021–2022',
+    // WP162 (owner, 2026-11-02/03; TL-05): CodersTrust took part in 2021 only, so the years are 2021 (they were 2021–2022). The card and the page show no figure: the World Bank's May 2022 figures
+    // (PR-07, 500+ enrolled; PR-08, 5,000+ interested) count the whole program and were removed from the register's public dataset. WP91's PR-07 sentence is gone from the scope line.
+    program: 'World Bank, 2021',
     partner: 'Online training program',
-    // PR-07 is the World Bank's own figure (500+ students enrolled, May 2022), not a CodersTrust program record, and takes no "Program Record" tag (evidenceOf).
-    factId: 'PR-07',
     summary: 'A World Bank initiative that gave women in Albania a three-month online course in digital skills.',
-    place: 'World Bank, with the Government of Albania and EuroPartners Development; Albania, 2021–2022',
+    place: 'World Bank, with the Government of Albania and EuroPartners Development; Albania, 2021',
     who: 'Women aged 16 to 35',
-    // WP91 (triage A7): the card's figure and wording are PR-07's (register: "the World Bank reported in May 2022, while the program was still running, that more than 500 students had enrolled").
-    scope: 'Three-month online training in graphic design, web development and digital marketing, with mentoring. The World Bank reported in May 2022, while the program was still running, that more than 500 students had enrolled',
-    resultTitle: 'Reported Enrollment',
-    reported: true,
-    dateModified: '2026-10-21', // WP161-A (adversarial review A-01): the page's last visible change was the May 2022 World Bank link (WP72); it fell back to the shared 2026-10-10
+    scope: 'Three-month online training in graphic design, web development and digital marketing, with mentoring',
+    dateModified: '2026-11-03', // WP162: the years, the Results band and the meta description changed. Earlier: WP161-A (adversarial review A-01): the May 2022 World Bank link (WP72, 2026-10-21)
     related: { label: 'See How YouthWIDE Deploys the Model', href: '/programs/youthwide/' },
   },
   {

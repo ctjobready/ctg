@@ -84,9 +84,10 @@ const OCTOBER_POSTS = [
 
 test.describe('A-01 case studies and Stories declare the day their visible text last changed', () => {
   const article = (slug: string) => nodeOf(`impact/case-studies/${slug}/index.html`, 'Article');
-  test('WSDFM says 2026-10-28 and Digital Jobs Albania 2026-10-21 (no longer the shared 2026-10-10)', () => {
+  // WP162: Digital Jobs Albania's text changed again on 2026-11-03 (its years, Results band and meta description), so it says 2026-11-03 (it said 2026-10-21); tests/wp162.spec.ts holds that date too.
+  test('WSDFM says 2026-10-28 and Digital Jobs Albania 2026-11-03 (no longer the shared 2026-10-10)', () => {
     expect(article('wsdfm-women-freelancers').dateModified).toBe('2026-10-28');
-    expect(article('digital-jobs-albania').dateModified).toBe('2026-10-21');
+    expect(article('digital-jobs-albania').dateModified).toBe('2026-11-03');
   });
   test('the other three keep their own dates, and all five keep datePublished 2026-10-08', () => {
     expect(article('kosovo-women-in-online-work').dateModified).toBe('2026-11-02');
@@ -159,9 +160,10 @@ test.describe('A-04 Article.headline equals the page H1', () => {
       expect(nodeOf(rel, 'Article').headline).toBe(heading);
     });
   }
+  // WP162 (2026-11-03): Global Reach (the Albania row) and the Case Studies hub (its lead and the Albania card) changed visible text, so both moved on to 2026-11-03; the headline change alone still moves no date.
   test('the dates of the three Article nodes stay as they were (the headline is structured data, not visible text)', () => {
-    expect(nodeOf('impact/global-reach/index.html', 'Article').dateModified).toBe('2026-11-02');
-    expect(nodeOf('impact/case-studies/index.html', 'Article').dateModified).toBe('2026-11-01');
+    expect(nodeOf('impact/global-reach/index.html', 'Article').dateModified).toBe('2026-11-03');
+    expect(nodeOf('impact/case-studies/index.html', 'Article').dateModified).toBe('2026-11-03');
   });
 });
 

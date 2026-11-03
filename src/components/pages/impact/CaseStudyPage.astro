@@ -33,8 +33,9 @@ interface Props {
    * Register facts whose stats form the outcome-first row. A program-results stat (PR-01, PR-02, PR-05) carries its evidence label from the
    * register, so it takes none here; `evidence` is for a stat whose register label has none (PR-03), and is shown under the figure.
    * WP125: `label` replaces the register's label on this page (FactStat's own `label`), as Her Power's tile reads the clause the cards use.
+   * WP162 (owner decision 2026-11-03): optional; a case with no register figure (Digital Jobs Albania) passes none, and the hero then shows no stat tile.
    */
-  stats: { id: string; evidence?: string; label?: string }[];
+  stats?: { id: string; evidence?: string; label?: string }[];
   context: string[];
   challenges: string[];
   solution: string[];
@@ -59,7 +60,7 @@ interface Props {
    */
   heroPhoto?: { src: ImageMetadata; alt: string; assetId: string; width: number; height: number };
 }
-const { slug, pageTitle, description, stats, context, challenges, solution, artSeed, heroNote, heroNoteFacts, trialLink = false, heroPhoto, storyEyebrow = 'Learner Experience', storyTitle = 'A Learner Story' } = Astro.props;
+const { slug, pageTitle, description, stats = [], context, challenges, solution, artSeed, heroNote, heroNoteFacts, trialLink = false, heroPhoto, storyEyebrow = 'Learner Experience', storyTitle = 'A Learner Story' } = Astro.props;
 // A case without its own hero photograph takes the one registered for its card (src/data/photos.ts).
 const fallback = caseCardPhoto(slug);
 const hero = heroPhoto ?? (fallback ? { src: fallback.src, alt: fallback.alt, assetId: fallback.assetId, width: fallback.src.width, height: fallback.src.height } : undefined);
@@ -125,7 +126,7 @@ const d = discoveryCta();
   </Section>
   <slot name="after-results" />
 
-  {/* WP55: a case study with no learner story (Digital Jobs Albania: the World Bank's figures are enrollment, and no learner story is registered) leaves the band out instead of showing an empty one. */}
+  {/* WP55: a case study with no learner story (Digital Jobs Albania: no learner story is registered) leaves the band out instead of showing an empty one. */}
   {Astro.slots.has('story') && (
     <Section tone="airy" aria-labelledby="story-h">
       <SectionHeader id="story-h" eyebrow={storyEyebrow} title={storyTitle} lead="Individual stories, not typical or promised outcomes." />

@@ -403,7 +403,7 @@ test.describe('K1 and K2 (Kimi): the Case Studies hub is "Five Programs Across K
   test('the H1, the lead and the grid’s H2 read as below, and the old H1 and H2 are gone', async ({ page }) => {
     await open(page, HUB);
     await expect(page.getByRole('heading', { level: 1 })).toHaveText('Five Programs Across Kosovo, Albania and Bangladesh');
-    await expect(page.locator('main .hero__lead').first()).toHaveText('Five programs, each with its figure and its base.');
+    await expect(page.locator('main .hero__lead').first()).toHaveText('Five programs, with the figures and bases where they exist.'); // WP162 (Albania has no figure now; it was "Five programs, each with its figure and its base.")
     await expect(page.getByRole('heading', { level: 2, name: 'Results First, Program by Program' })).toHaveCount(1);
     expect(sitePages().filter((p) => /Learners Reaching Paid Work, from Kosovo|Five Programs, Results First|Five Programs, from Kosovo to Bangladesh/.test(visible(p.html))).map((p) => p.route)).toEqual([]);
   });
@@ -421,15 +421,16 @@ test.describe('K1 and K2 (Kimi): the Case Studies hub is "Five Programs Across K
     expect(await page.locator('img[data-asset="legacy-global-bhutan-batch-inauguration"]').count()).toBeGreaterThan(0);
   });
 
-  test('the Albania card names its figure "Reported Enrollment" (an enrollment count, not a result); the other four cards say "Result"', async ({ page }) => {
+  // WP162 (owner decision 2026-11-03): the Albania card has no figure, so no label is needed for it (it showed the World Bank's enrollment count as "Reported Enrollment"); the label stays honest by being absent.
+  test('the Albania card shows no figure and no figure label (WP162; it said "Reported Enrollment"); the other four cards say "Result"', async ({ page }) => {
     await open(page, HUB);
     const names = await page.locator('article.case .card__title').evaluateAll((els) => els.map((e) => (e.textContent ?? '').trim()));
     const labels = await page.locator('article.case .case__result dt').evaluateAll((els) => els.map((e) => (e.textContent ?? '').trim()));
     expect(names).toHaveLength(5);
-    expect(labels).toEqual(names.map((n) => (n === 'Digital Jobs Albania' ? 'Reported Enrollment' : 'Result')));
+    expect(labels).toEqual(names.filter((n) => n !== 'Digital Jobs Albania').map(() => 'Result'));
     const albania = page.locator('article.case', { hasText: 'Digital Jobs Albania' });
-    await expect(albania.locator('.case__value')).toHaveText('500+');
-    expect(compact(await albania.locator('.case__label').textContent())).toBe('students enrolled, reported by the World Bank in May 2022 while the program was running');
+    await expect(albania.locator('.case__result, .case__value, .case__label')).toHaveCount(0);
+    await expect(page.locator('main')).not.toContainText('Reported Enrollment');
   });
 });
 

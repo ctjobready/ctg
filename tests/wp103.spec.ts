@@ -6,7 +6,8 @@ import { listPages } from './support/pages';
 /**
  * WP103 (Sonnet Medium run 2, kit 69, and owner answers of 2026-10-29). Test-first: run `npm run build`, then
  * `PORT=<port> npx playwright test tests/wp103.spec.ts --project=chromium`.
- *   - Item 1: Case Studies index says "figure", not "result", in its lead and meta description (Albania's figure is reported enrollment).
+ *   - Item 1: Case Studies index says "figure", not "result", in its lead and meta description (Albania's figure was reported enrollment).
+ *     WP162 (owner decision 2026-11-03): Albania has no figure now, so the wording is "with the figures and bases where they exist" (it was "each with its figure and its base"); still "figure", not "result".
  *   - Item 2: the Kosovo case study H1 is "Women in Online Work, Kosovo: A World Bank Pilot for Young Women".
  *   - Item 3: the Stories H1 is "Learners Turning Training into Work".
  *   - Item 4: the consent line says "those pictured or their guardians" on In the Field and News Photographs.
@@ -18,16 +19,16 @@ const builtHtml = () => listPages().map((p) => ({ route: p.route, html: readFile
 const ldJson = async (page: import('@playwright/test').Page) => (await page.locator('script[type="application/ld+json"]').allTextContents()).join('\n');
 
 test.describe('WP103 item 1: Case Studies index says "figure"', () => {
-  test('the lead reads "Five programs, each with its figure and its base."', async ({ page }) => {
+  test('the lead reads "Five programs, with the figures and bases where they exist." (WP162; it was "Five programs, each with its figure and its base.")', async ({ page }) => {
     await open(page, 'impact/case-studies/');
-    await expect(page.locator('main .hero__lead').first()).toHaveText('Five programs, each with its figure and its base.');
+    await expect(page.locator('main .hero__lead').first()).toHaveText('Five programs, with the figures and bases where they exist.');
   });
 
   test('the meta description reads with "figure", stays within 155 characters, and keeps the rest of its sentence', async ({ page }) => {
     await open(page, 'impact/case-studies/');
     const description = (await page.locator('meta[name="description"]').getAttribute('content')) ?? '';
     expect(description).toBe(
-      'Five CodersTrust case studies, each with its figure and its base: Women in Online Work, Digital Jobs Albania, WSDFM, UNDP YES and Her Power.',
+      'Five CodersTrust case studies, with the figures and bases where they exist: Women in Online Work, Digital Jobs Albania, WSDFM, UNDP YES and Her Power.', // WP162
     );
     expect(description.length).toBeLessThanOrEqual(155);
   });
@@ -35,7 +36,7 @@ test.describe('WP103 item 1: Case Studies index says "figure"', () => {
   test('the JSON-LD description repeats "figure", not "result"', async ({ page }) => {
     await open(page, 'impact/case-studies/');
     const ld = await ldJson(page);
-    expect(ld).toContain('each with its figure and its base');
+    expect(ld).toContain('with the figures and bases where they exist'); // WP162 (it was "each with its figure and its base")
     expect(ld).not.toContain('its result and its base');
   });
 

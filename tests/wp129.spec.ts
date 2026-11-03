@@ -297,7 +297,18 @@ test.describe('WP129 item 6: every dated page whose visible text changed carries
     'about/recognition/index.html', // WP161-B (2026-11-02): the Morten Lund note and the World Bank pages heading
   ]);
   // WP161-A (2026-11-03): Privacy, Accessibility, Foundations and Governments moved on; WP161-B (2026-11-03): Ferdinand Kjærulff's profile.
-  const MOVED_1103 = new Set(['privacy-policy/index.html', 'accessibility/index.html', 'partner-with-us/foundations/index.html', 'partner-with-us/governments/index.html', 'about/team/ferdinand-kjaerulff/index.html']);
+  // WP162 (2026-11-03): About (the Albania tile), Impact (the Albania case card), Global Reach (the Albania row) and the Digital Jobs Albania case study (years, Results band, meta description) moved on.
+  const MOVED_1103 = new Set([
+    'privacy-policy/index.html',
+    'accessibility/index.html',
+    'partner-with-us/foundations/index.html',
+    'partner-with-us/governments/index.html',
+    'about/team/ferdinand-kjaerulff/index.html',
+    'about/index.html',
+    'impact/index.html',
+    'impact/global-reach/index.html',
+    'impact/case-studies/digital-jobs-albania/index.html',
+  ]);
   for (const [route, cls] of STAMPED) {
     const [day, long] = MOVED_1103.has(route) ? ['2026-11-03', 'November 3, 2026'] : MOVED_1102.has(route) ? ['2026-11-02', 'November 2, 2026'] : MOVED_1101.has(route) ? ['2026-11-01', 'November 1, 2026'] : ['2026-10-31', 'October 31, 2026'];
     test(`${route} reads "Last updated ${long}" and its JSON-LD dateModified is ${day}`, () => {
@@ -322,6 +333,7 @@ test.describe('WP129 item 6: every dated page whose visible text changed carries
     'impact/in-the-field/index.html',
     'impact/case-studies/kosovo-women-in-online-work/index.html',
     'impact/case-studies/undp-yes-korail/index.html',
+    'impact/case-studies/digital-jobs-albania/index.html', // WP162: its text changed on 2026-11-03, so it left KEEP below
     'partner-with-us/foundations/index.html',
     'partner-with-us/governments/index.html',
     'partner-with-us/investors/index.html',
@@ -339,7 +351,7 @@ test.describe('WP129 item 6: every dated page whose visible text changed carries
   const KEEP: [string, string][] = [
     // WP161-A (adversarial review A-01): both declare the day of their last visible change instead of the shared 2026-10-10 fallback.
     ['impact/case-studies/wsdfm-women-freelancers/index.html', '2026-10-28'],
-    ['impact/case-studies/digital-jobs-albania/index.html', '2026-10-21'],
+    // WP162: Digital Jobs Albania left this list (it kept 2026-10-21 until its text changed on 2026-11-03); JSONLD_ONLY above holds its new date.
   ];
   for (const [route, day] of KEEP) {
     test(`${route} keeps ${day} (its text did not change; guard)`, () => {
