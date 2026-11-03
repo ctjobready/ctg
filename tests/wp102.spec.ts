@@ -80,7 +80,8 @@ test.describe('WP102 2: NU schedule notices are linked where intake and schedule
       expect(row).toContain('href="https://pgd.nu.ac.bd/all-recent-notices-pgd.php"');
       expect(visible(row)).toContain('National University PGD Admission Notices');
       expect(visible(row)).toContain('National University PGD Recent Notices');
-      expect(visible(row)).toContain('notices are published in Bangla');
+      // WP161 (WP160-B, owner answer 2026-11-02): the lead-in says the notices are for National University's own Gazipur intake (it said "National University’s notices are published in Bangla:")
+      expect(visible(row)).toContain('National University publishes notices for its own intake at its Gazipur campus in Bangla; the fee, eligibility and admission test in those notices apply to that intake, not to admission through CodersTrust:');
     });
   }
 });

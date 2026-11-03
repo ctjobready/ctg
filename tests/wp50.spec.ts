@@ -577,7 +577,7 @@ test.describe('Programs: no "Last updated" line on the overview (item 24)', () =
     await expect(page.locator('main .updated, main .lf-updated')).toHaveCount(0);
     expect(await everything(page)).not.toMatch(/Last updated/);
     const ld = (await page.locator('script[type="application/ld+json"]').allTextContents()).join(' ');
-    expect(ld).toContain('"dateModified":"2026-11-01"'); // WP141 moved it to 2026-11-01; WP106: the YouthWIDE card changed on 2026-10-29 (it was 2026-10-15)
+    expect(ld).toContain('"dateModified":"2026-11-02"'); // WP161 moved it to 2026-11-02 (the learner line, the SuperKids card, "cybersecurity"); WP141 moved it to 2026-11-01; WP106: the YouthWIDE card changed on 2026-10-29 (it was 2026-10-15)
     for (const route of ['programs/youthwide/', 'programs/superkids/', 'programs/jobready-work/', 'programs/nu-postgraduate-diploma/', 'impact/independent-evaluation/', 'privacy-policy/']) {
       await open(page, route);
       expect(await page.locator('.updated, .lf-updated').count(), route).toBeGreaterThan(0);

@@ -332,8 +332,8 @@ test.describe('6 NU Post Graduate Diploma: the "Ready to Apply?" band does not r
       // WP153: the band has no lead (it said "Submit the application form.", which repeated step 1); tests/wp153.spec.ts holds the rest.
       expect(text).not.toContain('Ready to Apply? Submit the application form.');
       expect(text).not.toContain('Submit the application form. Our admissions team will contact you with the next steps.');
-      expect(text).toContain('Admissions Contacts You. Our admissions team shares the next steps.');
-      expect(text).toContain('Submit the Application Form. The Apply Now button opens the standalone application form.');
+      expect(text).toContain('Admissions Contacts You. Our admissions team shares the application steps.'); // WP161 (A-34): it said "shares the next steps"
+      expect(text).toContain('Register Your Interest. The Apply Now button opens a short form asking for your name, contact details and course.'); // WP161 (A-34): it said "Submit the Application Form. The Apply Now button opens the standalone application form."
       // The admissions sentence is said once on the page (the step).
       expect(count(text, /Our admissions team (?:will )?(?:contacts? you|shares)/)).toBe(1);
     });

@@ -98,7 +98,7 @@ interface Course {
 const COURSES: Course[] = [
   { slug: 'digital-marketing', title: 'NU Post Graduate Diploma in Digital Marketing', subject: 'digital marketing', topics: ['SEO and analytics', 'Social media marketing', 'E-commerce'], prefer: 'Prefer SEO, social media and advertising?' },
   { slug: 'ict', title: 'NU Post Graduate Diploma in Information and Communication Technology (ICT)', subject: 'information and communication technology (ICT)', topics: ['Programming and databases', 'Networks and troubleshooting', 'Mobile and web development'], prefer: 'Prefer programming, databases and networks?' },
-  { slug: 'cyber-security', title: 'NU Post Graduate Diploma in Cyber Security', subject: 'cyber security', topics: ['Cryptography and network security', 'Digital forensics and investigation', 'Cyber law and risk management'], prefer: 'Prefer cryptography, network security and digital forensics?' },
+  { slug: 'cyber-security', title: 'NU Post Graduate Diploma in Cyber Security', subject: 'cybersecurity', topics: ['Cryptography and network security', 'Digital forensics and investigation', 'Cyber law and risk management'], prefer: 'Prefer cryptography, network security and digital forensics?' },
   { slug: 'data-analytics', title: 'NU Post Graduate Diploma in Data Analytics', subject: 'data analytics', topics: ['Analytics tools and databases', 'Data visualization', 'Machine learning and data governance'], prefer: 'Prefer analytics tools, data visualization and machine learning?' },
 ];
 
@@ -121,8 +121,8 @@ interface NewCourse {
 const NEW_COURSES: Record<string, NewCourse> = {
   'cyber-security': {
     title: 'NU Post Graduate Diploma in Cyber Security',
-    lead: 'Cyber security knowledge, from cryptography and network security to digital forensics and cyber law, in a National University Post Graduate Diploma delivered by CodersTrust.',
-    description: 'A National University Post Graduate Diploma in cyber security, delivered by CodersTrust: cryptography, network security, digital forensics and cyber law.',
+    lead: 'Cybersecurity knowledge, from cryptography and network security to digital forensics and cyber law, in a National University Post Graduate Diploma delivered by CodersTrust.',
+    description: 'A National University Post Graduate Diploma in cybersecurity, delivered by CodersTrust: cryptography, network security, digital forensics and cyber law.',
     studyLead: 'Modules, in order. The final module is a capstone project or internship.',
     answer: 'Build a foundation in cryptography, network security, digital forensics and cyber risk management, then apply it in the final capstone project or internship.',
     answerModules: ['Cryptography and Data Security', 'Network and Communication Security', 'Cyber Crime Investigation and Digital Forensics', 'Cyber Risk Management and Crime Prevention'],
@@ -148,8 +148,9 @@ const NEW_COURSES: Record<string, NewCourse> = {
     title: 'NU Post Graduate Diploma in Data Analytics',
     lead: 'Practical data analytics skills, from analytics tools and databases to data visualization and machine learning, in a National University Post Graduate Diploma delivered by CodersTrust.',
     description: 'A National University Post Graduate Diploma in data analytics, delivered by CodersTrust: analytics tools, databases, visualization and machine learning.',
-    studyLead: 'Modules, in order. The final module is a special-topics thesis or project report.',
-    answer: 'Build a foundation in analytics tools, databases, data visualization and machine learning, then apply it in the final special-topics thesis or project report.',
+    // WP161 (WP160-B, owner rule WP97): the final module follows National University's title, "Project/Internship: Special Topics in Data Analytics" (it said "a special-topics thesis or project report")
+    studyLead: 'Modules, in order. The final module, Special Topics in Data Analytics, is a project or internship.',
+    answer: 'Build a foundation in analytics tools, databases, data visualization and machine learning, then apply it in the final project or internship module.',
     answerModules: ['Data Analytics: Tools and Techniques', 'Database Systems', 'Data Visualization', 'Fundamentals of Machine Learning'],
     fit: 'Choose Data Analytics if you want to study analytics tools, databases, data visualization and machine learning.',
     fitModules: ['Data Analytics: Tools and Techniques', 'Database Systems', 'Data Visualization', 'Fundamentals of Machine Learning'],
@@ -237,7 +238,7 @@ test.describe('WP76 item 1: the register says the NU Post Graduate Diploma has f
       'Data Governance and Ethics',
       'Fundamentals of Machine Learning',
       'Professional Development & Freelancing',
-      'Special Topics in Data Analytics',
+      'Special Topics in Data Analytics (Project or Internship)', // WP161 (WP160-B): NU's own title for the final module
     ]);
   });
 
@@ -250,10 +251,10 @@ test.describe('WP76 item 1: the register says the NU Post Graduate Diploma has f
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 test.describe('WP76 item 1: the overview page, the Programs hub and the menus name all four courses', () => {
-  test('"Choose Your Course" says "Four courses, in digital marketing, information and communication technology (ICT), cyber security and data analytics, ..." over four cards in the diploma’s order, each linked, with its banner and three topics', async ({ page }) => {
+  test('"Choose Your Course" says "Four courses, in digital marketing, information and communication technology (ICT), cybersecurity and data analytics, ..." over four cards in the diploma’s order, each linked, with its banner and three topics', async ({ page }) => {
     await open(page, NU);
     await expect(page.locator('#courses h2')).toHaveText('Choose Your Course');
-    expect(compact(await page.locator('#courses .lead').textContent())).toBe('Four courses, in digital marketing, information and communication technology (ICT), cyber security and data analytics, delivered by CodersTrust, an affiliated college (College Code: 6634) under the National University of Bangladesh.');
+    expect(compact(await page.locator('#courses .lead').textContent())).toBe('Four courses, in digital marketing, information and communication technology (ICT), cybersecurity and data analytics, delivered by CodersTrust, an affiliated college (College Code: 6634) under the National University of Bangladesh.');
     expect(await texts(page, '#courses article .course__title')).toEqual(COURSES.map((c) => c.title));
     for (const [i, c] of COURSES.entries()) {
       const card = page.locator('#courses article').nth(i);
@@ -281,7 +282,7 @@ test.describe('WP76 item 1: the overview page, the Programs hub and the menus na
   test('the Programs hub card names all four courses; no built page names only "digital marketing and ICT"', async ({ page }) => {
     await open(page, 'programs/');
     const card = page.locator(`#programs-grid li:has(a[href$="${NU}"])`);
-    expect(compact(await card.textContent())).toContain('National University Post Graduate Diploma courses delivered by CodersTrust, in digital marketing, information and communication technology (ICT), cyber security and data analytics.');
+    expect(compact(await card.textContent())).toContain('National University Post Graduate Diploma courses delivered by CodersTrust, in digital marketing, information and communication technology (ICT), cybersecurity and data analytics.'); // WP161 (A-36): "cybersecurity" as a common noun
     expect(sitePages().filter((p) => /digital marketing and ICT/i.test(visible(p.html))).map((p) => p.route)).toEqual([]);
   });
 
@@ -449,7 +450,7 @@ test.describe('WP76 item 1: the two new course pages follow the course template'
       const doAnswer = await answerOf(page, 'What Will I Be Able to Do After This Course?');
       expect(doAnswer).toBe(`${c.answer} ${NEXT_STEP}`);
       const rightAnswer = await answerOf(page, 'Is This the Right Course for Me?');
-      expect(rightAnswer).toBe(`Eligibility: ${ELIGIBILITY}. ${c.fit} Not right if you want a short self-paced course: see JobReady.global.`);
+      expect(rightAnswer).toBe(`Eligibility: ${ELIGIBILITY}. ${c.fit} Not right if you want a shorter course: see JobReady.global.`); // WP161 (A-35): it said "a short self-paced course"
       // every subject the two sentences name is the subject of one of the course's own modules
       for (const m of [...c.answerModules, ...c.fitModules]) expect(modulesOf(slug), m).toContain(m);
       const ld = await faqJsonLd(page);
@@ -534,7 +535,8 @@ test.describe('WP76 item 1: the existing course pages keep their wording and str
     expect(compact(await page.locator('#curriculum .sh .lead, #curriculum header .lead').first().textContent())).toBe('Modules, in order. The final module combines internship, project work and a seminar; internship arrangements are confirmed with admissions.');
     expect(await texts(page, '#who .roles li')).toEqual(['Social Media Executive', 'SEO Executive/Expert', 'Google Ads, PPC and SEM Specialist', 'Content Marketer']);
     await open(page, `${NU}ict/`);
-    expect(await answerOf(page, 'What Will I Be Able to Do After This Course?')).toBe(`Build practical work in programming, databases, networks and mobile applications, followed by the final internship, project work and seminar module. ${NEXT_STEP}`);
+    // WP161 (A-33): ICT's final module is National University's "Project/ Intern" (it was "Internship/ Project Work & Seminar")
+    expect(await answerOf(page, 'What Will I Be Able to Do After This Course?')).toBe(`Build practical work in programming, databases, networks and mobile applications, followed by the final project or internship module. ${NEXT_STEP}`);
     expect(await texts(page, '#who .roles li')).toEqual(['Software Developer', 'Programmer', 'Network Administrator', 'Network Engineer', 'Database Administrator', 'Web Developer', 'Web Designer', 'Mobile App Developer']);
   });
 });

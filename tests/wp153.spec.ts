@@ -170,9 +170,10 @@ test.describe('5 NU Post Graduate Diploma: "Ready to Apply?" has no lead repeati
       const text = main(p);
       expect(text).not.toContain('Ready to Apply? Submit the application form.');
       // The instruction is said once, as step 1; step 2 carries the admissions sentence.
-      expect(count(text, /Submit the application form/i)).toBe(1);
-      expect(text).toContain('Submit the Application Form. The Apply Now button opens the standalone application form.');
-      expect(text).toContain('Admissions Contacts You. Our admissions team shares the next steps.');
+      // WP161 (A-34): step 1 is "Register Your Interest." (the form is a short registration form; it said "Submit the Application Form.")
+      expect(count(text, /Register Your Interest/i)).toBe(1);
+      expect(text).toContain('Register Your Interest. The Apply Now button opens a short form asking for your name, contact details and course.');
+      expect(text).toContain('Admissions Contacts You. Our admissions team shares the application steps.');
       expect(visible(band).startsWith('Ready to Apply? Apply Now')).toBe(true);
     });
   }

@@ -6,7 +6,7 @@ duration: "12 Months"
 fee: "BDT 50,000"
 mode: "On-Campus"
 applyUrl: "https://docs.google.com/forms/d/e/1FAIpQLScm4K2bBY83VmcOgYfuMpK9RC91jhULnKFo479dug8strodtA/viewform"
-modules: ["Fundamentals of Data Analytics", "Introduction to Programming", "Data Analytics: Tools and Techniques", "Database Systems", "Data Analysis and Software Application", "Data Visualization", "Data Governance and Ethics", "Fundamentals of Machine Learning", "Professional Development & Freelancing", "Special Topics in Data Analytics"]
+modules: ["Fundamentals of Data Analytics", "Introduction to Programming", "Data Analytics: Tools and Techniques", "Database Systems", "Data Analysis and Software Application", "Data Visualization", "Data Governance and Ethics", "Fundamentals of Machine Learning", "Professional Development & Freelancing", "Special Topics in Data Analytics (Project or Internship)"]
 internship: "Project work allows students to apply analytical concepts to practical problems, organize and interpret data, develop reports, and present findings. An internship, where available, can provide additional exposure to professional working environments."
 faqs:
   - q: "What is Data Analytics, and why is it important in today's business landscape?"

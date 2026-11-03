@@ -278,6 +278,7 @@ test.describe('WP129 item 6: every dated page whose visible text changed carries
     'programs/nu-postgraduate-diploma/data-analytics/index.html',
     'programs/nu-postgraduate-diploma/digital-marketing/index.html',
     'programs/nu-postgraduate-diploma/ict/index.html',
+    'programs/index.html', // WP161 (2026-11-02): the learner line, the SuperKids card and "cybersecurity" in the NU card
     'about/index.html',
     'partner-with-us/foundations/index.html',
     'partner-with-us/governments/index.html',

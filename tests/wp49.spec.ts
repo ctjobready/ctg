@@ -213,7 +213,7 @@ test.describe('NU course pages: "Is This the Right Course for Me?" (item 9)', ()
     test(`${slug}: the answer keeps the eligibility sentence and names what the course teaches, from its own module list`, async ({ page }) => {
       await open(page, `${NU}${slug}/`);
       const text = await mainText(page);
-      expect(text).toContain(`Eligibility: ${ELIGIBILITY}. ${sentence} Not right if you want a short self-paced course: see JobReady.global`);
+      expect(text).toContain(`Eligibility: ${ELIGIBILITY}. ${sentence} Not right if you want a shorter course: see JobReady.global`); // WP161 (A-35): it said "a short self-paced course"
       expect(text).not.toContain('It is right for you if you meet that and want a digital career.');
       // every subject the sentence names is the subject of one of the course's own modules
       for (const m of topics) expect(modulesOf(slug), m).toContain(m);

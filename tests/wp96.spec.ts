@@ -97,7 +97,8 @@ test.describe('Item 2: Her Power is dated 2023–2025', () => {
 // tests/wp97.spec.ts holds the full WP97 checks.
 test.describe('Item 3: the NU course is spelled Cyber Security in visible text (WP97)', () => {
   test('no built NU page prints the one-word "Cybersecurity" for the course', () => {
-    const hits = routesWhere((t) => /Diploma in Cybersecurity|in cybersecurity,|Cybersecurity knowledge|Choose Cybersecurity/.test(t));
+    // WP161 (A-36): "cybersecurity" as a common noun ("Cybersecurity knowledge, ...", "... Diploma in cybersecurity, delivered by ...") is allowed; the course name stays "Cyber Security"
+    const hits = routesWhere((t) => /Diploma in Cybersecurity|Choose Cybersecurity|Cybersecurity (Laws|Analyst)|Junior Cybersecurity/.test(t));
     expect(hits).toEqual([]);
   });
 
@@ -106,13 +107,13 @@ test.describe('Item 3: the NU course is spelled Cyber Security in visible text (
     await open(page, route);
     await expect(page.getByRole('heading', { level: 1 })).toHaveText('NU Post Graduate Diploma in Cyber Security');
     await expect(page).toHaveTitle(/NU Post Graduate Diploma in Cyber Security/);
-    expect(await page.locator('meta[name="description"]').getAttribute('content')).toContain('in cyber security');
+    expect(await page.locator('meta[name="description"]').getAttribute('content')).toContain('in cybersecurity'); // WP161 (A-36): the common noun is "cybersecurity"; the H1 and title keep the course name
   });
 
   test('the Programs menu and the diploma overview name the course "Cyber Security"', async ({ page }) => {
     await open(page, 'programs/nu-postgraduate-diploma/');
     const html = builtPages().find((p) => p.route === 'programs/nu-postgraduate-diploma/')!.html;
-    expect(visible(html)).toContain('Four courses, in digital marketing, information and communication technology (ICT), cyber security and data analytics');
+    expect(visible(html)).toContain('Four courses, in digital marketing, information and communication technology (ICT), cybersecurity and data analytics'); // WP161 (A-36)
     const labels = await page.locator('#mega-programs .mega__title, #courses h3').allTextContents();
     expect(labels.map(compact)).toContain('Cyber Security');
   });

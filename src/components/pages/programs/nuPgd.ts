@@ -30,6 +30,11 @@ export const NU_NOTICES: { label: string; href: string }[] = [
   { label: 'National University PGD Admission Notices', href: 'https://pgd.nu.ac.bd/admission-notices-pgd.php' },
   { label: 'National University PGD Recent Notices', href: 'https://pgd.nu.ac.bd/all-recent-notices-pgd.php' },
 ];
+/**
+ * WP161 (WP160-B, owner answer 2026-11-02: admission through CodersTrust, college 6634, follows CodersTrust's own terms; NU's notices describe NU's own intake at its Gazipur campus): the words before the two notice links,
+ * on every NU page (the Schedule and Intake row, NuNoticeLinks) and in the overview's FAQ answer. It was "National University’s notices are published in Bangla:", which read as if the notices' fee, eligibility and admission test applied to CodersTrust's applicants.
+ */
+export const NU_NOTICES_LEAD = 'National University publishes notices for its own intake at its Gazipur campus in Bangla; the fee, eligibility and admission test in those notices apply to that intake, not to admission through CodersTrust:';
 /** WP102: on the NU pages CodersTrust is described only as an affiliated college (NU-04, the Recognition row), never as the official training partner (SC-04 keeps that wording for the other pages). */
 const nuAffiliation = (): string => {
   const t = fact('NU-04').text;
@@ -46,11 +51,11 @@ export const NU_COURSE_NAME: Record<string, string> = {
 };
 /** The four courses in the order every surface lists them (the overview's cards, the menus, "Also Consider"): the two long-standing courses first, then the two added in WP76. */
 export const NU_COURSE_ORDER: readonly string[] = ['digital-marketing', 'ict', 'cyber-security', 'data-analytics'];
-/** Each course as a phrase in a sentence: "digital marketing, ICT, cyber security and data analytics" (the overview's "Choose Your Course" lead and the Programs hub card name all four this way). */
+/** Each course as a phrase in a sentence: "digital marketing, ICT, cybersecurity and data analytics" (the overview's "Choose Your Course" lead and the Programs hub card name all four this way). WP161 (A-36): the common noun is "cybersecurity", as on the rest of the site; the course name "Cyber Security" (NU-13) is unchanged. */
 export const NU_COURSE_SUBJECT: Record<string, string> = {
   'digital-marketing': 'digital marketing',
   ict: 'information and communication technology (ICT)',
-  'cyber-security': 'cyber security',
+  'cyber-security': 'cybersecurity',
   'data-analytics': 'data analytics',
 };
 /** Standalone Google Form (never embedded) and the secondary phone route, both from the CTA library. */
@@ -98,20 +103,22 @@ export const NU_COURSE_COPY: Record<string, { short: string; lead: string; descr
     // WP97: the <title> is capped at 60 characters with " | CodersTrust"; the full course name does not fit, so the title keeps the short "ICT" that NU itself uses (the H1 and the description carry the full name)
     titleTag: 'NU Post Graduate Diploma in ICT',
     prefer: 'Prefer programming, databases and networks?',
-    studyLead: 'Modules, in order. The final module combines internship, project work and a seminar; internship arrangements are confirmed with admissions.',
+    // WP161 (A-33): National University's ICT syllabus (effective 2023-24) ends with "Project/ Intern" (827418), not an internship, project work and seminar module
+    studyLead: 'Modules, in order. The final module is a project or internship; internship arrangements are confirmed with admissions.',
   },
   // WP76: from CodersTrust's own course page (NUCYBER26): the ten subjects, the description's topics (cyber criminology, cryptography and data security, network and communication security, cyber security laws and policies, cybercrime investigation and digital forensics, digital privacy,
   // cyber risk management, cyber terrorism, financial cybercrime) and the final "Capstone Project/Internship" module. Everything below is worded from the module names; no outcome, role or service is promised.
   'cyber-security': {
     short: 'Cyber Security: cryptography, network security, digital forensics, cyber law and risk management.',
-    lead: 'Cyber security knowledge, from cryptography and network security to digital forensics and cyber law, in a National University Post Graduate Diploma delivered by CodersTrust.',
-    description: 'A National University Post Graduate Diploma in cyber security, delivered by CodersTrust: cryptography, network security, digital forensics and cyber law.',
+    lead: 'Cybersecurity knowledge, from cryptography and network security to digital forensics and cyber law, in a National University Post Graduate Diploma delivered by CodersTrust.',
+    description: 'A National University Post Graduate Diploma in cybersecurity, delivered by CodersTrust: cryptography, network security, digital forensics and cyber law.',
     topics: ['Cryptography and network security', 'Digital forensics and investigation', 'Cyber law and risk management'],
     titleTag: 'NU Post Graduate Diploma in Cyber Security',
     prefer: 'Prefer cryptography, network security and digital forensics?',
     studyLead: 'Modules, in order. The final module is a capstone project or internship.',
   },
-  // WP76: from CodersTrust's own course page (NUDATA26): the ten subjects and the final "Special Topics in Data Analytics" module (a thesis or experimental project report, supervised). The page's description also names spreadsheets and dashboards, which no module title carries, so the copy
+  // WP76: from CodersTrust's own course page (NUDATA26): the ten subjects and the final "Special Topics in Data Analytics" module. WP161 (WP160-B, owner rule WP97: follow National University's own titles): NU's Data Analytics syllabus heads that module
+  // "Project/Internship: 826818 Special Topics in Data Analytics", so the page says a project or internship (it said "a special-topics thesis or project report", from CodersTrust's own page). The page's description also names spreadsheets and dashboards, which no module title carries, so the copy
   // below names only what the module list does (analytics tools, databases, data visualization, machine learning, data governance and ethics).
   'data-analytics': {
     short: 'Practical data analytics: analytics tools, databases, data visualization and machine learning.',
@@ -120,7 +127,7 @@ export const NU_COURSE_COPY: Record<string, { short: string; lead: string; descr
     topics: ['Analytics tools and databases', 'Data visualization', 'Machine learning and data governance'],
     titleTag: 'NU Post Graduate Diploma in Data Analytics',
     prefer: 'Prefer analytics tools, data visualization and machine learning?',
-    studyLead: 'Modules, in order. The final module is a special-topics thesis or project report.',
+    studyLead: 'Modules, in order. The final module, Special Topics in Data Analytics, is a project or internship.',
   },
 };
 
@@ -220,15 +227,16 @@ const ANSWER_MODULES: Record<string, { module: string; words: string }[]> = {
 };
 /**
  * WP76: the frame of that answer, per course: the verb (the two long-standing courses keep "Build practical work in ..."; the two added courses say "Build a foundation in ...", the Cyber Security page's own words for what the programme gives: "a strong foundation for further learning and career
- * development in this field"; the Data Analytics page says "Build a foundation for further learning in business intelligence and advanced analytics"), the closing clause (the last module differs: an internship, project work and seminar; a capstone project or internship; a special-topics thesis or project report)
+ * development in this field"; the Data Analytics page says "Build a foundation for further learning in business intelligence and advanced analytics"), the closing clause (the last module differs: an internship, project work and seminar; a project or internship; a capstone project or internship)
  * and the pattern of that last module's title, which must still be in the module list.
  * "then apply it in the final capstone project or internship" is the Cyber Security page's own account of that module ("allows students to apply their knowledge to real-world situations"); the Data Analytics page says the same of project work.
+ * WP161 (A-33, WP160-B): ICT's and Data Analytics' final modules follow National University's syllabi, a project or internship ("Project/ Intern"; "Project/Internship: Special Topics in Data Analytics").
  */
 const ANSWER_FRAME: Record<string, { lead: string; closing: string; finalModule: RegExp }> = {
   'digital-marketing': { lead: 'Build practical work in', closing: 'followed by the final internship, project work and seminar module', finalModule: /^Internship/i },
-  ict: { lead: 'Build practical work in', closing: 'followed by the final internship, project work and seminar module', finalModule: /^Internship/i },
+  ict: { lead: 'Build practical work in', closing: 'followed by the final project or internship module', finalModule: /^Project/i },
   'cyber-security': { lead: 'Build a foundation in', closing: 'then apply it in the final capstone project or internship', finalModule: /^Capstone Project/i },
-  'data-analytics': { lead: 'Build a foundation in', closing: 'then apply it in the final special-topics thesis or project report', finalModule: /^Special Topics/i },
+  'data-analytics': { lead: 'Build a foundation in', closing: 'then apply it in the final project or internship module', finalModule: /^Special Topics/i },
 };
 /** "a, b, c and d" */
 const andList = (items: string[]) => `${items.slice(0, -1).join(', ')} and ${items[items.length - 1]}`;
@@ -327,6 +335,7 @@ export async function nuCourses(): Promise<NuCourse[]> {
       return {
         slug: e.data.slug,
         title: NU_COURSE_NAME[e.data.slug] ?? e.data.title,
+        // NU's "Internship/ Project Work & Seminar" (Digital Marketing only since WP161: ICT's last module is "Project or Internship") is printed as "Internship, Project Work and Seminar"
         modules: (e.data.modules ?? []).map((m) => (/^Internship/i.test(m) ? 'Internship, Project Work and Seminar' : m)),
         roles: relatedCareerAreas(list(e.body ?? '', 'Career opportunities'), e.data.slug),
         faqs: (e.data.faqs ?? []).filter((_, i) => keep.includes(i)),

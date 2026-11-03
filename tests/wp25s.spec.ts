@@ -28,7 +28,7 @@ test.describe('direct answers under the H1', () => {
     // WP41 (cycle-18 review): the lead speaks to the institution ("Run mentored, certification-focused training in your campus labs alongside academic studies.")
     ['programs/jobready-campus/', 'Run mentored, certification-focused training in your campus labs alongside academic studies.'],
     ['programs/jobready-work/', 'JobReady@Work builds custom AI-ready training for your team'],
-    ['programs/superkids/', 'SuperKids brings block coding, robotics and graphic design for kids into schools'],
+    ['programs/superkids/', 'SuperKids@School brings block coding, robotics and graphic design for kids into schools.'], // WP161 (WP160-B): the lead names SuperKids@School and the family courses
     ['our-model/', 'One integrated path: assessment, certification-focused training'],
   ] as const) {
     test(`${route} opens with a direct answer under the H1`, async ({ page }) => {
@@ -162,7 +162,7 @@ test.describe('Programs', () => {
     expect(dm).toContain('Build practical work in WordPress design, content marketing, SEO and analytics, followed by the final internship, project work and seminar module.');
     expect(dm).not.toContain('You can explain the digital skills');
     await open(page, 'programs/nu-postgraduate-diploma/ict/');
-    expect(compact(await everything(page))).toContain('Build practical work in programming, databases, networks and mobile applications, followed by the final internship, project work and seminar module.');
+    expect(compact(await everything(page))).toContain('Build practical work in programming, databases, networks and mobile applications, followed by the final project or internship module.'); // WP161 (A-33): NU's ICT syllabus ends with "Project/ Intern"
   });
 
   // WP39 (cycle-16 review): YouthWIDE's features band was three short cards; its third said the curriculum is "designed to keep pace as AI changes entry-level tasks" (the designed-to scope stayed).

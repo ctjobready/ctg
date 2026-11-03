@@ -231,7 +231,8 @@ test.describe('6 NU "Ready to Apply?": the step names its subject', () => {
   for (const page of [NU, ...NU_COURSES]) {
     test(`${page}: "Submit the Application Form. The Apply Now button opens the standalone application form."`, () => {
       const text = main(page);
-      expect(text).toContain('Submit the Application Form. The Apply Now button opens the standalone application form. Admissions Contacts You. Our admissions team shares the next steps.');
+      // WP161 (A-34): the step still names its subject ("The Apply Now button opens ..."); the form is a short registration form and admissions shares the application steps
+      expect(text).toContain('Register Your Interest. The Apply Now button opens a short form asking for your name, contact details and course. Admissions Contacts You. Our admissions team shares the application steps.');
       expect(text).not.toContain('It takes you to the standalone application form');
       expect(count(text, 'Apply Now')).toBeGreaterThanOrEqual(2); // the button and the step
     });

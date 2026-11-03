@@ -42,7 +42,7 @@ test.describe('WP95 A2: Programs hub links learners to JobReady.global for short
     const lines = hero.locator('.hub__nu');
     await expect(lines).toHaveCount(2);
     const course = lines.nth(1);
-    await expect(course).toContainText('Looking for a short self-paced course?');
+    await expect(course).toContainText('Looking for a course for yourself?'); // WP161 (A-35): it said "Looking for a short self-paced course?"
     const link = course.getByRole('link', { name: /Explore Courses at JobReady\.global/ });
     await expect(link).toHaveAttribute('href', 'https://jobready.global/');
     await expect(link).toHaveAttribute('rel', /noopener/);

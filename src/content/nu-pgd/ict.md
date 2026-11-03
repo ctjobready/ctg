@@ -6,7 +6,7 @@ duration: "12 Months"
 fee: "BDT 50,000"
 mode: "On-Campus"
 applyUrl: "https://docs.google.com/forms/d/e/1FAIpQLScm4K2bBY83VmcOgYfuMpK9RC91jhULnKFo479dug8strodtA/viewform"
-modules: ["Introduction to ICT", "Office Automation", "Java Programming", "Database Management Systems", "Multimedia Design and Developments", "System Maintenance and Troubleshooting", "Computer Networks Maintenance", "Mobile Application Development", "Web Application & Web Site Design", "Internship/ Project Work & Seminar"]
+modules: ["Introduction to ICT", "Office Automation", "Java Programming", "Database Management Systems", "Multimedia Design and Developments", "System Maintenance and Troubleshooting", "Computer Networks Maintenance", "Mobile Application Development", "Web Application & Web Site Design", "Project or Internship"]
 internship: "The students are required to undergo an internship in Information & Communication Technology Firm for gaining practical experience in the field."
 faqs:
   - q: "How long does it take to complete the Post Graduate Diploma in Information and Communication Technology (ICT)?"

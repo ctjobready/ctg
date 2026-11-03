@@ -138,10 +138,11 @@ test.describe('WP124 A4, names, dates and course titles', () => {
     expect(t).not.toContain('Professor Aravena');
     expect(pagesMatching(/[Ee]mphasizing on\b/)).toEqual([]);
   });
-  for (const course of ['digital-marketing', 'ict']) {
+  // WP161 (A-33): ICT's Module 10 is National University's "Project/ Intern", printed "Project or Internship"; Digital Marketing keeps "Internship, Project Work and Seminar"
+  for (const [course, module10] of [['digital-marketing', 'Internship, Project Work and Seminar'], ['ict', 'Project or Internship']]) {
     test(`the NU ${course} page lists Module 10 in Title Case`, () => {
       const t = text(`programs/nu-postgraduate-diploma/${course}/index.html`);
-      expect(t).toContain('Internship, Project Work and Seminar');
+      expect(t).toContain(module10);
       expect(t).not.toContain('Internship, project work and seminar');
     });
   }

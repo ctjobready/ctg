@@ -132,7 +132,8 @@ test.describe('NU diploma course pages: "What You Will Work On" is gone, "What Y
       // "What You Study": the lead sentence (internship, project, seminar) and every module in the list
       const curriculum = page.locator('#curriculum');
       await expect(curriculum.locator('h2')).toHaveText('What You Study');
-      expect(compact(await curriculum.locator('.sh .lead, header .lead').first().textContent())).toContain('The final module combines internship, project work and a seminar');
+      // WP161 (A-33): ICT's final module is National University's "Project/ Intern"; Digital Marketing keeps its internship, project work and seminar module
+      expect(compact(await curriculum.locator('.sh .lead, header .lead').first().textContent())).toContain(route.includes('/ict/') ? 'The final module is a project or internship' : 'The final module combines internship, project work and a seminar');
       const summary = compact(await curriculum.locator('summary').textContent());
       const total = Number(/View All (\d+) Modules/.exec(summary)?.[1]);
       expect(total).toBeGreaterThan(5);

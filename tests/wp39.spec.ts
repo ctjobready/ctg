@@ -454,7 +454,8 @@ test.describe('NU Post Graduate Diploma course pages: "What Will I Be Able to Do
   const NEXT_STEP = 'Your next step depends on your experience, portfolio and local market.';
   const CASES: [string, string, string[]][] = [
     ['programs/nu-postgraduate-diploma/digital-marketing/', 'Build practical work in WordPress design, content marketing, SEO and analytics, followed by the final internship, project work and seminar module.', ['WordPress Design', 'Content Marketing', 'Search Engine Optimization', 'Web & Google Analytics']],
-    ['programs/nu-postgraduate-diploma/ict/', 'Build practical work in programming, databases, networks and mobile applications, followed by the final internship, project work and seminar module.', ['Java Programming', 'Database Management Systems', 'Computer Networks Maintenance', 'Mobile Application Development']],
+    ['programs/nu-postgraduate-diploma/ict/', 'Build practical work in programming, databases, networks and mobile applications, followed by the final project or internship module.', // WP161 (A-33)
+      ['Java Programming', 'Database Management Systems', 'Computer Networks Maintenance', 'Mobile Application Development']],
   ];
   for (const [route, sentence, modules] of CASES) {
     test(`${route}: two plain sentences, the next-step line kept, every subject a module of the course, the JSON-LD the same`, async ({ page }) => {

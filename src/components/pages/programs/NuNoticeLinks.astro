@@ -1,13 +1,14 @@
 ---
 // WP102 (owner answer 2026-10-28): links to National University's own PGD notices, where the page says intake and schedule are confirmed with each applicant.
 // The notices are in Bangla. External links carry the site's external-link icon and screen-reader text (as the header and footer do).
+// WP161 (WP160-B, owner answer 2026-11-02): the lead-in says the notices describe National University's own intake at its Gazipur campus, so their fee, eligibility and admission test are not read as CodersTrust's terms (NU_NOTICES_LEAD).
 import Icon from '../../system/Icon.astro';
 import { linkAttrs } from '../../../lib/url';
-import { NU_NOTICES } from './nuPgd';
+import { NU_NOTICES, NU_NOTICES_LEAD } from './nuPgd';
 
 const links = NU_NOTICES.map((n) => ({ label: n.label, ...linkAttrs(n.href) }));
 ---
 
-National University’s notices are published in Bangla: {links.map((l, i) => (
+{NU_NOTICES_LEAD} {links.map((l, i) => (
   <>{i > 0 && ' and '}<a class="link" href={l.href} rel={l.rel}>{l.label}{l.external && <Icon name="arrow-up-right" size={14} />}{l.external && <span class="sr-only"> {l.srText}</span>}</a></>
 ))}.

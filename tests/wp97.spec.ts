@@ -40,7 +40,8 @@ const HUB = 'programs/';
 test.describe('Item 1: the course is spelled "Cyber Security"', () => {
   test('no built NU page prints the one-word "Cybersecurity" for the course', () => {
     // generic prose elsewhere ("cybersecurity" in news and partner copy) is not the course name, so only the course-name phrases are scanned
-    expect(routesWhere((t) => /Diploma in Cybersecurity|in cybersecurity,|Cybersecurity knowledge|Choose Cybersecurity/.test(t))).toEqual([]);
+    // WP161 (A-36): the common noun is "cybersecurity" on the NU pages too ("Cybersecurity knowledge, ...", "a ... Diploma in cybersecurity, delivered by ..."); the course NAME stays "Cyber Security"
+    expect(routesWhere((t) => /Diploma in Cybersecurity|Choose Cybersecurity|Cybersecurity (Laws|Analyst)|Junior Cybersecurity/.test(t))).toEqual([]);
   });
 
   test('the Cyber Security page keeps its URL slug; its H1 and <title> say "NU Post Graduate Diploma in Cyber Security"', async ({ page }) => {
@@ -53,7 +54,8 @@ test.describe('Item 1: the course is spelled "Cyber Security"', () => {
     const text = visible(pageHtml(CYBER));
     expect(text).toContain('Junior Cyber Security Analyst');
     expect(text).toContain('Cyber Security Laws, Policies and Strategies');
-    expect(text).not.toMatch(/Cybersecurity/);
+    // WP161 (A-36): the one capitalised "Cybersecurity" is the common noun opening the hero lead; no course name, job title or module uses it
+    expect(text.replace('Cybersecurity knowledge, from cryptography', '')).not.toMatch(/Cybersecurity/);
   });
 });
 
@@ -82,13 +84,13 @@ test.describe('Item 2: course titles use NU’s course names', () => {
       expect([...description].length, route).toBeLessThanOrEqual(155);
     }
     await open(page, CYBER);
-    expect(await page.locator('meta[name="description"]').getAttribute('content')).toContain('in cyber security');
+    expect(await page.locator('meta[name="description"]').getAttribute('content')).toContain('in cybersecurity'); // WP161 (A-36): the common noun is "cybersecurity"
   });
 
   test('the overview cards carry the four course names, in order, with the full ICT name', async ({ page }) => {
     await open(page, OVERVIEW);
     expect(compact(await page.locator('#courses .lead').textContent())).toBe(
-      'Four courses, in digital marketing, information and communication technology (ICT), cyber security and data analytics, delivered by CodersTrust, an affiliated college (College Code: 6634) under the National University of Bangladesh.',
+      'Four courses, in digital marketing, information and communication technology (ICT), cybersecurity and data analytics, delivered by CodersTrust, an affiliated college (College Code: 6634) under the National University of Bangladesh.',
     );
     const titles = (await page.locator('#courses article .course__title').allTextContents()).map(compact);
     expect(titles).toEqual([
@@ -103,7 +105,7 @@ test.describe('Item 2: course titles use NU’s course names', () => {
     await open(page, HUB);
     const card = page.locator('#programs-grid li:has(a[href$="programs/nu-postgraduate-diploma/"])');
     expect(compact(await card.textContent())).toContain(
-      'in digital marketing, information and communication technology (ICT), cyber security and data analytics.',
+      'in digital marketing, information and communication technology (ICT), cybersecurity and data analytics.', // WP161 (A-36)
     );
   });
 

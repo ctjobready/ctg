@@ -22,8 +22,13 @@ interface Props {
   id?: string;
   /** One real photograph per vignette, in order (src/data/photos.ts). A vignette's own `image` wins; without either, the generated art stands in. */
   photos?: Photo[];
+  /**
+   * The line under the photographs (shown only when a real photograph is on the band). WP161 (A-40): a page whose band lead already says where its photographs come from passes `false`
+   * (SuperKids: its photographs are all SuperKids assets, so "from CodersTrust programs and offices" was the wrong line).
+   */
+  note?: string | false;
 }
-const { title, lead, vignettes, id = 'future', photos = [] } = Astro.props;
+const { title, lead, vignettes, id = 'future', photos = [], note = 'Photographs are from CodersTrust programs and offices, shown for context.' } = Astro.props;
 // The framework labels (functional / emotional / social) are internal: only a vignette with its own category label ("Block Coding") shows one.
 const FRAMEWORK_LABELS = new Set(['Functional', 'Emotional', 'Social']);
 const media = vignettes.map((v, i) => {
@@ -51,7 +56,7 @@ const media = vignettes.map((v, i) => {
       ))
     }
   </div>
-  {media.some((m) => m && m.assetId) && <p class="fb__note">Photographs are from CodersTrust programs and offices, shown for context.</p>}
+  {note && media.some((m) => m && m.assetId) && <p class="fb__note">{note}</p>}
   <slot />
 </Section>
 

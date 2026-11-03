@@ -168,7 +168,7 @@ test.describe('3 "Post Graduate Diploma" is capitalised where it names the NU pr
   });
 
   test('the four NU course pages: lead and meta say "Post Graduate Diploma" (meta at most 155 characters)', () => {
-    const SUBJECTS = ['digital marketing', 'information and communication technology (ICT)', 'cyber security', 'data analytics'];
+    const SUBJECTS = ['digital marketing', 'information and communication technology (ICT)', 'cybersecurity', 'data analytics']; // WP161 (A-36): "cybersecurity" as a common noun
     NU_COURSES.forEach((p, i) => {
       expect(main(p), p).toContain('in a National University Post Graduate Diploma delivered by CodersTrust.');
       const d = metaDescription(p);

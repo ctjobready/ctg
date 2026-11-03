@@ -22,7 +22,7 @@ import MechanismSection from '../../../components/pages/programs/MechanismSectio
 import FaqSection from '../../../components/pages/programs/FaqSection.astro';
 import { anchor, faqNode, type FaqSource } from '../../../components/pages/programs/faq';
 import { PAGE_UPDATED } from '../../../components/pages/programs/meta';
-import { NU_ADMISSIONS_NOTE, NU_APPLY, NU_CALL, NU_CALL_NUMBER, NU_CALL_TEXT, NU_COURSE_COPY, NU_COURSE_SUBJECT, NU_LOCATION_NOTE, NU_NAME, NU_NOTICES, NU_PATH, NU_SCHEDULE_NOTE, nuCourses, nuOverview } from '../../../components/pages/programs/nuPgd';
+import { NU_ADMISSIONS_NOTE, NU_APPLY, NU_CALL, NU_CALL_NUMBER, NU_CALL_TEXT, NU_COURSE_COPY, NU_COURSE_SUBJECT, NU_LOCATION_NOTE, NU_NAME, NU_NOTICES, NU_NOTICES_LEAD, NU_PATH, NU_SCHEDULE_NOTE, nuCourses, nuOverview } from '../../../components/pages/programs/nuPgd';
 import NuNoticeLinks from '../../../components/pages/programs/NuNoticeLinks.astro';
 import { HEADLINE, NU_ELIGIBILITY, VALUE_PROPOSITION } from '../../../data/copy';
 import { COURSES_URL } from '../../../lib/site';
@@ -42,9 +42,10 @@ const COUNT_WORD = ['No', 'One', 'Two', 'Three', 'Four', 'Five', 'Six'];
 const coursesLead = `${COUNT_WORD[courses.length]} courses, in ${joinList(courses.map((c) => NU_COURSE_SUBJECT[c.slug]))}, delivered by CodersTrust, an affiliated college (College Code: 6634) under the National University of Bangladesh.`;
 
 const faqSources: FaqSource[] = [
-  // WP27: admissions' own eligibility sentence (NU-01), not "if you hold a degree".
-  { q: 'Is the NU Post Graduate Diploma Right for Me?', html: `Eligibility: ${NU_ELIGIBILITY}. It is right for you if you meet that and want a digital career. Not right if you want a short self-paced course: see ${anchor(COURSES_URL, 'JobReady.global')}.`, evidence: ['NU-01'] },
-  { q: 'Where Do I Find Eligibility, Schedule and Fees?', html: `The eligibility, duration, fee, payment and recognition details are in Before You Apply above. ${NU_ADMISSIONS_NOTE} National University’s notices are published in Bangla: ${NU_NOTICES.map((n) => anchor(n.href, n.label)).join(' and ')}. To ask, call ${anchor(NU_CALL.href, NU_CALL_NUMBER)}.` },
+  // WP27: admissions' own eligibility sentence (NU-01), not "if you hold a degree". WP161 (A-35): "a shorter course" (JobReady.global also sells live-online and on-campus courses, not only self-paced ones).
+  { q: 'Is the NU Post Graduate Diploma Right for Me?', html: `Eligibility: ${NU_ELIGIBILITY}. It is right for you if you meet that and want a digital career. Not right if you want a shorter course: see ${anchor(COURSES_URL, 'JobReady.global')}.`, evidence: ['NU-01'] },
+  // WP161 (WP160-B, owner answer 2026-11-02): the notices are introduced as National University's own intake (NU_NOTICES_LEAD), as in the Schedule and Intake row.
+  { q: 'Where Do I Find Eligibility, Schedule and Fees?', html: `The eligibility, duration, fee, payment and recognition details are in Before You Apply above. ${NU_ADMISSIONS_NOTE} ${NU_NOTICES_LEAD} ${NU_NOTICES.map((n) => anchor(n.href, n.label)).join(' and ')}. To ask, call ${anchor(NU_CALL.href, NU_CALL_NUMBER)}.` },
 ];
 
 const jsonLd = [
@@ -104,7 +105,8 @@ const jsonLd = [
   />
 
   <Section id="before-you-apply" aria-labelledby="before-h">
-    <SectionHeader id="before-h" eyebrow="Admissions" title="Before You Apply" lead="Program details as stated for the National University Post Graduate Diploma." />
+    <!-- WP161 (A-32): the lead says these are CodersTrust's delivery terms (it said "as stated for the National University Post Graduate Diploma", which read as NU's own fee and eligibility) -->
+    <SectionHeader id="before-h" eyebrow="Admissions" title="Before You Apply" lead="Program details for CodersTrust’s delivery of the National University Post Graduate Diploma." />
     <dl class="ba">
       <div class="ba__row"><dt>Eligibility</dt><dd><Fact id="NU-01" /></dd></div>
       <div class="ba__row"><dt>Duration</dt><dd><Fact id="NU-02" /></dd></div>
@@ -115,7 +117,8 @@ const jsonLd = [
       <div class="ba__row"><dt>Program Fee</dt><dd><Fact id="NU-03" /></dd></div>
       <div class="ba__row"><dt>Payment</dt><dd><Fact id="NU-05" /></dd></div>
       <div class="ba__row"><dt>Recognition</dt><dd><Fact id="NU-04" /></dd></div>
-      <div class="ba__row" id="admissions-contact"><dt>How to Apply</dt><dd>Complete the <a class="link" href={applyLink.href} rel={applyLink.rel}>application form</a>. For help, call <a class="link" href={NU_CALL.href}>{NU_CALL_NUMBER}</a> or email <a class="link" href="mailto:hello@coderstrustbd.com">hello@coderstrustbd.com</a>.</dd></div>
+      <!-- WP161 (A-34): the linked Google Form registers interest (name, contact details and course); admissions then shares the application steps -->
+      <div class="ba__row" id="admissions-contact"><dt>How to Apply</dt><dd>Complete the <a class="link" href={applyLink.href} rel={applyLink.rel}>short form</a> (name, contact details and course); admissions then shares the application steps. For help, call <a class="link" href={NU_CALL.href}>{NU_CALL_NUMBER}</a> or email <a class="link" href="mailto:hello@coderstrustbd.com">hello@coderstrustbd.com</a>.</dd></div>
     </dl>
   </Section>
 
@@ -144,8 +147,8 @@ const jsonLd = [
   <!-- C13 + C14 (WP24c): "Ready to Apply?" and "What Happens After You Apply" are one band -->
   <CTABand id="cta" heading="Ready to Apply?" cta={apply} secondary={NU_CALL}>
     <ol class="after" aria-label="What Happens After You Apply">
-      <li><strong>Submit the Application Form.</strong> The Apply Now button opens the standalone application form.</li>
-      <li><strong>Admissions Contacts You.</strong> Our admissions team shares the next steps.</li>
+      <li><strong>Register Your Interest.</strong> The Apply Now button opens a short form asking for your name, contact details and course.</li>
+      <li><strong>Admissions Contacts You.</strong> Our admissions team shares the application steps.</li>
     </ol>
   </CTABand>
 

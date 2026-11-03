@@ -49,7 +49,8 @@ const faqSources: FaqSource[] = [
   // "What Will I Study?" repeats the module list above; the second answer names concrete modules.
   ...nuModuleFaqs(c).slice(1),
   // WP27: admissions' own eligibility sentence (NU-01), the one every NU page states. WP49 (cycle-24 review): the sentence after it is the course's own (nuFitSentence: what the course teaches, from its module list), no longer the one both course pages shared.
-  { q: 'Is This the Right Course for Me?', html: `Eligibility: ${NU_ELIGIBILITY}. ${nuFitSentence(c)} Not right if you want a short self-paced course: see ${anchor(COURSES_URL, 'JobReady.global')}.`, evidence: [eligibilityId] },
+  // WP161 (A-35): "a shorter course" (JobReady.global also sells live-online and on-campus courses, not only self-paced ones).
+  { q: 'Is This the Right Course for Me?', html: `Eligibility: ${NU_ELIGIBILITY}. ${nuFitSentence(c)} Not right if you want a shorter course: see ${anchor(COURSES_URL, 'JobReady.global')}.`, evidence: [eligibilityId] },
 ];
 
 const jsonLd = [
@@ -78,7 +79,8 @@ const jsonLd = [
   </Hero>
 
   <Section id="before-you-apply" aria-labelledby="before-h">
-    <SectionHeader id="before-h" eyebrow="Admissions" title="Before You Apply" lead="Program details as stated for this course in the National University Post Graduate Diploma." />
+    <!-- WP161 (A-32): CodersTrust's delivery terms, not "as stated for" the National University diploma -->
+    <SectionHeader id="before-h" eyebrow="Admissions" title="Before You Apply" lead="Program details for this course as delivered by CodersTrust." />
     <dl class="ba">
       <div class="ba__row"><dt>Eligibility</dt><dd><Fact id={eligibilityId} /></dd></div>
       <div class="ba__row"><dt>Duration</dt><dd><Fact id="NU-02" /></dd></div>
@@ -89,12 +91,14 @@ const jsonLd = [
       <div class="ba__row"><dt>Program Fee</dt><dd><Fact id="NU-03" /></dd></div>
       <div class="ba__row"><dt>Payment</dt><dd><Fact id="NU-05" /></dd></div>
       <div class="ba__row"><dt>Recognition</dt><dd><Fact id="NU-04" /></dd></div>
-      <div class="ba__row" id="admissions-contact"><dt>How to Apply</dt><dd>Complete the <a class="link" href={applyLink.href} rel={applyLink.rel}>application form</a>. For help, call <a class="link" href={NU_CALL.href}>{NU_CALL_NUMBER}</a> or email <a class="link" href="mailto:hello@coderstrustbd.com">hello@coderstrustbd.com</a>.</dd></div>
+      <!-- WP161 (A-34): the linked Google Form registers interest (name, contact details and course); admissions then shares the application steps -->
+      <div class="ba__row" id="admissions-contact"><dt>How to Apply</dt><dd>Complete the <a class="link" href={applyLink.href} rel={applyLink.rel}>short form</a> (name, contact details and course); admissions then shares the application steps. For help, call <a class="link" href={NU_CALL.href}>{NU_CALL_NUMBER}</a> or email <a class="link" href="mailto:hello@coderstrustbd.com">hello@coderstrustbd.com</a>.</dd></div>
     </dl>
   </Section>
 
+  <!-- WP161 (A-35): the lead points to the eligibility row above instead of repeating NU-01 (it is stated once in Before You Apply and once in the FAQ), and says "a shorter course" -->
   <Section id="who" aria-labelledby="who-h">
-    <SectionHeader id="who-h" eyebrow="Who It Is For" title="For Learners Who Want a Digital Career" lead={`Eligibility: ${NU_ELIGIBILITY}. Right for you if you meet that and want to add practical digital skills. If you want a short self-paced course instead, see JobReady.global.`} />
+    <SectionHeader id="who-h" eyebrow="Who It Is For" title="For Learners Who Want a Digital Career" lead="Right for you if you meet the eligibility above and want to add practical digital skills. If you want a shorter course instead, see JobReady.global." />
     {
       c.roles.length > 0 && (
         <div class="roles" data-reveal>
@@ -136,8 +140,8 @@ const jsonLd = [
   <!-- C13 + C14 (WP24c): "Ready to Apply?" and "What Happens After You Apply" are one band -->
   <CTABand id="cta" heading="Ready to Apply?" cta={apply} secondary={NU_CALL}>
     <ol class="after" aria-label="What Happens After You Apply">
-      <li><strong>Submit the Application Form.</strong> The Apply Now button opens the standalone application form.</li>
-      <li><strong>Admissions Contacts You.</strong> Our admissions team shares the next steps.</li>
+      <li><strong>Register Your Interest.</strong> The Apply Now button opens a short form asking for your name, contact details and course.</li>
+      <li><strong>Admissions Contacts You.</strong> Our admissions team shares the application steps.</li>
     </ol>
   </CTABand>
 

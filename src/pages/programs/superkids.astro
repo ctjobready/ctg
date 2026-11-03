@@ -14,6 +14,7 @@ import CTABand from '../../components/ui/CTABand.astro';
 import Icon from '../../components/system/Icon.astro';
 import HeroBand from '../../components/sections/HeroBand.astro';
 import FutureBand from '../../components/sections/FutureBand.astro';
+import FeatureCard from '../../components/ui/FeatureCard.astro';
 import { futurePhotos, galleryPhotos } from '../../data/photos';
 import GalleryDisclosure from '../../components/pages/programs/GalleryDisclosure.astro';
 import StatusTag from '../../components/system/StatusTag.astro';
@@ -33,9 +34,10 @@ import { webPage } from '../../lib/schema';
 import { linkAttrs } from '../../lib/url';
 
 const path = '/programs/superkids/';
-const LAST_UPDATED = '2026-11-02'; // WP157 (owner decision 2026-11-02: the four learner portraits are captioned "SuperKids learner", with no first names). Earlier: WP143: the glance row with the repeated 400+ figure is gone. WP129 (owner rule 2026-10-31: any change to visible text moves the date, copy edits included): the serial-comma, semicolon and copy edits of WP126 to WP128 and the WP129 edits. Earlier: WP104: the gallery's consent line was added. WP36: the cycle-13 wording changes (the two agreement targets, the safeguarding answer); WP20c had 2026-10-14 (PAGE_UPDATED.superkids is 2026-10-10)
+const LAST_UPDATED = '2026-11-02'; // WP161 (owner answer 2026-11-02: SuperKids@School for schools and SuperKids courses for families; A-40: no template photo note). Earlier: WP157 (owner decision 2026-11-02: the four learner portraits are captioned "SuperKids learner", with no first names). Earlier: WP143: the glance row with the repeated 400+ figure is gone. WP129 (owner rule 2026-10-31: any change to visible text moves the date, copy edits included): the serial-comma, semicolon and copy edits of WP126 to WP128 and the WP129 edits. Earlier: WP104: the gallery's consent line was added. WP36: the cycle-13 wording changes (the two agreement targets, the safeguarding answer); WP20c had 2026-10-14 (PAGE_UPDATED.superkids is 2026-10-10)
 const title = 'SuperKids: STEAM, Coding and Robotics';
-const description = 'SuperKids brings STEAM, coding, robotics and digital art to young learners through schools. 400+ learners since 2021, plus DoICT and NCTB agreements.';
+// WP161 (WP160-B, owner answer 2026-11-02: "SuperKids D2C offer is for parents to enroll their kids. SuperKids@School is the B2B2C program with schools."): the meta description names both offers, in plain words (never "D2C" or "B2B2C").
+const description = 'SuperKids brings STEAM, coding and robotics to young learners in schools and in courses for families on JobReady.global. 400+ learners since 2021.';
 const inquiry = ctaFor('superkids');
 const pricingFirst = PRICING.text.split('. ')[0] + '.';
 
@@ -58,18 +60,18 @@ const faqSources: FaqSource[] = [{ audience: 'variants' as const, id: 'Q9-route'
 
 const jsonLd = [
   webPage({ path, name: 'SuperKids', description, dateModified: LAST_UPDATED, breadcrumb: [{ name: 'Home', path: '/' }, { name: 'Programs', path: '/programs/' }, { name: 'SuperKids', path }] }),
-  serviceNode({ path, name: 'SuperKids', description: 'STEAM, robotics, coding and digital art for young learners, offered through schools and education partners.', audience: 'Schools and Education Partners', areaServed: ['Bangladesh'] }),
+  serviceNode({ path, name: 'SuperKids', description: 'STEAM, robotics, coding and digital art for young learners, offered through schools and education partners (SuperKids@School) and as courses for families on JobReady.global.', audience: 'Schools, Education Partners and Parents', areaServed: ['Bangladesh'] }),
   faqNode(faqSources, path),
 ];
 const courses = linkAttrs(COURSES_URL);
 ---
 
 <LandingLayout title={title} description={description} path={path} breadcrumbs={[{ label: 'Programs', href: '/programs/' }, { label: 'SuperKids' }]} jsonLd={jsonLd} stickyCta={inquiry}>
-  <!-- C1 -->
+  <!-- C1. WP161 (WP160-B, owner answer 2026-11-02): the eyebrow and the lead name both offers, SuperKids@School for schools and SuperKids courses that parents buy on JobReady.global (two sentences: ", and parents ..." after a series reads as a serial comma to tests/wp127); the discovery session is in the SuperKids@School card below. -->
   <HeroBand
-    audience="SuperKids · For Schools and Education Partners"
+    audience="SuperKids · For Schools, Education Partners and Families"
     title="Bring Coding, Robotics and Digital Art into Your Classroom"
-    lead="SuperKids brings block coding, robotics and graphic design for kids into schools, with courses shaped with you in a discovery session, so children build digital skills early."
+    lead="SuperKids@School brings block coding, robotics and graphic design for kids into schools. Parents can enroll their children in SuperKids courses on JobReady.global."
     cta={inquiry}
     artSeed="superkids"
   />
@@ -82,9 +84,26 @@ const courses = linkAttrs(COURSES_URL);
     ]}
   />
 
-  <!-- C4 (C2 and C3 omitted: the hero already says why digital skills start early, and no register fact supports a cost-of-late-exposure statement) -->
+  <!-- WP161 (WP160-B): the two offers, one card each. The course names are the storefront's own (jobready.global, SuperKids STEAM section, checked 2026-11-03: "Introduction to Robotics (On-Campus Course)",
+       "Graphics Design for Kids (Live Online Course)", "Fundamentals of Block Coding (Live Online Course)"). The school route (discovery session, agreements, safeguarding, the CTA) is unchanged. -->
+  <Section id="two-ways" aria-labelledby="two-ways-h">
+    <SectionHeader id="two-ways-h" eyebrow="Schools and Families" title="Two Ways to Join SuperKids" />
+    <ul class="grid-cards grid-cards--stretch" role="list">
+      <li>
+        <FeatureCard icon="school" title="SuperKids@School" text="For schools and education partners: block coding, robotics and graphic design for kids in your classrooms, with courses shaped with you in a discovery session." />
+      </li>
+      <li>
+        <FeatureCard icon="users" title="SuperKids Courses for Families" text="Parents can enroll their children in SuperKids courses on JobReady.global, including Introduction to Robotics on campus and Graphics Design for Kids and Fundamentals of Block Coding online.">
+          <p class="two-ways__link"><a class="link" href={courses.href} rel={courses.rel}>Explore SuperKids Courses at JobReady.global<Icon name="arrow-up-right" size={16} /><span class="sr-only"> {courses.srText}</span></a></p>
+        </FeatureCard>
+      </li>
+    </ul>
+  </Section>
+
+  <!-- C4 (C2 and C3 omitted: the hero already says why digital skills start early, and no register fact supports a cost-of-late-exposure statement). WP161 (A-40): no template photo note; the lead says the photographs are SuperKids' own. -->
   <FutureBand
     photos={futurePhotos('superkids')}
+    note={false}
     title="A Classroom with Coding, Robotics and Digital Art"
     lead="Photographs from SuperKids workshops, events and school partnerships."
     vignettes={[
@@ -97,7 +116,7 @@ const courses = linkAttrs(COURSES_URL);
   <!-- C6 (the positioning statement opens the band) -->
   <MechanismSection title="A School STEAM Program for Young Learners" positioning={POSITIONING.superkids} eyebrow="The Program">
     <p class="courses__more" data-reveal>
-      Looking for courses for older learners? <a class="link" href={courses.href} rel={courses.rel}>Explore Courses at JobReady.global<Icon name="arrow-up-right" size={16} /><span class="sr-only"> {courses.srText}</span></a>
+      Looking for a SuperKids course for your own child, or courses for older learners? <a class="link" href={courses.href} rel={courses.rel}>Explore Courses at JobReady.global<Icon name="arrow-up-right" size={16} /><span class="sr-only"> {courses.srText}</span></a>
     </p>
   </MechanismSection>
 
@@ -175,6 +194,9 @@ const courses = linkAttrs(COURSES_URL);
   .courses__more {
     margin: var(--space-lg) 0 0;
     color: var(--on-surface-variant);
+  }
+  .two-ways__link {
+    margin: var(--space-sm) 0 0;
   }
   .agree {
     display: grid;
