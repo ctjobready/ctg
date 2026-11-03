@@ -177,8 +177,8 @@ test.describe('YouthWIDE: the glance row and the timing answer (items 2 and 7)',
 test.describe('Foundations: the links and the pain (items 3 and 5; WP48: the "Reporting and Review" callout of item 4 is gone from this page)', () => {
   test('under "Two Ways to Fund the Path" there are two links, one for each route, named for what they open; the numbered jump links and the duplicate platform link are gone', async ({ page }) => {
     await open(page, 'partner-with-us/foundations/');
-    expect(await texts(page, '#mechanism .mech__link a')).toEqual(['Explore YouthWIDE Delivery', 'Explore JobReady’s Rollout']);
-    for (const label of ['Explore YouthWIDE Delivery', 'Explore JobReady’s Rollout']) expect(titleCase(label), label).toBe(label);
+    expect(await texts(page, '#mechanism .mech__link a')).toEqual(['Explore YouthWIDE Delivery', 'Explore JobReady’s Capabilities']);
+    for (const label of ['Explore YouthWIDE Delivery', 'Explore JobReady’s Capabilities']) expect(titleCase(label), label).toBe(label);
     expect((await hrefs(page, '#mechanism .mech__link a')).map(sitePath)).toEqual(['/programs/youthwide/', '/our-model/jobready-platform/']);
     const band = compact(await page.locator('#mechanism').textContent());
     expect(band).not.toMatch(/See Funding Route|About the JobReady Platform/);

@@ -152,7 +152,7 @@ test.describe('Foundations: the two funding routes as a comparison', () => {
     expect(headings).toEqual(['Funding Route 1 YouthWIDE Cohort Grants', 'Funding Route 2 JobReady Platform Grants']);
     // WP40 (cycle-17 review): the two links under the comparison are one for each route, named for what they open (tests/wp40.spec.ts)
     await expect(page.locator('#mechanism').getByRole('link', { name: 'Explore YouthWIDE Delivery' })).toHaveAttribute('href', /\/programs\/youthwide\/$/);
-    await expect(page.locator('#mechanism').getByRole('link', { name: 'Explore JobReady’s Rollout' })).toHaveAttribute('href', /\/our-model\/jobready-platform\/$/);
+    await expect(page.locator('#mechanism').getByRole('link', { name: 'Explore JobReady’s Capabilities' })).toHaveAttribute('href', /\/our-model\/jobready-platform\/$/);
   });
 
   // WP163 (owner answers of 3 November 2026): the cell and IN-04 carry no live or pre-launch status; the cell names a subset of IN-04's capabilities (the register lists them all).

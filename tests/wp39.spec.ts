@@ -55,6 +55,8 @@ const CERT_AND_MENTORING = 'Industry certification exam preparation by track, fo
 const EMPLOYER_SKILLS = 'Tracks are set from employer demand in an AI-ready curriculum, built around the skills employers say they cannot find.';
 // WP163 (owner answers of 3 November 2026): the pages that describe the training offer state the delivery model once, in one of these cards (src/data/copy.ts DELIVERY_MODEL; tests/wp163.spec.ts).
 const DELIVERY = 'Training follows an AI-supported flipped classroom: all lectures are pre-recorded and an AI Tutor supports every learner, so mentors’ time goes to Q&A and to handholding beyond what the AI Tutor can provide.';
+// JobReady@Work carries no three months of mentoring, so the Employers card uses the sentence without the mentors' clause (DELIVERY_MODEL_WORK).
+const DELIVERY_WORK = 'Training follows an AI-supported flipped classroom: all lectures are pre-recorded and an AI Tutor supports every learner.';
 
 /** The three cards of each page's "What You Get" band, in the order of the page's three pains. Each page's cards are derived from the rows its matrix had (cycle-16 review, item 1). */
 const PAGES: PageSpec[] = [
@@ -118,7 +120,7 @@ const PAGES: PageSpec[] = [
     cards: [
       { title: 'Job-Ready Candidates for Your Roles', text: 'Access to candidates from CodersTrust’s placement team for your roles, plus trainees from certification tracks chosen from employer demand.', facts: ['IN-04', 'PD-10'] },
       { title: 'AI Content Agreed Before Training', text: 'An AI-ready curriculum, designed to prepare people to work with AI tools. Each track’s AI content is agreed with you before training starts.', facts: ['PD-02', 'IN-10'] }, // WP142 (kit 109): team-training wording, no youth-cohort "work-entry plan" or "enrollment"
-      { title: 'Customized Curriculum and Workshops', text: `JobReady@Work builds a customized curriculum and interactive workshops, so your team learns on tasks from your own roles. ${DELIVERY}`, facts: ['IN-10', 'PD-01', 'IN-04'] },
+      { title: 'Customized Curriculum and Workshops', text: `JobReady@Work builds a customized curriculum and interactive workshops, so your team learns on tasks from your own roles. ${DELIVERY_WORK}`, facts: ['IN-10', 'PD-01', 'IN-04'] },
     ],
   },
   {

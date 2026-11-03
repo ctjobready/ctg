@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { expect, test } from '@playwright/test';
-import { DELIVERY_MODEL } from '../src/data/copy';
+import { DELIVERY_MODEL, DELIVERY_MODEL_WORK } from '../src/data/copy';
 import { faqs } from '../src/data/faqs';
 import { fact } from '../src/data/facts';
 import { DIST_DIR } from './support/env';
@@ -172,7 +172,10 @@ test.describe('2. the AI-supported flipped classroom is stated once where the pr
   ];
   for (const [label, rel] of PLACED) {
     test(`${label} states it exactly once`, () => {
-      expect(count(mainOf(rel), DELIVERY_MODEL.text)).toBe(1);
+      // JobReady@Work carries no three months of mentoring, so its two pages use DELIVERY_MODEL_WORK (no mentors' clause).
+      const work = rel === WORK || rel === EMPLOYERS;
+      expect(count(mainOf(rel), (work ? DELIVERY_MODEL_WORK : DELIVERY_MODEL).text)).toBe(1);
+      if (work) expect(mainOf(rel)).not.toContain('mentors’ time goes to Q&A');
       expect(count(mainOf(rel), 'flipped classroom'), 'the model is not restated in other words').toBe(1);
     });
   }

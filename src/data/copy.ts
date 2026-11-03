@@ -750,6 +750,12 @@ export const DELIVERY_MODEL: CopyBlock = {
   facts: ['PD-01', 'IN-04'],
 };
 
+/** The delivery model for JobReady@Work (Employers and the JobReady@Work page): those programs carry no three months of mentoring (Our Model), so the sentence stops before the mentors' scope. */
+export const DELIVERY_MODEL_WORK: CopyBlock = {
+  text: 'Training follows an AI-supported flipped classroom: all lectures are pre-recorded and an AI Tutor supports every learner.',
+  facts: ['PD-01', 'IN-04'],
+};
+
 // WP50 (cycle-25 review): EMPLOYER_PRICING ("Pricing is set per program; we share an indicative budget in the discovery session and confirm it after the needs assessment.", WP25s) is gone. The two employer pages printed it a second time in
 // their options band, so the sentence is now said once on each page, in the "What Does It Cost?" answer (Q8-employer in faqs.ts).
 

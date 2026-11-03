@@ -289,7 +289,7 @@ test.describe('Partner with Us', () => {
     expect(text).toContain('The contracting entity, safeguarding arrangements and reporting plan are confirmed for your program.');
     // WP40 (cycle-17 review): the two links under the comparison are one for each route, named for what they open (tests/wp40.spec.ts)
     await expect(page.locator('#mechanism').getByRole('link', { name: 'Explore YouthWIDE Delivery' })).toHaveAttribute('href', /\/programs\/youthwide\/$/);
-    await expect(page.locator('#mechanism').getByRole('link', { name: 'Explore JobReady’s Rollout' })).toHaveAttribute('href', /\/our-model\/jobready-platform\/$/);
+    await expect(page.locator('#mechanism').getByRole('link', { name: 'Explore JobReady’s Capabilities' })).toHaveAttribute('href', /\/our-model\/jobready-platform\/$/);
   });
 });
 
