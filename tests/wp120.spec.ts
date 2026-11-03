@@ -28,7 +28,7 @@ test.describe('WP120', () => {
     }
   });
   test('SKIT post sentence ends with a full stop; Career Carnival says "Program completers"', () => {
-    expect(text('news/1000-trainees-sheikh-kamal-ict-incubator-training/index.html')).toContain('CodersTrust will provide training to 1,000 people in high-demand IT skills.');
+    expect(text('news/1000-trainees-sheikh-kamal-ict-incubator-training/index.html')).toContain('CodersTrust will provide training to 1,000 people in high-demand IT skills at the Sheikh Kamal IT Training and Incubation Center in Barishal.'); // WP161-B (Fable review A-16): the body names the center
     const c = text('news/coderstrust-organizes-career-carnival-for-students-and-affiliates/index.html');
     expect(c).toContain('Program completers also benefit from job-placement support');
     expect(c).not.toContain('Graduates also benefit');

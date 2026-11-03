@@ -1,7 +1,7 @@
 ---
 title: "CodersTrust Students Were Invited to Apply to UPEACE’s “Young Leaders for Peace” Summer Programme 2026"
 date: 2026-04-17
-updated: 2026-10-30
+updated: 2026-11-03
 topic: programs-events
 excerpt: "CodersTrust learners were invited to apply for UPEACE’s Young Leaders for Peace Summer Programme 2026, which ran June 14 to 28 in San José, Costa Rica."
 cover: ../../assets/images/news/coderstrust-students-invited-to-join-upeaces-young-leaders-for-peace-summer-programme-2026/upace-students.jpg
@@ -52,6 +52,8 @@ Through this initiative, CodersTrust continues its mission to go beyond technica
 At CodersTrust, we believe that future leaders need both technical expertise and the ability to create positive social impact. The YLP program serves as a powerful platform for students to begin their journey toward becoming responsible global citizens.
 
 Eligible students within the CodersTrust network were encouraged to take this step toward shaping a better, more peaceful world.
+
+Update: A CodersTrust alumna attended the June 2026 program on a scholarship.
 
 ## Program Information
 

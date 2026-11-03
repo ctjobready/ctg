@@ -101,7 +101,7 @@ test.describe('WP124 A3, the Digital Factory posts read as whole sentences', () 
     const t = text(post(FACTORY));
     expect(t).toContain('Bangladesh’s greatest natural resource is not beneath the ground—it is in the minds of its young people.');
     expect(t).toContain('remain unemployed or underemployed—not because they lack ability, but because they lack access');
-    expect(t).toContain('to transform Bangladesh into a Digital Factory—not a factory of buildings and machines, but a nationwide ecosystem');
+    expect(t).toContain('is to make it a Digital Factory—not a factory of buildings and machines, but a nationwide ecosystem'); // WP161-B (Fable review A-22): "Our vision for Bangladesh is to make it a Digital Factory"
     expect(t).toContain('every motivated young person—regardless of geography, gender or economic background—has access');
     expect(t).toContain('Let’s make Bangladesh a Digital Factory—empowering millions of skilled minds');
   });
@@ -174,7 +174,7 @@ const EDITS: [string, string, string][] = [
   [UNGA, 'at the UN General Assembly, 23 September 2025, in New York', 'at the UN General Assembly, September 23, 2025, in New York'],
   [NSU, 'CodersTrust. MOU signed by Professor', 'CodersTrust. The MOU was signed by Professor'],
   [NSU, 'Chairman, Grameen Bank and Aziz Ahmad', 'Chairman, Grameen Bank, and Aziz Ahmad'],
-  [LEEDO, 'a prominent EduTech Company,', 'a prominent EdTech company,'],
+  [LEEDO, 'a prominent EduTech Company,', 'an EdTech company,'], // WP161-B (Fable review A-23): no first-person superlative (WP124 had made it "a prominent EdTech company,")
   [BASE_STUDY, 'Chief Business Officer of CodersTrust Bangladesh, Rana Saha, Finance & Accounts Manager of CodersTrust Bangladesh along with', 'Chief Business Officer of CodersTrust Bangladesh; and Rana Saha, Finance & Accounts Manager of CodersTrust Bangladesh, along with'],
   [HOLONIQ_2024, 'Boston Global Forum added “', 'Boston Global Forum, added, “'],
   [HOLONIQ_2024, 'UNGSII Foundation said “', 'UNGSII Foundation, said, “'],
@@ -183,14 +183,14 @@ const EDITS: [string, string, string][] = [
   [RMSTU, 'industry relevant training', 'industry-relevant training'],
   [GARDINER, 'the Economic Officer, responsible for technology issues', 'the Economic Officer responsible for technology issues'],
   [OSTITTO, 'a non-profit organization, dedicated to the welfare of the third gender community', 'a non-profit organization dedicated to the welfare of the third-gender community'],
-  [OSTITTO, 'CEO of CodersTrust Bangladesh, and Former Additional Foreign Secretary emphasized', 'CEO of CodersTrust Bangladesh and former Additional Foreign Secretary, emphasized'],
+  [OSTITTO, 'CEO of CodersTrust Bangladesh, and Former Additional Foreign Secretary emphasized', 'CEO of CodersTrust Bangladesh and former Additional Secretary, Ministry of Foreign Affairs of Bangladesh, emphasized'], // WP161-B (owner 2026-11-02): his title
   [OSTITTO, 'recognized the immense potential within the third gender community. He stated', 'recognized the immense potential within the third-gender community. He stated'],
   [OSTITTO, 'previous work with the third gender community, including', 'previous work with the third-gender community, including'],
   [OSTITTO, 'will include five third gender individuals', 'will include five third-gender individuals'],
   [DISCOVERY, 'Chairman and Co-Founder of CodersTrust, Emily Waters, International Senior Project Director of Discovery Education, Jeni Evans, Senior Director of Educational Partnerships, Ataul Goni Osmani, CodersTrust Bangladesh Country Director, and other officials', 'Chairman and Co-Founder of CodersTrust; Emily Waters, International Senior Project Director of Discovery Education; Jeni Evans, Senior Director of Educational Partnerships; Ataul Goni Osmani, CodersTrust Bangladesh Country Director; and other officials'],
   [DISCOVERY, 'termed it as a historic milestone', 'termed it a historic milestone'],
   [AKIJ, 'participants in presence of high officials', 'participants in the presence of high officials'],
-  [AKIJ, 'Ministry of Foreign Affairs of Government of Bangladesh', 'Ministry of Foreign Affairs of the Government of Bangladesh'],
+  [AKIJ, 'Ministry of Foreign Affairs of Government of Bangladesh', 'and former Additional Secretary, Ministry of Foreign Affairs of Bangladesh.'], // WP161-B (owner 2026-11-02): his title (WP124 had made it "of the Government of Bangladesh")
   [AKIJ, 'such corporate trainings not only benefits', 'such corporate trainings not only benefit'],
   [NCTB, 'textbook development in Bangladesh on November 26, 2023,', 'textbook development in Bangladesh, on November 26, 2023,'],
   [NCTB, 'Prof. Md. Farhadul Islam, Chairman of NCTB and CodersTrust', 'Prof. Md. Farhadul Islam, Chairman of NCTB, and CodersTrust'],

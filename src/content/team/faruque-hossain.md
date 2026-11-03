@@ -1,7 +1,7 @@
 ---
 name: "Faruque Hossain"
 slug: faruque-hossain
-role: "Advisor; former Chairman, National Skills Development Authority"
+role: "Advisor; former Executive Chairman, National Skills Development Authority"
 titleRole: "Advisor"
 group: advisors
 order: 4
@@ -11,4 +11,4 @@ expertise: []
 legacyUrl: "https://coderstrust.global/team-member/faruque-hossain/"
 ---
 
-Faruque Hossain is an Advisor to CodersTrust. He is the former Chairman of the National Skills Development Authority (NSDA) of Bangladesh.
+Faruque Hossain is an Advisor to CodersTrust. He is the former Executive Chairman of the National Skills Development Authority (NSDA) of Bangladesh.

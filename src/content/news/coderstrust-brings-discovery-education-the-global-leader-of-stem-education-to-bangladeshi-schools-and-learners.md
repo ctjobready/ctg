@@ -1,7 +1,7 @@
 ---
 title: "CodersTrust Brings Discovery Education STEM and Coding Content to Bangladeshi Schools and Learners"
 date: 2023-06-15
-updated: 2026-10-30
+updated: 2026-11-02
 countToday: true
 topic: partnerships
 excerpt: "CodersTrust brings Discovery Education STEM and coding content to Bangladeshi learners under its SuperKids offering."
@@ -14,7 +14,7 @@ seoTitle: "Discovery Education for Bangladeshi Schools"
 
 ![A man shaking hands with another man while holding a signed document, with colleagues standing around them in front of a blue backdrop](../../assets/images/news/coderstrust-brings-discovery-education-the-global-leader-of-stem-education-to-bangladeshi-schools-and-learners/image-2023-06-15t16-10-59-630z.jpg)
 
-CodersTrust, a leading global EdTech company, is set to offer STEM (Science, Technology, Engineering and Mathematics) and Coding education for Bangladeshi learners under its SuperKids offering in collaboration with Discovery Education, which describes itself as the global leader of STEM education.
+CodersTrust, a global EdTech company, is set to offer STEM (Science, Technology, Engineering and Mathematics) and Coding education for Bangladeshi learners under its SuperKids offering in collaboration with Discovery Education, which describes itself as the global leader of STEM education.
 
 The organizations officially initiated the collaboration in Dhaka on Wednesday. Discovery Education’s Executive Director and SVP, Global Academic Consulting, Martin Creel, and CodersTrust Bangladesh CEO Md. Shamsul Haque signed in the presence of Aziz Ahmad, Chairman and Co-Founder of CodersTrust; Emily Waters, International Senior Project Director of Discovery Education; Jeni Evans, Senior Director of Educational Partnerships; Ataul Goni Osmani, CodersTrust Bangladesh Country Director; and other officials of CodersTrust.
 

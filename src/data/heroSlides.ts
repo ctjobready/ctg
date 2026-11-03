@@ -249,6 +249,7 @@ const PR_TEXT = {
   // WP58 (cycle-30 review, Grok R3): "Her Power: 372 of 800 tracked in work (47%); 2,500 trained directly." (it said "47% of 800 tracked women in work", which reads as 376 of the 800): the count and its base are PR-05's stat value ("372 of 800"), as the other pages state them, and the
   // percentage is the one in PR-05's text, so nothing is retyped; the build stops if the stat value and the text stop naming the same base. The review's wording, "372 of 800 tracked women in work (47%); 2,500 trained directly.", is 624 px wide against the 594 px the row has at 1280 px, so it wrapped
   // and made this slide 30 px taller, which left slide 1 57 px unused (the limit is 48, tests/hero-slider.spec.ts); "women" is the word left out (558.8 px: the Kosovo and WSDFM lines do not say it either, and the other pages say "tracked women").
+  // WP161-B (Fable review A-42, Polish): "Her Power (2023–2025): ..." was tried to match the dated Kosovo and Korail rows; it wraps at 1280 px and leaves slide 1 with 57 px unused (the limit is 48, tests/hero-slider.spec.ts), so the row stays undated (accepted).
   herPower: `Her Power: ${herPowerTracked} tracked in work (${herPower[2]}%); ${herPowerDirect} trained directly.`,
 };
 

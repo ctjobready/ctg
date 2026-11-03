@@ -52,7 +52,7 @@ test.describe('WP123, site-wide sweeps over the built pages', () => {
   });
   test('"Grameenphone", never "GrameenPhone", in visible text, alt, meta and JSON-LD', () => {
     expect(pagesMatching(/GrameenPhone/)).toEqual([]);
-    expect(count(text(RECOGNITION_POST), 'PKSF, iDE, CARE and Grameenphone trust CodersTrust')).toBe(1);
+    expect(count(text(RECOGNITION_POST), 'PKSF, iDE, CARE and Grameenphone have worked with CodersTrust')).toBe(1); // WP161-B (Fable review A-19): register PA-01’s evergreen phrasing
   });
   test('American quotation punctuation: no built page has a closing double quote followed by a comma or full stop', () => {
     expect(pagesMatching(/”[,.]/)).toEqual([]);
@@ -139,6 +139,11 @@ test.describe('WP123, polish', () => {
   test('changed News posts are dated 2026-10-29 (dateModified)', () => {
     for (const rel of [MOU_BASE, LEEDO, DISCOVERY, BUILD_PEACE, RECOGNITION_POST, FREELANCING, UPEACE]) {
       // WP126 re-dated the Discovery Education and HolonIQ 2023 posts (countToday note) to 2026-10-30
+      // WP161-B re-dated LEEDO, Discovery Education and the HolonIQ 2023 post to 2026-11-02 (Fable review A-19, A-21, A-23)
+      if ([LEEDO, DISCOVERY, RECOGNITION_POST].includes(rel)) {
+        expect(html(rel), rel).toMatch(/"dateModified":"2026-11-02"/);
+        continue;
+      }
       expect(html(rel), rel).toMatch(rel === DISCOVERY || rel === RECOGNITION_POST ? /"dateModified":"2026-10-30"/ : /"dateModified":"2026-10-(29|30)"/); // WP127 re-dated more of these (serial-comma sweep)
     }
   });

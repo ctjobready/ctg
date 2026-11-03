@@ -33,9 +33,10 @@ const routesWhere = (test: (text: string, html: string) => boolean) =>
     .map((p) => p.route);
 
 const AZIZ = 'about/team/aziz-ahmad/';
-const SUPPLY_CAPTION = 'Aziz Ahmad, Co-Founder and Chairman of CodersTrust, receiving the Supply Chain Diversity and Sustainability Excellence Award, 2019';
+// WP161-B (owner 2026-11-02): the 2019 award is Con Edison’s Minority Business Entrepreneur of the Year award, to UTC Associates (the caption and alt text said "Supply Chain Diversity and Sustainability Excellence Award")
+const SUPPLY_CAPTION = 'Aziz Ahmad receiving Con Edison’s Minority Business Entrepreneur of the Year award for UTC Associates, 2019';
 const NASDAQ_CAPTION = 'Aziz Ahmad, Co-Founder and Chairman of CodersTrust, at the Nasdaq closing bell ceremony with the U.S. Small Business Administration';
-const SUPPLY_ALT = 'Aziz Ahmad, Co-Founder and Chairman of CodersTrust, receiving the Supply Chain Diversity and Sustainability Excellence Award at the 2019 awards, among four people on stage with a framed certificate';
+const SUPPLY_ALT = 'Aziz Ahmad, holding a framed certificate, receiving Con Edison’s Minority Business Entrepreneur of the Year award for UTC Associates in 2019, with three men in front of a stage and a Con Edison banner';
 const NASDAQ_ALT = 'Aziz Ahmad, Co-Founder and Chairman of CodersTrust, at the podium of the Nasdaq closing bell ceremony for the U.S. Small Business Administration';
 
 test.describe('Item 1: the two award photographs show only on Aziz Ahmad’s profile', () => {
@@ -44,7 +45,7 @@ test.describe('Item 1: the two award photographs show only on Aziz Ahmad’s pro
     expect(routesWhere((t) => t.includes(NASDAQ_CAPTION))).toEqual([AZIZ]);
   });
 
-  test('the profile page shows both photographs with the Co-Founder and Chairman alt text (no award claim is added)', () => {
+  test('the profile page shows both photographs with their alt text (no award claim is added; WP161-B: the 2019 alt names the owner’s award wording)', () => {
     const html = builtPages().find((p) => p.route === AZIZ)!.html;
     expect(html).toContain(`alt="${SUPPLY_ALT}"`);
     expect(html).toContain(`alt="${NASDAQ_ALT}"`);

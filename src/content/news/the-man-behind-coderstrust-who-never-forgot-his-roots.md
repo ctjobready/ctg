@@ -1,7 +1,7 @@
 ---
 title: "The Man Behind CodersTrust Who Never Forgot His Roots"
 date: 2026-08-04
-updated: 2026-10-30
+updated: 2026-11-02
 countToday: true
 topic: insights
 excerpt: "A profile of Co-Founder and Chairman Aziz Ahmad and his belief that success means changing lives."
@@ -18,7 +18,7 @@ seoTitle: "Aziz Ahmad, Who Never Forgot His Roots"
 
 Success is often measured by wealth, titles or recognition. But for Aziz Ahmad, Co-Founder and Chairman of CodersTrust, success has always meant something far greater—creating opportunities for others.
 
-A recently released video by content creator Jana Alam Jhony offers a glimpse into the personal life of the globally recognized technology leader, portraying a man whose life is defined not by luxury, but by humility, compassion and an unwavering commitment to giving back. Despite achieving international success, Mr. Ahmad continues to embrace a simple lifestyle, proving that true greatness is measured by the lives we impact.
+A recently released video by content creator Jana Alam Jhony offers a glimpse into the personal life of the technology entrepreneur, portraying a man whose life is defined not by luxury, but by humility, compassion and an unwavering commitment to giving back. Despite achieving international success, Mr. Ahmad continues to embrace a simple lifestyle, proving that true greatness is measured by the lives we impact.
 
 https://www.youtube.com/watch?v=rQC8BaL71QI
 

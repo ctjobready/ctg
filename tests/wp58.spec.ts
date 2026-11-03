@@ -314,7 +314,7 @@ test.describe('S9: the press line is not repeated on About', () => {
     expect(await texts(page, '#recognition .about-rec > *')).toEqual(['CodersTrust was listed in the HolonIQ South Asia EdTech 100 in 2023 (STEAM category) and 2024.', 'Recognition and Media']);
     await expect(about.locator('.cov')).toHaveCount(0);
     await expect(about.locator('a[href^="http"]')).toHaveCount(0);
-    expect(compact(await page.locator('main').textContent())).not.toMatch(/Early press coverage|World Bank coverage/);
+    expect(compact(await page.locator('main').textContent())).not.toMatch(/Early press coverage|World Bank coverage|World Bank pages/); // WP161-B: Home's pointer says "the World Bank pages"
     await open(page, HOME);
     const home = page.locator('#recognition .cov');
     await expect(home).toHaveCount(1);
@@ -323,7 +323,7 @@ test.describe('S9: the press line is not repeated on About', () => {
       c.querySelectorAll('.sr-only').forEach((n) => n.remove());
       return (c.textContent ?? '').replace(/\s+/g, ' ').trim();
     });
-    expect(homeLine).toBe('Early press coverage, 2014–2016, and World Bank coverage of our work in Kosovo and Albania are on the Recognition and Media page.');
+    expect(homeLine).toBe('Early press coverage, 2014–2016, and the World Bank pages on our work in Kosovo and Albania are on the Recognition and Media page.'); // WP161-B (Fable review A-12)
     expect(await home.locator('a').count()).toBe(0);
   });
 

@@ -91,13 +91,13 @@ test.describe('WP122, name consistency', () => {
     expect(t).toContain('a registered tax preparer in the U.S. with a Preparer Tax Identification Number (PTIN)');
     expect(t).not.toContain('tax preparer in the USA');
   });
-  test('Aziz Ahmad’s two photo captions and alt texts say "Co-Founder and Chairman of CodersTrust"', () => {
+  test('Aziz Ahmad’s Nasdaq photo caption and alt text say "Co-Founder and Chairman of CodersTrust"; the 2019 award photo uses the owner’s caption (WP161-B)', () => {
     const h = html('about/team/aziz-ahmad/index.html');
     const t = text('about/team/aziz-ahmad/index.html');
     expect(t).toContain('Aziz Ahmad, Co-Founder and Chairman of CodersTrust, at the Nasdaq closing bell ceremony with the U.S. Small Business Administration');
-    expect(t).toContain('Aziz Ahmad, Co-Founder and Chairman of CodersTrust, receiving the Supply Chain Diversity and Sustainability Excellence Award, 2019');
+    expect(t).toContain('Aziz Ahmad receiving Con Edison’s Minority Business Entrepreneur of the Year award for UTC Associates, 2019'); // WP161-B (owner 2026-11-02): the award's name and recipient
     expect(h).toContain('alt="Aziz Ahmad, Co-Founder and Chairman of CodersTrust, at the podium of the Nasdaq closing bell ceremony for the U.S. Small Business Administration"');
-    expect(h).toContain('alt="Aziz Ahmad, Co-Founder and Chairman of CodersTrust, receiving the Supply Chain Diversity and Sustainability Excellence Award at the 2019 awards, among four people on stage with a framed certificate"');
+    expect(h).toContain('alt="Aziz Ahmad, holding a framed certificate, receiving Con Edison’s Minority Business Entrepreneur of the Year award for UTC Associates in 2019, with three men in front of a stage and a Con Edison banner"'); // WP161-B
     expect(t).not.toContain('Aziz Ahmad, Co-Founder of CodersTrust,');
   });
 });

@@ -143,9 +143,9 @@ test.describe('WP126 item 4: the Digital Factory post says "exported labor"', ()
     expect(t).not.toContain('(unskilled)');
     expect(t).not.toContain('exported (unskilled)');
   });
-  test('the post is dated updated: 2026-10-30', () => {
-    expect(source(DIGITAL_FACTORY)).toMatch(/^updated: 2026-10-30$/m);
-    expect(banner(html(`news/${DIGITAL_FACTORY}/index.html`))).toContain('updated October 30, 2026');
+  test('the post is dated updated: 2026-10-30 (WP161-B: 2026-11-02, Fable review A-22)', () => {
+    expect(source(DIGITAL_FACTORY)).toMatch(/^updated: 2026-11-02$/m); // WP161-B re-dated it (the Bangladesh vision and aim)
+    expect(banner(html(`news/${DIGITAL_FACTORY}/index.html`))).toContain('updated November 2, 2026');
   });
 });
 

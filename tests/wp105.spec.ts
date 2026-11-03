@@ -107,7 +107,7 @@ test.describe('WP105 item 3: Recognition no longer has "Recognition Connected to
   });
 
   test('Aziz Ahmad’s bio keeps its UTC Associates text', () => {
-    expect(visible(htmlOf('/about/team/aziz-ahmad/'))).toContain('UTC Associates, a technology consulting company that he leads, received the NYNJMSDC Partnership Award from the New York & New Jersey Minority Supplier Development Council on October 20, 2022.');
+    expect(visible(htmlOf('/about/team/aziz-ahmad/'))).toContain('UTC Associates, a technology consulting company that he leads, received Con Edison’s Minority Business Entrepreneur of the Year award in 2019 and the NYNJMSDC Partnership Award from the New York & New Jersey Minority Supplier Development Council on October 20, 2022.'); // WP161-B (owner 2026-11-02): the sentence names the 2019 Con Edison award too
   });
 });
 
@@ -222,8 +222,8 @@ test.describe('WP105 item 9: stamps and dateModified of the pages this WP change
 
   // These three pages state no "Last updated" line, so their JSON-LD dateModified would otherwise be the build day (UTC).
   // WP151: Governments moved on to 2026-11-02 (the learner card label is "Individual Story"). WP152: About moved on to 2026-11-02 (the 2025–2026 timeline item is two sentences).
-  // WP161-A: Governments moved on to 2026-11-03 (three months of mentoring; spending reported against the scorecard).
-  for (const [route, day] of [['about/', '2026-11-02'], ['partner-with-us/governments/', '2026-11-03'], ['about/recognition/', '2026-11-01']]) {
+  // WP161-A: Governments moved on to 2026-11-03; WP161-B: Recognition moved on to 2026-11-02.
+  for (const [route, day] of [['about/', '2026-11-02'], ['partner-with-us/governments/', '2026-11-03'], ['about/recognition/', '2026-11-02']]) {
     test(`${route} pins its JSON-LD dateModified to ${day} (the day it last changed: WP141, WP151, WP152), not the build date`, async ({ page }) => {
       await open(page, route);
       expect(await ldJson(page)).toMatch(new RegExp(`"dateModified"\\s*:\\s*"${day}"`));

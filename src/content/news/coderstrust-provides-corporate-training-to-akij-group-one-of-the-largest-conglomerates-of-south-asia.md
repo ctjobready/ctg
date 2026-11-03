@@ -1,7 +1,7 @@
 ---
-title: "CodersTrust Provides Corporate Training to Akij Group, One of the Largest Conglomerates of South Asia"
+title: "CodersTrust Provides Corporate Training to Akij Group"
 date: 2023-08-16
-updated: 2026-10-30
+updated: 2026-11-03
 topic: programs-events
 excerpt: "CodersTrust delivers corporate training in digital marketing and soft skills to the Akij Group of Companies."
 cover: ../../assets/images/news/coderstrust-provides-corporate-training-to-akij-group-one-of-the-largest-conglomerates-of-south-asia/coderstrust-provide-corporate-training-to-akij-group.jpg
@@ -15,7 +15,7 @@ seoTitle: "Corporate Training for the Akij Group"
 
 Dhaka, Bangladesh
 
-CodersTrust has conducted a corporate training on digital marketing and soft skills for [Akij Group of Companies](https://akij.net/), a $14 billion conglomerate based in Bangladesh. The event concluded with a certificate presentation to the talented participants in the presence of high officials of Akij Group and Md. Shamsul Haque, CEO of CodersTrust Bangladesh and former Additional Foreign Secretary of the Ministry of Foreign Affairs of the Government of Bangladesh.
+CodersTrust has conducted a corporate training on digital marketing and soft skills for [Akij Group of Companies](https://akij.net/), a conglomerate based in Bangladesh. The event concluded with a certificate presentation to the talented participants in the presence of high officials of Akij Group and Md. Shamsul Haque, CEO of CodersTrust Bangladesh and former Additional Secretary, Ministry of Foreign Affairs of Bangladesh.
 
 ![Employees seated at tables with laptops during the Akij Group corporate training](../../assets/images/news/coderstrust-provides-corporate-training-to-akij-group-one-of-the-largest-conglomerates-of-south-asia/coderstrust-provide-corporate-training-to-akij-group.jpg)
 

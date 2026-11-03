@@ -131,7 +131,7 @@ test.describe('WP106 item 3: Recognition drops the NOVA Award; the bio keeps it'
   });
 
   test('Aziz Ahmad’s bio still says he received the NOVA Award in 2022 for green technology', () => {
-    expect(visible(htmlOf('/about/team/aziz-ahmad/'))).toContain('He received the NOVA Award in 2022 for his contribution to the green technology industry');
+    expect(visible(htmlOf('/about/team/aziz-ahmad/'))).toContain('He received the World Green Energy Symposium’s NOVA Award in 2022 for his contribution to the green technology industry'); // WP161-B (owner 2026-11-02): the award names its issuer
   });
 });
 
@@ -252,7 +252,7 @@ test.describe('WP106 item 8: four team bios carry the role in the <title>', () =
   test('the displayed roles on the four pages are unchanged', async ({ page }) => {
     const ROLES: [string, string][] = [
       ['about/team/abdul-karim/', 'Advisor; former Principal Secretary, Government of Bangladesh'],
-      ['about/team/faruque-hossain/', 'Advisor; former Chairman, National Skills Development Authority'],
+      ['about/team/faruque-hossain/', 'Advisor; former Executive Chairman, National Skills Development Authority'], // WP161-B (Fable review A-10): his NSDA title is Executive Chairman
       ['about/team/ferdinand-kjaerulff/', 'Co-Founder · In Memoriam (2023)'],
       ['about/team/fahim-sheikh/', 'Marketing, Project and Training Operations'],
     ];

@@ -69,12 +69,13 @@ test.describe('WP107 item 1: Md. Shamsul Haque is "CEO of CodersTrust Bangladesh
     ['BASIS-ASSET', BASIS, 'The CEO of CodersTrust Bangladesh, Md. Shamsul Haque, signed the agreement on behalf of CodersTrust.'],
     ['DoICT Training of Trainers', DOICT, 'said Mr. Md. Shamsul Haque, CEO of CodersTrust Bangladesh.'],
     // WP124 proofread: the appositive is closed after the second title ("..., CEO of CodersTrust Bangladesh and former Additional Foreign Secretary, emphasized")
-    ['Ostitto', OSTITTO, 'Mr. Shamsul Haque, CEO of CodersTrust Bangladesh and former Additional Foreign Secretary, emphasized'],
+    // WP161-B (owner 2026-11-02): his title is "former Additional Secretary, Ministry of Foreign Affairs of Bangladesh" (it said "former Additional Foreign Secretary")
+    ['Ostitto', OSTITTO, 'Mr. Shamsul Haque, CEO of CodersTrust Bangladesh and former Additional Secretary, Ministry of Foreign Affairs of Bangladesh, emphasized'],
     ['UPEACE partnership', UPEACE_MOU, 'Md. Shamsul Haque, CEO of CodersTrust Bangladesh, were present among others.'],
     ['NSU MOU', NSU, 'Mr. Md. Shamsul Haque, CEO of CodersTrust Bangladesh, along with Mr. Md. Iqbal Hassan Ferdous (CRO)'],
     // WP124 proofread: the comma closing "Prof. Md. Farhadul Islam, Chairman of NCTB,"
     ['NCTB MOU', NCTB, 'Chairman of NCTB, and CodersTrust Bangladesh CEO Md. Shamsul Haque signed the document'],
-    ['America Week', AMERICA_WEEK, 'CodersTrust was proudly represented by CodersTrust Bangladesh CEO Md. Shamsul Haque, former Additional Foreign Secretary of Bangladesh, and his team'],
+    ['America Week', AMERICA_WEEK, 'CodersTrust was proudly represented by CodersTrust Bangladesh CEO Md. Shamsul Haque, former Additional Secretary, Ministry of Foreign Affairs of Bangladesh, and his team'], // WP161-B (owner 2026-11-02)
   ];
   for (const [name, slug, sentence] of CASES) {
     test(`${name}: the post says "${sentence.slice(0, 60)}…" (visible text, source and page)`, async ({ page }) => {
@@ -258,7 +259,9 @@ test.describe('WP107: every news post changed here carries `updated: 2026-10-29`
   const SLUGS = [BASIS, DOICT, OSTITTO, UPEACE_MOU, NSU, NCTB, AMERICA_WEEK, PRESS_FREEDOM, DISCOVERY];
   for (const slug of SLUGS) {
     test(`${slug.slice(0, 60)}`, async ({ page }) => {
-      const day = [DISCOVERY, DOICT, UPEACE_MOU, NSU, NCTB, PRESS_FREEDOM].includes(slug) ? '2026-10-30' : '2026-10-29'; // WP126 re-dated the Discovery Education post (countToday note); WP127 the other five (serial-comma sweep)
+      // WP161-B re-dated BASIS, Press Freedom and Discovery Education (2026-11-02: Fable review A-23, superlatives) and Ostitto and America Week (2026-11-03: the owner's title for Md. Shamsul Haque)
+      const WP161B: Record<string, string> = { [BASIS]: '2026-11-02', [PRESS_FREEDOM]: '2026-11-02', [DISCOVERY]: '2026-11-02', [OSTITTO]: '2026-11-03', [AMERICA_WEEK]: '2026-11-03' };
+      const day = WP161B[slug] ?? ([DISCOVERY, DOICT, UPEACE_MOU, NSU, NCTB, PRESS_FREEDOM].includes(slug) ? '2026-10-30' : '2026-10-29'); // WP126 re-dated the Discovery Education post (countToday note); WP127 the other five (serial-comma sweep)
       expect(post(slug)).toMatch(new RegExp(`^updated: ${day}$`, 'm'));
       await open(page, routeOf(slug));
       const ld = await ldJson(page);

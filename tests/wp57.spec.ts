@@ -284,12 +284,12 @@ test.describe('P1, Home: the fourth logo group is "Employers and Industry Partne
 // names both World Bank places (tests/wp55.spec.ts and tests/wp62.spec.ts hold the wording and the placement)
 test.describe('P2, "As covered by" is two short sentences with every link kept, on Recognition and Media; Home points to it in one', () => {
   for (const [name, route] of [['Recognition and Media', 'about/recognition/']] as const) {
-    test(`${name}: the press line is one short sentence, "World Bank coverage: ...", keeping Kosovo’s two pages and Albania’s page apart by year (WP87: the "Early press coverage, 2014–2016: ..." sentence is gone; the outlets' links are on the cards)`, async ({ page }) => {
+    test(`${name}: the press line is one short sentence, "World Bank pages that name CodersTrust: ..." (WP161-B; it was "World Bank coverage: ..."), keeping Kosovo’s two pages and Albania’s page apart by year (WP87: the "Early press coverage, 2014–2016: ..." sentence is gone; the outlets' links are on the cards)`, async ({ page }) => {
       await open(page, route);
       const line = page.locator('p.cov');
       await expect(line).toHaveCount(1);
       const text = await visibleText(page, 'p.cov');
-      expect(text.split(/(?<=\.) (?=[A-Z])/)).toEqual(['World Bank coverage: Kosovo (2017) and Albania (2021).']); // WP132: the 2016 Kosovo feature is linked by its early-coverage card only
+      expect(text.split(/(?<=\.) (?=[A-Z])/)).toEqual(['World Bank pages that name CodersTrust: Kosovo (2017) and Albania (2021).']); // WP132: the 2016 Kosovo feature is linked by its early-coverage card only; WP161-B: "World Bank pages that name CodersTrust:" (register PA-13)
       expect(text).not.toContain('As covered by');
       expect(text).not.toMatch(/Gulf News|TechCrunch|Forbes|Wall Street Journal|USA Today|Tech in Asia|Times of India/);
       // no stray space before a comma or a period (the links are followed directly by their punctuation)
@@ -309,12 +309,12 @@ test.describe('P2, "As covered by" is two short sentences with every link kept, 
     });
   }
 
-  test('Home: the press line is one sentence, "Early press coverage, 2014–2016, and World Bank coverage of our work in Kosovo and Albania are on the Recognition and Media page."; no outlet is named in it', async ({ page }) => {
+  test('Home: the press line is one sentence, "Early press coverage, 2014–2016, and the World Bank pages on our work in Kosovo and Albania are on the Recognition and Media page."; no outlet is named in it', async ({ page }) => {
     await open(page, HOME);
     const line = page.locator('p.cov');
     await expect(line).toHaveCount(1);
     const text = await visibleText(page, 'p.cov');
-    expect(text.split(/(?<=\.) (?=[A-Z])/)).toEqual(['Early press coverage, 2014–2016, and World Bank coverage of our work in Kosovo and Albania are on the Recognition and Media page.']);
+    expect(text.split(/(?<=\.) (?=[A-Z])/)).toEqual(['Early press coverage, 2014–2016, and the World Bank pages on our work in Kosovo and Albania are on the Recognition and Media page.']); // WP161-B (Fable review A-12)
     expect(text).not.toContain('As covered by');
     // no stray space before a comma or a period
     expect(text).not.toMatch(/ [,.]/);

@@ -52,10 +52,13 @@ if (description.length > 155) throw new Error(`Team profile ${p.id}: the meta de
 const titleFull = titleCase(`${d.name}, ${d.titleRole ?? d.role}`);
 const title = titleFull.length + ' | CodersTrust'.length <= 60 ? titleFull : d.name;
 // WP106: the four profiles whose <title> gained a role changed on 2026-10-29; WP129: the Ferdinand Kjaerulff and Fahim Sheikh biographies changed again on 2026-10-30 (WP126), so they read 2026-10-31 (the other two are unchanged); the others state no "last updated" date, so their JSON-LD dateModified is the build date.
-const MODIFIED: Record<string, string> = { 'abdul-karim': '2026-10-29', 'faruque-hossain': '2026-10-29', 'ferdinand-kjaerulff': '2026-10-31', 'fahim-sheikh': '2026-10-31', 'aziz-ahmad': '2026-11-02' }; // WP157: Aziz Ahmad's biography says "has spoken" (2026-11-02)
+// WP161-B: Faruque Hossain's role and bio say "former Executive Chairman" (2026-11-02), a role the Abdul Karim and Ferdinand Kjaerulff profiles show on their colleague cards; the owner answers of 2 November (applied 2026-11-03) changed
+// Aziz Ahmad's awards sentences, Md. Shamsul Haque's title (his profile now has its own date) and Ferdinand Kjaerulff's year of death.
+const MODIFIED: Record<string, string> = { 'abdul-karim': '2026-11-02', 'faruque-hossain': '2026-11-02', 'ferdinand-kjaerulff': '2026-11-03', 'fahim-sheikh': '2026-10-31', 'aziz-ahmad': '2026-11-03', 'shamsul-haque': '2026-11-03' }; // WP157: Aziz Ahmad's biography says "has spoken" (2026-11-02)
 const img = d.photo ? await getImage({ src: d.photo, width: 800, height: 800, format: 'jpg' }) : undefined;
 const imgUrl = img ? PRODUCTION_ORIGIN + stripBase(img.src) : undefined;
-const deceased = /passed away in (\w+ \d{4})/.exec(p.body ?? '');
+// WP161-B (owner 2026-11-02): the bio gives the year only ("passed away in 2023"; the month is unconfirmed), so the month is optional and deathDate is the year.
+const deceased = /passed away in (?:[A-Z][a-z]+ )?(\d{4})\b/.exec(p.body ?? '');
 const personNode = {
   ...person({
     path,
@@ -67,7 +70,7 @@ const personNode = {
     knowsAbout: d.expertise,
     worksFor: !deceased,
   }),
-  ...(deceased && { deathDate: '2023-02' }),
+  ...(deceased && { deathDate: deceased[1] }),
 };
 const jsonLd = [
   webPage({ path, name: title, description, type: 'ProfilePage', dateModified: MODIFIED[p.id], about: { '@id': `${pageUrl(path)}#person` }, breadcrumb: [{ name: 'Home', path: '/' }, { name: 'About', path: '/about/' }, { name: 'Team', path: '/about/team/' }, { name: d.name, path }] }),

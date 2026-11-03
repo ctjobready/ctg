@@ -59,5 +59,5 @@ test('Polish 6: Recognition links the archived 2016 World Bank feature once; the
   // the built <span> carries a data-astro-cid attribute, so match the class with trailing attributes allowed
   // the links carry a screen-reader-only note ("opens worldbank.org"); read the line as sighted readers see it
   const line = visible(raw.replace(/<span class="sr-only"[^>]*>[\s\S]*?<\/span>/g, ''));
-  expect(line).toMatch(/World Bank coverage: Kosovo \(\s*2017\s*\) and Albania \(\s*2021\s*\)\./);
+  expect(line).toMatch(/World Bank pages that name CodersTrust: Kosovo \(\s*2017\s*\) and Albania \(\s*2021\s*\)\./); // WP161-B (Fable review A-12): register PA-13's wording
 });

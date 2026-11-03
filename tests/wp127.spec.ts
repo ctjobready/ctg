@@ -65,7 +65,7 @@ const PERSON_START = /^(?:Professor|Prof\.|Dr\.|Mr\.|Mrs\.|Ms\.|Md\.|Aziz Ahmad|
 const ALLOWED: { has: string; why: string }[] = [
   { has: 'with a play button, and no request will go to YouTube', why: 'two clauses joined after an introductory clause (WP161-A, Privacy Policy Video section)' },
   { has: '78.2% at the October 2026 survey, and median monthly income rose', why: 'two clauses joined' },
-  { has: 'Early press coverage, 2014–2016, and World Bank coverage', why: 'the years are set off as a parenthetical' },
+  { has: 'Early press coverage, 2014–2016, and the World Bank pages', why: 'the years are set off as a parenthetical' }, // WP161-B (Fable review A-12): "World Bank pages", not "World Bank coverage"
   { has: 'spoke at a start-up event at In5, Dubai Internet City, and met investors', why: 'one subject, two verbs; the place name carries its own comma' },
   { has: 'STEM students must continually reskill themselves, and CodersTrust plays', why: 'two clauses joined' },
   { has: 'particularly the youth, and takes pride', why: 'one subject, two verbs, after an apposition' },
@@ -181,7 +181,7 @@ test.describe('WP127 item 2: the serial-comma checker', () => {
     expect(seriesIn('The agreement was signed by Aziz Ahmad, Chairman of CodersTrust, and Professor Jane Roe, Rector.')).toEqual([]);
   });
   test('an allowed sentence is skipped only while `allow` is on', () => {
-    const s = 'Early press coverage, 2014–2016, and World Bank coverage of our work are on the Recognition and Media page.';
+    const s = 'Early press coverage, 2014–2016, and the World Bank pages on our work are on the Recognition and Media page.';
     expect(seriesIn(s)).toEqual([]);
     expect(seriesIn(s, { allow: false })).toHaveLength(1);
   });

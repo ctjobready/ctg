@@ -54,7 +54,7 @@ test.describe('WP109 item 4: Fahim Sheikh’s <title> names him without the abri
 test.describe('WP109 item 5: the 2014 recognition line says co-founder of CodersTrust', () => {
   test('Recognition prints the full sentence, and the early-investor line elsewhere is unchanged', () => {
     const html = distHtml('about/recognition/index.html');
-    expect(html).toContain('Some 2014 coverage described Morten Lund as a co-founder of CodersTrust.');
+    expect(html).toContain('Some 2014 coverage described Morten Lund as a co-founder of CodersTrust and of Skype;'); // WP161-B (Fable review A-11): the note says what the coverage got wrong
     expect(html).not.toContain('Some 2014 coverage described Morten Lund as a co-founder. ');
     expect(distHtml('about/index.html')).toContain('early Skype investor Morten Lund');
   });
@@ -118,8 +118,8 @@ test.describe('WP109 item 9: dates on the changed pages', () => {
       expect(readFileSync(`src/content/news/${slug}.md`, 'utf8'), slug).toMatch(/^updated: 2026-10-30$/m);
     }
   });
-  test('Recognition (2026-11-01 since WP141), Fahim Sheikh and the outcomes page are dated', () => {
-    expect(distHtml('about/recognition/index.html')).toMatch(/"dateModified":"2026-11-01"/);
+  test('Recognition (2026-11-02 since WP161-B; 2026-11-01 since WP141), Fahim Sheikh and the outcomes page are dated', () => {
+    expect(distHtml('about/recognition/index.html')).toMatch(/"dateModified":"2026-11-02"/); // WP161-B: the Morten Lund note and the World Bank pages heading changed
     expect(distHtml('about/team/fahim-sheikh/index.html')).toMatch(/"dateModified":"2026-10-31"/);
     expect(distHtml('impact/outcomes-2026/index.html')).toContain('2026-11-03'); // WP161-A: 2026-11-03 (the rounding sentence, A-06). WP135: re-dated from 2026-10-29 (the closing line and "On This Page" changed); WP147: 2026-11-01 (the method line and the Speed to Earning tile changed)
   });

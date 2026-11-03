@@ -64,7 +64,7 @@ test.describe('WP119 Minor 1: no news post attaches the National University onbo
 test.describe('WP119 Minor 2: the Jahangirnagar MOU post puts DoICT under the ICT Division', () => {
   test('the first paragraph and the quoted remark say "the Department of ICT (DoICT)", never "ICT Division of DoICT" or "ICT Division, DoICT"', () => {
     const t = text(`news/${JU}/index.html`);
-    expect(t).toContain('between Jahangirnagar University Institute of IT and the Department of ICT (DoICT), under the ICT Division, Ministry of ICT.');
+    expect(t).toContain('between Jahangirnagar University Institute of IT and the Department of ICT (DoICT), under the ICT Division.'); // WP161-B (Fable review A-17): Bangladesh has no "Ministry of ICT"
     expect(t).toContain('“thrilled about this mutually beneficial collaboration” between Jahangirnagar University and the Department of ICT (DoICT)');
     expect(t).not.toMatch(/ICT Division of DoICT|ICT Division, DoICT/);
   });
@@ -89,7 +89,7 @@ test.describe('WP119 Minor 3: the five posts written in October 2026 carry their
       const b = banner(slug);
       expect(b, slug).toContain('Archived post, lightly edited.');
       // WP126: the posts that now say "The country count is today’s." were re-dated to October 30
-      expect(b, slug).toMatch(/updated October (30|31), 2026/); // WP127 re-dated the 2041 post (JU) too; WP131 re-dated Joyeeta and Carnival to October 31
+      expect(b, slug).toMatch(/updated (October (30|31)|November 2), 2026/); // WP127 re-dated the 2041 post (JU) too; WP131 re-dated Joyeeta and Carnival to October 31; WP161-B re-dated Discovery Education and the 2041 post (JU) to November 2
     }
   });
 });
@@ -118,7 +118,7 @@ test.describe('WP119 Polish', () => {
 
   test('7. Shamsul Haque bio: "He brings 38 years of experience, including in banking and advertising."', () => {
     const t = text('about/team/shamsul-haque/index.html');
-    expect(t).toContain('a former Additional Foreign Secretary of Bangladesh. He brings 38 years of experience, including in banking and advertising.');
+    expect(t).toContain('a former Additional Secretary, Ministry of Foreign Affairs of Bangladesh. He brings 38 years of experience, including in banking and advertising.'); // WP161-B (owner 2026-11-02): his title
     expect(t).not.toContain('diverse experience as a banker');
   });
 

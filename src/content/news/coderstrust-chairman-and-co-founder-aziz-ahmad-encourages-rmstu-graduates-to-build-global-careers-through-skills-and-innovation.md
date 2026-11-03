@@ -1,7 +1,7 @@
 ---
 title: "CodersTrust Chairman and Co-Founder Aziz Ahmad Encourages RMSTU Graduates to Build Global Careers"
 date: 2026-02-09
-updated: 2026-10-30
+updated: 2026-11-02
 topic: leadership-advocacy
 excerpt: "Aziz Ahmad gives the keynote at Rangamati Science and Technology University, telling graduating Computer Science students to “Be Useful.”"
 cover: ../../assets/images/news/coderstrust-chairman-and-co-founder-aziz-ahmad-encourages-rmstu-graduates-to-build-global-careers-through-skills-and-innovation/rangamati-science-and-technology-university-3.jpg
@@ -13,7 +13,7 @@ seoTitle: "Aziz Ahmad Encourages RMSTU Graduates"
 
 ![Faculty and students standing together at the front of a conference room under a Rangamati Science and Technology University sign](../../assets/images/news/coderstrust-chairman-and-co-founder-aziz-ahmad-encourages-rmstu-graduates-to-build-global-careers-through-skills-and-innovation/rangamati-science-and-technology-university-3.jpg)
 
-CodersTrust Chairman and Co-founder Aziz Ahmad is honored to be invited as the Keynote Speaker at Rangamati Science and Technology University (RMSTU), where he addresses graduating Computer Science students on the theme “Be Useful — The World Will Find You.”
+CodersTrust Chairman and Co-Founder Aziz Ahmad is honored to be invited as the Keynote Speaker at Rangamati Science and Technology University (RMSTU), where he addresses graduating Computer Science students on the theme “Be Useful — The World Will Find You.”
 
 In his keynote, Mr. Aziz Ahmad emphasizes the importance of building practical skills, staying curious and creating meaningful value in a rapidly evolving global economy. He highlights how young professionals from Bangladesh can position themselves in the international workforce through continuous learning, adaptability and a commitment to excellence.
 

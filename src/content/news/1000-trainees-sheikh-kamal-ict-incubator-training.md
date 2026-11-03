@@ -1,7 +1,7 @@
 ---
 title: "1,000 People to Be Trained in High-Demand IT Skills | Sheikh Kamal ICT Incubator Training"
 date: 2023-01-05
-updated: 2026-10-29
+updated: 2026-11-02
 topic: partnerships
 excerpt: "CodersTrust is contracted to train 1,000 people in high-demand IT skills at the Sheikh Kamal IT Training and Incubation Center in Barishal."
 cover: ../../assets/images/news/1000-trainees-sheikh-kamal-ict-incubator-training/sheikh-kamal-it-centre.jpg
@@ -19,4 +19,4 @@ Bangladesh Hi-Tech Park Authority is setting up Sheikh Kamal IT Training and Inc
 
 ## Scope
 
-CodersTrust will provide training to 1,000 people in high-demand IT skills.
+CodersTrust will provide training to 1,000 people in high-demand IT skills at the Sheikh Kamal IT Training and Incubation Center in Barishal.

@@ -370,9 +370,10 @@ test.describe('"CodersTrust Around the World": seven tiles on Home and About, th
 // WP62 (cycle-34 review, Kimi, GPT-6.1 Sol and Gemini): Home's line is one pointer sentence with no outlet and no link of its own; the existing "See All Recognition and Media" link follows it.
 // WP62 rework (R1, R2): the full line, with its ten links, is printed on the Recognition and Media page, under its logo list, and Home’s pointer names both World Bank places (Kosovo and Albania).
 test.describe('"As covered by": the press coverage line, text links and no logos, on Recognition and Media; Home points to it', () => {
-  const POINTER = 'Early press coverage, 2014–2016, and World Bank coverage of our work in Kosovo and Albania are on the Recognition and Media page.';
+  // WP161-B (Fable review A-12): "the World Bank pages" and "World Bank pages that name CodersTrust:" (register PA-13's wording; it said "World Bank coverage")
+  const POINTER = 'Early press coverage, 2014–2016, and the World Bank pages on our work in Kosovo and Albania are on the Recognition and Media page.';
   // WP132: the Kosovo 2016 feature is linked once, by its early-coverage card, so the line lists Kosovo (2017) and Albania (2021) and carries two links (HREFS[8], HREFS[9])
-  const LINE = 'World Bank coverage: Kosovo (2017) and Albania (2021).'; // WP87: it also named the seven outlets ("Early press coverage, 2014–2016: Gulf News, ..."); their links are on the cards now
+  const LINE = 'World Bank pages that name CodersTrust: Kosovo (2017) and Albania (2021).'; // WP87: it also named the seven outlets ("Early press coverage, 2014–2016: Gulf News, ..."); their links are on the cards now
   const TECHCRUNCH = 'https://techcrunch.com/2014/06/13/building-code-to-break-poverty-in-bangladesh/';
   const HREFS = [
     'https://gulfnews.com/technology/skype-co-founder-seeks-local-partners-in-new-venture-1.1327190',
@@ -426,7 +427,7 @@ test.describe('"As covered by": the press coverage line, text links and no logos
     await open(page, RECOGNITION);
     await expect(page.locator('#coverage p.cov')).toHaveCount(0);
     await expect(page.locator('#world-bank p.cov')).toHaveCount(1);
-    await expect(page.locator('#world-bank h2')).toHaveText('Coverage of Our Work in Kosovo and Albania');
+    await expect(page.locator('#world-bank h2')).toHaveText('World Bank Pages on Our Work in Kosovo and Albania'); // WP161-B
     const order = await page.evaluate(() => {
       const follows = (a: Element, b: Element) => !!(a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING);
       const q = (s: string) => document.querySelector(s)!;

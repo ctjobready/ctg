@@ -202,7 +202,7 @@ test.describe('R6 (Grok): Independent Evaluation does not read the classes resul
     await open(page, EVALUATION);
     await expect(page.locator('#classes h2')).toHaveText('Freelancing Share by Classes Attended');
     await expect(page.locator('a[href="#classes"]').first()).toHaveText('Freelancing Share by Classes Attended');
-    await expect(page.locator('#classes .rsec__body > p').first()).toHaveText('In this study, freelancing was higher among women who attended more classes.');
+    await expect(page.locator('#classes .rsec__body > p').first()).toHaveText('In this study, freelancing was higher among women who attended more classes (attendance was not randomly assigned).'); // WP161-B (Fable review A-41)
     // the chart under it is titled "Share of Women Freelancing", not the heading's words again; its data (RC-08) and rows are unchanged
     await expect(page.locator('#classes [data-fact="RC-08"] .bars__title')).toHaveText('Share of Women Freelancing');
     await expect(page.locator('#classes [data-fact="RC-08"] .bars__data caption')).toHaveText('Share of Women Freelancing');

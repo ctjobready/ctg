@@ -117,9 +117,9 @@ test.describe('Items 3 to 7: news archive consistency', () => {
   });
 
   test('7: the America Week post gives Shamsul Haque the team page’s rank', () => {
-    expect(visible(pageHtml('about/team/shamsul-haque/'))).toContain('former Additional Foreign Secretary of Bangladesh');
+    expect(visible(pageHtml('about/team/shamsul-haque/'))).toContain('former Additional Secretary, Ministry of Foreign Affairs of Bangladesh'); // WP161-B (owner 2026-11-02): his title
     const text = visible(pageHtml(news(AMERICA)));
-    expect(text).toContain('CEO Md. Shamsul Haque, former Additional Foreign Secretary of Bangladesh, and his team');
+    expect(text).toContain('CEO Md. Shamsul Haque, former Additional Secretary, Ministry of Foreign Affairs of Bangladesh, and his team');
     expect(text).not.toContain('Additional Secretary of the Ministry of Foreign Affairs');
   });
 });
@@ -231,7 +231,7 @@ test.describe('Item 16: Recognition’s early-coverage cards link their articles
       c.querySelectorAll('.sr-only').forEach((n) => n.remove());
       return (c.textContent ?? '').replace(/\s+/g, ' ').trim();
     });
-    expect(lineText).toBe('World Bank coverage: Kosovo (2017) and Albania (2021).'); // WP132: the 2016 Kosovo feature is the card’s link
+    expect(lineText).toBe('World Bank pages that name CodersTrust: Kosovo (2017) and Albania (2021).'); // WP132: the 2016 Kosovo feature is the card’s link; WP161-B: register PA-13's wording
     expect(await page.locator('nav a[href="#world-bank"]').count()).toBeGreaterThanOrEqual(1);
   });
 });

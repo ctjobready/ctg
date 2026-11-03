@@ -210,13 +210,13 @@ test.describe('About, Governance, Recognition, Careers and Contact', () => {
     }
   });
 
-  test('Recognition: appointments and honors, one primary hero button, a University Partnership eyebrow and a two-sentence founder note', async ({ page }) => {
+  test('Recognition: appointments and honors, one primary hero button, a University Partnership eyebrow and a founder note (one sentence since WP161-B)', async ({ page }) => {
     await open(page, 'about/recognition/');
     await expect(page.locator('main .hero')).toContainText('has received appointments and honors');
     await expect(page.locator('main .hero .btn--primary')).toHaveCount(1);
     await expect(page.locator('main .hero .btn--primary')).toContainText('Media Inquiries');
     await expect(page.locator('#endorsements .eyebrow').first()).toHaveText('University Partnership');
-    await expect(page.locator('#coverage')).toContainText('as a co-founder of CodersTrust. CodersTrust’s founders are');
+    await expect(page.locator('#coverage')).toContainText('as a co-founder of CodersTrust and of Skype; he was an early Skype investor, and CodersTrust’s founders are'); // WP161-B (Fable review A-11)
   });
 
   test('Careers: the hiring status sits in the hero above the button, and the equal-opportunity heading is "We Judge People on Merit"', async ({ page }) => {

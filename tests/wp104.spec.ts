@@ -284,7 +284,7 @@ test.describe('WP104 item 8: meta descriptions name the full target group', () =
 // --------------------------------------------------------------------------------------------------------------------------------
 test.describe('WP104 item 9: "1,000" in the two 1,000-trainees news posts', () => {
   const POSTS = [
-    { route: 'news/1000-trainees-sheikh-kamal-ict-incubator-training/', h1: '1,000 People to Be Trained in High-Demand IT Skills | Sheikh Kamal ICT Incubator Training', body: 'CodersTrust will provide training to 1,000 people in high-demand IT skills.' },
+    { route: 'news/1000-trainees-sheikh-kamal-ict-incubator-training/', h1: '1,000 People to Be Trained in High-Demand IT Skills | Sheikh Kamal ICT Incubator Training', body: 'CodersTrust will provide training to 1,000 people in high-demand IT skills at the Sheikh Kamal IT Training and Incubation Center in Barishal.' }, // WP161-B (Fable review A-16)
     { route: 'news/1000-trainees-enhancing-digital-government-economy-edge/', h1: 'Contract to Train 1,000 Youth | Enhancing Digital Government & Economy (EDGE)', body: 'CodersTrust will provide training to 1,000 youths on digital and disruptive 4IR technologies.' },
   ];
   for (const p of POSTS) {
@@ -299,8 +299,8 @@ test.describe('WP104 item 9: "1,000" in the two 1,000-trainees news posts', () =
     // Item 10 also covers "any page this WP changes": as with the Her Power post (tests/wp86.spec.ts), an edited archived post carries the day of the edit.
     test(`${p.route}: the archive banner says "updated October 29, 2026" and the JSON-LD dateModified is 2026-10-29`, async ({ page }) => {
       await open(page, p.route);
-      await expect(page.locator('.archive-banner')).toContainText(/updated October (29|30), 2026/); // WP127 re-dated the EDGE post to October 30 (serial-comma sweep)
-      expect(await ldJson(page)).toMatch(/"dateModified"\s*:\s*"2026-10-(29|30)"/);
+      await expect(page.locator('.archive-banner')).toContainText(/updated (October (29|30)|November 2), 2026/); // WP127 re-dated the EDGE post to October 30 (serial-comma sweep); WP161-B re-dated both posts to November 2 (Fable review A-16, A-17)
+      expect(await ldJson(page)).toMatch(/"dateModified"\s*:\s*"2026-(10-(29|30)|11-02)"/);
     });
   }
 });

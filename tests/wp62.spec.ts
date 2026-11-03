@@ -122,9 +122,10 @@ test.describe('Item 1 (GPT-6.1 Sol, Kimi): Home slide 1 says the 41% is monthly'
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // WP62 rework (R1, R2): the first pass named Kosovo alone on Home and left the ten press and World Bank links on no page, because Recognition and Media printed no Albania release; the full line is printed on that page now and Home’s pointer names both places.
 test.describe('Item 2 (Kimi, GPT-6.1 Sol, Gemini; rework R1 and R2): Home’s press line is one pointer sentence; Recognition and Media prints the line with its links', () => {
-  const POINTER = 'Early press coverage, 2014–2016, and World Bank coverage of our work in Kosovo and Albania are on the Recognition and Media page.';
+  // WP161-B (Fable review A-12): "the World Bank pages" and "World Bank pages that name CodersTrust:" (register PA-13's wording; it said "World Bank coverage")
+  const POINTER = 'Early press coverage, 2014–2016, and the World Bank pages on our work in Kosovo and Albania are on the Recognition and Media page.';
   // WP132: the Kosovo 2016 feature is linked once, by its card, so the line lists Kosovo (2017) and Albania (2021)
-  const LINE = 'World Bank coverage: Kosovo (2017) and Albania (2021).'; // WP87: the outlets sentence is gone; the links are on the cards
+  const LINE = 'World Bank pages that name CodersTrust: Kosovo (2017) and Albania (2021).'; // WP87: the outlets sentence is gone; the links are on the cards
   const TECHCRUNCH = 'https://techcrunch.com/2014/06/13/building-code-to-break-poverty-in-bangladesh/';
   const withoutSrOnly = (selector: string) => (page: Page) =>
     page.locator(selector).first().evaluate((el) => {
@@ -180,7 +181,7 @@ test.describe('Item 2 (Kimi, GPT-6.1 Sol, Gemini; rework R1 and R2): Home’s pr
   test('the pointer names exactly the World Bank places the line prints, and the years it names are the outlets’ own', async ({ page }) => {
     await open(page, RECOGNITION);
     const line = await withoutSrOnly('#world-bank p.cov')(page);
-    const places = [...line.matchAll(/(?:World Bank coverage:| and) (Kosovo|Albania) \(/g)].map((m) => m[1]);
+    const places = [...line.matchAll(/(?:World Bank pages that name CodersTrust:| and) (Kosovo|Albania) \(/g)].map((m) => m[1]);
     expect(places).toEqual(['Kosovo', 'Albania']);
     expect(POINTER).toContain(`our work in ${places.join(' and ')} are on`);
     const outletYears = (await page.locator('ul.rec-press li time').evaluateAll((els) => els.map((e) => e.getAttribute('datetime')))).sort();

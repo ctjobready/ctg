@@ -293,9 +293,10 @@ test.describe('WP129 item 6: every dated page whose visible text changed carries
     'programs/jobready-work/index.html', // WP157 (2026-11-02)
     'programs/superkids/index.html', // WP157 (2026-11-02)
     'our-model/jobready-platform/index.html', // WP157 (2026-11-02)
+    'about/recognition/index.html', // WP161-B (2026-11-02): the Morten Lund note and the World Bank pages heading
   ]);
-  // WP161-A (2026-11-03): the Privacy Policy (Video section, legal basis), the Accessibility Statement (images and external content), Foundations and Governments (three months of mentoring and more) moved on.
-  const MOVED_1103 = new Set(['privacy-policy/index.html', 'accessibility/index.html', 'partner-with-us/foundations/index.html', 'partner-with-us/governments/index.html']);
+  // WP161-A (2026-11-03): Privacy, Accessibility, Foundations and Governments moved on; WP161-B (2026-11-03): Ferdinand Kjærulff's profile.
+  const MOVED_1103 = new Set(['privacy-policy/index.html', 'accessibility/index.html', 'partner-with-us/foundations/index.html', 'partner-with-us/governments/index.html', 'about/team/ferdinand-kjaerulff/index.html']);
   for (const [route, cls] of STAMPED) {
     const [day, long] = MOVED_1103.has(route) ? ['2026-11-03', 'November 3, 2026'] : MOVED_1102.has(route) ? ['2026-11-02', 'November 2, 2026'] : MOVED_1101.has(route) ? ['2026-11-01', 'November 1, 2026'] : ['2026-10-31', 'October 31, 2026'];
     test(`${route} reads "Last updated ${long}" and its JSON-LD dateModified is ${day}`, () => {
@@ -333,9 +334,8 @@ test.describe('WP129 item 6: every dated page whose visible text changed carries
   }
 
   // Dated pages whose visible text did not change since their date keep it (guard tests; they pass before the change).
+  // WP161-B: the Abdul Karim and Faruque Hossain profiles left this list; their text changed on 2026-11-02 (Faruque Hossain's role, "former Executive Chairman", which Abdul Karim's colleague cards show), and tests/wp161-b.spec.ts holds their dates.
   const KEEP: [string, string][] = [
-    ['about/team/abdul-karim/index.html', '2026-10-29'],
-    ['about/team/faruque-hossain/index.html', '2026-10-29'],
     // WP161-A (adversarial review A-01): both declare the day of their last visible change instead of the shared 2026-10-10 fallback.
     ['impact/case-studies/wsdfm-women-freelancers/index.html', '2026-10-28'],
     ['impact/case-studies/digital-jobs-albania/index.html', '2026-10-21'],

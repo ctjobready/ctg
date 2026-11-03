@@ -337,7 +337,7 @@ test.describe('14 Owner date rule', () => {
     }
   });
 
-  test('Aziz Ahmad’s profile has its own dateModified entry (2026-11-02), not the build date', () => {
-    expect(readFileSync('src/pages/about/team/[slug].astro', 'utf8')).toMatch(/'aziz-ahmad': '2026-11-02'/);
+  test('Aziz Ahmad’s profile has its own dateModified entry (2026-11-02 or later: WP161-B moved it to 2026-11-03), not the build date', () => {
+    expect(/'aziz-ahmad': '(2026-11-\d\d)'/.exec(readFileSync('src/pages/about/team/[slug].astro', 'utf8'))?.[1] ?? '').toMatch(/^2026-11-(0[2-9]|[12]\d|30)$/);
   });
 });

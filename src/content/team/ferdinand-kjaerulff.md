@@ -15,4 +15,4 @@ Ferdinand Kjærulff, a former Danish Army captain, entrepreneur and businessman,
 
 His aim was that, by capturing the return on investment from the online labor market, CodersTrust could make education universally accessible and an appealing investment for the capital market. He believed that building this inclusive financial system for bright students around the world could have a powerful impact on the poorest people in the world.
 
-Ferdinand passed away in February 2023 after living with cancer. CodersTrust honors his visionary spirit by continuing to provide the youth of the world with skill-based digital education with industry certification preparation.
+Ferdinand passed away in 2023 after living with cancer. CodersTrust honors his visionary spirit by continuing to provide the youth of the world with skill-based digital education with industry certification preparation.

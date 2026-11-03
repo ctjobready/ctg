@@ -1,7 +1,7 @@
 ---
 title: "Contract to Train 1,000 Youth | Enhancing Digital Government & Economy (EDGE)"
 date: 2023-03-05
-updated: 2026-10-30
+updated: 2026-11-02
 topic: partnerships
 excerpt: "CodersTrust signs a contract with PMIS at the University of Dhaka and the Bangladesh Computer Council to train 1,000 youths under the EDGE project."
 cover: ../../assets/images/news/1000-trainees-enhancing-digital-government-economy-edge/edge-signing.jpg
@@ -12,9 +12,9 @@ tags: []
 seoTitle: "EDGE: Contract to Train 1,000 Youth"
 ---
 
-![CodersTrust signing contract with Center for Project Management and Information Systems (PMIS), University of Dhaka in collaboration with Bangladesh Computer Council (BCC) under ICT and Telecommunication Ministry, Bangladesh](../../assets/images/news/1000-trainees-enhancing-digital-government-economy-edge/image-1.jpg)
+![CodersTrust signing contract with Center for Project Management and Information Systems (PMIS), University of Dhaka in collaboration with Bangladesh Computer Council (BCC), under the ICT Division, Bangladesh](../../assets/images/news/1000-trainees-enhancing-digital-government-economy-edge/image-1.jpg)
 
-*CodersTrust signing contract with Center for Project Management and Information Systems (PMIS), University of Dhaka in collaboration with Bangladesh Computer Council (BCC) under ICT and Telecommunication Ministry, Bangladesh*
+*CodersTrust signing contract with Center for Project Management and Information Systems (PMIS), University of Dhaka in collaboration with Bangladesh Computer Council (BCC), under the ICT Division, Bangladesh*
 
 ## Objective
 

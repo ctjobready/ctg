@@ -4,12 +4,12 @@ import { linkAttrs } from '../../lib/url';
 
 /**
  * AsCoveredBy (WP55, synthesis 3.5): the press line, one paragraph, no logos and no photographs. It has two forms, which share its data, its class and its fact markers (PA-09 and PA-13):
- *   - `worldbank`: one paragraph of text links to the World Bank pages that name CodersTrust (PA-13: the Kosovo feature story of 2016 and country brief of 2017, and the Albania press release of 2021): "World Bank coverage: Kosovo (2016, 2017) and Albania (2021)."
+ *   - `worldbank`: one paragraph of text links to the World Bank pages that name CodersTrust (PA-13: the Kosovo feature story of 2016 and country brief of 2017, and the Albania press release of 2021): "World Bank pages that name CodersTrust: Kosovo (2016, 2017) and Albania (2021)." (WP161-B, A-12: register PA-13’s own wording; it said "World Bank coverage:")
  *     Links leave the site, so each carries the rel from linkAttrs and a screen-reader "(opens host)" suffix like every other external link. It is printed on the Recognition and Media page (WP62 rework R1), in its own section.
  *     WP87 (CLR review, Opus XHigh run 1, Minor): this form was the `list` form, whose first sentence repeated the seven outlets ("Early press coverage, 2014–2016: Gulf News, TechCrunch, Forbes (contributor post), ...") only to carry their links, and
  *     whose World Bank sentence put the 2017 and 2021 pages under the 2014–2016 heading. The outlets' links are on the early-coverage cards themselves now (COVERED_BY, read by the Recognition and Media page), so the sentence is gone and the World Bank line
  *     stands in its own section.
- *   - `pointer` (Home): one sentence with no link of its own, "Early press coverage, 2014–2016, and World Bank coverage of our work in Kosovo and Albania are on the Recognition and Media page.", directly above the
+ *   - `pointer` (Home): one sentence with no link of its own, "Early press coverage, 2014–2016, and the World Bank pages on our work in Kosovo and Albania are on the Recognition and Media page.", directly above the
  *     existing "See All Recognition and Media" link. The years and the places are read from the same data as the page it names prints, so the sentence cannot drift from it.
  * WP57 (cycle-29 review, GPT-6.1 Sol P2): the line was one overpacked sentence ("As covered by Gulf News (2014), TechCrunch (2014), ...; and by the World Bank on Kosovo (2016, 2017) and Albania (2021)."). The World Bank
  * years stay as the link texts: Kosovo has two pages, so the year is what tells the two links apart.
@@ -39,11 +39,11 @@ const places = placeNames.length < 2 ? placeNames.join('') : `${placeNames.slice
 {
   variant === 'pointer' ? (
     <p class:list={['cov', className]} data-fact="PA-09 PA-13">
-      Early press coverage, {span}, and World Bank coverage of our work in {places} are on the Recognition and Media page.
+      Early press coverage, {span}, and the World Bank pages on our work in {places} are on the Recognition and Media page.
     </p>
   ) : (
     <p class:list={['cov', className]} data-fact="PA-13">
-      World Bank coverage:
+      World Bank pages that name CodersTrust:
       {
         wb.map((w, i) => (
           <>
