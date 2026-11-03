@@ -71,8 +71,8 @@ const PAGES: PageSpec[] = [
     h2: 'What Your Agency Gets',
     cards: [
       // WP49 (cycle-24 review): "completers", the site's word for people who finished a program (it said "graduates"); WP62 (cycle-34 review, Gemini): "... placement support toward local, remote and global work." (it said "... that point completers toward paid work.")
-      { title: 'Certification Preparation and Placement Support', text: 'Certification tracks chosen from employer demand, then mentoring and placement support toward local, remote and global work.', facts: ['PD-10', 'PD-01'] },
-      { title: 'Spending Measured Against Outcomes', text: 'A pilot scorecard with cost per completer and per verified outcome, and monthly reports. Your budget is assessed against the agreed scorecard.', facts: ['PD-11', 'PD-08'] },
+      { title: 'Certification Preparation and Placement Support', text: 'Certification tracks chosen from employer demand, then three months of mentoring and placement support toward local, remote and global work.', facts: ['PD-10', 'PD-01'] },
+      { title: 'Spending Measured Against Outcomes', text: 'A pilot scorecard with cost per completer and per verified outcome, and monthly reports. Spending is reported against the agreed scorecard.', facts: ['PD-11', 'PD-08'] },
       {
         title: 'Capacity Designed to Stay in Your System',
         // WP60 (cycle-32 review, Gemini GM5): the list opens "Where included:" (it read as unconditional)
@@ -88,7 +88,8 @@ const PAGES: PageSpec[] = [
       {
         title: 'Mentoring, Placement Support and Outcome Tracking',
         // WP49 (cycle-24 review): the scorecard also covers completion, certification and sustained work (PD-11), so results are measured against it, "including first paid work, not attendance alone"
-        text: 'Mentoring and placement support are standard inclusions, and outcomes are tracked for 12 months after each course. Results are measured against the agreed scorecard, including first paid work, not attendance alone.',
+        // WP161-A (A-26, A-29): three months of mentoring on both cards; Governments' spending is reported against the scorecard
+        text: 'Three months of mentoring and placement support are standard inclusions, and outcomes are tracked for 12 months after each course. Results are measured against the agreed scorecard, including first paid work, not attendance alone.',
         facts: ['PD-01', 'PD-02', 'PD-11'],
       },
       { title: 'A Pilot Scorecard Agreed with You', text: 'Cost per completer and per verified outcome, with thresholds agreed before the first cohort starts.', facts: ['PD-11'] },

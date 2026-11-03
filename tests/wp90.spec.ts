@@ -109,7 +109,7 @@ test.describe('WP90 item 4: comparison row', () => {
   test('the Outcome Tracking row reads "Included for every cohort" on Home, the page that carries the comparison table', async ({ page }) => {
     await open(page, '');
     const text = compact(await page.locator('main').textContent());
-    expect(text).toContain('Included for every cohort: monthly reports and follow-up surveys at 3, 6 and 12 months');
+    expect(text).toContain('Included for every supported cohort: monthly reports and follow-up surveys at 3, 6 and 12 months'); // WP161-A (A-27): "every supported cohort"
     expect(text).not.toContain('Planned for every cohort');
   });
 });

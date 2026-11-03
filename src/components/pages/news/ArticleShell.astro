@@ -28,6 +28,8 @@ interface Props {
   description: string;
   path: string;
   date: Date;
+  /** WP161-A (adversarial review A-03): first publication date (front matter `publishedOn`, set on `writtenFromSources` posts); the structured data's datePublished and article:published_time use it, the visible date stays `date`. */
+  publishedOn?: Date;
   updated?: Date;
   topic: string;
   /** Production-relative path of the 1200×630 social image. */
@@ -50,11 +52,11 @@ interface Props {
   /** A text link that closes the note (front matter `archiveNoteLink`): the page that now tells the story, e.g. its case study (WP46). */
   archiveNoteLink?: { label: string; href: string };
 }
-const { headline, seoTitle, description, path, date, updated, topic, image, imageAlt, imageAsset, heroCaption, audience = 'general', writtenFromSources = false, countToday = false, archiveNote, archiveNoteFacts = [], archiveNoteLink } = Astro.props;
+const { headline, seoTitle, description, path, date, publishedOn, updated, topic, image, imageAlt, imageAsset, heroCaption, audience = 'general', writtenFromSources = false, countToday = false, archiveNote, archiveNoteFacts = [], archiveNoteLink } = Astro.props;
 const closing = NEWS_CTA[audience];
 const closingHref = ctaHref(closing.cta);
 const canonical = canonicalUrl(path);
-const published = date.toISOString();
+const published = (publishedOn ?? date).toISOString();
 const SUFFIX = ' | CodersTrust';
 const metaTitle = seoTitle ?? headline;
 // The layout appends the suffix unless the title already names the site; the whole <title> must fit in 60 characters.
@@ -65,7 +67,7 @@ const node = newsArticle({
   path,
   headline,
   description,
-  datePublished: isoDate(date),
+  datePublished: isoDate(publishedOn ?? date),
   dateModified: updated ? isoDate(updated) : undefined,
   image: image ? absoluteUrl(image, Astro.site) : undefined,
   section: topic,

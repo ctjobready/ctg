@@ -9,7 +9,7 @@ import { url, linkAttrs } from '../../lib/url';
 
 const GITHUB_PRIVACY = 'https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement';
 const JOBREADY = 'https://jobready.global/';
-const UPDATED = '2026-11-01'; // WP149 (the Google Forms row and the Email Inquiries help line name the "National University Post Graduate Diploma"; the date is unchanged because WP148 had already set it on 2026-11-01). Earlier: WP148 (the NU program name is capitalised, "Post Graduate Diploma"). Earlier: WP129 (owner rule 2026-10-31: any change to visible text moves the date, copy edits included): the serial-comma, semicolon and copy edits of WP126 to WP128 and the WP129 edits. Earlier: WP122: YouTube named in the share, social and map-link row, the Links to Other Sites sentence and the Video line. WP106: "This website is run by CT USA, Inc. (CodersTrust)." (owner 2026-10-29). WP105: the Email Inquiries section names the careers and NU diploma help inboxes
+const UPDATED = '2026-11-03'; // WP161-A (adversarial review A-08; owner answer 2026-11-02 on B-4): the lead and the Video section say no page embeds a video today, the YouTube player row is gone (the share, social and map-link row still names YouTube), and "In Short" states the legitimate-interest basis. Earlier: WP149 (the Google Forms row and the Email Inquiries help line name the "National University Post Graduate Diploma"; the date is unchanged because WP148 had already set it on 2026-11-01). Earlier: WP148 (the NU program name is capitalised, "Post Graduate Diploma"). Earlier: WP129 (owner rule 2026-10-31: any change to visible text moves the date, copy edits included): the serial-comma, semicolon and copy edits of WP126 to WP128 and the WP129 edits. Earlier: WP122: YouTube named in the share, social and map-link row, the Links to Other Sites sentence and the Video line. WP106: "This website is run by CT USA, Inc. (CodersTrust)." (owner 2026-10-29). WP105: the Email Inquiries section names the careers and NU diploma help inboxes
 const description = 'How the CodersTrust website handles data: no analytics cookies, no trackers of its own and a plain list of every service involved.';
 const toc = [
   { id: 'summary', label: 'In Short' },
@@ -33,7 +33,7 @@ const jsonLd = [webPage({ path: '/privacy-policy/', name: 'Privacy Policy', desc
   breadcrumbs={[{ label: 'Privacy Policy' }]}
   jsonLd={jsonLd}
   eyebrow="Legal"
-  lead="This website is a static site. It sets no analytics cookies and loads no third-party trackers on its own; a video loads from YouTube only after you click play, and YouTube may then set its own cookies. This page names the services involved in handling your data, and when."
+  lead="This website is a static site. It sets no analytics cookies and loads no third-party trackers on its own; nothing from another company loads inside its pages. This page names the services involved in handling your data, and when."
   toc={toc}
   updated={UPDATED}
 >
@@ -45,6 +45,7 @@ const jsonLd = [webPage({ path: '/privacy-policy/', name: 'Privacy Policy', desc
         <li>The site has no forms. Inquiries are emails that you send yourself.</li>
         <li>The only thing the site stores in your browser is a note that you dismissed the announcement bar.</li>
         <li>Services run by other organizations (the host, Google Forms, YouTube, social networks, maps) come into play only in the situations listed below.</li>
+        <li>We rely on our legitimate interest in running and securing the site and in answering inquiries.</li>
       </ul>
     </section>
 
@@ -61,7 +62,6 @@ const jsonLd = [webPage({ path: '/privacy-policy/', name: 'Privacy Policy', desc
             <tr><th scope="row">Your Email Provider</th><td data-label="When It Is Involved">When you send us an email</td><td data-label="What It Can See">Your message and address</td></tr>
             <tr><th scope="row">Google Forms (Application Forms)</th><td data-label="When It Is Involved">Only if you open the National University Post Graduate Diploma application form</td><td data-label="What It Can See">What you type into the form</td></tr>
             <tr><th scope="row">jobready.global</th><td data-label="When It Is Involved">Only if you follow a link to it</td><td data-label="What It Can See">Whatever that site collects once you are on it</td></tr>
-            <tr><th scope="row">YouTube (youtube-nocookie.com)</th><td data-label="When It Is Involved">Only after you click play on a video</td><td data-label="What It Can See">Your IP address, and what YouTube sets once the video loads</td></tr>
             <tr><th scope="row">LinkedIn, X, Facebook, YouTube, Google Maps</th><td data-label="When It Is Involved">Only if you click a share, social or map link</td><td data-label="What It Can See">What those services collect once you are on them</td></tr>
             <tr><th scope="row">Your Browser (Local Storage)</th><td data-label="When It Is Involved">If you dismiss the announcement bar</td><td data-label="What It Can See">Stays on your device; we never receive it</td></tr>
           </tbody>
@@ -95,7 +95,9 @@ const jsonLd = [webPage({ path: '/privacy-policy/', name: 'Privacy Policy', desc
 
     <section id="video" aria-labelledby="video-h">
       <h2 id="video-h">Video</h2>
-      <p>Videos appear as a still image with a play button. No request goes to YouTube until you click play. After the click, the video loads from youtube-nocookie.com, YouTube’s privacy-enhanced domain, and YouTube sees your IP address and may store its own data on your device. If you never click play or the YouTube link, YouTube never hears from you.</p>
+      {/* WP161-A (adversarial review A-08): no built page except the staging styleguide embeds an iframe, a video or the LiteVideo facade (tests/wp161-a.spec.ts checks the build). The last sentence names youtube-nocookie.com because
+          every page's Content-Security-Policy still allows frames from it (src/lib/site.ts), and check:privacy-origins requires the policy to name every origin a page can load. */}
+      <p>No page embeds a video today. Some news posts and our social links point to YouTube; nothing loads from YouTube unless you follow a link, and then you are on YouTube’s site under its own policy. If a page ever embeds a video, it will appear as a still image with a play button, and no request will go to YouTube until you click play. It would then load from youtube-nocookie.com, YouTube’s privacy-enhanced domain.</p>
     </section>
 
     <section id="storage" aria-labelledby="storage-h">

@@ -1,6 +1,7 @@
 ---
 title: "CodersTrust Sets Up in India"
 date: 2016-08-07
+publishedOn: 2026-10-18
 updated: 2026-10-29
 topic: programs-events
 excerpt: "CodersTrust began operating in India in 2015 and in 2016 was moving to make Pune its hub; The Economic Times and The Times of India covered it that year."

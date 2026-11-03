@@ -58,9 +58,10 @@ const local = localCta();
 // Q9-route: the one-line safeguarding answer with a link to the governance page, which keeps the full account (WP36).
 const FAQ_IDS = ['Q1-local', 'Q9-route', 'Q10-later']; // WP147: the definition block at the top of the page explains the facilitator model, so the funding-ends answer says "CodersTrust-trained facilitators"
 const path = '/partner-with-us/local-partners/';
+// WP161-A (adversarial review A-02): the WebPage carries the page's own dateModified, 2026-11-02, its last visible change (it fell back to the build date).
 const description = 'Bangladeshi NGOs, colleges and chambers can deliver CodersTrust’s mentored digital-skills programs in their communities.';
 const jsonLd = [
-  webPage({ path, name: 'Local Implementing Partners', description, breadcrumb: [{ name: 'Home', path: '/' }, { name: 'Partner with Us', path: '/partner-with-us/' }, { name: 'Local Partners', path }] }),
+  webPage({ path, name: 'Local Implementing Partners', description, dateModified: '2026-11-02', breadcrumb: [{ name: 'Home', path: '/' }, { name: 'Partner with Us', path: '/partner-with-us/' }, { name: 'Local Partners', path }] }),
   faqJsonLd('variants', path, FAQ_IDS),
 ];
 

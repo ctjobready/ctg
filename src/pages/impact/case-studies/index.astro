@@ -16,10 +16,11 @@ import { webPage } from '../../../lib/schema';
 const path = '/impact/case-studies/';
 // WP103 (Sonnet Medium run 2, kit 69): "figure", not "result", because Albania's figure is reported enrollment, not a result.
 const description = desc('Five CodersTrust case studies, each with its figure and its base: Women in Online Work, Digital Jobs Albania, WSDFM, UNDP YES and Her Power.');
+// WP161-A (adversarial review A-04): the Article headline is the H1 (it was "CodersTrust Case Studies"); the CollectionPage and ItemList names stay.
 const jsonLd = [
   webPage({ path, name: 'CodersTrust Case Studies', description, type: 'CollectionPage' }),
   itemList('CodersTrust case studies', CASE_STUDIES.map((c) => ({ name: c.name, path: c.path }))),
-  articleNode({ path, headline: 'CodersTrust Case Studies', description, datePublished: '2026-10-08', dateModified: '2026-11-01', author: 'CodersTrust' }), // WP142 (2026-11-01): the card label "Partner and Place" (it read "Partner & Place"), so the date moves (owner rule: any visible text change)
+  articleNode({ path, headline: 'Five Programs Across Kosovo, Albania and Bangladesh', description, datePublished: '2026-10-08', dateModified: '2026-11-01', author: 'CodersTrust' }), // WP142 (2026-11-01): the card label "Partner and Place" (it read "Partner & Place"), so the date moves (owner rule: any visible text change)
 ];
 const d = discoveryCta();
 

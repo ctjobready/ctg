@@ -61,6 +61,7 @@ import { cta } from '../../../lib/mailto';
 import { webPage } from '../../../lib/schema';
 
 const PATH = '/partner-with-us/employers/';
+// WP161-A (adversarial review A-02, A-28): the WebPage carries the page's own dateModified (it fell back to the build date); the Hire Talent lead gains register SC-03's "Most delivery has been in Bangladesh." (2026-11-03).
 const primary = cta('work');
 const talent = cta('talent');
 
@@ -83,7 +84,7 @@ if (aws !== 'AWS Authorized Training Partner') throw new Error('Employers: PA-06
   description={description}
   path={PATH}
   breadcrumbs={[{ label: 'Partner with Us', href: LINKS.hub }, { label: 'Employers' }]}
-  jsonLd={[webPage({ path: PATH, name: title, description }), faqJsonLd('employers', PATH, FAQ_IDS)]}
+  jsonLd={[webPage({ path: PATH, name: title, description, dateModified: '2026-11-03' }), faqJsonLd('employers', PATH, FAQ_IDS)]}
   stickyCta={{ label: primary.label, href: primary.href }}
 >
   <!-- C1 · Identity hook -->
@@ -108,7 +109,7 @@ if (aws !== 'AWS Authorized Training Partner') throw new Error('Employers: PA-06
   <DefinitionBand />
 
   <Section id="hire-talent" tone="airy" pad="sm" aria-labelledby="hire-h">
-    <SectionHeader id="hire-h" eyebrow="Hire Talent" title="Job-Ready Talent Through the Placement Team" lead="Job-ready candidates are introduced through CodersTrust’s placement team. Talent requests are scoped against the experience and credentials available in the candidate pool." />
+    <SectionHeader id="hire-h" eyebrow="Hire Talent" title="Job-Ready Talent Through the Placement Team" lead="Job-ready candidates are introduced through CodersTrust’s placement team. Most delivery has been in Bangladesh. Talent requests are scoped against the experience and credentials available in the candidate pool." />
     <p data-fact="IN-04"><a class="link" href={talent.href}>{talent.label}<Icon name="arrow-right" size={16} /></a></p>
   </Section>
 

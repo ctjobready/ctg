@@ -83,6 +83,7 @@ import { cta } from '../../../lib/mailto';
 import { webPage } from '../../../lib/schema';
 
 const PATH = '/partner-with-us/governments/';
+// WP161-A (adversarial review A-26, A-29; 2026-11-03): the certification card states the three months of mentoring before the FAQ refers to it, and the scorecard card says spending is reported against the agreed scorecard.
 const primary = cta('briefing');
 
 const { title, description } = meta(
@@ -110,7 +111,7 @@ const FAQ_IDS = ['Q7-government', 'Q2-government', 'Q1-government', 'Q10-later',
   description={description}
   path={PATH}
   breadcrumbs={[{ label: 'Partner with Us', href: LINKS.hub }, { label: 'Governments' }]}
-  jsonLd={[webPage({ path: PATH, name: title, description, dateModified: '2026-11-02' }), faqJsonLd('governments', PATH, FAQ_IDS)]}
+  jsonLd={[webPage({ path: PATH, name: title, description, dateModified: '2026-11-03' }), faqJsonLd('governments', PATH, FAQ_IDS)]}
   stickyCta={{ label: primary.label, href: primary.href }}
 >
   <!-- C1 · Identity hook -->
@@ -202,8 +203,8 @@ const FAQ_IDS = ['Q7-government', 'Q2-government', 'Q1-government', 'Q10-later',
     title="What Your Agency Gets"
     cards={[
       // WP62 (cycle-34 review, Gemini): "... mentoring and placement support toward local, remote and global work." (it said "... that point completers toward paid work."), the phrase the mechanism cards use for where placement leads.
-      { icon: 'award', title: 'Certification Preparation and Placement Support', text: 'Certification tracks chosen from employer demand, then mentoring and placement support toward local, remote and global work.', facts: ['PD-10', 'PD-01'] },
-      { icon: 'chart-bar', title: 'Spending Measured Against Outcomes', text: 'A pilot scorecard with cost per completer and per verified outcome, and monthly reports. Your budget is assessed against the agreed scorecard.', facts: ['PD-11', 'PD-08'] },
+      { icon: 'award', title: 'Certification Preparation and Placement Support', text: 'Certification tracks chosen from employer demand, then three months of mentoring and placement support toward local, remote and global work.', facts: ['PD-10', 'PD-01'] },
+      { icon: 'chart-bar', title: 'Spending Measured Against Outcomes', text: 'A pilot scorecard with cost per completer and per verified outcome, and monthly reports. Spending is reported against the agreed scorecard.', facts: ['PD-11', 'PD-08'] },
       { icon: 'landmark', title: 'Capacity Designed to Stay in Your System', text: 'Where included: curriculum and manuals; CodersTrust-trained facilitators; and blended learning in existing labs that works with limited connectivity, so rural labs can take part.', facts: ['GV-11', 'PD-06', 'PD-07'] },
     ]}
     scope={PROGRAM_SCOPE_STATEMENT}

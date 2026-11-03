@@ -1,6 +1,7 @@
 ---
 title: "Hour of Code in Somaliland"
 date: 2015-12-21
+publishedOn: 2026-10-18
 updated: 2026-10-30
 topic: programs-events
 excerpt: "In late 2015, CodersTrust’s work in Somaliland included an Hour of Code event for students and an ICT program at Tima-ade University."

@@ -35,6 +35,7 @@ const related = relatedNews(all, post);
   description={d.excerpt}
   path={`/news/${post.id}/`}
   date={d.date}
+  publishedOn={d.publishedOn}
   updated={d.updated}
   topic={topic}
   image={og ? stripBase(og.src) : undefined}

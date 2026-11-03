@@ -63,7 +63,7 @@ const PERSON_START = /^(?:Professor|Prof\.|Dr\.|Mr\.|Mrs\.|Ms\.|Md\.|Aziz Ahmad|
 
 /** Sentences the pattern flags although they are not a series of three or more. `has` is a fragment of the flagged sentence; each entry says why it is kept. */
 const ALLOWED: { has: string; why: string }[] = [
-  { has: 'youtube-nocookie.com, YouTube’s privacy-enhanced domain, and YouTube sees', why: 'an apposition, then a new clause' },
+  { has: 'with a play button, and no request will go to YouTube', why: 'two clauses joined after an introductory clause (WP161-A, Privacy Policy Video section)' },
   { has: '78.2% at the October 2026 survey, and median monthly income rose', why: 'two clauses joined' },
   { has: 'Early press coverage, 2014–2016, and World Bank coverage', why: 'the years are set off as a parenthetical' },
   { has: 'spoke at a start-up event at In5, Dubai Internet City, and met investors', why: 'one subject, two verbs; the place name carries its own comma' },

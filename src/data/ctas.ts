@@ -70,7 +70,7 @@ export const CTAS: Record<CtaKey, CtaDef> = {
     key: 'briefing',
     label: 'Request a Briefing for Your Ministry',
     subject: 'Briefing request — [ministry/agency]',
-    body: ['Agency', 'Program/target', 'Contact person', 'Two suitable times for a briefing'],
+    body: ['Ministry or agency', 'Country', 'Priority groups and locations', 'Target number of trainees', 'Contact person', 'Two suitable times for a briefing'], // WP161-A (adversarial review A-31): the fields the Governments page's agenda names
   },
   funding: {
     key: 'funding',
@@ -108,7 +108,7 @@ export const CTAS: Record<CtaKey, CtaDef> = {
     key: 'campus',
     label: 'Bring JobReady@Campus to Your Institution',
     subject: 'JobReady@Campus inquiry — [institution]',
-    body: ['Institution', 'Number of students', 'Programs of interest', 'Two suitable times for a discovery session'],
+    body: ['Institution', 'Country', 'Students you have in mind (approximate number)', 'Programs of interest', 'Two suitable times for a discovery session'], // WP161-A (adversarial review A-31)
   },
   work: {
     key: 'work',
@@ -154,7 +154,7 @@ export const CTAS: Record<CtaKey, CtaDef> = {
     key: 'diligence',
     label: 'Ask About Due Diligence',
     subject: 'Due-diligence inquiry — [organization]',
-    body: ['Organization', 'Program or grant under consideration', 'Questions or documents you need', 'Deadline'],
+    body: ['Organization', 'Program, grant or contract under consideration', 'Questions or documents you need', 'Deadline'], // WP161-A (adversarial review A-31): a contract too (governments, employers)
   },
   /** Careers page: applications go to the CodersTrust Bangladesh HR team (address from the legacy careers page). */
   careers: {

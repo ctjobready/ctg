@@ -22,6 +22,11 @@ const news = defineCollection({
       title: z.string(),
       date: z.coerce.date(),
       updated: z.coerce.date().optional(),
+      /**
+       * WP161-A (adversarial review A-03): first publication date, for `writtenFromSources` posts; `date` stays the event date shown on the page and used for list order.
+       * NewsArticle.datePublished and article:published_time use it, so the structured data no longer says a post written in October 2026 was first published in 2014–2020.
+       */
+      publishedOn: z.coerce.date().optional(),
       topic: z.enum(['partnerships', 'recognition', 'programs-events', 'leadership-advocacy', 'insights']),
       excerpt: z.string().max(180),
       cover: image().optional(),

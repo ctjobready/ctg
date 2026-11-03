@@ -14,7 +14,7 @@ Both are generated from the migration manifest (`migration/migration-manifest.cs
 node scripts/generate-from-manifest.mjs           # regenerate src/data/redirects.ts, edge/bulk-redirects.csv, edge/worker/id-map.json
 node scripts/generate-from-manifest.mjs --check   # CI: fail if a committed file differs from the manifest
 node --test edge/worker/test/                     # Worker tests (no network, no dependencies)
-npm run test:edge-release                         # Worker tests + the staged-hostname checklist (network only if EDGE_HOST is set)
+npm run test:edge-release                         # Worker tests + the staged-hostname checklist (network only if EDGE_HOST is set) + the Privacy Policy's launch statements
 ```
 
 The same manifest drives the static redirect pages that Pages itself serves (`src/data/redirects.ts`), so a visitor still
@@ -138,7 +138,9 @@ curl -sI 'https://coderstrust.global/about/?utm_source=x'        # 200, untouche
 
 `npm run test:edge-release` runs the Worker tests offline (no network) and prints this checklist. With `EDGE_HOST` set (for
 example `EDGE_HOST=https://staging.example.net`) it also sends these requests to that staging hostname and compares each answer;
-without `EDGE_HOST` it never touches the network.
+without `EDGE_HOST` it never touches the network. It also runs `scripts/check-privacy-launch.mjs` on the build (`--dist`, default
+`dist/`), which fails until the Privacy Policy states how long inquiry emails are kept and where visitor data is processed (the owner
+supplies both facts at cutover).
 
 ## 4. Certificates and SSL mode
 

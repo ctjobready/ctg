@@ -294,8 +294,10 @@ test.describe('WP129 item 6: every dated page whose visible text changed carries
     'programs/superkids/index.html', // WP157 (2026-11-02)
     'our-model/jobready-platform/index.html', // WP157 (2026-11-02)
   ]);
+  // WP161-A (2026-11-03): the Privacy Policy (Video section, legal basis), the Accessibility Statement (images and external content), Foundations and Governments (three months of mentoring and more) moved on.
+  const MOVED_1103 = new Set(['privacy-policy/index.html', 'accessibility/index.html', 'partner-with-us/foundations/index.html', 'partner-with-us/governments/index.html']);
   for (const [route, cls] of STAMPED) {
-    const [day, long] = MOVED_1102.has(route) ? ['2026-11-02', 'November 2, 2026'] : MOVED_1101.has(route) ? ['2026-11-01', 'November 1, 2026'] : ['2026-10-31', 'October 31, 2026'];
+    const [day, long] = MOVED_1103.has(route) ? ['2026-11-03', 'November 3, 2026'] : MOVED_1102.has(route) ? ['2026-11-02', 'November 2, 2026'] : MOVED_1101.has(route) ? ['2026-11-01', 'November 1, 2026'] : ['2026-10-31', 'October 31, 2026'];
     test(`${route} reads "Last updated ${long}" and its JSON-LD dateModified is ${day}`, () => {
       const raw = html(route);
       const m = new RegExp(`<p class="${cls}[^"]*"[^>]*>([\\s\\S]*?)</p>`).exec(raw);
@@ -324,7 +326,7 @@ test.describe('WP129 item 6: every dated page whose visible text changed carries
     'programs/index.html',
   ];
   for (const route of JSONLD_ONLY) {
-    const day = MOVED_1102.has(route) ? '2026-11-02' : MOVED_1101.has(route) ? '2026-11-01' : '2026-10-31';
+    const day = MOVED_1103.has(route) ? '2026-11-03' : MOVED_1102.has(route) ? '2026-11-02' : MOVED_1101.has(route) ? '2026-11-01' : '2026-10-31';
     test(`${route} pins its own JSON-LD dateModified to ${day}`, () => {
       expect(dateModified(html(route))).toContain(day);
     });
@@ -334,8 +336,9 @@ test.describe('WP129 item 6: every dated page whose visible text changed carries
   const KEEP: [string, string][] = [
     ['about/team/abdul-karim/index.html', '2026-10-29'],
     ['about/team/faruque-hossain/index.html', '2026-10-29'],
-    ['impact/case-studies/wsdfm-women-freelancers/index.html', '2026-10-10'],
-    ['impact/case-studies/digital-jobs-albania/index.html', '2026-10-10'],
+    // WP161-A (adversarial review A-01): both declare the day of their last visible change instead of the shared 2026-10-10 fallback.
+    ['impact/case-studies/wsdfm-women-freelancers/index.html', '2026-10-28'],
+    ['impact/case-studies/digital-jobs-albania/index.html', '2026-10-21'],
   ];
   for (const [route, day] of KEEP) {
     test(`${route} keeps ${day} (its text did not change; guard)`, () => {

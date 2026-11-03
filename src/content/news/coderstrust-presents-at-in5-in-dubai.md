@@ -1,6 +1,7 @@
 ---
 title: "CodersTrust Presents at In5 in Dubai"
 date: 2014-04-29
+publishedOn: 2026-10-18
 updated: 2026-10-29
 topic: programs-events
 excerpt: "In April 2014, CodersTrust’s leaders spoke at a start-up event at In5, Dubai Internet City, and met investors and potential partners in the Gulf."

@@ -321,7 +321,7 @@ test.describe('Home: the Outcome Tracking row, the positioning statement and the
     await open(page, '');
     const row = page.locator('#compare tbody tr', { has: page.locator('th', { hasText: 'Outcome Tracking' }) });
     await expect(row).toHaveCount(1);
-    expect(compact(await row.locator('td').first().textContent())).toBe('Included for every cohort: monthly reports and follow-up surveys at 3, 6 and 12 months');
+    expect(compact(await row.locator('td').first().textContent())).toBe('Included for every supported cohort: monthly reports and follow-up surveys at 3, 6 and 12 months'); // WP161-A (A-27)
   });
 
   test('the Compare heading names the one approach the table compares with', async ({ page }) => {

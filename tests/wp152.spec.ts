@@ -272,7 +272,7 @@ test.describe('2 Certification: every mention is preparation (A) or something th
 
   test('Governments: the third card is "Certification Preparation and Placement Support" (the allowlist entry is gone)', () => {
     const text = main(GOVERNMENTS);
-    expect(text).toContain('Certification Preparation and Placement Support Certification tracks chosen from employer demand, then mentoring and placement support toward local, remote and global work.');
+    expect(text).toContain('Certification Preparation and Placement Support Certification tracks chosen from employer demand, then three months of mentoring and placement support toward local, remote and global work.'); // WP161-A (A-26): three months of mentoring
     expect(text).not.toContain('Certification Tracks and Placement Support');
   });
 

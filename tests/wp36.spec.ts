@@ -157,7 +157,7 @@ test.describe('Development Partners and Governments: each figure once', () => {
     // WP39 (cycle-16 review): the features band is three short cards; the second one keeps "Spending Measured Against Outcomes" and the budget "assessed against the agreed scorecard"
     const card = page.locator('#features li.card', { has: page.locator('h3', { hasText: 'Spending Measured Against Outcomes' }) });
     await expect(card).toHaveCount(1);
-    expect(compact(await card.locator('.card__text').textContent())).toContain('Your budget is assessed against the agreed scorecard.');
+    expect(compact(await card.locator('.card__text').textContent())).toContain('Spending is reported against the agreed scorecard.'); // WP161-A (A-29): it read "Your budget is assessed against the agreed scorecard."
     expect(await mainText(page)).not.toMatch(/judged against verified outcomes|Spending tied to verified outcomes/);
   });
 });
@@ -364,7 +364,7 @@ test.describe('cost and safeguarding: full on the hub, one line and a link on th
       expect(answer).toBe(SAFE);
       const link = page.locator('#faq details, details.faq__item', { has: page.locator('summary', { hasText: 'What About Safeguarding' }) }).locator('.faq__a a');
       await expect(link).toHaveText('See how we handle them.');
-      expect(await link.getAttribute('href')).toMatch(/\/about\/governance\/$/);
+      expect(await link.getAttribute('href')).toMatch(/\/about\/governance\/#safeguarding$/); // WP161-A (A-30): it lands on the safeguarding section
       const ld = (await faqJsonLd(page)).find((q) => q.name === 'What About Safeguarding and Data Protection?');
       expect(ld?.text).toBe(SAFE);
       expect(await mainText(page)).not.toContain('Guardian consent and supervision apply');
@@ -467,7 +467,7 @@ test.describe('dating lines', () => {
   // WP41 (cycle-18 review): the survey page's heading changed on October 15 (the survey's name moved to the eyebrow); its "Last updated" moved to October 20, 2026 with the refresh of its data (Impact Report 261014B); the source snapshot stays October 2026
   test('Impact Survey 2026 reads "Source snapshot: October 2026 · Last updated October 21, 2026"; no page says "Page last reviewed"', async ({ page }) => {
     await open(page, 'impact/outcomes-2026/');
-    expect(compact(await page.locator('.lf-updated').textContent())).toBe('Source snapshot: October 2026 · Last updated November 2, 2026'); // WP104; WP135: October 31; WP147: November 1 (the closing line and "On This Page" changed)
+    expect(compact(await page.locator('.lf-updated').textContent())).toBe('Source snapshot: October 2026 · Last updated November 3, 2026'); // WP104; WP135: October 31; WP147: November 1 (the closing line and "On This Page" changed); WP161-A: November 3 (the rounding sentence)
     for (const route of ['impact/independent-evaluation/', 'our-model/talentleap/', 'programs/youthwide/', 'programs/superkids/']) {
       await open(page, route);
       expect(compact(await page.locator('.lf-updated, .updated').first().textContent()), route).toMatch(/^Last updated [A-Z][a-z]+ \d{1,2}, 2026$/);

@@ -96,7 +96,7 @@ test.describe('Governments, Universities and Local Partners: the wording the rev
     expect(compact(await pain('Training Budgets Do Not Show Up as Earnings').locator('.gp__a').textContent())).toBe('Most training budgets count who enrolled, not who is earning afterward.');
     // WP54 (cycle-28 review, GPT-6.1 Sol G2): the heading is "Trainer and Curriculum Capacity Takes Time to Build" (it said "Is Thin"); the line under it is unchanged
     expect(compact(await pain('Trainer and Curriculum Capacity Takes Time to Build').locator('.gp__a').textContent())).toBe('National delivery needs trained facilitators and localized curricula.');
-    expect(await texts(page, '#features li.card:nth-child(1) p')).toEqual(['Certification tracks chosen from employer demand, then mentoring and placement support toward local, remote and global work.']);
+    expect(await texts(page, '#features li.card:nth-child(1) p')).toEqual(['Certification tracks chosen from employer demand, then three months of mentoring and placement support toward local, remote and global work.']); // WP161-A (A-26): three months of mentoring
     const text = await mainText(page);
     expect(text).not.toContain('Budgets are measured by enrollment, not by who is earning afterward.');
     expect(text).not.toContain('rarely ready at national scale');
@@ -133,7 +133,8 @@ test.describe('Foundations: the first and third "What Your Cohort Grant Gets" ca
   test('the first card measures results against the agreed scorecard, including first paid work, not attendance alone', async ({ page }) => {
     await open(page, FOUND);
     expect(await texts(page, '#features li.card:nth-child(1) p')).toEqual([
-      'Mentoring and placement support are standard inclusions, and outcomes are tracked for 12 months after each course. Results are measured against the agreed scorecard, including first paid work, not attendance alone.',
+      // WP161-A (A-26): three months of mentoring, stated before the FAQ refers to it
+      'Three months of mentoring and placement support are standard inclusions, and outcomes are tracked for 12 months after each course. Results are measured against the agreed scorecard, including first paid work, not attendance alone.',
     ]);
     expect(await mainText(page)).not.toContain('using the agreed scorecard');
   });

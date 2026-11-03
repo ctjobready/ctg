@@ -52,6 +52,7 @@ import { cta } from '../../../lib/mailto';
 import { webPage } from '../../../lib/schema';
 
 const PATH = '/partner-with-us/universities/';
+// WP161-A (adversarial review A-02): the WebPage carries the page's own dateModified, 2026-11-02, its last visible change (it fell back to the build date).
 const primary = cta('campus');
 
 // WP155 (Opus Max run 2, kit 122, Polish 4): "Our Approach" no longer ends "in campus labs alongside academic studies"; the band's H2 ("Training Alongside the Degree") and its "In Parallel with the Degree" card state the timing, so the description below still rests on the body.
@@ -71,7 +72,7 @@ const FAQ_IDS = ['Q1-campus', 'Q10-campus', 'Q8-route'];
   description={description}
   path={PATH}
   breadcrumbs={[{ label: 'Partner with Us', href: LINKS.hub }, { label: 'Universities' }]}
-  jsonLd={[webPage({ path: PATH, name: title, description }), faqJsonLd('universities', PATH, FAQ_IDS)]}
+  jsonLd={[webPage({ path: PATH, name: title, description, dateModified: '2026-11-02' }), faqJsonLd('universities', PATH, FAQ_IDS)]}
   stickyCta={{ label: primary.label, href: primary.href }}
 >
   <!-- C1 · Identity hook -->

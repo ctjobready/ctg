@@ -409,7 +409,8 @@ test.describe('Home: the comparison table is one style (item 13)', () => {
     expect(rows).toEqual([
       ['Mentoring', 'Three months of milestone-based mentoring', 'Varies; often self-directed'],
       ['Work Entry', 'Placement support into local, remote and global work', 'Work-entry support depends on the provider and package'],
-      ['Outcome Tracking', 'Included for every cohort: monthly reports and follow-up surveys at 3, 6 and 12 months', 'Reporting emphasis varies; check whether employment outcomes are included'],
+      ['Outcome Tracking', 'Included for every supported cohort: monthly reports and follow-up surveys at 3, 6 and 12 months', // WP161-A (A-27)
+       'Reporting emphasis varies; check whether employment outcomes are included'],
       ['Independent Evidence', 'One randomized trial of CodersTrust’s WSDFM program (200 hours, women in Dhaka); independent evaluation of your cohort welcome', 'Varies'],
     ]);
     for (const [, ...cells] of rows) {

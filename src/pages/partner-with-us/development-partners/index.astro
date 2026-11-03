@@ -72,6 +72,7 @@ import { cta } from '../../../lib/mailto';
 import { webPage } from '../../../lib/schema';
 
 const PATH = '/partner-with-us/development-partners/';
+// WP161-A (adversarial review A-02): the WebPage carries the page's own dateModified, 2026-11-02, its last visible change (it fell back to the build date).
 const primary = cta('discovery');
 
 const { title, description } = meta(
@@ -96,7 +97,7 @@ const FAQ_IDS = ['Q1-development-partners', 'Q6-development-partners', 'Q3', 'Q1
   description={description}
   path={PATH}
   breadcrumbs={[{ label: 'Partner with Us', href: LINKS.hub }, { label: 'Development Partners and NGOs' }]}
-  jsonLd={[webPage({ path: PATH, name: title, description }), faqJsonLd('development-partners', PATH, FAQ_IDS)]}
+  jsonLd={[webPage({ path: PATH, name: title, description, dateModified: '2026-11-02' }), faqJsonLd('development-partners', PATH, FAQ_IDS)]}
   stickyCta={{ label: primary.label, href: primary.href }}
 >
   <!-- C1 · Identity hook -->

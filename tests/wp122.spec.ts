@@ -30,15 +30,16 @@ test.describe('WP122, Privacy Policy: YouTube is named wherever the page lists s
   test('"Links to Other Sites" says nothing is sent to LinkedIn, X, Facebook, YouTube or Google until you click one', () => {
     expect(text(PRIVACY)).toContain('nothing is sent to LinkedIn, X, Facebook, YouTube or Google until you click one, and then you are on their site.');
   });
-  test('the Video line is accurate: no play click and no YouTube link click means YouTube never hears from you', () => {
+  // WP161-A (adversarial review A-08): no page embeds a video, so the Video section says so and that nothing loads from YouTube unless a link is followed (tests/wp161-a.spec.ts pins the whole section).
+  test('the Video line is accurate: no page embeds a video, and nothing loads from YouTube unless you follow a link', () => {
     const t = text(PRIVACY);
-    expect(t).toContain('If you never click play or the YouTube link, YouTube never hears from you.');
-    expect(t).not.toContain('If you never click play, YouTube never hears from you.');
+    expect(t).toContain('No page embeds a video today. Some news posts and our social links point to YouTube; nothing loads from YouTube unless you follow a link');
+    expect(t).not.toContain('If you never click play');
   });
-  test('the page is dated 2026-11-01 (Last updated and dateModified; WP148 moved it from 2026-10-31)', () => {
+  test('the page is dated 2026-11-03 (Last updated and dateModified; WP148 moved it from 2026-10-31 to 2026-11-01, WP161-A to 2026-11-03)', () => {
     const h = html(PRIVACY);
-    expect(h).toContain('"dateModified":"2026-11-01"');
-    expect(text(PRIVACY)).toMatch(/Last updated:? 1 November 2026|Last updated:? November 1, 2026|2026-11-01/);
+    expect(h).toContain('"dateModified":"2026-11-03"');
+    expect(text(PRIVACY)).toMatch(/Last updated:? 3 November 2026|Last updated:? November 3, 2026|2026-11-03/);
   });
 });
 

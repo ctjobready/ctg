@@ -446,7 +446,7 @@ test.describe('Item 9 (Gemini): "Reach Since 2014" says "since 2014" once', () =
 test.describe('Item 10 (Gemini): Governments’ "What Your Agency Gets"', () => {
   test('the first card ends "... mentoring and placement support toward local, remote and global work."; the earlier wording is on no built page', async ({ page }) => {
     await open(page, GOVERNMENTS);
-    expect(await texts(page, '#features li.card:nth-child(1) p')).toEqual(['Certification tracks chosen from employer demand, then mentoring and placement support toward local, remote and global work.']);
+    expect(await texts(page, '#features li.card:nth-child(1) p')).toEqual(['Certification tracks chosen from employer demand, then three months of mentoring and placement support toward local, remote and global work.']); // WP161-A (A-26): three months of mentoring
     expect(await page.locator('#features li.card:nth-child(1)').getAttribute('data-fact')).toBe('PD-10 PD-01');
     expect(pagesWith('point completers toward paid work')).toEqual([]);
   });

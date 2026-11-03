@@ -58,7 +58,7 @@ test.describe('WP94 A3: due-diligence card reads Included', () => {
   test('the Monthly Reports card opens "Included for every cohort" and "Planned" is gone', async ({ page }) => {
     await open(page, 'partner-with-us/');
     const text = compact(await page.locator('main').textContent());
-    expect(text).toContain('Included for every cohort: follow-up surveys at 3, 6 and 12 months and monthly reports.');
+    expect(text).toContain('Included for every supported cohort: follow-up surveys at 3, 6 and 12 months and monthly reports.'); // WP161-A (A-27): "every supported cohort"
     expect(text).not.toContain('Planned for every cohort');
   });
 });

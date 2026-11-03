@@ -110,8 +110,9 @@ const anon: StoryCardData[] = [
 const cards = [...anon, ...legacyCards];
 const description = desc('Learner stories and experiences from CodersTrust programs. Individual stories, not typical or promised outcomes.');
 const jsonLd = [
-  webPage({ path, name: 'CodersTrust success stories', description, type: 'CollectionPage' }),
-  articleNode({ path, headline: 'Success Stories', description, datePublished: '2026-10-08', dateModified: '2026-10-31', author: 'CodersTrust' }),
+  // WP161-A (adversarial review A-01, A-04): the CollectionPage carries the page's own date (2026-10-31, WP129, its last visible change) instead of the build date, and the Article headline is the H1.
+  webPage({ path, name: 'CodersTrust success stories', description, type: 'CollectionPage', dateModified: '2026-10-31' }),
+  articleNode({ path, headline: 'Learners Turning Training into Work', description, datePublished: '2026-10-08', dateModified: '2026-10-31', author: 'CodersTrust' }),
 ];
 const d = discoveryCta();
 ---

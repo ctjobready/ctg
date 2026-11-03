@@ -250,9 +250,10 @@ test.describe('WP141 item 1: the in-sentence copies are rewritten (spot checks)'
     expect(main('partner-with-us/governments/index.html')).toContain('Where included: curriculum and manuals;'); // WP147: it read "Where included: Training of Trainers, curriculum and manuals;"
   });
 
-  test('the Home comparison row and the hub due-diligence card read "Included for every cohort: ..."', () => {
-    expect(main('index.html')).toContain('Included for every cohort: monthly reports and follow-up surveys at 3, 6 and 12 months');
-    expect(main('partner-with-us/index.html')).toContain('Included for every cohort: follow-up surveys at 3, 6 and 12 months and monthly reports.');
+  // WP161-A (adversarial review A-27): "every supported cohort"
+  test('the Home comparison row and the hub due-diligence card read "Included for every supported cohort: ..."', () => {
+    expect(main('index.html')).toContain('Included for every supported cohort: monthly reports and follow-up surveys at 3, 6 and 12 months');
+    expect(main('partner-with-us/index.html')).toContain('Included for every supported cohort: follow-up surveys at 3, 6 and 12 months and monthly reports.');
   });
 
   test('wp112b stays: no page says the exam fee is included', () => {

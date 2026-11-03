@@ -67,6 +67,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     scope: 'Three-month online training in graphic design, web development and digital marketing, with mentoring. The World Bank reported in May 2022, while the program was still running, that more than 500 students had enrolled',
     resultTitle: 'Reported Enrollment',
     reported: true,
+    dateModified: '2026-10-21', // WP161-A (adversarial review A-01): the page's last visible change was the May 2022 World Bank link (WP72); it fell back to the shared 2026-10-10
     related: { label: 'See How YouthWIDE Deploys the Model', href: '/programs/youthwide/' },
   },
   {
@@ -81,6 +82,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     place: 'Commissioned by Porticus; Bangladesh',
     who: 'Women in Bangladesh',
     scope: 'ICT skills for freelancing marketplaces and local jobs, with one-to-one mentoring',
+    dateModified: '2026-10-28', // WP161-A (adversarial review A-01): the page's last visible change was the funder and outreach roles (2026-10-28); it fell back to the shared 2026-10-10
     related: { label: 'See How YouthWIDE Deploys the Model', href: '/programs/youthwide/' },
   },
   {

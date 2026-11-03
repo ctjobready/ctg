@@ -55,6 +55,7 @@
 import PartnerGlance from '../../../components/pages/partners/PartnerGlance.astro';
 import PairedEvidence from '../../../components/pages/partners/PairedEvidence.astro';
 import DueDiligenceView from '../../../components/pages/hub/DueDiligenceView.astro';
+import Fact from '../../../components/facts/Fact.astro';
 import LearnerVoice from '../../../components/pages/impact/LearnerVoice.astro';
 import LandingLayout from '../../../layouts/LandingLayout.astro';
 import HeroBand from '../../../components/sections/HeroBand.astro';
@@ -82,6 +83,8 @@ import { cta } from '../../../lib/mailto';
 import { webPage } from '../../../lib/schema';
 
 const PATH = '/partner-with-us/foundations/';
+// WP161-A (2026-11-03): the cohort-grant card states the three months of mentoring before the FAQ refers to it (adversarial review A-26), and the due-diligence band adds register ID-12 once, after its contracting line
+// (owner answer 2026-11-02 on B-3: a private foundation's first question is the grantee's legal form). Only this page passes the sentence; the shared brief band on the other route pages is unchanged.
 const primary = cta('funding');
 // WP27: the two funding routes each get a text link with its own prefilled subject, under the one primary button; WP30c: they sit under the two-route comparison.
 const routeYouthwide = cta('fundingYouthwide');
@@ -104,7 +107,7 @@ const FAQ_IDS = ['Q3', 'Q8-route', 'Q9-route', 'Q10'];
   description={description}
   path={PATH}
   breadcrumbs={[{ label: 'Partner with Us', href: LINKS.hub }, { label: 'Foundations and CSR' }]}
-  jsonLd={[webPage({ path: PATH, name: title, description, dateModified: '2026-11-02' }), faqJsonLd('foundations', PATH, FAQ_IDS)]}
+  jsonLd={[webPage({ path: PATH, name: title, description, dateModified: '2026-11-03' }), faqJsonLd('foundations', PATH, FAQ_IDS)]}
   stickyCta={{ label: primary.label, href: primary.href }}
 >
   <!-- C1 · Identity hook -->
@@ -209,7 +212,7 @@ const FAQ_IDS = ['Q3', 'Q8-route', 'Q9-route', 'Q10'];
       {
         icon: 'target',
         title: 'Mentoring, Placement Support and Outcome Tracking',
-        text: `Mentoring and placement support are standard inclusions, and outcomes are tracked for ${TRACKING_MONTHS} months after each course. Results are measured against the agreed scorecard, including first paid work, not attendance alone.`,
+        text: `Three months of mentoring and placement support are standard inclusions, and outcomes are tracked for ${TRACKING_MONTHS} months after each course. Results are measured against the agreed scorecard, including first paid work, not attendance alone.`,
         facts: ['PD-01', 'PD-02', 'PD-11'],
       },
       {
@@ -256,7 +259,7 @@ const FAQ_IDS = ['Q3', 'Q8-route', 'Q9-route', 'Q10'];
   <!-- C12 · Risk reversal (immediately before C13): WP34 (cycle-11 review): the four diligence cards repeated what this page's bands state, so one item and a link stand in. WP45 (cycle-21 review) left a "Reporting and Review" callout
        after it; WP48 (cycle-23 review): that callout is gone, because its sentence (monthly reports track progress; quarterly reviews guide corrective action and any expansion) repeated the "Progress You Can See Every Month"
        card above (monthly reports and a quarterly steering review). The due-diligence item links to Governance and Accountability. -->
-  <DueDiligenceView brief id="due-diligence" />
+  <DueDiligenceView brief id="due-diligence"><Fact id="ID-12" /></DueDiligenceView>
 
   <!-- C13 · Call to action -->
   <CTABand

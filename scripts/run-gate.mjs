@@ -6,7 +6,8 @@
  *
  *   npm run test:build               deterministic local checks on the STAGING build in dist/
  *   npm run test:production-release  checks against a PRODUCTION build (SITE_ENV=production, BASE_PATH=/)
- *   npm run test:edge-release        Worker tests + the staged-hostname checklist (network only if EDGE_HOST is set)
+ *   npm run test:edge-release        Worker tests + the staged-hostname checklist (network only if EDGE_HOST is set) + the Privacy Policy's
+ *                                    launch statements in dist/ (email retention period, international transfer; WP161-A)
  *   npm run test:static              html, links, budget, seo and content checks over dist/
  *
  *   node scripts/run-gate.mjs <build|production-release|edge-release|static> [--dist <dir>]
@@ -104,6 +105,9 @@ const GATES = {
     steps: [
       ['Worker tests (offline)', [process.execPath, '--test', join(root, 'edge/worker/test/')]],
       ['staged-hostname checklist (network only if EDGE_HOST is set)', [process.execPath, join(root, 'edge/staged-checks.mjs')]],
+      // WP161-A (adversarial review B-4, owner answer 2026-11-02): the cutover gate holds the launch until the Privacy Policy states how long inquiry emails are kept and where
+      // visitor data is processed. It is deliberately not in `build` or `production-release`, which stay green until the owner supplies those two facts at cutover.
+      ['privacy launch statements (email retention period and international transfer in /privacy-policy/)', node('check-privacy-launch.mjs', '--dist', dist)],
     ],
   },
 };
@@ -114,8 +118,8 @@ if (!gate) {
   process.exit(2);
 }
 
-const needsDist = gateName !== 'edge-release';
-console.log(`${gate.title}: ${gate.steps.length} step(s)${needsDist ? `, dist ${relative(process.cwd(), dist) || '.'}${existsSync(dist) ? '' : ' (NOT FOUND: run the build first)'}` : ''}`);
+// Every gate reads dist/ (edge-release since WP161-A: the privacy launch statements).
+console.log(`${gate.title}: ${gate.steps.length} step(s), dist ${relative(process.cwd(), dist) || '.'}${existsSync(dist) ? '' : ' (NOT FOUND: run the build first)'}`);
 
 const results = [];
 for (const [name, [cmd, ...args]] of gate.steps) {

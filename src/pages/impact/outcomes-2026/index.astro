@@ -44,7 +44,7 @@ const jsonLd = [
     ...dataset({
       path,
       name: 'CodersTrust Impact Survey 2026 — published aggregates',
-      description: 'Published aggregates from the CodersTrust Impact Survey, October 2026: employment, income, speed to earnings, career outcomes and learner experience among surveyed completers; and the profile of all responding alumni. Percentages and medians only, with no counts; districts under 3% are combined into Other districts.',
+      description: 'Published aggregates from the CodersTrust Impact Survey, October 2026: employment, income, speed to earnings, career outcomes and learner experience among surveyed completers; and the profile of all responding alumni. Percentages and medians with their bases (n) where published, and no cell counts; districts under 3% are combined into Other districts. Shares are rounded to one decimal, so a summary share can differ from the sum of its parts by 0.1 point.',
       datePublished: D.DATE_PUBLISHED,
       dateModified: D.PAGE_LAST_REVIEWED,
       methodology: 'Online alumni survey (LimeSurvey)',
@@ -232,6 +232,8 @@ const howToRead = `<ul>
     <p><a class="ro__dl" href={csvHref} download>
       <Icon name="download" size={18} />Download the Survey Aggregates (CSV)
     </a></p>
+    {/* WP161-A (adversarial review A-06): the file's own arithmetic (6.9 + 4.6 = 11.5 against 11.6, 18.4 + 11.5 + 6.9 = 36.8 against 36.9, 54.4 + 13.6 + 10.3 = 78.3 against 78.2); the Dataset description says the same */}
+    <p>Shares are rounded to one decimal, so a summary share can differ from the sum of its parts by 0.1 point.</p>
   </ReportSection>
 
   <CTABand id="cta" heading={CLOSING_HEADING} text={DISCOVERY_SESSION_ASK} cta={d} secondary={{ label: 'Read the Randomized Trial Results', href: '/impact/independent-evaluation/' }} more={[{ label: 'Find the Partnership Route for Your Organization', href: '/partner-with-us/' }]} micro={MICRO_COMMITMENT} />

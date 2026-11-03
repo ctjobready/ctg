@@ -23,6 +23,9 @@ import { CONTRACTING_ENTITIES } from '../../../data/copy';
  * WP34 (cycle-11 review): `brief` is one short item for the development-partner, government, foundation, university and local-partner pages, whose own bands already
  * state reporting, safeguarding and independent evaluation (the four cards repeated them): a heading, one sentence and one link to Governance and Accountability.
  * The hub keeps the full view above.
+ *
+ * WP161-A (adversarial review A-27): the hub's reporting card says "every supported cohort" (WP39 settled that the reporting band applies to supported cohorts). A brief band may add one sentence after its line
+ * through the default slot, printed as its own paragraph under the line (Foundations: register ID-12); without a slot the band is unchanged.
  */
 interface Props {
   /** Compact form (Employers): a four-row list with no lead. */
@@ -41,7 +44,7 @@ const independent = { icon: 'search-check', title: 'Independent Evaluation Welco
 const funderItems = [
   contracting,
   // WP45 (cycle-21 review): the hub's "Monthly Reports and Quarterly Reviews" band (#review-cycle) is gone, so this card links to where Governance answers how outcomes are tracked and reported (its FAQ, #faq).
-  { icon: 'file-check', title: 'Monthly Reports and Follow-Up Surveys', text: `Included for every cohort: follow-up surveys at ${TRACER_MONTHS} and monthly reports.`, href: '/about/governance/#faq', link: 'How We Track Outcomes', ids: 'PD-08 PD-09' },
+  { icon: 'file-check', title: 'Monthly Reports and Follow-Up Surveys', text: `Included for every supported cohort: follow-up surveys at ${TRACER_MONTHS} and monthly reports.`, href: '/about/governance/#faq', link: 'How We Track Outcomes', ids: 'PD-08 PD-09' },
   { icon: 'shield', title: 'Safeguarding Agreed per Program', text: 'Consent, protected records and grievance handling are specified for each program.', href: '/about/governance/#safeguarding', link: 'How People Are Protected', ids: 'PD-12' },
   independent,
 ];
@@ -60,6 +63,8 @@ const items = audience === 'employers' ? employerItems : funderItems;
       <h2 class="ddb__title" id={`${id}-h`}>Confirm Contracting, Safeguarding and Reporting</h2>
       {/* the sentence rests on the contracting entity (ID-07, PD-13), the safeguarding specification (PD-12) and the reporting plan (PD-08) */}
       <p class="lead" data-fact="ID-07 PD-13 PD-12 PD-08">The contracting entity, safeguarding arrangements and reporting plan are confirmed for your program.</p>
+      {/* WP161-A: a page may add one sentence right after the line (default slot); only Foundations does (register ID-12, the legal form; owner answer 2026-11-02), so every other page prints the line alone */}
+      {Astro.slots.has('default') && <p class="ddb__note"><slot /></p>}
       <p class="cluster ddb__more"><a class="link" href={linkAttrs('/about/governance/').href}>Governance and Accountability<Icon name="arrow-right" size={16} /></a></p>
     </div>
   </Section>
