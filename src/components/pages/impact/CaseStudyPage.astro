@@ -33,7 +33,7 @@ interface Props {
    * Register facts whose stats form the outcome-first row. A program-results stat (PR-01, PR-02, PR-05) carries its evidence label from the
    * register, so it takes none here; `evidence` is for a stat whose register label has none (PR-03), and is shown under the figure.
    * WP125: `label` replaces the register's label on this page (FactStat's own `label`), as Her Power's tile reads the clause the cards use.
-   * WP162 (owner decision 2026-11-03): optional; a case with no register figure (Digital Jobs Albania) passes none, and the hero then shows no stat tile.
+   * WP162 (owner decision 2026-11-03): optional; a case with no register figure passes none, and the hero then shows no stat tile. (WP164: every published case passes one again; Digital Jobs Albania's is PR-09, partner-reported, with no evidence pill.)
    */
   stats?: { id: string; evidence?: string; label?: string }[];
   context: string[];

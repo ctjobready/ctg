@@ -326,7 +326,7 @@ test.describe('Item 6 (Sonnet, Gemini; reworded by WP63, GPT-6.1 Sol G2): "Will 
     return compact(await item.locator('.faq__a').textContent());
   };
 
-  test('the bank answer (Home) is two sentences; the second is the new one; the answer rests on TL-05 too (CodersTrust took part in Digital Jobs Albania)', async ({ page }) => {
+  test('the bank answer (Home) is two sentences; the second is the new one; the answer rests on TL-05 too (CodersTrust began Digital Jobs Albania; WP164)', async ({ page }) => {
     await open(page, HOME);
     const answer = await answerOf(page);
     expect(answer).toBe(`${FIRST} ${SECOND}`);
@@ -334,7 +334,7 @@ test.describe('Item 6 (Sonnet, Gemini; reworded by WP63, GPT-6.1 Sol G2): "Will 
     expect((await faqJsonLd(page)).find((q) => q.name === 'Will This Work in Our Country?')?.text).toBe(`${FIRST} ${SECOND}`);
     const evidence = (await page.locator('#faq details', { hasText: 'Will This Work in Our Country?' }).locator('.faq__a p').first().getAttribute('data-fact')) ?? '';
     expect(evidence.split(' ')).toEqual(['IN-02', 'PD-10', 'PR-02', 'TL-05']);
-    expect(fact('TL-05').text).toContain('CodersTrust took part in Digital Jobs Albania');
+    expect(fact('TL-05').text).toContain('CodersTrust began Digital Jobs Albania'); // WP164 (owner decision 2026-11-03; it said "CodersTrust took part in Digital Jobs Albania")
   });
 
   test('the audience variants keep the second sentence (Development Partners, Governments, Universities), each opening with its own first sentence', async ({ page }) => {

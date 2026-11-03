@@ -201,6 +201,9 @@ const B_RULES: [string, (b: string) => boolean][] = [
   ['the learner’s own certification', (b) => /industry certification beside (?:the|their) degree|a certification beside the degree|route to industry certification|certifications to add next|Certification is not guaranteed/i.test(b)],
   ['"certification-focused" (training focused on certifications)', (b) => /certification-focused/.test(b)],
   ['modifier of "track" or "cohort" inside a sentence', (b) => !isLabel(b) && /certification[- ](?:tracks?|cohorts?)\b/i.test(b)],
+  // WP164 (owner decision 2026-11-03): the Digital Jobs Albania case study prints the implementing partner's count ("270+ certified, of 500 trained", read from PR-09) under "Partner-Reported Results",
+  // followed by "… they are not CodersTrust program records." It is a partner-reported program result, not a certification CodersTrust awards. Only that exact shape passes; "We certified 270+" would not.
+  ['partner-reported program result (Digital Jobs Albania, PR-09)', (b) => /^\d[\d,]*\+ certified, of \d[\d,]* trained$/.test(b)],
 ];
 
 type Verdict = { cls: 'A' | 'B' | 'A-unprepared'; reason: string };
@@ -221,6 +224,8 @@ test.describe('2 Certification: every mention is preparation (A) or something th
       'Your organization reaches young people, but a curriculum, certification and links to paid work are hard to build alone.',
       'Certification and one-to-one support.',
       'We award certification to every completer.',
+      'We certified 270+ of 500 trained.', // WP164: the partner-reported rule takes only the case study's exact shape
+      'CodersTrust certified 270+ women',
     ]) {
       expect(classify(b)?.cls, b).toBe('A-unprepared');
     }
@@ -240,6 +245,7 @@ test.describe('2 Certification: every mention is preparation (A) or something th
       'First Earnings, Not Just Certificates',
       'skill and certification courses delivered',
       'Higher Secondary Certificate (HSC) or Below',
+      '270+ certified, of 500 trained', // WP164: the Digital Jobs Albania partner-reported result (PR-09)
     ]) {
       expect(classify(b)?.cls, b).not.toBe('A-unprepared');
     }

@@ -14,8 +14,8 @@ export interface CaseStudy {
   program: string;
   partner: string;
   /**
-   * Register fact whose stat is the outcome-first figure. WP162 (owner decision 2026-11-03): optional, because Digital Jobs Albania has no figure (the World Bank's published figures count the whole program,
-   * and CodersTrust took part in 2021 only), so its card has no Result block (CaseGrid) and its page no stat tile (CaseStudyPage).
+   * Register fact whose stat is the outcome-first figure. WP162 (owner decision 2026-11-03): optional; a case without one has no Result block on its card (CaseGrid) and no stat tile on its page (CaseStudyPage).
+   * WP164 (owner decision 2026-11-03): every published case has one again (Digital Jobs Albania: PR-09, partner-reported).
    */
   factId?: string;
   summary: string;
@@ -55,15 +55,17 @@ export const CASE_STUDIES: CaseStudy[] = [
     path: `${base}digital-jobs-albania/`,
     name: 'Digital Jobs Albania',
     heading: 'Digital Jobs Albania: Online Skills for Women, with the World Bank',
-    // WP162 (owner, 2026-11-02/03; TL-05): CodersTrust took part in 2021 only, so the years are 2021 (they were 2021–2022). The card and the page show no figure: the World Bank's May 2022 figures
-    // (PR-07, 500+ enrolled; PR-08, 5,000+ interested) count the whole program and were removed from the register's public dataset. WP91's PR-07 sentence is gone from the scope line.
-    program: 'World Bank, 2021',
+    // WP164 (owner decision 2026-11-03; TL-05): CodersTrust began the program in 2021 and Learnio, the former CodersTrust Global, completed it in 2022, so the years are 2021–2022 again (WP162 had made them 2021).
+    // The figure is PR-09, the implementing partner's (EuroPartners Development) count for the whole program: partner-reported, not a CodersTrust program record (evidenceOf), so the card shows it with no
+    // "Delivered" tag and no "Program Record" pill. The World Bank's May 2022 figures (PR-07, PR-08) stay removed (WP162), and WP91's PR-07 sentence stays off the scope line.
+    program: 'World Bank, 2021–2022',
     partner: 'Online training program',
+    factId: 'PR-09',
     summary: 'A World Bank initiative that gave women in Albania a three-month online course in digital skills.',
-    place: 'World Bank, with the Government of Albania and EuroPartners Development; Albania, 2021',
+    place: 'World Bank, with the Government of Albania and EuroPartners Development; Albania, 2021–2022',
     who: 'Women aged 16 to 35',
     scope: 'Three-month online training in graphic design, web development and digital marketing, with mentoring',
-    dateModified: '2026-11-03', // WP162: the years, the Results band and the meta description changed. Earlier: WP161-A (adversarial review A-01): the May 2022 World Bank link (WP72, 2026-10-21)
+    dateModified: '2026-11-03', // WP164: the years, the figure, the context, the Results band and the meta description changed. Earlier: WP162 (2026-11-03); WP161-A (adversarial review A-01): the May 2022 World Bank link (WP72, 2026-10-21)
     related: { label: 'See How YouthWIDE Deploys the Model', href: '/programs/youthwide/' },
   },
   {

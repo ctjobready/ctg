@@ -49,13 +49,13 @@ test.describe('WP79 item 1: Global Reach labels follow the Locations Are Not Pro
 });
 
 test.describe('WP79 item 2: Case Studies lead', () => {
-  // WP162: the lead and description say "with the figures and bases where they exist" (Albania has no figure now); they said "each with its figure and its base".
-  test('the lead reads "Five programs, with the figures and bases where they exist." (WP103: "figure", not "result"; WP162) and drops the claim about what the figures do not show', async ({ page }) => {
+  // WP162 made the lead and description say "with the figures and bases where they exist" (Albania had no figure); WP164 (Albania has PR-09 now) restores "each with its figure and its base".
+  test('the lead reads "Five programs, each with its figure and its base." (WP103: "figure", not "result"; WP164) and drops the claim about what the figures do not show', async ({ page }) => {
     await open(page, 'impact/case-studies/');
-    await expect(page.locator('main .hero__lead').first()).toHaveText('Five programs, with the figures and bases where they exist.');
+    await expect(page.locator('main .hero__lead').first()).toHaveText('Five programs, each with its figure and its base.');
     const description = (await page.locator('meta[name="description"]').getAttribute('content')) ?? '';
     expect(description).not.toContain('do not show');
-    expect(description).toContain('with the figures and bases where they exist');
+    expect(description).toContain('each with its figure and its base');
   });
 });
 

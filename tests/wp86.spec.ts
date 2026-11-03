@@ -135,9 +135,10 @@ test.describe('Item 8: the Gulf News card carries the article headline', () => {
   });
 });
 
-// WP162 (owner decision 2026-11-03): the Albania card has no figure at all now (the World Bank's May 2022 figures count the whole program), so it has no tag row; the other four keep theirs.
+// WP162 (owner decision 2026-11-03): the Albania card had no figure at all (the World Bank's May 2022 figures count the whole program), so it had no tag row; the other four keep theirs.
+// WP164 (owner decision 2026-11-03): the card has a figure again, PR-09, the implementing partner's; it is not a CodersTrust program record, so the card still has no tag row (CaseGrid shows tags only for a figure with an evidence type).
 test.describe('Item 9: the Digital Jobs Albania card takes no Delivered tag', () => {
-  test('four of the five case cards carry a Delivered tag; Digital Jobs Albania carries none (WP162: no figure, so no tag row)', async ({ page }) => {
+  test('four of the five case cards carry a Delivered tag; Digital Jobs Albania carries none (WP164: its partner-reported figure takes no tag row)', async ({ page }) => {
     await open(page, 'impact/case-studies/');
     expect(await page.locator('.case__tags').count()).toBe(4);
     expect(await page.locator('.case__tags .status-tag').count()).toBe(4);

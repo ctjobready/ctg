@@ -15,8 +15,10 @@ import herPower from '../../../assets/images/pages/impact/her-power-training-lab
 
 /**
  * Grid of the published case-study cards (five since WP55): outcome-first stat from the register, then the program.
- * WP162 (owner decision 2026-11-03): a case with no register figure (Digital Jobs Albania: the World Bank's May 2022 figures count the whole program, and CodersTrust took part in 2021 only) has no Result block,
- * so its card shows the program, its partner and place, and the link; every card with a figure labels it "Result". (WP60 had labelled Albania's World Bank enrollment figure "Reported Enrollment", and WP86 left it without the "Delivered" tag.)
+ * WP162 (owner decision 2026-11-03): a case with no register figure has no Result block, so its card shows the program, its partner and place, and the link; every card with a figure labels it "Result". (WP60 had labelled Albania's World Bank
+ * enrollment figure "Reported Enrollment", and WP86 left it without the "Delivered" tag.)
+ * WP164 (owner decision 2026-11-03): Digital Jobs Albania has a figure again, PR-09 (100+ found a freelancing job or project before the training ended, of 500 trained), which EuroPartners Development, the implementing partner, reports;
+ * it is not a CodersTrust program record. The tag row ("Delivered" and the evidence pill) follows the figure's evidence type, so a figure with none (evidenceOf: the partner- and World Bank-reported figures) shows no tags.
  * No `grid-cards--2` modifier: five cards read 3 + 2 in the system's default three columns (a two-column grid would leave the fifth alone in its row), and a set of four still reads 2 × 2 by the system's own rule (utilities.css).
  */
 interface Props {
@@ -56,7 +58,7 @@ const cards = CASE_STUDIES.filter((c) => c.slug !== except).map((c) => {
                 <div class="case__result">
                   <dt>Result</dt>
                   <dd>
-                    <span class="case__tags"><StatusTag status="Delivered" />{c.result.evidence && <EvidenceTag type={c.result.evidence} />}</span>
+                    {c.result.evidence && <span class="case__tags"><StatusTag status="Delivered" /><EvidenceTag type={c.result.evidence} /></span>}
                     <span class="case__value">{c.result.stat.value}</span>{' '}<span class="case__label">{c.result.label}</span>
                     {c.note && <span class="case__second" data-fact={c.note.facts.join(' ')}>{c.note.text}</span>}
                   </dd>

@@ -19,6 +19,9 @@ import { listPages } from './support/pages';
  *   PA-09  The Kosovo item is a World Bank feature story, not a blog.
  *   PX-11  The source is Alam and Mamun, PLOS ONE (2022); "Hossain et al." is gone from src and dist.  PX-14 stays undated.  PD-13 adds no visible claim (no page calls the policies drafts).
  *   Dates  Every page whose visible text changed is dated 2026-11-03 (owner rule: any visible text change moves the date).
+ * WP164 (owner decision 2026-11-03) reverses the Albania part of this package: CodersTrust began Digital Jobs Albania in 2021 and Learnio, the former CodersTrust Global, completed it in 2022, so TL-05, the tile,
+ * Global Reach, the cards and the case study say 2021–2022 again, and the case study, its hub card and the hub lead carry the partner-reported figure PR-09 (tests/wp164.spec.ts). The checks below that WP164
+ * reverses are re-pinned to the WP164 state and say so ("WP164 reverses …"); the PR-07/PR-08-absent, SC-10, PA-09, PX-11, PX-14, PD-13, SC-13 and date checks are unchanged.
  */
 
 const TODAY = '2026-11-03';
@@ -117,40 +120,42 @@ test.describe('SC-10: 40+ digital roles, without "high-demand"', () => {
 });
 
 /* ---------------------------------------------------------------------------------------------- */
-test.describe('TL-05 and the Albania years: CodersTrust took part in Digital Jobs Albania in 2021 only', () => {
-  test('TL-05 reads "In 2021, CodersTrust took part in Digital Jobs Albania, …"; its tile date is 2021 and its label is unchanged', () => {
+// WP164 reverses this block (owner decision 2026-11-03): CodersTrust began the program in 2021 and Learnio, the former CodersTrust Global, completed it in 2022, so the date is 2021–2022 again.
+// The tests are re-pinned to the WP164 state; tests/wp164.spec.ts holds the full WP164 checks.
+test.describe('TL-05 and the Albania years (WP164 reverses WP162’s "2021 only": 2021–2022 again)', () => {
+  test('WP164 reverses the TL-05 sentence and date: "In 2021, CodersTrust began Digital Jobs Albania, …; … Learnio and completed the program in 2022"; the tile date is 2021–2022 and the label is unchanged', () => {
     const tl05 = fact('TL-05');
     expect(tl05.text).toBe(
-      'In 2021, CodersTrust took part in Digital Jobs Albania, a World Bank initiative with the Government of Albania and EuroPartners Development that gave women aged 16 to 35 an online three-month course in digital skills',
+      'In 2021, CodersTrust began Digital Jobs Albania, a World Bank initiative with the Government of Albania and EuroPartners Development that gave women aged 16 to 35 an online three-month course in digital skills; after the December 2021 split of the CodersTrust group, CodersTrust Global continued as Learnio and completed the program in 2022',
     );
-    expect(tl05.stat?.value).toBe('2021');
+    expect(tl05.text).not.toContain('took part');
+    expect(tl05.stat?.value).toBe('2021–2022');
     expect(tl05.stat?.label).toBe('A World Bank initiative, delivered online');
-    expect(tl05.sourceIds).toEqual(['WBDJA21']);
+    expect(tl05.sourceIds).toEqual(['WBDJA21', 'PRWEB21', 'EPDJA']);
   });
   for (const rel of [HOME, ABOUT]) {
-    test(`${rel}: the "CodersTrust Around the World" tile reads "Albania, 2021. A World Bank initiative, delivered online."`, () => {
+    test(`${rel}: WP164 reverses the tile date: the "CodersTrust Around the World" tile reads "Albania, 2021–2022. A World Bank initiative, delivered online."`, () => {
       const tile = /<li\b[^>]*data-tile="albania"[\s\S]*?<\/li>/.exec(html(rel))?.[0] ?? '';
-      expect(visible(/<figcaption[\s\S]*?<\/figcaption>/.exec(tile)?.[0] ?? '')).toBe('Albania, 2021. A World Bank initiative, delivered online.');
+      expect(visible(/<figcaption[\s\S]*?<\/figcaption>/.exec(tile)?.[0] ?? '')).toBe('Albania, 2021–2022. A World Bank initiative, delivered online.');
     });
   }
-  test('Global Reach: the Albania row and card say 2021', () => {
-    expect(locations.find((l) => l.id === 'albania')?.years).toBe('2021');
+  test('Global Reach: WP164 reverses the years; the Albania row and card say 2021–2022', () => {
+    expect(locations.find((l) => l.id === 'albania')?.years).toBe('2021–2022');
     const raw = html(REACH);
     const row = /<tr\b[^>]*>(?:(?!<\/tr>)[\s\S])*?Albania[\s\S]*?<\/tr>/.exec(raw)?.[0] ?? '';
-    expect(visible(/<td data-label="Years"[^>]*>[\s\S]*?<\/td>/.exec(row)?.[0] ?? '')).toBe('2021');
-    expect(visible(/<p class="wmap__country"[^>]*>Albania <span[^>]*>[^<]*<\/span><\/p>/.exec(raw)?.[0] ?? '')).toBe('Albania 2021');
+    expect(visible(/<td data-label="Years"[^>]*>[\s\S]*?<\/td>/.exec(row)?.[0] ?? '')).toBe('2021–2022');
+    expect(visible(/<p class="wmap__country"[^>]*>Albania <span[^>]*>[^<]*<\/span><\/p>/.exec(raw)?.[0] ?? '')).toBe('Albania 2021–2022');
   });
-  test('the case-study data: program "World Bank, 2021" and place "…; Albania, 2021"', () => {
+  test('the case-study data: WP164 reverses the years; program "World Bank, 2021–2022" and place "…; Albania, 2021–2022"', () => {
     const dja = CASE_STUDIES.find((c) => c.slug === 'digital-jobs-albania')!;
-    expect(dja.program).toBe('World Bank, 2021');
-    expect(dja.place).toBe('World Bank, with the Government of Albania and EuroPartners Development; Albania, 2021');
+    expect(dja.program).toBe('World Bank, 2021–2022');
+    expect(dja.place).toBe('World Bank, with the Government of Albania and EuroPartners Development; Albania, 2021–2022');
   });
-  test('no built file puts "2021–2022" (or 2021-2022, 2021 to 2022) beside Albania, in text, attributes or JSON-LD', () => {
+  test('WP164 reverses the "no 2021–2022 beside Albania" check: no built file dates the program to 2021 alone ("Albania, 2021." or "World Bank, 2021" without "–2022", or "took part in 2021")', () => {
     const offenders: string[] = [];
     for (const f of builtTexts()) {
-      for (const m of f.text.matchAll(/Albania/g)) {
-        const near = f.text.slice(Math.max(0, m.index! - 160), m.index! + 160);
-        if (/2021\s*[–-]\s*(?:20)?22|2021 to 2022/.test(near)) offenders.push(`${f.rel}: …${near.replace(/\s+/g, ' ')}…`);
+      for (const re of [/Albania, 2021(?![–-])/, /World Bank, 2021(?![–-])/, /took part in (?:Digital Jobs Albania )?(?:in )?2021/]) {
+        if (re.test(f.text)) offenders.push(`${f.rel}: ${re}`);
       }
     }
     expect(offenders).toEqual([]);
@@ -166,7 +171,10 @@ test.describe('PR-07 and PR-08: the World Bank’s whole-program figures for Alb
     expect(() => fact('PR-08')).toThrow();
     expect(sources.WBBLOG22.citation).not.toMatch(/\b5,000\b|\b500\b|enrolled|interest/);
     expect(sources.WBBLOG22.url).toMatch(/^https:\/\/web\.archive\.org\//);
-    for (const f of Object.values(facts)) expect(`${f.text} ${f.stat?.label ?? ''}`, f.id).not.toMatch(/Digital Jobs Albania, 2021–2022/);
+    // WP164 reverses the "no Digital Jobs Albania, 2021–2022 entry" check: PR-09 (the partner-reported results) opens with those words. No entry about Albania quotes the World Bank's interim figures.
+    for (const f of Object.values(facts).filter((x) => /Albania/.test(`${x.text} ${x.stat?.label ?? ''}`))) {
+      expect(`${f.text} ${f.stat?.label ?? ''}`, f.id).not.toMatch(/5,000\+?|500\+|enrolled|interest/);
+    }
   });
   test('no source file uses PR-07 or PR-08 as an id (comments may name them)', () => {
     const offenders = srcFiles().filter((f) => /['"`]PR-0[78]['"`]|data-fact="[^"]*PR-0[78]/.test(f.text)).map((f) => f.rel);
@@ -190,34 +198,36 @@ test.describe('PR-07 and PR-08: the World Bank’s whole-program figures for Alb
   });
 });
 
-test.describe('The Digital Jobs Albania case study', () => {
-  const SENTENCE = 'The World Bank’s published figures cover the whole program, including the months after CodersTrust’s part ended in 2021, so they are not shown here as CodersTrust results.';
-  test('the Results band states why no figure is shown, keeps the two World Bank links and shows no figure', () => {
+// WP164 reverses the no-figure Results band and the 2021-only dating of this block: the band shows the partner-reported figures (PR-09) and says they are not CodersTrust program records,
+// the hero has PR-09's tile, and the page says CodersTrust began delivery in 2021 and Learnio completed the program in 2022. The World Bank links stay (WP162's rule); tests/wp164.spec.ts holds the full checks.
+test.describe('The Digital Jobs Albania case study (WP164 reverses the no-figure band and the 2021-only dating)', () => {
+  const OLD_SENTENCE = 'The World Bank’s published figures cover the whole program, including the months after CodersTrust’s part ended in 2021, so they are not shown here as CodersTrust results.';
+  const NOT_RECORDS = 'EuroPartners Development, the implementing partner, reports these figures for the whole program; they are not CodersTrust program records.';
+  test('WP164 reverses the no-figure band: the Results band shows PR-09’s figures and the partner sentence, and still keeps the two World Bank links (plus the EuroPartners page)', () => {
     const results = byId(ALBANIA, 'section', 'results');
     const text = visible(results);
-    expect(text).toBe(`Results What Happened ${SENTENCE} Read the World Bank Announcement Read the World Bank’s May 2022 Update`);
-    expect(results).not.toMatch(/data-fact=/);
+    expect(text).not.toContain(OLD_SENTENCE);
+    expect(text).toContain(NOT_RECORDS);
+    expect(results).toMatch(/data-fact="PR-09"/);
+    expect(results).not.toMatch(/data-fact="[^"]*PR-0[78]/);
     expect(results).toContain(`href="${sources.WBDJA21.url}"`);
     expect(results).toContain(`href="${sources.WBBLOG22.url}"`);
-    // both open off the site with rel="noopener" (worldbank.org is a partner domain, so lib/url keeps the referrer for it; the archive copy also gets noreferrer)
+    // all open off the site with rel="noopener" (worldbank.org is a partner domain, so lib/url keeps the referrer for it; the archive copy and europartners.al also get noreferrer)
     const external = [...results.matchAll(/<a\b[^>]*href="https:[^"]*"[^>]*>/g)].map((m) => m[0]);
-    expect(external).toHaveLength(2);
+    expect(external).toHaveLength(3);
     for (const a of external) expect(a).toMatch(/rel="noopener(?: noreferrer)?"/);
   });
-  test('the hero shows no stat tile; its eyebrow says 2021; the context says CodersTrust took part in 2021; no year beyond 2021 describes CodersTrust’s part', () => {
+  test('WP164 reverses the 2021-only dating: the hero shows PR-09’s tile; its eyebrow says 2021–2022; the context says CodersTrust began delivery in 2021 and Learnio completed the program in 2022', () => {
     const main = mainRaw(ALBANIA);
-    expect(main).not.toContain('class="cs__stat"');
-    expect(visible(/<p class="hero__eyebrow"[^>]*>[\s\S]*?<\/p>/.exec(main)?.[0] ?? '')).toBe('Case Study · World Bank, 2021');
+    expect(main).toContain('class="cs__stat"');
+    expect(visible(/<p class="hero__eyebrow"[^>]*>[\s\S]*?<\/p>/.exec(main)?.[0] ?? '')).toBe('Case Study · World Bank, 2021–2022');
     expect(visible(main)).toContain(
-      'The initiative was implemented with the Government of Albania, CodersTrust and EuroPartners Development, a local consulting company. CodersTrust took part in 2021.',
+      'The initiative was implemented with the Government of Albania, CodersTrust and EuroPartners Development, a local consulting company. CodersTrust began delivery in 2021; after the December 2021 split of the CodersTrust group, CodersTrust Global continued as Learnio and completed the program in 2022.',
     );
-    // the only 2022 on the page is in the May 2022 update's link text
-    const text = visible(main);
-    expect(text.split('2022').length - 1).toBe(1);
-    expect(text).toContain('Read the World Bank’s May 2022 Update');
+    expect(visible(main)).not.toContain('CodersTrust took part in 2021');
   });
-  test('the meta description and the Article description say CodersTrust took part in 2021', () => {
-    const d = 'Digital Jobs Albania, a World Bank initiative: an online three-month course in digital skills for women in Albania. CodersTrust took part in 2021.';
+  test('WP164 reverses the meta description: it and the Article description say 2021–2022, begun by CodersTrust and completed by Learnio', () => {
+    const d = 'A World Bank initiative: an online three-month course in digital skills for women in Albania, 2021–2022, begun by CodersTrust and completed by Learnio.';
     expect(metaDescription(ALBANIA)).toBe(d);
     expect(nodeOf(ALBANIA, 'Article').description).toBe(d);
   });
@@ -228,7 +238,7 @@ test.describe('The Digital Jobs Albania case study', () => {
     await jump.click();
     await expect(page).toHaveURL(/#results$/);
     await expect(page.locator('#results-h')).toBeInViewport();
-    await expect(page.locator('#results')).toContainText(SENTENCE);
+    await expect(page.locator('#results')).toContainText(NOT_RECORDS); // WP164 (it was WP162's "not shown here as CodersTrust results" sentence)
     await expect(page.getByRole('link', { name: /Read the World Bank Announcement/ })).toHaveAttribute('href', sources.WBDJA21.url!);
     await expect(page.getByRole('link', { name: /Read the World Bank’s May 2022 Update/ })).toHaveAttribute('href', sources.WBBLOG22.url!);
   });
@@ -236,30 +246,32 @@ test.describe('The Digital Jobs Albania case study', () => {
 
 test.describe('The case-study hub and the Impact page', () => {
   const cards = (rel: string) => [...html(rel).matchAll(/<article class="card card--link case"[\s\S]*?<\/article>/g)].map((m) => m[0]);
-  test('hub: the Albania card has no figure block; the other four each have a "Result" with a figure', () => {
+  // WP164 reverses the no-figure card and the restated lead: every card has a "Result" again (Albania: PR-09, partner-reported, with no "Delivered" tag), and the lead and description say "each with its figure and its base".
+  test('WP164 reverses the no-figure card: the Albania card has a "Result" (PR-09) without tags; every card has a "Result" with a figure', () => {
     const all = cards(HUB);
     expect(all).toHaveLength(5);
     const albania = all.find((c) => c.includes('Digital Jobs Albania'))!;
-    expect(albania).not.toContain('case__result');
-    expect(albania).not.toContain('case__value');
-    expect(visible(albania)).toBe('Digital Jobs Albania Partner and Place World Bank, with the Government of Albania and EuroPartners Development; Albania, 2021 Read the Case Study');
-    for (const c of all.filter((x) => x !== albania)) {
+    expect(albania).not.toMatch(/status-tag|evidence-tag/);
+    expect(visible(albania)).toBe(
+      'Digital Jobs Albania Partner and Place World Bank, with the Government of Albania and EuroPartners Development; Albania, 2021–2022 Result 100+ found a freelancing job or project before the training ended (of 500 trained; partner-reported) Read the Case Study',
+    );
+    for (const c of all) {
       expect(visible(/<div class="case__result"[\s\S]*?<dt[^>]*>([\s\S]*?)<\/dt>/.exec(c)?.[1] ?? '')).toBe('Result');
       expect(visible(/<span class="case__value"[^>]*>[\s\S]*?<\/span>/.exec(c)?.[0] ?? '')).not.toBe('');
     }
-    expect(/<div class="grid-cards[^"]*" data-fact="([^"]*)"/.exec(html(HUB))?.[1]).toBe('PR-02 PR-01 PR-03 PR-05 PR-02b');
+    expect(/<div class="grid-cards[^"]*" data-fact="([^"]*)"/.exec(html(HUB))?.[1]).toBe('PR-02 PR-09 PR-01 PR-03 PR-05 PR-02b');
   });
-  test('hub: the lead and the description say "with the figures and bases where they exist" (not "each with its figure and its base")', () => {
-    expect(visible(/<p class="hero__lead"[^>]*>[\s\S]*?<\/p>/.exec(mainRaw(HUB))?.[0] ?? '')).toBe('Five programs, with the figures and bases where they exist.');
-    const d = 'Five CodersTrust case studies, with the figures and bases where they exist: Women in Online Work, Digital Jobs Albania, WSDFM, UNDP YES and Her Power.';
+  test('WP164 reverses the lead: the lead and the description say "each with its figure and its base" again (not "with the figures and bases where they exist")', () => {
+    expect(visible(/<p class="hero__lead"[^>]*>[\s\S]*?<\/p>/.exec(mainRaw(HUB))?.[0] ?? '')).toBe('Five programs, each with its figure and its base.');
+    const d = 'Five CodersTrust case studies, each with its figure and its base: Women in Online Work, Digital Jobs Albania, WSDFM, UNDP YES and Her Power.';
     expect(metaDescription(HUB)).toBe(d);
     expect(readFileSync(join(DIST_DIR, 'llms.txt'), 'utf8')).toContain(`(https://coderstrust.global/impact/case-studies/): ${d}`);
-    for (const rel of [HUB, 'llms.txt']) expect(readFileSync(join(DIST_DIR, rel), 'utf8')).not.toContain('each with its figure and its base');
+    for (const rel of [HUB, 'llms.txt']) expect(readFileSync(join(DIST_DIR, rel), 'utf8')).not.toContain('with the figures and bases where they exist');
   });
-  test('Impact: the Albania card reads "…; Albania, 2021" and its scope line no longer quotes the World Bank’s enrollment', () => {
+  test('Impact: WP164 reverses the years; the Albania card reads "…; Albania, 2021–2022" and its scope line still does not quote the World Bank’s enrollment', () => {
     const card = /<article class="card card--link"[^>]*>(?:(?!<\/article>)[\s\S])*?Digital Jobs Albania[\s\S]*?<\/article>/.exec(byId(IMPACT, 'section', 'cases'))?.[0] ?? '';
     expect(visible(card)).toBe(
-      'World Bank, with the Government of Albania and EuroPartners Development; Albania, 2021 Digital Jobs Albania Three-month online training in graphic design, web development and digital marketing, with mentoring. Read the Case Study',
+      'World Bank, with the Government of Albania and EuroPartners Development; Albania, 2021–2022 Digital Jobs Albania Three-month online training in graphic design, web development and digital marketing, with mentoring. Read the Case Study',
     );
   });
 });

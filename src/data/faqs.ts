@@ -28,7 +28,9 @@ export interface Faq {
 
 // Objection bank (planning/04 §5, Q1–Q14): answers and evidence IDs are the authoritative copy; first sentence = BLUF.
 export const faqs: Faq[] = [
-  // Q1 (WP62, cycle-34 review, Sonnet and Gemini): Albania has no outcome figures, so it adds delivery experience, not results (TL-05: CodersTrust took part in Digital Jobs Albania in 2021; WP162, owner 2026-11-02/03: 2021 only).
+  // Q1 (WP62, cycle-34 review, Sonnet and Gemini): Albania adds delivery experience, not CodersTrust results (TL-05: CodersTrust began Digital Jobs Albania in 2021; Learnio, the former CodersTrust Global, completed it in 2022).
+  // WP164 (owner decision 2026-11-03): the case study now shows the program's results (PR-09), but they are reported by EuroPartners Development, the implementing partner, and are not CodersTrust program records,
+  // so "Our outcome evidence comes mainly from Bangladesh, with program results from Kosovo and delivery experience in Albania." is still true and is unchanged.
   // WP63 (cycle-35 review, GPT-6.1 Sol G2): two plain sentences, "We test local employer demand first and choose each country’s tracks with local partners. Our outcome evidence comes mainly from Bangladesh, with program results from Kosovo and delivery experience in Albania."
   // (WP62's was "That depends on local demand, which we test first. Our outcome evidence comes mainly from Bangladesh; the Kosovo pilot adds program results from outside it, and Digital Jobs Albania adds delivery experience; we set each country’s tracks with local partners, from local employer demand.").
   // The audience variants below (q1Variant) say their first sentence for their own reader and keep the second sentence and the evidence; YouthWIDE (src/pages/programs/youthwide.astro) prints this answer as it is.

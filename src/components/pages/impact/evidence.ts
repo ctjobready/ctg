@@ -19,9 +19,14 @@ export type Evidence = 'Randomized Trial' | 'Surveyed Completers' | 'Program Rec
  * WP162 (owner decision 2026-11-03): the Digital Jobs Albania figures (PR-07, PR-08) left the register's public dataset (they count the whole program; CodersTrust took part in 2021 only), so the set holds PR-02b alone.
  */
 const WORLD_BANK_REPORTED = new Set(['PR-02b']);
+/**
+ * WP164 (owner decision 2026-11-03): the Digital Jobs Albania results (PR-09: of 500 trained, 270+ certified and 100+ found a freelancing job or project before the training ended) are reported by EuroPartners Development, the implementing partner,
+ * for the whole program. They are not CodersTrust program records, so they take no "Program Record" pill (and no "Delivered" tag on the case cards, CaseGrid); the stat's label says "partner-reported".
+ */
+const PARTNER_REPORTED = new Set(['PR-09']);
 
 export function evidenceOf(id: string): Evidence | undefined {
-  if (WORLD_BANK_REPORTED.has(id)) return undefined;
+  if (WORLD_BANK_REPORTED.has(id) || PARTNER_REPORTED.has(id)) return undefined;
   if (id.startsWith('RC-')) return 'Randomized Trial';
   if (id.startsWith('OC-')) return 'Surveyed Completers';
   if (id.startsWith('PR-')) return 'Program Record';

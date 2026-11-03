@@ -22,6 +22,9 @@ import { listPages } from './support/pages';
  *   - the fifth case study (Digital Jobs Albania) and its hub entries; the five news-archive entries; the permissions rows of every added photograph.
  * WP162 (owner, 2026-11-02/03; register deck sync 2026-11-03): CodersTrust took part in Digital Jobs Albania in 2021 only, so TL-05, the tile and the Global Reach row say 2021; the World Bank's
  * May 2022 figures (PR-07, PR-08) count the whole program and were removed, so the Albania tests below now pin their absence (no figure tile, no Results figures, no figure on the hub card).
+ * WP164 (owner decision 2026-11-03) reverses the dating and the no-figure state: CodersTrust began the program in 2021 and Learnio, the former CodersTrust Global, completed it in 2022, so TL-05, the tile and
+ * the Global Reach row say 2021–2022 again; the case study, its hero and its hub card carry PR-09, the implementing partner's figures (partner-reported, with no "Program Record" pill and no "Delivered" tag).
+ * PR-07 and PR-08 stay removed. The tests below are re-pinned and say "WP164" where they changed; tests/wp164.spec.ts holds the full checks.
  */
 
 const compact = (t: string | null | undefined) => (t ?? '').replace(/\s+/g, ' ').trim();
@@ -84,7 +87,7 @@ test.describe('the register: 16 countries and territories, and the new dated and
 
   test('the six dated tile facts carry a date, one short line and at least one source with a link', () => {
     const tl = ['TL-01', 'TL-02', 'TL-03', 'TL-04', 'TL-05', 'TL-06'].map((id) => fact(id));
-    expect(tl.map((f) => f.stat?.value)).toEqual(['April 2014', 'April 2014', '2015', '2016–2017', '2021', 'April 2024']); // WP162: TL-05 is 2021 (it was 2021–2022)
+    expect(tl.map((f) => f.stat?.value)).toEqual(['April 2014', 'April 2014', '2015', '2016–2017', '2021–2022', 'April 2024']); // WP164: TL-05 is 2021–2022 again (WP162 had made it 2021)
     for (const f of tl) {
       expect(f.stat?.label.length, f.id).toBeLessThanOrEqual(60);
       expect(f.sourceIds?.length, f.id).toBeGreaterThan(0);
@@ -185,7 +188,7 @@ test.describe('Global Reach: 16 locations, the owner’s corrected rows, and a p
   test('Albania names Digital Jobs Albania, a World Bank initiative, the Government of Albania and EuroPartners Development, and shows no photograph (none exists)', async ({ page }) => {
     await open(page, GLOBAL_REACH);
     expect(compact(await cell(page, 'Albania', 'Partner / Note').textContent())).toBe('Program: Digital Jobs Albania, a World Bank initiative, with the Government of Albania and EuroPartners Development');
-    expect(compact(await cell(page, 'Albania', 'Years').textContent())).toBe('2021'); // WP162: CodersTrust took part in 2021 only (it was 2021–2022)
+    expect(compact(await cell(page, 'Albania', 'Years').textContent())).toBe('2021–2022'); // WP164: begun by CodersTrust in 2021, completed by Learnio in 2022 (WP162 had made it 2021)
     await expect(row(page, 'Albania').locator('img')).toHaveCount(0);
     expect(compact(await cell(page, 'Kosovo', 'Partner / Note').textContent())).toBe('Program: Women in Online Work, with the World Bank');
   });
@@ -232,7 +235,7 @@ test.describe('"CodersTrust Around the World": seven tiles on Home and About, th
     ['dubai', 'Dubai, April 2014. Start-up event at In5, Dubai Internet City.', 'legacy-global-dubai-start-up-event'],
     ['somaliland', 'Somaliland, 2015. Hour of Code, and an ICT program at Tima-ade University.', 'legacy-global-somaliland-hour-of-code'],
     ['kosovo', 'Kosovo, 2016–2017. Women in Online Work, with the World Bank.', 'legacy-general-kosovo-wow-group'],
-    ['albania', 'Albania, 2021. A World Bank initiative, delivered online.', ''], // WP162: 2021 only (it was 2021–2022)
+    ['albania', 'Albania, 2021–2022. A World Bank initiative, delivered online.', ''], // WP164: 2021–2022 again (WP162 had made it 2021)
     ['new-york', 'New York, April 2024. MOU with The City College of New York.', 'legacy-field-ccny-mou-signing'],
     ['bangladesh', 'Bangladesh, since 2014. Most delivery has been in Bangladesh.', 'legacy-general-women-learners-classroom'],
   ] as const;
@@ -610,34 +613,43 @@ test.describe('the former "Albania" photograph is the Kosovo pilot: cropped, re-
 });
 
 test.describe('Digital Jobs Albania: the fifth case study, in the World Bank’s wording', () => {
-  test('the page follows the template: title, no figure tile (WP162), context, challenges, what CodersTrust did, results, keep reading', async ({ page }) => {
+  test('the page follows the template: title, the partner-reported figure tile (WP164), context, challenges, what CodersTrust did, results, keep reading', async ({ page }) => {
     await open(page, ALBANIA);
     await expect(page.getByRole('heading', { level: 1 })).toHaveText('Digital Jobs Albania: Online Skills for Women, with the World Bank');
     expect(await page.locator('title').textContent()).toContain('Digital Jobs Albania');
     expect(await texts(page, 'main h2')).toEqual(['Why This Program', 'Challenges', 'What CodersTrust Did', 'What Happened', 'Where the Model Runs Next', 'Talk to Us About a First Cohort']);
-    // WP162: no figure tile (it showed PR-07's 500+; the World Bank's May 2022 figures count the whole program and were removed)
-    await expect(page.locator('.hero [data-fact="PR-07"], .hero .cs__stat')).toHaveCount(0);
+    // WP162 removed PR-07's 500+ tile (the World Bank's May 2022 figures count the whole program); WP164 (owner decision 2026-11-03) shows PR-09, the implementing partner's 100+, with no evidence pill
+    await expect(page.locator('.hero [data-fact="PR-07"]')).toHaveCount(0);
+    await expect(page.locator('.hero .cs__stat')).toHaveCount(1);
+    await expect(page.locator('.hero .cs__stat [data-fact="PR-09"]')).toHaveCount(1);
+    await expect(page.locator('.hero .cs__stat .evidence-tag')).toHaveCount(0);
     const hero = page.locator('img[fetchpriority="high"]').first();
     expect(await hero.getAttribute('data-asset')).toBe('legacy-global-digital-jobs-albania');
     expect(await page.locator('#cta, section[aria-labelledby="related-h"]').count()).toBe(2);
   });
 
-  test('it names CodersTrust as the international digital skills training provider, in the World Bank’s words, and never another company', async ({ page }) => {
+  // WP164 (owner decision 2026-11-03): the context now also names Learnio, the former CodersTrust Global, which completed the program after the December 2021 split; the World Bank's own spelling "Coderstrust" is still never printed.
+  test('it names CodersTrust as the international digital skills training provider, in the World Bank’s words (and, since WP164, Learnio as the former CodersTrust Global)', async ({ page }) => {
     await open(page, ALBANIA);
     const main = compact(await page.locator('main').textContent());
     expect(main).toContain('The World Bank names CodersTrust as the international digital skills training provider in the partnership.');
     expect(main).toContain('The initiative was implemented with the Government of Albania, CodersTrust and EuroPartners Development, a local consulting company.');
+    expect(main).toContain('CodersTrust began delivery in 2021; after the December 2021 split of the CodersTrust group, CodersTrust Global continued as Learnio and completed the program in 2022.'); // WP164
     expect(main).not.toMatch(MONEY);
     expect(main).not.toMatch(/Coderstrust/);
   });
 
-  test('its Results band says why the World Bank’s whole-program figures are not shown (WP162; it showed 5,000+ interest and 500+ enrolled), with a link to the release and no "Program Record" pill', async ({ page }) => {
+  // WP164 (owner decision 2026-11-03) reverses WP162's no-figure band: the band shows the implementing partner's two figures (PR-09) and says they are not CodersTrust program records. The World Bank's
+  // interim figures (5,000+ interest, 500+ enrolled) stay off, and nothing on the page carries a "Program Record" pill.
+  test('its Results band shows the partner-reported figures (WP164; WP162 showed none, and before that 5,000+ interest and 500+ enrolled), with a link to the release and no "Program Record" pill', async ({ page }) => {
     await open(page, ALBANIA);
     const results = page.locator('#results, section:has(h2:text("What Happened"))').first();
     const t = compact(await results.textContent());
-    expect(t).toContain('The World Bank’s published figures cover the whole program, including the months after CodersTrust’s part ended in 2021, so they are not shown here as CodersTrust results.');
+    expect(t).toContain('270+ certified, of 500 trained');
+    expect(t).toContain('100+ found a freelancing job or project before the training ended, of 500 trained');
+    expect(t).toContain('EuroPartners Development, the implementing partner, reports these figures for the whole program; they are not CodersTrust program records.');
     expect(t).not.toMatch(/5,000\+|500\+|expressed interest|students enrolled|What the World Bank Reported/);
-    expect(await results.locator('[data-fact]').count()).toBe(0);
+    expect(await results.locator('[data-fact]').evaluateAll((els) => els.map((e) => e.getAttribute('data-fact')))).toEqual(['PR-09']);
     const link = results.getByRole('link', { name: /Read the World Bank Announcement/ });
     expect(await link.getAttribute('href')).toBe(sources.WBDJA21.url);
     expect(await link.getAttribute('rel')).toMatch(/noopener/);
@@ -646,7 +658,7 @@ test.describe('Digital Jobs Albania: the fifth case study, in the World Bank’s
     await expect(page.locator('main .ls, main [data-learner-story]')).toHaveCount(0);
   });
 
-  test('the hub lists five case studies with Digital Jobs Albania second, results first, and no figure (WP162) or evidence pill on its card; Impact, Home and the case studies agree on "Five"', async ({ page }) => {
+  test('the hub lists five case studies with Digital Jobs Albania second, results first, and the partner-reported figure (WP164) with no evidence pill on its card; Impact, Home and the case studies agree on "Five"', async ({ page }) => {
     await open(page, HUB);
     await expect(page.locator('article.case')).toHaveCount(5);
     expect(await texts(page, 'article.case .card__title')).toEqual([
@@ -657,9 +669,10 @@ test.describe('Digital Jobs Albania: the fifth case study, in the World Bank’s
       'Her Power',
     ]);
     const dja = page.locator('article.case', { hasText: 'Digital Jobs Albania' });
-    // WP162: the card has no figure (it showed PR-07's 500+ students enrolled; the World Bank's May 2022 figures count the whole program and were removed)
-    await expect(dja.locator('.case__result, .case__value, .case__label')).toHaveCount(0);
-    await expect(dja.locator('.evidence-tag, [data-evidence]')).toHaveCount(0);
+    // WP162 removed PR-07's 500+ students enrolled (the World Bank's May 2022 figures count the whole program); WP164 shows PR-09, the implementing partner's 100+, as the card's "Result", with no tags
+    await expect(dja.locator('.case__value')).toHaveText('100+');
+    await expect(dja.locator('.case__label')).toHaveText('found a freelancing job or project before the training ended (of 500 trained; partner-reported)');
+    await expect(dja.locator('.evidence-tag, [data-evidence], .status-tag')).toHaveCount(0);
     expect(await dja.locator('a.card__link').getAttribute('href')).toMatch(/\/impact\/case-studies\/digital-jobs-albania\/$/);
     // WP60 (cycle-32 review, Kimi K2): the hub's H1 is "Five Programs, ...", so the grid's H2 is "Results First, Program by Program" (it was "Five Programs, Results First"); WP63 (cycle-35 review, Kimi K5): the H1 and the Impact band are "Five Programs Across Kosovo, Albania and Bangladesh"
     await expect(page.getByRole('heading', { level: 2, name: 'Results First, Program by Program' })).toHaveCount(1);

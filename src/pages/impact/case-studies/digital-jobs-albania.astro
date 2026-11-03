@@ -1,28 +1,45 @@
 ---
 import CaseStudyPage from '../../../components/pages/impact/CaseStudyPage.astro';
+import Callout from '../../../components/pages/impact/Callout.astro';
 import Icon from '../../../components/system/Icon.astro';
-import { sources } from '../../../data/facts';
+import { fact, sources } from '../../../data/facts';
 import { linkAttrs } from '../../../lib/url';
 
 /**
  * Digital Jobs Albania, a short case study (WP55, owner decision 2026-10-18; WP55 spec item 6). It follows the template of the other four, in the World Bank's own wording (press release, Tirana, 14 September 2021):
  * "a new World Bank initiative" that gives "women aged 16-35 years" an "intensive 3-month training in digital skills", "implemented in partnership with the Government of Albania, Coderstrust (an international digital
- * skills training provider), and EuroPartners Development (a local consulting company)". The owner's ruling (decision 2) is that this is CodersTrust's work, so the page says so and never names another company.
- * WP162 (owner, 2026-11-02/03; register deck sync 2026-11-03): CodersTrust took part in 2021 only (Learnio, which the World Bank's May 2022 blog names, is the former CodersTrust Global ApS), so the context says so and the years are 2021.
- * The World Bank's two May 2022 figures (PR-07, 500+ enrolled; PR-08, 5,000+ interested) count the whole program, so they are removed: the hero shows no stat tile, and the Results band says why no figure is shown
- * and keeps the links to the September 2021 release and the May 2022 update. No money amount, price or investment figure appears. There is no learner story, so the template leaves that band out (CaseStudyPage).
+ * skills training provider), and EuroPartners Development (a local consulting company)". The owner's ruling (decision 2) is that this is CodersTrust's work, so the page says so.
+ * WP164 (owner decision 2026-11-03; partly reverses WP162, which had "CodersTrust took part in 2021" and no figure): CodersTrust began delivery in 2021 and, after the December 2021 split of the CodersTrust group
+ * (PRWeb, 15 December 2021), CodersTrust Global continued as Learnio and completed the program in 2022 (EuroPartners project page: 06.2021 to 12.2022, lead partner Learnio), so the context names Learnio and the years are 2021–2022.
+ * The figures are the implementing partner's for the whole program (PR-09, source EPDJA): the hero shows PR-09 (100+) with no evidence pill (evidenceOf), and the Results band prints both figures and their base,
+ * read from PR-09's text, then says they are not CodersTrust program records. The World Bank's May 2022 figures (PR-07, PR-08) stay off the site (WP162); both World Bank links stay. No money amount, price or
+ * investment figure appears. There is no learner story, so the template leaves that band out (CaseStudyPage).
  */
 const release = linkAttrs(sources.WBDJA21.url ?? '');
 const update = linkAttrs(sources.WBBLOG22.url ?? '');
+const projectPage = linkAttrs(sources.EPDJA.url ?? '');
+
+// PR-09 reads "Digital Jobs Albania, 2021–2022: of <trained> women trained, <certified> were certified and <found> found <what>, as reported by EuroPartners Development, the implementing partner".
+// The Results band lists the two figures, each with its base, under "Partner-Reported Results"; the stat's value must be the same <found>, so the hero tile and the band cannot disagree. The lines carry no
+// label of their own: a bare "Certification" or "Certified" label would read as a certification CodersTrust awards (tests/wp150.spec.ts and tests/wp152.spec.ts); the certifications are the partner's count.
+const pr09 = fact('PR-09');
+const m = /^Digital Jobs Albania, 2021–2022: of (\d[\d,]*) women trained, (\d[\d,]*\+) were certified and (\d[\d,]*\+) found (a freelancing job or project before the training ended), as reported by EuroPartners Development, the implementing partner$/.exec(pr09.text);
+if (!m || pr09.stat?.value !== m[3]) throw new Error('PR-09 no longer reads "…: of N women trained, X+ were certified and Y+ found a freelancing job or project before the training ended, as reported by EuroPartners Development, …" with the stat value Y+');
+const [, trained, certified, found, what] = m;
+const results = [
+  { value: certified, text: `certified, of ${trained} trained` },
+  { value: found, text: `found ${what}, of ${trained} trained` },
+];
 ---
 
 <CaseStudyPage
   slug="digital-jobs-albania"
   pageTitle="Digital Jobs Albania"
-  description="Digital Jobs Albania, a World Bank initiative: an online three-month course in digital skills for women in Albania. CodersTrust took part in 2021."
+  description="A World Bank initiative: an online three-month course in digital skills for women in Albania, 2021–2022, begun by CodersTrust and completed by Learnio."
+  stats={[{ id: 'PR-09' }]}
   context={[
     'In September 2021, the World Bank launched Digital Jobs Albania to help women in Albania gain better access to online work and connect with the global economy.',
-    'The initiative was implemented with the Government of Albania, CodersTrust and EuroPartners Development, a local consulting company. CodersTrust took part in 2021.',
+    'The initiative was implemented with the Government of Albania, CodersTrust and EuroPartners Development, a local consulting company. CodersTrust began delivery in 2021; after the December 2021 split of the CodersTrust group, CodersTrust Global continued as Learnio and completed the program in 2022.',
   ]}
   challenges={[
     'Women’s labor force participation in Albania is lower than men’s.',
@@ -37,7 +54,13 @@ const update = linkAttrs(sources.WBBLOG22.url ?? '');
   <p slot="solution-lead" class="dja__lead">The World Bank names CodersTrust as the international digital skills training provider in the partnership. The initiative gave participants:</p>
 
   <Fragment slot="results">
-    <p>The World Bank’s published figures cover the whole program, including the months after CodersTrust’s part ended in 2021, so they are not shown here as CodersTrust results.</p>
+    <Callout tone="bluf" label="Partner-Reported Results">
+      <ul class="dja__results" role="list" data-fact="PR-09">
+        {results.map((r) => <li><strong>{r.value}</strong> {r.text}</li>)}
+      </ul>
+    </Callout>
+    <p>EuroPartners Development, the implementing partner, reports these figures for the whole program; they are not CodersTrust program records.</p>
+    <p><a class="link" href={projectPage.href} rel={projectPage.rel}>Read the EuroPartners Project Page<span class="sr-only"> {projectPage.srText}</span><Icon name="arrow-right" size={16} /></a></p>
     <p><a class="link" href={release.href} rel={release.rel}>Read the World Bank Announcement<span class="sr-only"> (opens worldbank.org)</span><Icon name="arrow-right" size={16} /></a></p>
     <p><a class="link" href={update.href} rel={update.rel}>Read the World Bank’s May 2022 Update<span class="sr-only"> (opens web.archive.org)</span><Icon name="arrow-right" size={16} /></a></p>
   </Fragment>
@@ -47,5 +70,15 @@ const update = linkAttrs(sources.WBBLOG22.url ?? '');
   .dja__lead {
     margin: 0 0 var(--space-md);
     color: var(--on-surface-variant);
+  }
+  .dja__results {
+    display: grid;
+    gap: var(--space-sm);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .dja__results strong {
+    font-weight: var(--fw-bold);
   }
 </style>
