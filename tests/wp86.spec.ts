@@ -65,10 +65,10 @@ test.describe('Item 3: "Last updated" and the Her Power news date are October 24
   test('YouthWIDE and JobReady Platform show October 24, 2026', async ({ page }) => {
     await open(page, 'programs/youthwide/');
     // WP104: both stamps moved on with their later content changes (tests/wp104.spec.ts); WP141: November 1, 2026
-    await expect(page.locator('.updated')).toHaveText('Last updated November 2, 2026'); // WP151
+    await expect(page.locator('.updated')).toHaveText('Last updated November 3, 2026'); // WP151; WP163: re-dated 2026-11-03
     await open(page, 'our-model/jobready-platform/');
-    await expect(page.locator('.lf-updated')).toHaveText('Last updated November 2, 2026'); // WP157: re-dated 2026-11-02
-    expect(pageHtml('our-model/jobready-platform/')).toContain('"dateModified":"2026-11-02"'); // WP157: re-dated 2026-11-02
+    await expect(page.locator('.lf-updated')).toHaveText('Last updated November 3, 2026'); // WP157: re-dated 2026-11-02; WP163: 2026-11-03
+    expect(pageHtml('our-model/jobready-platform/')).toContain('"dateModified":"2026-11-03"'); // WP163: re-dated 2026-11-03
   });
 
   // WP124: the Her Power post moved on to October 29, 2026 with its quotation-mark fix (tests/wp124.spec.ts)
@@ -178,10 +178,12 @@ test.describe('Item 11: the Recognition On This Page entries are the section hea
 });
 
 test.describe('Item 12: the JobReady Platform FAQ does not point to planned items', () => {
-  test('the answer reads "what is live and what is in pre-launch", with no "planned"', async () => {
+  // WP163 (owner answers of 3 November 2026): the answer points to the capabilities with no live, pre-launch or planned label at all (it read "Partly. See Rollout Status above for what is live and what is in pre-launch.").
+  test('the answer points to Platform Capabilities, with no "planned" (and no live or pre-launch label)', async () => {
     const html = pageHtml('our-model/jobready-platform/');
-    expect(html).toContain('Partly. See Rollout Status above for what is live and what is in pre-launch.');
+    expect(html).toContain('See Platform Capabilities above, from the AI Tutor to the work marketplaces.');
     expect(html).not.toContain('pre-launch and planned capabilities');
+    expect(html).not.toContain('what is live and what is in pre-launch');
   });
 });
 

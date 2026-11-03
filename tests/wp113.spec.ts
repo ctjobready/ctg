@@ -34,7 +34,8 @@ function sentences(text: string): string[] {
 test.describe('WP113 Polish 7: the partner hub "What Does It Cost?" answer', () => {
   test('it lists the inclusions with the exam terms "set per program" and no program-scope clause of its own (WP141: the page statement carries it)', () => {
     const text = visibleText(distHtml('partner-with-us/index.html'));
-    expect(text).toContain('Supported youth cohorts include outreach and selection, training, certification exam preparation (exam fees and attempts set per program), three months of mentoring, placement support and 12 months of outcome tracking after each course.');
+    // WP163 (owner answers of 3 November 2026): "certification exam preparation and one exam fee per trainee (any further attempts set per program)" (it read "(exam fees and attempts set per program)").
+    expect(text).toContain('Supported youth cohorts include outreach and selection, training, certification exam preparation and one exam fee per trainee (any further attempts set per program), three months of mentoring, placement support and 12 months of outcome tracking after each course.');
     expect(text).not.toContain('and the exam fee,');
     const sentence = sentences(text).find((s) => s.startsWith('Supported youth cohorts include'));
     expect(sentence, 'the inclusion sentence').toBeDefined();
@@ -43,7 +44,7 @@ test.describe('WP113 Polish 7: the partner hub "What Does It Cost?" answer', () 
 
   test('the same answer is the FAQ structured data of the page', () => {
     const html = distHtml('partner-with-us/index.html');
-    expect(html).toContain('certification exam preparation (exam fees and attempts set per program), three months of mentoring, placement support and 12 months of outcome tracking after each course.');
+    expect(html).toContain('certification exam preparation and one exam fee per trainee (any further attempts set per program), three months of mentoring, placement support and 12 months of outcome tracking after each course.'); // WP163
     expect(html).not.toContain('and the exam fee,');
   });
 });

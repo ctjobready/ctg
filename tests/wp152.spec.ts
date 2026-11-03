@@ -76,7 +76,7 @@ const HUBS = ['partner-with-us/index.html', 'programs/index.html'];
 test.describe('1 Facilitators: each page that explains delivery names who teaches', () => {
   /** [page, the delivery card or sentence, in the page order the reader meets it]. The long form is once on the page. */
   const DELIVERY: [string, string][] = [
-    [HOME, `How We Reach Them Blended Training Training in existing labs and colleges, led by ${LONG}, with delivery designed to work where connectivity is limited.`], // WP154: the card names where (existing labs and colleges) and who teaches. WP153: Home’s first delivery explanation names who teaches (it was the one exemption)
+    [HOME, `How We Reach Them AI-Supported Blended Training Training in existing labs and colleges, led by ${LONG}, with delivery designed to work where connectivity is limited.`], // WP163: the card is "AI-Supported Blended Training" and then states the delivery model. WP154: the card names where (existing labs and colleges) and who teaches. WP153: Home’s first delivery explanation names who teaches (it was the one exemption)
     [DEV, `How We Reach Them Existing Labs and Colleges Outreach and selection with local partners, then blended delivery by ${LONG}.`], // WP153: the body no longer repeats "in existing labs and colleges"
     [GOVERNMENTS, `How We Reach Them Government Digital Labs Blended learning in government labs you already run, led by ${BARE}; lab access and seats are confirmed per program.`],
     [UNIVERSITIES, `Set Up Campus Labs as Learning Centers On-campus labs become blended-learning centers with ${LONG}; faculty members act as coordinators.`],
@@ -278,7 +278,8 @@ test.describe('2 Certification: every mention is preparation (A) or something th
 
   test('Universities: the training card is "Certification Preparation by Track"', () => {
     const text = main(UNIVERSITIES);
-    expect(text).toContain('Prepare for Certification Certification Preparation by Track 100 training hours per certification, including exam preparation; exam fees, eligibility and attempts are set per program.');
+    // WP163 (owner answers of 3 November 2026): one exam fee per trainee is included; exam eligibility and any further attempts are set per program.
+    expect(text).toContain('Prepare for Certification Certification Preparation by Track 100 training hours per certification, including exam preparation and one exam fee per trainee; exam eligibility and any further attempts are set per program.');
     expect(text).not.toContain('Industry Certification Tracks');
   });
 
@@ -300,7 +301,9 @@ test.describe('2 Certification: every mention is preparation (A) or something th
 
 test('3 Our Model: "Each certification track has 100 training hours, including exam preparation, over 3–6 months." (no "includes ... including")', () => {
   const text = main(OUR_MODEL);
-  expect(text).toContain('Blended Training and Certification Preparation Each certification track has 100 training hours, including exam preparation, over 3–6 months.');
+  // WP163 (owner answers of 3 November 2026): the card is "AI-Supported Training and Certification Preparation" and opens with the delivery model; the hours sentence follows unchanged.
+  expect(text).toContain('AI-Supported Training and Certification Preparation Training follows an AI-supported flipped classroom:');
+  expect(text).toContain('Each certification track has 100 training hours, including exam preparation, over 3–6 months.');
   expect(text).not.toContain('Each certification track includes 100 training hours');
   // The hour sentences of the WP150 rule still say exam preparation; and no sentence on any page reads "includes ..., including".
   const offenders = realPages()
@@ -311,7 +314,7 @@ test('3 Our Model: "Each certification track has 100 training hours, including e
 
 test('4 Investors, "Connect Learning to Paid Work": the body does not repeat the heading and has no comma before "through"', () => {
   const text = main(INVESTORS);
-  expect(text).toContain('Connect Learning to Paid Work JobReady is being built to link learners to paid work through mentoring and placement support.');
+  expect(text).toContain('Connect Learning to Paid Work JobReady is designed to link learners to paid work through mentoring and placement support.');
   expect(text).not.toContain('connect learning to paid work, through');
   expect(text).not.toMatch(/JobReady is being built to connect learning to paid work/);
   expect(text).not.toMatch(/paid work, through mentoring/);

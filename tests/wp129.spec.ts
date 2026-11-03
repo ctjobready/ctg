@@ -74,15 +74,16 @@ const sentences = (t: string) => t.split(/(?<=\.)\s+(?=[A-Z“"])/);
 // 1. The 100 training hours include certification exam preparation
 // ---------------------------------------------------------------------------------------------------------------------------------
 test.describe('WP129 item 1: the 100 training hours per certification include exam preparation', () => {
+  // WP163 (owner answers of 3 November 2026): one exam fee per trainee is included, any further attempts set per program; exam eligibility stays set per program where the card names it.
   const YOUTHWIDE =
-    '100 training hours per certification, including certification exam preparation (exam fees and attempts set per program), then three months of milestone-based mentoring.';
+    '100 training hours per certification, including certification exam preparation and one exam fee per trainee (any further attempts set per program), then three months of milestone-based mentoring.';
   const CAMPUS =
-    '100 training hours per certification, including certification exam preparation, then three months of milestone-based mentoring; exam fees, eligibility, attempts and retakes are set per program.';
-  // WP146: the Universities card names exam fees (it read "…; eligibility, attempts and terms are set per program.")
-  const UNIVERSITIES = '100 training hours per certification, including exam preparation; exam fees, eligibility and attempts are set per program.';
-  // WP146: Q14 is one sentence (the first sentence, "supported CodersTrust cohorts add mentoring, …", is gone; "Every" became "every").
+    '100 training hours per certification, including certification exam preparation and one exam fee per trainee, then three months of milestone-based mentoring; exam eligibility and any further attempts are set per program.';
+  // WP146: the Universities card names exam fees (it read "…; eligibility, attempts and terms are set per program."). WP163: one exam fee per trainee.
+  const UNIVERSITIES = '100 training hours per certification, including exam preparation and one exam fee per trainee; exam eligibility and any further attempts are set per program.';
+  // WP146: Q14 is one sentence (the first sentence, "supported CodersTrust cohorts add mentoring, …", is gone; "Every" became "every"). WP163: a second sentence states the delivery model (DELIVERY_MODEL).
   const Q14 =
-    'Compared with a self-paced course alone, every supported TalentLEAP cohort pairs 100 training hours per certification, including certification exam preparation, with three months of milestone-based mentoring, placement support and outcome tracking for 12 months after each course.';
+    'Compared with a self-paced course alone, every supported TalentLEAP cohort pairs 100 training hours per certification, including certification exam preparation, with three months of milestone-based mentoring, placement support and outcome tracking for 12 months after each course. Training follows an AI-supported flipped classroom: all lectures are pre-recorded and an AI Tutor supports every learner, so mentors’ time goes to Q&A and to handholding beyond what the AI Tutor can provide.';
 
   test('YouthWIDE at a Glance, "Training and Mentoring"', () => {
     expect(text('programs/youthwide/index.html')).toContain(YOUTHWIDE);
@@ -102,7 +103,7 @@ test.describe('WP129 item 1: the 100 training hours per certification include ex
   test('Our Model keeps the pipeline that places "Prepare for Certification" inside the Learn stage of a track that includes the 100 hours (guard; passes before the change)', () => {
     const t = text('our-model/index.html');
     expect(t).toContain('Each certification track has 100 training hours, including exam preparation, over 3–6 months.'); // WP151: the sentence says "including exam preparation" itself
-    expect(t).toContain('Blended Training and Certification Preparation');
+    expect(t).toContain('AI-Supported Training and Certification Preparation'); // WP163: the card was "Blended Training and Certification Preparation"
     expect(t).toContain('Prepare for Certification');
   });
   test('no built page, meta description, JSON-LD string or llms.txt says "then exam preparation" or "then certification exam preparation"', () => {
@@ -298,6 +299,7 @@ test.describe('WP129 item 6: every dated page whose visible text changed carries
   ]);
   // WP161-A (2026-11-03): Privacy, Accessibility, Foundations and Governments moved on; WP161-B (2026-11-03): Ferdinand Kjærulff's profile.
   // WP162 (2026-11-03): About (the Albania tile), Impact (the Albania case card), Global Reach (the Albania row) and the Digital Jobs Albania case study (years, Results band, meta description) moved on.
+  // WP163 (2026-11-03, owner answers of that day: one exam fee per trainee, the AI-supported flipped classroom, no live or planned labels): TalentLEAP, JobReady Platform, YouthWIDE, JobReady@Campus, JobReady@Work and Investors.
   const MOVED_1103 = new Set([
     'privacy-policy/index.html',
     'accessibility/index.html',
@@ -308,6 +310,12 @@ test.describe('WP129 item 6: every dated page whose visible text changed carries
     'impact/index.html',
     'impact/global-reach/index.html',
     'impact/case-studies/digital-jobs-albania/index.html',
+    'our-model/talentleap/index.html',
+    'our-model/jobready-platform/index.html',
+    'programs/youthwide/index.html',
+    'programs/jobready-campus/index.html',
+    'programs/jobready-work/index.html',
+    'partner-with-us/investors/index.html',
   ]);
   for (const [route, cls] of STAMPED) {
     const [day, long] = MOVED_1103.has(route) ? ['2026-11-03', 'November 3, 2026'] : MOVED_1102.has(route) ? ['2026-11-02', 'November 2, 2026'] : MOVED_1101.has(route) ? ['2026-11-01', 'November 1, 2026'] : ['2026-10-31', 'October 31, 2026'];

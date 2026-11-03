@@ -46,7 +46,7 @@ import StepsBand from '../../../components/pages/partners/StepsBand.astro';
 import Reinforcement from '../../../components/pages/partners/Reinforcement.astro';
 import PageEnhancements from '../../../components/pages/partners/PageEnhancements.astro';
 import { HOURS, LINKS, TRACKING_MONTHS, meta } from '../../../components/pages/partners/partners';
-import { HEADLINE, POSITIONING, PROGRAM_SCOPE_STATEMENT_EXAMS, READ_THE_EVIDENCE, SPEED_UNIVERSITIES, VALUE_PROPOSITION } from '../../../data/copy';
+import { DELIVERY_MODEL, HEADLINE, POSITIONING, PROGRAM_SCOPE_STATEMENT_EXAMS, READ_THE_EVIDENCE, SPEED_UNIVERSITIES, VALUE_PROPOSITION } from '../../../data/copy';
 import { faqJsonLd } from '../../../lib/faq';
 import { cta } from '../../../lib/mailto';
 import { webPage } from '../../../lib/schema';
@@ -72,7 +72,7 @@ const FAQ_IDS = ['Q1-campus', 'Q10-campus', 'Q8-route'];
   description={description}
   path={PATH}
   breadcrumbs={[{ label: 'Partner with Us', href: LINKS.hub }, { label: 'Universities' }]}
-  jsonLd={[webPage({ path: PATH, name: title, description, dateModified: '2026-11-02' }), faqJsonLd('universities', PATH, FAQ_IDS)]}
+  jsonLd={[webPage({ path: PATH, name: title, description, dateModified: '2026-11-03' }), faqJsonLd('universities', PATH, FAQ_IDS)]}
   stickyCta={{ label: primary.label, href: primary.href }}
 >
   <!-- C1 · Identity hook -->
@@ -137,7 +137,7 @@ const FAQ_IDS = ['Q1-campus', 'Q10-campus', 'Q8-route'];
     positioning={POSITIONING.universities}
     blocks={[
       { label: 'Set Up', title: 'Campus Labs as Learning Centers', text: 'On-campus labs become blended-learning centers with facilitators trained by CodersTrust (Training of Trainers); faculty members act as coordinators.', icon: 'landmark' },
-      { label: 'Prepare for Certification', title: 'Certification Preparation by Track', text: `${HOURS} training hours per certification, including exam preparation; exam fees, eligibility and attempts are set per program.`, icon: 'award' },
+      { label: 'Prepare for Certification', title: 'Certification Preparation by Track', text: `${HOURS} training hours per certification, including exam preparation and one exam fee per trainee; exam eligibility and any further attempts are set per program.`, icon: 'award' },
       { label: 'Mentor and Place', title: 'Mentoring and Placement', text: `Three months of milestone-based mentoring and placement support, with outcome tracking for ${TRACKING_MONTHS} months after each course.`, icon: 'users' },
       { label: 'Alongside Studies', title: 'In Parallel with the Degree', text: 'Training runs in parallel with academic studies, with professional internships where employer placements are available.', icon: 'graduation-cap' },
     ]}
@@ -153,7 +153,8 @@ const FAQ_IDS = ['Q1-campus', 'Q10-campus', 'Q8-route'];
   <IncludesBand
     title="What Your Students and Your Institution Get"
     cards={[
-      { icon: 'award', title: 'Certification Exam Preparation and Mentoring', text: 'Industry certification exam preparation by track, followed by three months of milestone-based mentoring toward a first client or a first job.', facts: ['PD-02', 'PD-01'] },
+      // WP163 (owner answers of 3 November 2026): the card states the delivery model once on this page (DELIVERY_MODEL, the AI-supported flipped classroom).
+      { icon: 'award', title: 'Certification Exam Preparation and Mentoring', text: `Industry certification exam preparation by track, followed by three months of milestone-based mentoring toward a first client or a first job. ${DELIVERY_MODEL.text}`, facts: ['PD-02', 'PD-01', 'IN-04'] },
       { icon: 'briefcase', title: 'Skills Employers Ask For', text: 'Tracks are set from employer demand in an AI-ready curriculum, built around the skills employers say they cannot find.', facts: ['PD-10', 'PD-02'] },
       { icon: 'clipboard-check', title: 'Placement Evidence You Can Report', text: 'Follow-up surveys, monthly reports and documentary evidence where available give your institution outcome data it can report.', facts: ['PD-08', 'PD-09'] },
     ]}

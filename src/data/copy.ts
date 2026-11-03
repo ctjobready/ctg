@@ -39,9 +39,9 @@ export const VALUE_PROPOSITION: Record<Audience, string> = {
   foundations: 'We help funders back mentored, certification-focused training that prepares youth for paid digital work.',
   universities: 'We help universities and colleges prepare students for paid work through mentored, certification-focused training.',
   employers: 'We help employers upskill their teams for AI and digital work, and connect them to job-ready digital talent through our placement team.',
-  // WP32 (cycle-9 review): "staged rollout" alone did not say what is live, so the hero adds IN-04's status in one sentence (the Investors page marks the lead data-fact="IN-04"); it is two sentences by design.
-  // The two marketplaces are named as two, as IN-04 and tests/wp25s.spec.ts ("named as two") have them: never "the employer and gig-work marketplaces".
-  investors: 'Back JobReady’s staged rollout, built on CodersTrust’s training and mentoring programs. Partner portals and AI chat are live; the employer marketplace and the gig-work marketplace are in pre-launch.',
+  // WP32 (cycle-9 review): the hero's second sentence is IN-04's (the Investors page marks the lead data-fact="IN-04"); it is two sentences by design. The two marketplaces are named as two, as IN-04 and tests/wp25s.spec.ts ("named as two") have them.
+  // WP163 (owner answers of 3 November 2026): no capability carries a live, pre-launch, planned or roadmap label, so the second sentence says what JobReady offers (it said "Partner portals and AI chat are live; ... are in pre-launch.").
+  investors: 'Back JobReady’s staged rollout, built on CodersTrust’s training and mentoring programs. JobReady offers an AI Tutor, adaptive learning paths, an AI career coach, partner portals, the employer marketplace and the gig-work marketplace.',
   localPartners: 'We help local organizations prepare young people for paid digital work through mentored, certification-focused training.',
   nuPgd: 'We help learners prepare for digital work through the National University Post Graduate Diploma.',
 };
@@ -736,8 +736,18 @@ export const SCALE: CopyBlock = {
 };
 
 export const PRICING: CopyBlock = {
-  text: 'Pricing is set per program, and we share an indicative budget in the discovery session. Standard inclusions: outreach and selection, blended training, an AI-ready curriculum, certification exam preparation (exam fee included), three months of mentoring, placement support, monthly reporting and outcome tracking for 12 months after each course. Devices, stipends, connectivity and independent evaluation are budgeted separately where a program needs them. AI-ready curriculum: each track’s AI content and work-entry plan are agreed with you before enrollment; we do not yet publish a track-by-track breakdown.',
+  text: 'Pricing is set per program, and we share an indicative budget in the discovery session. Standard inclusions: outreach and selection, AI-supported blended training, an AI-ready curriculum, certification exam preparation and one exam fee per trainee (any further attempts set per program), three months of mentoring, placement support, monthly reporting and outcome tracking for 12 months after each course. Devices, stipends, connectivity and independent evaluation are budgeted separately where a program needs them. AI-ready curriculum: each track’s AI content and work-entry plan are agreed with you before enrollment; we do not yet publish a track-by-track breakdown.',
   facts: ['PD-02', 'PD-02a'],
+};
+
+/**
+ * WP163 (owner answers of 3 November 2026): the delivery model, an AI-supported flipped classroom. All lectures are pre-recorded, an AI Tutor supports every learner, and mentors’ time goes only to
+ * Q&A and to handholding beyond what the AI Tutor can provide (PD-01: the lecture and lab hours and the mentoring; the AI Tutor is a JobReady capability, IN-04). The owner's decision is not yet in PD-01's register text. Pages state it ONCE, where the program or offer is described (tests/wp163.spec.ts),
+ * and "three months of mentoring" stays as it is elsewhere (its scope is now Q&A and handholding). Past results are not attributed to this model.
+ */
+export const DELIVERY_MODEL: CopyBlock = {
+  text: 'Training follows an AI-supported flipped classroom: all lectures are pre-recorded and an AI Tutor supports every learner, so mentors’ time goes to Q&A and to handholding beyond what the AI Tutor can provide.',
+  facts: ['PD-01', 'IN-04'],
 };
 
 // WP50 (cycle-25 review): EMPLOYER_PRICING ("Pricing is set per program; we share an indicative budget in the discovery session and confirm it after the needs assessment.", WP25s) is gone. The two employer pages printed it a second time in

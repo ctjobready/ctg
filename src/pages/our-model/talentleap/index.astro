@@ -24,14 +24,15 @@ const descriptor = 'CodersTrust’s Competency-Based Talent Development Model';
 // WP36 (cycle-13 review): the opening no longer implies that several levels are taught. IN-06 and IN-08: Competent is the first level; Proficient and Expert are planned. The model's own description ("CodersTrust’s
 // competency-based talent development model", IN-06) is the eyebrow above the heading, so the opening goes straight to what the model does.
 // WP64 (cycle-36 review, Claude): "The first published TalentLEAP level is Competent; Proficient and Expert levels are planned." (it said "Competent is the published first level; Proficient and Expert are planned.", with no word that these are TalentLEAP's levels); IN-06 and IN-08 are unchanged.
-const bluf = 'TalentLEAP organizes learning around assessed skill units and career paths. The first published TalentLEAP level is Competent; Proficient and Expert levels are planned. Learners move through three stages, Learn, Earn and Prosper, with three months of milestone-based mentoring after the course.';
+// WP163 (owner answers of 3 November 2026): no capability or level is labelled planned, so the opening names the three levels (it said "The first published TalentLEAP level is Competent; Proficient and Expert levels are planned.").
+const bluf = 'TalentLEAP organizes learning around assessed skill units and career paths. Its levels run from Competent to Proficient and Expert. Learners move through three stages, Learn, Earn and Prosper, with three months of milestone-based mentoring after the course.';
 const description = desc('TalentLEAP is CodersTrust’s competency-based model: assessed skill units, career paths and Learn, Earn, Prosper with three months of mentoring.');
 
 // The steps of the visible stage pipeline (StagePipeline), for the structured data. WP50 (cycle-25 review): read from the pipeline's own source (components/pages/model/stagePipeline.ts), where they were restated by hand;
 // WP154 (Opus Max run 1, kit 121, Polish): the planned levels are stated once on this page, in the opening (the example band has no lead and the Prosper step no longer ends "Further TalentLEAP levels are planned."); dates 2026-11-02 (the owner date rule).
 const steps = STAGE_STEPS;
 const levels = [
-  { name: 'Level 1 · Competent', description: 'Introduction to Digital Marketing with Google and Meta Certifications: three months of mentorship by an experienced professional, three months of membership in a digital-marketing expertise community and bonus mini-courses in essential business and leadership skills. Proficient and Expert levels are planned.' },
+  { name: 'Level 1 · Competent', description: 'Introduction to Digital Marketing with Google and Meta Certifications: three months of mentorship by an experienced professional, three months of membership in a digital-marketing expertise community and bonus mini-courses in essential business and leadership skills.' },
 ];
 // At a Glance tiles (WP22): each leads with its number; label and note are the register's own glance wording (OC-01) or stat label and detail (RC-02).
 const stat = (id: string) => {
@@ -50,7 +51,7 @@ const faq = faqItems('foundations', ['Q14', 'Q10', 'Q4']).map((f) => {
   return f;
 });
 const jsonLd = [
-  articleNode({ path, headline: 'TalentLEAP: A Skill-by-Skill Path from Learning to Earning', description, datePublished: '2026-10-08', dateModified: '2026-11-02', author: 'CodersTrust Learning Design', about: { '@type': 'Thing', name: 'TalentLEAP' } }),
+  articleNode({ path, headline: 'TalentLEAP: A Skill-by-Skill Path from Learning to Earning', description, datePublished: '2026-10-08', dateModified: '2026-11-03', author: 'CodersTrust Learning Design', about: { '@type': 'Thing', name: 'TalentLEAP' } }),
   describedList('How TalentLEAP Works', steps.map((s) => ({ name: s.name, description: s.text })), `${path}#steps`),
   describedList('TalentLEAP example: Digital Marketing career path levels', levels, `${path}#levels`),
   faqPage(faq, path),
@@ -74,7 +75,7 @@ const d = discoveryCta();
   lead={bluf}
   description={description}
   path={path}
-  updated="2026-11-02"
+  updated="2026-11-03"
   toc={toc}
   breadcrumbs={[{ label: 'Our Model', href: '/our-model/' }, { label: 'TalentLEAP' }]}
   jsonLd={jsonLd}

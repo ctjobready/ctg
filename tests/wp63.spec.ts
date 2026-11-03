@@ -137,15 +137,17 @@ test.describe('G2 (GPT-6.1 Sol): "Will This Work in Our Country?" is two plain s
 });
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+// WP163 (owner answers of 3 November 2026): the "Planned Adaptive Learning" band and its "... is planned and not live yet." sentence were removed by this package (no capability carries a planned or live
+// label); adaptive learning is one row of the capabilities table, tied to IN-04 and IN-06. The old roadmap wordings stay off every page.
 test.describe('GP3 (GPT-6.1 Sol): the JobReady Platform roadmap sentence', () => {
-  test('"Planned Adaptive Learning" says "..., not live yet." once, tied to IN-06', async ({ page }) => {
+  test('the roadmap band is gone; adaptive learning is one table row tied to IN-06, with no status', async ({ page }) => {
     await open(page, JOBREADY_PLATFORM);
-    await expect(page.locator('#roadmap h2')).toHaveText('Planned Adaptive Learning');
-    const body = page.locator('#roadmap p');
-    await expect(body).toHaveCount(1);
-    await expect(body).toHaveText('Personalized and adaptive learning based on TalentLEAP’s competency levels is planned and not live yet.'); // WP157 (F11)
-    expect(await body.getAttribute('data-fact')).toBe('IN-06');
+    await expect(page.locator('#roadmap')).toHaveCount(0);
+    const row = page.locator('#status tbody tr', { hasText: 'Personalized and adaptive learning paths' });
+    await expect(row).toHaveCount(1);
+    expect(await row.getAttribute('data-fact')).toBe('IN-04 IN-06');
     expect(pagesWith('This is roadmap, not live.')).toEqual([]);
+    expect(pagesWith('is planned and not live yet')).toEqual([]);
   });
 });
 
@@ -355,7 +357,7 @@ test.describe('R9 (Grok, not done): YouthWIDE keeps its "Last updated" line', ()
     expect(withLine).toContain('/programs/youthwide/');
     expect(withLine.length, `pages with a "Last updated" line: ${withLine.join(', ')}`).toBeGreaterThan(5);
     await open(page, YOUTHWIDE);
-    await expect(page.locator('.updated')).toHaveText('Last updated November 2, 2026'); // WP104; WP141 moved it to November 1; WP151 to November 2
+    await expect(page.locator('.updated')).toHaveText('Last updated November 3, 2026'); // WP104; WP141 moved it to November 1; WP151 to November 2; WP163 to November 3
   });
 });
 

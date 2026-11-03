@@ -211,9 +211,9 @@ test.describe('F7 About timeline: completed periods in the past tense', () => {
     expect(t()).not.toContain('grant supports a CodersTrust feasibility study');
   });
 
-  test('2025–2026 (the current period): "JobReady rolls out in stages." stays present; "CodersTrust published Impact Survey 2026."', () => {
+  test('2025–2026 (the current period): the JobReady sentence stays present (WP163: IN-04’s definition, no rollout status); "CodersTrust published Impact Survey 2026."', () => {
     const line = between(t(), '2025–2026 JobReady, YouthWIDE and the Impact Survey', 'CodersTrust Around the World').trim();
-    expect(line.startsWith('2025–2026 JobReady, YouthWIDE and the Impact Survey JobReady rolls out in stages. YouthWIDE aims to train')).toBe(true);
+    expect(line.startsWith('2025–2026 JobReady, YouthWIDE and the Impact Survey JobReady is CodersTrust’s digital learning and earning platform. YouthWIDE aims to train')).toBe(true);
     expect(line).toMatch(/depending on government and donor commitments\. CodersTrust published Impact Survey 2026\./);
     expect(t()).not.toContain('CodersTrust publishes Impact Survey 2026');
   });
@@ -234,9 +234,12 @@ test('F10 Aziz Ahmad: "he has spoken at forums including" (past appearances; the
   expect(t).not.toContain('he speaks at forums');
 });
 
-test('F11 JobReady platform: "Personalized and adaptive learning based on TalentLEAP’s competency levels is planned and not live yet."', () => {
+test('F11 JobReady platform: adaptive learning based on TalentLEAP’s competency levels is stated once, with no status', () => {
   const t = main(PLATFORM);
-  expect(t).toContain('Planned Adaptive Learning Personalized and adaptive learning based on TalentLEAP’s competency levels is planned and not live yet.');
+  // WP163 (owner answers of 3 November 2026): the "Planned Adaptive Learning" band and its "... is planned and not live yet." sentence were removed by this package (no capability carries a
+  // planned or live label); the capability is a row of the Platform Capabilities table, still tied to TalentLEAP’s competency levels (tests/wp163.spec.ts).
+  expect(t).toContain('Personalized and adaptive learning paths AI adjusts content difficulty, pacing and sequence to each learner’s progress, finds skill gaps and recommends modules, based on TalentLEAP’s competency levels.');
+  expect(t).not.toContain('is planned and not live yet');
   expect(t).not.toContain('Planned: personalized and adaptive learning');
 });
 

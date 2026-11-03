@@ -240,7 +240,7 @@ test.describe('Investors: the thesis card (item 3)', () => {
     expect(await texts(page, '#thesis .card__title')).toEqual(['Young People Need Work and Employers Need Skills', 'AI Skills Are in Rising Demand', 'Connect Learning to Paid Work']); // WP153: the problem cards sit together and the JobReady answer follows
     for (const t of await texts(page, '#thesis .card__title')) expect(t, t).toBe(titleCase(t));
     const second = cards.nth(2); // WP153: the answer card is last
-    expect(compact(await second.locator('.card__text').textContent())).toBe('JobReady is being built to link learners to paid work through mentoring and placement support.'); // WP152 (WP151: "connect learning to paid work, through ...")
+    expect(compact(await second.locator('.card__text').textContent())).toBe('JobReady is designed to link learners to paid work through mentoring and placement support.'); // WP152 (WP151: "connect learning to paid work, through ...")
     expect(await second.locator('.card__text').getAttribute('data-fact')).toBe('IN-04');
     expect(sitePages().filter((p) => /Online Learning Sells Content|Many online courses provide content/.test(visible(p.html))).map((p) => p.route)).toEqual([]);
   });
@@ -629,7 +629,8 @@ test.describe('TalentLEAP stage pipeline: the Prosper step (item 27; WP154: it n
   test('the earlier sentence is on no page; the two related clauses that were not part of this review (the Our Model TalentLEAP card, the Investors Prosper step) are unchanged (WP153: the Prosper step no longer repeats the planned levels)', async ({ page }) => {
     expect(sitePages().filter((p) => p.html.includes('Progressive levels are planned beyond the first published level')).map((p) => p.route)).toEqual([]);
     await open(page, 'our-model/');
-    expect(await everything(page)).toContain('with progressive levels planned beyond the first published level.');
+    // WP163 (owner answers of 3 November 2026): the Our Model TalentLEAP card names the levels with no "planned" label (it ended "with progressive levels planned beyond the first published level.").
+    expect(await everything(page)).toContain('with levels from Competent to Proficient and Expert.');
     await open(page, INVEST);
     expect(await everything(page)).toContain('Career paths built on TalentLEAP’s assessed skill units, with continuing development.'); // WP153: the planned levels are stated once, in "What JobReady Does"; WP154: the Prosper body no longer repeats its heading
     expect(await everything(page)).not.toContain('progressive levels are planned');

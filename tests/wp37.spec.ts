@@ -258,10 +258,11 @@ test.describe('Foundations: the Funding Route 2 passage says what a platform gra
     expect(await inquiry.getAttribute('href')).toMatch(/^mailto:.*JobReady%20platform%20grant/);
     await expect(page.getByRole('link', { name: /Discuss a JobReady Platform Grant/ }), 'the link is on the page once').toHaveCount(1);
     expect(compact(await passage.textContent())).not.toMatch(/Live today|In pre-launch|Modules are rolling out|AI-native|jobready\.global/);
-    // the list is stated once on the page, in the comparison
-    expect(count(await mainText(page), 'Live today:')).toBe(1);
-    // WP47 (cycle-22 review): the comparison lists the live subset, "partner portals and AI chat" (the register's IN-04 and the platform page keep the full list)
-    expect(compact(await page.locator('#funding-routes').textContent())).toContain('Live today: partner portals and AI chat.');
+    // the platform's capabilities are stated once on the page, in the comparison. WP163 (owner answers of 3 November 2026): as what the platform offers, with no "Live today" or "In pre-launch" label.
+    expect(count(await mainText(page), 'Live today:')).toBe(0);
+    expect(count(await mainText(page), 'JobReady’s AI Tutor, adaptive learning paths, AI career coach, partner portals and work marketplaces.')).toBe(1);
+    // WP47 (cycle-22 review): the comparison lists a subset (the register's IN-04 and the platform page keep the full list)
+    expect(compact(await page.locator('#funding-routes').textContent())).toContain('JobReady’s AI Tutor, adaptive learning paths, AI career coach, partner portals and work marketplaces.');
   });
 
   // WP40 (cycle-17 review): the numbered jump links ("See Funding Route 1 / 2") are gone from the mechanism band, which links the program and platform pages instead (tests/wp40.spec.ts); the two bands keep their ids and their order
@@ -357,7 +358,8 @@ test.describe('Our Model: a timeline answer that says the weeks once, and a plai
 
 test.describe('"CRM" is written out wherever the live-platform list is printed', () => {
   test('the register’s IN-04 says "customer relationship management" and no longer "CRM"', () => {
-    expect(fact('IN-04').text).toContain('Live today: partner portals, marketing automation, customer relationship management and AI chat. In pre-launch: the employer marketplace and the gig-work marketplace.');
+    // WP163 (owner answers of 3 November 2026): IN-04 lists its capabilities with no live or pre-launch label.
+    expect(fact('IN-04').text).toContain('partner portals, marketing automation, customer relationship management, AI chat, the employer marketplace and the gig-work marketplace.');
     expect(fact('IN-04').text).not.toMatch(/\bCRM\b/);
   });
 
@@ -377,7 +379,7 @@ test.describe('"CRM" is written out wherever the live-platform list is printed',
   for (const [route, expected] of [
     // WP49 (cycle-24 review): the "What Is Live Today" callout is gone; the status table names the live list in its "Across the Platform" row and says the course storefront operates in its first row
     ['our-model/jobready-platform/', ['Marketing automation, customer relationship management and AI chat', 'CodersTrust’s course storefront operates at jobready.global.']],
-    ['partner-with-us/investors/', ['Partner portals are live, and AI chat is live across the platform.']], // WP144: Investors names AI chat as platform-wide
+    ['partner-with-us/investors/', ['with automated assessment and feedback and AI chat across the platform.']], // WP144: Investors names AI chat as platform-wide. WP163: with no live label
   ] as [string, string[]][]) {
     test(`${route}: the live list reads in full`, async ({ page }) => {
       await open(page, route);
@@ -388,30 +390,33 @@ test.describe('"CRM" is written out wherever the live-platform list is printed',
 
   // WP41 (cycle-18 review): the platform page has "Rollout Status" directly above its questions (the table and the "What Is Live Today" callout), so its answer points there instead of listing the status a third time
   // (tests/wp41.spec.ts); the shared answer stays in full on Employers and JobReady@Work
-  test('the "Is the JobReady Platform Live?" answer reads in full on Employers and JobReady@Work and points to "Rollout Status" on the platform page, and the FAQ JSON-LD says what the page says', async ({ page }) => {
+  // WP163 (owner answers of 3 November 2026): the question is "What Does the JobReady Platform Offer?" (it asked "Is the JobReady Platform Live?"), and no answer carries a live, pre-launch or planned label.
+  test('the "What Does the JobReady Platform Offer?" answer reads in full on Employers and JobReady@Work and points to "Platform Capabilities" on the platform page, and the FAQ JSON-LD says what the page says', async ({ page }) => {
+    const Q = 'What Does the JobReady Platform Offer?';
     for (const route of ['partner-with-us/employers/', 'programs/jobready-work/']) {
       await open(page, route);
-      const answer = await answerOf(page, 'Is the JobReady Platform Live?');
-      // WP48 (cycle-23 review): the answer names the live modules a partner or employer deals with, not the internal tooling (tests/wp48.spec.ts)
-      expect(answer, route).toBe('Partner portals and AI chat are live; the employer marketplace and the gig-work marketplace are in pre-launch. Hiring currently runs through CodersTrust’s placement team.');
-      expect((await faqJsonLd(page)).find((q) => q.name === 'Is the JobReady Platform Live?')?.text, route).toBe(answer);
+      const answer = await answerOf(page, Q);
+      // WP48 (cycle-23 review): the answer names what a partner or employer deals with, not the internal tooling (tests/wp48.spec.ts)
+      expect(answer, route).toBe('JobReady offers an AI Tutor, AI-driven personalized and adaptive learning paths, automated assessment and feedback, an AI career coach, partner portals, AI chat, the employer marketplace and the gig-work marketplace. Hiring runs through CodersTrust’s placement team.');
+      expect((await faqJsonLd(page)).find((q) => q.name === Q)?.text, route).toBe(answer);
     }
     await open(page, 'our-model/jobready-platform/');
-    const platform = await answerOf(page, 'Is the JobReady Platform Live?');
-    expect(platform).toBe('Partly. See Rollout Status above for what is live and what is in pre-launch.');
-    expect((await faqJsonLd(page)).find((q) => q.name === 'Is the JobReady Platform Live?')?.text).toBe(platform);
+    const platform = await answerOf(page, Q);
+    expect(platform).toBe('See Platform Capabilities above, from the AI Tutor to the work marketplaces.');
+    expect((await faqJsonLd(page)).find((q) => q.name === Q)?.text).toBe(platform);
     // WP39 (cycle-16 review): Investors lists the status in "What JobReady Does", directly above its questions, so its answer points there (tests/wp39.spec.ts); the JSON-LD still reads the same as the page
     await open(page, 'partner-with-us/investors/');
-    const investors = await answerOf(page, 'Is the JobReady Platform Live?');
-    expect(investors).toBe('Partly. See What JobReady Does above for the live, pre-launch and planned capabilities.');
-    expect((await faqJsonLd(page)).find((q) => q.name === 'Is the JobReady Platform Live?')?.text).toBe(investors);
+    const investors = await answerOf(page, Q);
+    expect(investors).toBe('See What JobReady Does above, from the AI Tutor to the work marketplaces.');
+    expect((await faqJsonLd(page)).find((q) => q.name === Q)?.text).toBe(investors);
   });
 
-  test('the platform page’s meta description names the live modules the menu names and fits the 155-character limit', async ({ page }) => {
+  // WP163 (owner answers of 3 November 2026): the description names capabilities the menu names, with no live label (it read "... Partner portals and AI chat are live; more modules follow.").
+  test('the platform page’s meta description names the capabilities the menu names and fits the 155-character limit', async ({ page }) => {
     await open(page, 'our-model/jobready-platform/');
     const description = (await page.locator('meta[name="description"]').getAttribute('content')) ?? '';
     // WP53 (owner decision 2026-10-16): JobReady is "CodersTrust’s digital learning and earning platform"
-    expect(description).toBe('JobReady is CodersTrust’s digital learning and earning platform. Partner portals and AI chat are live; more modules follow.');
+    expect(description).toBe('JobReady is CodersTrust’s digital learning and earning platform: an AI Tutor, adaptive learning paths, an AI career coach and work marketplaces.');
     expect(description.length).toBeLessThanOrEqual(155);
   });
 });

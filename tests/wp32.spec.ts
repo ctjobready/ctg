@@ -108,7 +108,8 @@ test.describe('Investors', () => {
     await open(page, 'partner-with-us/investors/');
     const lead = page.locator('main .hero .hero__lead').first();
     // the two marketplaces are named as two (IN-04's wording; tests/wp25s.spec.ts forbids "employer and gig-work")
-    await expect(lead).toHaveText('Back JobReady’s staged rollout, built on CodersTrust’s training and mentoring programs. Partner portals and AI chat are live; the employer marketplace and the gig-work marketplace are in pre-launch.');
+    // WP163 (owner answers of 3 November 2026): the second sentence says what JobReady offers (IN-04), with no live or pre-launch label.
+    await expect(lead).toHaveText('Back JobReady’s staged rollout, built on CodersTrust’s training and mentoring programs. JobReady offers an AI Tutor, adaptive learning paths, an AI career coach, partner portals, the employer marketplace and the gig-work marketplace.');
     expect(await lead.getAttribute('data-fact')).toBe('IN-04');
     await expect(page.getByRole('heading', { level: 1 })).toHaveText('Invest in a Platform Built to Connect Emerging-Market Youth to Work');
     await expect(page.locator('main .hero .btn--primary')).toHaveCount(1);

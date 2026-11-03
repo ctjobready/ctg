@@ -63,7 +63,7 @@ test.describe('YouthWIDE: no "What Success Looks Like" band (item 1; WP48: the b
 test.describe('"What Does It Cost?" and Home’s inclusions heading: standard inclusions are for supported youth cohorts (item 2)', () => {
   // WP43 (cycle-20 review): the answer is three shorter sentences; the inclusions are still said for "Supported youth cohorts" ("include ..."), and the separately budgeted items stay
   const COST =
-    'Pricing is set per program; we share an indicative budget in the discovery session. Supported youth cohorts include outreach and selection, training, certification exam preparation (exam fees and attempts set per program), three months of mentoring, placement support and 12 months of outcome tracking after each course. Devices, stipends, connectivity and independent evaluation are budgeted separately where needed.';
+    'Pricing is set per program; we share an indicative budget in the discovery session. Supported youth cohorts include outreach and selection, training, certification exam preparation and one exam fee per trainee (any further attempts set per program), three months of mentoring, placement support and 12 months of outcome tracking after each course. Devices, stipends, connectivity and independent evaluation are budgeted separately where needed.';
 
   test('the partner hub FAQ says it for supported youth cohorts, in three sentences, and the FAQ JSON-LD says the same words', async ({ page }) => {
     await open(page, 'partner-with-us/');
@@ -151,34 +151,36 @@ test.describe('Programs hub: the trial is one line (item 4)', () => {
   });
 });
 
-test.describe('JobReady Platform: the status question points to "Rollout Status" (item 5)', () => {
-  const ANSWER = 'Partly. See Rollout Status above for what is live and what is in pre-launch.';
+// WP163 (owner answers of 3 November 2026): the question is "What Does the JobReady Platform Offer?" and points to "Platform Capabilities" (the band was "Rollout Status"; its id #status is kept), with no live or pre-launch label.
+test.describe('JobReady Platform: the platform question points to "Platform Capabilities" (item 5)', () => {
+  const Q = 'What Does the JobReady Platform Offer?';
+  const ANSWER = 'See Platform Capabilities above, from the AI Tutor to the work marketplaces.';
 
-  test('the answer is one short pair of sentences, "Rollout Status" is a link to the rollout band, and the FAQ JSON-LD says the same words', async ({ page }) => {
+  test('the answer is one short sentence, "Platform Capabilities" is a link to the capabilities band, and the FAQ JSON-LD says the same words', async ({ page }) => {
     await open(page, 'our-model/jobready-platform/');
-    const item = page.locator('#faq details', { has: page.locator('summary', { hasText: 'Is the JobReady Platform Live?' }) });
+    const item = page.locator('#faq details', { has: page.locator('summary', { hasText: Q }) });
     expect(compact(await item.locator('.faq__a').textContent())).toBe(ANSWER);
     const link = item.locator('.faq__a a');
-    await expect(link).toHaveText('Rollout Status');
+    await expect(link).toHaveText('Platform Capabilities');
     expect(await link.getAttribute('href')).toBe('#status');
-    await expect(page.locator('section#status h2')).toHaveText('Rollout Status');
-    expect((await faqJsonLd(page)).find((q) => q.name === 'Is the JobReady Platform Live?')?.text).toBe(ANSWER);
+    await expect(page.locator('section#status h2')).toHaveText('Platform Capabilities');
+    expect((await faqJsonLd(page)).find((q) => q.name === Q)?.text).toBe(ANSWER);
     expect(await item.locator('.faq__a p').getAttribute('data-fact')).toBe('IN-04');
   });
 
   test('the link reaches the band; the shared answer is unchanged where it is asked elsewhere (Employers)', async ({ page }) => {
     await open(page, 'our-model/jobready-platform/');
-    await page.locator('#faq .faq__a a', { hasText: 'Rollout Status' }).click();
+    await page.locator('#faq .faq__a a', { hasText: 'Platform Capabilities' }).click();
     await expect(page).toHaveURL(/#status$/);
     await open(page, 'partner-with-us/employers/');
-    const answer = compact(await page.locator('#faq details', { has: page.locator('summary', { hasText: 'Is the JobReady Platform Live?' }) }).locator('.faq__a').textContent());
-    // WP48 (cycle-23 review): the shared answer names the live modules a partner or employer deals with, not the internal tooling (tests/wp48.spec.ts)
-    expect(answer).toContain('Partner portals and AI chat are live; the employer marketplace and the gig-work marketplace are in pre-launch.');
+    const answer = compact(await page.locator('#faq details', { has: page.locator('summary', { hasText: Q }) }).locator('.faq__a').textContent());
+    // WP48 (cycle-23 review): the shared answer names what a partner or employer deals with, not the internal tooling (tests/wp48.spec.ts)
+    expect(answer).toContain('JobReady offers an AI Tutor, AI-driven personalized and adaptive learning paths, automated assessment and feedback, an AI career coach, partner portals, AI chat, the employer marketplace and the gig-work marketplace.');
   });
 
   test('the page carries today’s date, the day its wording changed', async ({ page }) => {
     await open(page, 'our-model/jobready-platform/');
-    expect(compact(await page.locator('.lf-updated').textContent())).toBe('Last updated November 2, 2026'); // WP104: the page's wording last changed on 29 October (WP102); WP141 changed it on 1 November
+    expect(compact(await page.locator('.lf-updated').textContent())).toBe('Last updated November 3, 2026'); // WP104: the page's wording last changed on 29 October (WP102); WP141 changed it on 1 November; WP163 on 3 November
   });
 });
 

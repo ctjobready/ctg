@@ -5,6 +5,7 @@ import ModelDiagram from '../../ui/ModelDiagram.astro';
 import Icon from '../../system/Icon.astro';
 import PositioningStatement from '../../sections/PositioningStatement.astro';
 import { WHERE_THEY_WORK_TEXT } from '../partners/partners';
+import { DELIVERY_MODEL } from '../../../data/copy';
 import { linkAttrs } from '../../../lib/url';
 
 /**
@@ -37,7 +38,8 @@ const {
   eyebrow = 'How It Works',
   blocks = [
     { label: 'Who We Reach', title: 'Educated, Unemployed and Underemployed Youth', text: 'Outreach and selection with local partners.', icon: 'users' },
-    { label: 'How We Reach Them', title: 'Blended Training', text: 'Training in existing labs and colleges, led by facilitators trained by CodersTrust (Training of Trainers), with delivery designed to work where connectivity is limited.', icon: 'graduation-cap' },
+    // WP163 (owner answers of 3 November 2026): Home states the delivery model once, here (DELIVERY_MODEL, the AI-supported flipped classroom).
+    { label: 'How We Reach Them', title: 'AI-Supported Blended Training', text: `Training in existing labs and colleges, led by facilitators trained by CodersTrust (Training of Trainers), with delivery designed to work where connectivity is limited. ${DELIVERY_MODEL.text}`, icon: 'graduation-cap' },
     { label: 'What We Deliver', title: 'Skills, Certification Preparation and Mentoring', text: 'Industry certification exam preparation by track, then three months of milestone-based mentoring.', icon: 'award' },
     { label: 'Where They Work', title: 'Local, Remote and Global Work', text: WHERE_THEY_WORK_TEXT, icon: 'globe' },
   ],

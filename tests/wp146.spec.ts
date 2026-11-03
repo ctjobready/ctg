@@ -41,7 +41,8 @@ test('Polish 3: the trial sentence gives the income result and leaves +10.3 to t
 
 test('Polish 4: Universities certification card names exam fees', () => {
   const text = main('partner-with-us/universities/index.html');
-  expect(text).toContain('100 training hours per certification, including exam preparation; exam fees, eligibility and attempts are set per program.');
+  // WP163 (owner answers of 3 November 2026): the card names one exam fee per trainee (it read "exam fees, eligibility and attempts are set per program").
+  expect(text).toContain('100 training hours per certification, including exam preparation and one exam fee per trainee; exam eligibility and any further attempts are set per program.');
   expect(text).not.toContain('eligibility, attempts and terms are set per program');
 });
 

@@ -294,8 +294,9 @@ test.describe('Item 8: Our Model’s scale card says "After about five months of
   });
 
   test('the register’s PD-06 text is unchanged ("from about month 5")', () => {
+    // WP163 (owner answers of 3 November 2026): lectures are pre-recorded, so PD-06 no longer gives a lecture class size; "from about month 5" is unchanged.
     expect(fact('PD-06').text).toBe(
-      'Up to 10 certification cohorts in parallel from about month 5; classes of 20 (labs) and 40 (lectures); hub-and-spoke delivery with facilitators trained by CodersTrust for larger programs',
+      'Up to 10 certification cohorts in parallel from about month 5; classes of 20 (labs); hub-and-spoke delivery with facilitators trained by CodersTrust for larger programs',
     );
   });
 });

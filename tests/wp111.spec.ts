@@ -49,7 +49,8 @@ test.describe('WP111 item 1: SDG 9 is named "Industry, Innovation and Infrastruc
 test.describe('WP111 item 2: Development Partners first portfolio card', () => {
   test('the card reads the new sentence and the old one is gone', () => {
     const html = visibleText(distHtml('partner-with-us/development-partners/index.html'));
-    expect(html).toContain('Certification exam preparation, three months of mentoring and placement support in one program; exam fees and attempts set per program.');
+    // WP163 (owner answers of 3 November 2026): one exam fee per trainee is included, any further attempts set per program (it read "...; exam fees and attempts set per program.").
+    expect(html).toContain('Certification exam preparation and one exam fee per trainee (any further attempts set per program), three months of mentoring and placement support in one program.');
     expect(html).not.toContain('Certification exam preparation with the exam fee included, three months of mentoring and placement support, in one program.');
   });
 });

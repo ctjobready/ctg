@@ -53,7 +53,7 @@ import StepFlow from '../../../components/ui/StepFlow.astro';
 import Reinforcement from '../../../components/pages/partners/Reinforcement.astro';
 import PageEnhancements from '../../../components/pages/partners/PageEnhancements.astro';
 import { LINKS, meta } from '../../../components/pages/partners/partners';
-import { C14, EMPLOYER_HIRING_STEPS, HEADLINE, MICRO_COMMITMENT, POSITIONING, PROGRAM_SCOPE_INCLUSIONS, VALUE_PROPOSITION, withSourceNote } from '../../../data/copy';
+import { C14, DELIVERY_MODEL, EMPLOYER_HIRING_STEPS, HEADLINE, MICRO_COMMITMENT, POSITIONING, PROGRAM_SCOPE_INCLUSIONS, VALUE_PROPOSITION, withSourceNote } from '../../../data/copy';
 import { contractScope } from '../../../components/sections/copyText';
 import { fact } from '../../../data/facts';
 import { faqJsonLd } from '../../../lib/faq';
@@ -181,7 +181,8 @@ if (aws !== 'AWS Authorized Training Partner') throw new Error('Employers: PA-06
     cards={[
       { icon: 'users', title: 'Job-Ready Candidates for Your Roles', text: 'Access to candidates from CodersTrust’s placement team for your roles, plus trainees from certification tracks chosen from employer demand.', facts: ['IN-04', 'PD-10'] },
       { icon: 'cpu', title: 'AI Content Agreed Before Training', text: 'An AI-ready curriculum, designed to prepare people to work with AI tools. Each track’s AI content is agreed with you before training starts.', facts: ['PD-02', 'IN-10'] },
-      { icon: 'presentation', title: 'Customized Curriculum and Workshops', text: 'JobReady@Work builds a customized curriculum and interactive workshops, so your team learns on tasks from your own roles.', facts: ['IN-10'] },
+      // WP163 (owner answers of 3 November 2026): the card states the delivery model once on this page (DELIVERY_MODEL, the AI-supported flipped classroom).
+      { icon: 'presentation', title: 'Customized Curriculum and Workshops', text: `JobReady@Work builds a customized curriculum and interactive workshops, so your team learns on tasks from your own roles. ${DELIVERY_MODEL.text}`, facts: ['IN-10', 'PD-01', 'IN-04'] },
     ]}
     scope={PROGRAM_SCOPE_INCLUSIONS}
   />

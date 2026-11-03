@@ -139,9 +139,10 @@ test.describe('4 Investors', () => {
     const text = main(INVESTORS);
     expect(text).toContain('Prosper Career Paths and Continuing Development Career paths built on TalentLEAP’s assessed skill units, with continuing development.');
     expect(text).not.toContain('progressive levels are planned beyond the first published level');
-    expect(text).toContain('The first published TalentLEAP level is Competent; Proficient and Expert levels are planned.');
+    // WP163 (owner answers of 3 November 2026): no level is labelled planned; the card names the three levels once (it said "The first published TalentLEAP level is Competent; Proficient and Expert levels are planned.").
+    expect(text).toContain('TalentLEAP’s levels run from Competent to Proficient and Expert');
     expect(count(text, /Proficient and Expert/g)).toBe(1);
-    expect(count(text, /\blevels are planned\b/gi)).toBe(1);
+    expect(count(text, /\blevels are planned\b/gi)).toBe(0);
     expect(count(text, /progressive levels/gi)).toBe(0);
   });
 
@@ -151,7 +152,7 @@ test.describe('4 Investors', () => {
     const titles = [...band.matchAll(/<h3 class="card__title"[^>]*>([^<]+)<\/h3>/g)].map((m) => decode(m[1]));
     expect(titles).toEqual(['Young People Need Work and Employers Need Skills', 'AI Skills Are in Rising Demand', 'Connect Learning to Paid Work']);
     const text = visible(band);
-    expect(text).toContain('JobReady is being built to link learners to paid work through mentoring and placement support.');
+    expect(text).toContain('JobReady is designed to link learners to paid work through mentoring and placement support.');
     expect(text.indexOf('AI Skills Are in Rising Demand')).toBeLessThan(text.indexOf('Connect Learning to Paid Work'));
   });
 });
@@ -185,7 +186,7 @@ test.describe('5 NU Post Graduate Diploma: "Ready to Apply?" has no lead repeati
 
 test('6 Home: the "Blended Training" card (Home’s first explanation of delivery) names who teaches, in the long form, once', () => {
   const text = main(HOME);
-  expect(text).toContain(`How We Reach Them Blended Training Training in existing labs and colleges, led by ${LONG}, with delivery designed to work where connectivity is limited.`); // WP154: reworded; tests/wp154.spec.ts holds the new text
+  expect(text).toContain(`How We Reach Them AI-Supported Blended Training Training in existing labs and colleges, led by ${LONG}, with delivery designed to work where connectivity is limited.`); // WP154: reworded; tests/wp154.spec.ts holds the new text. WP163: the title is "AI-Supported Blended Training"
   expect(count(text, LONG)).toBe(1);
   expect(count(text, SHORT_FORM)).toBe(0);
   // It is Home’s first delivery explanation: no earlier block names labs, colleges or blended delivery.

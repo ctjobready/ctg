@@ -65,7 +65,7 @@ import RouteLink from '../../../components/pages/partners/RouteLink.astro';
 import Reinforcement from '../../../components/pages/partners/Reinforcement.astro';
 import PageEnhancements from '../../../components/pages/partners/PageEnhancements.astro';
 import { HOURS, KOSOVO_WOW_TILE_LABEL, LINKS, UNDP_YES_TILE_LABEL, WHERE_THEY_WORK_TEXT, funderOptionCards, meta } from '../../../components/pages/partners/partners';
-import { ACCOUNTABILITY, HEADLINE, MICRO_COMMITMENT, POSITIONING, PROGRAM_SCOPE_STATEMENT_EXAMS, PROGRAM_SIZES_NOTE, READ_THE_EVIDENCE, VALUE_PROPOSITION, WB_KOSOVO } from '../../../data/copy';
+import { ACCOUNTABILITY, DELIVERY_MODEL, HEADLINE, MICRO_COMMITMENT, POSITIONING, PROGRAM_SCOPE_STATEMENT_EXAMS, PROGRAM_SIZES_NOTE, READ_THE_EVIDENCE, VALUE_PROPOSITION, WB_KOSOVO } from '../../../data/copy';
 import { fact } from '../../../data/facts';
 import { faqJsonLd } from '../../../lib/faq';
 import { cta } from '../../../lib/mailto';
@@ -97,7 +97,7 @@ const FAQ_IDS = ['Q1-development-partners', 'Q6-development-partners', 'Q3', 'Q1
   description={description}
   path={PATH}
   breadcrumbs={[{ label: 'Partner with Us', href: LINKS.hub }, { label: 'Development Partners and NGOs' }]}
-  jsonLd={[webPage({ path: PATH, name: title, description, dateModified: '2026-11-02' }), faqJsonLd('development-partners', PATH, FAQ_IDS)]}
+  jsonLd={[webPage({ path: PATH, name: title, description, dateModified: '2026-11-03' }), faqJsonLd('development-partners', PATH, FAQ_IDS)]}
   stickyCta={{ label: primary.label, href: primary.href }}
 >
   <!-- C1 · Identity hook -->
@@ -191,7 +191,8 @@ const FAQ_IDS = ['Q1-development-partners', 'Q6-development-partners', 'Q3', 'Q1
   <IncludesBand
     title="What Your Portfolio Gets"
     cards={[
-      { icon: 'route', title: 'Training, Mentoring and Placement Support', text: 'Certification exam preparation, three months of mentoring and placement support in one program; exam fees and attempts set per program.', facts: ['PD-01'] },
+      // WP163 (owner answers of 3 November 2026): one exam fee per trainee is included, any further attempts set per program, and the card states the delivery model once on this page (DELIVERY_MODEL).
+      { icon: 'route', title: 'Training, Mentoring and Placement Support', text: `Certification exam preparation and one exam fee per trainee (any further attempts set per program), three months of mentoring and placement support in one program. ${DELIVERY_MODEL.text}`, facts: ['PD-01', 'PD-02a', 'IN-04'] },
       { icon: 'map-pin', title: 'Accessible Local Delivery', text: 'Outreach, accessible selection and tracks chosen from employer demand, with safeguarding agreed for each program.', facts: ['PD-02', 'PD-10', 'PD-12'] },
       { icon: 'clipboard-check', title: 'Progress Your Evaluators Can Check', text: 'Baseline data, follow-up surveys and monthly reports, with documentary evidence where available.', facts: ['PD-08', 'PD-09'] },
     ]}

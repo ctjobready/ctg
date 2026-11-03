@@ -271,9 +271,10 @@ test.describe('Our Model', () => {
     const rows = page.locator('#status tbody th');
     await expect(rows).toContainText(['Train', 'Connect to Work', 'Supply Talent', 'Equip Institutions']);
     await expect(page.locator('#why a', { hasText: 'How TalentLEAP Works' })).toHaveCount(1);
-    // WP49 (cycle-24 review): the "What Is Live Today" callout is gone; the roadmap says adaptive learning is planned, not live
-    // WP63 (cycle-35 review, GPT-6.1 Sol GP3, polish): "..., not live yet."
-    await expect(page.locator('#roadmap')).toContainText('not live yet.');
+    // WP49 (cycle-24 review): the "What Is Live Today" callout is gone. WP63 had the roadmap band say adaptive learning was "not live yet."; WP163 (owner answers of 3 November 2026) removed that band:
+    // no capability carries a live or planned label, and adaptive learning is a row of the capabilities table.
+    await expect(page.locator('#roadmap')).toHaveCount(0);
+    await expect(page.locator('#status tbody tr', { hasText: 'Personalized and adaptive learning paths' })).toHaveCount(1);
   });
 
   test('TalentLEAP: How It Works is the five-step stage pipeline (no repeated rows) and every On This Page label equals its heading', async ({ page }) => {

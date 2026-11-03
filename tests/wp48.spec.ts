@@ -223,21 +223,23 @@ test.describe('YouthWIDE: the labs tile carries the registered qualifier (item 1
   });
 });
 
-test.describe('"Is the JobReady Platform Live?" (item 5)', () => {
-  const ANSWER = 'Partner portals and AI chat are live; the employer marketplace and the gig-work marketplace are in pre-launch. Hiring currently runs through CodersTrust’s placement team.';
+// WP163 (owner answers of 3 November 2026): the question is "What Does the JobReady Platform Offer?" (it asked "Is the JobReady Platform Live?"), and the answer names IN-04's capabilities with no live or pre-launch label.
+test.describe('"What Does the JobReady Platform Offer?" (item 5)', () => {
+  const Q = 'What Does the JobReady Platform Offer?';
+  const ANSWER = 'JobReady offers an AI Tutor, AI-driven personalized and adaptive learning paths, automated assessment and feedback, an AI career coach, partner portals, AI chat, the employer marketplace and the gig-work marketplace. Hiring runs through CodersTrust’s placement team.';
 
   test('Employers and JobReady@Work give the short answer, without the internal tooling; the JSON-LD says what the page says', async ({ page }) => {
     for (const route of ['partner-with-us/employers/', 'programs/jobready-work/']) {
       await open(page, route);
-      const answer = await answerOf(page, 'Is the JobReady Platform Live?');
+      const answer = await answerOf(page, Q);
       expect(answer, route).toBe(ANSWER);
       expect(answer, route).not.toMatch(/marketing automation|customer relationship management|Upwork|Fiverr|employer and gig-work/i);
-      expect((await faqJsonLd(page)).find((q) => q.name === 'Is the JobReady Platform Live?')?.text, route).toBe(answer);
+      expect((await faqJsonLd(page)).find((q) => q.name === Q)?.text, route).toBe(answer);
     }
   });
 
   test('the JobReady Platform page and the register keep the full list', async ({ page }) => {
-    expect(fact('IN-04').text).toContain('Live today: partner portals, marketing automation, customer relationship management and AI chat. In pre-launch: the employer marketplace and the gig-work marketplace.');
+    expect(fact('IN-04').text).toContain('partner portals, marketing automation, customer relationship management, AI chat, the employer marketplace and the gig-work marketplace.'); // WP163: no live or pre-launch label
     await open(page, 'our-model/jobready-platform/');
     // WP49 (cycle-24 review): the "What Is Live Today" callout is gone; the status table keeps the full list (its "Across the Platform" row and the partner-portals row; tests/wp49.spec.ts)
     const text = compact(await page.locator('main').textContent());

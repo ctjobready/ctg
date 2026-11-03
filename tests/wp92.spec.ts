@@ -26,9 +26,10 @@ const SC02_DETAIL =
 const HER_POWER_TILE = 'Her Power: tracked women in work (47%), among the 2,400 women CodersTrust trained directly';
 const WHERE_THEY_WORK_BODY =
   'Placement support, then follow-up surveys at 3, 6 and 12 months after each course.'; // WP155 (Polish 5): was "Placement support into local, remote and global work, with monthly reports to the agency and follow-up surveys ..."
-const BLENDED_TITLE = 'Blended Training and Certification Preparation';
+// WP163 (owner answers of 3 November 2026): the card is "AI-Supported Training and Certification Preparation" (it was "Blended Training and Certification Preparation"); it opens with the delivery model.
+const BLENDED_TITLE = 'AI-Supported Training and Certification Preparation';
 const GLOBAL_REACH_NOTE_END = 'New York is the headquarters, not one of the 16 locations. Most delivery has been in Bangladesh.';
-const PORTFOLIO_CARD_1 = 'Certification exam preparation, three months of mentoring and placement support in one program; exam fees and attempts set per program.';
+const PORTFOLIO_CARD_1 = 'Certification exam preparation and one exam fee per trainee (any further attempts set per program), three months of mentoring and placement support in one program. Training follows an AI-supported flipped classroom: all lectures are pre-recorded and an AI Tutor supports every learner, so mentors’ time goes to Q&A and to handholding beyond what the AI Tutor can provide.';
 const DOICT_LINE = 'DoICT agreement target: 20M+ students through 9,000+ digital labs in Bangladesh.';
 const NCTB_LINE = 'NCTB agreement target: 20M+ students.';
 const SUPERKIDS_MEANS = 'A school can bring these into the classroom, so children build digital skills early.';
@@ -86,7 +87,7 @@ test.describe('WP92 A4: the Impact Delivered tile has its own note; the 16 sente
 });
 
 test.describe('WP92 A5: the Our Model certification card has the preparation heading', () => {
-  test('the card reads "Blended Training and Certification Preparation" and the body is unchanged', async ({ page }) => {
+  test('the card reads "AI-Supported Training and Certification Preparation" and the hours sentence is unchanged', async ({ page }) => {
     await open(page, 'our-model/');
     const card = page.locator('#delivery .card', { hasText: BLENDED_TITLE });
     await expect(card).toHaveCount(1);

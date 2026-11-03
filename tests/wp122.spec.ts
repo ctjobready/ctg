@@ -69,8 +69,10 @@ test.describe('WP122, TalentLEAP: the caveat once, and no "planned" levels insid
     expect(t).not.toContain('Example only'); // WP157 (F12): the caption repeated the H2
     expect(t).not.toContain('Competent is the published first level');
   });
-  test('the lede still says once that Proficient and Expert levels are planned', () => {
-    expect(count(text(TL), 'Proficient and Expert levels are planned.')).toBe(1);
+  // WP163 (owner answers of 3 November 2026): no level is labelled planned; the lede names the three levels once instead ("Its levels run from Competent to Proficient and Expert.").
+  test('the lede names the three levels once and no longer says they are planned', () => {
+    expect(count(text(TL), 'Its levels run from Competent to Proficient and Expert.')).toBe(1);
+    expect(count(text(TL), 'Proficient and Expert levels are planned.')).toBe(0);
   });
 });
 

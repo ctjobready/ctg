@@ -215,7 +215,8 @@ test.describe('mega-menu featured panels point to a different decisive page than
     await open(page, '');
     const cases: [string, string, string][] = [
       ['about', '/about/governance/', 'How CodersTrust is organized and reports to partners.'],
-      ['model', '/our-model/jobready-platform/', 'Partner portals and AI chat are live; the employer marketplace and the gig-work marketplace are in pre-launch.'],
+      // WP163 (owner answers of 3 November 2026): the platform line says what JobReady offers, with no live or pre-launch label
+      ['model', '/our-model/jobready-platform/', 'An AI Tutor, adaptive learning paths, an AI career coach, partner portals and work marketplaces.'],
       // WP54 (cycle-28 review, Claude S7): the line no longer carries the Bangladesh aim (tests/wp54.spec.ts)
       ['programs', '/programs/youthwide/', 'Co-funded country cohorts, designed for three regions, from training to paid digital work.'],
       // WP48 (cycle-23 review): the Governments blurb no longer implies a delivered national program (tests/wp48.spec.ts)

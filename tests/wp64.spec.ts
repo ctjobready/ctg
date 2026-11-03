@@ -368,14 +368,16 @@ test.describe('Item 7 (GLM, Gemini, Claude): three polish fixes', () => {
   });
 
   test('TalentLEAP’s opening and Investors’ "Learn Through TalentLEAP" card say "The first published TalentLEAP level is Competent; Proficient and Expert levels are planned."; the old sentence is on no built page', async ({ page }) => {
-    const SENTENCE = 'The first published TalentLEAP level is Competent; Proficient and Expert levels are planned.';
+    // WP163 (owner answers of 3 November 2026): no level is labelled planned; the opening names the three levels, and the Investors card names them with the adaptive learning paths and then states the
+    // delivery model (it said "The first published TalentLEAP level is Competent; Proficient and Expert levels are planned." in both places).
+    const SENTENCE = 'Its levels run from Competent to Proficient and Expert.';
     await open(page, TALENTLEAP);
     expect(compact(await page.locator('.lf-head .lead').textContent())).toBe(
       `TalentLEAP organizes learning around assessed skill units and career paths. ${SENTENCE} Learners move through three stages, Learn, Earn and Prosper, with three months of milestone-based mentoring after the course.`,
     );
     await open(page, INVESTORS);
     await expect(page.locator('#features li.card').first().locator('h3')).toHaveText('Learn Through TalentLEAP');
-    expect(await texts(page, '#features li.card:nth-child(1) p')).toEqual([`${SENTENCE} Supported cohorts include mentoring, certification exam preparation and placement support. Cohort inclusions on this page are agreed in each program’s scope.`]); // WP142: the page's one scope sentence follows the cohort-inclusions sentence
+    expect(await texts(page, '#features li.card:nth-child(1) p')).toEqual([`TalentLEAP’s levels run from Competent to Proficient and Expert, with AI-driven personalized and adaptive learning paths. Training follows an AI-supported flipped classroom: all lectures are pre-recorded and an AI Tutor supports every learner, so mentors’ time goes to Q&A and to handholding beyond what the AI Tutor can provide. Supported cohorts include mentoring, certification exam preparation and placement support. Cohort inclusions on this page are agreed in each program’s scope.`]); // WP142: the page's one scope sentence follows the cohort-inclusions sentence
     expect(pagesWith('Competent is the published first level; Proficient and Expert are planned')).toEqual([]);
     expect(fact('IN-08').text).toContain('Competent is the first level; Proficient and Expert are planned');
   });

@@ -53,6 +53,8 @@ interface PageSpec {
 const SCOPE_RESULTS = 'Follow-up surveys, monthly reports and documentary evidence where available give your institution outcome data it can report.';
 const CERT_AND_MENTORING = 'Industry certification exam preparation by track, followed by three months of milestone-based mentoring toward a first client or a first job.';
 const EMPLOYER_SKILLS = 'Tracks are set from employer demand in an AI-ready curriculum, built around the skills employers say they cannot find.';
+// WP163 (owner answers of 3 November 2026): the pages that describe the training offer state the delivery model once, in one of these cards (src/data/copy.ts DELIVERY_MODEL; tests/wp163.spec.ts).
+const DELIVERY = 'Training follows an AI-supported flipped classroom: all lectures are pre-recorded and an AI Tutor supports every learner, so mentors’ time goes to Q&A and to handholding beyond what the AI Tutor can provide.';
 
 /** The three cards of each page's "What You Get" band, in the order of the page's three pains. Each page's cards are derived from the rows its matrix had (cycle-16 review, item 1). */
 const PAGES: PageSpec[] = [
@@ -61,7 +63,7 @@ const PAGES: PageSpec[] = [
     h2: 'What Your Portfolio Gets',
     cards: [
       // WP49 (cycle-24 review): the 100 hours per certification stay in the delivery model above (tests/wp49.spec.ts); WP65 (cycle-37 review, Gemini, Sonnet): "CodersTrust connects training, mentoring and placement support in one program." (it said "One delivery partner connects ...")
-      { title: 'Training, Mentoring and Placement Support', text: 'Certification exam preparation, three months of mentoring and placement support in one program; exam fees and attempts set per program.', facts: ['PD-01'] },
+      { title: 'Training, Mentoring and Placement Support', text: 'Certification exam preparation and one exam fee per trainee (any further attempts set per program), three months of mentoring and placement support in one program. Training follows an AI-supported flipped classroom: all lectures are pre-recorded and an AI Tutor supports every learner, so mentors’ time goes to Q&A and to handholding beyond what the AI Tutor can provide.', facts: ['PD-01', 'PD-02a', 'IN-04'] },
       { title: 'Accessible Local Delivery', text: 'Outreach, accessible selection and tracks chosen from employer demand, with safeguarding agreed for each program.', facts: ['PD-02', 'PD-10', 'PD-12'] },
       { title: 'Progress Your Evaluators Can Check', text: 'Baseline data, follow-up surveys and monthly reports, with documentary evidence where available.', facts: ['PD-08', 'PD-09'] },
     ],
@@ -71,7 +73,7 @@ const PAGES: PageSpec[] = [
     h2: 'What Your Agency Gets',
     cards: [
       // WP49 (cycle-24 review): "completers", the site's word for people who finished a program (it said "graduates"); WP62 (cycle-34 review, Gemini): "... placement support toward local, remote and global work." (it said "... that point completers toward paid work.")
-      { title: 'Certification Preparation and Placement Support', text: 'Certification tracks chosen from employer demand, then three months of mentoring and placement support toward local, remote and global work.', facts: ['PD-10', 'PD-01'] },
+      { title: 'Certification Preparation and Placement Support', text: `Certification tracks chosen from employer demand, then three months of mentoring and placement support toward local, remote and global work. ${DELIVERY}`, facts: ['PD-10', 'PD-01', 'IN-04'] },
       { title: 'Spending Measured Against Outcomes', text: 'A pilot scorecard with cost per completer and per verified outcome, and monthly reports. Spending is reported against the agreed scorecard.', facts: ['PD-11', 'PD-08'] },
       {
         title: 'Capacity Designed to Stay in Your System',
@@ -89,8 +91,8 @@ const PAGES: PageSpec[] = [
         title: 'Mentoring, Placement Support and Outcome Tracking',
         // WP49 (cycle-24 review): the scorecard also covers completion, certification and sustained work (PD-11), so results are measured against it, "including first paid work, not attendance alone"
         // WP161-A (A-26, A-29): three months of mentoring on both cards; Governments' spending is reported against the scorecard
-        text: 'Three months of mentoring and placement support are standard inclusions, and outcomes are tracked for 12 months after each course. Results are measured against the agreed scorecard, including first paid work, not attendance alone.',
-        facts: ['PD-01', 'PD-02', 'PD-11'],
+        text: `${DELIVERY} Three months of mentoring and placement support are standard inclusions, and outcomes are tracked for 12 months after each course. Results are measured against the agreed scorecard, including first paid work, not attendance alone.`,
+        facts: ['PD-01', 'PD-02', 'PD-11', 'IN-04'],
       },
       { title: 'A Pilot Scorecard Agreed with You', text: 'Cost per completer and per verified outcome, with thresholds agreed before the first cohort starts.', facts: ['PD-11'] },
       {
@@ -105,7 +107,7 @@ const PAGES: PageSpec[] = [
     route: 'partner-with-us/universities/',
     h2: 'What Your Students and Your Institution Get',
     cards: [
-      { title: 'Certification Exam Preparation and Mentoring', text: CERT_AND_MENTORING, facts: ['PD-02', 'PD-01'] },
+      { title: 'Certification Exam Preparation and Mentoring', text: `${CERT_AND_MENTORING} ${DELIVERY}`, facts: ['PD-02', 'PD-01', 'IN-04'] },
       { title: 'Skills Employers Ask For', text: EMPLOYER_SKILLS, facts: ['PD-10', 'PD-02'] },
       { title: 'Placement Evidence You Can Report', text: SCOPE_RESULTS, facts: ['PD-08', 'PD-09'] },
     ],
@@ -116,7 +118,7 @@ const PAGES: PageSpec[] = [
     cards: [
       { title: 'Job-Ready Candidates for Your Roles', text: 'Access to candidates from CodersTrust’s placement team for your roles, plus trainees from certification tracks chosen from employer demand.', facts: ['IN-04', 'PD-10'] },
       { title: 'AI Content Agreed Before Training', text: 'An AI-ready curriculum, designed to prepare people to work with AI tools. Each track’s AI content is agreed with you before training starts.', facts: ['PD-02', 'IN-10'] }, // WP142 (kit 109): team-training wording, no youth-cohort "work-entry plan" or "enrollment"
-      { title: 'Customized Curriculum and Workshops', text: 'JobReady@Work builds a customized curriculum and interactive workshops, so your team learns on tasks from your own roles.', facts: ['IN-10'] },
+      { title: 'Customized Curriculum and Workshops', text: `JobReady@Work builds a customized curriculum and interactive workshops, so your team learns on tasks from your own roles. ${DELIVERY}`, facts: ['IN-10', 'PD-01', 'IN-04'] },
     ],
   },
   {
@@ -126,8 +128,8 @@ const PAGES: PageSpec[] = [
       {
         title: 'Facilitator Training and a Local Curriculum',
         // WP52 (cycle-27 review): what stays after funding ends is scoped ("Where included, ..."); it read "Local capacity stays after a funded cohort ends, ..."
-        text: 'Training of Trainers, a localized curriculum and preparation for industry certification. You do not have to build the curriculum or certification route yourself.',
-        facts: ['PD-06', 'PD-02'],
+        text: `Training of Trainers, a localized curriculum and preparation for industry certification. You do not have to build the curriculum or certification route yourself. ${DELIVERY}`,
+        facts: ['PD-06', 'PD-02', 'PD-01', 'IN-04'],
         pain: 'P1',
       },
       {
@@ -306,11 +308,13 @@ test.describe('Universities: the Guide band does not repeat the National Univers
 });
 
 test.describe('Investors: the platform-status question points to "What JobReady Does", and there is no "Our Approach" statement (items 4 and 5)', () => {
-  const ANSWER = 'Partly. See What JobReady Does above for the live, pre-launch and planned capabilities.';
+  // WP163 (owner answers of 3 November 2026): the question is "What Does the JobReady Platform Offer?" and the answer carries no live, pre-launch or planned label (it was "Partly. See What JobReady Does above for the live, pre-launch and planned capabilities.").
+  const Q = 'What Does the JobReady Platform Offer?';
+  const ANSWER = 'See What JobReady Does above, from the AI Tutor to the work marketplaces.';
 
-  test('the first question answers "Partly." and links "What JobReady Does" to the section above it; the JSON-LD carries the same words', async ({ page }) => {
+  test('the first question links "What JobReady Does" to the section above it; the JSON-LD carries the same words', async ({ page }) => {
     await open(page, 'partner-with-us/investors/');
-    const item = page.locator('#faq details', { has: page.locator('summary', { hasText: 'Is the JobReady Platform Live?' }) }).first();
+    const item = page.locator('#faq details', { has: page.locator('summary', { hasText: Q }) }).first();
     expect(compact(await item.locator('.faq__a').textContent())).toBe(ANSWER);
     const link = item.locator('.faq__a a');
     await expect(link).toHaveCount(1);
@@ -320,7 +324,7 @@ test.describe('Investors: the platform-status question points to "What JobReady 
     await expect(page.locator(href!)).toHaveCount(1);
     await expect(page.locator(`${href} h2`)).toHaveText('What JobReady Does');
     expect(await item.locator('.faq__a p').getAttribute('data-fact')).toBe('IN-04');
-    const ld = (await faqJsonLd(page)).find((q) => q.name === 'Is the JobReady Platform Live?');
+    const ld = (await faqJsonLd(page)).find((q) => q.name === Q);
     expect(ld?.text).toBe(ANSWER);
     expect(compact(await page.locator('main').textContent())).toContain(ANSWER);
   });
@@ -328,7 +332,8 @@ test.describe('Investors: the platform-status question points to "What JobReady 
   // WP41 (cycle-18 review): the platform page points to its "Rollout Status" band the same way (tests/wp41.spec.ts), so the shared answer is in full on Employers and JobReady@Work only
   test('the shared answer stays in full wherever else it is asked (Employers, JobReady@Work); Investors no longer lists the status a third time', async ({ page }) => {
     // WP48 (cycle-23 review): the shared answer is "Partner portals and AI chat are live; the employer marketplace and the gig-work (Earn) marketplace are in pre-launch. Hiring currently runs through CodersTrust’s placement team." (tests/wp48.spec.ts)
-    const shared = 'Partner portals and AI chat are live; the employer marketplace and the gig-work marketplace are in pre-launch.';
+    // WP163: the shared answer says what JobReady offers, with no live or pre-launch label.
+    const shared = 'JobReady offers an AI Tutor, AI-driven personalized and adaptive learning paths, automated assessment and feedback, an AI career coach, partner portals, AI chat, the employer marketplace and the gig-work marketplace.';
     for (const route of ['partner-with-us/employers/', 'programs/jobready-work/']) {
       await open(page, route);
       expect(await page.locator('main').evaluate((el) => el.textContent ?? ''), route).toContain(shared);
@@ -337,8 +342,8 @@ test.describe('Investors: the platform-status question points to "What JobReady 
     const text = await page.locator('main').evaluate((el) => el.textContent ?? '');
     expect(text).not.toContain('Live today: partner portals');
     expect(text).not.toContain('Partly — modules');
-    // the status itself is still on the page, in "What JobReady Does" (the cards that the answer links; WP40: three short cards in place of the table)
-    expect(compact(await page.locator('#features').textContent())).toContain('Partner portals are live, and AI chat is live across the platform.'); // WP144: Investors names AI chat as platform-wide
+    // the capabilities are still on the page, in "What JobReady Does" (the cards that the answer links; WP40: three short cards in place of the table). WP163: with no live label.
+    expect(compact(await page.locator('#features').textContent())).toContain('with automated assessment and feedback and AI chat across the platform.'); // WP144: Investors names AI chat as platform-wide
   });
 
   // WP43 (cycle-20 review): the mechanism band is headed "How JobReady Connects Learning to Work" (it was "A Multi-Sided Model: Learn, Earn, Prosper"), and the "How JobReady Builds on Delivery" band WP39 kept is gone (tests/wp43.spec.ts)

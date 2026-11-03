@@ -308,8 +308,9 @@ test.describe('WP128 item 9: meta descriptions prefer a reorder or a split to se
     expect(GOV.length).toBeLessThanOrEqual(155);
     expect(GOV).not.toContain(';');
   });
-  test('only the three descriptions that join two full clauses keep a semicolon (a new one fails)', () => {
-    const KEPT = ['/news/coderstrust-sets-up-in-india/', '/our-model/jobready-platform/', '/partner-with-us/investors/'];
+  // WP163 (owner answers of 3 November 2026): the JobReady Platform description lists capabilities after a colon (it joined "... are live; more modules follow."), so two keep a semicolon.
+  test('only the two descriptions that join two full clauses keep a semicolon (a new one fails)', () => {
+    const KEPT = ['/news/coderstrust-sets-up-in-india/', '/partner-with-us/investors/'];
     const withSemicolon = listPages()
       .filter((p) => metaContent(read(p), 'description').includes(';'))
       .map((p) => p.route)

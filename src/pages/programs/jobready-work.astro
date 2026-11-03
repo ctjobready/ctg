@@ -24,7 +24,7 @@ import RouteBlock from '../../components/ui/RouteBlock.astro';
 import StepFlow from '../../components/ui/StepFlow.astro';
 import { faqNode, type FaqSource } from '../../components/pages/programs/faq';
 import { PAGE_UPDATED, ctaFor, serviceNode } from '../../components/pages/programs/meta';
-import { C14, EMPLOYER_HIRING_STEPS, MICRO_COMMITMENT, POSITIONING, PROGRAM_SCOPE_INCLUSIONS_EXAMS, statLabelUnder } from '../../data/copy';
+import { C14, DELIVERY_MODEL, EMPLOYER_HIRING_STEPS, MICRO_COMMITMENT, POSITIONING, PROGRAM_SCOPE_INCLUSIONS_EXAMS, statLabelUnder } from '../../data/copy';
 import { fact } from '../../data/facts';
 import { contractScope } from '../../components/sections/copyText';
 import { formatDate, isoDate } from '../../lib/format';
@@ -78,7 +78,7 @@ const approach = [
     title="JobReady@Work at a Glance"
     rows={[
       { label: 'Who It Is For', text: 'Employers who want their teams upskilled for AI workflows, and job-ready digital talent for open roles, introduced through CodersTrust’s placement team and scoped against the experience and credentials available.', facts: ['IN-10', 'IN-04'] },
-      { label: 'Training', text: 'Soft-skills and hard-skills tracks, built around the tasks in your own roles; AI leadership and AI-transformation programs with AIvolve. Certification preparation can be added where a track offers one, with exam eligibility and attempts set per program.', facts: ['IN-10', 'PA-07', 'PD-03'] },
+      { label: 'Training', text: `Soft-skills and hard-skills tracks, built around the tasks in your own roles; AI leadership and AI-transformation programs with AIvolve. Certification preparation and one exam fee per trainee can be added where a track offers one; exam eligibility and any further attempts are set per program. ${DELIVERY_MODEL.text}`, facts: ['IN-10', 'PA-07', 'PD-03', 'PD-02a', 'PD-01', 'IN-04'] },
       { label: 'Measuring Progress', text: 'Post-training support and a progress evaluation against the measures you set, for team capability in the digital and AI tasks defined in the needs assessment.', facts: ['IN-10'] },
     ]}
     scope={PROGRAM_SCOPE_INCLUSIONS_EXAMS}

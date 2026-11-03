@@ -41,21 +41,22 @@ async function faqJsonLd(page: Page) {
 }
 
 test.describe('Investors: "What JobReady Does" is three short cards and one link (item 1)', () => {
+  // WP163 (owner answers of 3 November 2026): the cards say what JobReady offers, with no live, pre-launch, planned or roadmap label; the Learn card states the delivery model, the page's one statement of it.
   const CARDS = [
     {
       title: 'Learn Through TalentLEAP',
-      text: 'The first published TalentLEAP level is Competent; Proficient and Expert levels are planned. Supported cohorts include mentoring, certification exam preparation and placement support. Cohort inclusions on this page are agreed in each program’s scope.', // WP142: the page's one scope sentence follows the cohort-inclusions sentence. WP64 (cycle-36 review, Claude): it said "Competent is the published first level; Proficient and Expert are planned."
-      facts: ['IN-06', 'IN-08', 'PD-01', 'PD-02'],
+      text: 'TalentLEAP’s levels run from Competent to Proficient and Expert, with AI-driven personalized and adaptive learning paths. Training follows an AI-supported flipped classroom: all lectures are pre-recorded and an AI Tutor supports every learner, so mentors’ time goes to Q&A and to handholding beyond what the AI Tutor can provide. Supported cohorts include mentoring, certification exam preparation and placement support. Cohort inclusions on this page are agreed in each program’s scope.', // WP142: the page's one scope sentence follows the cohort-inclusions sentence. WP64 (cycle-36 review, Claude): it said "Competent is the published first level; Proficient and Expert are planned."
+      facts: ['IN-06', 'IN-08', 'PD-01', 'PD-02', 'IN-04'],
     },
     {
       title: 'Connect to Paid Work',
-      text: 'The employer marketplace and the gig-work marketplace are in pre-launch. Until launch, placement runs through CodersTrust’s placement team and marketplaces such as Upwork and Fiverr.',
+      text: 'The employer marketplace and the gig-work marketplace connect learners to paid work, and an AI career coach guides them on careers, interviews and portfolios. Placement also runs through CodersTrust’s placement team and marketplaces such as Upwork and Fiverr.',
       facts: ['IN-04'],
     },
     {
       title: 'Equip Partner Institutions',
-      text: 'Partner portals are live, and AI chat is live across the platform. Personalized and adaptive learning is on the roadmap.', // WP144: AI chat is named as platform-wide
-      facts: ['IN-04', 'IN-06'],
+      text: 'Partner portals give institutions a digital delivery platform, with automated assessment and feedback and AI chat across the platform.', // WP144: AI chat is named as platform-wide
+      facts: ['IN-04'],
     },
   ];
 
@@ -76,17 +77,19 @@ test.describe('Investors: "What JobReady Does" is three short cards and one link
     }
   });
 
-  test('every status word is the register’s: live and pre-launch as IN-04 has them (the two marketplaces named as two), the levels as IN-08, the roadmap as IN-06', async ({ page }) => {
-    expect(fact('IN-04').text).toContain('Live today: partner portals, marketing automation, customer relationship management and AI chat. In pre-launch: the employer marketplace and the gig-work marketplace.');
-    expect(fact('IN-08').text).toContain('Competent is the first level; Proficient and Expert are planned');
-    expect(fact('IN-06').text).toContain('personalized and adaptive learning (roadmap)');
+  // WP163 (owner answers of 3 November 2026): IN-04 and IN-06 carry no status any more (IN-04 lists capabilities; IN-06 has no "(roadmap)"), and the band calls nothing live, pre-launch, planned or roadmap
+  // (IN-08's register text still says Proficient and Expert are planned; the page names the levels without that label).
+  test('every capability word is the register’s: IN-04’s capabilities (the two marketplaces named as two), the levels as IN-08 names them, adaptive learning as IN-06, with no status', async ({ page }) => {
+    expect(fact('IN-04').text).toContain('partner portals, marketing automation, customer relationship management, AI chat, the employer marketplace and the gig-work marketplace.');
+    expect(fact('IN-08').text).toContain('Competent is the first level');
+    expect(fact('IN-06').text).toContain('the basis for AI-driven personalized and adaptive learning paths');
     await open(page, 'partner-with-us/investors/');
     const band = compact(await page.locator('#features').textContent());
-    expect(band).toContain('The employer marketplace and the gig-work marketplace are in pre-launch.');
+    expect(band).toContain('The employer marketplace and the gig-work marketplace connect learners to paid work');
     expect(band, 'the two marketplaces are named as two (tests/wp25s.spec.ts)').not.toMatch(/employer and gig-work/i);
-    expect(band).toContain('Partner portals are live, and AI chat is live across the platform.'); // WP144: AI chat is live across the platform (IN-04: live today)
+    expect(band).toContain('with automated assessment and feedback and AI chat across the platform.'); // WP144: AI chat is named as platform-wide
     expect(band).toContain('marketplaces such as Upwork and Fiverr');
-    expect(band, 'nothing is called live that IN-04 does not call live').not.toMatch(/marketplaces? (is|are) live/i);
+    expect(band, 'no capability carries a status label').not.toMatch(/\b(?:live|pre-launch|planned|roadmap)\b/i);
   });
 
   test('the table is gone: no table, no labelled parts, no lead sentence about how the status is stated, and the table component no longer ships on any page', async ({ page }) => {
@@ -97,22 +100,23 @@ test.describe('Investors: "What JobReady Does" is three short cards and one link
     expect(withTable, 'no page carries the old table markup (the component was deleted with its last user)').toEqual([]);
   });
 
-  test('"See the Full Rollout Status" is one text link under the cards, inside the band, and reaches the platform page’s rollout status', async ({ page }) => {
+  // WP163 (owner answers of 3 November 2026): the link is "See the Platform Capabilities" (it was "See the Full Rollout Status"); the platform page's band is "Platform Capabilities" (id #status kept).
+  test('"See the Platform Capabilities" is one text link under the cards, inside the band, and reaches the platform page’s capabilities table', async ({ page }) => {
     await open(page, 'partner-with-us/investors/');
     const link = page.locator('#features a');
     await expect(link).toHaveCount(1);
-    await expect(link).toHaveText('See the Full Rollout Status');
-    expect(titleCase('See the Full Rollout Status')).toBe('See the Full Rollout Status');
+    await expect(link).toHaveText('See the Platform Capabilities');
+    expect(titleCase('See the Platform Capabilities')).toBe('See the Platform Capabilities');
     expect(sitePath((await link.getAttribute('href')) ?? '')).toBe('/our-model/jobready-platform/');
     const [cardsBox, linkBox] = await Promise.all([page.locator('#features ul.inc').boundingBox(), link.boundingBox()]);
     expect(linkBox!.y, 'the link sits under the cards').toBeGreaterThanOrEqual(cardsBox!.y + cardsBox!.height);
     await link.click();
-    await expect(page.locator('#status h2')).toHaveText('Rollout Status');
+    await expect(page.locator('#status h2')).toHaveText('Platform Capabilities');
   });
 
   test('the first FAQ answer still links to the band, which now holds the cards it points at', async ({ page }) => {
     await open(page, 'partner-with-us/investors/');
-    const item = page.locator('#faq details', { has: page.locator('summary', { hasText: 'Is the JobReady Platform Live?' }) }).first();
+    const item = page.locator('#faq details', { has: page.locator('summary', { hasText: 'What Does the JobReady Platform Offer?' }) }).first(); // WP163: it asked "Is the JobReady Platform Live?"
     const link = item.locator('.faq__a a');
     await expect(link).toHaveText('What JobReady Does');
     expect(await link.getAttribute('href')).toBe('#features');

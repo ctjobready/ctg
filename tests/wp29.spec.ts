@@ -137,7 +137,8 @@ test.describe('Foundations: the two funding routes as a comparison', () => {
       ['Funding Route 1 YouthWIDE Cohort Grants', 'Co-fundable country programs designed for South Asia, Sub-Saharan Africa and the Middle East and North Africa.', 'Builds on results from earlier programs in Bangladesh and Kosovo.'],
       [
         'Funding Route 2 JobReady Platform Grants',
-        'A grant toward platform infrastructure, not toward cohorts. Live today: partner portals and AI chat. In pre-launch: the employer marketplace and the gig-work marketplace.',
+        // WP163 (owner answers of 3 November 2026): no capability carries a live or pre-launch label, so the cell names what the platform offers (IN-04).
+        'A grant toward platform infrastructure, not toward cohorts: JobReady’s AI Tutor, adaptive learning paths, AI career coach, partner portals and work marketplaces.',
         // WP65 (cycle-37 review, Gemini): the cell keeps the benchmark's line alone; "The outcome evidence on this page comes from the youth programs, not from the platform." restated it (tests/wp65.spec.ts)
         'Youth-program outcomes are not platform outcomes. The discovery session covers JobReady’s staged rollout.',
       ],
@@ -154,12 +155,14 @@ test.describe('Foundations: the two funding routes as a comparison', () => {
     await expect(page.locator('#mechanism').getByRole('link', { name: 'Explore JobReady’s Rollout' })).toHaveAttribute('href', /\/our-model\/jobready-platform\/$/);
   });
 
-  test('the platform status sentence in the table is IN-04’s: the live subset (partner portals and AI chat) and the registered pre-launch sentence', async ({ page }) => {
+  // WP163 (owner answers of 3 November 2026): the cell and IN-04 carry no live or pre-launch status; the cell names a subset of IN-04's capabilities (the register lists them all).
+  test('the platform sentence in the table is IN-04’s: a subset of its capabilities, with no status', async ({ page }) => {
     await open(page, 'partner-with-us/foundations/');
     const cell = table(page).locator('tr[data-fact="IN-04"] td').first();
-    // WP37 (cycle-14 review): "CRM" is written out as "customer relationship management" (in IN-04 and wherever the full live list is printed); WP47 (cycle-22 review): the table lists the live subset only
-    expect(compact(await cell.textContent())).toContain('Live today: partner portals and AI chat. In pre-launch: the employer marketplace and the gig-work marketplace.');
-    expect(fact('IN-04').text).toContain('Live today: partner portals, marketing automation, customer relationship management and AI chat. In pre-launch: the employer marketplace and the gig-work marketplace.');
+    // WP37 (cycle-14 review): "CRM" is written out as "customer relationship management" (in IN-04 and wherever the full list is printed); WP47 (cycle-22 review): the table lists a subset only
+    expect(compact(await cell.textContent())).toContain('JobReady’s AI Tutor, adaptive learning paths, AI career coach, partner portals and work marketplaces.');
+    expect(compact(await cell.textContent())).not.toMatch(/Live today|pre-launch/i);
+    expect(fact('IN-04').text).toContain('an AI Tutor, AI-driven personalized and adaptive learning paths, automated assessment and feedback, an AI career coach, partner portals, marketing automation, customer relationship management, AI chat, the employer marketplace and the gig-work marketplace.');
   });
 
   test('on a phone the table becomes one card per route (table hidden), with no horizontal overflow', async ({ page }) => {

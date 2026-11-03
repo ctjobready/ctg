@@ -154,7 +154,8 @@ test.describe('1 Government-targeted actions use the briefing route', () => {
 
 test('2 Home: the "Blended Training" card says facilitators lead training in existing labs and colleges, and that delivery is designed for limited connectivity', () => {
   const text = main(HOME);
-  expect(text).toContain(`How We Reach Them Blended Training Training in existing labs and colleges, led by ${LONG}, with delivery designed to work where connectivity is limited.`);
+  // WP163 (owner answers of 3 November 2026): the card is "AI-Supported Blended Training" and closes with the delivery model (DELIVERY_MODEL).
+  expect(text).toContain(`How We Reach Them AI-Supported Blended Training Training in existing labs and colleges, led by ${LONG}, with delivery designed to work where connectivity is limited. Training follows an AI-supported flipped classroom:`);
   expect(text).not.toContain('Labs, colleges and delivery that works');
   expect(count(text, LONG)).toBe(1);
   // The first delivery explanation still names who teaches, in the long form, before any short form (wp152, wp153).
@@ -244,10 +245,11 @@ test.describe('6 NU "Ready to Apply?": the step names its subject', () => {
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 test.describe('7 TalentLEAP: the planned levels are stated once', () => {
+  // WP163 (owner answers of 3 November 2026): no level is labelled planned; the opening names the three levels once and the page says "planned" nowhere.
   test('the opening says it; the example has no lead; the Prosper step does not repeat it', () => {
     const text = main(TALENTLEAP);
-    expect(text).toContain('The first published TalentLEAP level is Competent; Proficient and Expert levels are planned.');
-    expect(count(text, /planned/gi)).toBe(1);
+    expect(text).toContain('Its levels run from Competent to Proficient and Expert.');
+    expect(count(text, /planned/gi)).toBe(0);
     expect(text).not.toContain('In this example, Level 1 is Competent; Proficient and Expert are the planned next levels.');
     expect(text).not.toContain('TalentLEAP organizes skills into career paths with progressive levels.');
     expect(text).not.toContain('Further TalentLEAP levels are planned.');
@@ -261,8 +263,9 @@ test.describe('7 TalentLEAP: the planned levels are stated once', () => {
     const text = main(OUR_MODEL);
     expect(text).toContain('Prosper Career paths, continuing development and the alumni network.');
     expect(text).not.toContain('Further TalentLEAP levels are planned.');
-    expect(count(text, /levels planned|levels are planned/gi)).toBe(1);
-    expect(text).toContain('with progressive levels planned beyond the first published level.');
+    // WP163: the TalentLEAP card names the levels and no longer says they are planned.
+    expect(count(text, /levels planned|levels are planned/gi)).toBe(0);
+    expect(text).toContain('with levels from Competent to Proficient and Expert.');
   });
 });
 

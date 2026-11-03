@@ -65,7 +65,7 @@ test.describe('Item 3: no straight double quotes or apostrophes in visible text'
 test.describe('Item 4: pages whose survey figures changed on 21 October say so', () => {
   // WP86 (CLR run 3, Minor 3): YouthWIDE's line is now October 24 (tests/wp86.spec.ts)
   for (const [route, day] of [['impact/outcomes-2026/', 'November 3, 2026'], // WP161-A: November 3 (the rounding sentence under "Download the Data"). WP135: October 31 (the closing line and "On This Page" changed); WP147: November 1 (the method line and the Speed to Earning tile changed)
-    ['programs/jobready-campus/', 'November 2, 2026']]) { // WP141: JobReady@Campus moved on to November 1, 2026; WP151: November 2, 2026
+    ['programs/jobready-campus/', 'November 3, 2026']]) { // WP141: JobReady@Campus moved on to November 1, 2026; WP151: November 2, 2026; WP163: November 3, 2026
     // WP104: both pages' stamps moved on to October 29, 2026 with their later content changes (tests/wp104.spec.ts); WP129: JobReady@Campus moved on to October 31, 2026 (its wording changed again on 30 and 31 October)
     test(`${route} shows "Last updated ${day}"`, async ({ page }) => {
       await open(page, route);

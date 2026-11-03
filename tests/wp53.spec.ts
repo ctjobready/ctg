@@ -160,9 +160,11 @@ test.describe('Home: the carousel is four slides (item 1)', () => {
 test.describe('JobReady is "CodersTrust’s digital learning and earning platform" wherever the site defines it (item 2)', () => {
   const DEFINITION = 'CodersTrust’s digital learning and earning platform';
 
-  test('IN-04 opens with the definition and keeps the rollout status; no built page, meta description or JSON-LD says "education and employment platform"', async () => {
-    expect(fact('IN-04').text.startsWith(`JobReady is ${DEFINITION}, being built as`)).toBe(true);
-    expect(fact('IN-04').text).toContain('Modules are rolling out in stages. Live today: partner portals, marketing automation, customer relationship management and AI chat. In pre-launch: the employer marketplace and the gig-work marketplace.');
+  // WP163 (owner answers of 3 November 2026): IN-04 keeps the definition and lists its capabilities with no rollout status (it said "..., being built as an AI-native platform ... Modules are rolling out in stages. Live today: ... In pre-launch: ...").
+  test('IN-04 opens with the definition and lists the capabilities; no built page, meta description or JSON-LD says "education and employment platform"', async () => {
+    expect(fact('IN-04').text.startsWith(`JobReady is ${DEFINITION}, an AI-native platform designed to`)).toBe(true);
+    expect(fact('IN-04').text).toContain('Its capabilities include an AI Tutor,');
+    expect(fact('IN-04').text).not.toMatch(/rolling out in stages|Live today|In pre-launch/);
     expect(pagesMatching(/education and employment platform/i)).toEqual([]);
   });
 
@@ -174,22 +176,25 @@ test.describe('JobReady is "CodersTrust’s digital learning and earning platfor
     await expect(page.locator('main a.cat[href$="partner-with-us/investors/"] .cat__title').first()).toHaveText('Back JobReady’s Staged Rollout');
   });
 
-  test('Investors: the definition band says it, and the hero keeps the staged rollout and the live / pre-launch status', async ({ page }) => {
+  // WP163 (owner answers of 3 November 2026): the definition band says "JobReady is CodersTrust’s digital learning and earning platform for emerging markets." (no "is building"), and the hero's second sentence
+  // says what JobReady offers (no live / pre-launch status).
+  test('Investors: the definition band says it, and the hero keeps the staged rollout and names what JobReady offers', async ({ page }) => {
     await open(page, INVEST);
-    expect(await texts(page, '#definition .def__text')).toContain('CodersTrust is building JobReady, a digital learning and earning platform for emerging markets.');
+    expect(await texts(page, '#definition .def__text')).toContain('JobReady is CodersTrust’s digital learning and earning platform for emerging markets.');
     const hero = compact(await page.locator('#hero').textContent());
     expect(hero).toContain('Back JobReady’s staged rollout');
-    expect(hero).toContain('Partner portals and AI chat are live; the employer marketplace and the gig-work marketplace are in pre-launch.');
+    expect(hero).toContain('JobReady offers an AI Tutor, adaptive learning paths, an AI career coach, partner portals, the employer marketplace and the gig-work marketplace.');
   });
 
   test('the JobReady Platform page: the lead and the meta description say it; the Our Model card says it', async ({ page }) => {
     await open(page, PLATFORM);
-    expect(compact(await page.locator('main').textContent())).toContain('JobReady is CodersTrust’s digital learning and earning platform. Modules are rolling out in stages.');
+    // WP163 (owner answers of 3 November 2026): the lead, the meta description and the Our Model card name what the platform offers instead of a rollout status.
+    expect(compact(await page.locator('main').textContent())).toContain('JobReady is CodersTrust’s digital learning and earning platform, from an AI Tutor to work marketplaces.');
     const description = (await page.locator('meta[name="description"]').getAttribute('content')) ?? '';
-    expect(description).toBe('JobReady is CodersTrust’s digital learning and earning platform. Partner portals and AI chat are live; more modules follow.');
+    expect(description).toBe('JobReady is CodersTrust’s digital learning and earning platform: an AI Tutor, adaptive learning paths, an AI career coach and work marketplaces.');
     expect(description.length).toBeLessThanOrEqual(155);
     await open(page, MODEL);
-    expect(compact(await page.locator('main').textContent())).toContain('The digital learning and earning platform, rolling out in stages.');
+    expect(compact(await page.locator('main').textContent())).toContain('The digital learning and earning platform, from the AI Tutor to the work marketplaces.');
   });
 });
 

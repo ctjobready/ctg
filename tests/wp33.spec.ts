@@ -129,7 +129,7 @@ test.describe('Home mechanism card 3', () => {
     expect(await mainText(page)).not.toContain('eligibility and attempts agreed in the program scope');
     await open(page, 'programs/youthwide/');
     // WP145: the exam terms are stated once on YouthWIDE (the glance); "What We Deliver" no longer repeats them
-    expect(await mainText(page)).toContain('exam fees and attempts set per program');
+    expect(await mainText(page)).toContain('one exam fee per trainee (any further attempts set per program)'); // WP163 (owner answers of 3 November 2026): one exam fee per trainee
   });
 });
 

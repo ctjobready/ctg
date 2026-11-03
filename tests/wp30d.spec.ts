@@ -161,8 +161,10 @@ test.describe('less is more: the report-like bands are gone', () => {
     const text = compact(await page.locator('main').evaluate((el) => el.textContent ?? ''));
     expect(text.split('AI chat is live today').length - 1).toBe(0);
     expect(text.split('Adaptive learning remains on the roadmap').length - 1).toBe(0);
-    // WP63 (cycle-35 review, GPT-6.1 Sol GP3, polish): the sentence ends "..., not live yet." (it ended "... This is roadmap, not live."); it is still said once
-    expect(text.split('not live yet.').length - 1).toBe(1);
+    // WP63 (cycle-35 review, GPT-6.1 Sol GP3, polish): the sentence ended "..., not live yet.". WP163 (owner answers of 3 November 2026) removed the "Planned Adaptive Learning" band and every
+    // live or planned label: the page states no status at all, and adaptive learning is a row of the capabilities table.
+    expect(text.split('not live yet.').length - 1).toBe(0);
+    expect(text).toContain('Personalized and adaptive learning paths');
     expect(text.split('This is roadmap, not live.').length - 1).toBe(0);
   });
 });

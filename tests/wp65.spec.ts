@@ -64,8 +64,9 @@ test.describe('Item 1 (Sonnet, Grok, Kimi): the Our Model scale card says month 
   });
 
   test('the register’s PD-06 text is unchanged: it counts "from about month 5" as a month of the program, which is what the card now says', () => {
+    // WP163 (owner answers of 3 November 2026): lectures are pre-recorded, so PD-06 no longer gives a lecture class size; "from about month 5" is unchanged.
     expect(fact('PD-06').text).toBe(
-      'Up to 10 certification cohorts in parallel from about month 5; classes of 20 (labs) and 40 (lectures); hub-and-spoke delivery with facilitators trained by CodersTrust for larger programs',
+      'Up to 10 certification cohorts in parallel from about month 5; classes of 20 (labs); hub-and-spoke delivery with facilitators trained by CodersTrust for larger programs',
     );
   });
 
@@ -240,7 +241,7 @@ test.describe('Item 5 (Gemini): the platform-grant row says one thing', () => {
     await open(page, FOUNDATIONS);
     await scrollThrough(page);
     const cell = page.locator('#funding-routes tr[data-fact="IN-04"] td').first();
-    expect(compact(await cell.textContent())).toContain('A grant toward platform infrastructure, not toward cohorts. Live today: partner portals and AI chat.');
+    expect(compact(await cell.textContent())).toContain('A grant toward platform infrastructure, not toward cohorts: JobReady’s AI Tutor, adaptive learning paths, AI career coach, partner portals and work marketplaces.'); // WP163: no live label
     expect(await noOverflow(page)).toBe(true);
   });
 });
@@ -260,8 +261,8 @@ test.describe('Item 6 (Gemini, Kimi, Sonnet): polish', () => {
     await open(page, DEV_PARTNERS);
     const card = page.locator('#features li.card').first();
     await expect(card.locator('h3')).toHaveText('Training, Mentoring and Placement Support');
-    expect(await texts(page, '#features li.card:nth-child(1) p')).toEqual(['Certification exam preparation, three months of mentoring and placement support in one program; exam fees and attempts set per program.']);
-    expect(await card.getAttribute('data-fact')).toBe('PD-01');
+    expect(await texts(page, '#features li.card:nth-child(1) p')).toEqual(['Certification exam preparation and one exam fee per trainee (any further attempts set per program), three months of mentoring and placement support in one program. Training follows an AI-supported flipped classroom: all lectures are pre-recorded and an AI Tutor supports every learner, so mentors’ time goes to Q&A and to handholding beyond what the AI Tutor can provide.']);
+    expect(await card.getAttribute('data-fact')).toBe('PD-01 PD-02a IN-04'); // WP163: the card names one exam fee per trainee (PD-02a) and the AI Tutor (IN-04)
     expect(pagesWith('One delivery partner connects training')).toEqual([]);
   });
 

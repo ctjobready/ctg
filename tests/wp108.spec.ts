@@ -155,9 +155,9 @@ test.describe('WP108 item 6: the pages changed here carry a date modified of 202
     });
   }
 
-  // WP161-A: Foundations moved on to 2026-11-03 (three months of mentoring; the ID-12 legal form beside the due-diligence line); Investors keeps 2026-11-02.
+  // WP161-A: Foundations moved on to 2026-11-03 (three months of mentoring; the ID-12 legal form beside the due-diligence line). WP163: Investors moved on to 2026-11-03 (no live, pre-launch or planned labels; the delivery model).
   for (const [name, route, file, day] of [
-    ['Investors', 'partner-with-us/investors/', 'src/pages/partner-with-us/investors/index.astro', '2026-11-02'],
+    ['Investors', 'partner-with-us/investors/', 'src/pages/partner-with-us/investors/index.astro', '2026-11-03'],
     ['Foundations', 'partner-with-us/foundations/', 'src/pages/partner-with-us/foundations/index.astro', '2026-11-03'],
   ]) {
     test(`${name}: the page states its modified date in the source and in its JSON-LD`, async ({ page }) => {
@@ -169,8 +169,8 @@ test.describe('WP108 item 6: the pages changed here carry a date modified of 202
     });
   }
 
-  test('JobReady@Work shows “Last updated November 2, 2026” (WP141)', async ({ page }) => { // WP157: re-dated 2026-11-02
+  test('JobReady@Work shows “Last updated November 3, 2026” (WP141)', async ({ page }) => { // WP157: re-dated 2026-11-02; WP163: re-dated 2026-11-03
     await open(page, 'programs/jobready-work/');
-    await expect(page.locator('p.updated')).toHaveText(/Last updated\s+November 2, 2026/); // WP157: re-dated 2026-11-02
+    await expect(page.locator('p.updated')).toHaveText(/Last updated\s+November 3, 2026/); // WP163: one exam fee per trainee, the delivery model and the platform question changed
   });
 });

@@ -20,7 +20,7 @@ import GainsPains from '../../../components/pages/partners/GainsPains.astro';
 import PairedEvidence from '../../../components/pages/partners/PairedEvidence.astro';
 import { LINKS } from '../../../components/pages/partners/partners';
 import { localCta } from '../../../components/pages/about/routes';
-import { LOCAL_PARTNER_EVIDENCE, LOCAL_PARTNER_PAINS, HEADLINE, MICRO_COMMITMENT, NEXT_STEPS_TITLE, POSITIONING, PROGRAM_SCOPE_STATEMENT, VALUE_PROPOSITION, painForList, painForRow } from '../../../data/copy';
+import { DELIVERY_MODEL, LOCAL_PARTNER_EVIDENCE, LOCAL_PARTNER_PAINS, HEADLINE, MICRO_COMMITMENT, NEXT_STEPS_TITLE, POSITIONING, PROGRAM_SCOPE_STATEMENT, VALUE_PROPOSITION, painForList, painForRow } from '../../../data/copy';
 import { faqJsonLd } from '../../../lib/faq';
 import { webPage } from '../../../lib/schema';
 import { BANGLADESH_HQ } from '../../../lib/site';
@@ -61,7 +61,7 @@ const path = '/partner-with-us/local-partners/';
 // WP161-A (adversarial review A-02): the WebPage carries the page's own dateModified, 2026-11-02, its last visible change (it fell back to the build date).
 const description = 'Bangladeshi NGOs, colleges and chambers can deliver CodersTrust’s mentored digital-skills programs in their communities.';
 const jsonLd = [
-  webPage({ path, name: 'Local Implementing Partners', description, dateModified: '2026-11-02', breadcrumb: [{ name: 'Home', path: '/' }, { name: 'Partner with Us', path: '/partner-with-us/' }, { name: 'Local Partners', path }] }),
+  webPage({ path, name: 'Local Implementing Partners', description, dateModified: '2026-11-03', breadcrumb: [{ name: 'Home', path: '/' }, { name: 'Partner with Us', path: '/partner-with-us/' }, { name: 'Local Partners', path }] }),
   faqJsonLd('variants', path, FAQ_IDS),
 ];
 
@@ -163,8 +163,9 @@ const ways = [
         painId: painForRow(LOCAL_PARTNER_PAINS, 'P1').painId,
         icon: 'graduation-cap',
         title: 'Facilitator Training and a Local Curriculum',
-        text: 'Training of Trainers, a localized curriculum and preparation for industry certification. You do not have to build the curriculum or certification route yourself.',
-        facts: ['PD-06', 'PD-02'],
+        // WP163 (owner answers of 3 November 2026): the card states the delivery model once on this page (DELIVERY_MODEL, the AI-supported flipped classroom).
+        text: `Training of Trainers, a localized curriculum and preparation for industry certification. You do not have to build the curriculum or certification route yourself. ${DELIVERY_MODEL.text}`,
+        facts: ['PD-06', 'PD-02', 'PD-01', 'IN-04'],
       },
       {
         painId: painForRow(LOCAL_PARTNER_PAINS, 'P2').painId,

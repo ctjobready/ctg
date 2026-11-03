@@ -478,7 +478,7 @@ test.describe('Governments: the empathy line and the glance tile (items 14 and 1
 
 test.describe('"the gig-work marketplace" in prose; the product name Earn stays in the platform status table (item 15)', () => {
   test('IN-04 says "the gig-work marketplace"; "(Earn)" is on no built page except the JobReady Platform status table’s row', async ({ page }) => {
-    expect(fact('IN-04').text).toContain('In pre-launch: the employer marketplace and the gig-work marketplace.');
+    expect(fact('IN-04').text).toContain('the employer marketplace and the gig-work marketplace.'); // WP163: no "In pre-launch:" label
     expect(fact('IN-04').text).not.toContain('(Earn)');
     // every page (the archived posts too: they carry the menu), in the raw markup: visible text, meta and structured data
     const hits = listPages().flatMap((p) => {
@@ -490,11 +490,12 @@ test.describe('"the gig-work marketplace" in prose; the product name Earn stays 
     await expect(page.locator('#status tbody tr', { hasText: 'Gig-work (Earn) marketplace' })).toHaveCount(1);
   });
 
-  test('Investors, Foundations, Employers and JobReady@Work say it in prose, the two marketplaces still named as two', async ({ page }) => {
+  // WP163 (owner answers of 3 November 2026): Foundations' platform route names the marketplaces together, "work marketplaces" (the full names are on the pages that list them); never "employer and gig-work".
+  test('Investors, Foundations, Employers and JobReady@Work say it in prose, the two marketplaces still named as two where they are named', async ({ page }) => {
     for (const route of [INVEST, FOUND, EMP, 'programs/jobready-work/']) {
       await open(page, route);
       const text = await everything(page);
-      expect(text, route).toContain('the employer marketplace and the gig-work marketplace');
+      expect(text, route).toContain(route === FOUND ? 'partner portals and work marketplaces' : 'the employer marketplace and the gig-work marketplace');
       expect(text, route).not.toMatch(/\(Earn\)|employer and gig-work/i);
     }
   });

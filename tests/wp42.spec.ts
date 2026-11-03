@@ -290,19 +290,18 @@ test.describe('the WSDFM case study: one line above the tiles instead of two par
   });
 });
 
-test.describe('JobReady Platform: the roadmap item is said once (item 6)', () => {
-  test('"Planned Adaptive Learning" keeps its heading and has one sentence under it; the card and its heading are gone', async ({ page }) => {
+test.describe('JobReady Platform: adaptive learning is said once (item 6)', () => {
+  // WP163 (owner answers of 3 November 2026): the "Planned Adaptive Learning" band (heading, sentence and On This Page entry) was removed by this package: no capability carries a planned or live label,
+  // and adaptive learning is said once, as a row of the Platform Capabilities table tied to IN-04 and IN-06 (IN-06 no longer says "(roadmap)").
+  test('adaptive learning is one row of the capabilities table; the roadmap band, its heading and its On This Page entry are gone', async ({ page }) => {
     await open(page, 'our-model/jobready-platform/');
-    await expect(page.locator('#roadmap h2')).toHaveText('Planned Adaptive Learning');
-    await expect(page.locator('#roadmap h3, #roadmap .card')).toHaveCount(0);
-    const body = page.locator('#roadmap p');
-    await expect(body).toHaveCount(1);
-    // WP63 (cycle-35 review, GPT-6.1 Sol GP3, polish): "... competency levels, not live yet." (it ended "... competency levels. This is roadmap, not live.")
-    await expect(body).toHaveText('Personalized and adaptive learning based on TalentLEAP’s competency levels is planned and not live yet.'); // WP157 (F11)
-    expect(await body.getAttribute('data-fact')).toBe('IN-06');
-    expect(fact('IN-06').text).toContain('the basis for AI-driven personalized and adaptive learning (roadmap)');
+    await expect(page.locator('#roadmap')).toHaveCount(0);
+    const row = page.locator('#status tbody tr', { hasText: 'Personalized and adaptive learning paths' });
+    await expect(row).toHaveCount(1);
+    expect(await row.getAttribute('data-fact')).toBe('IN-04 IN-06');
+    expect(fact('IN-06').text).toContain('the basis for AI-driven personalized and adaptive learning paths');
     expect(await mainText(page)).not.toContain('Planned Personalized and Adaptive Learning');
-    expect(await texts(page, '.lf-toc nav a')).toContain('Planned Adaptive Learning');
+    expect(await texts(page, '.lf-toc nav a')).not.toContain('Planned Adaptive Learning');
   });
 });
 

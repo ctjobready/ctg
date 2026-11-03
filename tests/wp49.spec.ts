@@ -80,8 +80,8 @@ test.describe('Development Partners: the problem band and the first portfolio ca
     await open(page, DP);
     const card = page.locator('#features li.card').first();
     await expect(card.locator('h3')).toHaveText('Training, Mentoring and Placement Support');
-    expect(await texts(page, '#features li.card:nth-child(1) p')).toEqual(['Certification exam preparation, three months of mentoring and placement support in one program; exam fees and attempts set per program.']);
-    expect(await card.getAttribute('data-fact')).toBe('PD-01');
+    expect(await texts(page, '#features li.card:nth-child(1) p')).toEqual(['Certification exam preparation and one exam fee per trainee (any further attempts set per program), three months of mentoring and placement support in one program. Training follows an AI-supported flipped classroom: all lectures are pre-recorded and an AI Tutor supports every learner, so mentors’ time goes to Q&A and to handholding beyond what the AI Tutor can provide.']);
+    expect(await card.getAttribute('data-fact')).toBe('PD-01 PD-02a IN-04'); // WP163: the card names one exam fee per trainee (PD-02a) and the AI Tutor (IN-04)
     expect(compact(await page.locator('#features').textContent())).not.toContain('100 training hours');
     expect(compact(await page.locator('#mechanism').textContent())).toContain('100 training hours per certification, including exam preparation, then three months of milestone-based mentoring and placement support.') // WP150: the 100 hours include exam preparation;
     expect(count(await mainText(page), '100 training hours per certification')).toBe(1);
@@ -96,7 +96,8 @@ test.describe('Governments, Universities and Local Partners: the wording the rev
     expect(compact(await pain('Training Budgets Do Not Show Up as Earnings').locator('.gp__a').textContent())).toBe('Most training budgets count who enrolled, not who is earning afterward.');
     // WP54 (cycle-28 review, GPT-6.1 Sol G2): the heading is "Trainer and Curriculum Capacity Takes Time to Build" (it said "Is Thin"); the line under it is unchanged
     expect(compact(await pain('Trainer and Curriculum Capacity Takes Time to Build').locator('.gp__a').textContent())).toBe('National delivery needs trained facilitators and localized curricula.');
-    expect(await texts(page, '#features li.card:nth-child(1) p')).toEqual(['Certification tracks chosen from employer demand, then three months of mentoring and placement support toward local, remote and global work.']); // WP161-A (A-26): three months of mentoring
+    // WP163 (owner answers of 3 November 2026): the card then states the delivery model, the page's one statement of it.
+    expect(await texts(page, '#features li.card:nth-child(1) p')).toEqual(['Certification tracks chosen from employer demand, then three months of mentoring and placement support toward local, remote and global work. Training follows an AI-supported flipped classroom: all lectures are pre-recorded and an AI Tutor supports every learner, so mentors’ time goes to Q&A and to handholding beyond what the AI Tutor can provide.']); // WP161-A (A-26): three months of mentoring
     const text = await mainText(page);
     expect(text).not.toContain('Budgets are measured by enrollment, not by who is earning afterward.');
     expect(text).not.toContain('rarely ready at national scale');
@@ -133,8 +134,8 @@ test.describe('Foundations: the first and third "What Your Cohort Grant Gets" ca
   test('the first card measures results against the agreed scorecard, including first paid work, not attendance alone', async ({ page }) => {
     await open(page, FOUND);
     expect(await texts(page, '#features li.card:nth-child(1) p')).toEqual([
-      // WP161-A (A-26): three months of mentoring, stated before the FAQ refers to it
-      'Three months of mentoring and placement support are standard inclusions, and outcomes are tracked for 12 months after each course. Results are measured against the agreed scorecard, including first paid work, not attendance alone.',
+      // WP161-A (A-26): three months of mentoring, stated before the FAQ refers to it. WP163 (owner answers of 3 November 2026): the card opens with the delivery model, the page's one statement of it.
+      'Training follows an AI-supported flipped classroom: all lectures are pre-recorded and an AI Tutor supports every learner, so mentors’ time goes to Q&A and to handholding beyond what the AI Tutor can provide. Three months of mentoring and placement support are standard inclusions, and outcomes are tracked for 12 months after each course. Results are measured against the agreed scorecard, including first paid work, not attendance alone.',
     ]);
     expect(await mainText(page)).not.toContain('using the agreed scorecard');
   });
@@ -183,22 +184,23 @@ test.describe('YouthWIDE: the closing timing paragraph (item 7)', () => {
 });
 
 test.describe('JobReady Platform: the live-today callout (item 8)', () => {
-  test('the "What Is Live Today" label and its paragraph are gone; the status table, the JobReady link and "Planned Adaptive Learning" stay', async ({ page }) => {
+  // WP163 (owner answers of 3 November 2026): the table is "Platform Capabilities": nine capability rows (the AI capabilities added), no Status column and no Pre-Launch label; the "Planned Adaptive Learning" band
+  // this test kept was removed by this package (adaptive learning is a row of the table).
+  test('the "What Is Live Today" label and its paragraph are gone; the capabilities table and the JobReady link stay', async ({ page }) => {
     await open(page, 'our-model/jobready-platform/');
     const text = await mainText(page);
     expect(text).not.toContain('What Is Live Today');
     expect(text).not.toContain('Adaptive learning remains on the roadmap.');
     expect(sitePages().filter((p) => visible(p.html).includes('What Is Live Today')).map((p) => p.route)).toEqual([]);
     const rows = page.locator('#status tbody tr');
-    await expect(rows).toHaveCount(5);
-    // the table says the course storefront operates, and that the two marketplaces are in pre-launch
+    await expect(rows).toHaveCount(9);
+    // the table says the course storefront operates, and names the two marketplaces as two rows, with no status
     expect(compact(await rows.first().textContent())).toContain('course storefront operates');
-    await expect(rows.filter({ hasText: 'Gig-work (Earn) marketplace' })).toContainText('Pre-Launch');
-    await expect(rows.filter({ hasText: 'Employer marketplace' })).toContainText('Pre-Launch');
+    await expect(rows.filter({ hasText: 'Gig-work (Earn) marketplace' })).toHaveCount(1);
+    await expect(rows.filter({ hasText: 'Employer marketplace' })).toHaveCount(1);
+    await expect(page.locator('#status')).not.toContainText('Pre-Launch');
     await expect(page.locator('#status a', { hasText: 'Visit jobready.global' })).toHaveCount(1);
-    await expect(page.locator('#roadmap h2')).toHaveText('Planned Adaptive Learning');
-    // WP63 (cycle-35 review, GPT-6.1 Sol GP3, polish): "..., not live yet."
-    expect(compact(await page.locator('#roadmap').textContent())).toContain('not live yet.');
+    await expect(page.locator('#roadmap')).toHaveCount(0);
   });
 });
 

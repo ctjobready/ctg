@@ -69,7 +69,8 @@ test.describe('Investors page structure', () => {
     const text = await page.locator('main').innerText();
     // WP30c: the thesis band has no lead line; its three cards carry the argument. WP50 (cycle-25 review): the second card is "Connect Learning to Paid Work" with one line about what JobReady is being built to do
     // (it was "Online Learning Sells Content, Not Earnings" over a sentence about what many online courses lack; tests/wp50.spec.ts)
-    expect(text).toContain('JobReady is being built to link learners to paid work through mentoring and placement support.'); // WP152: the body no longer repeats its heading and has no comma before "through" (WP151: "connect learning to paid work, through ..."; before that "connect learning with mentoring and placement support.")
+    // WP163 (owner answers of 3 November 2026: no capability is labelled in development): "is designed to" (it said "is being built to").
+    expect(text).toContain('JobReady is designed to link learners to paid work through mentoring and placement support.'); // WP152: the body no longer repeats its heading and has no comma before "through" (WP151: "connect learning to paid work, through ..."; before that "connect learning with mentoring and placement support.")
     expect(text).not.toContain('Many online courses provide content without the work-entry support that turns skills into income');
     // WP48 (cycle-23 review): the closing stakes line ("Every trained young person who remains out of work is an opportunity employers and communities are not yet capturing.") is gone; it added no fact
     expect(text).not.toContain('is an opportunity employers and communities are not yet capturing');

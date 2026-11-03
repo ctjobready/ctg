@@ -39,7 +39,8 @@ test.describe('Minor 1: certification preparation is an add-on where a track off
   });
   test('JobReady@Work glance "Training" line', () => {
     const text = main(WORK);
-    expect(text).toContain('Certification preparation can be added where a track offers one, with exam eligibility and attempts set per program.');
+    // WP163 (owner answers of 3 November 2026): one exam fee per trainee is included (it read "..., with exam eligibility and attempts set per program.").
+    expect(text).toContain('Certification preparation and one exam fee per trainee can be added where a track offers one; exam eligibility and any further attempts are set per program.');
     expect(text).not.toContain('Certification preparation where a track offers one');
     expect(text).toContain(COST);
   });
@@ -47,14 +48,15 @@ test.describe('Minor 1: certification preparation is an add-on where a track off
 
 test.describe('Polish 2: the exam-terms qualifier is stated once per page beyond the scope sentence', () => {
   // Any statement of the exam terms: "exam fees … set per program", "exam eligibility … set per program", "eligibility, attempts and retakes … set per program".
-  const QUALIFIER = /\b(?:exam fees|exam eligibility|eligibility, attempts)\b[^.;]*?\bset per program\b/g;
+  // WP163 (owner answers of 3 November 2026): and the one-fee form, "one exam fee per trainee (any further attempts set per program)".
+  const QUALIFIER = /\b(?:exam fees?|exam eligibility|eligibility, attempts)\b[^.;]*?\bset per program\b/g;
 
   test('YouthWIDE "What We Deliver" drops its second statement and keeps the glance as the referent', () => {
     const text = main(YOUTHWIDE);
     expect(text).toContain('Certification exam preparation by track, then three months of milestone-based mentoring.');
     expect(text).not.toContain('then three months of milestone-based mentoring; exam eligibility and attempts are set per program');
     expect(count(text, QUALIFIER), 'exam-terms statements').toBe(1);
-    expect(text).toContain('exam fees and attempts set per program');
+    expect(text).toContain('one exam fee per trainee (any further attempts set per program)'); // WP163
   });
 
   test('JobReady@Campus certification card drops its second statement and keeps the glance as the referent', () => {
@@ -62,18 +64,19 @@ test.describe('Polish 2: the exam-terms qualifier is stated once per page beyond
     expect(text).toContain('Students who pass the exam add an industry certification beside their degree. Certification is not guaranteed.');
     expect(text).not.toContain('Certification is not guaranteed; eligibility, attempts and retakes are set per program');
     expect(count(text, QUALIFIER), 'exam-terms statements').toBe(1);
-    expect(text).toContain('exam fees, eligibility, attempts and retakes are set per program');
+    expect(text).toContain('one exam fee per trainee, then three months of milestone-based mentoring; exam eligibility and any further attempts are set per program'); // WP163
   });
 
   test('TalentLEAP FAQ drops its second statement (page and FAQ JSON-LD), the Step 3 pipeline keeps the referent', () => {
     const raw = html(TALENTLEAP);
     const text = main(TALENTLEAP);
     // WP146: Q14 is one sentence, "Compared with a self-paced course alone, every supported TalentLEAP cohort pairs …" (the sentence began "Every supported …")
-    const answer = 'Compared with a self-paced course alone, every supported TalentLEAP cohort pairs 100 training hours per certification, including certification exam preparation, with three months of milestone-based mentoring, placement support and outcome tracking for 12 months after each course.';
+    // WP163: the answer's second sentence states the delivery model (DELIVERY_MODEL); it states no exam terms.
+    const answer = 'Compared with a self-paced course alone, every supported TalentLEAP cohort pairs 100 training hours per certification, including certification exam preparation, with three months of milestone-based mentoring, placement support and outcome tracking for 12 months after each course. Training follows an AI-supported flipped classroom: all lectures are pre-recorded and an AI Tutor supports every learner, so mentors’ time goes to Q&A and to handholding beyond what the AI Tutor can provide.';
     expect(text).toContain(answer);
     expect(text).not.toContain('including certification exam preparation (exam fees and attempts set per program), with three months');
     expect(count(text, QUALIFIER), 'exam-terms statements').toBe(1);
-    expect(text).toContain('exam fees and attempts set per program');
+    expect(text).toContain('one exam fee per trainee (any further attempts set per program)'); // WP163
     const ld = [...raw.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map((m) => decode(m[1])).join('\n');
     expect(ld).toContain(answer);
     expect(ld).not.toContain('including certification exam preparation (exam fees and attempts set per program), with three months');

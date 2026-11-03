@@ -266,15 +266,16 @@ test.describe('Investors: the scale answer says larger programs are designed to 
   });
 });
 
-test.describe('Our Model menu names both pre-launch marketplaces (item 15)', () => {
-  const LINE = 'Partner portals and AI chat are live; the employer marketplace and the gig-work marketplace are in pre-launch.';
+// WP163 (owner answers of 3 November 2026): the menu line says what the platform offers, with no live or pre-launch label; it names the marketplaces together as "work marketplaces", never "employer and gig-work".
+test.describe('Our Model menu names the platform’s capabilities (item 15)', () => {
+  const LINE = 'An AI Tutor, adaptive learning paths, an AI career coach, partner portals and work marketplaces.';
 
   test('the menu line and the featured panel say it as IN-04 does, never "employer and gig-work"', async ({ page }) => {
     await open(page, '');
     expect(compact(await page.locator('#mega-model a.mega__link[href$="our-model/jobready-platform/"] .mega__desc').textContent())).toBe(LINE);
     expect(compact(await page.locator('#mega-model .mega__feature-text').textContent())).toBe(LINE);
-    expect(fact('IN-04').text).toContain('In pre-launch: the employer marketplace and the gig-work marketplace.');
-    expect(compact(await page.locator('header').first().textContent())).not.toMatch(/employer and gig-work/i);
+    expect(fact('IN-04').text).toContain('the employer marketplace and the gig-work marketplace.');
+    expect(compact(await page.locator('header').first().textContent())).not.toMatch(/employer and gig-work|pre-launch|are live/i);
   });
 });
 
@@ -318,7 +319,7 @@ test.describe('News: the Her Power post carries a delivery note (item 20)', () =
 
 // WP46 (cycle-22 review): Our Model no longer prints the hub's inclusion answer word for word; its "What Does It Cost?" is the one-line route answer with a link to the hub's FAQ (tests/wp46.spec.ts)
 test.describe('The cost inclusions are one sentence in the hub (item 21); Our Model links to it (WP46)', () => {
-  const SENTENCE = 'Supported youth cohorts include outreach and selection, training, certification exam preparation (exam fees and attempts set per program), three months of mentoring, placement support and 12 months of outcome tracking after each course.';
+  const SENTENCE = 'Supported youth cohorts include outreach and selection, training, certification exam preparation and one exam fee per trainee (any further attempts set per program), three months of mentoring, placement support and 12 months of outcome tracking after each course.';
   const COST = `Pricing is set per program; we share an indicative budget in the discovery session. ${SENTENCE} Devices, stipends, connectivity and independent evaluation are budgeted separately where needed.`;
 
   for (const route of ['partner-with-us/']) {
@@ -348,7 +349,7 @@ test.describe('The cost inclusions are one sentence in the hub (item 21); Our Mo
 
   test('every inclusion in the sentence is one of PD-02’s standard inclusions', async () => {
     const pd02 = fact('PD-02').text.toLowerCase();
-    for (const phrase of ['outreach and selection', 'certification exam preparation (exam fees and attempts set per program)', 'three months of mentoring', 'placement support', 'outcome tracking for 12 months after each course']) expect(pd02, phrase).toContain(phrase);
+    for (const phrase of ['outreach and selection', 'certification exam preparation and one exam fee per trainee (any further attempts set per program)', 'three months of mentoring', 'placement support', 'outcome tracking for 12 months after each course']) expect(pd02, phrase).toContain(phrase);
   });
 });
 

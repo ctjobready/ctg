@@ -230,7 +230,7 @@ test.describe('S3 (Claude): the 1 million 2030 aim carries its dependency on eve
     expect(compact(await tile.locator('.glance__note').textContent())).toBe(`YouthWIDE in Bangladesh and similar countries in South Asia and the Middle East and North Africa, ${AIM_DEPENDENCY}. An ambition, not a result.`);
     await open(page, 'about/');
     expect(compact(await page.locator('#story .timeline__item').last().locator('.timeline__text').textContent())).toBe(
-      `JobReady rolls out in stages. YouthWIDE aims to train 1 million educated youth (Higher Secondary Certificate or above) for digital employment by 2030, in Bangladesh and similar countries in South Asia and the Middle East and North Africa, ${AIM_DEPENDENCY}. CodersTrust published Impact Survey 2026.`,
+      `JobReady is CodersTrust’s digital learning and earning platform. YouthWIDE aims to train 1 million educated youth (Higher Secondary Certificate or above) for digital employment by 2030, in Bangladesh and similar countries in South Asia and the Middle East and North Africa, ${AIM_DEPENDENCY}. CodersTrust published Impact Survey 2026.`,
     );
     await open(page, YOUTHWIDE);
     expect(compact(await page.locator('#program-glance .pg__row').first().textContent())).toContain(`YouthWIDE aims to train 1 million educated youth (Higher Secondary Certificate or above) for digital employment by 2030, in Bangladesh and similar countries in South Asia and the Middle East and North Africa, ${AIM_DEPENDENCY}.`);
@@ -384,14 +384,15 @@ test.describe('G3 (GPT-6.1 Sol): Employers’ "AI skills are the hardest to find
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 test.describe('G5 (GPT-6.1 Sol): Local Partners’ first "What Your Community Gets" card no longer repeats the funding-end answer', () => {
-  test('the card is two sentences; the funding-end answer (Q10) is still on the page, with its scope words', async ({ page }) => {
+  // WP163 (owner answers of 3 November 2026): a third sentence states the delivery model, the page's one statement of it; the card still does not repeat the funding-end answer.
+  test('the card is two sentences and the delivery model; the funding-end answer (Q10) is still on the page, with its scope words', async ({ page }) => {
     await open(page, LOCAL);
     const card = page.locator('#features li', { has: page.locator('.card__title', { hasText: 'Facilitator Training and a Local Curriculum' }) });
     await expect(card).toHaveCount(1);
     const text = compact(await card.locator('.card__text').textContent());
-    expect(text).toBe('Training of Trainers, a localized curriculum and preparation for industry certification. You do not have to build the curriculum or certification route yourself.');
+    expect(text).toBe('Training of Trainers, a localized curriculum and preparation for industry certification. You do not have to build the curriculum or certification route yourself. Training follows an AI-supported flipped classroom: all lectures are pre-recorded and an AI Tutor supports every learner, so mentors’ time goes to Q&A and to handholding beyond what the AI Tutor can provide.');
     expect(text).not.toContain('funding ends');
-    expect(await card.getAttribute('data-fact')).toBe('PD-06 PD-02');
+    expect(await card.getAttribute('data-fact')).toBe('PD-06 PD-02 PD-01 IN-04');
     expect(compact(await page.locator('main').textContent())).toContain('Where included, what the program builds stays in place');
   });
 });
@@ -464,17 +465,19 @@ test.describe('L4 (GLM): Home’s "How Do You Prove Outcomes?" says a scorecard 
 });
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-test.describe('L7 (GLM): the JobReady Platform rollout table says "Live" for the course storefront', () => {
-  test('the statuses are Live, Pre-Launch, Pre-Launch, Live and Live; the storefront’s note still says it operates at jobready.global; "Operating" is not a status', async ({ page }) => {
+// WP163 (owner answers of 3 November 2026): the table this pinned (a Status column: Live, Pre-Launch, Pre-Launch, Live, Live) was replaced by "Platform Capabilities" with no Status column; the storefront row
+// and its note stay, and no status badge is printed.
+test.describe('L7 (GLM): the JobReady Platform capabilities table keeps the course storefront row', () => {
+  test('there is no Status column; the storefront’s note still says it operates at jobready.global; no badge says "Operating" or any status', async ({ page }) => {
     await open(page, 'our-model/jobready-platform/');
     const rows = page.locator('#status tbody tr');
-    await expect(rows).toHaveCount(5);
-    expect(await texts(page, '#status tbody td[data-label="Status"]')).toEqual(['Live', 'Pre-Launch', 'Pre-Launch', 'Live', 'Live']);
+    await expect(rows).toHaveCount(9);
+    await expect(page.locator('#status tbody td[data-label="Status"]')).toHaveCount(0);
     const first = rows.first();
     expect(compact(await first.locator('th').textContent())).toBe('Train');
     expect(compact(await first.locator('td[data-label="Capability"]').textContent())).toBe('Course storefront at jobready.global');
     expect(compact(await first.locator('td[data-label="Note"]').textContent())).toBe('CodersTrust’s course storefront operates at jobready.global.');
-    expect(await texts(page, '#status .badge')).not.toContain('Operating');
+    expect(await texts(page, '#status .badge')).toEqual([]);
   });
 });
 

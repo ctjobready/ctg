@@ -30,7 +30,7 @@ import CopyText from '../../components/pages/impact/CopyText.astro';
 import FaqSection from '../../components/pages/programs/FaqSection.astro';
 import StagePipeline from '../../components/pages/model/StagePipeline.astro';
 import { desc, title, val, discoveryCta } from '../../components/pages/impact/page-utils';
-import { SAFEGUARDING, MICRO_COMMITMENT, PROGRAM_SCOPE_STATEMENT_EXAMS, RCT_HEADLINE } from '../../data/copy';
+import { DELIVERY_MODEL, SAFEGUARDING, MICRO_COMMITMENT, PROGRAM_SCOPE_STATEMENT_EXAMS, RCT_HEADLINE } from '../../data/copy';
 import type { FaqSource } from '../../components/pages/programs/faq';
 import { linkAttrs } from '../../lib/url';
 
@@ -52,7 +52,8 @@ const cards = [
   { icon: 'clipboard-check', title: 'Accessible Readiness Assessment', id: 'PD-14', text: 'Tests and an interview route applicants to a career track or a foundation track. Some applicants may not be selected.' },
   { icon: 'layers', title: 'Foundation Tracks', id: 'PD-17', text: 'Learners with limited computer or English skills get extra foundation hours with facilitator support, scoped in co-design. Their outcomes are reported by track.' },
   { icon: 'wifi', title: 'Learning with Limited Connectivity', id: 'PD-07', text: 'Lessons work over a 1.5 Mbps connection, and 720p lessons can be downloaded for offline viewing.' },
-  { icon: 'graduation-cap', title: 'Blended Training and Certification Preparation', id: 'PD-01', text: `Each certification track has ${val('PD-01')} training hours, including exam preparation, over 3–6 months. Three months of milestone-based one-to-one mentoring follow, with placement support alongside, toward each track’s agreed work-entry goal.` },
+  // WP163 (owner answers of 3 November 2026): the delivery card states the AI-supported flipped classroom once (DELIVERY_MODEL); the Go Deeper cards carry no planned-levels or rollout-status wording.
+  { icon: 'graduation-cap', title: 'AI-Supported Training and Certification Preparation', id: 'PD-01 IN-04', text: `${DELIVERY_MODEL.text} Each certification track has ${val('PD-01')} training hours, including exam preparation, over 3–6 months. Three months of milestone-based one-to-one mentoring follow, with placement support alongside, toward each track’s agreed work-entry goal.` },
   { icon: 'network', title: 'Local Labs, Coordinated Delivery', id: 'PD-06', text: 'After about five months of delivery, programs are designed to run up to 10 certification cohorts in parallel, using existing labs and facilitators trained by CodersTrust (Training of Trainers).' },
   { icon: 'briefcase', title: 'Placement Support', id: 'PD-15', text: 'Support includes assessment-based career advising, resume writing, job-application and interview preparation, job fairs, employer matching and freelance-marketplace onboarding, with internships or apprenticeships where employer placements are available.' },
 ];
@@ -108,8 +109,8 @@ const faqSources: FaqSource[] = [
   <Section tone="ice" aria-labelledby="go-h">
     <SectionHeader id="go-h" eyebrow="Go Deeper" title="Explore TalentLEAP and the JobReady Platform" />
     <div class="grid-cards grid-cards--2">
-      <ProgramCard icon="route" title="TalentLEAP" text="CodersTrust’s competency-based talent development model: skill units, career paths and mentoring, with progressive levels planned beyond the first published level." href="/our-model/talentleap/" linkLabel="How TalentLEAP Works" />
-      <ProgramCard icon="layout-dashboard" title="JobReady Platform" text="The digital learning and earning platform, rolling out in stages." href="/our-model/jobready-platform/" linkLabel="See the Rollout Status" />
+      <ProgramCard icon="route" title="TalentLEAP" text="CodersTrust’s competency-based talent development model: skill units, career paths and mentoring, with levels from Competent to Proficient and Expert." href="/our-model/talentleap/" linkLabel="How TalentLEAP Works" />
+      <ProgramCard icon="layout-dashboard" title="JobReady Platform" text="The digital learning and earning platform, from the AI Tutor to the work marketplaces." href="/our-model/jobready-platform/" linkLabel="See the Platform Capabilities" />
     </div>
   </Section>
 

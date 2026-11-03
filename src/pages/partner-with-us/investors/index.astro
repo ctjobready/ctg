@@ -36,7 +36,7 @@ import InvestorReach from '../../../components/pages/investors/InvestorReach.ast
 import InvestorFit from '../../../components/pages/investors/InvestorFit.astro';
 import InvestorOffer from '../../../components/pages/investors/InvestorOffer.astro';
 import FaqBlock from '../../../components/pages/hub/FaqBlock.astro';
-import { HEADLINE, PROGRAM_SCOPE_COHORT_INCLUSIONS, VALUE_PROPOSITION } from '../../../data/copy';
+import { DELIVERY_MODEL, HEADLINE, PROGRAM_SCOPE_COHORT_INCLUSIONS, VALUE_PROPOSITION } from '../../../data/copy';
 import { cta } from '../../../lib/mailto';
 import { faqJsonLd } from '../../../lib/faq';
 import { linkAttrs } from '../../../lib/url';
@@ -51,31 +51,32 @@ if (description.length > 155) throw new Error(`Investors meta description is ${d
 const investor = cta('investor');
 // Q11-investor (WP39, cycle-16 review): the live / pre-launch / planned list is "What JobReady Does" directly above, so the answer points there; the shared Q11 (Employers, JobReady@Work, the platform page) keeps the list.
 const FAQ_IDS = ['Q11-investor', 'Q5', 'Q2-investor'];
-const jsonLd = [webPage({ path, name: title, description, dateModified: '2026-11-02' }), faqJsonLd('investors', path, FAQ_IDS)]; // WP161-A (adversarial review A-07): WebPage.name is the title without the site-name suffix, like the other route pages. WP151 (the "Not a Fit Yet" clause and the thesis body changed; 2026-11-02). Earlier: WP108: the page states no "last updated" date; its dateModified is the day SC-02's detail was reworded
+const jsonLd = [webPage({ path, name: title, description, dateModified: '2026-11-03' }), faqJsonLd('investors', path, FAQ_IDS)]; // WP163 (owner answers of 3 November 2026): the hero, "What JobReady Does" and the platform question carry no live, pre-launch, planned or roadmap label (2026-11-03). WP161-A (adversarial review A-07): WebPage.name is the title without the site-name suffix, like the other route pages. WP151 (the "Not a Fit Yet" clause and the thesis body changed; 2026-11-02). Earlier: WP108: the page states no "last updated" date; its dateModified is the day SC-02's detail was reworded
 
 // "What JobReady Does" (WP40, cycle-17 review): three cards, one for each job the platform does for a reader of this page: learning, paid work, institutions. The status words are the register's (IN-04: "Live today: partner
 // portals, marketing automation, customer relationship management and AI chat. In pre-launch: the employer marketplace and the gig-work marketplace."; IN-06: personalized and adaptive learning is roadmap;
 // IN-08: "Competent is the first level; Proficient and Expert are planned"), and the two marketplaces are named as two (tests/wp25s.spec.ts). "marketplaces such as Upwork and Fiverr" keeps the old row's "such as": placement
 // does not run through these two alone.
+// WP163 (owner answers of 3 November 2026): the cards say what JobReady offers, with no status words (IN-04, IN-06 and IN-08 no longer carry them); the Learn card states the delivery model once (DELIVERY_MODEL).
 const includes = [
   {
     icon: 'graduation-cap',
     title: 'Learn Through TalentLEAP',
-    // WP64 (cycle-36 review, Claude): the same sentence as the TalentLEAP page's opening, "The first published TalentLEAP level is Competent; Proficient and Expert levels are planned." (it said "Competent is the published first level; Proficient and Expert are planned.").
-    text: `The first published TalentLEAP level is Competent; Proficient and Expert levels are planned. Supported cohorts include mentoring, certification exam preparation and placement support. ${PROGRAM_SCOPE_COHORT_INCLUSIONS}`,
-    facts: ['IN-06', 'IN-08', 'PD-01', 'PD-02'],
+    // WP64 (cycle-36 review, Claude): the same sentence as the TalentLEAP page's opening. WP163: "Its levels run from Competent to Proficient and Expert." (it said "The first published TalentLEAP level is Competent; Proficient and Expert levels are planned.").
+    text: `TalentLEAP’s levels run from Competent to Proficient and Expert, with AI-driven personalized and adaptive learning paths. ${DELIVERY_MODEL.text} Supported cohorts include mentoring, certification exam preparation and placement support. ${PROGRAM_SCOPE_COHORT_INCLUSIONS}`,
+    facts: ['IN-06', 'IN-08', 'PD-01', 'PD-02', 'IN-04'],
   },
   {
     icon: 'briefcase',
     title: 'Connect to Paid Work',
-    text: 'The employer marketplace and the gig-work marketplace are in pre-launch. Until launch, placement runs through CodersTrust’s placement team and marketplaces such as Upwork and Fiverr.',
+    text: 'The employer marketplace and the gig-work marketplace connect learners to paid work, and an AI career coach guides them on careers, interviews and portfolios. Placement also runs through CodersTrust’s placement team and marketplaces such as Upwork and Fiverr.',
     facts: ['IN-04'],
   },
   {
     icon: 'building-2',
     title: 'Equip Partner Institutions',
-    text: 'Partner portals are live, and AI chat is live across the platform. Personalized and adaptive learning is on the roadmap.',
-    facts: ['IN-04', 'IN-06'],
+    text: 'Partner portals give institutions a digital delivery platform, with automated assessment and feedback and AI chat across the platform.',
+    facts: ['IN-04'],
   },
 ];
 const rollout = linkAttrs('/our-model/jobready-platform/');
@@ -127,7 +128,7 @@ const mechanismBlocks = [
 
   <Tone cmf="C8">
     <IncludesBand id="features" title="What JobReady Does" cards={includes}>
-      <a slot="more" class="link" href={rollout.href}>See the Full Rollout Status<Icon name="arrow-right" size={16} /></a>
+      <a slot="more" class="link" href={rollout.href}>See the Platform Capabilities<Icon name="arrow-right" size={16} /></a>
     </IncludesBand>
   </Tone>
 

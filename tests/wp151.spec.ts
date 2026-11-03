@@ -58,14 +58,17 @@ test.describe('1 JobReady@Campus: the How It Works card says who teaches', () =>
 test.describe('2 Labels and training hours (the sweep itself is in wp150, section 7)', () => {
   test('Our Model states the hours with exam preparation inside them', () => {
     const text = main(OUR_MODEL);
-    expect(text).toContain('Blended Training and Certification Preparation Each certification track has 100 training hours, including exam preparation, over 3–6 months.'); // WP152: "has" (it read "includes 100 training hours, including")
+    // WP163 (owner answers of 3 November 2026): the card is "AI-Supported Training and Certification Preparation" and opens with the delivery model (DELIVERY_MODEL); the hours sentence follows unchanged.
+    expect(text).toContain('AI-Supported Training and Certification Preparation Training follows an AI-supported flipped classroom:');
+    expect(text).toContain('beyond what the AI Tutor can provide. Each certification track has 100 training hours, including exam preparation, over 3–6 months.'); // WP152: "has" (it read "includes 100 training hours, including")
     expect(text).not.toContain('100 training hours over 3–6 months');
   });
 
   test('JobReady@Campus glance row: "Training and Certification Preparation"', () => {
     const text = main(CAMPUS);
     expect(text).toContain(
-      'Training and Certification Preparation 100 training hours per certification, including certification exam preparation, then three months of milestone-based mentoring; exam fees, eligibility, attempts and retakes are set per program.',
+      // WP163 (owner answers of 3 November 2026): one exam fee per trainee is included; exam eligibility and any further attempts are set per program.
+      'Training and Certification Preparation 100 training hours per certification, including certification exam preparation and one exam fee per trainee, then three months of milestone-based mentoring; exam eligibility and any further attempts are set per program.',
     );
     expect(text).not.toContain('Training and Certification 100 training hours');
   });
@@ -101,8 +104,9 @@ test.describe('3 Repetition: said once', () => {
     const text = main(INVESTORS);
     expect(text).toContain('Not a Fit Yet Investors who need a finished marketplace now.');
     expect(text).not.toContain('finished marketplace now:');
-    // The hero lead and the status tile ("Connect to Paid Work") are the only two statements of the status; the FAQ points to the tiles.
-    expect(count(text, 'the gig-work marketplace are in pre-launch')).toBe(2);
+    // The hero lead and the "Connect to Paid Work" tile are the only two statements naming the marketplaces; the FAQ points to the tiles. WP163 (owner answers of 3 November 2026): neither carries a pre-launch status any more.
+    expect(count(text, 'employer marketplace and the gig-work marketplace')).toBe(2);
+    expect(count(text, 'pre-launch')).toBe(0);
   });
 
   test('NU Post Graduate Diploma: the FAQ "How Do I Apply?" is gone; the "Ready to Apply?" band keeps the instruction', () => {
@@ -123,7 +127,7 @@ test.describe('3 Repetition: said once', () => {
 
 test('4 Investors, "Connect Learning to Paid Work": the body says paid work', () => {
   const text = main(INVESTORS);
-  expect(text).toContain('Connect Learning to Paid Work JobReady is being built to link learners to paid work through mentoring and placement support.'); // WP152: no heading echo, no comma before "through"
+  expect(text).toContain('Connect Learning to Paid Work JobReady is designed to link learners to paid work through mentoring and placement support.'); // WP152: no heading echo, no comma before "through"
   expect(text).not.toContain('connect learning with mentoring and placement support');
 });
 

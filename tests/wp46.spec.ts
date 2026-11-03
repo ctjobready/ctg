@@ -41,7 +41,8 @@ async function faqJsonLd(page: Page) {
 test.describe('TalentLEAP: the course-platform answer compares with a self-paced course alone (item 1)', () => {
   const QUESTION = 'How Is a Supported Cohort Different from a Self-Paced Course?'; // WP155 (Polish 10): was 'How Is CodersTrust Different from an Online Course Platform?' (CodersTrust runs a course storefront itself)
   // WP146: the answer is one sentence now: the scoped comparison and the cohort sentence are joined ("…alone, every supported TalentLEAP cohort pairs…"); the separate first sentence ("supported CodersTrust cohorts add mentoring, …") is gone.
-  const ANSWER = 'Compared with a self-paced course alone, every supported TalentLEAP cohort pairs 100 training hours per certification, including certification exam preparation, with three months of milestone-based mentoring, placement support and outcome tracking for 12 months after each course.';
+  // WP163 (owner answers of 3 November 2026): a second sentence states the delivery model, the answer about how training works (DELIVERY_MODEL).
+  const ANSWER = 'Compared with a self-paced course alone, every supported TalentLEAP cohort pairs 100 training hours per certification, including certification exam preparation, with three months of milestone-based mentoring, placement support and outcome tracking for 12 months after each course. Training follows an AI-supported flipped classroom: all lectures are pre-recorded and an AI Tutor supports every learner, so mentors’ time goes to Q&A and to handholding beyond what the AI Tutor can provide.';
 
   test('the answer is the scoped comparison followed by the unchanged cohort sentence, in the page and in its FAQ JSON-LD; it no longer generalizes about every course platform', async ({ page }) => {
     await open(page, 'our-model/talentleap/');
@@ -85,14 +86,15 @@ test.describe('Investors: the definition band no longer calls JobReady "AI-nativ
   // WP53 (owner decision 2026-10-16): "a digital learning and earning platform" (it said "education and employment"; tests/wp53.spec.ts)
   test('the platform sentence reads "a digital learning and earning platform", and no page, JSON-LD block or llms.txt still says AI-native', async ({ page }) => {
     await open(page, 'partner-with-us/investors/');
-    expect(await texts(page, '#definition .def__text')).toContain('CodersTrust is building JobReady, a digital learning and earning platform for emerging markets.');
+    expect(await texts(page, '#definition .def__text')).toContain('JobReady is CodersTrust’s digital learning and earning platform for emerging markets.'); // WP163: no "in development" wording (it said "CodersTrust is building JobReady, ...")
     expect(await page.locator('#definition .def').getAttribute('data-fact')).toBe('ID-01 IN-04');
     expect(await mainText(page)).not.toMatch(/AI-native/i);
     const stale = builtPages().filter((p) => /AI[- ]native/i.test(p.html)).map((p) => p.route);
     expect(stale, 'pages that still say "AI-native"').toEqual([]);
-    // the live / pre-launch status lines stay where they are
+    // WP163 (owner answers of 3 November 2026): the live / pre-launch status lines this asserted were removed by this package (no capability carries a live or pre-launch label); the page names the capabilities instead.
     const text = await mainText(page);
-    expect(text).toMatch(/Live today|are live|pre-launch/i);
+    expect(text).not.toMatch(/Live today|are live|pre-launch/i);
+    expect(text).toContain('JobReady offers an AI Tutor');
   });
 });
 
@@ -206,7 +208,7 @@ test.describe('JobReady Platform: the record band is "The Record Behind JobReady
     const toc = page.locator('.lf-toc nav a', { hasText: 'The Record Behind JobReady' });
     await expect(toc).toHaveCount(1);
     expect(await toc.getAttribute('href')).toMatch(/#why$/);
-    expect(await texts(page, '.lf-toc nav a')).toEqual(['Four Jobs, One Platform', 'Rollout Status', 'The Record Behind JobReady', 'Planned Adaptive Learning', 'Questions About the Platform', 'Talk to Us About JobReady']); // WP141: the list ends with the closing heading
+    expect(await texts(page, '.lf-toc nav a')).toEqual(['Four Jobs, One Platform', 'Platform Capabilities', 'The Record Behind JobReady', 'Questions About the Platform', 'Talk to Us About JobReady']); // WP141: the list ends with the closing heading. WP163: "Rollout Status" is "Platform Capabilities" and "Planned Adaptive Learning" is gone
     // the band still shows the three labelled groups (delivered, in the pipeline, contracted scope)
     expect(await texts(page, '#why .jr__whyh')).toEqual(['Delivered Since 2014', 'Being Onboarded', 'Contracted Scope']);
     expect(await mainText(page)).not.toContain('Why Institutions Choose JobReady');
@@ -279,7 +281,7 @@ test.describe('Foundations: "What Happens Next" has the four steps, and the part
   test('JobReady Platform: its closing line also says "discovery session" where it said "introductory call"', async ({ page }) => {
     await open(page, 'our-model/jobready-platform/');
     const aside = compact(await page.locator('.jr__next').textContent());
-    expect(aside).toContain('A discovery session covers how JobReady fits your program, and a platform grant helps CodersTrust roll out the remaining modules. In your inquiry, include two suitable times.'); // WP135 (was "...; details are shared in the discovery session.")
+    expect(aside).toContain('A discovery session covers how JobReady fits your program, and a platform grant supports JobReady’s platform infrastructure. In your inquiry, include two suitable times.'); // WP135 (was "...; details are shared in the discovery session."). WP163: no "remaining modules" (no capability is labelled pending)
     expect(aside).not.toContain('introductory call');
   });
 });

@@ -32,9 +32,10 @@ function walk(dir: string, out: string[] = []): string[] {
 
 // --------------------------------------------------------------------------------------------------------------------------------
 test.describe('WP112 Minor 1: YouthWIDE glance row "Training and Mentoring"', () => {
-  test('the row says the exam preparation with "exam fees and attempts set per program"', () => {
+  // WP163 (owner answers of 3 November 2026): one exam fee per trainee is included, any further attempts set per program (it read "(exam fees and attempts set per program)").
+  test('the row says the exam preparation with "one exam fee per trainee (any further attempts set per program)"', () => {
     const text = visibleText(distHtml('programs/youthwide/index.html'));
-    expect(text).toContain('100 training hours per certification, including certification exam preparation (exam fees and attempts set per program), then three months of milestone-based mentoring.');
+    expect(text).toContain('100 training hours per certification, including certification exam preparation and one exam fee per trainee (any further attempts set per program), then three months of milestone-based mentoring.');
     expect(text).not.toContain('with the exam fee included');
   });
 });
@@ -44,20 +45,20 @@ test.describe('WP112 Minor 2: Our Model pipeline step 3', () => {
   test('Our Model and TalentLEAP print the qualified step 3 and the old "exam fee included" is gone', () => {
     for (const page of ['our-model/index.html', 'our-model/talentleap/index.html']) {
       const text = visibleText(distHtml(page));
-      expect(text, page).toContain('Certification exam preparation (exam fees and attempts set per program).');
+      expect(text, page).toContain('Certification exam preparation and one exam fee per trainee (any further attempts set per program).'); // WP163
       expect(text, page).not.toContain('Certification exam preparation, exam fee included.');
     }
   });
 
   test('the structured data of the pipeline carries the same step 3 text', () => {
-    expect(distHtml('our-model/talentleap/index.html')).toContain('"description":"Certification exam preparation (exam fees and attempts set per program)."');
+    expect(distHtml('our-model/talentleap/index.html')).toContain('"description":"Certification exam preparation and one exam fee per trainee (any further attempts set per program)."'); // WP163
   });
 });
 
 // --------------------------------------------------------------------------------------------------------------------------------
 test.describe('WP112 Minor 3: "What Does It Cost?" list and the comparison cell', () => {
   test('the Partner with Us hub answer states the supported-cohort inclusions with the clause once, opening the sentence so it covers every item (WP113)', () => {
-    expect(visibleText(distHtml('partner-with-us/index.html'))).toContain('certification exam preparation (exam fees and attempts set per program), three months of mentoring, placement support and 12 months of outcome tracking after each course.');
+    expect(visibleText(distHtml('partner-with-us/index.html'))).toContain('certification exam preparation and one exam fee per trainee (any further attempts set per program), three months of mentoring, placement support and 12 months of outcome tracking after each course.'); // WP163
   });
 });
 
@@ -84,11 +85,11 @@ test.describe('WP112 Polish 6: Universities campus FAQ says "students"', () => {
 
 // --------------------------------------------------------------------------------------------------------------------------------
 test.describe('WP112 Polish 7: dates', () => {
-  test('TalentLEAP, whose text changed, carries 2026-11-02 in JSON-LD and reads "Last updated November 2, 2026" (WP154; WP141 had 2026-11-01)', () => {
+  test('TalentLEAP, whose text changed, carries 2026-11-03 in JSON-LD and reads "Last updated November 3, 2026" (WP163; WP154 had 2026-11-02, WP141 2026-11-01)', () => {
     const html = distHtml('our-model/talentleap/index.html');
-    expect(html).toMatch(/"dateModified":"2026-11-02"/);
+    expect(html).toMatch(/"dateModified":"2026-11-03"/);
     expect(html).not.toMatch(/"dateModified":"2026-10-28"/);
-    expect(visibleText(html)).toContain('Last updated November 2, 2026');
+    expect(visibleText(html)).toContain('Last updated November 3, 2026');
   });
 
   test('Governance reads "Last updated November 2, 2026" (WP127 and WP128 changed its text on 30 October, WP129 applied the owner rule that any visible text change moves the date; WP141 changed it again; WP155 on 2 November)', () => {
@@ -108,7 +109,8 @@ test.describe('WP112b: no built page says the exam fee is included', () => {
     expect(offenders).toEqual([]);
   });
 
-  test('JobReady@Campus states the fee, eligibility, attempts and retakes as set per program (WP141: the page statement carries the program-scope qualifier)', () => {
-    expect(visibleText(distHtml('programs/jobready-campus/index.html'))).toContain('100 training hours per certification, including certification exam preparation, then three months of milestone-based mentoring; exam fees, eligibility, attempts and retakes are set per program.');
+  // WP163 (owner answers of 3 November 2026): one exam fee per trainee is included; exam eligibility and any further attempts are set per program (it read "exam fees, eligibility, attempts and retakes are set per program").
+  test('JobReady@Campus states one exam fee per trainee, with eligibility and further attempts set per program (WP141: the page statement carries the program-scope qualifier)', () => {
+    expect(visibleText(distHtml('programs/jobready-campus/index.html'))).toContain('100 training hours per certification, including certification exam preparation and one exam fee per trainee, then three months of milestone-based mentoring; exam eligibility and any further attempts are set per program.');
   });
 });

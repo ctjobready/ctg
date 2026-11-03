@@ -75,7 +75,7 @@ import OfferCards from '../../../components/pages/partners/OfferCards.astro';
 import StepsBand from '../../../components/pages/partners/StepsBand.astro';
 import PageEnhancements from '../../../components/pages/partners/PageEnhancements.astro';
 import { KOSOVO_WOW_TILE_LABEL, LINKS, TRACER_MONTHS, funderOptionCards, meta } from '../../../components/pages/partners/partners';
-import { CONTRACT_TOTAL_NOTE_SHORT, HEADLINE, NU_PARTNERSHIP_STATEMENT, POSITIONING, PROGRAM_SCOPE_STATEMENT, PROGRAM_SIZES_NOTE_BRIEFING, VALUE_PROPOSITION, WB_KOSOVO } from '../../../data/copy';
+import { CONTRACT_TOTAL_NOTE_SHORT, DELIVERY_MODEL, HEADLINE, NU_PARTNERSHIP_STATEMENT, POSITIONING, PROGRAM_SCOPE_STATEMENT, PROGRAM_SIZES_NOTE_BRIEFING, VALUE_PROPOSITION, WB_KOSOVO } from '../../../data/copy';
 import { HER_POWER_TILE_LABEL } from '../../../components/pages/home/caseStudies';
 import { fact } from '../../../data/facts';
 import { faqJsonLd } from '../../../lib/faq';
@@ -203,7 +203,8 @@ const FAQ_IDS = ['Q7-government', 'Q2-government', 'Q1-government', 'Q10-later',
     title="What Your Agency Gets"
     cards={[
       // WP62 (cycle-34 review, Gemini): "... mentoring and placement support toward local, remote and global work." (it said "... that point completers toward paid work."), the phrase the mechanism cards use for where placement leads.
-      { icon: 'award', title: 'Certification Preparation and Placement Support', text: 'Certification tracks chosen from employer demand, then three months of mentoring and placement support toward local, remote and global work.', facts: ['PD-10', 'PD-01'] },
+      // WP163 (owner answers of 3 November 2026): the card states the delivery model once on this page (DELIVERY_MODEL, the AI-supported flipped classroom).
+      { icon: 'award', title: 'Certification Preparation and Placement Support', text: `Certification tracks chosen from employer demand, then three months of mentoring and placement support toward local, remote and global work. ${DELIVERY_MODEL.text}`, facts: ['PD-10', 'PD-01', 'IN-04'] },
       { icon: 'chart-bar', title: 'Spending Measured Against Outcomes', text: 'A pilot scorecard with cost per completer and per verified outcome, and monthly reports. Spending is reported against the agreed scorecard.', facts: ['PD-11', 'PD-08'] },
       { icon: 'landmark', title: 'Capacity Designed to Stay in Your System', text: 'Where included: curriculum and manuals; CodersTrust-trained facilitators; and blended learning in existing labs that works with limited connectivity, so rural labs can take part.', facts: ['GV-11', 'PD-06', 'PD-07'] },
     ]}

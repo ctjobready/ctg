@@ -277,7 +277,8 @@ test.describe('TalentLEAP and YouthWIDE', () => {
     await open(page, 'our-model/talentleap/');
     const lead = compact(await page.locator('.lf-head .lead').textContent());
     expect(lead).toBe(
-      'TalentLEAP organizes learning around assessed skill units and career paths. The first published TalentLEAP level is Competent; Proficient and Expert levels are planned. Learners move through three stages, Learn, Earn and Prosper, with three months of milestone-based mentoring after the course.', // WP64 (cycle-36 review, Claude): it said "Competent is the published first level; Proficient and Expert are planned."
+      // WP163 (owner answers of 3 November 2026): no level is labelled planned (it said "The first published TalentLEAP level is Competent; Proficient and Expert levels are planned.")
+      'TalentLEAP organizes learning around assessed skill units and career paths. Its levels run from Competent to Proficient and Expert. Learners move through three stages, Learn, Earn and Prosper, with three months of milestone-based mentoring after the course.', // WP64 (cycle-36 review, Claude): it said "Competent is the published first level; Proficient and Expert are planned."
     );
     expect(lead).not.toMatch(/graduated|taught/);
     expect(compact(await page.locator('meta[name="description"]').getAttribute('content'))).not.toMatch(/graduated levels/);
@@ -377,7 +378,7 @@ test.describe('cost and safeguarding: full on the hub, one line and a link on th
     // WP145: the hub's program-scope sentence closes this answer on the page; the answer proper (and its FAQ JSON-LD) is checked here.
     const cost = (await answerOf(page, 'What Does It Cost?')).replace(' Inclusions, exam terms and reporting on this page are agreed in the program scope.', '');
     // WP41 (cycle-18 review): the list is scoped to supported youth cohorts; WP43 (cycle-20 review): "Supported youth cohorts include training, certification exam preparation and the exam fee, …"; WP45: "… include outreach and selection, training, …"
-    expect(cost).toContain('Supported youth cohorts include outreach and selection, training, certification exam preparation (exam fees and attempts set per program)');
+    expect(cost).toContain('Supported youth cohorts include outreach and selection, training, certification exam preparation and one exam fee per trainee (any further attempts set per program)');
     expect(sentences(cost).length).toBeLessThanOrEqual(3);
     expect(await mainText(page)).not.toContain('Guardian consent and supervision apply to anyone under 18');
     const ld = await faqJsonLd(page);
@@ -477,7 +478,7 @@ test.describe('dating lines', () => {
 
   test('TalentLEAP and SuperKids carry today’s date, the day their wording changed', async ({ page }) => {
     await open(page, 'our-model/talentleap/');
-    expect(compact(await page.locator('.lf-updated').textContent())).toBe('Last updated November 2, 2026'); // WP112: TalentLEAP's wording last changed on 29 October (was 28 October, WP104); WP141 changed it on 1 November; WP154 on 2 November
+    expect(compact(await page.locator('.lf-updated').textContent())).toBe('Last updated November 3, 2026'); // WP112: TalentLEAP's wording last changed on 29 October (was 28 October, WP104); WP141 changed it on 1 November; WP154 on 2 November; WP163 on 3 November
     await open(page, 'programs/superkids/');
     expect(compact(await page.locator('.updated').textContent())).toBe('Last updated November 2, 2026'); // WP143 moved it; WP104: SuperKids gained its consent line on 29 October
   });

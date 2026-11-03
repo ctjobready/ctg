@@ -77,7 +77,7 @@ import FundingRoutes from '../../../components/pages/partners/FundingRoutes.astr
 import Reinforcement from '../../../components/pages/partners/Reinforcement.astro';
 import PageEnhancements from '../../../components/pages/partners/PageEnhancements.astro';
 import { KOSOVO_WOW_TILE_LABEL, LINKS, TRACKING_MONTHS, UNDP_YES_TILE_LABEL, factPart, funderOptionCards, meta } from '../../../components/pages/partners/partners';
-import { BIGD_NAME, C14, HEADLINE, POSITIONING, PROGRAM_SCOPE_STATEMENT, PROGRAM_SIZES_NOTE, VALUE_PROPOSITION, WB_KOSOVO } from '../../../data/copy';
+import { BIGD_NAME, C14, DELIVERY_MODEL, HEADLINE, POSITIONING, PROGRAM_SCOPE_STATEMENT, PROGRAM_SIZES_NOTE, VALUE_PROPOSITION, WB_KOSOVO } from '../../../data/copy';
 import { faqJsonLd } from '../../../lib/faq';
 import { cta } from '../../../lib/mailto';
 import { webPage } from '../../../lib/schema';
@@ -98,6 +98,7 @@ const { title, description } = meta(
   `Fund paths to earnings. In a randomized trial of CodersTrust’s WSDFM program, women offered a place were ${factPart('RC-02', /(\d+\.\d) percentage points/)} percentage points more likely to be employed.`,
 );
 
+// WP163 (owner answers of 3 November 2026; the page already carries 2026-11-03 from WP161-A): the platform route names what JobReady offers (FundingRoutes), and the first cohort-grant card states the delivery model once (DELIVERY_MODEL).
 // Q8-route and Q9-route: the one-line cost and safeguarding answers, each with a link to where the full answer lives (the partner hub FAQ, the governance page) (WP36).
 const FAQ_IDS = ['Q3', 'Q8-route', 'Q9-route', 'Q10'];
 ---
@@ -212,8 +213,8 @@ const FAQ_IDS = ['Q3', 'Q8-route', 'Q9-route', 'Q10'];
       {
         icon: 'target',
         title: 'Mentoring, Placement Support and Outcome Tracking',
-        text: `Three months of mentoring and placement support are standard inclusions, and outcomes are tracked for ${TRACKING_MONTHS} months after each course. Results are measured against the agreed scorecard, including first paid work, not attendance alone.`,
-        facts: ['PD-01', 'PD-02', 'PD-11'],
+        text: `${DELIVERY_MODEL.text} Three months of mentoring and placement support are standard inclusions, and outcomes are tracked for ${TRACKING_MONTHS} months after each course. Results are measured against the agreed scorecard, including first paid work, not attendance alone.`,
+        facts: ['PD-01', 'PD-02', 'PD-11', 'IN-04'],
       },
       {
         icon: 'badge-check',

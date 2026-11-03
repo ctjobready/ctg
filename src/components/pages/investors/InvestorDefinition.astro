@@ -8,6 +8,7 @@ import { DEFINITION_HEADING } from '../../../data/copy';
  * digital learning and earning platform). Page-local because DefinitionBand has one paragraph only.
  * WP53 (owner decision 2026-10-16): JobReady is defined as "the digital learning and earning platform of CodersTrust" wherever the site defines it (IN-04, this band, the router and hub investor cards, the platform page).
  * WP46 (cycle-22 review): the lead sentence no longer calls JobReady "AI-native" (an unexplained label; WP44 already dropped it from the platform page's hero).
+ * WP163 (owner answers of 3 November 2026): no capability is labelled in development, and IN-04 no longer says "being built", so the sentence says what JobReady is (it said "CodersTrust is building JobReady, ...").
  * WP38 (cycle-15 review): the second paragraph no longer closes on "a track record of 130,000+ learners trained since 2014"; the count is the first tile of "Delivered Since 2014" (#guide; WP42 moved the tiles there from #reach).
  */
 interface Props {
@@ -21,6 +22,6 @@ const { id = 'definition' } = Astro.props;
   <div class="def" data-fact="ID-01 IN-04">
     <h2 class="def__title" id={`${id}-h`}>{DEFINITION_HEADING}</h2>
     <p class="def__text">{fact('ID-01').text}</p>
-    <p class="def__text">CodersTrust is building JobReady, a digital learning and earning platform for emerging markets.</p>
+    <p class="def__text">JobReady is CodersTrust’s digital learning and earning platform for emerging markets.</p>
   </div>
 </Section>

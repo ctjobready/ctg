@@ -19,6 +19,7 @@ import { withSourceNote } from '../../../data/copy';
  * WP50 (cycle-25 review): the second card is "Connect Learning to Paid Work" with one line about what JobReady is being built to do; it was "Online Learning Sells Content, Not Earnings" (a heading that read as absolute) over a sentence
  * about what many online courses lack ("... without the work-entry support that turns skills into income: mentoring, certification and placement").
  * WP58 (cycle-30 review, Claude S11): the third card is "AI Skills Are in Rising Demand" (it was "AI Is Raising the Bar for Entry Work", a heading about entry-level work over PX-08, which is about jobs that require AI skills at every level, against all jobs).
+ * WP163 (owner answers of 3 November 2026): no capability is labelled in development, so the answer card says what JobReady "is designed to" do (IN-04's wording; it said "is being built to").
  * WP153 (Opus XHigh run 7, Polish): the band reads problem, problem, answer: "Connect Learning to Paid Work" (what JobReady is being built to do) follows the two demand facts (the 62 million and 72% tile card, and "AI Skills Are in Rising Demand"); content order only.
  */
 interface Props {
@@ -60,7 +61,7 @@ const px08 = withSourceNote('PX-08', px08Text);
       <div class="card__body">
         <Icon name="book-open" size={36} strokeWidth={1.5} class="th__icon" />
         <h3 class="card__title">Connect Learning to Paid Work</h3>
-        <p class="card__text" data-fact="IN-04">JobReady is being built to link learners to paid work through mentoring and placement support.</p>
+        <p class="card__text" data-fact="IN-04">JobReady is designed to link learners to paid work through mentoring and placement support.</p>
       </div>
     </article>
   </div>

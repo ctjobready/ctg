@@ -297,10 +297,12 @@ test.describe('Our Model and Investors', () => {
   test('the platform names two marketplaces, and the National University onboarding figure sits in its own group', async ({ page }) => {
     await open(page, 'our-model/jobready-platform/');
     const text = compact(await main(page));
-    // WP49 (cycle-24 review): the "What Is Live Today" callout is gone; the status table names the two marketplaces as two rows, each in pre-launch (never "the employer and gig-work marketplaces")
+    // WP49 (cycle-24 review): the "What Is Live Today" callout is gone; the table names the two marketplaces as two rows (never "the employer and gig-work marketplaces").
+    // WP163 (owner answers of 3 November 2026): the rows carry no Pre-Launch status any more (the table has no Status column).
     const rows = page.locator('#status tbody tr');
-    await expect(rows.filter({ hasText: 'Gig-work (Earn) marketplace' })).toContainText('Pre-Launch');
-    await expect(rows.filter({ hasText: 'Employer marketplace' })).toContainText('Pre-Launch');
+    await expect(rows.filter({ hasText: 'Gig-work (Earn) marketplace' })).toHaveCount(1);
+    await expect(rows.filter({ hasText: 'Employer marketplace' })).toHaveCount(1);
+    await expect(page.locator('#status')).not.toContainText('Pre-Launch');
     expect(text).not.toMatch(/employer and gig-work marketplaces/i);
     const why = page.locator('#why');
     const tile = (title: string) => why.locator('.jr__whystat', { has: page.getByRole('heading', { level: 3, name: title }) });
@@ -329,7 +331,7 @@ test.describe('Our Model and Investors', () => {
     // WP49 (cycle-24 review): the shared "What Happens When Funding Ends?" answer no longer carries that TalentLEAP clause (tests/wp49.spec.ts); the page's own worked example states the levels
     expect(text).not.toContain('TalentLEAP is designed to organize skills into career paths with progressive levels as further levels are published');
     expect(text).not.toContain('TalentLEAP organizes skills into career paths with progressive levels. In this example, Level 1 is Competent; Proficient and Expert are the planned next levels.'); // WP154: the example band has no lead; the opening says the planned levels once
-    expect(text).toContain('The first published TalentLEAP level is Competent; Proficient and Expert levels are planned.');
+    expect(text).toContain('Its levels run from Competent to Proficient and Expert.'); // WP163: no level is labelled planned (it said "The first published TalentLEAP level is Competent; Proficient and Expert levels are planned.")
     // WP80 (item 1): the FAQ answer now opens "Yes, for CodersTrust’s WSDFM program." and names the evaluator in its second sentence.
     expect(text).toContain('The BRAC Institute of Governance and Development (BIGD) at BRAC University ran a randomized controlled trial');
   });

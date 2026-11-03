@@ -1,7 +1,6 @@
 ---
 import LongformLayout from '../../../layouts/LongformLayout.astro';
 import Accordion from '../../../components/ui/Accordion.astro';
-import Badge from '../../../components/system/Badge.astro';
 import Button from '../../../components/system/Button.astro';
 import Icon from '../../../components/system/Icon.astro';
 import EmailFallback from '../../../components/ui/EmailFallback.astro';
@@ -10,7 +9,7 @@ import StatusTag from '../../../components/system/StatusTag.astro';
 import EvidenceTag from '../../../components/system/EvidenceTag.astro';
 import ReportSection from '../../../components/pages/impact/ReportSection.astro';
 import { articleNode, desc, title, platformGrantCta, discoveryCta } from '../../../components/pages/impact/page-utils';
-import { CONTRACT_TOTAL_NOTE_SHORT, MICRO_COMMITMENT, NU_NOT_TRAINED, withoutSince2014 } from '../../../data/copy';
+import { CONTRACT_TOTAL_NOTE_SHORT, DELIVERY_MODEL, MICRO_COMMITMENT, NU_NOT_TRAINED, withoutSince2014 } from '../../../data/copy';
 import { fact } from '../../../data/facts';
 import { faqItems, faqJsonLd } from '../../../lib/faq';
 import { linkAttrs } from '../../../lib/url';
@@ -18,37 +17,41 @@ import { linkAttrs } from '../../../lib/url';
 // WP30d (owner direction 2026-10-14: less is more): shorter table notes, one live-today summary, a single roadmap sentence and a shorter "why" line.
 // WP49 (cycle-24 review): the "What Is Live Today" callout under the status table is gone: it said again what the table directly above it says (partner portals, marketing automation, customer relationship management and AI chat live; the course storefront
 // operating in the first row; the two marketplaces in pre-launch), and adaptive learning is on the roadmap in "Planned Adaptive Learning" below. The table is the one statement of the rollout status.
+// WP163 (owner answers of 3 November 2026): no capability carries a live, pre-launch, planned or roadmap label. "Rollout Status" is "Platform Capabilities": the table lists each capability and the job it does, with no Status column,
+// and adds the AI capabilities the investor deck describes (an AI Tutor, AI-driven personalized and adaptive learning paths, automated assessment and feedback, an AI career coach; IN-04). The "Planned Adaptive Learning" band is gone (adaptive
+// learning is a row of the table), and the jobs band states the delivery model once (DELIVERY_MODEL). The section keeps its id, #status: deep links and the FAQ answer use it.
 // WP42 (cycle-19 review): "Planned Adaptive Learning" keeps its heading and says the capability once (the card that repeated it is gone). WP63 (cycle-35 review, GPT-6.1 Sol GP3, polish): it reads "Planned: personalized and adaptive learning based on TalentLEAP’s competency levels, not live yet." (it ended "... competency levels. This is roadmap, not live.").
 const path = '/our-model/jobready-platform/';
 const JOBREADY = 'https://jobready.global/';
 // WP37 (cycle-14 review): "CRM" is written out wherever the live list is printed (the table row, the Q11 answer); the meta description names the two live modules the menu names, since the full list does not fit its 155 characters.
-const description = desc('JobReady is CodersTrust’s digital learning and earning platform. Partner portals and AI chat are live; more modules follow.');
+// WP163: the page names its AI capabilities rather than the label "AI-native" (WP46: an unexplained label; tests/wp46.spec.ts keeps it off every page).
+const description = desc('JobReady is CodersTrust’s digital learning and earning platform: an AI Tutor, adaptive learning paths, an AI career coach and work marketplaces.');
 // WP41 (cycle-18 review): the answer points to "Rollout Status" (#status) above it instead of listing the status a second time (the table says it).
 const faqIds = ['Q11-platform'];
 const jsonLd = [
-  articleNode({ path, headline: 'JobReady: A Platform Built to Connect Learning to Work', description, datePublished: '2026-10-08', dateModified: '2026-11-02', author: 'CodersTrust', about: { '@type': 'Thing', name: 'JobReady Platform' } }),
+  articleNode({ path, headline: 'JobReady: A Platform Built to Connect Learning to Work', description, datePublished: '2026-10-08', dateModified: '2026-11-03', author: 'CodersTrust', about: { '@type': 'Thing', name: 'JobReady Platform' } }),
   faqJsonLd('foundations', path, faqIds),
 ];
 const faq = faqItems('foundations', faqIds);
 
-// WP60 (cycle-32 review, GLM L7): the course storefront's status is "Live", as the partner portals' and the "Across the Platform" row's are (it said "Operating", the one status in the table that was not Live, Pre-Launch or Roadmap); its note still says "CodersTrust’s course storefront operates at jobready.global."
-type Status = 'Live' | 'Pre-Launch' | 'Roadmap';
-const tone: Record<Status, 'success' | 'info' | 'eyebrow' | 'sale'> = { Live: 'success', 'Pre-Launch': 'info', Roadmap: 'sale' };
-const rows: { job: string; capability: string; status: Status; note: string }[] = [
-  { job: 'Train', capability: 'Course storefront at jobready.global', status: 'Live', note: 'CodersTrust’s course storefront operates at jobready.global.' },
-  { job: 'Connect to Work', capability: 'Gig-work (Earn) marketplace', status: 'Pre-Launch', note: 'In pre-launch. Until then, placement support comes from CodersTrust’s placement team and marketplaces such as Upwork and Fiverr.' },
-  { job: 'Supply Talent', capability: 'Employer marketplace', status: 'Pre-Launch', note: 'In pre-launch. Until then, employers are introduced to candidates through CodersTrust’s placement team.' },
-  { job: 'Equip Institutions', capability: 'Partner portals', status: 'Live', note: 'Available to partner institutions for digital delivery.' },
-  // The register (IN-04) names these three as live without assigning them to one of the four jobs, so they share one row.
-  { job: 'Across the Platform', capability: 'Marketing automation, customer relationship management and AI chat', status: 'Live', note: 'Live as part of the staged rollout.' },
+// WP163: each row is a capability IN-04 names, with the job it does; the notes describe the capability in the investor deck's own terms (ID26 s56 and s61), with no status, figure or date. Talent matching is not listed (the owner's list
+// for this package names the AI Tutor, adaptive learning paths, automated assessment and feedback and the AI career coach).
+const rows: { job: string; capability: string; note: string; facts: string }[] = [
+  { job: 'Train', capability: 'Course storefront at jobready.global', note: 'CodersTrust’s course storefront operates at jobready.global.', facts: 'IN-04' },
+  { job: 'Train', capability: 'AI Tutor', note: 'One-on-one guidance and feedback for every learner, with answers to questions on any concept, lesson or module.', facts: 'IN-04' },
+  { job: 'Train', capability: 'Personalized and adaptive learning paths', note: 'AI adjusts content difficulty, pacing and sequence to each learner’s progress, finds skill gaps and recommends modules, based on TalentLEAP’s competency levels.', facts: 'IN-04 IN-06' },
+  { job: 'Train', capability: 'Automated assessment and feedback', note: 'AI creates and grades assignments and quizzes with instant feedback, and can assess practical skills through project analysis and code review.', facts: 'IN-04' },
+  { job: 'Connect to Work', capability: 'AI career coach', note: 'Guidance on career navigation, skill building, interview preparation and portfolio improvement.', facts: 'IN-04' },
+  { job: 'Connect to Work', capability: 'Gig-work (Earn) marketplace', note: 'Placement support also comes from CodersTrust’s placement team and marketplaces such as Upwork and Fiverr.', facts: 'IN-04' },
+  { job: 'Supply Talent', capability: 'Employer marketplace', note: 'Employers are also introduced to candidates through CodersTrust’s placement team.', facts: 'IN-04' },
+  { job: 'Equip Institutions', capability: 'Partner portals', note: 'For partner institutions’ digital delivery.', facts: 'IN-04' },
+  // The register (IN-04) names these three without assigning them to one of the four jobs, so they share one row.
+  { job: 'Across the Platform', capability: 'Marketing automation, customer relationship management and AI chat', note: 'AI chat supports learner queries and administrative tasks.', facts: 'IN-04' },
 ];
-// Roadmap: only what the register names (IN-06: TalentLEAP is "the basis for AI-driven personalized and adaptive learning (roadmap)"), in one sentence under its heading (WP42, cycle-19 review: the card repeated the heading and the paragraph).
-// Other AI modules (a tutor, a career coach, adaptive assessment, talent matching) are not registered and are not listed.
 const toc = [
   { id: 'jobs', label: 'Four Jobs, One Platform' },
-  { id: 'status', label: 'Rollout Status' },
+  { id: 'status', label: 'Platform Capabilities' },
   { id: 'why', label: 'The Record Behind JobReady' },
-  { id: 'roadmap', label: 'Planned Adaptive Learning' },
   { id: 'faq', label: 'Questions About the Platform' },
   { id: 'cta', label: 'Talk to Us About JobReady' },
 ];
@@ -66,30 +69,30 @@ const d = discoveryCta();
   title={title('JobReady Platform')}
   heading="JobReady: A Platform Built to Connect Learning to Work"
   eyebrow="Our Model"
-  lead="JobReady is CodersTrust’s digital learning and earning platform. Modules are rolling out in stages."
+  lead="JobReady is CodersTrust’s digital learning and earning platform, from an AI Tutor to work marketplaces."
   description={description}
   path={path}
-  updated="2026-11-02"
+  updated="2026-11-03"
   toc={toc}
   breadcrumbs={[{ label: 'Our Model', href: '/our-model/' }, { label: 'JobReady Platform' }]}
   jsonLd={jsonLd}
 >
   <ReportSection id="jobs" title="Four Jobs, One Platform">
-    <p data-fact="IN-04">JobReady is designed to do four jobs: train youth through courses, including preparation for industry certification where a track offers one; connect learners to local, remote and global work; supply employers with job-ready talent; and give institutions a digital delivery platform. The table below says which capabilities are live today.</p>
+    <p data-fact="IN-04">JobReady is designed to do four jobs: train youth through courses, including preparation for industry certification where a track offers one; connect learners to local, remote and global work; supply employers with job-ready talent; and give institutions a digital delivery platform. The table below lists its capabilities.</p>
+    <p data-fact={DELIVERY_MODEL.facts.join(' ')}>{DELIVERY_MODEL.text}</p>
   </ReportSection>
 
-  <ReportSection id="status" title="Rollout Status">
-    <p>Categories of capability and their status, as of this page’s last update.</p>
-    <section class="jr__table" aria-label="Platform capabilities and status" tabindex="0" data-scroll data-stack>
+  <ReportSection id="status" title="Platform Capabilities">
+    <p>What the platform offers, by the job each capability does.</p>
+    <section class="jr__table" aria-label="Platform capabilities" tabindex="0" data-scroll data-stack>
       <table>
-        <caption class="sr-only">Platform Capabilities and Their Rollout Status</caption>
-        <thead><tr><th scope="col">Job</th><th scope="col">Capability</th><th scope="col">Status</th><th scope="col">Note</th></tr></thead>
+        <caption class="sr-only">Platform Capabilities by Job</caption>
+        <thead><tr><th scope="col">Job</th><th scope="col">Capability</th><th scope="col">Note</th></tr></thead>
         <tbody>
           {rows.map((r) => (
-            <tr>
+            <tr data-fact={r.facts}>
               <th scope="row">{r.job}</th>
               <td data-label="Capability">{r.capability}</td>
-              <td data-label="Status"><Badge tone={tone[r.status]}>{r.status}</Badge></td>
               <td data-label="Note">{r.note}</td>
             </tr>
           ))}
@@ -115,17 +118,13 @@ const d = discoveryCta();
     </p>
   </ReportSection>
 
-  <ReportSection id="roadmap" title="Planned Adaptive Learning">
-    <p data-fact="IN-06">Personalized and adaptive learning based on TalentLEAP’s competency levels is planned and not live yet.</p>
-  </ReportSection>
-
   <ReportSection id="faq" title="Questions About the Platform">
     <Accordion items={faq} name="jr-faq" openFirst />
   </ReportSection>
 
   <aside class="jr__next" id="cta" aria-label="Talk to us about JobReady">
     <h2 class="jr__nexttitle">Talk to Us About JobReady</h2>
-    <p>A discovery session covers how JobReady fits your program, and a platform grant helps CodersTrust roll out the remaining modules. In your inquiry, include two suitable times.</p>
+    <p>A discovery session covers how JobReady fits your program, and a platform grant supports JobReady’s platform infrastructure. In your inquiry, include two suitable times.</p>
     <div class="jr__actions">
       <Button href={d.href} iconEnd="arrow-right">{d.label}</Button>
       <a class="link" href={f.href}>Discuss a Platform Grant for JobReady’s Next Stage</a>

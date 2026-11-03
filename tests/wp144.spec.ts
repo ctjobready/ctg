@@ -51,7 +51,8 @@ test('Polish 5: Korail case study "Two Learners in Their Own Words"; Success Sto
 });
 
 test('Polish 6: Investors names AI chat as platform-wide', () => {
-  expect(main('partner-with-us/investors/index.html')).toContain('Partner portals are live, and AI chat is live across the platform. Personalized and adaptive learning is on the roadmap.');
+  // WP163 (owner answers of 3 November 2026): the card carries no live or roadmap status; AI chat is still named as platform-wide.
+  expect(main('partner-with-us/investors/index.html')).toContain('Partner portals give institutions a digital delivery platform, with automated assessment and feedback and AI chat across the platform.');
 });
 
 test('Polish 7: TalentLEAP "Evidence for Today’s Tracks" (heading and On This Page)', () => {

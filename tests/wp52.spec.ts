@@ -95,8 +95,9 @@ test.describe('JobReady@Campus: the problem band’s lead says what the program 
 });
 
 test.describe('Local Partners: what stays after funding, and what the monthly reports cover, are scoped (items 3 and 4)', () => {
+  // WP163 (owner answers of 3 November 2026): the card closes with the delivery model, the page's one statement of it, and carries PD-01 and IN-04 for it.
   const CARD =
-    'Training of Trainers, a localized curriculum and preparation for industry certification. You do not have to build the curriculum or certification route yourself.';
+    'Training of Trainers, a localized curriculum and preparation for industry certification. You do not have to build the curriculum or certification route yourself. Training follows an AI-supported flipped classroom: all lectures are pre-recorded and an AI Tutor supports every learner, so mentors’ time goes to Q&A and to handholding beyond what the AI Tutor can provide.';
   const BLOCK = 'Where a funder is involved, monthly reports cover enrollment, completion, certification, placements and first earnings.';
 
   // WP60 (cycle-32 review, GPT-6.1 Sol G5): the card no longer says what remains after funding ends; the page’s funding-ends answer (Q10) says it, with the scope words, and still opens with them
@@ -105,7 +106,7 @@ test.describe('Local Partners: what stays after funding, and what the monthly re
     const card = page.locator('#features li', { has: page.locator('.card__title', { hasText: 'Facilitator Training and a Local Curriculum' }) });
     await expect(card).toHaveCount(1);
     expect(compact(await card.locator('.card__text').textContent())).toBe(CARD);
-    expect(await card.getAttribute('data-fact')).toBe('PD-06 PD-02');
+    expect(await card.getAttribute('data-fact')).toBe('PD-06 PD-02 PD-01 IN-04');
     // Q10 ("What Happens When Funding Ends?") opens with the same scope words, and the page carries it
     expect(faqs.find((f) => f.id === 'Q10')!.a).toContain('Where included, what the program builds stays in place: facilitators trained by CodersTrust (Training of Trainers) and localized curricula'); // WP147: it read "certified local facilitators"; Local Partners prints the Q10-later variant ("CodersTrust-trained facilitators", WP148), as the definition block above it explains the model
     expect(compact(await page.locator('main').evaluate((el) => el.textContent ?? ''))).toContain('Where included, what the program builds stays in place');
@@ -177,7 +178,7 @@ test.describe('Foundations: the cohort-grant offer’s lead is the program-sizes
 });
 
 test.describe('About: the 2025–2026 timeline entry is sentences, not a semicolon chain (item 7)', () => {
-  const TEXT = 'JobReady rolls out in stages. YouthWIDE aims to train 1 million educated youth (Higher Secondary Certificate or above) for digital employment by 2030, in Bangladesh and similar countries in South Asia and the Middle East and North Africa, depending on government and donor commitments. CodersTrust published Impact Survey 2026.';
+  const TEXT = 'JobReady is CodersTrust’s digital learning and earning platform. YouthWIDE aims to train 1 million educated youth (Higher Secondary Certificate or above) for digital employment by 2030, in Bangladesh and similar countries in South Asia and the Middle East and North Africa, depending on government and donor commitments. CodersTrust published Impact Survey 2026.';
 
   test('the last entry reads as above, from data/timeline.ts, under its unchanged heading, and cites the facts its sentences rest on (IN-02 is no longer among them)', async ({ page }) => {
     const last = timeline[timeline.length - 1];
@@ -192,8 +193,9 @@ test.describe('About: the 2025–2026 timeline entry is sentences, not a semicol
     expect(await item.getAttribute('data-fact')).toBe('IN-04 IN-01 OC-01');
   });
 
-  test('every claim in the entry rests on the register: IN-04 (modules roll out in stages), IN-01 (1 million educated youth by 2030, in Bangladesh and similar countries), OC-01 (the Impact Survey 2026 result)', () => {
-    expect(fact('IN-04').text).toContain('Modules are rolling out in stages');
+  // WP163 (owner answers of 3 November 2026): IN-04 no longer carries the rollout status, so the JobReady sentence is IN-04's opening definition.
+  test('every claim in the entry rests on the register: IN-04 (the platform definition), IN-01 (1 million educated youth by 2030, in Bangladesh and similar countries), OC-01 (the Impact Survey 2026 result)', () => {
+    expect(fact('IN-04').text.startsWith('JobReady is CodersTrust’s digital learning and earning platform')).toBe(true);
     expect(fact('IN-01').text).toContain('aims to train 1 million educated youth (Higher Secondary Certificate or above)');
     expect(fact('IN-01').text).toContain('by 2030');
     expect(fact('OC-01').text).toContain('October 2026 survey');

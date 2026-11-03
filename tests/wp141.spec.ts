@@ -223,12 +223,13 @@ test.describe('WP141 item 1: the in-sentence copies are rewritten (spot checks)'
     expect(main('programs/jobready-campus/index.html')).toContain('Institutions receive monthly reports on progress toward paid work.');
   });
 
+  // WP163 (owner answers of 3 November 2026): one exam fee per trainee is included, any further attempts set per program (it read "exam fees and attempts set per program"); the terms still say "set per program".
   test('exam wording says "set per program", not the clause', () => {
-    expect(main('programs/youthwide/index.html')).toContain('including certification exam preparation (exam fees and attempts set per program), then three months of milestone-based mentoring.');
-    expect(main('our-model/index.html')).toContain('Certification exam preparation (exam fees and attempts set per program).');
-    expect(main('programs/jobready-campus/index.html')).toContain('exam fees, eligibility, attempts and retakes are set per program.');
-    expect(main('partner-with-us/index.html')).toContain('certification exam preparation (exam fees and attempts set per program), three months of mentoring');
-    expect(main('partner-with-us/development-partners/index.html')).toContain('exam fees and attempts set per program.');
+    expect(main('programs/youthwide/index.html')).toContain('including certification exam preparation and one exam fee per trainee (any further attempts set per program), then three months of milestone-based mentoring.');
+    expect(main('our-model/index.html')).toContain('Certification exam preparation and one exam fee per trainee (any further attempts set per program).');
+    expect(main('programs/jobready-campus/index.html')).toContain('exam eligibility and any further attempts are set per program.');
+    expect(main('partner-with-us/index.html')).toContain('certification exam preparation and one exam fee per trainee (any further attempts set per program), three months of mentoring');
+    expect(main('partner-with-us/development-partners/index.html')).toContain('one exam fee per trainee (any further attempts set per program), three months of mentoring and placement support in one program.');
   });
 
   test('the FAQ structured data equals the visible answer (the shared "How Do You Prove Outcomes?" answer, without the clause)', () => {

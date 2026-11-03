@@ -102,16 +102,17 @@ test.describe('A-01 case studies and Stories declare the day their visible text 
 });
 
 test.describe('A-02 partner route pages declare their own dateModified', () => {
+  // WP163 (owner answers of 3 November 2026): the three route pages and Investors changed visible text again on 2026-11-03 (one exam fee per trainee, the delivery model, no live or planned labels).
   for (const route of ['development-partners', 'local-partners', 'universities']) {
-    test(`${route}: WebPage.dateModified is 2026-11-02, its last visible change`, () => {
-      expect(nodeOf(`partner-with-us/${route}/index.html`, 'WebPage').dateModified).toBe('2026-11-02');
+    test(`${route}: WebPage.dateModified is ${TODAY}, its last visible change (WP163; it was 2026-11-02)`, () => {
+      expect(nodeOf(`partner-with-us/${route}/index.html`, 'WebPage').dateModified).toBe(TODAY);
     });
   }
-  test(`Employers, Governments and Foundations change visible text in this package, so they say ${TODAY}; Investors keeps 2026-11-02`, () => {
+  test(`Employers, Governments and Foundations change visible text in this package, so they say ${TODAY}; Investors does too since WP163`, () => {
     expect(nodeOf(EMPLOYERS, 'WebPage').dateModified).toBe(TODAY);
     expect(nodeOf(GOVERNMENTS, 'WebPage').dateModified).toBe(TODAY);
     expect(nodeOf(FOUNDATIONS, 'WebPage').dateModified).toBe(TODAY);
-    expect(nodeOf('partner-with-us/investors/index.html', 'WebPage').dateModified).toBe('2026-11-02');
+    expect(nodeOf('partner-with-us/investors/index.html', 'WebPage').dateModified).toBe(TODAY);
   });
 });
 

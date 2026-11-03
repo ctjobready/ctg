@@ -312,7 +312,7 @@ test.describe('NU Post Graduate Diploma: a link to the wider programs, not their
 test.describe('Our Model: two delivery cards say what they mean', () => {
   test('"Each certification track has 100 training hours, including exam preparation, over 3–6 months." and the scale card is "Local Labs, Coordinated Delivery"', async ({ page }) => {
     await open(page, 'our-model/');
-    const training = page.locator('#delivery .card', { hasText: 'Blended Training and Certification Preparation' });
+    const training = page.locator('#delivery .card', { hasText: 'AI-Supported Training and Certification Preparation' }); // WP163: the card was "Blended Training and Certification Preparation"; it now opens with the delivery model
     expect(compact(await training.textContent())).toContain('Each certification track has 100 training hours, including exam preparation, over 3–6 months.'); // WP152: "has" (WP151: "includes 100 training hours, including exam preparation"; before that "hours over 3–6 months.")
     const scale = page.locator('#delivery .card', { hasText: 'Local Labs, Coordinated Delivery' });
     await expect(scale).toHaveCount(1);

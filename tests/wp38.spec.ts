@@ -245,7 +245,8 @@ test.describe('Investors: the definition band no longer repeats the 130,000+', (
       'CodersTrust is a workforce-development organization that trains and mentors educated, unemployed and underemployed youth in emerging markets for digital work and connects them to local, remote and global work.',
       // WP46 (cycle-22 review): no "AI-native" (an unexplained label; tests/wp46.spec.ts)
       // WP53 (owner decision 2026-10-16): "a digital learning and earning platform"
-      'CodersTrust is building JobReady, a digital learning and earning platform for emerging markets.',
+      // WP163 (owner answers of 3 November 2026: no capability is labelled in development): "JobReady is CodersTrust’s digital learning and earning platform for emerging markets." (it said "CodersTrust is building JobReady, ...")
+      'JobReady is CodersTrust’s digital learning and earning platform for emerging markets.',
     ]);
     expect(await page.locator('#definition .def').getAttribute('data-fact')).toBe('ID-01 IN-04');
     expect(compact(await page.locator('#definition').textContent())).not.toContain('130,000');

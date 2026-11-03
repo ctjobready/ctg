@@ -87,7 +87,7 @@ test.describe('Item 1: the YouthWIDE aim is 1 million educated youth (Higher Sec
     // WP106 (Polish, accepted): the Programs card is sibling length, so it states the short aim (the figure from IN-01, the 2030 date and the clause); the full statement stays on About and YouthWIDE
     expect(compact(await page.locator('main').textContent())).toContain(`It aims to train 1 million educated youth by 2030, ${AIM_DEPENDENCY}.`);
     await open(page, 'about/');
-    expect(compact(await page.locator('#story .timeline__item').last().locator('.timeline__text').textContent())).toBe(`JobReady rolls out in stages. YouthWIDE aims to train ${IN01_STATEMENT}. CodersTrust published Impact Survey 2026.`);
+    expect(compact(await page.locator('#story .timeline__item').last().locator('.timeline__text').textContent())).toBe(`JobReady is CodersTrust’s digital learning and earning platform. YouthWIDE aims to train ${IN01_STATEMENT}. CodersTrust published Impact Survey 2026.`);
     await open(page, 'impact/');
     const tile = page.locator('#heading a[data-fact~="IN-01"]');
     await expect(tile).toHaveCount(1);
@@ -410,7 +410,8 @@ test.describe('Item 8: no superseded value remains, and the things the owner kep
     expect(routesWith(/certified (graduates?|completers?|alumni|learners?|youth|young people|candidates?|hires?|students?)/i)).toEqual([]);
   });
 
-  test('not changed by this package: the Kosovo funder is not named, PCEP and CWP stay in PD-03, the Learn portal row stays "Live", the Rockefeller entry and 130,000+ stay, Her Power 2,400 stays', async ({ page }) => {
+  // WP163 (owner answers of 3 November 2026): the capabilities table has no Status column, so the course storefront row no longer says "Live"; the row and its note stay.
+  test('not changed by this package: the Kosovo funder is not named, PCEP and CWP stay in PD-03, the Learn portal row stays (WP163: with no status), the Rockefeller entry and 130,000+ stay, Her Power 2,400 stays', async ({ page }) => {
     expect(routesWith(/Korea Green Growth|Green Growth Trust/i, pages())).toEqual([]);
     expect(fact('PD-03').text).toMatch(/PCEP/);
     expect(fact('PD-03').text).toMatch(/CWP/);
@@ -420,7 +421,8 @@ test.describe('Item 8: no superseded value remains, and the things the owner kep
     await open(page, 'our-model/jobready-platform/');
     const row = page.locator('tr', { hasText: 'Course storefront at jobready.global' });
     await expect(row).toHaveCount(1);
-    expect(compact(await row.textContent())).toContain('Live');
+    expect(compact(await row.textContent())).toContain('CodersTrust’s course storefront operates at jobready.global.');
+    expect(compact(await row.textContent())).not.toContain('Live');
     expect(Object.keys(facts)).not.toContain('IN-11');
   });
 });
