@@ -185,8 +185,14 @@ export const navGroups: NavGroup[] = [
   },
 ];
 
-/** Plain top-level link after the groups. */
-export const topLinks: NavLink[] = [{ label: 'News', href: '/news/' }];
+/**
+ * Plain top-level links after the groups. WP165 (owner request of 5 November 2026): Blog sits beside News, its sibling (News is a top-level link, not an
+ * item of a menu); like News it is also in the footer's bottom row (footerBottomLinks) and the mobile drawer.
+ */
+export const topLinks: NavLink[] = [
+  { label: 'News', href: '/news/' },
+  { label: 'Blog', href: '/blog/' },
+];
 
 /** Utility link: course catalogue lives on jobready.global. */
 export const utilityLink: NavLink = { label: 'Courses', href: COURSES_URL };

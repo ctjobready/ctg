@@ -9,6 +9,7 @@ import { locations } from '../src/data/countries';
 import { WORLD_STRIP, WORLD_STRIP_SHORT } from '../src/data/globalStrip';
 import { DESKTOP, MOBILE, open, scrollThrough } from './support/browser';
 import { listPages } from './support/pages';
+import { withoutRepostBody } from './support/repost';
 
 /**
  * WP55 behaviors (owner decisions 2026-10-17/18: global positioning; "CodersTrust Around the World"). Retrospective coverage (the owner exempted this project from test-first work); each test states one observable
@@ -41,7 +42,8 @@ const visible = (html: string) =>
     .replace(/&#39;|&#x27;/g, '’')
     .replace(/\s+/g, ' ');
 /** Built pages that are not archived news posts (those keep their original wording), with their HTML. */
-const sitePages = () => listPages().filter((p) => !p.route.startsWith('/news/')).map((p) => ({ route: p.route, html: readFileSync(p.file, 'utf8') }));
+// WP165: the essay element of a /blog/<post>/ page is Aziz Ahmad's Substack text, republished without edits; the sweeps read the rest of the page (tests/support/repost.ts)
+const sitePages = () => listPages().filter((p) => !p.route.startsWith('/news/')).map((p) => ({ route: p.route, html: withoutRepostBody(p.route, readFileSync(p.file, 'utf8')) }));
 const repo = (path: string) => fileURLToPath(new URL(`../${path}`, import.meta.url));
 
 const HOME = '';

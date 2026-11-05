@@ -1,0 +1,43 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Hero from '../../components/system/Hero.astro';
+import Section from '../../components/ui/Section.astro';
+import SectionHeader from '../../components/ui/SectionHeader.astro';
+import NewsCard from '../../components/ui/NewsCard.astro';
+import { allBlogPosts, authorProfile } from '../../components/pages/blog/blog';
+import { blogHref } from '../../lib/blogPosts';
+import { desc } from '../../components/pages/impact/page-utils';
+import { pageUrl, webPage } from '../../lib/schema';
+
+/**
+ * WP165 (owner request of 5 November 2026): the Blog index, separate from News. It lists the published essays newest first; drafts never
+ * appear (src/lib/blogPosts.ts). The lead names the author with the role his team profile shows (src/content/team/aziz-ahmad.md).
+ * The page states no "last updated" line (a listing page, like /news/); its JSON-LD dateModified is the day it was added.
+ */
+const posts = await allBlogPosts();
+const chair = await authorProfile('Aziz Ahmad');
+if (!chair) throw new Error('Blog: Aziz Ahmad has no team profile (src/content/team), so the lead cannot name his role.');
+const path = '/blog/';
+const lead = `Essays by Aziz Ahmad, ${chair.role} of CodersTrust, on youth, work and technology.`;
+const description = desc(lead);
+const jsonLd = [
+  {
+    ...webPage({ path, name: 'Blog', description, type: 'CollectionPage', dateModified: '2026-11-05', breadcrumb: [{ name: 'Home', path: '/' }, { name: 'Blog', path }] }),
+    mainEntity: {
+      '@type': 'ItemList',
+      itemListElement: posts.map((p, i) => ({ '@type': 'ListItem', position: i + 1, url: pageUrl(blogHref(p)), name: p.data.title })),
+    },
+  },
+];
+---
+
+<BaseLayout title="Blog" description={description} path={path} breadcrumbs={[{ label: 'Blog' }]} jsonLd={jsonLd}>
+  <Hero eyebrow="Essays" title="Blog" lead={lead} art={false} />
+
+  <Section id="essays" aria-labelledby="essays-h">
+    <SectionHeader id="essays-h" title="Latest Essays" lead="Each essay first appeared on Aziz Ahmad’s Substack and is republished here with his permission." />
+    <div class="grid-cards">
+      {posts.map((p) => <NewsCard title={p.data.title} date={p.data.date} excerpt={p.data.excerpt} image={p.data.cover} imageAlt={p.data.coverAlt ?? ''} href={blogHref(p)} assetId={`blog-${p.id}`} />)}
+    </div>
+  </Section>
+</BaseLayout>

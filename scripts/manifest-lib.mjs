@@ -311,7 +311,7 @@ export const ADDED_NEWS = [
 /** Content entries with their legacyUrl, keyed by collection. */
 export function contentEntries() {
   const root = path.join(REPO_ROOT, 'src', 'content');
-  const out = { news: [], team: [], stories: [], nuPgd: [], mentors: [] };
+  const out = { news: [], blog: [], team: [], stories: [], nuPgd: [], mentors: [] };
   const read = (dir, key, extra) => {
     const d = path.join(root, dir);
     if (!fs.existsSync(d)) return;
@@ -321,6 +321,7 @@ export function contentEntries() {
     }
   };
   read('news', 'news');
+  read('blog', 'blog'); // WP165: the Blog essays (draft posts are not routes, as for news)
   read('team', 'team');
   read('stories', 'stories');
   read('nu-pgd', 'nuPgd');
@@ -333,7 +334,7 @@ export function contentEntries() {
 
 /**
  * Every route the static site serves, base-less with a trailing slash. Derived from src/pages plus the
- * collections behind the three dynamic routes; throws on a dynamic route it does not know how to expand,
+ * collections behind the four dynamic routes (WP165 added /blog/[slug]); throws on a dynamic route it does not know how to expand,
  * so a new dynamic page cannot silently go unchecked.
  */
 export function siteRoutes() {
@@ -358,6 +359,7 @@ export function siteRoutes() {
         const key = base + stem;
         let slugs;
         if (key === '/news/[slug]') slugs = content.news.filter((n) => !n.draft).map((n) => n.id);
+        else if (key === '/blog/[slug]') slugs = content.blog.filter((n) => !n.draft).map((n) => n.id);
         else if (key === '/about/team/[slug]') slugs = content.team.map((t) => t.id);
         else if (key === '/programs/nu-postgraduate-diploma/[slug]') slugs = content.nuPgd.filter((n) => n.kind === 'course').map((n) => n.slug ?? n.id);
         else throw new Error(`siteRoutes(): unknown dynamic route ${key}; teach scripts/manifest-lib.mjs how to expand it`);

@@ -1,7 +1,9 @@
 import type { APIRoute } from 'astro';
+import { getCollection } from 'astro:content';
 import { ENTITY_DEFINITION, PRODUCTION_ORIGIN, SITE_NAME } from '../lib/site';
 import { fact } from '../data/facts';
 import { IDENTITY } from '../data/copy';
+import { blogHref, publishedBlogPosts } from '../lib/blogPosts';
 
 /**
  * llms.txt (planning/09 §1 and §6).
@@ -59,6 +61,7 @@ const REFERENCE: Item[] = [
   { name: 'Instructors and Mentors', path: '/about/mentors/' },
   { name: 'Recognition and Media', path: '/about/recognition/' },
   { name: 'News', path: '/news/' },
+  { name: 'Blog', path: '/blog/' },
   { name: 'Careers', path: '/careers/' },
   { name: 'Contact', path: '/contact/' },
 ];
@@ -68,7 +71,15 @@ const sentence = (s: string) => (/[.!?]$/.test(s) ? s : `${s}.`);
 
 const line = ({ name, path, note }: Item) => `- [${name}](${PRODUCTION_ORIGIN}${path})${note ? `: ${note}` : ''}`;
 
-function llmsTxt(): string {
+/**
+ * WP165: the published Blog essays (drafts never: src/lib/blogPosts.ts), newest first, under their own heading after the reference pages. Each is the
+ * author's opinion essay, republished from his Substack; postbuild-llms.mjs appends each page's meta description, as for every other link line.
+ */
+async function blogItems(): Promise<Item[]> {
+  return publishedBlogPosts(await getCollection('blog')).map((p) => ({ name: p.data.title, path: blogHref(p) }));
+}
+
+function llmsTxt(blog: Item[]): string {
   return [
     `# ${SITE_NAME}`,
     ENTITY_DEFINITION,
@@ -82,6 +93,8 @@ function llmsTxt(): string {
     '## Canonical reference pages',
     ...REFERENCE.map(line),
     '',
+    // Opinion essays by Aziz Ahmad (Co-Founder and Chairman), not register facts: the section says so in its first line.
+    ...(blog.length ? ['## Blog', 'Essays by Aziz Ahmad, republished from his Substack. They are his views; the figures CodersTrust publishes are on the Impact pages above.', ...blog.map(line), ''] : []),
     '## Deprioritised',
     `- Redirect stubs: legacy ${PRODUCTION_ORIGIN.replace('https://', '')} paths (old posts, archives, feeds and course pages) that forward to the pages above. Follow them to the destination; do not cite or index the stub.`,
     // the component gallery is not part of a production build (WP20a), so only the other builds name it
@@ -90,4 +103,4 @@ function llmsTxt(): string {
   ].join('\n');
 }
 
-export const GET: APIRoute = () => new Response(llmsTxt(), { headers: { 'Content-Type': 'text/plain; charset=utf-8' } });
+export const GET: APIRoute = async () => new Response(llmsTxt(await blogItems()), { headers: { 'Content-Type': 'text/plain; charset=utf-8' } });

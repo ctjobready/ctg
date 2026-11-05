@@ -5,6 +5,7 @@ import { fact } from '../src/data/facts';
 import { DIST_DIR } from './support/env';
 import { open } from './support/browser';
 import { listPages, pageByRoute } from './support/pages';
+import { routeOfDistFile, withoutRepostBody } from './support/repost';
 
 /**
  * WP106 (Sonnet XHigh run 2, kit 72; owner answers of 2026-10-29). Test-first: run `npm run build`, then
@@ -138,8 +139,10 @@ test.describe('WP106 item 3: Recognition drops the NOVA Award; the bio keeps it'
 // --------------------------------------------------------------------------------------------------------------------------------
 test.describe('WP106 item 4: "Co-Founder and Global Chairman" is "Co-Founder and Chairman" everywhere', () => {
   test('no file in the build (pages, stubs, feeds, llms.txt, JSON-LD) says "Global Chairman"', () => {
+    // WP165: the essay element of a /blog/<post>/ page is Aziz Ahmad's own Substack text, republished without edits (his author line there says "Global
+    // Chairman"; the conflict with this rule is reported to the owner); the rest of those pages, their byline included, is held to the rule (tests/support/repost.ts)
     const offenders = distTextFiles()
-      .filter((f) => /Global Chairman/i.test(readFileSync(f, 'utf8')))
+      .filter((f) => /Global Chairman/i.test(withoutRepostBody(routeOfDistFile(f.slice(DIST_DIR.length)), readFileSync(f, 'utf8'))))
       .map((f) => f.slice(DIST_DIR.length));
     expect(offenders).toEqual([]);
   });

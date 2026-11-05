@@ -56,6 +56,9 @@
 //     scripts/facts-guard-allow.json (page + exact text + reason; a stale entry fails). Not scanned: /news/<post>/ archive posts, redirect
 //     stubs, /styleguide/ (a component sample page) and the 404. Details at "number guard" below; `FACTS_GUARD_LIST=1 npm run check:facts`
 //     lists every figure the register allowed. Negative self-tests below.
+//   - WP165 (owner request of 5 November 2026): the essay element (<div data-repost-body>) of a /blog/<post>/ page is Aziz Ahmad's text as published on
+//     Substack, so that element alone is left out of the number guard, the archive-only wording and the copy conventions, as the archived /news/<post>/
+//     posts are; the rest of the page and every other check are unchanged ("withoutRepostBody" below). Negative self-tests below.
 //   - survey edition pin: the survey figures are those of ONE Impact Report edition (SURVEY_EDITION, Impact Report 261014B). The OC-* facts (text, stat value, numeric, before-training figure, label, detail and glance
 //     lines) and every row of the published survey CSV (outcomes-data.ts: chart cells, headline rows, bases) must state that edition's figures and none of the previous edition's (261007A); a fact field,
 //     a stat.numeric or a CSV row that disagrees fails as a "dataset:" problem naming it and the value it should have, and a survey fact or CSV row the pin does not list fails too. Negative self-tests below.
@@ -209,8 +212,35 @@ const ARCHIVE_ONLY_WORDING = [
  * rule. Everything else is scanned as raw HTML: visible text, attributes (aria-label, title, data-*), meta descriptions and JSON-LD.
  */
 const exemptFromArchiveRule = (path, html) => /^\/news\/[^/]+\/$/.test(path) || /<html\b[^>]*\bdata-redirect-stub\b/.test(html.slice(0, 600));
-function archiveWordingProblems(path, html) {
-  if (exemptFromArchiveRule(path, html)) return [];
+
+/* ---- WP165: the author's own text of a re-posted Blog essay ---- */
+// A /blog/<post>/ page carries an essay by Aziz Ahmad as he published it on Substack (owner request of 5 November 2026: republished with his permission,
+// without edits), inside ONE element, <div … data-repost-body> (src/pages/blog/[slug].astro). That element alone, and only on a /blog/<post>/ page, is
+// left out of three wording rules: the number guard, the archive-only wording ("enquir*", "licence", "tripled") and the copy conventions (straight
+// apostrophes, "pp") — the same three the archived /news/<post>/ posts are left out of, and for the same reason: they are dated texts in their author's
+// words, not evergreen copy. Everything else on the page (the <title>, the meta description, the subtitle, the byline, the cards, the JSON-LD) is held to
+// them, and every other check of this script (internal source codes and wording, data-fact status, the certification note) reads the whole page,
+// essay included. The marker on any other page, or on the /blog/ index, exempts nothing. Negative self-tests below.
+const REPOST_PAGE = /^\/blog\/[^/]+\/$/;
+const REPOST_BODY_OPEN = /<div\b[^>]*\sdata-repost-body(?=[\s=/>])[^>]*>/;
+function withoutRepostBody(path, html) {
+  if (!REPOST_PAGE.test(path)) return html;
+  const open = REPOST_BODY_OPEN.exec(html);
+  if (!open) return html;
+  // the element runs to its own closing tag: count nested <div>s
+  const tag = /<(\/?)div\b[^>]*>/gi;
+  tag.lastIndex = open.index;
+  let depth = 0;
+  for (let m = tag.exec(html); m; m = tag.exec(html)) {
+    depth += m[1] ? -1 : 1;
+    if (depth === 0) return html.slice(0, open.index) + html.slice(tag.lastIndex);
+  }
+  return html; // unbalanced markup: nothing is left out
+}
+
+function archiveWordingProblems(path, rawHtml) {
+  if (exemptFromArchiveRule(path, rawHtml)) return [];
+  const html = withoutRepostBody(path, rawHtml);
   const out = [];
   for (const [re, why] of ARCHIVE_ONLY_WORDING) {
     const m = re.exec(html);
@@ -732,7 +762,8 @@ function numberGuardPage(path, html, allow = []) {
   const res = { scanned: false, tokens: 0, byRegister: 0, byWhitelist: 0, problems: [] };
   if (!guardsNumbers(path, html)) return res;
   res.scanned = true;
-  const markup = html.replace(/<script\b[\s\S]*?<\/script>/gi, '').replace(/<style\b[\s\S]*?<\/style>/gi, '');
+  // WP165: a re-posted Blog essay's own text is the author's (withoutRepostBody, above); the rest of its page is guarded
+  const markup = withoutRepostBody(path, html).replace(/<script\b[\s\S]*?<\/script>/gi, '').replace(/<style\b[\s\S]*?<\/style>/gi, '');
   const reported = new Set();
   for (const t of numberTokens(guardText(markup))) {
     res.tokens++;
@@ -910,6 +941,14 @@ function surveyEditionProblems(factsById, rows, pins = { facts: SURVEY_FACTS, ro
   if (!archiveWordingProblems('/impact/outcomes-2026/', '<body><li>does not mean every learner’s income Tripled.</li></body>').length) problems.push('self-test: the wording gate accepted "tripled" outside the archive');
   if (archiveWordingProblems('/news/some-archived-post/', '<body>income tripled</body>').length) problems.push('self-test: the wording gate flagged "tripled" inside an archived post');
   if (archiveWordingProblems('/our-model/', '<body>A triple-lens model; triplet; tripleshot</body>').length) problems.push('self-test: the wording gate flagged "triple" words that are not "tripled"');
+  // WP165: only the essay element of a /blog/<post>/ page is the author's own text; the rest of that page, the /blog/ index and any other page carrying the marker are held to the rule
+  const repostDoc = (outside = '') => `<!doctype html><html lang="en"><head><title>x</title><meta name="description" content="An essay${outside}"></head><body><main><h1>Essay</h1><div class="prose" data-repost-body=""><p>Income roughly tripled.</p><div><p>Send an enquiry.</p></div><p>Our licence.</p></div><p>Originally published on Substack${outside}.</p></main></body></html>`;
+  if (archiveWordingProblems('/blog/an-essay/', repostDoc()).length) problems.push('self-test: the wording gate flagged the author’s own text inside the essay element of a /blog/<post>/ page');
+  if (archiveWordingProblems('/blog/an-essay/', repostDoc(' (income tripled)')).length !== 1) problems.push('self-test: the wording gate exempted "tripled" outside the essay element of a /blog/<post>/ page (title, meta and the rest of the page are held to it)');
+  if (!archiveWordingProblems('/blog/', repostDoc()).length) problems.push('self-test: the wording gate exempted the /blog/ index (only the essay element of /blog/<post>/ is the author’s text)');
+  if (!archiveWordingProblems('/our-model/', repostDoc()).length) problems.push('self-test: the wording gate exempted the essay marker on a page that is not a /blog/<post>/ page');
+  if (!archiveWordingProblems('/blog/an-essay/', repostDoc().replace('<p>Originally published', '<p>A licence, outside the essay. Originally published')).length) problems.push('self-test: the wording gate stopped at a nested </div> inside the essay element (text after the essay must still be read)');
+  if (!archiveWordingProblems('/blog/an-essay/', repostDoc().replace('data-repost-body=""', 'data-repost-body-note=""')).length) problems.push('self-test: the wording gate exempted an element whose attribute only starts with data-repost-body');
   // [PLAIN-LINE]: required on the independent-evaluation page, numbers derived from RC-02 wherever it appears, rendered by <PlainLine> with RC-02's footnote marker (WP42: the exemption is one page, the WSDFM case study, and not also a required page)
   if (PLAIN_LINE_PAGES.length !== 1 || PLAIN_LINE_PAGES[0] !== '/impact/independent-evaluation/') problems.push('self-test: the [PLAIN-LINE] is required on exactly /impact/independent-evaluation/ (WP42)');
   if (PLAIN_LINE_EXEMPT_PAGES.length !== 1 || PLAIN_LINE_EXEMPT_PAGES[0] !== '/impact/case-studies/wsdfm-women-freelancers/') problems.push('self-test: the [PLAIN-LINE] exemption is exactly /impact/case-studies/wsdfm-women-freelancers/ (WP42) and no other page');
@@ -1278,6 +1317,13 @@ function surveyEditionProblems(factsById, rows, pins = { facts: SURVEY_FACTS, ro
   if (!guardRun('/our-model/', '').scanned || guardRun('/news/some-archived-post/', '').scanned || guardRun('/styleguide/', '').scanned) problems.push('self-test: the number guard scans the wrong pages');
   if (numberGuardPage('/old-slug/', '<!DOCTYPE html><html lang="en" data-redirect-stub><head><title>47.5%</title></head><body>47.5%</body></html>').problems.length) problems.push('self-test: the number guard flagged a redirect stub');
   guardPasses('"47.5%" on the styleguide (a component sample page)', '/styleguide/', '<p>47.5% and 1,234M+</p>');
+  // WP165: the essay element of a /blog/<post>/ page is the author's text; the page around it, the /blog/ index and the marker elsewhere are guarded
+  const essay = (inside, outside = '') => `<h1>Essay</h1><p class="sub">${outside}</p><div class="prose" data-repost-body><p>Employment rose 47.5%.</p><div><p>About $9.9M.</p></div><p>${inside}</p></div><p>Originally published on Substack.</p>`;
+  guardPasses('the author’s figures inside the essay element of a /blog/<post>/ page', '/blog/an-essay/', essay('Up 12.34%.'));
+  guardFails('an unregistered "47.5%" outside the essay element of a /blog/<post>/ page', '/blog/an-essay/', essay('Up 12.34%.', 'Employment rose 47.5%.'));
+  guardFails('an unregistered figure in the meta description of a /blog/<post>/ page', '/blog/an-essay/', essay('Up 12.34%.'), [], '<meta name="description" content="Up 47.5% in a year">');
+  if (guardRun('/blog/', essay('Up 12.34%.')).problems.length !== 3) problems.push('self-test: the number guard exempted the essay marker on the /blog/ index (only /blog/<post>/ is exempt)');
+  if (guardRun('/our-model/', essay('Up 12.34%.')).problems.length !== 3) problems.push('self-test: the number guard exempted the essay marker on a page that is not a /blog/<post>/ page');
   if (numberGuardPage('/404.html', guardDoc('<p>47.5%</p>')).problems.length) problems.push('self-test: the number guard flagged the 404');
   // numbers that are not claims carry no marker and are not read: years, dates, list counts, steps, durations, ages, bases
   const unmarked = guardRun('/our-model/', '<p>Founded in 2014; the October 2026 survey; Nov–Dec 2021; steps 1, 2 and 3; 100 training hours; ages 18–35; 6–8 weeks; tracers at 3/6/12 months; n = 331; over 4 months; 1 of 3; Her Power 2.0.</p><p>Call +1 212 344 4111 or +880 1958\u{2011}220802. WSIS+20 Forum.</p>');
@@ -1448,7 +1494,8 @@ for (const file of htmlFiles(dist)) {
     for (const p of proofCardProblems(markup, rc02Stat, facts['RC-07']?.text ?? '')) problems.push(`${path}: ${p}`);
   }
   // curly apostrophes and "pp" spelled out (the archived posts and the styleguide samples are exempt)
-  if (!exemptFromConventions(path) && !exemptFromArchiveRule(path, html)) for (const p of conventionProblems(text)) problems.push(`${path}: ${p}`);
+  // WP165: a re-posted Blog essay's own text is the author's (withoutRepostBody); the rest of its page is held to the conventions
+  if (!exemptFromConventions(path) && !exemptFromArchiveRule(path, html)) for (const p of conventionProblems(REPOST_PAGE.test(path) ? visibleText(withoutRepostBody(path, markup)) : text)) problems.push(`${path}: ${p}`);
   // number guard: every claim-marked figure in the copy is a registered fact value or whitelisted (archive posts, stubs, styleguide, 404 exempt)
   {
     const g = numberGuardPage(path, html, allowList);
@@ -1510,6 +1557,6 @@ if (problems.length) {
   process.exit(1);
 }
 console.log(
-  `check-facts: OK — ${pages} pages, ${refs} fact references, no gated facts or internal wording; ${vendorPages} page(s) name vendor certifications and carry the note once; no "enquir*", "licence" or "tripled" outside /news/<post>/; [PLAIN-LINE] on ${plainLinePages} page(s) with RC-02's numbers; [PROOF-CARD] (the hero's plain-language trial reading, held to RC-02 and RC-07) on ${proofCardPages} page(s); [SESSION-AGENDA] beside the CTA on ${agendaPages} page(s); [POSITION] opens C6 on ${positionPages} page(s); three ranked pains (C2) on ${painPages} page(s), with one C8 card each on ${painC8Pages} of them; trial relevance line under the trial headline on ${trialScopePages} page(s); number guard: ${guard.pages} evergreen page(s) scanned, ${guard.tokens} claim-marked figure(s) checked, ${guard.byRegister} allowed by the register, ${guard.byWhitelist} by the whitelist (${allowList.length} entries); survey dataset pinned to ${SURVEY_EDITION} (${Object.keys(SURVEY_FACTS).length} facts, ${SURVEY_CSV_ROWS.length} CSV rows); report CTA ${reportWithheld ? 'withheld' : 'enabled'}` +
+  `check-facts: OK — ${pages} pages, ${refs} fact references, no gated facts or internal wording; ${vendorPages} page(s) name vendor certifications and carry the note once; no "enquir*", "licence" or "tripled" outside /news/<post>/ (and the essay text of /blog/<post>/); [PLAIN-LINE] on ${plainLinePages} page(s) with RC-02's numbers; [PROOF-CARD] (the hero's plain-language trial reading, held to RC-02 and RC-07) on ${proofCardPages} page(s); [SESSION-AGENDA] beside the CTA on ${agendaPages} page(s); [POSITION] opens C6 on ${positionPages} page(s); three ranked pains (C2) on ${painPages} page(s), with one C8 card each on ${painC8Pages} of them; trial relevance line under the trial headline on ${trialScopePages} page(s); number guard: ${guard.pages} evergreen page(s) scanned, ${guard.tokens} claim-marked figure(s) checked, ${guard.byRegister} allowed by the register, ${guard.byWhitelist} by the whitelist (${allowList.length} entries); survey dataset pinned to ${SURVEY_EDITION} (${Object.keys(SURVEY_FACTS).length} facts, ${SURVEY_CSV_ROWS.length} CSV rows); report CTA ${reportWithheld ? 'withheld' : 'enabled'}` +
     (production ? `; production holds: ${holds.size} held fact(s), none rendered.` : '.'),
 );

@@ -71,6 +71,13 @@
       "text": "CodersTrust Chairman Mr. Aziz Ahmad Joins BCIU Roundtable in Washington, D.C.",
       "rule": "trailing-period",
       "reason": "The abbreviation \"D.C.\" (WP120, U.S. style per WP109); the period belongs to the abbreviation, not to the heading."
+    },
+    {
+      "page": "/blog/beyond-digital-literacy/",
+      "tag": "h2",
+      "text": "AI Literacy Is Necessary. Affordance Literacy Takes Us Further.",
+      "rule": "trailing-period",
+      "reason": "A section heading of Aziz Ahmad's essay, republished verbatim from his Substack with his permission (WP165, owner request of 5 November 2026): the heading is two sentences, so its periods are his punctuation; the words are already in Title Case."
     }
   ]
 }

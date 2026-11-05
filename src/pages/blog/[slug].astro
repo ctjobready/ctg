@@ -1,0 +1,165 @@
+---
+import { getImage } from 'astro:assets';
+import { render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import NewsCard from '../../components/ui/NewsCard.astro';
+import Img from '../../components/ui/Img.astro';
+import Icon from '../../components/system/Icon.astro';
+import { allBlogPosts, authorProfile } from '../../components/pages/blog/blog';
+import { blogHref, otherBlogPosts } from '../../lib/blogPosts';
+import { desc } from '../../components/pages/impact/page-utils';
+import { blogPosting } from '../../lib/schema';
+import { formatDate, isoDate, truncate } from '../../lib/format';
+import { absoluteUrl, linkAttrs, stripBase, url } from '../../lib/url';
+
+/**
+ * WP165 (owner request of 5 November 2026): one Blog essay. The body is the author's text as published on Substack (src/content/blog/<slug>.md,
+ * converted without edits; its headings are in Title Case, the site rule). It sits in <div data-repost-body>: scripts/check-facts.mjs holds every
+ * other part of the page to its rules and leaves that one element of a /blog/<post>/ page to the author's wording (see REPOST_BODY there).
+ * The date shown is the Substack publication date (datePublished); an `updated` date, when a post has one, is shown beside it and is dateModified,
+ * as on the news articles. The byline links to the author's team profile and gives the role it shows.
+ */
+export async function getStaticPaths() {
+  const posts = await allBlogPosts();
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post, all: posts } }));
+}
+const { post, all } = Astro.props;
+const { Content } = await render(post);
+const d = post.data;
+const path = blogHref(post);
+const profile = await authorProfile(d.author);
+const SUFFIX = ' | CodersTrust';
+const metaTitle = d.seoTitle ?? d.title;
+if (metaTitle.length + SUFFIX.length > 60) throw new Error(`Blog post ${path}: the <title> would be ${metaTitle.length + SUFFIX.length} characters (limit 60). Add a seoTitle of at most ${60 - SUFFIX.length} characters to its front matter.`);
+const description = desc(d.excerpt);
+const asset = `blog-${post.id}`;
+const og = d.cover ? await getImage({ src: d.cover, width: 1200, height: 630, fit: 'cover', format: 'jpg' }) : undefined;
+const origin = d.substackUrl ? linkAttrs(d.substackUrl) : undefined;
+const others = otherBlogPosts(all, post);
+const node = blogPosting({
+  path,
+  headline: d.title,
+  description,
+  datePublished: isoDate(d.date),
+  dateModified: d.updated ? isoDate(d.updated) : undefined,
+  image: og ? absoluteUrl(stripBase(og.src), Astro.site) : undefined,
+  keywords: d.tags,
+  author: { name: d.author, profilePath: profile?.path },
+  isBasedOn: d.substackUrl,
+});
+---
+
+<BaseLayout
+  title={metaTitle}
+  description={description}
+  path={path}
+  breadcrumbs={[{ label: 'Blog', href: '/blog/' }, { label: truncate(d.title, 48) }]}
+  ogType="article"
+  image={og ? stripBase(og.src) : undefined}
+  imageAlt={og ? d.coverAlt : undefined}
+  imageAsset={og ? asset : undefined}
+  publishedTime={d.date.toISOString()}
+  modifiedTime={(d.updated ?? d.date).toISOString()}
+  jsonLd={[node]}
+>
+  <article class="post container container--narrow">
+    <header class="post__head">
+      <p class="post__meta">
+        <time datetime={isoDate(d.date)}>{formatDate(d.date)}</time>
+        {d.updated && <span>Updated <time datetime={isoDate(d.updated)}>{formatDate(d.updated)}</time></span>}
+      </p>
+      <h1 class="t-display-4xl">{d.title}</h1>
+      <p class="post__subtitle">{d.subtitle}</p>
+      <p class="post__byline">
+        By {profile ? <a class="link" href={url(profile.path)}>{d.author}</a> : d.author}{profile && `, ${profile.role} of CodersTrust`}
+      </p>
+    </header>
+    {d.cover && d.coverAlt !== undefined && <figure class="post__cover"><Img src={d.cover} alt={d.coverAlt} width={1100} widths={[640, 1100]} sizes="(min-width:1024px) 800px, 100vw" loading="eager" fetchpriority="high" assetId={asset} /></figure>}
+    <div class="prose post__body" data-repost-body={d.repost ? '' : undefined}><Content /></div>
+    {
+      origin && (
+        <p class="post__origin">
+          Originally published on{' '}
+          <a class="link" href={origin.href} rel={origin.rel}>Substack<span class="sr-only"> {origin.srText}</span></a>{' '}
+          on <time datetime={isoDate(d.date)}>{formatDate(d.date)}</time>.
+        </p>
+      )
+    }
+  </article>
+
+  {
+    others.length > 0 && (
+      <section class="post__more container" aria-labelledby="more-h">
+        <h2 id="more-h" class="t-heading-2xl">More Essays</h2>
+        <div class="grid-cards">
+          {others.map((p) => <NewsCard title={p.data.title} date={p.data.date} excerpt={p.data.excerpt} image={p.data.cover} imageAlt={p.data.coverAlt ?? ''} href={blogHref(p)} assetId={`blog-${p.id}`} />)}
+        </div>
+        <p><a class="link" href={url('/blog/')}>All Essays<Icon name="arrow-right" size={16} /></a></p>
+      </section>
+    )
+  }
+</BaseLayout>
+
+<style>
+  .post {
+    padding-block: var(--space-section-mobile);
+  }
+  @media (min-width: 768px) {
+    .post {
+      padding-block: var(--space-section-desktop);
+    }
+  }
+  .post__head {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    margin-bottom: var(--space-lg);
+  }
+  .post__head > * {
+    margin: 0;
+  }
+  .post__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+    align-items: center;
+    font-size: var(--fs-body-xs);
+    color: var(--on-surface-variant);
+  }
+  .post__subtitle {
+    font-size: var(--fs-body-m);
+    line-height: var(--lh-body-m);
+    color: var(--on-surface-variant);
+  }
+  .post__byline {
+    font-weight: var(--fw-bold);
+  }
+  .post__cover {
+    margin: 0 0 var(--space-lg);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+  }
+  .post__cover :global(img) {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  /* reference lists in the essays print long URLs as plain text: let them wrap on a phone */
+  .post__body {
+    overflow-wrap: anywhere;
+  }
+  .post__origin {
+    margin-top: var(--space-lg);
+    padding-top: var(--space-md);
+    border-top: 1px solid var(--outline-variant);
+    color: var(--on-surface-variant);
+  }
+  .post__more {
+    padding-bottom: var(--band-pad);
+    display: grid;
+    gap: var(--space-md);
+  }
+  .post__more > * {
+    margin: 0;
+  }
+</style>

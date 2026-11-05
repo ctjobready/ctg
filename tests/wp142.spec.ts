@@ -2,6 +2,7 @@ import { readdirSync, readFileSync, statSync } from 'node:fs';
 import { join, relative } from 'node:path';
 import { expect, test } from '@playwright/test';
 import { DIST_DIR } from './support/env';
+import { routeOfDistFile, withoutRepostBody } from './support/repost';
 
 /**
  * WP142 (Opus High run 17, kit 109). Test-first: run `npm run build`, then `PORT=<port> npx playwright test tests/wp142.spec.ts tests/wp141.spec.ts --project=chromium`.
@@ -154,7 +155,8 @@ test.describe('WP142 item 3: "&" labels', () => {
     const offenders: string[] = [];
     for (const rel of allPages()) {
       if (rel.startsWith('news/') || rel.startsWith('styleguide/')) continue;
-      const raw = html(rel);
+      // WP165: the essay element of a /blog/<post>/ page is Aziz Ahmad's Substack text, republished without edits (its citations name "Finance & Development"); tests/support/repost.ts
+      const raw = withoutRepostBody(routeOfDistFile(rel), html(rel));
       if (!mainHtml(raw)) continue;
       const lines = decode(raw.replace(/<script[\s\S]*?<\/script>/g, ' ').replace(/<style[\s\S]*?<\/style>/g, ' ').replace(/<[^>]+>/g, '\n')).split('\n').map((l) => l.trim());
       for (const l of lines) {

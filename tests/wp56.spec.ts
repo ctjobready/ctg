@@ -10,6 +10,7 @@ import { WORLD_STRIP } from '../src/data/globalStrip';
 import { DIST_DIR } from './support/env';
 import { DESKTOP, MOBILE, open, scrollThrough } from './support/browser';
 import { listPages } from './support/pages';
+import { withoutRepostBody } from './support/repost';
 
 /**
  * WP56 behaviors (owner decisions 12 to 15 of 2026-10-18, after the DR1 Somalia research and the NG1 Nigeria research). Retrospective coverage (the owner exempted this project from test-first work); each test states one
@@ -43,8 +44,8 @@ const RF_URL = 'https://web.archive.org/web/20231202123117/https://www.rockefell
 
 /** Every built page (archived news posts included), with its HTML. */
 const allPages = () => listPages().map((p) => ({ route: p.route, html: readFileSync(p.file, 'utf8') }));
-/** Built pages that are not archived news posts (those keep their original wording). */
-const sitePages = () => allPages().filter((p) => !p.route.startsWith('/news/'));
+/** Built pages that are not archived news posts (those keep their original wording). WP165: nor the essay element of a /blog/<post>/ page, Aziz Ahmad's Substack text republished without edits (tests/support/repost.ts). */
+const sitePages = () => allPages().filter((p) => !p.route.startsWith('/news/')).map((p) => ({ route: p.route, html: withoutRepostBody(p.route, p.html) }));
 
 const walk = (dir: string, out: string[] = []): string[] => {
   for (const name of readdirSync(dir)) {

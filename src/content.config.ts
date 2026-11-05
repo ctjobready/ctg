@@ -78,6 +78,36 @@ const news = defineCollection({
     }),
 });
 
+/**
+ * WP165 (owner request of 5 November 2026): the Blog (/blog/ and /blog/<slug>/), separate from News. It re-publishes Aziz Ahmad's Substack essays with the
+ * Chairman's permission: the body is his text, converted to Markdown without edits (headings in Title Case, the site rule). `date` is the Substack publication
+ * date, shown on the page and used as datePublished; `draft: true` keeps a post out of the build exactly as for `news` (src/lib/blogPosts.ts).
+ */
+const blog = defineCollection({
+  loader: glob({ pattern: '*.md', base: './src/content/blog' }),
+  schema: ({ image }) =>
+    z.object({
+      title: z.string(),
+      date: z.coerce.date(),
+      updated: z.coerce.date().optional(),
+      /** The essay's own standfirst, shown under the H1 as written. */
+      subtitle: z.string(),
+      /** Card text on /blog/ and the meta description (155 characters at most: the article page fails the build above that). */
+      excerpt: z.string().max(180),
+      author: z.string().default('Aziz Ahmad'),
+      /** The original post. Required for a re-post (`repost: true`, the default; publishedBlogPosts() fails the build without it); optional for a post written for this site. */
+      substackUrl: z.string().url().startsWith('https://').optional(),
+      repost: z.boolean().default(true),
+      tags: z.array(z.string()).default([]),
+      draft: z.boolean().default(false),
+      /** Optional cover with its alt text; none of the re-posts has one (no stock imagery). */
+      cover: image().optional(),
+      coverAlt: z.string().optional(),
+      /** Optional page title for a headline too long for "<title> | CodersTrust" in 60 characters (the H1 and the JSON-LD headline keep the full title). */
+      seoTitle: z.string().max(46).optional(),
+    }),
+});
+
 const stories = defineCollection({
   loader: glob({ pattern: '*.md', base: './src/content/stories' }),
   schema: ({ image }) =>
@@ -152,4 +182,4 @@ const nuPgd = defineCollection({
   }),
 });
 
-export const collections = { news, stories, team, mentors, nuPgd };
+export const collections = { news, blog, stories, team, mentors, nuPgd };

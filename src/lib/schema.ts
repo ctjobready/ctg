@@ -201,6 +201,24 @@ function articleBase(type: 'Article' | 'NewsArticle', o: ArticleOpts): JsonLdNod
 export const article = (o: ArticleOpts) => articleBase('Article', o);
 export const newsArticle = (o: ArticleOpts) => articleBase('NewsArticle', o);
 
+/**
+ * WP165: a Blog essay. The author is a named Person; when the author has a team profile, the node points at the profile's Person (@id
+ * "<profile>#person", the node /about/team/<slug>/ defines) and carries its name and URL, so the reference never dangles on this page.
+ * A re-post names its original as `isBasedOn` (the Substack URL). The publisher is the Organization.
+ */
+export function blogPosting(o: ArticleOpts & { author: { name: string; profilePath?: string }; isBasedOn?: string }): JsonLdNode {
+  const { author, isBasedOn, ...rest } = o;
+  const base = articleBase('Article', rest);
+  return {
+    ...base,
+    '@type': 'BlogPosting',
+    author: author.profilePath
+      ? { '@type': 'Person', '@id': `${pageUrl(author.profilePath)}#person`, name: author.name, url: pageUrl(author.profilePath) }
+      : { '@type': 'Person', name: author.name },
+    ...(isBasedOn && { isBasedOn }),
+  };
+}
+
 /** JSON-LD text is plain text: undo the HTML escaping (&amp; and friends) that stripHtml leaves behind. */
 const unescapeHtml = (s: string) =>
   s.replace(/&(amp|lt|gt|quot|#39|nbsp);/g, (_, e: string) => ({ amp: '&', lt: '<', gt: '>', quot: '"', '#39': "'", nbsp: ' ' })[e as 'amp']);
@@ -320,13 +338,13 @@ const PAGE_TYPES = ['WebPage', 'AboutPage', 'ContactPage', 'CollectionPage', 'Pr
 const typesOf = (n: JsonLdNode): string[] => [n['@type'] ?? []].flat() as string[];
 
 /**
- * A page described by an Article or NewsArticle alone (news posts, case studies, ...) also gets a WebPage node,
+ * A page described by an Article, NewsArticle or BlogPosting alone (news posts, blog essays, case studies, ...) also gets a WebPage node,
  * and the article points at it through mainEntityOfPage (planning/09 §2). The article builders keep the page URL
  * in mainEntityOfPage; it becomes a reference to the page node here, so no page has to assemble the pair.
  */
 function withPageNode(nodes: JsonLdNode[]): JsonLdNode[] {
   if (nodes.some((n) => typesOf(n).some((t) => PAGE_TYPES.includes(t)))) return nodes;
-  const i = nodes.findIndex((n) => typesOf(n).some((t) => t === 'Article' || t === 'NewsArticle') && typeof n.mainEntityOfPage === 'string');
+  const i = nodes.findIndex((n) => typesOf(n).some((t) => t === 'Article' || t === 'NewsArticle' || t === 'BlogPosting') && typeof n.mainEntityOfPage === 'string');
   if (i === -1) return nodes;
   const art = nodes[i];
   const url = art.mainEntityOfPage as string;

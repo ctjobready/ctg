@@ -3,6 +3,7 @@ import { join } from 'node:path';
 import { expect, test } from '@playwright/test';
 import { DIST_DIR } from './support/env';
 import { listPages } from './support/pages';
+import { withoutRepostBody } from './support/repost';
 
 /**
  * WP123 (Opus Medium run 5, kit 90; 2026-10-29): News archive consistency sweep with site-wide tests, and the closing-prompt wording. Run `npm run build` first.
@@ -34,7 +35,8 @@ function searchable(raw: string): string {
     .replace(/\s+/g, ' ');
 }
 const text = (rel: string) => searchable(html(rel));
-const pagesMatching = (re: RegExp): string[] => listPages().filter((p) => re.test(searchable(readFileSync(p.file, 'utf8')))).map((p) => p.route);
+// WP165: the sweeps hold the site's own copy; the essay element of a /blog/<post>/ page is Aziz Ahmad's Substack text, republished without edits, and is left out (tests/support/repost.ts)
+const pagesMatching = (re: RegExp): string[] => listPages().filter((p) => re.test(searchable(withoutRepostBody(p.route, readFileSync(p.file, 'utf8'))))).map((p) => p.route);
 const count = (hay: string, needle: string) => hay.split(needle).length - 1;
 
 const MOU_BASE = 'news/coderstrust-bangladesh-signs-strategic-mou-with-base-study-concern-to-enhance-global-education-opportunities/index.html';

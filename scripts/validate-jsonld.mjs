@@ -62,6 +62,9 @@ const TEMPLATES = [
   [/^\/about\/(governance|mentors|recognition)\/$/, 'about section', []],
   [/^\/news\/$/, 'news listing', []],
   [/^\/news\/[^/]+\/$/, 'news article', ['NewsArticle']],
+  // WP165: the Blog index and its essays (BlogPosting by a named Person, the author)
+  [/^\/blog\/$/, 'blog listing', []],
+  [/^\/blog\/[^/]+\/$/, 'blog post', ['BlogPosting']],
   [/^\/contact\/$/, 'contact', ['ContactPage']],
   [/^\/(careers|privacy-policy|accessibility)\/$/, 'utility', []],
   [/^\/(404|styleguide)\/$/, 'noindex utility', []],
@@ -70,7 +73,7 @@ const templateOf = (route) => TEMPLATES.find(([re]) => re.test(route)) ?? [null,
 
 const PAGE_TYPES = new Set(['WebPage', 'AboutPage', 'ContactPage', 'CollectionPage', 'ProfilePage']);
 /** A page may be described by its primary entity alone (BaseLayout adds a plain WebPage only when the page passes no nodes). */
-const PRIMARY_TYPES = new Set(['Article', 'NewsArticle', 'Dataset', 'Course', 'ScholarlyArticle']);
+const PRIMARY_TYPES = new Set(['Article', 'NewsArticle', 'BlogPosting', 'Dataset', 'Course', 'ScholarlyArticle']);
 const NESTED_KEYED = new Set(['ScholarlyArticle']);
 const asArray = (v) => (v === undefined || v === null ? [] : Array.isArray(v) ? v : [v]);
 const typesOf = (n) => asArray(n['@type']);
@@ -86,6 +89,7 @@ const KEYS = {
   BreadcrumbList: { required: ['itemListElement'], recommended: [] },
   Article: { required: ['headline', 'datePublished', 'author', 'publisher'], recommended: ['about', 'dateModified', 'citation'] },
   NewsArticle: { required: ['headline', 'datePublished', 'author', 'publisher'], recommended: ['dateModified', 'image'] },
+  BlogPosting: { required: ['headline', 'datePublished', 'author', 'publisher'], recommended: ['dateModified'] },
   Person: { required: ['name', 'worksFor'], recommended: ['jobTitle', 'image', 'sameAs'] },
   Course: { required: ['name', 'description', 'provider'], recommended: ['hasCourseInstance'] },
   Dataset: { required: ['name', 'description', 'creator', 'spatialCoverage', 'variableMeasured', 'measurementTechnique'], recommended: ['temporalCoverage', 'distribution', 'license'] },
@@ -255,6 +259,13 @@ for (const file of walkFiles(dist)) {
   for (const n of merged.filter((x) => typesOf(x).includes('NewsArticle'))) {
     const a = n.author;
     if (!org || !a || a['@id'] !== org['@id'] || Object.keys(a).some((k) => k !== '@id' && k !== '@type' && k !== 'name')) err(`NewsArticle.author is ${JSON.stringify(a)}, expected a reference to the Organization (${org?.['@id']})`);
+  }
+  // WP165: a BlogPosting is by a named Person (an essay's author), published by the Organization; an author with a team profile is referenced by the profile's Person @id
+  for (const n of merged.filter((x) => typesOf(x).includes('BlogPosting'))) {
+    const a = n.author;
+    if (!a || a['@type'] !== 'Person' || !has(a, 'name')) err(`BlogPosting.author is ${JSON.stringify(a)}, expected a Person with a name`);
+    else if (a['@id'] !== undefined && !new RegExp(`^${ORIGIN.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}/about/team/[^/]+/#person$`).test(a['@id'])) err(`BlogPosting.author @id ${a['@id']} is not a team profile's Person`);
+    if (!org || n.publisher?.['@id'] !== org['@id']) err('BlogPosting.publisher does not reference the Organization');
   }
   if (sites[0] && org && sites[0].publisher?.['@id'] !== org['@id']) err('WebSite.publisher does not reference the Organization');
 

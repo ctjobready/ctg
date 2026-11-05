@@ -7,6 +7,7 @@ import { CONTRACT_TOTAL_NOTE, CONTRACT_TOTAL_NOTE_INVESTORS, CONTRACT_TOTAL_NOTE
 import { NO_PRIOR, percent } from '../src/components/pages/impact/outcomes-data';
 import { DESKTOP, MOBILE, open, scrollThrough } from './support/browser';
 import { listPages } from './support/pages';
+import { withoutRepostBody } from './support/repost';
 
 /**
  * WP59 behaviors (cycle-31 whole-site reviews: Claude S3 and S4; GPT-6.1 Sol G1, G2, G5 and G6; Kimi K3; GLM L1 and L3; Gemini GM1). Retrospective coverage (the owner exempted this project from test-first work); each test states one observable
@@ -29,7 +30,8 @@ const noOverflow = (page: Page) => page.evaluate(() => document.documentElement.
 const slide = (page: Page, n: number) => page.locator('[data-hs-slide]').nth(n - 1);
 
 /** Built pages that are not archived news posts (those keep their original wording), with their HTML. */
-const sitePages = () => listPages().filter((p) => !p.route.startsWith('/news/')).map((p) => ({ route: p.route, html: readFileSync(p.file, 'utf8') }));
+// WP165: the essay element of a /blog/<post>/ page is Aziz Ahmad's Substack text, republished without edits; the sweeps read the rest of the page (tests/support/repost.ts)
+const sitePages = () => listPages().filter((p) => !p.route.startsWith('/news/')).map((p) => ({ route: p.route, html: withoutRepostBody(p.route, readFileSync(p.file, 'utf8')) }));
 /** The visible text of a built page (no scripts, styles or screen-reader-only parts), entities decoded. */
 const visible = (html: string) =>
   compact(

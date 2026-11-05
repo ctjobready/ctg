@@ -5,6 +5,7 @@ import { fact } from '../src/data/facts';
 import { faqs } from '../src/data/faqs';
 import { DIST_DIR } from './support/env';
 import { listPages } from './support/pages';
+import { withoutRepostBody } from './support/repost';
 
 /**
  * WP127 (Opus High run 2, kit 94: the serial-comma rule finished site-wide, and copy Polish). Written test-first: run `npm run build`, then
@@ -80,6 +81,8 @@ const ALLOWED: { has: string; why: string }[] = [
   { has: 'job postings requiring AI skills grew 69% vs. 9% for all postings, and workers with AI skills', why: 'two clauses joined' },
   { has: 'has received appointments and honors, and CodersTrust’s work has been covered in the press', why: 'two clauses joined; "Aziz Ahmad" is an apposition (WP129)' },
   { has: 'fell 21% relative to manual-intensive jobs, and image-creation postings fell 17%', why: 'two clauses joined' },
+  // WP165: an essay title is the author's; it appears as the H1, the JSON-LD headline, the breadcrumb, the cards and llms.txt (the essay text itself is left out of the scan)
+  { has: 'The Father, the Godfather, and the Jobs of Our', why: 'the title of Aziz Ahmad’s Substack essay, republished without edits (WP165)' },
 ];
 
 interface Series {
@@ -148,7 +151,8 @@ function textBlocks(raw: string): { kind: string; lines: string[] }[] {
 const LLMS = join(DIST_DIR, 'llms.txt');
 function everyText(): { where: string; lines: string[] }[] {
   const out: { where: string; lines: string[] }[] = [];
-  for (const p of listPages()) for (const b of textBlocks(readFileSync(p.file, 'utf8'))) out.push({ where: `${p.route} ${b.kind}`, lines: b.lines });
+  // WP165: the essay element of a /blog/<post>/ page is Aziz Ahmad's Substack text, republished without edits, and keeps his serial commas (tests/support/repost.ts)
+  for (const p of listPages()) for (const b of textBlocks(withoutRepostBody(p.route, readFileSync(p.file, 'utf8')))) out.push({ where: `${p.route} ${b.kind}`, lines: b.lines });
   if (existsSync(LLMS)) out.push({ where: '/llms.txt', lines: decode(readFileSync(LLMS, 'utf8')).split('\n') });
   return out;
 }

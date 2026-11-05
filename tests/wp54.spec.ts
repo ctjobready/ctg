@@ -5,6 +5,7 @@ import { fact } from '../src/data/facts';
 import { C14, FAQ_EYEBROW } from '../src/data/copy';
 import { DESKTOP, MOBILE, open } from './support/browser';
 import { listPages } from './support/pages';
+import { withoutRepostBody } from './support/repost';
 
 /**
  * WP54 behaviors (the verified cycle-28 whole-site reviews): the Governments pain "Trainer and Curriculum Capacity Takes Time to Build" and the lower-case "implemented by" in the NHRDF contract name; the Local Partners reporting pain
@@ -32,7 +33,8 @@ const visible = (html: string) =>
     .replace(/&#39;|&#x27;/g, '’')
     .replace(/\s+/g, ' ');
 /** The built pages that are not archived news posts (those keep their original wording). */
-const sitePages = () => listPages().filter((p) => !p.route.startsWith('/news/')).map((p) => ({ route: p.route, html: readFileSync(p.file, 'utf8') }));
+// WP165: the essay element of a /blog/<post>/ page is Aziz Ahmad's Substack text, republished without edits; the sweeps read the rest of the page (tests/support/repost.ts)
+const sitePages = () => listPages().filter((p) => !p.route.startsWith('/news/')).map((p) => ({ route: p.route, html: withoutRepostBody(p.route, readFileSync(p.file, 'utf8')) }));
 /** Everything in main, including answers inside closed FAQ accordions (innerText leaves those out). */
 const everything = async (page: Page) => compact(await page.locator('main').evaluate((el) => el.textContent ?? ''));
 const slide = (page: Page, n: number) => page.locator('[data-hs-slide]').nth(n - 1);

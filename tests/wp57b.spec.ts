@@ -5,6 +5,7 @@ import { fact, sources } from '../src/data/facts';
 import { DIST_DIR } from './support/env';
 import { DESKTOP, MOBILE, open, scrollThrough } from './support/browser';
 import { listPages } from './support/pages';
+import { withoutRepostBody } from './support/repost';
 
 /**
  * WP57b behaviors (the owner's decisions of 2026-10-19 and GLM's accepted items L3, L5 and L8 of cycle 29). Retrospective coverage (the owner exempted this project from test-first work); each test states one observable behavior of the
@@ -22,7 +23,8 @@ const texts = (page: Page, selector: string) => page.locator(selector).evaluateA
 const noOverflow = (page: Page) => page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth);
 
 /** Built pages that are not archived news posts (those keep their original wording), with their HTML. */
-const sitePages = () => listPages().filter((p) => !p.route.startsWith('/news/')).map((p) => ({ route: p.route, html: readFileSync(p.file, 'utf8') }));
+// WP165: the essay element of a /blog/<post>/ page is Aziz Ahmad's Substack text, republished without edits; the sweeps read the rest of the page (tests/support/repost.ts)
+const sitePages = () => listPages().filter((p) => !p.route.startsWith('/news/')).map((p) => ({ route: p.route, html: withoutRepostBody(p.route, readFileSync(p.file, 'utf8')) }));
 const mainText = (html: string) =>
   compact(
     (html.includes('<main') ? html.slice(html.indexOf('<main'), html.indexOf('</main>')) : html)
