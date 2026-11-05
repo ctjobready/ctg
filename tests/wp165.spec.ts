@@ -115,7 +115,7 @@ const CLOCK: Post = {
   slug: 'the-clock-is-running-bangladesh-demographic-dividend',
   title: 'The Clock Is Running: Bangladesh’s Demographic Dividend Will Not Wait for Its Jobs',
   subtitle: 'The World Bank says South Asia’s demographic tailwinds peak in 2034 and fade. Bangladesh’s peak is 2045, but the jobs are already falling behind.',
-  excerpt: 'South Asia’s demographic tailwinds fade after 2034. Bangladesh peaks in 2045, but jobs already lag the workforce and AI is closing doors.',
+  excerpt: 'South Asia’s demographic tailwinds fade after 2034. Bangladesh peaks in 2045, but jobs already lag the workforce and AI-exposed postings are falling.',
   iso: '2026-11-05',
   shown: 'November 5, 2026',
   first: 'For years, I have heard Bangladesh described as a country blessed by its young.',
