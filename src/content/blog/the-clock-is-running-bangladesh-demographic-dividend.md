@@ -2,7 +2,7 @@
 title: "The Clock Is Running: Bangladesh’s Demographic Dividend Will Not Wait for Its Jobs"
 date: 2026-11-05
 subtitle: "The World Bank says South Asia’s demographic tailwinds peak in 2034 and fade. Bangladesh’s peak is 2045, but the jobs are already falling behind."
-excerpt: "South Asia’s demographic tailwinds fade after 2034. Bangladesh peaks in 2045, but jobs already lag the workforce and AI is closing doors."
+excerpt: "South Asia’s demographic tailwinds fade after 2034. Bangladesh peaks in 2045, but jobs already lag the workforce and AI-exposed postings are falling."
 author: "Aziz Ahmad"
 seoTitle: "The Clock Is Running on Bangladesh’s Dividend"
 tags: ["demographic dividend", "Bangladesh", "jobs", "youth", "AI"]
@@ -16,7 +16,7 @@ A new World Bank report, *Demographic Change in South Asia: From Tailwinds to He
 
 ## The Dividend and the Clock
 
-A demographic dividend is simple to describe. When a country has more adults of working age and fewer dependants to support, income can grow faster, provided those adults have productive work. The World Bank estimates that demographic trends have added about 0.4 percentage point a year to South Asia's growth since 2000.
+A demographic dividend is simple to describe. When a country has more adults of working age and fewer dependents to support, income can grow faster, provided those adults have productive work. The World Bank estimates that demographic trends have added about 0.4 percentage point a year to South Asia's growth since 2000.
 
 That tailwind is fading. The report finds that the region's working-age share of the population will peak at about 69 percent in 2034 and then begin to fall. By its estimate the contribution of demographics to growth will shrink by three-quarters, to about 0.1 percentage point a year. The pool is also shrinking from the bottom: the population aged 15 to 24 in South Asia is projected to fall by about 15 percent between 2023 and 2050.
 
@@ -40,7 +40,7 @@ Across Bangladesh, Bhutan, India and Nepal, formal firms grew employment by 2.7 
 
 Look further ahead and the arithmetic gets harder. The report projects that by 2050 Bangladesh will have some 13 million more labor force participants than it would need to keep 2.5 workers for every older adult, the ratio the United States has today. It treats this as a risk: a labor supply that outpaces job creation.
 
-## And AI Is Already Closing Doors
+## Postings Exposed to AI Are Already Falling
 
 I wrote last month about what two pioneers of artificial intelligence are telling us about the jobs of our children. The World Bank now puts numbers on the same warning for South Asia.
 
@@ -64,7 +64,7 @@ Three things follow, and none of them can wait for the next budget cycle.
 
 ## The Window Is Open, but Not for Long
 
-The report says that for South Asia as a whole, less than a decade remains to deepen the gains from the first demographic dividend. Bangladesh's calendar is longer, but the pressure is on us today: jobs are already growing more slowly than the workforce, AI is already closing the entry-level doors and the aging clock starts next year.
+The report says that for South Asia as a whole, less than a decade remains to deepen the gains from the first demographic dividend. Bangladesh's calendar is longer, but the pressure is on us today: jobs are already growing more slowly than the workforce, postings for AI-exposed work are already falling and the aging clock starts next year.
 
 Twenty years is one generation, and a generation is not a plan. Every cohort that leaves school for an economy without jobs for it is a piece of the dividend we do not get back. We can spend the next five years building skills, mentoring and routes to work at scale, or we can spend them waiting. Bangladesh will age either way. The only choice is whether it ages with a workforce that is skilled, employed and earning or with one that was young once and never got its chance.
 
