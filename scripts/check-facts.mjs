@@ -214,8 +214,9 @@ const ARCHIVE_ONLY_WORDING = [
 const exemptFromArchiveRule = (path, html) => /^\/news\/[^/]+\/$/.test(path) || /<html\b[^>]*\bdata-redirect-stub\b/.test(html.slice(0, 600));
 
 /* ---- WP165: the author's own text of a re-posted Blog essay ---- */
-// A /blog/<post>/ page carries an essay by Aziz Ahmad as he published it on Substack (owner request of 5 November 2026: republished with his permission,
-// without edits), inside ONE element, <div … data-repost-body> (src/pages/blog/[slug].astro). That element alone, and only on a /blog/<post>/ page, is
+// A /blog/<post>/ re-post carries an essay by Aziz Ahmad as he published it on Substack (owner request of 5 November 2026: republished with his permission;
+// its CodersTrust figures aligned with the register, his own wording otherwise kept), inside ONE element, <div … data-repost-body> (src/pages/blog/[slug].astro;
+// an essay written for the site has no such element and is held to every rule). That element alone, and only on a /blog/<post>/ page, is
 // left out of three wording rules: the number guard, the archive-only wording ("enquir*", "licence", "tripled") and the copy conventions (straight
 // apostrophes, "pp") — the same three the archived /news/<post>/ posts are left out of, and for the same reason: they are dated texts in their author's
 // words, not evergreen copy. Everything else on the page (the <title>, the meta description, the subtitle, the byline, the cards, the JSON-LD) is held to

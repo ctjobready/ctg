@@ -185,14 +185,15 @@ export const navGroups: NavGroup[] = [
   },
 ];
 
+export const NEWS_LINK: NavLink = { label: 'News', href: '/news/' };
+export const BLOG_LINK: NavLink = { label: 'Blog', href: '/blog/' };
 /**
  * Plain top-level links after the groups. WP165 (owner request of 5 November 2026): Blog sits beside News, its sibling (News is a top-level link, not an
- * item of a menu); like News it is also in the footer's bottom row (footerBottomLinks) and the mobile drawer.
+ * item of a menu); like News it is also in the mobile drawer, the no-JS nav and the footer's bottom row (footerBottomLinksFor). WP165 follow-up (owner,
+ * 5 November 2026): the Blog link is there only while at least one Blog post is live (published, not a draft); with none, every page carries News alone,
+ * as before WP165. `blogLive` is hasLiveBlogPosts() (src/components/pages/blog/blog.ts), read by SiteHeader and Footer.
  */
-export const topLinks: NavLink[] = [
-  { label: 'News', href: '/news/' },
-  { label: 'Blog', href: '/blog/' },
-];
+export const topLinksFor = (blogLive: boolean): NavLink[] => (blogLive ? [NEWS_LINK, BLOG_LINK] : [NEWS_LINK]);
 
 /** Utility link: course catalogue lives on jobready.global. */
 export const utilityLink: NavLink = { label: 'Courses', href: COURSES_URL };
@@ -249,8 +250,9 @@ export const footerColumns = navGroups
     })),
   }));
 
-export const footerBottomLinks: NavLink[] = [
-  ...topLinks,
+/** The footer's bottom row: the top-level links (Blog only while a Blog post is live, as in the header), then Privacy and Accessibility. */
+export const footerBottomLinksFor = (blogLive: boolean): NavLink[] => [
+  ...topLinksFor(blogLive),
   { label: 'Privacy', href: '/privacy-policy/' },
   { label: 'Accessibility', href: '/accessibility/' },
 ];

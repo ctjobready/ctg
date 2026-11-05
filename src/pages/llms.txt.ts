@@ -61,7 +61,7 @@ const REFERENCE: Item[] = [
   { name: 'Instructors and Mentors', path: '/about/mentors/' },
   { name: 'Recognition and Media', path: '/about/recognition/' },
   { name: 'News', path: '/news/' },
-  { name: 'Blog', path: '/blog/' },
+  // WP165: { name: 'Blog', path: '/blog/' } follows News here while a Blog post is live (llmsTxt, below)
   { name: 'Careers', path: '/careers/' },
   { name: 'Contact', path: '/contact/' },
 ];
@@ -72,14 +72,17 @@ const sentence = (s: string) => (/[.!?]$/.test(s) ? s : `${s}.`);
 const line = ({ name, path, note }: Item) => `- [${name}](${PRODUCTION_ORIGIN}${path})${note ? `: ${note}` : ''}`;
 
 /**
- * WP165: the published Blog essays (drafts never: src/lib/blogPosts.ts), newest first, under their own heading after the reference pages. Each is the
- * author's opinion essay, republished from his Substack; postbuild-llms.mjs appends each page's meta description, as for every other link line.
+ * WP165: the published Blog essays (drafts never: src/lib/blogPosts.ts), newest first, under their own heading after the reference pages; postbuild-llms.mjs
+ * appends each page's meta description, as for every other link line. WP165 follow-up: with no live post, neither the Blog reference line nor the section
+ * is written (the Blog has no page then).
  */
 async function blogItems(): Promise<Item[]> {
   return publishedBlogPosts(await getCollection('blog')).map((p) => ({ name: p.data.title, path: blogHref(p) }));
 }
+const BLOG_REFERENCE: Item = { name: 'Blog', path: '/blog/' };
 
 function llmsTxt(blog: Item[]): string {
+  const reference = blog.length ? REFERENCE.flatMap((it) => (it.path === '/news/' ? [it, BLOG_REFERENCE] : [it])) : REFERENCE;
   return [
     `# ${SITE_NAME}`,
     ENTITY_DEFINITION,
@@ -91,10 +94,10 @@ function llmsTxt(blog: Item[]): string {
     ...PRIORITY.map(line),
     '',
     '## Canonical reference pages',
-    ...REFERENCE.map(line),
+    ...reference.map(line),
     '',
-    // Opinion essays by Aziz Ahmad (Co-Founder and Chairman), not register facts: the section says so in its first line.
-    ...(blog.length ? ['## Blog', 'Essays by Aziz Ahmad, republished from his Substack. They are his views; the figures CodersTrust publishes are on the Impact pages above.', ...blog.map(line), ''] : []),
+    // Opinion essays by Aziz Ahmad (Co-Founder and Chairman): the section says so in its first line.
+    ...(blog.length ? ['## Blog', 'Essays by Aziz Ahmad. They are his views; the figures CodersTrust publishes are on the Impact pages above.', ...blog.map(line), ''] : []),
     '## Deprioritised',
     `- Redirect stubs: legacy ${PRODUCTION_ORIGIN.replace('https://', '')} paths (old posts, archives, feeds and course pages) that forward to the pages above. Follow them to the destination; do not cite or index the stub.`,
     // the component gallery is not part of a production build (WP20a), so only the other builds name it

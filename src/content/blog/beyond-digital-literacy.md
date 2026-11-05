@@ -7,11 +7,13 @@ author: "Aziz Ahmad"
 substackUrl: "https://tergadesidero178981.substack.com/p/beyond-digital-literacy-teaching"
 seoTitle: "Beyond Digital Literacy in the Age of AI"
 tags: ["affordance literacy", "AI literacy", "economic opportunity"]
+figuresUpdated: 2026-11-05
+draft: true
 ---
 
 ## The Question That Stayed with Me
 
-A few days ago, I published an essay titled “The Father, the Godfather, and the Jobs of Our Children and Youth,” reflecting on the warnings of two pioneers of artificial intelligence: John McCarthy, who gave the field its name, and Geoffrey Hinton, whose work helped make modern AI possible.
+A few days ago, I published an essay titled “The Father, the Godfather, and the Jobs of Our Children,” reflecting on the warnings of two pioneers of artificial intelligence: John McCarthy, who gave the field its name, and Geoffrey Hinton, whose work helped make modern AI possible.
 
 My central concern was straightforward: What happens to millions of young people worldwide when artificial intelligence begins performing the very jobs we have spent decades preparing them to do? Bangladesh, where CodersTrust has built a substantial training operation, offers an especially revealing case study.
 
@@ -19,7 +21,7 @@ The essay generated a thoughtful conversation on Facebook. One response, from my
 
 Samdani raised a fundamental distinction. Are we simply preparing young people for existing jobs, many of which may disappear, or are we enabling them to imagine and create entirely new forms of work and economic value? He asked how we could ensure that human opportunity expands faster than AI’s capacity to replace human labor.
 
-That question has stayed with me. It connects my earliest experiences building telecommunications infrastructure in the United States with my work over the past twelve years helping young people develop digital skills through CodersTrust.
+That question has stayed with me. It connects my earliest experiences building telecommunications infrastructure in the United States with my work over the past twelve years, since 2014, helping young people develop digital skills through CodersTrust.
 
 The next great educational challenge is not merely teaching young people how to use technology. It is teaching them how to recognize what technology makes possible—and how to turn those possibilities into meaningful economic opportunity.
 
@@ -69,13 +71,13 @@ Training a million people without developing markets, enterprises, and pathways 
 
 When my late friend Ferdinand Kjærulff and I co-founded CodersTrust in 2014, we were motivated by a simple belief: Talent is widely distributed. Opportunity is not.
 
-Over the past twelve years, CodersTrust has trained more than 130,000 young people across programs serving 15 countries. Training has real value only when it improves people’s ability to participate in economic life.
+Over the past twelve years, CodersTrust has trained more than 130,000 learners and has worked in 16 countries and territories. Training has real value only when it improves people’s ability to participate in economic life.
 
-The evaluation’s Table 4 reports treatment-on-treated estimates of approximately 25.75% higher employment and 54.56% higher monthly income for participants who received training, relative to the relevant comparison estimates. These figures describe the evaluated women’s program, not all CodersTrust learners or all settings; they should not be confused with intention-to-treat estimates.
+The evaluation’s Table 4 reports treatment-on-treated estimates of approximately 26% higher employment and 54% higher monthly income for participants who received training, relative to the relevant comparison estimates. These figures describe the evaluated women’s program, not all CodersTrust learners or all settings; they should not be confused with intention-to-treat estimates.
 
-Among women who attended training, the evaluation estimated approximately 53% higher monthly income and 28% higher employment relative to the control group. The study also identified improvements in household expenditure, savings, and other measures of well-being.
+Among women who attended training, the evaluation estimated approximately 54% higher monthly income and 26% higher employment relative to the control group. The study also identified improvements in household expenditure, savings, and other measures of well-being.
 
-Our October 2026 Impact Report offers additional evidence, while reminding us why rigorous measurement is essential. Among responding course completers, reported employment increased from 47.4% before training to 77.9% at the time of the survey. Median monthly income rose from approximately $82 to $245. Among respondents from the 2014–2023 completion cohorts who reported no income before training, 72.3% were earning at the time of the survey.
+Our October 2026 Impact Report offers additional evidence, while reminding us why rigorous measurement is essential. Among responding course completers, reported employment increased from 48.0% before training to 78.2% at the October 2026 survey. Median monthly income rose from approximately $98 to $245. Among respondents from the 2014–2023 completion cohorts who reported no income before training, 70.8% (34 of 48) were earning at the October 2026 survey.
 
 For transparency, the 2026 CodersTrust impact report’s alumni figures describe respondents, not a randomized comparison group. Its response rate, cohort definitions, and questionnaire should accompany any public interpretation of those figures; absent that information here, they should not be treated as population-wide causal estimates.
 
@@ -213,6 +215,6 @@ Mangalam, M., Hajnal, A., and Kelty-Stephen, D. G. (eds.) (2024). The Modern Leg
 
 ## About the Author
 
-Aziz Ahmad is Co-Founder and Global Chairman of CodersTrust, CEO of UTC Associates, and the recently appointed Global Ambassador of the UN General Assembly-mandated University for Peace.
+Aziz Ahmad is Co-Founder and Chairman of CodersTrust, leads UTC Associates and is the recently appointed Global Ambassador of the UN General Assembly-mandated University for Peace.
 
 October 18, 2026

@@ -80,8 +80,10 @@ const news = defineCollection({
 
 /**
  * WP165 (owner request of 5 November 2026): the Blog (/blog/ and /blog/<slug>/), separate from News. It re-publishes Aziz Ahmad's Substack essays with the
- * Chairman's permission: the body is his text, converted to Markdown without edits (headings in Title Case, the site rule). `date` is the Substack publication
- * date, shown on the page and used as datePublished; `draft: true` keeps a post out of the build exactly as for `news` (src/lib/blogPosts.ts).
+ * Chairman's permission (`repost: true`, with `substackUrl`) and carries essays written for this site (`repost: false`). A re-post's body is his text converted
+ * to Markdown (headings in Title Case, the site rule), with its figures aligned to the facts register (`figuresUpdated`); `date` is the original publication
+ * date, shown on the page and used as datePublished. `draft: true` keeps a post out of the build exactly as for `news` (src/lib/blogPosts.ts); with no live
+ * post the Blog has no page and no link anywhere (WP165 follow-up).
  */
 const blog = defineCollection({
   loader: glob({ pattern: '*.md', base: './src/content/blog' }),
@@ -90,6 +92,11 @@ const blog = defineCollection({
       title: z.string(),
       date: z.coerce.date(),
       updated: z.coerce.date().optional(),
+      /**
+       * WP165 follow-up (owner, 5 November 2026): the day a re-post's figures were aligned with CodersTrust's published figures (the facts register). The
+       * page then says so in one sentence under the byline ("Updated on <date>, to align figures with CodersTrust’s current published figures. ...").
+       */
+      figuresUpdated: z.coerce.date().optional(),
       /** The essay's own standfirst, shown under the H1 as written. */
       subtitle: z.string(),
       /** Card text on /blog/ and the meta description (155 characters at most: the article page fails the build above that). */

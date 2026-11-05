@@ -5,6 +5,7 @@ import { locations } from '../src/data/countries';
 import { AIM_DEPENDENCY, CONTRACT_FIGURES, NU_NOT_TRAINED, POSITIONING, SOURCE_NOTE, TRIAL_WOMEN } from '../src/data/copy';
 import { DESKTOP, MOBILE, open } from './support/browser';
 import { listPages } from './support/pages';
+import { withoutRepostBody } from './support/repost';
 
 /**
  * WP60 behaviors (cycle-32 whole-site reviews: Grok R1, R2, R4, R5 and R6; Claude S3, S4 (owner answer 2026-10-20) and S6; GPT-6.1 Sol G1, G2, G3 and G5). Retrospective coverage (the owner exempted this project from test-first work);
@@ -40,7 +41,8 @@ const noOverflow = (page: Page) => page.evaluate(() => document.documentElement.
 const slide = (page: Page, n: number) => page.locator('[data-hs-slide]').nth(n - 1);
 
 /** Built pages that are not archived news posts (those keep their original wording), with their HTML. */
-const sitePages = () => listPages().filter((p) => !p.route.startsWith('/news/')).map((p) => ({ route: p.route, html: readFileSync(p.file, 'utf8') }));
+// WP165: the essay element of a /blog/<post>/ page is Aziz Ahmad's Substack text, republished without edits; the sweeps read the rest of the page (tests/support/repost.ts)
+const sitePages = () => listPages().filter((p) => !p.route.startsWith('/news/')).map((p) => ({ route: p.route, html: withoutRepostBody(p.route, readFileSync(p.file, 'utf8')) }));
 /** The visible text of a built page (no scripts, styles or screen-reader-only parts), entities decoded. */
 const visible = (html: string) =>
   compact(

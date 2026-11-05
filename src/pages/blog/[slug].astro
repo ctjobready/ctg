@@ -13,11 +13,14 @@ import { formatDate, isoDate, truncate } from '../../lib/format';
 import { absoluteUrl, linkAttrs, stripBase, url } from '../../lib/url';
 
 /**
- * WP165 (owner request of 5 November 2026): one Blog essay. The body is the author's text as published on Substack (src/content/blog/<slug>.md,
- * converted without edits; its headings are in Title Case, the site rule). It sits in <div data-repost-body>: scripts/check-facts.mjs holds every
- * other part of the page to its rules and leaves that one element of a /blog/<post>/ page to the author's wording (see REPOST_BODY there).
+ * WP165 (owner request of 5 November 2026): one Blog post. A re-post's body is the author's text as published on Substack (src/content/blog/<slug>.md;
+ * headings in Title Case, the site rule; its CodersTrust figures aligned with the register). It sits in <div data-repost-body>: scripts/check-facts.mjs
+ * holds every other part of the page to its rules and leaves that one element of a /blog/<post>/ page to the author's wording (see REPOST_BODY there).
  * The date shown is the Substack publication date (datePublished); an `updated` date, when a post has one, is shown beside it and is dateModified,
  * as on the news articles. The byline links to the author's team profile and gives the role it shows.
+ * WP165 follow-up (owner, 5 November 2026): a re-post whose figures were aligned with the register (`figuresUpdated`) says so in one sentence under the
+ * byline, and that date is its dateModified. An essay written for this site (`repost: false`) carries the byline and date only: no Substack sentence,
+ * no Substack closing line, no isBasedOn, and its whole page is held to every gate (no data-repost-body).
  */
 export async function getStaticPaths() {
   const posts = await allBlogPosts();
@@ -34,18 +37,21 @@ if (metaTitle.length + SUFFIX.length > 60) throw new Error(`Blog post ${path}: t
 const description = desc(d.excerpt);
 const asset = `blog-${post.id}`;
 const og = d.cover ? await getImage({ src: d.cover, width: 1200, height: 630, fit: 'cover', format: 'jpg' }) : undefined;
-const origin = d.substackUrl ? linkAttrs(d.substackUrl) : undefined;
+const substack = d.repost && d.substackUrl ? d.substackUrl : undefined;
+const origin = substack ? linkAttrs(substack) : undefined;
 const others = otherBlogPosts(all, post);
+// the latest of the post's own update and its figures update, else the publication date
+const modified = [d.updated, d.figuresUpdated].filter((x): x is Date => Boolean(x)).sort((a, b) => b.valueOf() - a.valueOf())[0];
 const node = blogPosting({
   path,
   headline: d.title,
   description,
   datePublished: isoDate(d.date),
-  dateModified: d.updated ? isoDate(d.updated) : undefined,
+  dateModified: modified ? isoDate(modified) : undefined,
   image: og ? absoluteUrl(stripBase(og.src), Astro.site) : undefined,
   keywords: d.tags,
   author: { name: d.author, profilePath: profile?.path },
-  isBasedOn: d.substackUrl,
+  isBasedOn: substack,
 });
 ---
 
@@ -59,7 +65,7 @@ const node = blogPosting({
   imageAlt={og ? d.coverAlt : undefined}
   imageAsset={og ? asset : undefined}
   publishedTime={d.date.toISOString()}
-  modifiedTime={(d.updated ?? d.date).toISOString()}
+  modifiedTime={(modified ?? d.date).toISOString()}
   jsonLd={[node]}
 >
   <article class="post container container--narrow">
@@ -73,6 +79,14 @@ const node = blogPosting({
       <p class="post__byline">
         By {profile ? <a class="link" href={url(profile.path)}>{d.author}</a> : d.author}{profile && `, ${profile.role} of CodersTrust`}
       </p>
+      {
+        d.figuresUpdated && (
+          <p class="post__note" data-figures-updated>
+            Updated on <time datetime={isoDate(d.figuresUpdated)}>{formatDate(d.figuresUpdated)}</time>, to align figures with CodersTrust’s current published figures.
+            {substack && <> Originally published on Substack on <time datetime={isoDate(d.date)}>{formatDate(d.date)}</time>.</>}
+          </p>
+        )
+      }
     </header>
     {d.cover && d.coverAlt !== undefined && <figure class="post__cover"><Img src={d.cover} alt={d.coverAlt} width={1100} widths={[640, 1100]} sizes="(min-width:1024px) 800px, 100vw" loading="eager" fetchpriority="high" assetId={asset} /></figure>}
     <div class="prose post__body" data-repost-body={d.repost ? '' : undefined}><Content /></div>
@@ -133,6 +147,10 @@ const node = blogPosting({
   }
   .post__byline {
     font-weight: var(--fw-bold);
+  }
+  .post__note {
+    font-size: var(--fs-body-xs);
+    color: var(--on-surface-variant);
   }
   .post__cover {
     margin: 0 0 var(--space-lg);

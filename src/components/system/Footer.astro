@@ -1,9 +1,13 @@
 ---
 import Logo from './Logo.astro';
 import Icon from './Icon.astro';
-import { footerColumns, footerBottomLinks } from '../../data/nav';
+import { footerColumns, footerBottomLinksFor } from '../../data/nav';
+import { hasLiveBlogPosts } from '../pages/blog/blog';
 import { ENTITY_DEFINITION, OFFICES, SOCIAL, SITE_TAGLINE, COPYRIGHT_YEAR, SITE_NAME } from '../../lib/site';
 import { linkAttrs } from '../../lib/url';
+
+// WP165 follow-up: the Blog link only while a Blog post is live (src/data/nav.ts)
+const footerBottomLinks = footerBottomLinksFor(await hasLiveBlogPosts());
 ---
 
 <footer class="footer" id="site-footer">

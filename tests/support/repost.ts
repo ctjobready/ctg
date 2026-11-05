@@ -1,6 +1,7 @@
 /**
- * WP165 (owner request of 5 November 2026): a /blog/<post>/ page republishes an essay by Aziz Ahmad as he published it on Substack, with his
- * permission and without edits, inside ONE element, <div … data-repost-body> (src/pages/blog/[slug].astro). The site-wide copy sweeps that hold
+ * WP165 (owner request of 5 November 2026): a /blog/<post>/ re-post republishes an essay by Aziz Ahmad as he published it on Substack, with his
+ * permission (its CodersTrust figures aligned with the register, his own wording otherwise kept), inside ONE element, <div … data-repost-body>
+ * (src/pages/blog/[slug].astro; an essay written for the site has none, so the sweeps read all of it). The site-wide copy sweeps that hold
  * the site's own house style (no serial comma, American quotation punctuation, "Co-Founder and Chairman" for his title, ...) read a built page
  * through `withoutRepostBody`, which leaves out that element on a /blog/<post>/ page only: everything else on those pages (title, meta description,
  * subtitle, byline, cards, JSON-LD) and every other page, the /blog/ index included, are still swept. scripts/check-facts.mjs applies the same rule

@@ -334,7 +334,7 @@ export function contentEntries() {
 
 /**
  * Every route the static site serves, base-less with a trailing slash. Derived from src/pages plus the
- * collections behind the four dynamic routes (WP165 added /blog/[slug]); throws on a dynamic route it does not know how to expand,
+ * collections behind the dynamic routes (WP165 added /blog/[slug] and the /blog/[...listing] index); throws on a dynamic route it does not know how to expand,
  * so a new dynamic page cannot silently go unchecked.
  */
 export function siteRoutes() {
@@ -360,10 +360,12 @@ export function siteRoutes() {
         let slugs;
         if (key === '/news/[slug]') slugs = content.news.filter((n) => !n.draft).map((n) => n.id);
         else if (key === '/blog/[slug]') slugs = content.blog.filter((n) => !n.draft).map((n) => n.id);
+        // WP165 follow-up: the Blog index is a rest route built only while a Blog post is live (no live post, no /blog/ page)
+        else if (key === '/blog/[...listing]') slugs = content.blog.some((n) => !n.draft) ? [''] : [];
         else if (key === '/about/team/[slug]') slugs = content.team.map((t) => t.id);
         else if (key === '/programs/nu-postgraduate-diploma/[slug]') slugs = content.nuPgd.filter((n) => n.kind === 'course').map((n) => n.slug ?? n.id);
         else throw new Error(`siteRoutes(): unknown dynamic route ${key}; teach scripts/manifest-lib.mjs how to expand it`);
-        for (const s of slugs) routes.add(`${base}${s}/`);
+        for (const s of slugs) routes.add(s === '' ? base : `${base}${s}/`);
       } else routes.add(`${base}${stem}/`);
     }
   };

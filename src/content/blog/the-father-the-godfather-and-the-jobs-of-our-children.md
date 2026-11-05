@@ -7,6 +7,8 @@ author: "Aziz Ahmad"
 substackUrl: "https://tergadesidero178981.substack.com/p/the-father-the-godfather-and-the"
 seoTitle: "Two AI Pioneers and the Jobs of Our Children"
 tags: ["artificial intelligence", "youth employment", "Bangladesh"]
+figuresUpdated: 2026-11-05
+draft: true
 ---
 
 The man who named artificial intelligence and the man who made it work have, between them, handed my generation a warning and a homework assignment. I want to talk about both, because the young people who will pay for our answer are the ones I have spent the last decade trying to put to work.
@@ -45,7 +47,7 @@ This is not only a Bangladesh story. The IMF estimates that roughly 1.2 billion 
 
 ## What I Have Learned from Training Young People
 
-I was born in Chattogram, Bangladesh, and came to the United States as a young man in the mid-1980s. In 2014, my late friend Ferdinand Kjærulff and I founded CodersTrust in Copenhagen with a simple idea: talent is evenly distributed, opportunity is not. Today, from New York and with our largest operation in Bangladesh, CodersTrust trains young people in digital skills and connects them to work. To date, we have trained more than 130,000 young people. Over 70% have gone on to earn a living by joining the platform economy as freelancers, advancing in their careers, or starting businesses of their own. Many of those freelancers are now exactly the workers Hinton is describing, which is why our next chapter is about helping them move from doing routine tasks to directing AI.
+I was born in Chattogram, Bangladesh, and came to the United States as a young man in the mid-1980s. In 2014, my late friend Ferdinand Kjærulff and I founded CodersTrust in Copenhagen with a simple idea: talent is evenly distributed, opportunity is not. Today, from New York and with our largest operation in Bangladesh, CodersTrust trains young people in digital skills and connects them to work. Since 2014, we have trained more than 130,000 learners. Over 70% have gone on to earn a living by joining the platform economy as freelancers, advancing in their careers, or starting businesses of their own. Many of those freelancers are now exactly the workers Hinton is describing, which is why our next chapter is about helping them move from doing routine tasks to directing AI.
 
 A decade of that work has taught me three things that matter more now than ever.
 
@@ -57,9 +59,9 @@ A decade of that work has taught me three things that matter more now than ever.
 
 ## The Evidence: When Training Ends in Earning
 
-Skeptics are right to ask whether skills training actually changes lives, because most of the time it does not. A World Bank review of vocational training trials found employment rose by an average of just 2.3 percentage points, and only about a third of those programs raised employment significantly at all. When BRAC University's Institute of Governance and Development (BIGD) ran a randomized controlled trial of CodersTrust's program for women, employment rose 10.3 points among those offered a place, more than four times that benchmark. Women who attended earned 53% more, were 28% more likely to be employed and 3.6 times as likely to freelance. Their households spent 41% more and were 39% less likely to take out a loan.
+Skeptics are right to ask whether skills training actually changes lives, because most of the time it does not. A 2017 World Bank review of nine randomized vocational training trials found employment rose by an average of just 2.3 percentage points, and only three of the nine raised employment significantly at all. When BRAC University's Institute of Governance and Development (BIGD) ran a randomized controlled trial of CodersTrust's program for women, employment rose 10.3 points among those offered a place, more than four times that benchmark. Women who attended earned 54% more, were 26% more likely to be employed and 2.8 times as likely to freelance. Their households spent 43% more and fewer took out loans.
 
-Our October 2026 survey of graduates tells the same story at scale. Employment rose from 47.4% before training to 77.9% today, and median monthly income roughly tripled, from $82 to $245. Of graduates who had no income before the course, 72.3% now earn, and nearly one in eight earn mainly from foreign clients or jobs abroad. Responses came from 55 of Bangladesh's 64 districts, from Panchagarh in the north to Cox's Bazar in the south. At national scale, the cost falls from about $500 to $300 per trainee. That is the model the AI era demands: fast, affordable, measured by earnings and built to scale. It is why we are now onboarding more than 1.5 million learners as an official skills partner of Bangladesh's National University, and why we aim to train two million vulnerable young people for digital work by 2030.
+Our October 2026 survey of course completers tells the same story at scale. Employment rose from 48.0% before training to 78.2% at the October 2026 survey, and median monthly income rose from $98 to $245. Of 2014–2023 completers who had no income before the course, 70.8% (34 of 48) were earning at the survey, and about one in eight surveyed completers named freelancing for foreign clients or a job abroad as their main income source. Responses came from 58 of Bangladesh's 64 districts, from Panchagarh in the north to Cox's Bazar in the south. At national scale, the cost falls from about $500 to $300 per trainee. That is the model the AI era demands: fast, affordable, measured by earnings and built to scale. It is why we are now onboarding more than 1.5 million National University learners as the university's official training partner, and why our YouthWIDE program aims to train 1 million educated youth for digital employment by 2030, in Bangladesh and similar countries in South Asia and the Middle East and North Africa, depending on government and donor commitments.
 
 ## A Call to Action
 
@@ -73,7 +75,7 @@ To the diaspora: our networks, capital and experience are among Bangladesh's gre
 
 And to young people in Bangladesh and across the Global South: do not compete with AI at what it does cheaply. Learn to direct it. Build the skills it cannot copy. The future will not wait for permission, and neither should you.
 
-*Aziz Ahmad is Co-Founder and Global Chairman of CodersTrust, CEO of UTC Associates, and the recently appointed Global Ambassador of the UN General Assembly-mandated University for Peace (UPEACE).*
+*Aziz Ahmad is Co-Founder and Chairman of CodersTrust, leads UTC Associates and is the recently appointed Global Ambassador of the UN General Assembly-mandated University for Peace (UPEACE).*
 
 ---
 

@@ -2,10 +2,14 @@
 import Logo from './Logo.astro';
 import Icon from './Icon.astro';
 import Button from './Button.astro';
-import { navGroups, nestItems, topLinks, utilityLink, headerCta } from '../../data/nav';
+import { navGroups, nestItems, topLinksFor, utilityLink, headerCta } from '../../data/nav';
+import { hasLiveBlogPosts } from '../pages/blog/blog';
 import { linkAttrs, stripBase } from '../../lib/url';
 import { spokenSteps } from '../../lib/format';
 import { CONTACT } from '../../lib/site';
+
+// WP165 follow-up: the Blog link only while a Blog post is live (src/data/nav.ts)
+const topLinks = topLinksFor(await hasLiveBlogPosts());
 
 const currentPath = stripBase(Astro.url.pathname);
 const isActive = (href: string) =>

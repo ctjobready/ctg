@@ -81,8 +81,11 @@ const ALLOWED: { has: string; why: string }[] = [
   { has: 'job postings requiring AI skills grew 69% vs. 9% for all postings, and workers with AI skills', why: 'two clauses joined' },
   { has: 'has received appointments and honors, and CodersTrust’s work has been covered in the press', why: 'two clauses joined; "Aziz Ahmad" is an apposition (WP129)' },
   { has: 'fell 21% relative to manual-intensive jobs, and image-creation postings fell 17%', why: 'two clauses joined' },
-  // WP165: an essay title is the author's; it appears as the H1, the JSON-LD headline, the breadcrumb, the cards and llms.txt (the essay text itself is left out of the scan)
-  { has: 'The Father, the Godfather, and the Jobs of Our', why: 'the title of Aziz Ahmad’s Substack essay, republished without edits (WP165)' },
+  // WP165: an essay title is the author's; it appears as the H1, the JSON-LD headline, the breadcrumb, the cards and llms.txt (the essay text itself is left out of the scan).
+  // The entry applies while that essay is built: it is a draft until Aziz Ahmad approves it (WP165 follow-up), and the stale-entry check would otherwise fail.
+  ...(existsSync(join(DIST_DIR, 'blog', 'the-father-the-godfather-and-the-jobs-of-our-children', 'index.html'))
+    ? [{ has: 'The Father, the Godfather, and the Jobs of Our', why: 'the title of Aziz Ahmad’s Substack essay, republished as he titled it (WP165)' }]
+    : []),
 ];
 
 interface Series {
