@@ -251,8 +251,10 @@ test.describe('3 The origin line on Development Partners and Investors does not 
   const LINE = 'From a Copenhagen launch to work across Asia, Africa, Europe and the Americas.';
   const REGIONS = 'across Asia, Africa, Europe and the Americas';
 
+  // WP166-C (R4-31): Global Reach's lead names the partners instead of repeating the H1 (it was SC-03's sentence, "CodersTrust has worked in 16 countries and territories across Asia, …, including Bangladesh since 2014."); the regions the line borrows open it.
   test('Global Reach carries the wording the line borrows, verbatim', () => {
-    expect(main(GLOBAL_REACH)).toContain(`CodersTrust has worked in 16 countries and territories ${REGIONS}, including Bangladesh since 2014`);
+    expect(main(GLOBAL_REACH)).toContain('Across Asia, Africa, Europe and the Americas, with partners including the World Bank');
+    expect(main(GLOBAL_REACH).toLowerCase()).toContain(REGIONS.toLowerCase());
   });
 
   for (const [name, rel] of [['Development Partners', DEV], ['Investors', INVESTORS]] as const) {

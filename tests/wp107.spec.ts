@@ -261,7 +261,8 @@ test.describe('WP107: every news post changed here carries `updated: 2026-10-29`
     test(`${slug.slice(0, 60)}`, async ({ page }) => {
       // WP161-B re-dated BASIS, Press Freedom and Discovery Education (2026-11-02: Fable review A-23, superlatives) and Ostitto and America Week (2026-11-03: the owner's title for Md. Shamsul Haque)
       const WP161B: Record<string, string> = { [BASIS]: '2026-11-02', [PRESS_FREEDOM]: '2026-11-02', [DISCOVERY]: '2026-11-02', [OSTITTO]: '2026-11-03', [AMERICA_WEEK]: '2026-11-03' };
-      const day = WP161B[slug] ?? ([DISCOVERY, DOICT, UPEACE_MOU, NSU, NCTB, PRESS_FREEDOM].includes(slug) ? '2026-10-30' : '2026-10-29'); // WP126 re-dated the Discovery Education post (countToday note); WP127 the other five (serial-comma sweep)
+      const earlier = WP161B[slug] ?? ([DISCOVERY, DOICT, UPEACE_MOU, NSU, NCTB, PRESS_FREEDOM].includes(slug) ? '2026-10-30' : '2026-10-29'); // WP126 re-dated the Discovery Education post (countToday note); WP127 the other five (serial-comma sweep)
+      const day = earlier < '2026-11-21' ? '2026-11-21' : earlier; // WP166-C re-dated every post (the dated note, headlines, closing links and "More News" cards changed)
       expect(post(slug)).toMatch(new RegExp(`^updated: ${day}$`, 'm'));
       await open(page, routeOf(slug));
       const ld = await ldJson(page);

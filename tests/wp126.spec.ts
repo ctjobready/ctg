@@ -47,6 +47,8 @@ const COUNT_TODAY = [
   'empowering-women-in-digital-economy-certificate-giving-ceremony-by-coderstrust-with-joyeeta-foundation',
   'the-man-behind-coderstrust-who-never-forgot-his-roots',
 ];
+// WP166-C (owner approval of 21 November 2026, "Archive label: narrow and shorten"): a post dated 2026 shows the date line alone, so the sentence stays on the flagged posts dated before 2026 only (the flag stays: the body still gives today's count).
+const COUNT_TODAY_NOTED = COUNT_TODAY.filter((s) => !['a-proud-milestone-for-coderstrust', 'coderstrust-chairman-aziz-ahmad-visits-city-college-downtown-to-explore-global-partnership', 'the-man-behind-coderstrust-who-never-forgot-his-roots'].includes(s));
 const SENTENCE = 'The country count is today’s.';
 const DIGITAL_FACTORY = 'why-we-call-it-a-digital-factory';
 
@@ -57,25 +59,25 @@ test.describe('WP126 item 1: archive posts that say "16 countries and territorie
     for (const slug of NEWS_SLUGS) {
       const raw = html(`news/${slug}/index.html`);
       const b = banner(raw);
-      if (!/16 countries and territories/.test(body(raw)) || !b.startsWith('Archived post, lightly edited.')) continue;
+      if (!/16 countries and territories/.test(body(raw)) || !b.includes('Lightly edited.')) continue; // WP166-C: the note no longer opens "Archived post, lightly edited."
       withCount.push(slug);
       if (!b.includes(SENTENCE)) offenders.push(slug);
     }
     expect(offenders).toEqual([]);
-    expect(withCount.sort()).toEqual([...COUNT_TODAY].sort());
+    expect(withCount.sort()).toEqual([...COUNT_TODAY_NOTED].sort());
   });
 
-  test('the sentence sits in the standard note, after the Impact-pages sentence and before "Published …"', () => {
-    for (const slug of COUNT_TODAY) {
+  test('the sentence closes the standard note, after the Impact-pages sentence (WP166-C: the dates now come first)', () => {
+    for (const slug of COUNT_TODAY_NOTED) {
       const b = banner(html(`news/${slug}/index.html`));
-      expect(b, slug).toMatch(/current figures are on the Impact pages ?\. The country count is today’s\. Published /);
+      expect(b, slug).toMatch(/^Published .*current figures are on the Impact pages ?\. The country count is today’s\.$/);
       expect(b.split(SENTENCE).length - 1, slug).toBe(1);
     }
   });
 
   test('no other page carries the sentence', () => {
     const carriers = listPages().filter((p) => decode(readFileSync(p.file, 'utf8')).includes(SENTENCE)).map((p) => p.route.replace(/^\/+|\/+$/g, '').replace(/^ctg\//, '').replace(/^news\//, ''));
-    expect(carriers.sort()).toEqual([...COUNT_TODAY].sort());
+    expect(carriers.sort()).toEqual([...COUNT_TODAY_NOTED].sort());
   });
 
   test('the 16 stays in every one of those posts (the count is not restored to the as-published figure)', () => {
@@ -143,9 +145,9 @@ test.describe('WP126 item 4: the Digital Factory post says "exported labor"', ()
     expect(t).not.toContain('(unskilled)');
     expect(t).not.toContain('exported (unskilled)');
   });
-  test('the post is dated updated: 2026-10-30 (WP161-B: 2026-11-02, Fable review A-22)', () => {
-    expect(source(DIGITAL_FACTORY)).toMatch(/^updated: 2026-11-02$/m); // WP161-B re-dated it (the Bangladesh vision and aim)
-    expect(banner(html(`news/${DIGITAL_FACTORY}/index.html`))).toContain('updated November 2, 2026');
+  test('the post is dated updated: 2026-10-30 (WP161-B: 2026-11-02, Fable review A-22; WP166-C: 2026-11-21)', () => {
+    expect(source(DIGITAL_FACTORY)).toMatch(/^updated: 2026-11-21$/m); // WP161-B re-dated it (the Bangladesh vision and aim); WP166-C (its excerpt and closing band)
+    expect(banner(html(`news/${DIGITAL_FACTORY}/index.html`))).toContain('updated November 21, 2026');
   });
 });
 

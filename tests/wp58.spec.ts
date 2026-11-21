@@ -176,10 +176,11 @@ test.describe('S1, G1 and L7: "16 countries and territories" is where CodersTrus
     expect(ld).not.toContain('for digital work in 16 countries');
   });
 
-  test('Global Reach: the lead is SC-03’s sentence and the meta description begins the same way, within 155 characters; the H1 and the title are unchanged', async ({ page }) => {
+  // WP166-C (R4-31): the lead names the partners instead of repeating SC-03's sentence; the description still begins with SC-03's words
+  test('Global Reach: the lead names the partners and the meta description begins with SC-03’s words, within 155 characters; the H1 and the title are unchanged', async ({ page }) => {
     await open(page, GLOBAL_REACH);
     await expect(page.locator('main h1')).toHaveText('Where We Have Worked: 16 Countries and Territories');
-    expect(compact(await page.locator('main .hero__lead').first().textContent())).toBe('CodersTrust has worked in 16 countries and territories across Asia, Africa, Europe and the Americas, including Bangladesh since 2014.');
+    expect(compact(await page.locator('main .hero__lead').first().textContent())).toBe('Across Asia, Africa, Europe and the Americas, with partners including the World Bank, the World Food Programme and SOS Children’s Villages. In Bangladesh since 2014.');
     const description = await page.locator('meta[name="description"]').getAttribute('content');
     expect(description).toBe('CodersTrust has worked in 16 countries and territories: Bangladesh since 2014 and 15 international locations, with years and, where known, target groups.'); // WP157 (F6): Denmark has neither a target group nor skills
     expect(description!.length).toBeLessThanOrEqual(155);
@@ -266,7 +267,7 @@ test.describe('S7: every Kosovo year label reads 2016–2017', () => {
     await open(page, 'impact/case-studies/kosovo-women-in-online-work/');
     const main = compact(await page.locator('main').textContent());
     expect(main).toContain('World Bank Group, 2016–2017');
-    expect(main).toContain('Women in Online Work was a pilot with the World Bank Group in 2016–2017.');
+    expect(main).not.toContain('Women in Online Work was a pilot with the World Bank Group in 2016–2017.'); // WP166-C (R4-28): the sentence is cut (the H1 and the eyebrow, "World Bank Group, 2016–2017", say it)
     expect(main).toContain('Women in Online Work, Kosovo, 2016–2017');
     expect(await page.locator('meta[name="description"]').getAttribute('content')).toBe('Women in Online Work, a 2016–2017 pilot in Kosovo with the World Bank Group: 102 of the 150 women trained were in work (68%).');
     await open(page, 'impact/stories/');
@@ -399,9 +400,10 @@ test.describe('G6: Development Partners’ Adrian Afraham card', () => {
     expect(await page.content()).not.toContain('Secured a first freelance job after the Graphic Designing course');
   });
 
-  test('the same story keeps its summary line on the Impact page (the item named Development Partners only), and the other learner cards are unchanged', async ({ page }) => {
+  // WP166-C (R4-16): the Impact page's story is now Erlisa Zherka's (ST-05, the World Bank pilot in Kosovo), with its own summary line; Development Partners keeps Adrian Afraham's card as above
+  test('the Impact page keeps a summary line on its story (the item named Development Partners only), and the other learner cards are unchanged', async ({ page }) => {
     await open(page, IMPACT);
-    expect(compact(await page.locator('#learner-voice .ls__outcome').textContent())).toBe('Secured a first freelance job after the Graphic Designing course, followed by a job offer.');
+    expect(compact(await page.locator('#learner-voice .ls__outcome').textContent())).toBe('She landed a full-time online contract with a U.S.-based startup and was earning more than Kosovo’s average wage at the time.');
     for (const route of [GOVERNMENTS, FOUNDATIONS, 'partner-with-us/employers/', UNIVERSITIES]) {
       await open(page, route);
       await expect(page.locator('#learner-voice .ls__outcome'), route).toHaveCount(1);
@@ -495,9 +497,10 @@ test.describe('GM1: the contract-total note says who trained how many', () => {
     expect(sitePages().filter((p) => p.html.includes('(25,125 women trained)')).map((p) => p.route)).toEqual([]);
   });
 
-  test('Impact prints the shared contract-scope note (WP82)', async ({ page }) => {
+  // WP166-C (R4-17, owner approval of 21 November 2026, item 5): Impact prints the note's first sentence; the overlap sentence stays on Governments and Investors
+  test('Impact prints the shared contract-scope note (WP82; WP166-C: its first sentence)', async ({ page }) => {
     await open(page, IMPACT);
-    expect(compact(await page.locator('#glance a[data-fact~="GV-12"] .glance__note').textContent())).toBe('The total is contract scope, not a count of completers; it includes Her Power’s national program, which trained 25,125 women (CodersTrust trained 2,400 directly). Her Power’s 25,125 is the same group counted in the 150,000+ enrollments through CodersTrust’s curriculum, not additional people.');
+    expect(compact(await page.locator('#glance a[data-fact~="GV-12"] .glance__note').textContent())).toBe('The total is contract scope, not a count of completers; it includes Her Power’s national program, which trained 25,125 women (CodersTrust trained 2,400 directly).');
   });
 });
 

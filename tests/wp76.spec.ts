@@ -787,19 +787,14 @@ test.describe('WP76 item 3: the Kosovo program is described as the World Bank br
     ]);
   });
 
-  test('the Impact card (the case-study band on /impact/) says the same facts, Kosovo first, and the other four cards keep their scope lines', async ({ page }) => {
+  // WP166-C (R4-15): the Impact case cards are a partner strip (no scope line; the program-record tiles above carry the results); the scope lines stay on the case-study hub's cards and pages
+  test('the Impact card (the case-study band on /impact/) is Kosovo first, and the five cards carry no scope line', async ({ page }) => {
     await open(page, 'impact/');
     const cards = page.locator('#cases article');
     await expect(cards).toHaveCount(5);
     expect(compact(await cards.first().locator('.card__title').textContent())).toBe('Women in Online Work, Kosovo');
-    expect(compact(await cards.first().locator('.card__text').textContent())).toBe(`${CARD}.`);
-    expect(await texts(page, '#cases article .card__text')).toEqual([
-      `${CARD}.`,
-      'Three-month online training in graphic design, web development and digital marketing, with mentoring.', // WP162: the World Bank's whole-program enrollment sentence is gone
-      'ICT skills for freelancing marketplaces and local jobs, with one-to-one mentoring.',
-      'Skills training linked to freelance marketplaces, in a fully equipped lab with one-to-one mentoring.',
-      'Curriculum, training manuals, mentorship guidelines and trainer training; 2,400 trained directly.',
-    ]);
+    await expect(page.locator('#cases article .card__text')).toHaveCount(0);
+    expect(CARD.length).toBeGreaterThan(0);
   });
 
   test('no built page says the program built digital literacy first; the Kosovo row of Global Reach already names the same four skills', () => {

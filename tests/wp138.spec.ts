@@ -81,7 +81,7 @@ test('Polish 2: the named strings use the model (Home, YouthWIDE, Trial, Governm
   expect(yw).not.toContain('Scope, schedule and success measures are agreed, on the agency’s own timeline where it applies.');
 
   const trial = main('impact/independent-evaluation/index.html');
-  expect(trial).toContain('so a new pilot starts from a scorecard agreed before the first cohort, with independent evaluation welcome.');
+  expect(trial).toContain('A new pilot starts from a scorecard agreed before the first cohort, with independent evaluation welcome.'); // WP166-C (R4-08): the offer leads the paragraph (it closed it, "…, so a new pilot starts from …")
   expect(trial).not.toContain('a scorecard agreed in co-design');
 
   const gov = main('partner-with-us/governments/index.html');

@@ -33,8 +33,18 @@
     },
     {
       "page": "/news/",
+      "text": "Around 20",
+      "reason": "WP166-C (R6-01, R6-02): headline and excerpt of the archived post coderstrust-organizes-career-carnival-for-students-and-affiliates (around 20 employers at the October 2024 Career Carnival, as the post reports); archived /news/<post>/ pages are excluded from the guard (R8-m5) and the listing repeats their wording."
+    },
+    {
+      "page": "/news/",
+      "text": "60+",
+      "reason": "WP166-C (R6-01, R6-02): headline and excerpt of the archived post coderstrust-organizes-career-carnival-for-students-and-affiliates (over 60 job openings at the October 2024 Career Carnival, as the post reports); archived /news/<post>/ pages are excluded from the guard (R8-m5) and the listing repeats their wording."
+    },
+    {
+      "page": "/news/",
       "text": "1,400+",
-      "reason": "Excerpt of the archived post a-proud-milestone-for-coderstrust (a treasure-hunt registration count); archived /news/<post>/ pages are excluded from the guard (R8-m5) and the listing repeats their wording."
+      "reason": "Excerpt and (WP166-C, R5-04) headline of the archived post a-proud-milestone-for-coderstrust (a treasure-hunt registration count); archived /news/<post>/ pages are excluded from the guard (R8-m5) and the listing repeats their wording."
     },
     {
       "page": "/blog/the-clock-is-running-bangladesh-demographic-dividend/",

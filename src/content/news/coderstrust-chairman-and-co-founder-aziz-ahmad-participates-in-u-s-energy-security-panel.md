@@ -1,7 +1,7 @@
 ---
-title: "CodersTrust Chairman and Co-Founder Aziz Ahmad Attends U.S. Energy Security Panel"
+title: "Aziz Ahmad Attends U.S. Energy Security Panel"
 date: 2026-01-16
-updated: 2026-11-02
+updated: 2026-11-21
 topic: leadership-advocacy
 excerpt: "Aziz Ahmad attends a panel on advancing American energy security led by the U.S. Secretary of Energy."
 cover: ../../assets/images/news/coderstrust-chairman-and-co-founder-aziz-ahmad-participates-in-u-s-energy-security-panel/us-secretary-of-energy-3.jpg

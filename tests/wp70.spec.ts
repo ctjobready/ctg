@@ -15,7 +15,8 @@ import { listPages, pageByRoute } from './support/pages';
 const KOSOVO = '/impact/case-studies/kosovo-women-in-online-work/';
 const CONTEXT_SENTENCE = 'The World Bank Group sought market-oriented skills to help young women in Kosovo find meaningful employment.';
 const OLD_SENTENCE = 'In 2017 the World Bank Group sought market-oriented skills to help young women in Kosovo find meaningful employment.';
-const SPAN_LINE = 'Women in Online Work was a pilot with the World Bank Group in 2016–2017.';
+// WP166-C (R4-28): "Women in Online Work was a pilot with the World Bank Group in 2016–2017." is cut (the H1 and the eyebrow say it), so the span is pinned on the eyebrow
+const SPAN_LINE = 'Case Study · World Bank Group, 2016–2017';
 
 /** Visible text of a built HTML file: script and style bodies dropped, tags removed, whitespace collapsed. */
 function textOfHtml(html: string): string {

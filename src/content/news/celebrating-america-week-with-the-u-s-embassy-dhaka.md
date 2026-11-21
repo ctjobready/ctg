@@ -1,7 +1,7 @@
 ---
 title: "Celebrating America Week with the U.S. Embassy Dhaka"
 date: 2026-09-02
-updated: 2026-11-03
+updated: 2026-11-21
 topic: leadership-advocacy
 excerpt: "CodersTrust Bangladesh CEO Md. Shamsul Haque and the team attend the U.S. Ambassador’s reception for National Day and America Week in Dhaka."
 cover: ../../assets/images/news/celebrating-america-week-with-the-u-s-embassy-dhaka/celebrating-america-week-1.jpg

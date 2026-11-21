@@ -7,11 +7,11 @@ import SectionHeader from '../../components/ui/SectionHeader.astro';
 import CTABand from '../../components/ui/CTABand.astro';
 import Icon from '../../components/system/Icon.astro';
 import Fact from '../../components/facts/Fact.astro';
-import CopyText from '../../components/pages/impact/CopyText.astro';
-import Callout from '../../components/pages/impact/Callout.astro';
 import EvidenceLadder from '../../components/pages/impact/EvidenceLadder.astro';
-import LearnerVoice from '../../components/pages/impact/LearnerVoice.astro';
+import LearnerStory from '../../components/pages/impact/LearnerStory.astro';
+import Button from '../../components/system/Button.astro';
 import ImpactGlance from '../../components/pages/impact/ImpactGlance.astro';
+import { photo } from '../../data/photos';
 import { wsdfmFigureLabel } from '../../components/pages/impact/evidence';
 import { articleNode, desc, title, discoveryCta } from '../../components/pages/impact/page-utils';
 import { CASE_STUDIES } from '../../components/pages/impact/case-studies';
@@ -23,7 +23,7 @@ import { linkAttrs } from '../../lib/url';
 const path = '/impact/';
 // WP166-A (marketing review R7-21): the page's own lead, not the trial sentence Home, the Trial page and two route pages also used as their description.
 const description = desc('Program records from Kosovo and Bangladesh, an independent trial in Dhaka and a 2026 survey of completers. Each figure names its kind of evidence.');
-const jsonLd = [articleNode({ path, headline: 'Impact You Can Verify', description, datePublished: '2026-10-08', dateModified: '2026-11-03', author: 'CodersTrust' })]; // WP164 (2026-11-03: the Albania case card says 2021–2022 again). Earlier: WP162 (2026-11-03: the Albania case card says 2021 and no longer quotes the World Bank's enrollment figure). Earlier: WP157 (2026-11-02: the SDG introduction names the three core goals). Earlier: WP147 (2026-11-01): the 30,000+ tile reads as the register's label everywhere
+const jsonLd = [articleNode({ path, headline: 'Impact You Can Verify', description, datePublished: '2026-10-08', dateModified: '2026-11-21', author: 'CodersTrust' })]; // WP166-C (2026-11-21: the marketing-effectiveness review: hero lead and actions, the benchmark note, the tile order, the case cards, the story and the closing heading). Earlier: WP164 (2026-11-03: the Albania case card says 2021–2022 again). Earlier: WP162 (2026-11-03: the Albania case card says 2021 and no longer quotes the World Bank's enrollment figure). Earlier: WP157 (2026-11-02: the SDG introduction names the three core goals). Earlier: WP147 (2026-11-01): the 30,000+ tile reads as the register's label everywhere
 const sdgs = [
   { n: 4, label: 'Quality Education', core: true },
   { n: 5, label: 'Gender Equality', core: true },
@@ -35,7 +35,20 @@ const sdgs = [
 ];
 // WP57 (cycle-29 review, Kimi K3, item K1): the closing band's heading is one constant for the band and its last jump entry; the discovery CTA is read here, above the list, because a withheld CTA draws no band and so no entry.
 const d = discoveryCta();
-const CLOSING_HEADING = 'Discuss the Evidence for Your Program';
+// WP166-C (R4-13): the closing band is headed as on the other Impact pages ("Talk to Us About a First Cohort"; it said "Discuss the Evidence for Your Program").
+const CLOSING_HEADING = 'Talk to Us About a First Cohort';
+// WP166-C (R4-04): the +10.3 tile carries the benchmark note Development Partners shows, read from RC-06a's glance label (never retyped).
+const benchmark = /(more than four times the 2\.3-point average across nine vocational-training trials)$/.exec(fact('RC-06a').stat?.glance?.label ?? '')?.[1];
+if (!benchmark) throw new Error('Impact: the RC-06a glance label no longer ends "... more than four times the 2.3-point average across nine vocational-training trials"; update the +10.3 tile\'s note');
+const benchmarkNote = `${benchmark[0].toUpperCase()}${benchmark.slice(1)}.`;
+// WP166-C (R4-17): the hub's contract-scope note is the shared note's first sentence; the overlap sentence ("Her Power’s 25,125 is the same group …") stays on Governments and Investors.
+const contractNote = CONTRACT_TOTAL_NOTE.text.split(/(?<=\.) (?=Her Power’s 25,125 is the same group)/)[0];
+if (contractNote === CONTRACT_TOTAL_NOTE.text) throw new Error('Impact: CONTRACT_TOTAL_NOTE no longer has its overlap sentence; update the 30,000+ tile\'s note');
+// WP166-C (R4-16): the hub's one story is ST-05, the World Bank pilot in Kosovo (it was Adrian Afraham's Bangladesh course), rendered as on the Kosovo case study.
+const erlisaTail = fact('ST-05').text.split(' in Kosovo, ')[1];
+if (!erlisaTail) throw new Error('ST-05 text no longer has the expected "<Name>, a … participant in Kosovo, <outcome>" shape');
+const erlisaOutcome = `She ${erlisaTail.replace('; earning', ' and is earning')}.`;
+const erlisaPortrait = photo('impact/kosovo-graduate-portrait');
 // WP31: the jump labels are the headings they jump to (a short form only where the heading is long: the part before the comma), and every heading has one.
 // WP42 (cycle-19 review): the goals entry is the full heading, "Seven Global Goals, Three at the Core": its short form dropped the qualifier that says which goals are the focus.
 // WP91 (triage A11): each entry is its heading's full text, so the list matches the headings it jumps to; "In Short" (a label above this list, not a heading) is gone.
@@ -65,15 +78,14 @@ const aimNote = `YouthWIDE ${AIM_SCOPE}, ${AIM_DEPENDENCY}. An ambition, not a r
 ---
 
 <BaseLayout title={title('Impact You Can Verify')} description={description} path={path} breadcrumbs={[{ label: 'Impact' }]} jsonLd={jsonLd}>
-  <Hero variant="inner" eyebrow="Impact" title="Impact You Can Verify" lead="Program records from Kosovo and Bangladesh, an independent trial in Dhaka and a 2026 survey of completers. Each figure names its kind of evidence." artSeed="impact-hub" />
-
-  <Section id="summary" pad="sm" aria-label="Summary">
-    <div class="ih__bluf">
-      <Callout tone="bluf" label="In Short">
-        <CopyText block={IMPACT_ANSWER} />
-      </Callout>
-    </div>
-  </Section>
+  <!-- WP166-C (R4-01): the "In Short" answer (IMPACT_ANSWER, register-exact) is the hero's lead, with its fact markers, followed by the line on evidence kinds; the separate In Short band and the inventory of sources are gone.
+       WP166-C (R4-14): the hero carries the page's action (the discovery session, as on Home) and the text link to the trial. -->
+  <Hero variant="inner" eyebrow="Impact" title="Impact You Can Verify" lead={`${IMPACT_ANSWER.text} Each figure names its kind of evidence.`} leadFacts={IMPACT_ANSWER.facts} artSeed="impact-hub">
+    <Fragment slot="actions">
+      {d.href && <Button href={d.href} iconEnd="arrow-right">{d.label}</Button>}
+      <a class="link" href={linkAttrs('/impact/independent-evaluation/').href}>Read the Trial Results<Icon name="arrow-right" size={16} /></a>
+    </Fragment>
+  </Hero>
 
   <PageNav links={onThisPage} />
 
@@ -83,12 +95,19 @@ const aimNote = `YouthWIDE ${AIM_SCOPE}, ${AIM_DEPENDENCY}. An ambition, not a r
     title="Results at a Glance"
     eyebrow="Headline Results"
     groups={[
-      { title: 'Trial Results, CodersTrust’s WSDFM Program', cols: 4, items: [{ id: 'RC-02', href: '/impact/independent-evaluation/' }] },
+      { title: 'Trial Results, CodersTrust’s WSDFM Program', cols: 4, items: [{ id: 'RC-02', href: '/impact/independent-evaluation/', note: benchmarkNote, also: ['RC-06a'] }] },
       { title: 'Survey Results, Among Surveyed Completers', cols: 4, items: [
         { id: 'OC-03', href: '/impact/outcomes-2026/' },
         { id: 'OC-01', href: '/impact/outcomes-2026/' },
         { id: 'OC-05', href: '/impact/outcomes-2026/', label: oc05Label },
         { id: 'OC-04', href: '/impact/outcomes-2026/' },
+      ] },
+      // WP166-C (R4-17): the program results follow the trial and the survey, so the three kinds of outcome read in one run; reach and contract scope come after them.
+      { title: 'Program Results, by Named Program', cols: 4, items: [
+        { id: 'PR-02', href: '/impact/case-studies/kosovo-women-in-online-work/', label: 'Women in Online Work, Kosovo: women in work (68%)', note: `A 2016–2017 pilot with the World Bank Group. ${WB_KOSOVO.text}`, also: ['PR-06', ...WB_KOSOVO.facts] },
+        { id: 'PR-01', href: '/impact/case-studies/wsdfm-women-freelancers/', label: wsdfmLabel, note: WSDFM_NOT_TRIAL_NOTE, also: ['PR-06', 'RC-07'] },
+        { id: 'PR-03', href: '/impact/case-studies/undp-yes-korail/', also: ['PR-06'], note: 'A 2017 program in Dhaka’s Korail settlement.' },
+        { id: 'PR-05', href: '/impact/case-studies/her-power/', label: 'Her Power: tracked women in work (47%), from the 2,400 CodersTrust trained directly', note: 'The 2,400 are among the 25,125 women the national program trained.' }, // WP83 (owner answer 2026-10-23) made this "target is a separate figure"; WP85 (owner update 2026-10-24: the program trained its 25,125 and met its target); WP88 item 1: the 2,400 are among the 25,125
       ] },
       { title: 'Reach and Contract Scope', cols: 2, items: [
         // WP92 (Perplexity cycle 41, triage A4): the Delivered tile's note is its own; the 16 countries sentence stays on Global Reach, Home and the other pages as untagged items.
@@ -96,17 +115,11 @@ const aimNote = `YouthWIDE ${AIM_SCOPE}, ${AIM_DEPENDENCY}. An ambition, not a r
         {
           id: 'GV-12',
           href: '/partner-with-us/governments/',
-          also: ['SC-06', 'GV-10', 'GV-01', 'GV-11', 'SC-02'], // WP84: the shared note's overlap sentence names the 150,000+ enrollments (SC-02)
+          also: ['SC-06', 'GV-10', 'GV-01', 'GV-11'], // WP166-C: the overlap sentence that named the 150,000+ enrollments (SC-02, WP84) is not on this page
           label: fact('GV-12').stat!.label, // WP147: one wording for the 30,000+ tile on Impact, Governments, Investors and JobReady Platform (the register's)
-          // WP82 (owner item, 2026-10-23): the tile carries the same contract-scope note as Home, Governments and Investors (CONTRACT_TOTAL_NOTE): the total includes Her Power's national program (25,125 women trained; CodersTrust trained 2,500 directly).
-          note: CONTRACT_TOTAL_NOTE.text,
+          // WP82 (owner item, 2026-10-23): the tile carries the contract-scope note of Home, Governments and Investors (CONTRACT_TOTAL_NOTE); WP166-C (R4-17): its first sentence only (contractNote).
+          note: contractNote,
         },
-      ] },
-      { title: 'Program Results, by Named Program', cols: 4, items: [
-        { id: 'PR-02', href: '/impact/case-studies/kosovo-women-in-online-work/', label: 'Women in Online Work, Kosovo: women in work (68%)', note: `A 2016–2017 pilot with the World Bank Group. ${WB_KOSOVO.text}`, also: ['PR-06', ...WB_KOSOVO.facts] },
-        { id: 'PR-01', href: '/impact/case-studies/wsdfm-women-freelancers/', label: wsdfmLabel, note: WSDFM_NOT_TRIAL_NOTE, also: ['PR-06', 'RC-07'] },
-        { id: 'PR-03', href: '/impact/case-studies/undp-yes-korail/', also: ['PR-06'], note: 'A 2017 program in Dhaka’s Korail settlement.' },
-        { id: 'PR-05', href: '/impact/case-studies/her-power/', label: 'Her Power: tracked women in work (47%), from the 2,400 CodersTrust trained directly', note: 'The 2,400 are among the 25,125 women the national program trained.' }, // WP83 (owner answer 2026-10-23) made this "target is a separate figure"; WP85 (owner update 2026-10-24: the program trained its 25,125 and met its target); WP88 item 1: the 2,400 are among the 25,125
       ] },
     ]}
   />
@@ -123,7 +136,7 @@ const aimNote = `YouthWIDE ${AIM_SCOPE}, ${AIM_DEPENDENCY}. An ambition, not a r
               <div class="card__body">
                 <p class="eyebrow">{c.place}</p>
                 <h3 class="card__title"><a class="card__link" href={linkAttrs(c.path).href}>{c.name}</a></h3>
-                <p class="card__text">{c.scope}.</p>
+                {/* WP166-C (R4-15): no description line; the program-record tiles above carry the results, so the cards read as a partner strip. */}
                 <span class="card__more" aria-hidden="true">Read the Case Study<span class="sr-only">: {c.name}</span><Icon name="arrow-right" size={16} /></span>
               </div>
             </article>
@@ -134,7 +147,11 @@ const aimNote = `YouthWIDE ${AIM_SCOPE}, ${AIM_DEPENDENCY}. An ambition, not a r
     <p class="ih__all"><a class="link" href={linkAttrs('/impact/case-studies/').href}>See All Case Studies<Icon name="arrow-right" size={16} /></a></p>
   </Section>
 
-  <LearnerVoice story="adrian-afraham" excerpt="Following my completion of the course, I successfully secured my very first freelance job, which was followed by an enticing job offer." program="Graphic Designing course, CodersTrust Bangladesh" tone="white" tag />
+  <!-- WP166-C (R4-16): the hub's story is Erlisa Zherka's (ST-05, the World Bank pilot in Kosovo), as the Kosovo case study renders it; it was Adrian Afraham's (Bangladesh). -->
+  <Section id="learner-voice" tone="white" pad="sm" aria-label="Individual Learner Story">
+    <LearnerStory factId="ST-05" name="Erlisa Zherka" assetId="story-erlisa-zherka" image={erlisaPortrait.src} imageAlt={erlisaPortrait.alt} imageAssetId={erlisaPortrait.assetId} program="Women in Online Work, Kosovo, 2016–2017" outcome={erlisaOutcome} tag />
+    <p class="ih__all"><a class="link" href={linkAttrs('/impact/stories/').href}>More Learner Stories<Icon name="arrow-right" size={16} /></a></p>
+  </Section>
 
   <Section id="evidence-ladder" tone="ice" pad="sm" aria-labelledby="ladder-h">
     <SectionHeader id="ladder-h" eyebrow="How to Read the Evidence" title="Four Kinds of Evidence, Strongest First" lead="Each rung says what it shows and what it does not show." />
@@ -166,9 +183,6 @@ const aimNote = `YouthWIDE ${AIM_SCOPE}, ${AIM_DEPENDENCY}. An ambition, not a r
 </BaseLayout>
 
 <style>
-  .ih__bluf {
-    max-width: 60rem;
-  }
   .ih__cases {
     list-style: none;
     margin: 0;

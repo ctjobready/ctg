@@ -93,13 +93,14 @@ test.describe('Items 3 to 7: news archive consistency', () => {
     expect(text).not.toContain('Bring JobReady@Campus to Your Institution');
   });
 
-  test('4: no teaser calls Banani the "head office"; the Career Carnival teaser says "Dhaka office in Banani"', () => {
-    const teaser = 'CodersTrust holds a Career Carnival at its Dhaka office in Banani to create job placement opportunities for students and alumni.';
+  // WP166-C (R6-02): the Career Carnival teaser leads with its result and names no office (it was "CodersTrust holds a Career Carnival at its Dhaka office in Banani to create job placement opportunities for students and alumni."); no page calls Banani the head office
+  test('4: no teaser calls Banani the "head office"; the Career Carnival teaser leads with the employers and openings', () => {
+    const teaser = 'Around 20 companies offer 60+ job openings to more than 1,000 CodersTrust students and alumni at a Career Carnival in Dhaka.';
     expect(metaDescription(pageHtml(news(CARNIVAL)))).toBe(teaser);
     const withOld = builtPages().filter((p) => p.html.includes('Banani, Dhaka head office')).map((p) => p.route);
     expect(withOld).toEqual([]);
     const withNew = builtPages().filter((p) => visible(p.html).includes(teaser)).map((p) => p.route);
-    expect(withNew.length, 'the news index and the "More News" teasers print it').toBeGreaterThanOrEqual(5);
+    expect(withNew.length, 'the news index and the "More News" teasers print it').toBeGreaterThanOrEqual(2);
   });
 
   test('5: the India post no longer says there was an office in Gurugram; it says Pune, as its Economic Times source does', () => {
@@ -286,11 +287,12 @@ test.describe('Item 17: polish', () => {
     expect(first).not.toContain('Her Power (Department');
   });
 
-  test('WSDFM case study: the note names the trial as "the randomized trial by the BRAC Institute of Governance and Development (BIGD)" and says "the 1,000 women enrolled", so it reads on its own above the tiles', async ({ page }) => {
+  // WP166-C (R4-05): the note follows the tiles; the first tile's evidence line is now the page's first mention of the evaluator, so it spells BIGD out and the note uses the abbreviation
+  test('WSDFM case study: the note names the trial as "the randomized trial by BIGD" and says "the 1,000 women enrolled", so it reads on its own under the tiles', async ({ page }) => {
     await open(page, 'impact/case-studies/wsdfm-women-freelancers/');
     const note = page.locator('.hero [data-hero-note]');
-    await expect(note).toHaveText('Program records, not trial results; the 425 women offered a place in the randomized trial by the BRAC Institute of Governance and Development (BIGD) were among the 1,000 women enrolled.');
-    // the evaluator is spelled out (the note) before the tiles say "BIGD" (WP54 G8), and no "these 1,000" is left without an antecedent
+    await expect(note).toHaveText('Program records, not trial results; the 425 women offered a place in the randomized trial by BIGD were among the 1,000 women enrolled.');
+    // the evaluator is spelled out (the first tile) before anything says "BIGD" alone (WP54 G8), and no "these 1,000" is left without an antecedent
     const text = compact(await page.locator('.hero').textContent());
     expect(text.indexOf('BRAC Institute of Governance and Development (BIGD)')).toBeGreaterThanOrEqual(0);
     expect(text.indexOf('BRAC Institute of Governance and Development (BIGD)')).toBeLessThan(text.indexOf('BIGD randomized trial'));
@@ -351,11 +353,12 @@ test.describe('Items 18 to 21 (owner decisions 2026-10-24): the enrollment total
     for (const id of ['SC-02', 'SC-14', 'SC-15']) expect(fact(id).sourceIds, id).toContain('COURSEPAGES26');
   });
 
-  test('the overlap sentence under the 30,000+ keeps "150,000+" and is on Investors and Impact only', () => {
+  // WP166-C (R4-17, owner approval of 21 November 2026, item 5): Impact's tile prints the note's first sentence only, so the overlap sentence is on Investors only
+  test('the overlap sentence under the 30,000+ keeps "150,000+" and is on Investors only (WP166-C: no longer on Impact)', () => {
     const OVERLAP = 'Her Power’s 25,125 is the same group counted in the 150,000+ enrollments through CodersTrust’s curriculum, not additional people.';
     expect(CONTRACT_TOTAL_NOTE.text.endsWith(OVERLAP)).toBe(true);
-    // WP94 (triage A4): Investors points back to its reconciliation paragraph; Impact keeps the full overlap sentence.
-    expect(visible(pageHtml('impact/')), 'impact/').toContain(OVERLAP);
+    // WP94 (triage A4): Investors points back to its reconciliation paragraph.
+    expect(visible(pageHtml('impact/')), 'impact/').not.toContain(OVERLAP);
     expect(visible(pageHtml('partner-with-us/investors/')), 'investors/').toContain('Her Power’s 25,125 are already counted in the 150,000+ enrollments above, not additional people.');
   });
 

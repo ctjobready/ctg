@@ -259,10 +259,10 @@ test.describe('The case-study hub and the Impact page', () => {
       expect(visible(/<div class="case__result"[\s\S]*?<dt[^>]*>([\s\S]*?)<\/dt>/.exec(c)?.[1] ?? '')).toBe('Result');
       expect(visible(/<span class="case__value"[^>]*>[\s\S]*?<\/span>/.exec(c)?.[0] ?? '')).not.toBe('');
     }
-    expect(/<div class="grid-cards[^"]*" data-fact="([^"]*)"/.exec(html(HUB))?.[1]).toBe('PR-02 PR-09 PR-01 PR-03 PR-05 PR-02b');
+    expect(/<div class="grid-cards[^"]*" data-fact="([^"]*)"/.exec(html(HUB))?.[1]).toBe('PR-02 PR-09 PR-01 PR-03 PR-05 RC-02 PR-02b'); // WP166-C (R4-06): the WSDFM card also shows the trial figure (RC-02)
   });
   test('WP164 reverses the lead: the lead and the description say "each with its figure and its base" again (not "with the figures and bases where they exist")', () => {
-    expect(visible(/<p class="hero__lead"[^>]*>[\s\S]*?<\/p>/.exec(mainRaw(HUB))?.[0] ?? '')).toBe('Five programs, each with its figure and its base.');
+    expect(visible(/<p class="hero__lead"[^>]*>[\s\S]*?<\/p>/.exec(mainRaw(HUB))?.[0] ?? '')).toBe('With the World Bank, UNDP, Porticus and the Government of Bangladesh. Each program shows its figure and its base.'); // WP166-C (R4-07): the lead names the partners, with "figure" and "base" kept
     const d = 'Five CodersTrust case studies, each with its figure and its base: Women in Online Work, Digital Jobs Albania, WSDFM, UNDP YES and Her Power.';
     expect(metaDescription(HUB)).toBe(d);
     expect(readFileSync(join(DIST_DIR, 'llms.txt'), 'utf8')).toContain(`(https://coderstrust.global/impact/case-studies/): ${d}`);
@@ -271,7 +271,7 @@ test.describe('The case-study hub and the Impact page', () => {
   test('Impact: WP164 reverses the years; the Albania card reads "…; Albania, 2021–2022" and its scope line still does not quote the World Bank’s enrollment', () => {
     const card = /<article class="card card--link"[^>]*>(?:(?!<\/article>)[\s\S])*?Digital Jobs Albania[\s\S]*?<\/article>/.exec(byId(IMPACT, 'section', 'cases'))?.[0] ?? '';
     expect(visible(card)).toBe(
-      'World Bank, with the Government of Albania and EuroPartners Development; Albania, 2021–2022 Digital Jobs Albania Three-month online training in graphic design, web development and digital marketing, with mentoring. Read the Case Study',
+      'World Bank, with the Government of Albania and EuroPartners Development; Albania, 2021–2022 Digital Jobs Albania Read the Case Study', // WP166-C (R4-15): the Impact case cards carry no description line (the scope line never quoted the World Bank's enrollment)
     );
   });
 });
@@ -319,15 +319,14 @@ test.describe(`Dates: every page whose visible text changed in WP162 is dated ${
     [REACH, 'Article'],
     [ABOUT, 'AboutPage'],
   ] as const) {
-    // WP166-A: About's text changed again on 2026-11-21, so its date is on or after this package's
-    test(`${rel}: ${type}.dateModified is ${TODAY}${rel === ABOUT ? ' or later' : ''}`, () => {
-      if (rel === ABOUT) expect(String(nodeOf(rel, type).dateModified) >= TODAY).toBe(true);
-      else expect(nodeOf(rel, type).dateModified).toBe(TODAY);
+    // WP166-A: About's text changed again on 2026-11-21; WP166-C: the four Impact pages did too, so the pin is "this day or later"
+    test(`${rel}: ${type}.dateModified is ${TODAY} or later`, () => {
+      expect(String(nodeOf(rel, type).dateModified) >= TODAY).toBe(true);
     });
   }
   test('the Albania case study keeps datePublished 2026-10-08 and declares its own dateModified in the case-study data', () => {
     expect(nodeOf(ALBANIA, 'Article').datePublished).toBe('2026-10-08');
-    expect(CASE_STUDIES.find((c) => c.slug === 'digital-jobs-albania')?.dateModified).toBe(TODAY);
+    expect(String(CASE_STUDIES.find((c) => c.slug === 'digital-jobs-albania')?.dateModified) >= TODAY).toBe(true); // WP166-C: 2026-11-21
   });
   test(`Home pins no date of its own: its WebPage.dateModified is the build date, ${TODAY} or later`, () => {
     expect(String(nodeOf(HOME, 'WebPage').dateModified) >= TODAY).toBe(true);

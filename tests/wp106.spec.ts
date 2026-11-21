@@ -147,12 +147,14 @@ test.describe('WP106 item 4: "Co-Founder and Global Chairman" is "Co-Founder and
     expect(offenders).toEqual([]);
   });
 
-  test('the UPEACE post: H1, <title> source, excerpt-driven description and NewsArticle headline say "Co-Founder and Chairman of CodersTrust"', async ({ page }) => {
+  // WP166-C (R5-15): the headline drops the title string ("Aziz Ahmad Appointed Global UPEACE Ambassador") and the excerpt says what UPEACE is; the body keeps "Co-Founder and Chairman of CodersTrust" and no page says "Global Chairman"
+  test('the UPEACE post: H1, <title> source, excerpt-driven description and NewsArticle headline carry no "Global Chairman"; the body says "Co-Founder and Chairman of CodersTrust"', async ({ page }) => {
     await open(page, UPEACE);
-    expect(compact(await page.locator('h1').textContent())).toBe('Aziz Ahmad, Co-Founder and Chairman of CodersTrust, Appointed as Global UPEACE Ambassador');
-    expect(await page.locator('meta[name="description"]').getAttribute('content')).toBe('Aziz Ahmad, Co-Founder and Chairman of CodersTrust, is appointed a Global Ambassador of the University for Peace (UPEACE).');
+    expect(compact(await page.locator('h1').textContent())).toBe('Aziz Ahmad Appointed Global UPEACE Ambassador');
+    expect(await page.locator('meta[name="description"]').getAttribute('content')).toBe('The University for Peace, established by the UN General Assembly, appoints Aziz Ahmad a Global Ambassador for his work on skills, opportunity and peace.');
     const ld = await ldJson(page);
-    expect(ld).toContain('Aziz Ahmad, Co-Founder and Chairman of CodersTrust, Appointed as Global UPEACE Ambassador');
+    expect(ld).toContain('Aziz Ahmad Appointed Global UPEACE Ambassador');
+    expect(ld).not.toContain('Global Chairman');
     expect(compact(await page.locator('main').textContent())).toContain('congratulates Aziz Ahmad, Co-Founder and Chairman of CodersTrust, on his appointment');
   });
 
@@ -165,7 +167,7 @@ test.describe('WP106 item 4: "Co-Founder and Global Chairman" is "Co-Founder and
 
   test('the News index card for the UPEACE post carries the new headline and excerpt', async ({ page }) => {
     const html = visible(htmlOf('/news/'));
-    expect(html).toContain('Aziz Ahmad, Co-Founder and Chairman of CodersTrust, Appointed as Global UPEACE Ambassador');
+    expect(html).toContain('Aziz Ahmad Appointed Global UPEACE Ambassador'); // WP166-C (R5-15)
     expect(html).not.toContain('Global Chairman');
   });
 });

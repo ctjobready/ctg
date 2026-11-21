@@ -1,10 +1,10 @@
 ---
-title: "CodersTrust Chairman Mr. Aziz Ahmad Joins BCIU Roundtable in Washington, D.C."
+title: "Aziz Ahmad Joins BCIU Roundtable in Washington, D.C."
 date: 2025-10-14
-updated: 2026-10-30
+updated: 2026-11-21
 countToday: true
 topic: leadership-advocacy
-excerpt: "Aziz Ahmad takes part in a Business Council for International Understanding roundtable in Washington, D.C."
+excerpt: "Aziz Ahmad joins a Business Council for International Understanding roundtable on aligning Bangladesh’s development financing with digital skills."
 cover: ../../assets/images/news/coderstrust-chairman-mr-aziz-ahmad-joins-bciu-roundtable-in-washington-d-c/bciu-roundtable.jpg
 coverAlt: "A long conference table set with name cards in a hotel meeting room, with a card reading Aziz Ahmad, CodersTrust"
 legacyUrl: "https://coderstrust.global/coderstrust-chairman-mr-aziz-ahmad-joins-bciu-roundtable-in-washington-d-c/"

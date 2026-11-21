@@ -1,10 +1,10 @@
 ---
 title: "CodersTrust Earns Recognition Among Top 100 EdTech Companies in South Asia"
 date: 2023-11-21
-updated: 2026-11-02
+updated: 2026-11-21
 countToday: true
 topic: recognition
-excerpt: "A November HolonIQ report places CodersTrust among South Asia’s Top 100 EdTech companies."
+excerpt: "HolonIQ’s 2023 South Asia EdTech 100 names CodersTrust among the region’s top 100 EdTech companies."
 cover: ../../assets/images/news/coderstrust-earns-recognition-among-top-100-edtech-companies-in-south-asia/ct-in-top-100.jpg
 coverAlt: "Graphic of the HolonIQ 2023 South Asia EdTech 100 list"
 legacyUrl: "https://coderstrust.global/coderstrust-earns-recognition-among-top-100-edtech-companies-in-south-asia/"

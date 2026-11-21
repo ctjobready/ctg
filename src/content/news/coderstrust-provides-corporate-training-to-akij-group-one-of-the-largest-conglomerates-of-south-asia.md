@@ -1,7 +1,7 @@
 ---
 title: "CodersTrust Provides Corporate Training to Akij Group"
 date: 2023-08-16
-updated: 2026-11-03
+updated: 2026-11-21
 topic: programs-events
 excerpt: "CodersTrust delivers corporate training in digital marketing and soft skills to the Akij Group of Companies."
 cover: ../../assets/images/news/coderstrust-provides-corporate-training-to-akij-group-one-of-the-largest-conglomerates-of-south-asia/coderstrust-provide-corporate-training-to-akij-group.jpg

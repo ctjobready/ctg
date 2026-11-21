@@ -285,8 +285,9 @@ test.describe('WP104 item 8: meta descriptions name the full target group', () =
 // --------------------------------------------------------------------------------------------------------------------------------
 test.describe('WP104 item 9: "1,000" in the two 1,000-trainees news posts', () => {
   const POSTS = [
-    { route: 'news/1000-trainees-sheikh-kamal-ict-incubator-training/', h1: '1,000 People to Be Trained in High-Demand IT Skills | Sheikh Kamal ICT Incubator Training', body: 'CodersTrust will provide training to 1,000 people in high-demand IT skills at the Sheikh Kamal IT Training and Incubation Center in Barishal.' }, // WP161-B (Fable review A-16)
-    { route: 'news/1000-trainees-enhancing-digital-government-economy-edge/', h1: 'Contract to Train 1,000 Youth | Enhancing Digital Government & Economy (EDGE)', body: 'CodersTrust will provide training to 1,000 youths on digital and disruptive 4IR technologies.' },
+    // WP166-C (R5-11): both headlines name CodersTrust as the actor and lose the old template's pipe; they still say 1,000
+    { route: 'news/1000-trainees-sheikh-kamal-ict-incubator-training/', h1: 'CodersTrust Contracted to Train 1,000 People in High-Demand IT Skills in Barishal', body: 'CodersTrust will provide training to 1,000 people in high-demand IT skills at the Sheikh Kamal IT Training and Incubation Center in Barishal.' }, // WP161-B (Fable review A-16)
+    { route: 'news/1000-trainees-enhancing-digital-government-economy-edge/', h1: 'CodersTrust Signs EDGE Contract to Train 1,000 Youth in Digital and 4IR Technologies', body: 'CodersTrust will provide training to 1,000 youths on digital and disruptive 4IR technologies.' },
   ];
   for (const p of POSTS) {
     test(`${p.route}: the H1 and the body say 1,000, never 1000`, async ({ page }) => {
@@ -300,8 +301,8 @@ test.describe('WP104 item 9: "1,000" in the two 1,000-trainees news posts', () =
     // Item 10 also covers "any page this WP changes": as with the Her Power post (tests/wp86.spec.ts), an edited archived post carries the day of the edit.
     test(`${p.route}: the archive banner says "updated October 29, 2026" and the JSON-LD dateModified is 2026-10-29`, async ({ page }) => {
       await open(page, p.route);
-      await expect(page.locator('.archive-banner')).toContainText(/updated (October (29|30)|November 2), 2026/); // WP127 re-dated the EDGE post to October 30 (serial-comma sweep); WP161-B re-dated both posts to November 2 (Fable review A-16, A-17)
-      expect(await ldJson(page)).toMatch(/"dateModified"\s*:\s*"2026-(10-(29|30)|11-02)"/);
+      await expect(page.locator('.archive-banner')).toContainText(/updated (October (29|30)|November (2|21)), 2026/); // WP127 re-dated the EDGE post to October 30 (serial-comma sweep); WP161-B re-dated both posts to November 2 (Fable review A-16, A-17); WP166-C to November 21
+      expect(await ldJson(page)).toMatch(/"dateModified"\s*:\s*"2026-(10-(29|30)|11-(02|21))"/);
     });
   }
 });
@@ -324,8 +325,8 @@ test.describe('WP104 item 10: "Last updated" stamps match each page’s latest c
     { route: 'programs/youthwide/', selector: '.updated', text: 'Last updated November 3, 2026', iso: '2026-11-03' }, // WP163: one exam fee per trainee; the delivery model. WP151: "Choose Your Entry Point" has no lead
     { route: 'programs/jobready-work/', selector: '.updated', text: 'Last updated November 3, 2026', iso: '2026-11-03' }, // WP163: one exam fee per trainee; the delivery model; the platform question. WP157: re-dated 2026-11-02
     { route: 'programs/superkids/', selector: '.updated', text: 'Last updated November 2, 2026', iso: '2026-11-02' }, // WP143
-    { route: 'impact/outcomes-2026/', selector: '.lf-updated', text: 'Source snapshot: October 2026 · Last updated November 3, 2026', iso: '2026-11-03' }, // WP161-A: the rounding sentence under "Download the Data" (A-06). WP147: the method line and the Speed to Earning tile changed (was October 31 since WP135; October 29 before)
-    { route: 'impact/independent-evaluation/', selector: '.lf-updated', text: 'Last updated November 2, 2026', iso: '2026-11-02' }, // WP134: WP133 changed its text
+    { route: 'impact/outcomes-2026/', selector: '.lf-updated', text: 'Source snapshot: October 2026 · Last updated November 21, 2026', iso: '2026-11-21' }, // WP166-C (the marketing-effectiveness review). WP161-A: the rounding sentence under "Download the Data" (A-06). WP147: the method line and the Speed to Earning tile changed (was October 31 since WP135; October 29 before)
+    { route: 'impact/independent-evaluation/', selector: '.lf-updated', text: 'Last updated November 21, 2026', iso: '2026-11-21' }, // WP166-C. Earlier: WP134: WP133 changed its text
   ];
   for (const s of STAMPED) {
     test(`${s.route} reads "${s.text}" and its JSON-LD dateModified is ${s.iso}`, async ({ page }) => {
@@ -336,10 +337,11 @@ test.describe('WP104 item 10: "Last updated" stamps match each page’s latest c
   }
 
   // WP144: the Korail learner band heading changed again on 2026-11-01, so its JSON-LD dateModified is 2026-11-01 (it was 2026-10-31)
-  test('the UNDP YES case study’s JSON-LD dateModified is 2026-11-01 (its learner band heading changed that day); the other case studies keep theirs', async ({ page }) => {
+  // WP166-C (2026-11-21): every case study changed visible text again (closing band, story band), so both read 2026-11-21
+  test('the UNDP YES case study’s JSON-LD dateModified is its own (2026-11-01, then 2026-11-21); the other case studies keep theirs', async ({ page }) => {
     await open(page, 'impact/case-studies/undp-yes-korail/');
-    expect(await ldJson(page)).toMatch(/"dateModified"\s*:\s*"2026-11-01"/);
-    await open(page, 'impact/case-studies/wsdfm-women-freelancers/'); // WP137 re-dated Her Power (its text changed); WP161-A (A-01): WSDFM declares its own last visible change, 2026-10-28 (it fell back to the shared 2026-10-10)
-    expect(await ldJson(page)).toMatch(/"dateModified"\s*:\s*"2026-10-28"/);
+    expect(await ldJson(page)).toMatch(/"dateModified"\s*:\s*"2026-11-21"/);
+    await open(page, 'impact/case-studies/wsdfm-women-freelancers/'); // WP137 re-dated Her Power (its text changed); WP161-A (A-01): WSDFM declares its own last visible change (it fell back to the shared 2026-10-10)
+    expect(await ldJson(page)).toMatch(/"dateModified"\s*:\s*"2026-11-21"/);
   });
 });

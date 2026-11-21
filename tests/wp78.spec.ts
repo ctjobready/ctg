@@ -28,7 +28,7 @@ test.describe('WP78 item 2: Case Studies index wording', () => {
   test('the lead says each figure comes with its base (WP103: "figure", not "result"), and the old overpromise is gone', async ({ page }) => {
     await open(page, 'impact/case-studies/');
     const lead = page.locator('main .hero__lead').first();
-    await expect(lead).toHaveText('Five programs, each with its figure and its base.'); // WP164 restores it (WP162 had "Five programs, with the figures and bases where they exist.")
+    await expect(lead).toHaveText('With the World Bank, UNDP, Porticus and the Government of Bangladesh. Each program shows its figure and its base.'); // WP164 restored the base (WP162 had "Five programs, with the figures and bases where they exist."); WP166-C (R4-07): the lead names the partners
     await expect(page.locator('main')).not.toContainText('its base and what the figures do and do not show');
   });
 

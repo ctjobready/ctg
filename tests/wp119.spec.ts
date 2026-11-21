@@ -76,7 +76,7 @@ test.describe('WP119 Minor 3: the five posts written in October 2026 carry their
       const b = banner(a.slug);
       expect(b).toBe(`Written in October 2026 from the dated sources linked in the text. Event date: ${a.date}.`);
       expect(b).not.toMatch(/Archived post|Published|lightly edited|Added in October 2026/);
-      expect(source(a.slug)).toMatch(/^updated: 2026-10-(29|30)$/m); // WP127 re-dated two of the five (serial-comma sweep)
+      expect(source(a.slug)).toMatch(/^updated: 2026-11-21$/m); // WP127 re-dated two of the five (serial-comma sweep); WP166-C re-dated every post (headlines, closing links and "More News" cards changed)
     });
 
     test(`${a.slug}: the news index card keeps the event date`, () => {
@@ -84,13 +84,14 @@ test.describe('WP119 Minor 3: the five posts written in October 2026 carry their
     });
   }
 
-  test('an ordinary archived post keeps the standard banner, and the changed ones show updated October 30, 2026', () => {
-    for (const slug of [DISCOVERY, JOYEETA, CARNIVAL, JU, MILESTONE]) {
+  // WP166-C (owner approval of 21 November 2026, "Archive label: narrow and shorten"): no post says "Archived post"; an older post leads with its dates and then the shorter note, a 2026 post shows the dates alone (tests/wp166-c.spec.ts).
+  test('an ordinary older post carries the standard dated note, and a 2026 post the date line alone (WP166-C)', () => {
+    for (const slug of [DISCOVERY, JOYEETA, CARNIVAL, JU]) {
       const b = banner(slug);
-      expect(b, slug).toContain('Archived post, lightly edited.');
-      // WP126: the posts that now say "The country count is today’s." were re-dated to October 30
-      expect(b, slug).toMatch(/updated (October (30|31)|November 2), 2026/); // WP127 re-dated the 2041 post (JU) too; WP131 re-dated Joyeeta and Carnival to October 31; WP161-B re-dated Discovery Education and the 2041 post (JU) to November 2
+      expect(b, slug).toMatch(/^Published [A-Z][a-z]+ \d{1,2}, 20(1|2)\d; updated November 21, 2026\. Lightly edited\. Titles, offices and figures are as of publication; current figures are on the Impact pages\./);
+      expect(b, slug).not.toContain('Archived post');
     }
+    expect(banner(MILESTONE)).toBe('Published August 1, 2026; updated November 21, 2026.');
   });
 });
 

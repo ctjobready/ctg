@@ -210,8 +210,8 @@ test.describe('A-17 the ICT Division, not an "ICT and Telecommunication Ministry
 
 test.describe('A-18 U.S. energy security panel: "Attends"', () => {
   test('the H1 and the News index say "Attends U.S. Energy Security Panel"', () => {
-    expect(h1(ENERGY)).toBe('CodersTrust Chairman and Co-Founder Aziz Ahmad Attends U.S. Energy Security Panel');
-    expect(main(NEWS_INDEX)).toContain('CodersTrust Chairman and Co-Founder Aziz Ahmad Attends U.S. Energy Security Panel');
+    expect(h1(ENERGY)).toBe('Aziz Ahmad Attends U.S. Energy Security Panel'); // WP166-C (R5-18): person-led headlines start with the name
+    expect(main(NEWS_INDEX)).toContain('Aziz Ahmad Attends U.S. Energy Security Panel');
     expect(pagesWithText('Participates in U.S. Energy Security Panel')).toEqual([]);
   });
 });
@@ -300,10 +300,11 @@ test.describe('A-25 HolonIQ: Nguyen Anh Tuan, Co-Founder and CEO of Boston Globa
 // Package 8: evidence pages
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+// WP166-C (R4-10, owner approval of 21 November 2026, item 5): the classes-attended band this item worded is cut (the page's freelancing exhibit is the randomized comparison, RC-09), so no sentence reads attendance as assigned
 test.describe('A-41 Independent Evaluation: attendance was not randomly assigned', () => {
-  test('"In this study, freelancing was higher among women who attended more classes (attendance was not randomly assigned)."', () => {
+  test('no sentence presents the classes-attended result (WP166-C: the band is cut)', () => {
     const t = main(EVALUATION);
-    expect(t).toContain('In this study, freelancing was higher among women who attended more classes (attendance was not randomly assigned).');
+    expect(t).not.toContain('freelancing was higher among women who attended more classes');
     expect(t).not.toContain('attended more classes.');
   });
 });

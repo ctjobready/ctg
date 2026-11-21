@@ -1,17 +1,15 @@
 ---
-title: "Harnessing Socio-Technology for Positive Impact and Unity Globally"
+title: "CodersTrust Joins Build Peace 2023 in Nairobi on Designing Online Spaces for Conflict Transformation"
 date: 2023-12-03
-updated: 2026-10-30
+updated: 2026-11-21
 topic: leadership-advocacy
 excerpt: "A six-member CodersTrust team joins the Build Peace 2023 Conference in Nairobi, Kenya, on designing online spaces for conflict transformation."
 cover: ../../assets/images/news/harnessing-socio-technology-for-positive-impact-and-unity-globally/build-peace-2023-conference-2024-2.jpg
 coverAlt: "Seven conference participants wearing lanyards standing together outdoors"
 legacyUrl: "https://coderstrust.global/harnessing-socio-technology-for-positive-impact-and-unity-globally/"
 tags: []
-seoTitle: "Socio-Technology for Unity at Build Peace 2023"
+seoTitle: "Workshop at Build Peace 2023 in Nairobi"
 ---
-
-## CodersTrust Joins Build Peace 2023 on Designing Online Spaces for Conflict Transformation
 
 ![Seven conference participants wearing lanyards standing together outdoors](../../assets/images/news/harnessing-socio-technology-for-positive-impact-and-unity-globally/build-peace-2023-conference-2024-2.jpg)
 

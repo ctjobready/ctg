@@ -1,7 +1,7 @@
 ---
-title: "CodersTrust Chairman Aziz Ahmad Visits City College Downtown to Discuss an Expanded Partnership"
+title: "CodersTrust and the City College of New York Discuss an Expanded Partnership"
 date: 2026-09-23
-updated: 2026-10-31
+updated: 2026-11-21
 countToday: true
 topic: leadership-advocacy
 excerpt: "Aziz Ahmad visits City College Downtown to discuss expanding the partnership with The City College of New York, an MOU partner since April 2024."

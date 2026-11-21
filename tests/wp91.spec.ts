@@ -110,10 +110,12 @@ test.describe('WP91 A6: Governments ends What Happens Next with the first-step p
 });
 
 test.describe('WP91 A7: the Albania card carries PR-07 wording only (WP162: no figure at all)', () => {
-  test('the card reads its scope line with no figure, no Delivered tag and no completion claim', async ({ page }) => {
+  // WP166-C (R4-15): the Impact case cards carry no description line (the scope line this pinned is the case-study card's and page's; the program-record tiles above carry the results)
+  test('the card carries no scope line, no figure, no Delivered tag and no completion claim', async ({ page }) => {
     await open(page, 'impact/');
     const card = page.locator('#cases article', { hasText: 'Digital Jobs Albania' });
-    expect(compact(await card.locator('.card__text').textContent())).toBe(ALBANIA_SCOPE);
+    await expect(card.locator('.card__text')).toHaveCount(0);
+    expect(ALBANIA_SCOPE.length).toBeGreaterThan(0);
     await expect(card).not.toContainText(/500|enrolled|completed|Delivered/);
   });
   // WP162: this pinned PR-07's 500+ figure; PR-07 was removed from the register (owner decision 2026-11-03), so it now pins its absence.
@@ -163,7 +165,7 @@ test.describe('WP91 A11: On This Page lists the full headings', () => {
       'Four Kinds of Evidence, Strongest First',
       'Where We Are Heading',
       'Seven Global Goals, Three at the Core',
-      'Discuss the Evidence for Your Program',
+      'Talk to Us About a First Cohort', // WP166-C (R4-13)
     ]);
     for (const { label, id } of links) {
       expect(compact(await page.locator(`#${id} :is(h2, h3)`).first().textContent()), `the heading of #${id}`).toBe(label);

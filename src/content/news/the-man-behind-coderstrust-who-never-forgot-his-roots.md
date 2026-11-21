@@ -1,10 +1,10 @@
 ---
 title: "The Man Behind CodersTrust Who Never Forgot His Roots"
 date: 2026-08-04
-updated: 2026-11-02
+updated: 2026-11-21
 countToday: true
 topic: insights
-excerpt: "A profile of Co-Founder and Chairman Aziz Ahmad and his belief that success means changing lives."
+excerpt: "A video profile of Co-Founder and Chairman Aziz Ahmad: a simple life, a farm and a school initiative for underprivileged children in Bangladesh."
 cover: ../../assets/images/news/the-man-behind-coderstrust-who-never-forgot-his-roots/aziz-ahmad-farming.jpg
 coverAlt: "Aziz Ahmad, Co-Founder and Chairman of CodersTrust, working on his farm"
 legacyUrl: "https://coderstrust.global/the-man-behind-coderstrust-who-never-forgot-his-roots/"
@@ -38,7 +38,6 @@ His story is also a powerful reminder that patriotism extends beyond words. Even
 
 At a time when success is often associated with material wealth, Mr. Ahmad’s journey offers a refreshing perspective: real leadership is measured by service, real prosperity is created by empowering others and lasting success is defined by the positive impact we leave on society.
 
-Learn more about Bir Muktijoddha Ayub Ahmed Master Memorial Institute:
-[https://www.facebook.com/profile.php?id=61572984577021](https://www.facebook.com/profile.php?id=61572984577021)
+Learn more about the Bir Muktijoddha Ayub Ahmed Master Memorial Institute [on Facebook](https://www.facebook.com/profile.php?id=61572984577021).
 
 ![Aziz Ahmad smiling in a greenhouse full of flowering plants](../../assets/images/news/the-man-behind-coderstrust-who-never-forgot-his-roots/aziz-ahmad-greenhouse.jpg)

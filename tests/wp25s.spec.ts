@@ -14,12 +14,14 @@ const heroLead = (page: Page) => page.locator('main .hero .hero__lead').first().
 const compact = (t: string) => t.replace(/\s+/g, ' ').trim();
 
 test.describe('direct answers under the H1', () => {
-  test('/impact/ names its three kinds of proof in the lead under the H1, and the box below says what each shows', async ({ page }) => {
+  // WP166-C (R4-01): the In Short answer is the lead itself (the box and the inventory sentence are gone), still labeling each kind of evidence
+  test('/impact/ answers first in the lead under the H1, naming the trial and the survey as what they are', async ({ page }) => {
     await open(page, 'impact/');
-    expect(compact(await heroLead(page))).toBe('Program records from Kosovo and Bangladesh, an independent trial in Dhaka and a 2026 survey of completers. Each figure names its kind of evidence.');
-    const box = compact(await page.locator('#summary').innerText());
-    expect(box).toContain('A randomized trial of CodersTrust’s WSDFM program found that women offered a place');
-    expect(box).toContain('Among surveyed completers, employment was');
+    const lead = compact(await heroLead(page));
+    expect(lead).toContain('A randomized trial of CodersTrust’s WSDFM program found that women offered a place');
+    expect(lead).toContain('Among surveyed completers, employment was');
+    expect(lead.endsWith('Each figure names its kind of evidence.')).toBe(true);
+    await expect(page.locator('#summary')).toHaveCount(0);
   });
 
   for (const [route, needle] of [
@@ -44,9 +46,10 @@ test.describe('direct answers under the H1', () => {
 });
 
 test.describe('Impact', () => {
-  test('the WSDFM case study names CodersTrust’s WSDFM program in its H1', async ({ page }) => {
+  // WP166-C (R4-29): "Name: What, for Whom", as the other four case-study H1s (it was "CodersTrust’s WSDFM Program Evaluated by a Randomized Trial")
+  test('the WSDFM case study names the WSDFM program, its learners and its trial in its H1', async ({ page }) => {
     await open(page, 'impact/case-studies/wsdfm-women-freelancers/');
-    await expect(page.getByRole('heading', { level: 1 })).toHaveText('CodersTrust’s WSDFM Program Evaluated by a Randomized Trial');
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText('WSDFM: Freelancing Skills for Women, Evaluated by a Randomized Trial');
   });
 
   // WP55 (owner decision 2026-10-18): Digital Jobs Albania is the fifth case study; the two World Bank programs lead, then the three Bangladesh programs in their earlier order
@@ -78,13 +81,15 @@ test.describe('Impact', () => {
     await expect(page.getByRole('link', { name: /See Where These Results Sit on the Evidence Ladder/ })).toHaveCount(1);
   });
 
-  test('every case study closes with a labelled "Keep Reading" band, not a bare "All Case Studies" heading', async ({ page }) => {
+  // WP166-C (R4-11): the "Keep Reading" band is gone; its two links sit in the closing band, which says what to send
+  test('every case study closes with one band that carries the links, not a bare "All Case Studies" heading', async ({ page }) => {
     for (const slug of ['wsdfm-women-freelancers', 'kosovo-women-in-online-work', 'digital-jobs-albania', 'undp-yes-korail', 'her-power']) {
       await open(page, `impact/case-studies/${slug}/`);
-      const band = page.locator('section[aria-labelledby="related-h"]');
-      await expect(band.locator('.eyebrow')).toHaveText('Keep Reading');
-      await expect(band.getByRole('heading', { level: 2 })).toHaveText('Where the Model Runs Next');
+      await expect(page.locator('section[aria-labelledby="related-h"]')).toHaveCount(0);
+      const band = page.locator('#cta');
+      await expect(band.getByRole('heading', { level: 2 })).toHaveText('Talk to Us About a First Cohort');
       await expect(band.getByRole('link', { name: /Compare the Five Case Studies/ })).toHaveCount(1);
+      await expect(band.getByRole('link', { name: /See How YouthWIDE Deploys the Model/ })).toHaveCount(1);
       expect(await page.locator('main').innerText(), slug).not.toContain('All Case Studies');
     }
   });

@@ -231,7 +231,8 @@ test.describe('The contract-scope note says who trained whom, and Home’s slide
     // WP47 (cycle-22 review): the register’s GV-12 text now says "work scoped for" (it read "scopes covering"); tests/wp47.spec.ts pins the new sentence
     expect(fact('GV-12').text).toBe('Six government contracts with training and curriculum work scoped for 30,000+ people; official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners');
     await open(page, 'impact/');
-    expect(compact(await page.locator('#glance a[data-fact~="GV-12"] .glance__note').textContent())).toBe('The total is contract scope, not a count of completers; it includes Her Power’s national program, which trained 25,125 women (CodersTrust trained 2,400 directly). Her Power’s 25,125 is the same group counted in the 150,000+ enrollments through CodersTrust’s curriculum, not additional people.');
+    // WP166-C (R4-17, owner approval of 21 November 2026, item 5): the Impact tile prints the note's first sentence (the overlap sentence stays on Governments' contracts band and Investors)
+    expect(compact(await page.locator('#glance a[data-fact~="GV-12"] .glance__note').textContent())).toBe('The total is contract scope, not a count of completers; it includes Her Power’s national program, which trained 25,125 women (CodersTrust trained 2,400 directly).');
     expect(await page.locator('#glance a[data-fact~="GV-12"]').getAttribute('data-fact')).toContain('GV-11');
     await open(page, 'partner-with-us/governments/');
     expect(compact(await page.locator('#glance li', { hasText: '30,000+' }).locator('.pg__note').textContent())).toBe('The total is contract scope, not a count of completers; it includes Her Power’s national program, which trained 25,125 women (CodersTrust trained 2,400 directly).');

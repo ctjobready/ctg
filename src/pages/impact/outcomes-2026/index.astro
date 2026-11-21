@@ -59,17 +59,21 @@ const jsonLd = [
 
 // The discovery CTA is read above the list: a withheld call to action draws no closing band and so no entry. The band's heading is one constant for the entry and the band.
 const d = discoveryCta();
-const CLOSING_HEADING = 'Discuss the Evidence for Your Program';
-// Each label is the section's heading, word for word.
+// WP166-C (R4-13): the closing band is headed as on the other Impact pages (it said "Discuss the Evidence for Your Program").
+const CLOSING_HEADING = 'Talk to Us About a First Cohort';
+// WP166-C (R4-21, not applied): the reviewer's heading "Most Surveyed New Earners Started Earning Within Six Months" says "within", which WP48 (item 32) retired on the site (OC-05 counts from the end of the course and includes
+// earnings during it: "had started earning by six months after finishing the course"), and any heading with "surveyed new earners" puts the term in the On This Page list before the band defines it (WP147). The heading stays.
+const SPEED_HEADING = 'How Fast Earnings Started';
+// Each label is the section's heading, word for word. WP166-C (R4-20): "Who Responded" sits directly above "How to Read This Survey", after the results.
 const toc = [
   { id: 'summary', label: 'Results in Brief' },
-  { id: 'respondents', label: 'Who Responded' },
   { id: 'employment', label: 'Employment Before and After Training' },
-  { id: 'speed', label: 'How Fast Earnings Started' },
+  { id: 'speed', label: SPEED_HEADING },
   { id: 'income', label: 'Income Higher for Most Surveyed Completers' },
   { id: 'careers', label: 'Careers and New Income Sources' },
   { id: 'income-source', label: 'Where Income Comes From' },
   { id: 'experience', label: 'How Learners Rate the Experience' },
+  { id: 'respondents', label: 'Who Responded' },
   { id: 'methodology', label: 'How to Read This Survey' },
   { id: 'download', label: 'Download the Data' },
   // WP135 (Opus High run 10, Polish 2): the list ends with the closing band's heading, as Impact's and About's do.
@@ -94,7 +98,9 @@ const after = emp.numeric!;
 const typeRows = D.EMPLOYMENT_TYPES.map((t) => ({ label: t.label, before: t.before, after: t.after }));
 // WP22: the direct answer under the H1 (40 to 60 words), read from OC-01 and OC-03: employment, income, and what the survey does not show.
 const oc03 = fact('OC-03').stat!;
-const directAnswer = `Among surveyed completers, employment rose from ${emp.from} before training to ${emp.value} at the October 2026 survey, and median monthly income rose from ${oc03.from} to ${oc03.value}. These are what respondents report: the survey describes outcomes among alumni who answered, and it does not show that training caused the change.`;
+// WP166-C (R4-19): the second sentence is the limit in fewer words (it read "These are what respondents report: the survey describes outcomes among alumni who answered, and it does not show that training caused the change."); ", and" in place of
+// the reviewer's semicolon keeps the answer at 40 words and the settled phrase "does not show that training caused the change" (tests/wp35.spec.ts).
+const directAnswer = `Among surveyed completers, employment rose from ${emp.from} before training to ${emp.value} at the October 2026 survey, and median monthly income rose from ${oc03.from} to ${oc03.value}. Respondents report these outcomes, and the survey does not show that training caused the change.`;
 const answerWords = directAnswer.split(/\s+/).length;
 if (answerWords < 40 || answerWords > 60) throw new Error(`Outcomes 2026 direct answer is ${answerWords} words (40 to 60)`);
 // WP147 (Opus XHigh run 1, Polish): Results in Brief comes before "How Fast Earnings Started", the one place that defines "surveyed new earners", so the Speed to Earning tile says the group in plain words (OC-05's own phrase for it, below).
@@ -105,13 +111,10 @@ const oc05Label = fact('OC-05').stat!.label;
 if (!oc05Label.includes(NEW_EARNERS_TERM) || !fact('OC-05').text.includes(NEW_EARNERS_PLAIN)) throw new Error('Outcomes 2026: OC-05 no longer says "surveyed new earners" in its label and the plain phrase in its text; update the Speed to Earning tile');
 const speedTileLabel = oc05Label.replace(NEW_EARNERS_TERM, NEW_EARNERS_PLAIN);
 // How to read this survey (closed disclosure): the former evidence-ladder rung and the methodology list.
-// WP61 (cycle-33 review, GLM L4): the line names who answered by gender as well as education: "85.0% of respondents hold a bachelor’s degree or higher and 19.6% are women, so results describe a mostly graduate, majority-male group." Both figures are OC-09's,
-// the 85.0% as its stat value and the 19.6% read from its text ("... 19.6% women ..."), never retyped; the build stops if OC-09 stops stating the share of women.
-const womenShare = /(\d+(?:\.\d+)?)% women/.exec(fact('OC-09').text)?.[1];
-if (!womenShare) throw new Error('OC-09 no longer states the share of women respondents ("N% women")');
+// WP61 (cycle-33 review, GLM L4) had a "Who the respondents are" item here ("85.0% of respondents hold a bachelor’s degree or higher and 19.6% are women, so results describe a mostly graduate, majority-male group.").
+// WP166-C (R4-20, owner approval of 21 November 2026, item 5): that item is cut; the respondent profile (OC-09, with its 19.6% women) is stated once, in "Who Responded", directly above this disclosure.
 const howToRead = `<ul>
 <li><strong>Survey.</strong> Impact Survey 2026: an online alumni survey, fielded in October 2026.</li>
-<li data-fact="OC-09"><strong>Who the respondents are.</strong> ${val('OC-09')} of respondents hold a bachelor’s degree or higher and ${womenShare}% are women, so results describe a mostly graduate, majority-male group.</li>
 <li><strong>What it does not show.</strong> Respondents are not a random sample and may over-represent successful learners, so the survey does not show that training caused any change.</li>
 </ul>`;
 ---
@@ -129,6 +132,8 @@ const howToRead = `<ul>
   breadcrumbs={[{ label: 'Impact', href: '/impact/' }, { label: 'Impact Survey 2026' }]}
   jsonLd={jsonLd}
 >
+  {/* WP166-C (R4-14): one text link from the hero to the closing band; a withheld call to action draws no band and so no link. */}
+  {d.href && <Fragment slot="actions"><a class="link" href="#cta">{CLOSING_HEADING}<Icon name="arrow-right" size={16} /></a></Fragment>}
   <ReportSection id="summary" title="Results in Brief">
     <p class="ro__type"><EvidenceTag type="Surveyed Completers" /></p>
     <h3 class="t-heading-l ro__group">Earnings and Work</h3>
@@ -151,16 +156,6 @@ const howToRead = `<ul>
     </div>
   </ReportSection>
 
-  <ReportSection id="respondents" title="Who Responded">
-    <p data-fact="OC-01 OC-09">Nearly half of surveyed completers were employed before training ({val('OC-01', 'from')}). <Fact id="OC-09" /></p>
-    <p>Employment results rest on n = {D.EMPLOYMENT_BASE} paired answers and income results on n = {D.INCOME_BASE}.</p>
-    <BarChart
-      title="Respondents by Highest Education"
-      items={education}
-      max={100}
-    />
-  </ReportSection>
-
   <ReportSection id="employment" title="Employment Before and After Training">
     <p data-fact="OC-01">{val('OC-01')} of surveyed completers reported being employed at the October 2026 survey, compared with {val('OC-01', 'from')} before training. Separately, {D.EXIT.share}% of those employed before training reported that they were no longer employed.</p>
     <BeforeAfter
@@ -178,7 +173,7 @@ const howToRead = `<ul>
     />
   </ReportSection>
 
-  <ReportSection id="speed" title="How Fast Earnings Started">
+  <ReportSection id="speed" title={SPEED_HEADING}>
     {/* WP49 (cycle-24 review): the OC-05 labels on this page and on Impact say "surveyed new earners" (the register's term for this group); this sentence defines it once, in the words of the register's text below it.
         WP136 (Opus High run 11, Polish): the next sentence then uses the term instead of spelling the definition out again; the register's text (and the Home slide built from it) is unchanged, and the build stops if it stops holding the phrase. */}
     <p>Surveyed new earners are the completers who first earned during or after training.</p>
@@ -220,6 +215,17 @@ const howToRead = `<ul>
       title="Recommendation Score, 0 to 10, Among Surveyed Completers"
       items={recItems}
       emphasisNote={`Scores of 7 or higher: ${sevenUp}%`}
+    />
+  </ReportSection>
+
+  {/* WP166-C (R4-20): "Who Responded" follows the results and sits directly above "How to Read This Survey"; the sentence "Nearly half of surveyed completers were employed before training (48.0%)." (the page's fourth 48.0%) is cut. */}
+  <ReportSection id="respondents" title="Who Responded">
+    <p data-fact="OC-09"><Fact id="OC-09" /></p>
+    <p>Employment results rest on n = {D.EMPLOYMENT_BASE} paired answers and income results on n = {D.INCOME_BASE}.</p>
+    <BarChart
+      title="Respondents by Highest Education"
+      items={education}
+      max={100}
     />
   </ReportSection>
 

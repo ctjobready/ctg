@@ -33,6 +33,8 @@ const { eyebrow, heading, lead, toc = [], updated, snapshot, ...base } = Astro.p
       {eyebrow && <p class="eyebrow">{eyebrow}</p>}
       <h1 class="t-display-4xl">{heading ?? base.title}</h1>
       {lead && <p class="lead">{lead}</p>}
+      {/* WP166-C (R4-14): an optional action under the lead (the Trial and Survey pages: a text link to their closing band); pages without it are unchanged. */}
+      {Astro.slots.has('actions') && <p><slot name="actions" /></p>}
       {
         updated && (
           <p class="lf-updated">

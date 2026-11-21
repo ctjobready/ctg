@@ -1,14 +1,14 @@
 ---
-title: "CodersTrust Bangladesh and Ostitto Join Forces to Bridge the Digital Divide"
+title: "CodersTrust Bangladesh and Ostitto Sign MOU on ICT Training for the Third-Gender Community"
 date: 2023-11-07
-updated: 2026-11-03
+updated: 2026-11-21
 topic: partnerships
-excerpt: "CodersTrust Bangladesh signs an MOU with Ostitto Bangladesh, a non-profit serving the third gender community, to bridge the digital divide."
+excerpt: "CodersTrust Bangladesh signs an MOU with Ostitto Bangladesh to bring ICT literacy training to the third-gender community, with five places in each batch."
 cover: ../../assets/images/news/coderstrust-bangladesh-and-ostitto-join-forces-to-bridge-the-digital-divide/mou-with-ostitto-and-ct-1.jpg
 coverAlt: "CodersTrust Bangladesh and Ostitto Bangladesh representatives at the MOU signing"
 legacyUrl: "https://coderstrust.global/coderstrust-bangladesh-and-ostitto-join-forces-to-bridge-the-digital-divide/"
 tags: ["Latest News", "YouthWIDE", "News and Events", "Third-gender Training"]
-seoTitle: "Ostitto MOU to Bridge the Digital Divide"
+seoTitle: "ICT Training for the Third-Gender Community"
 ---
 
 Dhaka, Bangladesh

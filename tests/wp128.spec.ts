@@ -284,7 +284,7 @@ test.describe('WP128 item 8: every learner-story headline ends with a period', (
     ['partner-with-us/universities/index.html', 'Won a company logo design on Freelancer.com, then more clients.'],
     ['impact/stories/index.html', 'Works as a digital designer.'],
     ['impact/stories/index.html', 'Works as a freelance graphic designer.'],
-    ['impact/index.html', 'Secured a first freelance job after the Graphic Designing course, followed by a job offer.'],
+    ['impact/index.html', 'She landed a full-time online contract with a U.S.-based startup and was earning more than Kosovo’s average wage at the time.'], // WP166-C (R4-16): the hub's story is ST-05 (it was Adrian Afraham's)
   ];
   for (const [route, h] of PINNED) {
     test(`${route.replace(/index\.html$/, '') || '/'} shows the headline "${h.slice(0, 60)}"`, () => {

@@ -326,7 +326,7 @@ test.describe('P2, "As covered by" is two short sentences with every link kept, 
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 test.describe('K1, Impact: "On This Page" ends on the closing band', () => {
-  const CLOSING = 'Discuss the Evidence for Your Program';
+  const CLOSING = 'Talk to Us About a First Cohort'; // WP166-C (R4-13): the closing heading of the other Impact pages (it was "Discuss the Evidence for Your Program")
 
   test('the last entry is the closing band’s heading in Title Case, linking its anchor (#cta), after the goals entry; the entries before it are unchanged and in page order', async ({ page }) => {
     await open(page, IMPACT);
@@ -489,11 +489,12 @@ test.describe('GM4, Kosovo: Home’s "Proof in Practice" card shows both figures
 test.describe('R1, Global Reach: "Where We Have Worked: 16 Countries and Territories", and Denmark says when the launch was', () => {
   const GLOBAL_REACH = 'impact/global-reach/';
 
-  test('the H1 is "Where We Have Worked: 16 Countries and Territories" in Title Case; the lead is SC-03’s sentence; the title and description keep their limits and the same count', async ({ page }) => {
+  // WP166-C (R4-31): the lead names the partners (it was SC-03's sentence, which repeated the H1)
+  test('the H1 is "Where We Have Worked: 16 Countries and Territories" in Title Case; the lead names the partners; the title and description keep their limits and the same count', async ({ page }) => {
     await open(page, GLOBAL_REACH);
     await expect(page.locator('main h1')).toHaveText('Where We Have Worked: 16 Countries and Territories');
     expect('Where We Have Worked: 16 Countries and Territories').toBe(titleCase('Where We Have Worked: 16 Countries and Territories'));
-    expect(compact(await page.locator('main .hero__lead').first().textContent())).toBe(`${fact('SC-03').text}.`);
+    expect(compact(await page.locator('main .hero__lead').first().textContent())).toBe('Across Asia, Africa, Europe and the Americas, with partners including the World Bank, the World Food Programme and SOS Children’s Villages. In Bangladesh since 2014.');
     // the page title cannot carry the H1 (its words and " | CodersTrust" are 64 characters; the limit is 60), so it keeps "Global Reach: 16 Countries and Territories"
     const title = await page.title();
     expect(title).toBe('Global Reach: 16 Countries and Territories | CodersTrust');

@@ -57,7 +57,8 @@ const news = defineCollection({
       seoTitle: z.string().max(46).optional(),
       /**
        * Optional one-line note for the archive banner (WP45, cycle-21 review): what a post that announced an aim stands as now, in the register's words ("Delivered: the national program trained 25,125 women, its full target."; WP83, owner answer 2026-10-23, had it as "Target: Her Power is a national program to train 25,125 women."; WP85, owner update 2026-10-24: the government achieved 100% of the target, so it is "Delivered" again). It is printed on its own
-       * line under the banner's standard sentences; `archiveNoteFacts` names the register facts it states (rendered as data-fact).
+       * line directly under the H1 (WP166-C, R5-08; it was the banner's last line), and also carries a contract's scope where the delivery status is not in the register (WP166-C, R5-10: EDGE and SKIT);
+       * `archiveNoteFacts` names the register facts it states (rendered as data-fact).
        */
       archiveNote: z.string().max(120).optional(),
       archiveNoteFacts: z.array(z.string()).default([]),

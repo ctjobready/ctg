@@ -111,8 +111,9 @@ test.describe('WP111 item 5: Universities "Expansion Is Your Decision" card', ()
 test.describe('WP111 item 6: Gardiner news item H1', () => {
   const page = () => distHtml('news/gardinar-emphasizes-skill-development-and-access-for-bangladeshis-to-us-digital-platform/index.html');
 
-  test('the H1 reads "Gardiner Emphasizes Skill Development and Access to U.S. Digital Platforms for Bangladesh"', () => {
-    expect(h1(page())).toBe('Gardiner Emphasizes Skill Development and Access to U.S. Digital Platforms for Bangladesh');
+  // WP166-C (R6-20): the headline leads with the office, not a surname the reader does not know (it was "Gardiner Emphasizes Skill Development and Access to U.S. Digital Platforms for Bangladesh")
+  test('the H1 reads "U.S. Embassy Economic Officer Highlights Skills and Access to U.S. Digital Platforms at CodersTrust Ceremony"', () => {
+    expect(h1(page())).toBe('U.S. Embassy Economic Officer Highlights Skills and Access to U.S. Digital Platforms at CodersTrust Ceremony');
   });
 
   test('the old H1 is gone and the page title stays within 60 characters', () => {

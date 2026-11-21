@@ -116,12 +116,12 @@ test.describe('WP109 item 9: dates on the changed pages', () => {
       'coderstrust-bangladesh-partners-with-us-based-remoteintegrity-llc-to-expand-global-career-opportunities',
       'gardinar-emphasizes-skill-development-and-access-for-bangladeshis-to-us-digital-platform',
     ]) {
-      expect(readFileSync(`src/content/news/${slug}.md`, 'utf8'), slug).toMatch(/^updated: 2026-10-30$/m);
+      expect(readFileSync(`src/content/news/${slug}.md`, 'utf8'), slug).toMatch(/^updated: 2026-11-21$/m); // WP166-C re-dated every post
     }
   });
   test('Recognition (2026-11-02 since WP161-B; 2026-11-01 since WP141), Fahim Sheikh and the outcomes page are dated', () => {
-    expect(distHtml('about/recognition/index.html')).toMatch(/"dateModified":"2026-11-21"/); // WP161-B: the Morten Lund note and the World Bank pages heading changed; WP166-A (2026-11-21): the lead, the section order and the press band
+    expect(distHtml('about/recognition/index.html')).toMatch(/"dateModified":"2026-11-21"/); // WP161-B: the Morten Lund note and the World Bank pages heading changed; WP166-A (2026-11-21): the lead, the section order and the press band WP166-C: three forum headlines read from News (2026-11-21)
     expect(distHtml('about/team/fahim-sheikh/index.html')).toMatch(/"dateModified":"2026-10-31"/);
-    expect(distHtml('impact/outcomes-2026/index.html')).toContain('2026-11-03'); // WP161-A: 2026-11-03 (the rounding sentence, A-06). WP135: re-dated from 2026-10-29 (the closing line and "On This Page" changed); WP147: 2026-11-01 (the method line and the Speed to Earning tile changed)
+    expect(distHtml('impact/outcomes-2026/index.html')).toContain('2026-11-21'); // WP166-C: 2026-11-21. WP161-A: 2026-11-03 (the rounding sentence, A-06). WP135: re-dated from 2026-10-29 (the closing line and "On This Page" changed); WP147: 2026-11-01 (the method line and the Speed to Earning tile changed)
   });
 });

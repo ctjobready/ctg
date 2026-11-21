@@ -1,7 +1,7 @@
 ---
 title: "CodersTrust Visits the BIMSTEC Secretariat to Discuss Science, Technology and Innovation Cooperation"
 date: 2023-03-21
-updated: 2026-10-30
+updated: 2026-11-21
 topic: leadership-advocacy
 excerpt: "A CodersTrust delegation visits the BIMSTEC Secretariat in Dhaka to discuss cooperation in science, technology and innovation."
 cover: ../../assets/images/news/coderstrust-visited-bimstec-headquarter/coderstrust-at-bimstec.jpg

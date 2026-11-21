@@ -477,7 +477,8 @@ test.describe('Governments: the empathy line and the glance tile (items 14 and 1
     expect(contracts).toContain('The national program trained 25,125 women across 130 sub-districts (upazilas), meeting its target.');
     expect(await page.evaluate(() => Boolean(document.getElementById('glance')!.compareDocumentPosition(document.getElementById('contracts')!) & Node.DOCUMENT_POSITION_FOLLOWING))).toBe(true);
     await open(page, 'impact/');
-    expect(compact(await page.locator('#glance a[data-fact~="GV-12"] .glance__note').textContent())).toBe('The total is contract scope, not a count of completers; it includes Her Power’s national program, which trained 25,125 women (CodersTrust trained 2,400 directly). Her Power’s 25,125 is the same group counted in the 150,000+ enrollments through CodersTrust’s curriculum, not additional people.');
+    // WP166-C (R4-17, owner approval of 21 November 2026, item 5): Impact prints the same first sentence as Governments now (the overlap sentence was cut there)
+    expect(compact(await page.locator('#glance a[data-fact~="GV-12"] .glance__note').textContent())).toBe('The total is contract scope, not a count of completers; it includes Her Power’s national program, which trained 25,125 women (CodersTrust trained 2,400 directly).');
   });
 });
 

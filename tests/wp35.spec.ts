@@ -28,7 +28,7 @@ test.describe('Impact overview: Results at a Glance and the jump list', () => {
     const group = page.locator('#glance .glance__group', { has: page.getByRole('heading', { level: 3, name: 'Trial Results, CodersTrust’s WSDFM Program' }) });
     await expect(group.locator('li')).toHaveCount(1);
     const tile = group.locator('li a');
-    expect(await tile.getAttribute('data-fact')).toBe('RC-02');
+    expect(await tile.getAttribute('data-fact')).toBe('RC-02 RC-06a'); // WP166-C (R4-04): the tile's note is RC-06a's benchmark ("More than four times the 2.3-point average …"), as on Development Partners
     await expect(tile).toContainText('+10.3 percentage points');
     await expect(tile).toContainText('more employment for women offered a place (randomized trial of CodersTrust’s WSDFM program)');
     await expect(tile.locator('[data-evidence="Randomized Trial"]')).toHaveCount(1);
@@ -50,7 +50,7 @@ test.describe('Impact overview: Results at a Glance and the jump list', () => {
     expect(await mainText(page)).not.toContain('Go Deeper');
     // WP42 (cycle-19 review): the goals entry is the full heading ("Seven Global Goals, Three at the Core"), which says which goals are the focus
     // WP57 (cycle-29 review, Kimi K3, item K1): the closing band is the last entry (tests/wp57.spec.ts)
-    expect(await texts(page, 'nav[aria-label="On this page"] a')).toEqual(['Results at a Glance', 'Five Programs Across Kosovo, Albania and Bangladesh', 'Four Kinds of Evidence, Strongest First', 'Where We Are Heading', 'Seven Global Goals, Three at the Core', 'Discuss the Evidence for Your Program']);
+    expect(await texts(page, 'nav[aria-label="On this page"] a')).toEqual(['Results at a Glance', 'Five Programs Across Kosovo, Albania and Bangladesh', 'Four Kinds of Evidence, Strongest First', 'Where We Are Heading', 'Seven Global Goals, Three at the Core', 'Talk to Us About a First Cohort']); // WP166-C (R4-13): the closing heading of the other Impact pages
     expect(compact(await page.locator('#sdg').textContent())).toContain('CodersTrust’s training-to-employment model aligns with seven SDGs. At its core are SDG 4 (Quality Education), SDG 5 (Gender Equality) and SDG 8 (Decent Work and Economic Growth)');
     // the band order keeps its rhythm: no two dark bands in a row
     const dark = await page.evaluate(() => Array.from(document.querySelectorAll('main .band')).map((b) => /band--(klein|deep-ink)/.test(b.className)));
@@ -80,7 +80,8 @@ test.describe('Impact overview: Results at a Glance and the jump list', () => {
     // WP57 (cycle-29 review, Grok R2 with Gemini GM1): the Governments tile prints the note's WP35 wording, which names Her Power's national program (25,125 women trained; CodersTrust trained 2,500 directly)
     const GOV_NOTE = 'The total is contract scope, not a count of completers; it includes Her Power’s national program, which trained 25,125 women (CodersTrust trained 2,400 directly).';
     await open(page, 'impact/');
-    await expect(page.locator('#glance a[data-fact~="GV-12"] .glance__note')).toHaveText('The total is contract scope, not a count of completers; it includes Her Power’s national program, which trained 25,125 women (CodersTrust trained 2,400 directly). Her Power’s 25,125 is the same group counted in the 150,000+ enrollments through CodersTrust’s curriculum, not additional people.');
+    // WP166-C (R4-17, owner approval of 21 November 2026, item 5): Impact prints the note's first sentence, as Governments does; the overlap sentence stays on Governments' contracts band and Investors
+    await expect(page.locator('#glance a[data-fact~="GV-12"] .glance__note')).toHaveText(GOV_NOTE);
     await open(page, 'partner-with-us/governments/');
     await expect(page.locator('#glance li', { hasText: '30,000+' }).locator('.pg__note')).toHaveText(GOV_NOTE);
     expect(await mainText(page)).not.toMatch(/delivered-training total|Includes Her Power’s 25,125 women/);

@@ -379,7 +379,7 @@ test.describe('one title pattern: "{Page} | CodersTrust", with Home’s brand-fo
     // WP61 (cycle-33 review, Kimi K2): "About | CodersTrust" (it was "About Us | CodersTrust", which broke the "{Page} | CodersTrust" pattern); WP166-A: "About: A Global Workforce Organization | CodersTrust"
     expect(byRoute.get('/about/')).toBe('About: A Global Workforce Organization | CodersTrust');
     expect(byRoute.get('/about/team/shamsul-haque/')).toBe('Md. Shamsul Haque, CEO, CodersTrust Bangladesh | CodersTrust');
-    expect(byRoute.get('/news/a-proud-milestone-for-coderstrust/')).toBe('A Proud Milestone for CodersTrust! | CodersTrust');
+    expect(byRoute.get('/news/a-proud-milestone-for-coderstrust/')).toBe('U.S. Embassy Treasure Hunt Draws 1,400+ Users | CodersTrust'); // WP166-C (R5-04): the title names the partner and the result; it keeps the suffix
   });
 
   test('the social titles match the page title on those pages', async ({ page }) => {

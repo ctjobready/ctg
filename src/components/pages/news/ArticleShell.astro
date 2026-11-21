@@ -9,7 +9,7 @@ import { absoluteUrl, canonicalUrl, linkAttrs, url } from '../../../lib/url';
 import { ctaHref } from '../../../lib/mailto';
 import { CTAS } from '../../../data/ctas';
 import EmailFallback from '../../ui/EmailFallback.astro';
-import { NEWS_CTA, type NewsAudience } from './news';
+import { NEWS_CTA, isCurrentNews, type NewsAudience } from './news';
 
 /**
  * T6 news article shell. Like the shared ArticleLayout, but with a separate <title> (kept within 60
@@ -43,17 +43,24 @@ interface Props {
   audience?: NewsAudience;
   /** WP119: the post was written in October 2026 from dated sources (front matter `writtenFromSources`); the banner then gives its own note and the event date instead of the archive sentences. */
   writtenFromSources?: boolean;
-  /** WP126 (front matter `countToday`): the body gives today's country count ("16 countries and territories"), so the banner adds "The country count is today’s." after the Impact-pages sentence. */
+  /** WP126 (front matter `countToday`): the body gives today's country count ("16 countries and territories"), so the banner adds "The country count is today’s." after the Impact-pages sentence (WP166-C: on a post dated before 2026, the only posts whose banner keeps that note). */
   countToday?: boolean;
-  /** One line under the banner's standard sentences (front matter `archiveNote`): what an announced aim ended up as, in the register's words. */
+  /** One line directly under the H1 (front matter `archiveNote`; WP166-C moved it out of the banner): what an announced aim ended up as, in the register's words, or a contract's scope. */
   archiveNote?: string;
   /** Register facts the note states (front matter `archiveNoteFacts`), rendered as data-fact. */
   archiveNoteFacts?: string[];
   /** A text link that closes the note (front matter `archiveNoteLink`): the page that now tells the story, e.g. its case study (WP46). */
   archiveNoteLink?: { label: string; href: string };
+  /** WP166-C (R5-08, R6-25 to R6-28): the closing band's text link when the story has a better next page than the audience's default offer (newsOffer). */
+  offer?: { label: string; href: string };
 }
-const { headline, seoTitle, description, path, date, publishedOn, updated, topic, image, imageAlt, imageAsset, heroCaption, audience = 'general', writtenFromSources = false, countToday = false, archiveNote, archiveNoteFacts = [], archiveNoteLink } = Astro.props;
-const closing = NEWS_CTA[audience];
+const { headline, seoTitle, description, path, date, publishedOn, updated, topic, image, imageAlt, imageAsset, heroCaption, audience = 'general', writtenFromSources = false, countToday = false, archiveNote, archiveNoteFacts = [], archiveNoteLink, offer } = Astro.props;
+const closing = { ...NEWS_CTA[audience], offer: offer ?? NEWS_CTA[audience].offer };
+// WP166-C (owner approval of 21 November 2026, "Archive label: narrow and shorten"): a post dated 2026 or later shows the date line alone; an older post shows the
+// date line first, then one shorter note with the same meaning (it said "Archived post, lightly edited. Figures, job titles and references to officeholders reflect
+// the date of publication; current figures are on the Impact pages."): "Lightly edited. Titles, offices and figures are as of publication; current figures are on the Impact pages." (R5-05's wording, with its ", and" a semicolon
+// as in the old note, so the clause pair is not read as a serial comma). The written-from-sources note is unchanged.
+const current = isCurrentNews(date);
 const closingHref = ctaHref(closing.cta);
 const canonical = canonicalUrl(path);
 const published = (publishedOn ?? date).toISOString();
@@ -100,6 +107,8 @@ const share = {
         <Badge tone="brand">{topic}</Badge>
       </p>
       <h1 class="t-display-4xl">{headline}</h1>
+      {/* WP166-C (R5-08, R5-10): the post's own note (what an announced aim became, or the contract's scope) is a line of its own directly under the H1, not the tail of the date note. */}
+      {archiveNote && <p class="art__note" data-fact={archiveNoteFacts.length ? archiveNoteFacts.join(' ') : undefined}><strong>{archiveNote}</strong>{archiveNoteLink && <>{' '}<a class="link" href={url(archiveNoteLink.href)}>{archiveNoteLink.label}</a></>}</p>}
     </header>
     <p class="archive-banner" role="note">
       <Icon name="calendar" size={18} />
@@ -109,11 +118,8 @@ const share = {
         </span>
       ) : (
         <span>
-          Archived post, lightly edited. Figures, job titles and references to officeholders reflect the date of publication; current figures are on the{' '}
-          <a class="link" href={url('/impact/')}>Impact pages</a>.
-          {countToday && ' The country count is today’s.'}
-          {' '}Published <time datetime={isoDate(date)}>{formatDate(date)}</time>{updated && <>; updated <time datetime={isoDate(updated)}>{formatDate(updated)}</time></>}.
-          {archiveNote && <span class="archive-banner__note" data-fact={archiveNoteFacts.length ? archiveNoteFacts.join(' ') : undefined}>{archiveNote}{archiveNoteLink && <>{' '}<a class="link" href={url(archiveNoteLink.href)}>{archiveNoteLink.label}</a></>}</span>}
+          Published <time datetime={isoDate(date)}>{formatDate(date)}</time>{updated && <>; updated <time datetime={isoDate(updated)}>{formatDate(updated)}</time></>}.
+          {!current && <>{' '}Lightly edited. Titles, offices and figures are as of publication; current figures are on the{' '}<a class="link" href={url('/impact/')}>Impact pages</a>.{countToday && ' The country count is today’s.'}</>}
         </span>
       )}
     </p>
@@ -198,10 +204,8 @@ const share = {
     flex: none;
     margin-top: var(--space-xs);
   }
-  /* the post's own note (front matter archiveNote): a line of its own under the standard sentences */
-  .archive-banner__note {
-    display: block;
-    margin-top: var(--space-xs);
+  /* the post's own note (front matter archiveNote): a line of its own under the H1 (WP166-C; it was the bold last line of the banner) */
+  .art__note strong {
     font-weight: var(--fw-bold);
   }
   .art__hero {

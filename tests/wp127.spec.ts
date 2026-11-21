@@ -81,6 +81,7 @@ const ALLOWED: { has: string; why: string }[] = [
   { has: 'job postings requiring AI skills grew 69% vs. 9% for all postings, and workers with AI skills', why: 'two clauses joined' },
   // WP166-A (marketing review R1-39): the Recognition lede's second sentence ("Its Co-Founder and Chairman, Aziz Ahmad, has received appointments and honors, and ...") is replaced, so its entry is gone
   { has: 'fell 21% relative to manual-intensive jobs, and image-creation postings fell 17%', why: 'two clauses joined' },
+  { has: '(food spending 48% higher), and fewer took out loans', why: 'register text RC-14, verbatim (WP166-C): the comma closes a parenthetical clause before a second clause' },
   // WP165: an essay title is the author's; it appears as the H1, the JSON-LD headline, the breadcrumb, the cards and llms.txt (the essay text itself is left out of the scan).
   // The entry applies while that essay is built: it is a draft until Aziz Ahmad approves it (WP165 follow-up), and the stale-entry check would otherwise fail.
   ...(existsSync(join(DIST_DIR, 'blog', 'the-father-the-godfather-and-the-jobs-of-our-children', 'index.html'))

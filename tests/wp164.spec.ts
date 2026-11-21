@@ -229,14 +229,15 @@ test.describe('The Digital Jobs Albania case study', () => {
     expect(text).not.toMatch(/[$€£]\s?\d|\bUSD\b|\bEUR\b|150,000/);
     expect(text).not.toMatch(/5,000\+?|500\+|expressed interest|enrolled/);
   });
-  test('the meta description and the Article description say 2021–2022, begun by CodersTrust and completed by Learnio; the Article is dated 2026-11-03', () => {
+  // WP166-C moved the page on to 2026-11-21 (its subline, solution lead and closing band), so the date pin is "this day or later".
+  test('the meta description and the Article description say 2021–2022, begun by CodersTrust and completed by Learnio; the Article is dated 2026-11-03 or later', () => {
     expect(metaDescription(ALBANIA)).toBe(META);
     expect(META.length).toBeLessThanOrEqual(155);
     const article = nodeOf(ALBANIA, 'Article');
     expect(article.description).toBe(META);
     expect(article.datePublished).toBe('2026-10-08');
-    expect(article.dateModified).toBe(TODAY);
-    expect(CASE_STUDIES.find((c) => c.slug === 'digital-jobs-albania')?.dateModified).toBe(TODAY);
+    expect(String(article.dateModified) >= TODAY).toBe(true);
+    expect(String(CASE_STUDIES.find((c) => c.slug === 'digital-jobs-albania')?.dateModified) >= TODAY).toBe(true);
   });
   test('in the browser: the hero tile reads 100+, "Jump to the Results" lands on the two figures, and the EuroPartners link is named for screen readers', async ({ page }) => {
     await open(page, 'impact/case-studies/digital-jobs-albania/');
@@ -273,10 +274,10 @@ test.describe('The case-study hub and the Impact page', () => {
       expect(c).toContain('data-status="Delivered"');
       expect(c).toContain('data-evidence="Program Record"');
     }
-    expect(/<div class="grid-cards[^"]*" data-fact="([^"]*)"/.exec(html(HUB))?.[1]).toBe('PR-02 PR-09 PR-01 PR-03 PR-05 PR-02b');
+    expect(/<div class="grid-cards[^"]*" data-fact="([^"]*)"/.exec(html(HUB))?.[1]).toBe('PR-02 PR-09 PR-01 PR-03 PR-05 RC-02 PR-02b'); // WP166-C (R4-06): the WSDFM card also shows the trial figure (RC-02)
   });
   test('hub: the lead and the description say "each with its figure and its base" again (WP162 had "with the figures and bases where they exist")', () => {
-    expect(visible(/<p class="hero__lead"[^>]*>[\s\S]*?<\/p>/.exec(mainRaw(HUB))?.[0] ?? '')).toBe('Five programs, each with its figure and its base.');
+    expect(visible(/<p class="hero__lead"[^>]*>[\s\S]*?<\/p>/.exec(mainRaw(HUB))?.[0] ?? '')).toBe('With the World Bank, UNDP, Porticus and the Government of Bangladesh. Each program shows its figure and its base.'); // WP166-C (R4-07): the lead names the partners, with "figure" and "base" kept
     const d = 'Five CodersTrust case studies, each with its figure and its base: Women in Online Work, Digital Jobs Albania, WSDFM, UNDP YES and Her Power.';
     expect(metaDescription(HUB)).toBe(d);
     for (const type of ['CollectionPage', 'Article']) expect(nodeOf(HUB, type).description, type).toBe(d);
@@ -292,10 +293,11 @@ test.describe('The case-study hub and the Impact page', () => {
     await expect(dja.locator('.case__value')).toHaveText('100+');
     await expect(dja.locator('.status-tag, .evidence-tag')).toHaveCount(0);
   });
-  test('Impact: the Albania card reads "…; Albania, 2021–2022" and its scope line is unchanged (the Impact cards carry no figure)', () => {
+  // WP166-C (R4-15): the Impact case cards are a partner strip, with no description line
+  test('Impact: the Albania card reads "…; Albania, 2021–2022" (the Impact cards carry no figure and, since WP166-C, no scope line)', () => {
     const card = /<article class="card card--link"[^>]*>(?:(?!<\/article>)[\s\S])*?Digital Jobs Albania[\s\S]*?<\/article>/.exec(byId(IMPACT, 'section', 'cases'))?.[0] ?? '';
     expect(visible(card)).toBe(
-      `World Bank, with the Government of Albania and EuroPartners Development; Albania, ${RANGE} Digital Jobs Albania Three-month online training in graphic design, web development and digital marketing, with mentoring. Read the Case Study`,
+      `World Bank, with the Government of Albania and EuroPartners Development; Albania, ${RANGE} Digital Jobs Albania Read the Case Study`,
     );
   });
 });
@@ -337,10 +339,9 @@ test.describe(`Dates: every page whose visible text changed in WP164 is dated ${
     [REACH, 'Article'],
     [ABOUT, 'AboutPage'],
   ] as const) {
-    // WP166-A: About's text changed again on 2026-11-21, so its date is on or after this package's
-    test(`${rel}: ${type}.dateModified is ${TODAY}${rel === ABOUT ? ' or later' : ''}`, () => {
-      if (rel === ABOUT) expect(String(nodeOf(rel, type).dateModified) >= TODAY).toBe(true);
-      else expect(nodeOf(rel, type).dateModified).toBe(TODAY);
+    // WP166-A: About's text changed again on 2026-11-21; WP166-C: the four Impact pages did too, so the pin is "this day or later"
+    test(`${rel}: ${type}.dateModified is ${TODAY} or later`, () => {
+      expect(String(nodeOf(rel, type).dateModified) >= TODAY).toBe(true);
     });
   }
   test(`Home pins no date of its own: its WebPage.dateModified is the build date, ${TODAY} or later`, () => {

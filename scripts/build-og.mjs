@@ -44,7 +44,8 @@ const CARDS = [
   { file: 'our-model', prefix: '/our-model/', label: 'Our Model', line: 'One Path from Learning to Earning, with Outcomes Tracked' },
   { file: 'impact', prefix: '/impact/', label: 'Impact', line: 'Impact You Can Verify' },
   { file: 'about', prefix: '/about/', label: 'About', line: 'A Global Workforce Organization, Built on Evidence' },
-  { file: 'news', prefix: '/news/', label: 'News', line: 'Partnerships and MOUs, recognition, program events and leadership' },
+  // WP166-C (R5-06): the News lead was rewritten, so the line is the new lead's opening, verbatim and without a digit (it was "Partnerships and MOUs, recognition, program events and leadership", the old lead's opening)
+  { file: 'news', prefix: '/news/', label: 'News', line: 'Government contracts, partnerships and MOUs, recognition and program events' },
   { file: 'careers', prefix: '/careers/', label: 'Careers', line: 'We judge youth-employment programs by whether young people end up working and earning, not by how many attended.' },
   { file: 'contact', prefix: '/contact/', label: 'Contact', line: 'Choose the route that fits you, and the right team will respond.' },
 ];

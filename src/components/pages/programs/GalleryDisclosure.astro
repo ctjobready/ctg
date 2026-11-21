@@ -38,6 +38,8 @@ const sizes = '(min-width:1024px) 280px, (min-width:600px) 33vw, 50vw';
     <Section id={id} tone={tone} defer aria-labelledby={`${id}-h`}>
       <SectionHeader id={`${id}-h`} eyebrow={eyebrow} title={title} lead={lead} level={level}>
         {note && <p class="gd__note">{note}</p>}
+        {/* WP166-C (R4-26): optional links under the lede (In the Field: the case study behind a collection); no output when not given. */}
+        <slot name="after-lead" />
       </SectionHeader>
       <ul class="gd" aria-label={title}>
         {first.map((p) => (

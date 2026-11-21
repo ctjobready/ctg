@@ -18,6 +18,8 @@ export interface CaseStudy {
    * WP164 (owner decision 2026-11-03): every published case has one again (Digital Jobs Albania: PR-09, partner-reported).
    */
   factId?: string;
+  /** WP166-C (R4-06): a randomized-trial figure shown on the hub card above the program record (WSDFM: RC-02, the only program with a trial), as the case study's hero tile renders it. */
+  trialFactId?: string;
   summary: string;
   /** Card fields, the same four on every card (WP20d): Partner and Place, Who, Scope and Delivery, then the Result (the register stat), where the case has one. Wording follows each case-study page. */
   place: string;
@@ -41,13 +43,14 @@ export const CASE_STUDIES: CaseStudy[] = [
     program: 'World Bank Group, 2016–2017',
     partner: 'Women in Online Work pilot',
     factId: 'PR-02',
-    summary: 'A pilot that prepared young women in Kosovo for online work.',
+    // WP166-C (R4-28): the subline adds what the H1 does not say (it was "A pilot that prepared young women in Kosovo for online work.")
+    summary: 'Young women in five municipalities trained in two phases and bid on real online work.',
     place: 'World Bank Group; Kosovo, 2016–2017',
     who: 'Young women',
     // WP76: the World Bank brief's two phases (February to August 2016: front-end web development; September to December 2016: three tracks, coding, graphic design and digital marketing), where the line had said digital literacy came first.
     scope: 'Two phases: front-end web development first, then tracks in coding, graphic design and digital marketing',
     note: WB_KOSOVO,
-    dateModified: '2026-11-02', // WP157 (adversarial review F13): the H1 reads "A World Bank Pilot for Young Women"
+    dateModified: '2026-11-21', // WP166-C (2026-11-21): the subline, the context, the results line, the story band and the closing band. Earlier: WP157 (adversarial review F13): the H1 reads "A World Bank Pilot for Young Women"
     related: { label: 'See How YouthWIDE Deploys the Model', href: '/programs/youthwide/' },
   },
   {
@@ -61,26 +64,29 @@ export const CASE_STUDIES: CaseStudy[] = [
     program: 'World Bank, 2021–2022',
     partner: 'Online training program',
     factId: 'PR-09',
-    summary: 'A World Bank initiative that gave women in Albania a three-month online course in digital skills.',
+    // WP166-C (R4-27): the World Bank's naming of CodersTrust leads (it was "A World Bank initiative that gave women in Albania a three-month online course in digital skills."; the course stays in What CodersTrust Did)
+    summary: 'A World Bank initiative for women in Albania. The World Bank names CodersTrust as the international digital skills training provider in the partnership.',
     place: 'World Bank, with the Government of Albania and EuroPartners Development; Albania, 2021–2022',
     who: 'Women aged 16 to 35',
     scope: 'Three-month online training in graphic design, web development and digital marketing, with mentoring',
-    dateModified: '2026-11-03', // WP164: the years, the figure, the context, the Results band and the meta description changed. Earlier: WP162 (2026-11-03); WP161-A (adversarial review A-01): the May 2022 World Bank link (WP72, 2026-10-21)
+    dateModified: '2026-11-21', // WP166-C (2026-11-21): the subline, the solution lead and the closing band. Earlier: WP164: the years, the figure, the context, the Results band and the meta description changed. Earlier: WP162 (2026-11-03); WP161-A (adversarial review A-01): the May 2022 World Bank link (WP72, 2026-10-21)
     related: { label: 'See How YouthWIDE Deploys the Model', href: '/programs/youthwide/' },
   },
   {
     slug: 'wsdfm-women-freelancers',
     path: `${base}wsdfm-women-freelancers/`,
     name: 'Women’s Skill Development for Freelancing Marketplace (WSDFM)',
-    heading: 'CodersTrust’s WSDFM Program Evaluated by a Randomized Trial',
+    // WP166-C (R4-29): "Name: What, for Whom", as the other four H1s (it was "CodersTrust’s WSDFM Program Evaluated by a Randomized Trial")
+    heading: 'WSDFM: Freelancing Skills for Women, Evaluated by a Randomized Trial',
     program: 'Commissioned by Porticus',
     partner: 'Independently evaluated by BIGD',
     factId: 'PR-01',
+    trialFactId: 'RC-02',
     summary: 'ICT skills for freelancing marketplaces and local jobs, plus women’s empowerment, in Bangladesh.',
     place: 'Commissioned by Porticus; Bangladesh',
     who: 'Women in Bangladesh',
     scope: 'ICT skills for freelancing marketplaces and local jobs, with one-to-one mentoring',
-    dateModified: '2026-10-28', // WP161-A (adversarial review A-01): the page's last visible change was the funder and outreach roles (2026-10-28); it fell back to the shared 2026-10-10
+    dateModified: '2026-11-21', // WP166-C (2026-11-21): the H1, the hero order, the story band and the closing band. Earlier: WP161-A (adversarial review A-01): the page's last visible change was the funder and outreach roles (2026-10-28); it fell back to the shared 2026-10-10
     related: { label: 'See How YouthWIDE Deploys the Model', href: '/programs/youthwide/' },
   },
   {
@@ -88,7 +94,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     path: `${base}undp-yes-korail/`,
     name: 'UNDP YES, Korail',
     heading: 'UNDP YES: Korail Youth Finding First Jobs, 2017',
-    dateModified: '2026-11-01', // WP144: "Two Learners in Their Own Words"
+    dateModified: '2026-11-21', // WP166-C (2026-11-21): the story band and the closing band. Earlier: WP144: "Two Learners in Their Own Words"
     program: 'UNDP, Government of Bangladesh, Swanirvar Bangladesh',
     partner: '2017',
     factId: 'PR-03',
@@ -100,7 +106,7 @@ export const CASE_STUDIES: CaseStudy[] = [
   },
   {
     slug: 'her-power',
-    dateModified: '2026-10-31', // WP137: "It aimed" (owner rule 2026-10-31: any visible text change moves the date)
+    dateModified: '2026-11-21', // WP166-C (2026-11-21): the national-program tile and heading, the story band and the closing band. Earlier: WP137: "It aimed" (owner rule 2026-10-31: any visible text change moves the date)
     path: `${base}her-power/`,
     name: 'Her Power',
     heading: 'Her Power: Women’s Digital Skills with the Department of ICT (DoICT)',

@@ -44,11 +44,7 @@ const allPages = (dir = DIST_DIR): string[] =>
 const STYLEGUIDE = 'styleguide/index.html';
 const NO_LINE: Record<string, string> = {
   'about/mentors/index.html': 'a hero button only; the page has no closing line',
-  'impact/case-studies/digital-jobs-albania/index.html': 'a heading-only closing band',
-  'impact/case-studies/her-power/index.html': 'a heading-only closing band',
-  'impact/case-studies/kosovo-women-in-online-work/index.html': 'a heading-only closing band',
-  'impact/case-studies/undp-yes-korail/index.html': 'a heading-only closing band',
-  'impact/case-studies/wsdfm-women-freelancers/index.html': 'a heading-only closing band',
+  // WP166-C (R4-11): the five case studies left this list; their closing band now says what to send, with the times request once ("Want a program like this one? Tell us the country, your priority groups and two suitable times; …").
   'impact/stories/index.html': 'a heading-only closing band',
   'our-model/index.html': 'a hero button and a heading-only closing band',
 };
@@ -195,8 +191,8 @@ function tocLabels(rel: string): { text: string; href: string }[] {
 test('Polish 2: "On This Page" ends with the closing H2 on the Trial and Outcomes 2026 pages, and the entry jumps to it', () => {
   for (const [rel, heading] of [
     ['impact/independent-evaluation/index.html', 'Talk to Us About a First Cohort'],
-    ['impact/outcomes-2026/index.html', 'Discuss the Evidence for Your Program'],
-    ['impact/index.html', 'Discuss the Evidence for Your Program'],
+    ['impact/outcomes-2026/index.html', 'Talk to Us About a First Cohort'], // WP166-C (R4-13): the Impact pages close on one heading (it was "Discuss the Evidence for Your Program")
+    ['impact/index.html', 'Talk to Us About a First Cohort'],
   ] as const) {
     const toc = tocLabels(rel);
     const last = toc[toc.length - 1];

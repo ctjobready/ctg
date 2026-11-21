@@ -280,7 +280,8 @@ test.describe('Independent Evaluation: the evaluator is spelled out where the pa
     await open(page, 'impact/independent-evaluation/');
     const lead = compact(await page.locator('main .lf-head .lead').textContent());
     // WP61 (cycle-33 review, GPT-6.1 Sol G5): the result comes first, with the evaluator ("In a randomized trial by the BRAC Institute of Governance and Development (BIGD), women offered a place were 10.3 percentage points more likely to be employed ...")
-    expect(lead.startsWith(`In a randomized trial by ${BIGD_FULL}, women offered a place were 10.3 percentage points more likely to be employed`)).toBe(true);
+    // WP166-C (R4-03): the lead names the program the trial evaluated before the evaluator ("In a randomized trial of CodersTrust’s WSDFM program by …"); the evaluator is still spelled out at its first mention
+    expect(lead.startsWith(`In a randomized trial of CodersTrust’s WSDFM program by ${BIGD_FULL}, women offered a place were 10.3 percentage points more likely to be employed`)).toBe(true);
     const words = lead.split(/\s+/).length;
     expect(words, 'the direct answer is 40 to 60 words').toBeGreaterThanOrEqual(40);
     expect(words).toBeLessThanOrEqual(60);
@@ -527,7 +528,7 @@ test.describe('Learner stories: the evidence tag takes the kicker’s place (ite
     await expect(card.locator('[data-evidence="Individual Story"]')).toHaveCount(1);
     await expect(card.locator('.eyebrow')).toHaveCount(0);
     expect(compact(await card.locator('.ls__caveat').textContent())).toBe('Individual story; not typical or promised.');
-    expect(compact(await card.locator('.ls__name').textContent())).toContain('Adrian Afraham');
+    expect(compact(await card.locator('.ls__name').textContent())).toContain('Erlisa Zherka'); // WP166-C (R4-16): the hub's story is ST-05 (it was Adrian Afraham's)
     await expect(page.locator('#learner-voice')).toHaveAttribute('aria-label', 'Individual Learner Story');
     expect(await mainText(page)).not.toContain('Individual Learner Story');
   });

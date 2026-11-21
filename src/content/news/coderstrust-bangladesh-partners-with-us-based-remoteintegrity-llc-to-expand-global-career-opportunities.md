@@ -1,9 +1,9 @@
 ---
 title: "CodersTrust Bangladesh Partners with U.S.-Based RemoteIntegrity to Expand Global Career Opportunities"
 date: 2026-07-27
-updated: 2026-10-30
+updated: 2026-11-21
 topic: partnerships
-excerpt: "CodersTrust Bangladesh signs an MOU with RemoteIntegrity, a Florida-based U.S. technology organization, to widen global career opportunities."
+excerpt: "CodersTrust Bangladesh signs an MOU with Florida-based RemoteIntegrity to support top-performing program completers with international placement."
 cover: ../../assets/images/news/coderstrust-bangladesh-partners-with-us-based-remoteintegrity-llc-to-expand-global-career-opportunities/partners-with-us-based-remoteintegrity-2.jpg
 coverAlt: "Two men signing documents at a desk"
 legacyUrl: "https://coderstrust.global/coderstrust-bangladesh-partners-with-us-based-remoteintegrity-llc-to-expand-global-career-opportunities/"

@@ -64,7 +64,7 @@ test.describe('WP82: WSDFM trial wording uses the 425 offered a place', () => {
 
   test('the WSDFM case-study hero note and the Impact tile note read the new wording', async ({ page }) => {
     await open(page, WSDFM);
-    await expect(page.locator('[data-hero-note]')).toHaveText('Program records, not trial results; the 425 women offered a place in the randomized trial by the BRAC Institute of Governance and Development (BIGD) were among the 1,000 women enrolled.');
+    await expect(page.locator('[data-hero-note]')).toHaveText('Program records, not trial results; the 425 women offered a place in the randomized trial by BIGD were among the 1,000 women enrolled.'); // WP166-C (R4-05): the first tile now spells the evaluator out (WP54 G8)
     await open(page, 'impact/');
     await expect(page.locator('.glance__note', { hasText: 'Program records, not trial results' })).toHaveText(NOTE_NOW);
   });
@@ -88,11 +88,12 @@ test.describe('WP82: WSDFM trial wording uses the 425 offered a place', () => {
 });
 
 test.describe('WP82: the Impact contract-scope tile carries the shared note', () => {
-  test('the GV-12 tile on Impact shows CONTRACT_TOTAL_NOTE', async ({ page }) => {
+  // WP166-C (R4-17, owner approval of 21 November 2026, item 5): the Impact tile shows the note's first sentence (the overlap sentence stays on Governments and Investors)
+  test('the GV-12 tile on Impact shows CONTRACT_TOTAL_NOTE’s first sentence', async ({ page }) => {
     await open(page, 'impact/');
     const tile = page.locator('#glance a[data-fact~="GV-12"]');
     await expect(tile).toHaveCount(1);
-    await expect(tile.locator('.glance__note')).toHaveText(CONTRACT_TOTAL_NOTE.text);
+    await expect(tile.locator('.glance__note')).toHaveText(CONTRACT_TOTAL_NOTE.text.split(/(?<=\.) (?=Her Power’s 25,125 is the same group)/)[0]);
     expect(CONTRACT_TOTAL_NOTE.text).toContain('includes Her Power’s national program, which trained 25,125 women (CodersTrust trained 2,400 directly)');
   });
 });

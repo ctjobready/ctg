@@ -1,7 +1,7 @@
 ---
-title: "CodersTrust Chairman Mr. Aziz Ahmad Receives SDG Life Achievement Award from the UNGSII Foundation"
+title: "Aziz Ahmad Receives SDG Life Achievement Award from the UNGSII Foundation"
 date: 2025-01-22
-updated: 2026-10-30
+updated: 2026-11-21
 topic: recognition
 excerpt: "Aziz Ahmad accepts the SDG Life Achievement Award from the UNGSII Foundation during Davos WEF Week 2025."
 cover: ../../assets/images/news/coderstrust-chairman-mr-aziz-ahmad-receives-sdg-life-achievement-award-from-the-unsgii/sdg-life-achievement-award-2.jpg

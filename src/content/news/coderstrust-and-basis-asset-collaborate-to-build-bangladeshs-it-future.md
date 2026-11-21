@@ -1,7 +1,7 @@
 ---
-title: "CodersTrust and BASIS-ASSET Collaborate to Build Bangladesh’s IT Future"
+title: "CodersTrust Becomes a Training Partner Under the BASIS-ASSET Project"
 date: 2026-02-06
-updated: 2026-11-02
+updated: 2026-11-21
 topic: partnerships
 excerpt: "On February 5, 2026, CodersTrust became a training partner under the BASIS-ASSET project to equip Bangladeshi youth with IT skills."
 cover: ../../assets/images/news/coderstrust-and-basis-asset-collaborate-to-build-bangladeshs-it-future/basis-asset-1.jpg

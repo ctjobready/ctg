@@ -31,12 +31,14 @@ test.describe('What a Supported Youth Cohort Includes (#features; WP41: it was "
 // tests/wp25h-home.spec.ts and tests/wp48.spec.ts hold the Home without the band, and the Impact Survey 2026 page keeps the table and the 70.8%.
 
 test.describe('the UPEACE news headline matches its body', () => {
-  test('the article says students "were invited to apply", as its body does ("accepting applications")', async ({ page }) => {
+  // WP166-C (R6-03): the headline reports the outcome the post's update line gives ("A CodersTrust alumna attended the June 2026 program on a scholarship."); it was "CodersTrust Students Were Invited to Apply to …"
+  test('the headline says what the body reports: an alumna attended on a scholarship', async ({ page }) => {
     await open(page, UPEACE);
     const h1 = compact(await page.locator('h1').first().textContent());
-    expect(h1).toBe('CodersTrust Students Were Invited to Apply to UPEACE’s “Young Leaders for Peace” Summer Programme 2026');
+    expect(h1).toBe('CodersTrust Alumna Attends UPEACE’s Young Leaders for Peace Summer Programme on a Scholarship');
     const body = compact(await page.locator('main').textContent());
     expect(body).toContain('UPEACE was accepting applications');
+    expect(body).toContain('A CodersTrust alumna attended the June 2026 program on a scholarship.');
     expect(body).not.toMatch(/Invited to Join/i);
   });
 
@@ -47,7 +49,7 @@ test.describe('the UPEACE news headline matches its body', () => {
     const cards = page.locator(`main a[href$="/${UPEACE}"]`);
     expect(await cards.count(), 'the UPEACE post is listed on the News page').toBeGreaterThan(0);
     const text = compact(await page.locator('main').textContent());
-    expect(text).toContain('CodersTrust Students Were Invited to Apply to UPEACE’s “Young Leaders for Peace” Summer Programme 2026');
+    expect(text).toContain('CodersTrust Alumna Attends UPEACE’s Young Leaders for Peace Summer Programme on a Scholarship'); // WP166-C (R6-03)
     expect(text).not.toMatch(/Invited to Join/i);
   });
 });

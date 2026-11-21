@@ -72,7 +72,8 @@ const NCTB = 'coderstrust-seals-groundbreaking-mou-with-nctb-paving-the-way-for-
 const PRESS_FREEDOM = 'aziz-ahmad-advocates-technology-skills-for-peace-at-un-world-press-freedom-day';
 
 test.describe('WP124 A1, the Jahangirnagar MOU counterparty is the Department of ICT (DoICT) everywhere', () => {
-  const TEASER = 'Aziz Ahmad joins the MOU signing between Jahangirnagar University’s Institute of IT and the Department of ICT (DoICT) and speaks on IT skills for youth.';
+  // WP166-C (R6-15): the teaser leads with CodersTrust's own news (the freelancing training it supports) and still names the Department of ICT (DoICT)
+  const TEASER = 'Freelancing training supported by CodersTrust opens at Jahangirnagar University as its Institute of IT signs an MOU with the Department of ICT (DoICT).';
   test('the post meta description and the News index card both name the DoICT', () => {
     const d = metaDescription(html(post(JU)));
     expect(d).toBe(TEASER);

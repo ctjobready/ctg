@@ -193,8 +193,9 @@ test.describe('Independent Evaluation', () => {
     await expect(page.locator('#funders')).not.toContainText(/five-year/i);
     await expect(page.locator('#funders')).toContainText('See How Partnerships Work');
     await expect(page.locator('#outcomes')).toContainText('follow-up surveys at 3, 6 and 12 months'); // WP107: the single-question FAQ became the "How We Track Outcomes" band
-    await expect(page.locator('#classes h2')).toHaveText('Freelancing Share by Classes Attended');
-    await expect(page.locator('#classes')).toContainText('Freelancing Share by Classes Attended');
+    // WP166-C (R4-10, owner approval of 21 November 2026): the classes-attended chart (RC-08) is cut; the freelancing band is the randomized comparison (RC-09)
+    await expect(page.locator('#classes')).toHaveCount(0);
+    await expect(page.locator('#freelancing h2')).toHaveText('Freelancing: Women Offered a Place vs. the Control Group');
   });
 });
 
@@ -214,15 +215,16 @@ test.describe('case studies', () => {
   // WP42 (cycle-19 review): the hero's two paragraphs (the plain-language trial line and the program-record line) are gone; one line above the tiles names the two kinds of evidence, and each tile carries its own tag
   test('WSDFM states which figure is program records and which is the trial', async ({ page }) => {
     await open(page, 'impact/case-studies/wsdfm-women-freelancers/');
-    // WP54 (cycle-28 review, GPT-6.1 Sol G8): the note spells out the evaluator, the page's first mention of BIGD
-    await expect(page.locator('[data-hero-note]')).toHaveText('Program records, not trial results; the 425 women offered a place in the randomized trial by the BRAC Institute of Governance and Development (BIGD) were among the 1,000 women enrolled.');
+    // WP54 (cycle-28 review, GPT-6.1 Sol G8): the page's first mention of BIGD spells it out. WP166-C (R4-05): the trial tiles lead, so the first tile's evidence line spells it out and the note, which now follows the program record, uses the abbreviation
+    await expect(page.locator('[data-hero-note]')).toHaveText('Program records, not trial results; the 425 women offered a place in the randomized trial by BIGD were among the 1,000 women enrolled.');
     const tiles = page.locator('.hero .cs__stat');
     await expect(tiles).toHaveCount(3);
-    await expect(tiles.nth(0).locator('[data-evidence="Program Record"]')).toHaveCount(1);
-    await expect(tiles.nth(0)).toContainText('711 of 1,000');
+    await expect(tiles.nth(0).locator('[data-evidence="Randomized Trial"]')).toHaveCount(1);
+    await expect(tiles.nth(0)).toContainText('+10.3 percentage points');
+    await expect(tiles.nth(0)).toContainText('Randomized trial by the BRAC Institute of Governance and Development (BIGD), May 2022');
     await expect(tiles.nth(1).locator('[data-evidence="Randomized Trial"]')).toHaveCount(1);
-    await expect(tiles.nth(1)).toContainText('+10.3 percentage points');
-    await expect(tiles.nth(2).locator('[data-evidence="Randomized Trial"]')).toHaveCount(1);
+    await expect(tiles.nth(2).locator('[data-evidence="Program Record"]')).toHaveCount(1);
+    await expect(tiles.nth(2)).toContainText('711 of 1,000');
   });
 
   test('the UNDP YES page leads with the reported outcome, with no unregistered awareness claim', async ({ page }) => {

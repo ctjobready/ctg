@@ -1,9 +1,9 @@
 ---
-title: "MOU Signing Ceremony Between North South University & CodersTrust"
+title: "North South University and CodersTrust Sign an MOU on Skills and Career Pathways for Students"
 date: 2025-01-04
-updated: 2026-10-30
+updated: 2026-11-21
 topic: partnerships
-excerpt: "North South University and CodersTrust sign a Memorandum of Understanding, signed by NSU Vice Chancellor Abdul Hannan Chowdhury and Aziz Ahmad."
+excerpt: "North South University and CodersTrust sign an MOU on student skills and career pathways, signed by Vice Chancellor Abdul Hannan Chowdhury and Aziz Ahmad."
 cover: ../../assets/images/news/mou-signing-ceremony-between-north-south-university-coderstrust/mou-signing-ceremony-between-north-south-university-coderstrust.jpg
 coverAlt: "Two men signing the MOU at a conference table while a woman looks on"
 legacyUrl: "https://coderstrust.global/mou-signing-ceremony-between-north-south-university-coderstrust/"

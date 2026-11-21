@@ -5,14 +5,12 @@ import Button from '../../system/Button.astro';
 import Section from '../../ui/Section.astro';
 import SectionHeader from '../../ui/SectionHeader.astro';
 import CTABand from '../../ui/CTABand.astro';
-import Icon from '../../system/Icon.astro';
 import FactStat from '../../facts/FactStat.astro';
 import EvidenceTag from '../../system/EvidenceTag.astro';
 import { evidenceOf } from './evidence';
 import Img from '../../ui/Img.astro';
 import PhotoGallery from '../../ui/PhotoGallery.astro';
 import { caseCardPhoto, galleryPhotos } from '../../../data/photos';
-import { linkAttrs } from '../../../lib/url';
 import { mayRender } from '../../../lib/permissions';
 import type { ImageMetadata } from 'astro';
 import { MICRO_COMMITMENT } from '../../../data/copy';
@@ -21,7 +19,7 @@ import { caseBySlug } from './case-studies';
 
 /**
  * Template for the five case-study pages (T5): outcome-first header (stat row) → context → challenges →
- * CodersTrust solution → results → learner story → related program → discovery CTA.
+ * CodersTrust solution → results → learner story → discovery CTA (with the related program and the other case studies as its links, WP166-C).
  * Slots: `context` (extra context), `solution-lead` (CodersTrust's own role, set above the generic practices), `results`, `story`, `after-results`.
  */
 interface Props {
@@ -48,7 +46,9 @@ interface Props {
   heroNote?: string;
   /** WP60 (cycle-32 review, Claude S4): the register facts the note states, where it names a count (WSDFM: RC-07's 833); they go on the note's data-fact. */
   heroNoteFacts?: string[];
-  /** The closing band's second link: the randomized trial's results (WSDFM only) or, by default, how to read the evidence. */
+  /** WP166-C (R4-05): the note follows the tiles (a row of its own directly under the last tile, the one it qualifies) instead of preceding them, so the claim comes before its caveat. */
+  heroNoteAfter?: boolean;
+  /** The closing band's link beside the button: the randomized trial's results (WSDFM only) or, by default, the related program (WP166-C; it was "How to Read the Evidence"). */
   trialLink?: boolean;
   /** Eyebrow of the learner-story section: "In a Learner’s Words" only where a direct quote follows the story; "Learner Experience" otherwise. */
   storyEyebrow?: string;
@@ -60,14 +60,18 @@ interface Props {
    */
   heroPhoto?: { src: ImageMetadata; alt: string; assetId: string; width: number; height: number };
 }
-const { slug, pageTitle, description, stats = [], context, challenges, solution, artSeed, heroNote, heroNoteFacts, trialLink = false, heroPhoto, storyEyebrow = 'Learner Experience', storyTitle = 'A Learner Story' } = Astro.props;
+const { slug, pageTitle, description, stats = [], context, challenges, solution, artSeed, heroNote, heroNoteFacts, heroNoteAfter = false, trialLink = false, heroPhoto, storyEyebrow = 'Learner Experience', storyTitle = 'A Learner Story' } = Astro.props;
+// WP166-C (R4-11): the closing band says what to send and what the reader gets (Global Reach's line, with the times request once on the page), and carries the two links of the former
+// "Where the Model Runs Next" band; "Compare the Five Case Studies" replaces "How to Read the Evidence", and WSDFM keeps "Read the Randomized Trial Results" beside the button.
+const CLOSING_TEXT = 'Want a program like this one? Tell us the country, your priority groups and two suitable times; we outline a first cohort in a discovery session.';
+const compare = { label: 'Compare the Five Case Studies', href: '/impact/case-studies/' };
+const trial = { label: 'Read the Randomized Trial Results', href: '/impact/independent-evaluation/' };
 // A case without its own hero photograph takes the one registered for its card (src/data/photos.ts).
 const fallback = caseCardPhoto(slug);
 const hero = heroPhoto ?? (fallback ? { src: fallback.src, alt: fallback.alt, assetId: fallback.assetId, width: fallback.src.width, height: fallback.src.height } : undefined);
 const showPhoto = Boolean(hero) && mayRender(hero!.assetId);
 const c = caseBySlug(slug);
 const jsonLd = [articleNode({ path: c.path, headline: c.heading, description, datePublished: '2026-10-08', dateModified: c.dateModified ?? '2026-10-10', author: 'CodersTrust' })];
-const related = linkAttrs(c.related.href);
 const d = discoveryCta();
 ---
 
@@ -82,7 +86,7 @@ const d = discoveryCta();
   <Hero variant="inner" eyebrow={`Case Study · ${c.program}`} title={c.heading} lead={c.summary} artSeed={artSeed ?? `case-${slug}`} mediaShape="landscape">
     {showPhoto && hero && <Img slot="media" src={hero.src} alt={hero.alt} width={hero.width} height={hero.height} widths={[480, hero.width]} sizes="(min-width:1024px) 520px, 90vw" loading="eager" fetchpriority="high" assetId={hero.assetId} />}
     <Fragment slot="stats">
-      {heroNote && <p class="cs__note" data-hero-note data-fact={heroNoteFacts?.join(' ')}>{heroNote}</p>}
+      {heroNote && !heroNoteAfter && <p class="cs__note" data-hero-note data-fact={heroNoteFacts?.join(' ')}>{heroNote}</p>}
       {
         stats.map((s) => (
           <div class="cs__stat">
@@ -92,6 +96,7 @@ const d = discoveryCta();
           </div>
         ))
       }
+      {heroNote && heroNoteAfter && <p class="cs__note" data-hero-note data-fact={heroNoteFacts?.join(' ')}>{heroNote}</p>}
     </Fragment>
     <Fragment slot="actions">
       <Button variant="outline" href="#results">Jump to the Results</Button>
@@ -129,21 +134,16 @@ const d = discoveryCta();
   {/* WP55: a case study with no learner story (Digital Jobs Albania: no learner story is registered) leaves the band out instead of showing an empty one. */}
   {Astro.slots.has('story') && (
     <Section tone="airy" aria-labelledby="story-h">
-      <SectionHeader id="story-h" eyebrow={storyEyebrow} title={storyTitle} lead="Individual stories, not typical or promised outcomes." />
+      {/* WP166-C (R4-33): no section-level disclaimer; each story keeps its "Individual Story" tag and its card's "not typical or promised" line (and the outlier line where it applies). */}
+      <SectionHeader id="story-h" eyebrow={storyEyebrow} title={storyTitle} />
       <slot name="story" />
     </Section>
   )}
 
   <PhotoGallery id="in-the-field" tone="white" eyebrow="In the Field" title="From the Program" photos={galleryPhotos(slug).filter((p) => p.assetId !== hero?.assetId)} />
 
-  <Section aria-labelledby="related-h" pad="sm">
-    <!-- WP25s: an eyebrow and a descriptive link label, so "All Case Studies" is not read as a heading of its own above the closing call to action -->
-    <p class="eyebrow">Keep Reading</p>
-    <h2 class="t-heading-2xl" id="related-h">Where the Model Runs Next</h2>
-    <p class="cs__related"><a class="link" href={related.href}>{c.related.label}<Icon name="arrow-right" size={16} /></a><a class="link" href={linkAttrs('/impact/case-studies/').href}>Compare the Five Case Studies<Icon name="arrow-right" size={16} /></a></p>
-  </Section>
-
-  <CTABand id="cta" tone="klein" heading="Talk to Us About a First Cohort" cta={{ label: d.label, href: d.href }} secondary={trialLink ? { label: 'Read the Randomized Trial Results', href: '/impact/independent-evaluation/' } : { label: 'How to Read the Evidence', href: '/impact/#evidence-ladder' }} micro={MICRO_COMMITMENT} />
+  {/* WP166-C (R4-11): the "Keep Reading / Where the Model Runs Next" band is gone; its two links are in the closing band. */}
+  <CTABand id="cta" tone="klein" heading="Talk to Us About a First Cohort" text={CLOSING_TEXT} cta={{ label: d.label, href: d.href }} secondary={trialLink ? trial : { label: c.related.label, href: c.related.href }} more={trialLink ? [{ label: c.related.label, href: c.related.href }, compare] : [compare]} micro={MICRO_COMMITMENT} />
 
 </BaseLayout>
 
@@ -211,13 +211,6 @@ const d = discoveryCta();
   .cs__results :global(p),
   .cs__results :global(.callout) {
     max-width: var(--measure);
-  }
-  /* Two links side by side, or stacked when they do not fit: no separator character to be left dangling at the end of a line. */
-  .cs__related {
-    margin: var(--space-md) 0 0;
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-sm) var(--space-lg);
   }
   @media (min-width: 900px) {
     .cs__two {

@@ -1,7 +1,7 @@
 ---
-title: "CodersTrust Offers Training for Freelancing Careers: Teaching You the Right Way to Succeed"
+title: "“If I Could Learn This Skill, I Could Continue My Studies”: One Student’s Story"
 date: 2021-05-12
-updated: 2026-10-30
+updated: 2026-11-21
 topic: insights
 excerpt: "The story of a student who turned to freelancing training after her father could no longer afford her education."
 cover: ../../assets/images/news/coderstrust-teaching-you-freelancing-the-right-way/coders-trust-7-1-1-scaled.jpg

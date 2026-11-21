@@ -13,6 +13,10 @@ import { articleNode, desc, title, discoveryCta } from '../../../components/page
 import { fact } from '../../../data/facts';
 import { MICRO_COMMITMENT } from '../../../data/copy';
 import { webPage } from '../../../lib/schema';
+import { COURSES_URL } from '../../../lib/site';
+import { caseBySlug } from '../../../components/pages/impact/case-studies';
+
+const courses = linkAttrs(COURSES_URL);
 
 const path = '/impact/stories/';
 
@@ -89,36 +93,49 @@ for (const [id, st] of Object.entries(STEPS)) {
   const body = (all.find((s) => s.id === id)?.body ?? '').replace(/\s+/g, ' ');
   for (const phrase of st.needs) if (!body.includes(phrase)) throw new Error(`story ${id}: "${phrase}" is not in the story text`);
 }
+// WP166-C (R4-25): a story from a program with a case study links to it, so a reader can step from one learner to the group result behind her.
+const CASES = {
+  wsdfm: { href: '/impact/case-studies/wsdfm-women-freelancers/', name: caseBySlug('wsdfm-women-freelancers').name },
+  herPower: { href: '/impact/case-studies/her-power/', name: caseBySlug('her-power').name },
+  kosovo: { href: '/impact/case-studies/kosovo-women-in-online-work/', name: caseBySlug('kosovo-women-in-online-work').name },
+  yes: { href: '/impact/case-studies/undp-yes-korail/', name: caseBySlug('undp-yes-korail').name },
+};
+const CASE_OF: Record<string, { href: string; name: string }> = { 'samina-tasneem-chowdhury': CASES.wsdfm, 'maria-dewan': CASES.herPower };
 const caseCards = caseIds.map((id) => {
   const c = toCard(named.find((s) => s.id === id)!);
   const st = STEPS[id];
-  return { ...c, steps: { start: st.start, did: st.did, now: st.now } };
+  return { ...c, steps: { start: st.start, did: st.did, now: st.now }, caseStudy: CASE_OF[id] };
 });
 // WP18b: concrete examples lead (Samina’s 90+ projects, Maria’s first logo-design win, Erlisa’s full-time online contract, then the learners
 // who report a first job, client or sale); the two endorsements whose excerpt praises the program without a concrete result follow last.
 const ENDORSEMENTS = new Set(['aysha-akter-bipasha', 'arfias-islam-rudro']);
+// WP166-C (R4-23): the cards with a concrete outcome come first, strongest first (they fill the visible nine with the three register lines), then the role-only cards ("Works as …"), then the two endorsements;
+// the text of every card is unchanged. The build stops if a listed story leaves the collection.
+const STRONGEST = ['mysha-k-diya', 'nushrat-jahan', 'mustafa-zabed', 'adrian-afraham', 'ashraful-alam-sani', 'zarin-tusnim-shifa'];
+for (const id of STRONGEST) if (!named.some((s) => s.id === id)) throw new Error(`Stories: the story ${id} is missing`);
+const rankOf = (id: string) => (STRONGEST.includes(id) ? STRONGEST.indexOf(id) : STRONGEST.length + Number(ENDORSEMENTS.has(id)));
 const legacyCards = named
   .filter((s) => !caseIds.includes(s.id))
-  .sort((a, b) => Number(ENDORSEMENTS.has(a.id)) - Number(ENDORSEMENTS.has(b.id)) || a.data.name.localeCompare(b.data.name))
+  .sort((a, b) => rankOf(a.id) - rankOf(b.id) || a.data.name.localeCompare(b.data.name))
   .map(toCard);
 
 const anon: StoryCardData[] = [
-  { key: 'wow-erlisa-zherka', name: 'Erlisa Zherka', role: 'Women in Online Work, Kosovo, 2016–2017', caveat: 'Individual story; not typical or promised.', pathway: 'job', outcome: `She ${fact('ST-05').text.split(' in Kosovo, ')[1].replace('; earning', ' and is earning')}.`, assetId: 'story-erlisa-zherka' },
-  { key: 'yes-aklima-akder', name: 'Aklima Akder', role: 'UNDP YES, Korail, 2017', caveat: 'Individual story; not typical or promised.', pathway: 'freelance', outcome: withTerminalStop(`“${quoted('ST-01')}”`), assetId: 'story-aklima-akder' },
-  { key: 'yes-shamim-ahmed', name: 'Shamim Ahmed', role: 'UNDP YES, Korail, 2017', caveat: 'Individual story; an outlier, not typical.', pathway: 'freelance', outcome: `${withTerminalStop(`“${quoted('ST-02')}”`)} (${/\((about \$[\d,]+)/.exec(fact('ST-02').text)?.[1]})`, assetId: 'story-shamim-ahmed' },
+  { key: 'wow-erlisa-zherka', name: 'Erlisa Zherka', role: 'Women in Online Work, Kosovo, 2016–2017', caveat: 'Individual story; not typical or promised.', caseStudy: CASES.kosovo, pathway: 'job', outcome: `She ${fact('ST-05').text.split(' in Kosovo, ')[1].replace('; earning', ' and is earning')}.`, assetId: 'story-erlisa-zherka' },
+  { key: 'yes-aklima-akder', name: 'Aklima Akder', role: 'UNDP YES, Korail, 2017', caveat: 'Individual story; not typical or promised.', caseStudy: CASES.yes, pathway: 'freelance', outcome: withTerminalStop(`“${quoted('ST-01')}”`), assetId: 'story-aklima-akder' },
+  { key: 'yes-shamim-ahmed', name: 'Shamim Ahmed', role: 'UNDP YES, Korail, 2017', caveat: 'Individual story; an outlier, not typical.', caseStudy: CASES.yes, pathway: 'freelance', outcome: `${withTerminalStop(`“${quoted('ST-02')}”`)} (${/\((about \$[\d,]+)/.exec(fact('ST-02').text)?.[1]})`, assetId: 'story-shamim-ahmed' },
 ];
 const cards = [...anon, ...legacyCards];
 const description = desc('Learner stories and experiences from CodersTrust programs. Individual stories, not typical or promised outcomes.');
 const jsonLd = [
   // WP161-A (adversarial review A-01, A-04): the CollectionPage carries the page's own date (2026-10-31, WP129, its last visible change) instead of the build date, and the Article headline is the H1.
-  webPage({ path, name: 'CodersTrust success stories', description, type: 'CollectionPage', dateModified: '2026-10-31' }),
-  articleNode({ path, headline: 'Learners Turning Training into Work', description, datePublished: '2026-10-08', dateModified: '2026-10-31', author: 'CodersTrust' }),
+  webPage({ path, name: 'CodersTrust success stories', description, type: 'CollectionPage', dateModified: '2026-11-21' }), // WP166-C (2026-11-21): the lead, the card order, the case-study links and the course line
+  articleNode({ path, headline: 'Learners Turning Training into Work', description, datePublished: '2026-10-08', dateModified: '2026-11-21', author: 'CodersTrust' }),
 ];
 const d = discoveryCta();
 ---
 
 <BaseLayout title={title('Learners Turning Training into Work')} description={description} path={path} breadcrumbs={[{ label: 'Impact', href: '/impact/' }, { label: 'Success Stories' }]} jsonLd={jsonLd}>
-  <Hero variant="inner" eyebrow="Impact" title="Learners Turning Training into Work" lead="Individual stories from CodersTrust learners, not typical or promised outcomes." artSeed="stories-hub" />
+  <Hero variant="inner" eyebrow="Impact" title="Learners Turning Training into Work" lead="First freelance projects, first clients and paying jobs. Individual stories, not typical or promised outcomes." artSeed="stories-hub" />
 
   <Section id="steps" aria-labelledby="steps-h">
     <SectionHeader id="steps-h" eyebrow="In Three Steps" title="Two Learner Journeys" />
@@ -129,6 +146,8 @@ const d = discoveryCta();
     <SectionHeader id="stories-h" eyebrow="Learners" title="What Learners Report" />
     <StoryGallery cards={cards} visible={9} />
     <p class="st__notes">For results across a group of completers, see the <a class="link" href={linkAttrs('/impact/outcomes-2026/').href}>Impact Survey 2026</a> and the <a class="link" href={linkAttrs('/impact/independent-evaluation/').href}>randomized trial</a>.</p>
+    {/* WP166-C (R4-24): learners and parents arrive here from the menu ("Individual learner stories and outcomes"), so one line gives them their route: the header's Courses link (COURSES_URL). */}
+    <p class="st__notes">Looking for a course for yourself? See <a class="link" href={courses.href} rel={courses.rel}>Courses on JobReady.global{courses.srText && <span class="sr-only"> {courses.srText}</span>}</a>.</p>
   </Section>
 
   <CTABand id="cta" heading="Talk to Us About a First Cohort" cta={{ label: d.label, href: d.href }} secondary={{ label: 'How to Read the Evidence', href: '/impact/#evidence-ladder' }} micro={MICRO_COMMITMENT} />

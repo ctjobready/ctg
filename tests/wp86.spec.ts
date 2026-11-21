@@ -55,8 +55,10 @@ test.describe('Item 2: the overlap sentence only where 150,000+ is printed', () 
     }
   });
 
-  test('Impact keeps the full note with the overlap sentence; Investors keeps the first sentence and points back to its reconciliation (WP94)', async () => {
-    expect(pageHtml('impact/'), 'impact/').toContain(`${NOTE_SHORT_FIRST} ${OVERLAP}`);
+  // WP166-C (R4-17, owner approval of 21 November 2026, item 5): Impact's tile keeps the first sentence only (the overlap sentence was cut there); Investors still points back to its reconciliation
+  test('Impact keeps the first sentence of the note; Investors keeps the first sentence and points back to its reconciliation (WP94)', async () => {
+    expect(pageHtml('impact/'), 'impact/').toContain(NOTE_SHORT_FIRST);
+    expect(pageHtml('impact/'), 'impact/').not.toContain(OVERLAP);
     expect(pageHtml('partner-with-us/investors/'), 'investors/').toContain(`${NOTE_SHORT_FIRST} ${OVERLAP_INVESTORS}`);
   });
 });
@@ -73,14 +75,15 @@ test.describe('Item 3: "Last updated" and the Her Power news date are October 24
 
   // WP124: the Her Power post moved on to October 29, 2026 with its quotation-mark fix (tests/wp124.spec.ts)
   // WP161-B: it moved on to November 2, 2026 (Fable review A-17: "DoICT), under the ICT Division, Bangladesh")
-  test('the Her Power news post reads "updated November 2, 2026" and its JSON-LD dateModified is 2026-11-02', async ({ page }) => {
+  // WP166-C: it moved on to November 21, 2026 (its excerpt, the note under the H1 and the closing link)
+  test('the Her Power news post reads "updated November 21, 2026" and its JSON-LD dateModified is 2026-11-21', async ({ page }) => {
     const route = listPages().map((p) => p.route).find((r) => r.includes(HER_POWER_SLUG));
     expect(route, 'Her Power news route').toBeTruthy();
     await open(page, route!.replace(/^\//, ''));
-    await expect(page.locator('body')).toContainText('updated November 2, 2026');
+    await expect(page.locator('body')).toContainText('updated November 21, 2026');
     await expect(page.locator('body')).not.toContainText('updated October 15, 2026');
     const ld = (await page.locator('script[type="application/ld+json"]').allTextContents()).join(' ');
-    expect(ld).toContain('"dateModified":"2026-11-02"');
+    expect(ld).toContain('"dateModified":"2026-11-21"');
     expect(ld).not.toContain('"dateModified":"2026-10-15"');
   });
 });
@@ -140,7 +143,7 @@ test.describe('Item 8: the Gulf News card carries the article headline', () => {
 test.describe('Item 9: the Digital Jobs Albania card takes no Delivered tag', () => {
   test('four of the five case cards carry a Delivered tag; Digital Jobs Albania carries none (WP164: its partner-reported figure takes no tag row)', async ({ page }) => {
     await open(page, 'impact/case-studies/');
-    expect(await page.locator('.case__tags').count()).toBe(4);
+    expect(await page.locator('.case__result dd > .case__tags').count()).toBe(4); // WP166-C (R4-06): the WSDFM card's trial figure has its own tag row, inside .case__trial
     expect(await page.locator('.case__tags .status-tag').count()).toBe(4);
     // The card that links to Digital Jobs Albania: no tag row and no status tag.
     const albania = page.locator('article.case', { has: page.locator('a[href*="digital-jobs-albania"]') });

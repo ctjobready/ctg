@@ -76,12 +76,12 @@ const TODAY = '2026-11-02';
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 test.describe('F1 Outcomes "Who Responded": the 48.0% is a share of surveyed completers', () => {
-  test('"Nearly half of surveyed completers were employed before training (48.0%)." and the respondent profile still follows', () => {
+  // WP166-C (R4-20, owner approval of 21 November 2026, item 5): the "Nearly half …" sentence this item fixed is cut (the page's fourth 48.0%); the band opens on the register's respondent profile (OC-09), which stays about respondents.
+  test('the band opens on the respondent profile, and no sentence calls the completers’ 48.0% a share of respondents', () => {
     const t = rsec(OUTCOMES, 'respondents');
-    expect(t).toContain('Nearly half of surveyed completers were employed before training (48.0%).');
+    expect(t).not.toContain('Nearly half of surveyed completers were employed before training');
     expect(t).not.toContain('Nearly half of respondents were employed before training');
-    // The next sentence is the register's respondent profile (OC-09), which stays about respondents.
-    expect(t).toContain('(48.0%). Respondent profile: 85.0% hold a bachelor’s degree or higher;');
+    expect(t).toContain('Who Responded Respondent profile: 85.0% hold a bachelor’s degree or higher;');
   });
 });
 

@@ -1,9 +1,9 @@
 ---
-title: "CodersTrust Attends WSIS+20 Forum High-Level Event"
+title: "CodersTrust Joins the WSIS+20 Forum High-Level Event in Geneva"
 date: 2024-05-29
-updated: 2026-11-03
+updated: 2026-11-21
 topic: leadership-advocacy
-excerpt: "CodersTrust takes part in the WSIS+20 Forum High-Level Event in Geneva, held May 27 to 31, 2024."
+excerpt: "At the WSIS+20 Forum High-Level Event in Geneva, Aziz Ahmad joins discussions on platform economies and decent work in the Global South."
 cover: ../../assets/images/news/coderstrust-attends-wsis20-forum-high-level-event/wsis-2.jpg
 coverAlt: "Three people taking a selfie in front of the WSIS+20 Forum screen"
 legacyUrl: "https://coderstrust.global/coderstrust-attends-wsis20-forum-high-level-event/"

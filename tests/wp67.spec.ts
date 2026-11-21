@@ -211,8 +211,10 @@ test.describe('Item 4: "MoU" is "MOU" wherever it is printed', () => {
   test('the news topic is "Partnerships and MOUs" on the News page, with the page’s lead and its meta description', async ({ page }) => {
     await open(page, NEWS);
     const text = compact(await page.locator('main').textContent());
-    expect(text).toContain('Partnerships and MOUs, recognition, program events and leadership: what CodersTrust has announced');
-    expect(await page.locator('meta[name="description"]').getAttribute('content')).toContain('partnerships and MOUs, recognition, program events and leadership');
+    // WP166-C (R5-06, R5-07): the lead and the description were rewritten; both still say "partnerships and MOUs"
+    expect(text).toContain('Government contracts, partnerships and MOUs, recognition and program events');
+    expect(await page.locator('meta[name="description"]').getAttribute('content')).toContain('partnerships and MOUs, recognition and program events');
+    expect(text).toContain('Partnerships and MOUs'); // the topic chip
   });
 
   test('"MoU" is on no built page, in its text, attributes or structured data, except in one person’s words (an archived news post quotes them verbatim)', () => {

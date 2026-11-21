@@ -1,18 +1,16 @@
 ---
-title: "CodersTrust Seals Groundbreaking MOU with NCTB, Paving the Way for Competency-Based Learning Opportunities"
+title: "CodersTrust and Bangladesh’s National Curriculum and Textbook Board Sign an MOU on Competency-Based Learning"
 date: 2023-12-12
-updated: 2026-10-30
+updated: 2026-11-21
 topic: partnerships
-excerpt: "CodersTrust and the National Curriculum and Textbook Board sign an MOU to develop competency-based experiential learning programs."
+excerpt: "CodersTrust and Bangladesh’s National Curriculum and Textbook Board sign an MOU on teacher training and hands-on robotics and coding learning in schools."
 cover: ../../assets/images/news/coderstrust-seals-groundbreaking-mou-with-nctb-paving-the-way-for-competency-based-learning-opportunities/mou-with-nctb-4.jpg
 coverAlt: "Officials exchanging signed MOU folders in front of the NCTB and CodersTrust banner"
 coverInBody: true
 legacyUrl: "https://coderstrust.global/coderstrust-seals-groundbreaking-mou-with-nctb-paving-the-way-for-competency-based-learning-opportunities/"
 tags: ["Featured News", "k-12 Education", "Latest News", "YouthWIDE"]
-seoTitle: "NCTB MOU on Competency-Based Learning"
+seoTitle: "National Curriculum and Textbook Board MOU"
 ---
-
-## CodersTrust and NCTB Sign an MOU on Competency-Based Learning
 
 ![Officials exchanging signed MOU folders in front of the NCTB and CodersTrust banner](../../assets/images/news/coderstrust-seals-groundbreaking-mou-with-nctb-paving-the-way-for-competency-based-learning-opportunities/mou-with-nctb.jpg)
 

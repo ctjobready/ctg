@@ -60,7 +60,8 @@ const FIELD = 'impact/in-the-field/';
 const GLOBAL_REACH = 'impact/global-reach/';
 
 const NEWS = [
-  { slug: 'coderstrust-launches-in-copenhagen-with-a-virgin-unite-dinner', title: 'CodersTrust Launches in Copenhagen with a Virgin Unite Dinner', date: 'April 8, 2014', topic: 'Programs and Events' },
+  // WP166-C (R6-21): the headline names who was in the room, in the register's "in the presence of" wording (TL-01); it was "CodersTrust Launches in Copenhagen with a Virgin Unite Dinner"
+  { slug: 'coderstrust-launches-in-copenhagen-with-a-virgin-unite-dinner', title: 'CodersTrust Launches in Copenhagen in the Presence of Sir Richard Branson and Morten Lund', date: 'April 8, 2014', topic: 'Programs and Events' },
   { slug: 'coderstrust-presents-at-in5-in-dubai', title: 'CodersTrust Presents at In5 in Dubai', date: 'April 29, 2014', topic: 'Programs and Events' },
   { slug: 'hour-of-code-in-somaliland', title: 'Hour of Code in Somaliland', date: 'December 21, 2015', topic: 'Programs and Events' },
   { slug: 'coderstrust-sets-up-in-india', title: 'CodersTrust Sets Up in India', date: 'August 7, 2016', topic: 'Programs and Events' },
@@ -619,7 +620,7 @@ test.describe('Digital Jobs Albania: the fifth case study, in the World Bank’s
     await open(page, ALBANIA);
     await expect(page.getByRole('heading', { level: 1 })).toHaveText('Digital Jobs Albania: Online Skills for Women, with the World Bank');
     expect(await page.locator('title').textContent()).toContain('Digital Jobs Albania');
-    expect(await texts(page, 'main h2')).toEqual(['Why This Program', 'Challenges', 'What CodersTrust Did', 'What Happened', 'Where the Model Runs Next', 'Talk to Us About a First Cohort']);
+    expect(await texts(page, 'main h2')).toEqual(['Why This Program', 'Challenges', 'What CodersTrust Did', 'What Happened', 'Talk to Us About a First Cohort']); // WP166-C (R4-11): "Where the Model Runs Next" folded into the closing band
     // WP162 removed PR-07's 500+ tile (the World Bank's May 2022 figures count the whole program); WP164 (owner decision 2026-11-03) shows PR-09, the implementing partner's 100+, with no evidence pill
     await expect(page.locator('.hero [data-fact="PR-07"]')).toHaveCount(0);
     await expect(page.locator('.hero .cs__stat')).toHaveCount(1);
@@ -627,7 +628,7 @@ test.describe('Digital Jobs Albania: the fifth case study, in the World Bank’s
     await expect(page.locator('.hero .cs__stat .evidence-tag')).toHaveCount(0);
     const hero = page.locator('img[fetchpriority="high"]').first();
     expect(await hero.getAttribute('data-asset')).toBe('legacy-global-digital-jobs-albania');
-    expect(await page.locator('#cta, section[aria-labelledby="related-h"]').count()).toBe(2);
+    expect(await page.locator('#cta, section[aria-labelledby="related-h"]').count()).toBe(1); // WP166-C (R4-11): one closing band, with the related-program and compare links
   });
 
   // WP164 (owner decision 2026-11-03): the context now also names Learnio, the former CodersTrust Global, which completed the program after the December 2021 split; the World Bank's own spelling "Coderstrust" is still never printed.
@@ -736,7 +737,7 @@ test.describe('five news-archive entries, dated and sourced, in American English
 
   test('the news index lists the five, newest of them in date order, with 47 posts in all (42 migrated and the five added)', async ({ page }) => {
     await open(page, 'news/');
-    const titles = await texts(page, 'main article h3, main article h2');
+    const titles = await texts(page, '#archive article h3, #archive article h2'); // WP166-C (R5-01): the Featured row above repeats four cards, so the count is the dated list's
     for (const n of NEWS) expect(titles, n.title).toContain(n.title);
     expect(titles.length).toBe(47);
   });

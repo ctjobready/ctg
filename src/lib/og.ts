@@ -19,7 +19,7 @@ const SECTION_CARDS: { prefix: string; card: OgCard }[] = [
   { prefix: '/contact/', card: { src: '/og/contact.png', alt: 'CodersTrust: Contact. Choose the route that fits you, and the right team will respond.' } },
   { prefix: '/impact/', card: { src: '/og/impact.png', alt: 'CodersTrust: Impact. Impact You Can Verify.' } },
   { prefix: '/about/', card: { src: '/og/about.png', alt: 'CodersTrust: About. A Global Workforce Organization, Built on Evidence.' } },
-  { prefix: '/news/', card: { src: '/og/news.png', alt: 'CodersTrust: News. Partnerships and MOUs, recognition, program events and leadership.' } },
+  { prefix: '/news/', card: { src: '/og/news.png', alt: 'CodersTrust: News. Government contracts, partnerships and MOUs, recognition and program events.' } },
 ];
 
 /** The card for a base-less page path (for example "/impact/outcomes-2026/"); the default card when no section matches. */

@@ -1,7 +1,7 @@
 ---
-title: "CodersTrust Chairman Aziz Ahmad Meets Bangladesh Foreign Affairs Minister Khalilur Rahman"
+title: "Aziz Ahmad Meets Bangladesh Foreign Minister Khalilur Rahman"
 date: 2026-09-13
-updated: 2026-10-30
+updated: 2026-11-21
 topic: leadership-advocacy
 excerpt: "Aziz Ahmad holds a courtesy meeting with Bangladesh’s Foreign Minister to discuss CodersTrust’s mission."
 cover: ../../assets/images/news/coderstrust-chairman-aziz-ahmad-meets-bangladesh-foreign-affairs-minister-khalilur-rahman/meeting-with-honble-foreign-minister-of-bangladesh.jpg

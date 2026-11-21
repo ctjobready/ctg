@@ -3,6 +3,7 @@ import Img from '../../ui/Img.astro';
 import EvidenceTag from '../../system/EvidenceTag.astro';
 import { mayRender } from '../../../lib/permissions';
 import type { StoryCardData } from './story-types';
+import { linkAttrs } from '../../../lib/url';
 
 /**
  * Filterable grid of story cards (progressive enhancement: without JavaScript every card shows and the filter is hidden).
@@ -58,6 +59,7 @@ const present = (['freelance', 'job', 'business', 'other'] as const).filter((p) 
               <p class="sc__name">{c.name}</p>
               {c.role && <p class="sc__role">{c.role}</p>}
               {c.caveat && <p class="sc__caveat">{c.caveat}</p>}
+              {c.caseStudy && <p class="sc__case"><a class="link" href={linkAttrs(c.caseStudy.href).href}>Read the Case Study<span class="sr-only">: {c.caseStudy.name}</span></a></p>}
             </div>
           </article>
         </li>
@@ -86,6 +88,7 @@ const present = (['freelance', 'job', 'business', 'other'] as const).filter((p) 
               <p class="sc__name">{c.name}</p>
               {c.role && <p class="sc__role">{c.role}</p>}
               {c.caveat && <p class="sc__caveat">{c.caveat}</p>}
+              {c.caseStudy && <p class="sc__case"><a class="link" href={linkAttrs(c.caseStudy.href).href}>Read the Case Study<span class="sr-only">: {c.caseStudy.name}</span></a></p>}
             </div>
           </article>
         </li>

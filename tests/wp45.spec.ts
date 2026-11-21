@@ -300,24 +300,26 @@ test.describe('Recognition: the H1 is the listing the register supports (item 17
 test.describe('News: the Her Power post carries a delivery note (item 20)', () => {
   const HER_POWER = 'news/25000-trainees-her-power-empowerment-of-women-through-ict-frontier-initiative/';
 
-  test('the archive banner ends with "Delivered: the national program trained 25,125 women, its full target." (WP83 had "Target: Her Power is a national program to train 25,125 women."; WP85, owner update 2026-10-24), tied to GV-01; the headline is unchanged', async ({ page }) => {
+  // WP166-C (R5-08): the note is a line of its own directly under the H1 (it was the banner's last line); the banner keeps the dates and the short note
+  test('the post carries "Delivered: the national program trained 25,125 women, its full target." under its H1 (WP83 had "Target: Her Power is a national program to train 25,125 women."; WP85, owner update 2026-10-24), tied to GV-01; the headline is unchanged', async ({ page }) => {
     await open(page, HER_POWER);
     const banner = page.locator('.archive-banner');
-    const note = banner.locator('.archive-banner__note');
+    const note = page.locator('.art__head .art__note');
+    await expect(banner.locator('.art__note, .archive-banner__note')).toHaveCount(0);
     // WP46 (cycle-22 review): the note closes with a text link to the Her Power case study (the sentence itself is unchanged)
     await expect(note).toHaveText('Delivered: the national program trained 25,125 women, its full target. See the Her Power case study.');
     await expect(note.locator('a')).toHaveText('See the Her Power case study.');
     expect(await note.locator('a').getAttribute('href')).toMatch(/\/impact\/case-studies\/her-power\/$/);
     expect(await note.getAttribute('data-fact')).toBe('GV-01');
     expect(fact('GV-01').text).toContain('a national program that trained 25,125 women');
-    expect(compact(await banner.textContent())).toContain('Archived post, lightly edited.');
+    expect(compact(await banner.textContent())).toContain('Lightly edited. Titles, offices and figures are as of publication;'); // WP166-C: the shorter note (it opened "Archived post, lightly edited.")
     await expect(page.getByRole('heading', { level: 1 })).toHaveText('Her Power Contract Aims to Train 25,125 Women: Empowerment of Women Through ICT Frontier Initiative');
   });
 
   test('another archived post has the standard banner and no note', async ({ page }) => {
     await open(page, 'news/coderstrust-chairman-mr-aziz-ahmad-receives-sdg-life-achievement-award-from-the-unsgii/');
     await expect(page.locator('.archive-banner')).toHaveCount(1);
-    await expect(page.locator('.archive-banner__note')).toHaveCount(0);
+    await expect(page.locator('.archive-banner__note, .art__note')).toHaveCount(0);
   });
 });
 
@@ -421,7 +423,7 @@ test.describe('The SDG award has the register’s name everywhere (item 27)', ()
     await open(page, 'about/recognition/');
     expect(await mainText(page)).toContain('SDG Life Achievement Award');
     await open(page, 'news/coderstrust-chairman-mr-aziz-ahmad-receives-sdg-life-achievement-award-from-the-unsgii/');
-    await expect(page.getByRole('heading', { level: 1 })).toHaveText('CodersTrust Chairman Mr. Aziz Ahmad Receives SDG Life Achievement Award from the UNGSII Foundation');
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Aziz Ahmad Receives SDG Life Achievement Award from the UNGSII Foundation'); // WP166-C (R5-18): person-led headlines start with the name
     expect(await mainText(page)).toContain('the SDG Life Achievement Award from the UNGSII Foundation');
     const lifetime = builtPages().filter((p) => /Lifetime Achievement/i.test(p.html));
     expect(lifetime.map((p) => p.route)).toEqual([]);

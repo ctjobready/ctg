@@ -1,14 +1,14 @@
 ---
-title: "MOU Signed Between Bangladesh Petroleum Institute (BPI) and CodersTrust"
+title: "CodersTrust Bangladesh and Bangladesh Petroleum Institute Sign an MOU on Digital Skills for the Energy Sector"
 date: 2025-10-18
-updated: 2026-10-30
+updated: 2026-11-21
 topic: partnerships
 excerpt: "Bangladesh Petroleum Institute and CodersTrust Bangladesh sign an MOU on capacity building and digital skills for the energy sector."
 cover: ../../assets/images/news/mou-signed-between-bangladesh-petroleum-institute-bpi-and-coderstrust/mou-between-bpi-and-coderstrust-4-2.jpg
 coverAlt: "Officials and CodersTrust representatives seated at a table under the MOU signing banner of the Bangladesh Petroleum Institute"
 legacyUrl: "https://coderstrust.global/mou-signed-between-bangladesh-petroleum-institute-bpi-and-coderstrust/"
 tags: ["MOU Signing"]
-seoTitle: "Bangladesh Petroleum Institute Signs MOU"
+seoTitle: "Digital Skills MOU for the Energy Sector"
 ---
 
 ![Officials and CodersTrust representatives seated at a table under the MOU signing banner of the Bangladesh Petroleum Institute](../../assets/images/news/mou-signed-between-bangladesh-petroleum-institute-bpi-and-coderstrust/mou-between-bpi-and-coderstrust-4-2.jpg)

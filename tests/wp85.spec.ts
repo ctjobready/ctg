@@ -45,6 +45,16 @@ async function showSlide(page: Page, n: number) {
 const SCOPE_NOTE = 'The total is contract scope, not a count of completers; it includes Her Power’s national program, which trained 25,125 women (CodersTrust trained 2,400 directly).';
 const OVERLAP = 'Her Power’s 25,125 is the same group counted in the 150,000+ enrollments through CodersTrust’s curriculum, not additional people.';
 const CONTRACT_NOTE = `${SCOPE_NOTE} ${OVERLAP}`;
+/** WP166-C (R5-20): the posts with the government band, whose "More News" lead with the Her Power post (its archived headline and its "Delivered" excerpt). */
+const GOVERNMENT_BAND_POSTS = [
+  '1000-trainees-enhancing-digital-government-economy-edge',
+  '1000-trainees-sheikh-kamal-ict-incubator-training',
+  'coderstrust-and-doict-shaping-a-smart-future-through-trainer-empowerment',
+  'coderstrust-seals-groundbreaking-mou-with-nctb-paving-the-way-for-competency-based-learning-opportunities',
+  'mou-signed-between-bangladesh-petroleum-institute-bpi-and-coderstrust',
+  'the-future-building-a-digital-factory-for-bangladesh',
+  'why-we-call-it-a-digital-factory',
+];
 const SLIDE_2 = 'Six government contracts with training and curriculum work scoped for 30,000+ people, not a count of completers. Her Power, one of the six, trained 25,125 women nationally, its full target; CodersTrust trained 2,400 directly. As the official training partner of Bangladesh’s National University for digital career skills and credentials, CodersTrust is onboarding 1.5M+ of the university’s own learners, who are not learners trained by CodersTrust.';
 
 /** Wordings that put the 25,125 as a target still to be met (WP83); none may stand. */
@@ -97,7 +107,8 @@ test.describe('WP85: the register says the national program trained 25,125 women
 test.describe('WP85: every 25,125 on a built page is said as trained', () => {
   // WP90: the SC-02 detail's form "courseware: 25,125 in Her Power’s national program, which used ..." is a reach figure, not a target
   // WP94 (triage A4): Investors' pointer sentence ("are already counted ... above") follows the note's "trained 2,400" sentence, so it is a reference to a figure already said as trained.
-  const TRAINED = /trained 25,125|25,125 women Her Power trained|25,125 is the same group counted|25,125 are already counted|25,125 women the national program trained|courseware: 25,125 in Her Power’s national program|both the 112,926 and the 25,125/;
+  // WP166-C (R4-12): the Her Power case study's hero shows the register's GV-01 tile ("25,125" over "women trained across 130 sub-districts …") and its sub-heading "The National Program Trained 25,125 Women …"
+  const TRAINED = /trained 25,125|Trained 25,125 Women|data-final="25,125"[^>]*data-value="25125"|25,125<\/span><\/p><p class="stat__label"[^>]*>women|25,125 women Her Power trained|25,125 is the same group counted|25,125 are already counted|25,125 women the national program trained|courseware: 25,125 in Her Power’s national program|both the 112,926 and the 25,125/;
   const ARCHIVED = /Aims to Train 25,125|aims to train and support 25,125|train and facilitate 25,125/;
 
   test('text, meta tags and JSON-LD: each 25,125 is in a "trained" context; only the Her Power news post and the news index keep the archived "aims to train" wording', () => {
@@ -110,7 +121,7 @@ test.describe('WP85: every 25,125 on a built page is said as trained', () => {
         mentions++;
         const near = html.slice(Math.max(0, (m.index ?? 0) - 45), (m.index ?? 0) + 70);
         if (TRAINED.test(near)) continue;
-        if (ARCHIVED.test(near) && (p.route === POST || p.route === '/news/')) {
+        if (ARCHIVED.test(near) && p.route.startsWith('/news/')) { // WP166-C: the Her Power card under "More News" on the government-band posts
           archived.push(p.route);
           continue;
         }
@@ -119,13 +130,13 @@ test.describe('WP85: every 25,125 on a built page is said as trained', () => {
     }
     expect(offenders).toEqual([]);
     expect(mentions).toBeGreaterThan(20);
-    expect([...new Set(archived)].sort()).toEqual(['/news/', POST].sort());
+    expect([...new Set(archived)].sort()).toEqual(['/news/', POST, ...GOVERNMENT_BAND_POSTS.map((s) => `/news/${s}/`)].sort());
   });
 
   test('no built page (the news post and index aside) words the 25,125 as a target still to be met', () => {
     const offenders: string[] = [];
     for (const p of builtPages()) {
-      if (p.route === POST || p.route === '/news/') continue;
+      if (p.route.startsWith('/news/')) continue; // WP166-C: every /news/ page is the archive (the government-band posts show the Her Power card)
       for (const re of TARGET_WORDING) if (re.test(p.html)) offenders.push(`${p.route} ${re}`);
     }
     expect(offenders).toEqual([]);
@@ -133,7 +144,7 @@ test.describe('WP85: every 25,125 on a built page is said as trained', () => {
 
   test('the pages that show the 25,125 are the seven that state it, the post, the news index and the style guide', () => {
     const routes = builtPages().filter((p) => p.html.includes('25,125')).map((p) => p.route).sort();
-    expect(routes).toEqual(['/', '/impact/', '/impact/case-studies/her-power/', '/news/', POST, '/our-model/jobready-platform/', '/partner-with-us/governments/', '/partner-with-us/investors/', '/programs/youthwide/', '/styleguide/'].sort());
+    expect(routes).toEqual(['/', '/impact/', '/impact/case-studies/her-power/', '/news/', POST, ...GOVERNMENT_BAND_POSTS.map((s) => `/news/${s}/`), '/our-model/jobready-platform/', '/partner-with-us/governments/', '/partner-with-us/investors/', '/programs/youthwide/', '/styleguide/'].sort());
   });
 
   test('the archived post keeps its headline as published; its banner note is a "Delivered" line tied to GV-01', () => {
@@ -157,7 +168,9 @@ test.describe('WP85: the pages that state the 25,125', () => {
   test('Impact: the 30,000+ tile carries the shared note; the Her Power tile says the 2,400 are among the 25,125 women', async ({ page }) => {
     await open(page, 'impact/');
     const tile = page.locator('#glance [data-fact~="GV-12"]').first();
-    expect(compact(await tile.textContent())).toContain(CONTRACT_NOTE);
+    // WP166-C (R4-17, owner approval of 21 November 2026, item 5): the Impact tile carries the note's first sentence; the overlap sentence stays on Governments and Investors
+    expect(compact(await tile.textContent())).toContain(SCOPE_NOTE);
+    expect(compact(await tile.textContent())).not.toContain(OVERLAP);
     const her = compact(await page.locator('#glance [data-fact~="PR-05"]').first().textContent());
     expect(her).toContain('The 2,400 are among the 25,125 women the national program trained.');
     expect(her).not.toMatch(/target/i);
@@ -194,10 +207,11 @@ test.describe('WP85: the pages that state the 25,125', () => {
     expect(compact(await faq.textContent())).toContain('Her Power, a national program of the Department of ICT (DoICT), under the ICT Division, trained 25,125 women across 130 sub-districts (upazilas), meeting its target. CodersTrust provided the curriculum, training manuals and mentorship guidelines and trained 2,400 women directly.');
   });
 
-  test('the Her Power case study: heading "National Scale: The Wider Program"; "The national program’s reach is a separate measure: ... trained 25,125 women ..., meeting its target."', async ({ page }) => {
+  // WP166-C (R4-12): the heading states the national result (it was "National Scale: The Wider Program"); the paragraph is unchanged
+  test('the Her Power case study: heading "The National Program Trained 25,125 Women Across 130 Sub-Districts"; "The national program’s reach is a separate measure: ... trained 25,125 women ..., meeting its target."', async ({ page }) => {
     await open(page, 'impact/case-studies/her-power/');
-    await expect(page.getByRole('heading', { level: 3, name: 'National Scale: The Wider Program' })).toBeVisible();
-    expect(titleCase('National Scale: The Wider Program')).toBe('National Scale: The Wider Program');
+    await expect(page.getByRole('heading', { level: 3, name: 'The National Program Trained 25,125 Women Across 130 Sub-Districts' })).toBeVisible();
+    expect(titleCase('The National Program Trained 25,125 Women Across 130 Sub-Districts')).toBe('The National Program Trained 25,125 Women Across 130 Sub-Districts');
     const para = compact(await page.locator('.hp__scale p').textContent());
     expect(para).toBe(
       'The in-work figure above covers 800 tracked women from the 2,400 that CodersTrust trained directly. The national program’s reach is a separate measure: Her Power (DoICT, under the ICT Division) is a national program that trained 25,125 women across 130 sub-districts (upazilas), meeting its target. The 2,400 women CodersTrust trained directly are among them.',
@@ -207,9 +221,10 @@ test.describe('WP85: the pages that state the 25,125', () => {
     expect(compact(await page.locator('main').textContent())).toContain('372 of 800 tracked women, from the 2,400 trained directly by CodersTrust, were in work (47%)');
   });
 
-  test('the Her Power news post: the banner note is "Delivered: the national program trained 25,125 women, its full target." with the case-study link; the headline stays "Aims to Train"', async ({ page }) => {
+  // WP166-C (R5-08): the note is a line of its own directly under the H1 (it was the banner's last line)
+  test('the Her Power news post: the note under the H1 is "Delivered: the national program trained 25,125 women, its full target." with the case-study link; the headline stays "Aims to Train"', async ({ page }) => {
     await open(page, 'news/25000-trainees-her-power-empowerment-of-women-through-ict-frontier-initiative/');
-    const note = page.locator('.archive-banner .archive-banner__note');
+    const note = page.locator('.art__head .art__note');
     await expect(note).toHaveText('Delivered: the national program trained 25,125 women, its full target. See the Her Power case study.');
     expect(await note.getAttribute('data-fact')).toBe('GV-01');
     expect(await note.locator('a').getAttribute('href')).toMatch(/\/impact\/case-studies\/her-power\/$/);

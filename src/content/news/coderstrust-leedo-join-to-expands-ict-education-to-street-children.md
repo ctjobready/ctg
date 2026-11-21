@@ -1,9 +1,9 @@
 ---
-title: "CodersTrust and LEEDO Collaborate to Extend ICT Education to Street Children, Empowering the Underprivileged"
+title: "CodersTrust and LEEDO Open a 20-Computer Lab for Street Children in Dhaka"
 date: 2022-06-19
-updated: 2026-11-02
+updated: 2026-11-21
 topic: programs-events
-excerpt: "CodersTrust and LEEDO start an initiative to give IT training to underprivileged street children in Dhaka."
+excerpt: "CodersTrust equips a 20-computer lab at the LEEDO Peace Home in Dhaka and starts three-month IT training for street children."
 cover: ../../assets/images/news/coderstrust-leedo-join-to-expands-ict-education-to-street-children/leedo1.jpg
 coverAlt: "Children raising their hands in celebration in the new computer lab at the LEEDO Peace Home"
 legacyUrl: "https://coderstrust.global/coderstrust-leedo-join-to-expands-ict-education-to-street-children/"

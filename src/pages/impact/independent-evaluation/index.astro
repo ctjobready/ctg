@@ -1,7 +1,7 @@
 ---
 import LongformLayout from '../../../layouts/LongformLayout.astro';
 import Accordion from '../../../components/ui/Accordion.astro';
-import BarChart from '../../../components/ui/BarChart.astro';
+import StackedBars from '../../../components/pages/impact/StackedBars.astro';
 import Icon from '../../../components/system/Icon.astro';
 import EvidenceTag from '../../../components/system/EvidenceTag.astro';
 import Fact from '../../../components/facts/Fact.astro';
@@ -21,15 +21,12 @@ const h1 = 'Randomized Trial: Women Offered a Place Were More Likely to Work';
 // generalized beyond CodersTrust’s WSDFM program), so the evaluator reads "BRAC University (BIGD)" to stay within 155 characters (151).
 const description = desc('A BRAC University (BIGD) randomized trial of CodersTrust’s WSDFM program: women offered a place were 10.3 percentage points more likely to be employed.');
 
-// RC-08 chart values must match the register text.
-const classes = [
-  { label: 'Control Group', value: 12 },
-  { label: 'Attended 1–10 Classes', value: 16 },
-  { label: 'Attended 11–24 Classes', value: 21 },
-  { label: 'Attended 25 or More Classes', value: 42 },
-];
-const rc08 = fact('RC-08').text;
-for (const c of classes) if (!rc08.includes(`${c.value}%`)) throw new Error(`RC-08 chart value ${c.value}% is not in the register text`);
+// WP166-C (R4-10, owner approval of 21 November 2026, item 5): the page's freelancing exhibit is the randomized comparison (RC-09, women offered a place against the control group), as on the WSDFM case study;
+// the classes-attended chart (RC-08, not randomized) is cut. The chart values must match the register text.
+const control = [47.2, 40.9, 11.9];
+const offered = [36.9, 34.6, 28.5];
+const rc09 = fact('RC-09').text;
+for (const v of [...control, ...offered]) if (!rc09.includes(`${v.toFixed(1)}%`)) throw new Error(`RC-09 chart value ${v} is not in the register text`);
 
 // WP30e: one decision question with a short answer (the page itself answers "Is there independent evidence?"). The answer is the shared Q3 shortened to its two claims.
 // WP107 (Sonnet XHigh run 3, Polish 5): one question does not make a FAQ, so the closing band is headed "How We Track Outcomes" and the answer sits directly under the H2 (no accordion, no FAQPage JSON-LD: the schema.org FAQPage needs a visible question and this page no longer prints one).
@@ -47,7 +44,7 @@ const jsonLd = [
     headline: h1,
     description,
     datePublished: '2026-10-08',
-    dateModified: '2026-11-02', // WP157 (2026-11-02: the nine-trials sentence no longer repeats its heading). Earlier: WP141 (2026-11-01: the program-scope qualifier is stated once per page). Earlier: WP134: WP133 changed the page text (owner rule 2026-10-31)
+    dateModified: '2026-11-21', // WP166-C (2026-11-21: the lead, the section order, the freelancing exhibit, the household line, the funders paragraph and the hero link). Earlier: WP157 (2026-11-02: the nine-trials sentence no longer repeats its heading). Earlier: WP141 (2026-11-01: the program-scope qualifier is stated once per page). Earlier: WP134: WP133 changed the page text (owner rule 2026-10-31)
     author: 'CodersTrust',
     citation: [
       {
@@ -75,12 +72,14 @@ const jsonLd = [
 // The discovery CTA is read above the list: a withheld call to action draws no closing band and so no entry. The band's heading is one constant for the entry and the band.
 const d = discoveryCta();
 const CLOSING_HEADING = 'Talk to Us About a First Cohort';
+// WP166-C (R4-02): the three facts a funder acts on (four times the benchmark, the journal, then the income and household effects) come right after the result; the text of each section is unchanged.
+const FREELANCING_HEADING = 'Freelancing: Women Offered a Place vs. the Control Group';
 const toc = [
   { id: 'summary', label: 'The Result' },
-  { id: 'results', label: 'Income, Freelancing and Household Effects' },
-  { id: 'classes', label: 'Freelancing Share by Classes Attended' },
   { id: 'context', label: 'Over Four Times the Average of Nine Training Trials' },
   { id: 'journal', label: 'Published in a Peer-Reviewed Journal' },
+  { id: 'results', label: 'Income, Freelancing and Household Effects' },
+  { id: 'freelancing', label: FREELANCING_HEADING },
   { id: 'funders', label: 'What It Means for Funders' },
   { id: 'outcomes', label: 'How We Track Outcomes' },
   // WP135 (Opus High run 10, Polish 2): the list ends with the closing band's heading, as Impact's and About's do; a withheld call to action draws no band and so no entry.
@@ -100,10 +99,15 @@ if (!attendedDetail) throw new Error('RC-13 no longer has a glance note');
 // WP50 (cycle-25 review): this lead is where the page first names the evaluator, so it spells it out (BIGD_FULL: "the BRAC Institute of Governance and Development (BIGD)"); the later "BIGD" on the page ("Read the BIGD Report (2022)") is the abbreviation it introduces.
 // WP61 (cycle-33 review, GPT-6.1 Sol G5): the first sentence carried the evaluator, the program, its length, its population and the result ("A randomized trial by ... found that women offered a place in CodersTrust’s WSDFM program, a 200-hour program for women in
 // Dhaka, were 10.3 percentage points more likely to be employed than the control group."). The result now comes first, with the evaluator; the second sentence says which program the trial evaluated and that it is not today’s 100-hour tracks. 46 words, inside the 40 to 60 above (45 since WP99, when the second sentence named CodersTrust’s WSDFM program).
-const directAnswer = `In a randomized trial by ${BIGD_FULL}, women offered a place were 10.3 percentage points more likely to be employed than the control group. The trial evaluated CodersTrust’s 200-hour WSDFM program for women in Dhaka, not today’s 100-hour tracks.`;
+// WP166-C (R4-03, owner approval of 21 November 2026, item 5): the lead says why the result matters (the nine-trial benchmark, in RC-06a's own words) in place of the scope caveat, which stays on the page in
+// "How to Read This Trial" ("CodersTrust’s 200-hour WSDFM program; today’s tracks are 100 hours.", RC-07 and PD-01). 47 words. The reviewer's closing sentence, "The trial is published in a peer-reviewed journal.", is left out:
+// the owner's WP99 answer (2026-10-28, Q2 option C) keeps the report figures apart from the peer-reviewed article, so no paragraph that names the journal carries a report figure (tests/wp99.spec.ts).
+const BENCHMARK_CLAUSE = 'over four times the 2.3-point average across nine randomized trials of vocational training';
+const directAnswer = `In a randomized trial of CodersTrust’s WSDFM program by ${BIGD_FULL}, women offered a place were 10.3 percentage points more likely to be employed than the control group: ${BENCHMARK_CLAUSE}.`;
 const answerWords = directAnswer.split(/\s+/).length;
 if (answerWords < 40 || answerWords > 60) throw new Error(`Independent evaluation direct answer is ${answerWords} words (40 to 60)`);
-if (!fact('RC-01').text.includes('10.3 percentage points') || !fact('RC-07').text.includes('200 hours') || fact('PD-01').stat?.value !== '100') throw new Error('Independent evaluation direct answer: RC-01, RC-07 or PD-01 changed');
+if (!fact('RC-01').text.includes('10.3 percentage points') || !(fact('RC-06a').headline ?? '').includes(BENCHMARK_CLAUSE)) throw new Error('Independent evaluation direct answer: RC-01 or RC-06a changed');
+if (!fact('RC-07').text.includes('200 hours') || fact('PD-01').stat?.value !== '100') throw new Error('Independent evaluation: the scope caveat under How to Read This Trial no longer matches RC-07 or PD-01');
 const incomeLine = (fact('RC-01').headline ?? '').split(/(?<=\.)\s+(?=[A-Z])/).slice(1).join(' ');
 if (!/^Their monthly income/.test(incomeLine)) throw new Error('Independent evaluation: RC-01 headline no longer has the income sentences');
 ---
@@ -115,11 +119,13 @@ if (!/^Their monthly income/.test(incomeLine)) throw new Error('Independent eval
   path={path}
   heading={h1}
   eyebrow="Independent Evaluation"
-  updated="2026-11-02"
+  updated="2026-11-21"
   toc={toc}
   breadcrumbs={[{ label: 'Impact', href: '/impact/' }, { label: 'Independent Evaluation' }]}
   jsonLd={jsonLd}
 >
+  {/* WP166-C (R4-14): one text link from the hero to the closing band; a withheld call to action draws no band and so no link. */}
+  {d.href && <Fragment slot="actions"><a class="link" href="#cta">{CLOSING_HEADING}<Icon name="arrow-right" size={16} /></a></Fragment>}
   <ReportSection id="summary" title="The Result">
     <p class="ie__type"><EvidenceTag type="Randomized Trial" /> <span>CodersTrust’s WSDFM program, women in Dhaka</span></p>
     <Callout tone="bluf">
@@ -128,6 +134,19 @@ if (!/^Their monthly income/.test(incomeLine)) throw new Error('Independent eval
     </Callout>
     <p><a class="link" href={bigdReport.url} rel={linkAttrs(bigdReport.url!).rel}>Read the BIGD Report (2022)<Icon name="arrow-right" size={16} /><span class="sr-only"> (opens {hostOf(bigdReport.url!)})</span></a></p>
     <Accordion items={[{ q: 'How to Read This Trial', a: howToRead }]} name="ie-method" />
+  </ReportSection>
+
+  <ReportSection id="context" title="Over Four Times the Average of Nine Training Trials">
+    <p data-fact="RC-06a"><Fact id="RC-06a" field="headline" /></p>
+  </ReportSection>
+
+  <ReportSection id="journal" title="Published in a Peer-Reviewed Journal">
+    <p data-fact="RC-15">The trial is also published in a peer-reviewed journal: Arman, Bhattacharjee, Das, Gomes and Mahmood (2026), “Tackling Women’s Unemployment: Evidence from an Online Jobs Experiment in Bangladesh,” <em>Economic Development and Cultural Change</em> 75(1): 367–399 (October 2026).{' '}
+      <a href={journal.url} rel={linkAttrs(journal.url!).rel}>{journal.url}<span class="sr-only"> (opens {hostOf(journal.url!)})</span></a>
+    </p>
+    <p data-fact="RC-16"><Fact id="RC-16" /></p>
+    <!-- WP166-C (R4-02): the report's income, household and freelancing results now follow this band, so the line no longer says "above" ("The results above come from BIGD’s report."). -->
+    <p>The other results on this page come from BIGD’s report. The article is a separate publication.</p>
   </ReportSection>
 
   <ReportSection id="results" title="Income, Freelancing and Household Effects">
@@ -140,37 +159,30 @@ if (!/^Their monthly income/.test(incomeLine)) throw new Error('Independent eval
       <!-- WP110 (Opus Low run 2, kit 76, Minor 3): the attenders' income is stated here once, as the plain figure the register's RC-04 no longer carries; RC-13 is its data-fact. -->
       <li data-fact="RC-13">Income about +$36 a month.</li>
       <li data-fact="RC-13">{attendedDetail}</li>
-      <!-- WP105 (Sonnet XHigh run 1, kit 71, Polish 2): the household line is the plain-words reading of RC-05, with no percentages (the six figures stay in the register and in the BIGD report); RC-05 stays the line's data-fact. -->
-      <li data-fact="RC-05">Household effects for women who attended, against the control group: higher food and non-food spending, more of them with savings, fewer loans and less stress.</li>
+      <!-- WP166-C (R4-32, owner approval of 21 November 2026, item 5): the household line is RC-14, the register's verified household figure (it was RC-05's plain-words reading with no number, WP105). -->
+      <li data-fact="RC-14"><Fact id="RC-14" /></li>
     </ul>
     <p data-fact="RC-04a">The report gives these amounts in taka: <Fact id="RC-04a" />.</p>
   </ReportSection>
 
-  <ReportSection id="classes" title="Freelancing Share by Classes Attended">
-    <p>In this study, freelancing was higher among women who attended more classes (attendance was not randomly assigned).</p>
-    <div data-fact="RC-08">
-      <BarChart
-        title="Share of Women Freelancing"
-        items={classes.map((c) => ({ label: c.label, value: c.value }))}
+  <ReportSection id="freelancing" title={FREELANCING_HEADING}>
+    <div data-fact="RC-09">
+      <StackedBars
+        title="Employment Status at Follow-Up: Women Offered a Place vs. the Control Group"
+        segments={['Unemployed', 'Other Employment', 'Freelancing']}
+        rows={[
+          { label: 'Control Group', values: control },
+          { label: 'Women Offered a Place', values: offered },
+        ]}
+        note="BIGD randomized trial; women offered a place vs. control group (intent to treat). Follow-up November–December 2021."
       />
     </div>
   </ReportSection>
 
-  <ReportSection id="context" title="Over Four Times the Average of Nine Training Trials">
-    <p data-fact="RC-06a"><Fact id="RC-06a" field="headline" /></p>
-  </ReportSection>
-
-  <ReportSection id="journal" title="Published in a Peer-Reviewed Journal">
-    <p data-fact="RC-15">The trial is also published in a peer-reviewed journal: Arman, Bhattacharjee, Das, Gomes and Mahmood (2026), “Tackling Women’s Unemployment: Evidence from an Online Jobs Experiment in Bangladesh,” <em>Economic Development and Cultural Change</em> 75(1): 367–399 (October 2026).{' '}
-      <a href={journal.url} rel={linkAttrs(journal.url!).rel}>{journal.url}<span class="sr-only"> (opens {hostOf(journal.url!)})</span></a>
-    </p>
-    <p data-fact="RC-16"><Fact id="RC-16" /></p>
-    <p>The results above come from BIGD’s report. The article is a separate publication.</p>
-  </ReportSection>
-
   <ReportSection id="funders" title="What It Means for Funders">
+    <!-- WP166-C (R4-08): the offer first (the scorecard agreed before the first cohort, independent evaluation welcome), then the limit and the methods note; the same facts and the same settled scorecard wording (WP138). -->
     <p>
-      The offered-place results are the closer guide to what a funded program can deliver, because they include women who were offered a place but did not attend. One trial in one population does not forecast a new country or a new track, so a new pilot starts from a scorecard agreed before the first cohort, with independent evaluation welcome.
+      <strong>A new pilot starts from a scorecard agreed before the first cohort, with independent evaluation welcome.</strong> One trial in one population does not forecast a new country or a new track. The offered-place results are the closer guide to what a funded program can deliver, because they include women who were offered a place but did not attend.
     </p>
     <p data-fact="RC-10"><Fact id="RC-10" />.{' '}
       <a class="link" href={bigdStudy.url} rel={linkAttrs(bigdStudy.url!).rel}>See BIGD’s Follow-Up Study<Icon name="arrow-right" size={16} /><span class="sr-only"> (opens {hostOf(bigdStudy.url!)})</span></a>{' '}

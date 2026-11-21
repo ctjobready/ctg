@@ -345,11 +345,24 @@ test.describe('WP129 item 6: every dated page whose visible text changed carries
     'impact/case-studies/kosovo-women-in-online-work/index.html',
     'impact/case-studies/undp-yes-korail/index.html',
     'impact/case-studies/digital-jobs-albania/index.html', // WP162: its text changed on 2026-11-03, so it left KEEP below
+    'impact/case-studies/wsdfm-women-freelancers/index.html', // WP166-C: its text changed on 2026-11-21, so it left KEEP below
     'partner-with-us/foundations/index.html',
     'partner-with-us/governments/index.html',
     'partner-with-us/investors/index.html',
     'programs/index.html',
   ];
+  // WP166-C (2026-11-21, the marketing-effectiveness review): Recognition (three forum headlines read from News), Impact, Stories, Global Reach, In the Field and the case studies moved on.
+  const MOVED_1121 = new Set([
+    'about/recognition/index.html',
+    'impact/index.html',
+    'impact/stories/index.html',
+    'impact/global-reach/index.html',
+    'impact/in-the-field/index.html',
+    'impact/case-studies/kosovo-women-in-online-work/index.html',
+    'impact/case-studies/undp-yes-korail/index.html',
+    'impact/case-studies/digital-jobs-albania/index.html',
+    'impact/case-studies/wsdfm-women-freelancers/index.html',
+  ]);
   for (const route of JSONLD_ONLY) {
     const day = MOVED_1121.has(route) ? '2026-11-21' : MOVED_1103.has(route) ? '2026-11-03' : MOVED_1102.has(route) ? '2026-11-02' : MOVED_1101.has(route) ? '2026-11-01' : '2026-10-31';
     test(`${route} pins its own JSON-LD dateModified to ${day}`, () => {
@@ -361,7 +374,7 @@ test.describe('WP129 item 6: every dated page whose visible text changed carries
   // WP161-B: the Abdul Karim and Faruque Hossain profiles left this list; their text changed on 2026-11-02 (Faruque Hossain's role, "former Executive Chairman", which Abdul Karim's colleague cards show), and tests/wp161-b.spec.ts holds their dates.
   const KEEP: [string, string][] = [
     // WP161-A (adversarial review A-01): both declare the day of their last visible change instead of the shared 2026-10-10 fallback.
-    ['impact/case-studies/wsdfm-women-freelancers/index.html', '2026-10-28'],
+    // WP166-C: WSDFM left this list (it kept 2026-10-28 until its text changed on 2026-11-21); JSONLD_ONLY above holds its new date.
     // WP162: Digital Jobs Albania left this list (it kept 2026-10-21 until its text changed on 2026-11-03); JSONLD_ONLY above holds its new date.
   ];
   for (const [route, day] of KEEP) {

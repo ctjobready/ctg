@@ -85,19 +85,20 @@ const OCTOBER_POSTS = [
 test.describe('A-01 case studies and Stories declare the day their visible text last changed', () => {
   const article = (slug: string) => nodeOf(`impact/case-studies/${slug}/index.html`, 'Article');
   // WP162: Digital Jobs Albania's text changed again on 2026-11-03 (its years, Results band and meta description), so it says 2026-11-03 (it said 2026-10-21); tests/wp162.spec.ts holds that date too.
-  test('WSDFM says 2026-10-28 and Digital Jobs Albania 2026-11-03 (no longer the shared 2026-10-10)', () => {
-    expect(article('wsdfm-women-freelancers').dateModified).toBe('2026-10-28');
-    expect(article('digital-jobs-albania').dateModified).toBe('2026-11-03');
+  // WP166-C (2026-11-21): the five case studies changed visible text again (closing band, story band and each page's own findings), so all five say 2026-11-21 (tests/wp166-c.spec.ts).
+  test('WSDFM and Digital Jobs Albania declare their own day (no longer the shared 2026-10-10)', () => {
+    expect(article('wsdfm-women-freelancers').dateModified).toBe('2026-11-21');
+    expect(article('digital-jobs-albania').dateModified).toBe('2026-11-21');
   });
   test('the other three keep their own dates, and all five keep datePublished 2026-10-08', () => {
-    expect(article('kosovo-women-in-online-work').dateModified).toBe('2026-11-02');
-    expect(article('undp-yes-korail').dateModified).toBe('2026-11-01');
-    expect(article('her-power').dateModified).toBe('2026-10-31');
+    expect(article('kosovo-women-in-online-work').dateModified).toBe('2026-11-21');
+    expect(article('undp-yes-korail').dateModified).toBe('2026-11-21');
+    expect(article('her-power').dateModified).toBe('2026-11-21');
     for (const s of ['kosovo-women-in-online-work', 'digital-jobs-albania', 'wsdfm-women-freelancers', 'undp-yes-korail', 'her-power']) expect(article(s).datePublished, s).toBe('2026-10-08');
   });
-  test('Stories: the CollectionPage and the Article both say 2026-10-31', () => {
-    expect(nodeOf('impact/stories/index.html', 'CollectionPage').dateModified).toBe('2026-10-31');
-    expect(nodeOf('impact/stories/index.html', 'Article').dateModified).toBe('2026-10-31');
+  test('Stories: the CollectionPage and the Article both say the same day (WP166-C: 2026-11-21)', () => {
+    expect(nodeOf('impact/stories/index.html', 'CollectionPage').dateModified).toBe('2026-11-21');
+    expect(nodeOf('impact/stories/index.html', 'Article').dateModified).toBe('2026-11-21');
   });
 });
 
@@ -162,9 +163,10 @@ test.describe('A-04 Article.headline equals the page H1', () => {
     });
   }
   // WP162 (2026-11-03): Global Reach (the Albania row) and the Case Studies hub (its lead and the Albania card) changed visible text, so both moved on to 2026-11-03; the headline change alone still moves no date.
+  // WP166-C (2026-11-21): both changed visible text again (the Global Reach lead; the hub's lead and its WSDFM card).
   test('the dates of the three Article nodes stay as they were (the headline is structured data, not visible text)', () => {
-    expect(nodeOf('impact/global-reach/index.html', 'Article').dateModified).toBe('2026-11-03');
-    expect(nodeOf('impact/case-studies/index.html', 'Article').dateModified).toBe('2026-11-03');
+    expect(nodeOf('impact/global-reach/index.html', 'Article').dateModified).toBe('2026-11-21');
+    expect(nodeOf('impact/case-studies/index.html', 'Article').dateModified).toBe('2026-11-21');
   });
 });
 
@@ -181,10 +183,11 @@ test.describe('A-05 and A-06 Outcomes 2026: the Dataset description and the Down
     expect(section).toContain(`Download the Survey Aggregates (CSV) ${ROUNDING}`);
     expect(count(main(OUTCOMES), ROUNDING)).toBe(1);
   });
-  test(`the page's own date moves to ${TODAY} (visible text changed)`, () => {
-    expect(lastUpdated(OUTCOMES)).toBe(TODAY);
-    expect(nodeOf(OUTCOMES, 'Dataset').dateModified).toBe(TODAY);
-    expect(nodeOf(OUTCOMES, 'WebPage').dateModified).toBe(TODAY);
+  // WP166-C moved the page on to 2026-11-21 (its lead, the speed heading and the respondents band).
+  test(`the page's own date moves on when its visible text changes (${TODAY}; WP166-C: 2026-11-21)`, () => {
+    expect(lastUpdated(OUTCOMES)).toBe('2026-11-21');
+    expect(nodeOf(OUTCOMES, 'Dataset').dateModified).toBe('2026-11-21');
+    expect(nodeOf(OUTCOMES, 'WebPage').dateModified).toBe('2026-11-21');
   });
 });
 

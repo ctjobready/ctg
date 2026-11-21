@@ -1,9 +1,9 @@
 ---
-title: "CodersTrust Chairman Mr. Aziz Ahmad Joins a High-Level Discussion on Cybersecurity & Artificial Intelligence During UNGA Week"
+title: "Aziz Ahmad Joins a BCIU and Mastercard Discussion on Cybersecurity and AI During UNGA Week"
 date: 2025-09-23
-updated: 2026-11-02
+updated: 2026-11-21
 topic: leadership-advocacy
-excerpt: "Aziz Ahmad joins a high-level discussion on cybersecurity, digital governance and AI during UN General Assembly week in New York."
+excerpt: "Aziz Ahmad joins a discussion hosted by BCIU and Mastercard on cybersecurity, digital governance and AI during UN General Assembly week in New York."
 cover: ../../assets/images/news/coderstrust-chairman-mr-aziz-ahmad-speaks-on-cybersecurity-artificial-intelligence-at-united-nations-general-assembly-unga-2025/cybersecurity-ai-at-unga-2025-4-2.jpg
 coverAlt: "Two men standing in front of a Digital Ambassadors Forum banner"
 coverInBody: true

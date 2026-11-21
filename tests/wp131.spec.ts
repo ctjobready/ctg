@@ -35,13 +35,13 @@ test('Polish 2: Home FAQ states the welcome for independent evaluation as its ow
 });
 
 test('Polish 3: the CCNY visit headline says "Discuss an Expanded Partnership" on the post, the News index and its JSON-LD; the slug stays', () => {
-  const H = 'CodersTrust Chairman Aziz Ahmad Visits City College Downtown to Discuss an Expanded Partnership';
+  const H = 'CodersTrust and the City College of New York Discuss an Expanded Partnership'; // WP166-C (R5-18): institutions first (it was "CodersTrust Chairman Aziz Ahmad Visits City College Downtown to Discuss an Expanded Partnership")
   const raw = html(CCNY);
   expect(visible(raw)).toContain(H);
   expect(raw).toContain(`"headline":"${H}"`);
   expect(visible(html('news/index.html'))).toContain(H);
   for (const page of [CCNY, 'news/index.html']) expect(visible(html(page)), page).not.toContain('to Explore Global Partnership');
-  expect(raw).toMatch(/<time datetime="2026-10-3[01]"/);
+  expect(raw).toMatch(/<time datetime="2026-(10-3[01]|11-21)"/); // WP166-C re-dated every post
 });
 
 test('Polish 4: the CodersTrust boilerplate in the three posts says "for young learners", and no CodersTrust description says K-12', () => {

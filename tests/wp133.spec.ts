@@ -27,11 +27,12 @@ test('Minor 1: the government and university News closing lines ask for two suit
   expect(main(LINES[0][0])).not.toContain('preferred dates');
 });
 
-test('Minor 1: the four News closing texts in the source each ask for two suitable times', () => {
+// WP166-C (R5-19): a fifth, the school band ("Tell us your school, grade levels and two suitable times for a discovery session.")
+test('Minor 1: the five News closing texts in the source each ask for two suitable times', () => {
   const src = readFileSync('src/components/pages/news/news.ts', 'utf8');
   const block = /export const NEWS_CTA[\s\S]*?\n};/.exec(src)?.[0] ?? '';
   const texts = [...block.matchAll(/text: '([^']+)'/g)].map((m) => m[1]);
-  expect(texts).toHaveLength(4);
+  expect(texts).toHaveLength(5);
   for (const t of texts) expect(t, t).toMatch(/two suitable times/);
 });
 

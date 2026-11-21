@@ -142,11 +142,10 @@ test.describe('WP123, polish', () => {
     for (const rel of [MOU_BASE, LEEDO, DISCOVERY, BUILD_PEACE, RECOGNITION_POST, FREELANCING, UPEACE]) {
       // WP126 re-dated the Discovery Education and HolonIQ 2023 posts (countToday note) to 2026-10-30
       // WP161-B re-dated LEEDO, Discovery Education and the HolonIQ 2023 post to 2026-11-02 (Fable review A-19, A-21, A-23)
-      if ([LEEDO, DISCOVERY, RECOGNITION_POST].includes(rel)) {
-        expect(html(rel), rel).toMatch(/"dateModified":"2026-11-02"/);
-        continue;
-      }
-      expect(html(rel), rel).toMatch(rel === DISCOVERY || rel === RECOGNITION_POST ? /"dateModified":"2026-10-30"/ : /"dateModified":"2026-10-(29|30)"/); // WP127 re-dated more of these (serial-comma sweep)
+      // WP166-C re-dated every post to 2026-11-21 (the dated note, headlines, closing links and "More News" cards changed)
+      expect(html(rel), rel).toMatch(/"dateModified":"2026-11-21"/);
+      if ([LEEDO, DISCOVERY, RECOGNITION_POST].includes(rel)) continue;
+      expect(html(rel), rel).not.toMatch(/"dateModified":"2026-10-(29|30)"/); // WP127 had re-dated more of these (serial-comma sweep)
     }
   });
 });

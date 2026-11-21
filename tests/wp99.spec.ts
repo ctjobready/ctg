@@ -191,7 +191,7 @@ test.describe('Item 3: the Trial page and FAQ Q4 cite the peer-reviewed article;
     const ratio = band.locator('p[data-fact="RC-16"]');
     await expect(ratio).toHaveCount(1);
     expect(compact(await ratio.textContent())).toBe('The journal article estimates a benefit/cost ratio of 3.01 for CodersTrust’s 200-hour WSDFM program.');
-    expect(compact(await band.textContent())).toContain('The results above come from BIGD’s report. The article is a separate publication.');
+    expect(compact(await band.textContent())).toContain('The other results on this page come from BIGD’s report. The article is a separate publication.'); // WP166-C (R4-02): the band now precedes the report's results, so it no longer says "above"
   });
 
   test('the report figures are never labelled peer-reviewed: the result band does not say it, and no paragraph that says it carries a percentage or a dollar figure', async ({ page }) => {
@@ -321,12 +321,13 @@ test.describe('Item 5: CodersTrust’s WSDFM program, not "predecessor program"'
     await open(page, TRIAL);
     expect(compact(await page.locator('li[data-fact="RC-07 PD-01"]').textContent())).toBe('What was evaluated. CodersTrust’s 200-hour WSDFM program; today’s tracks are 100 hours.'); // WP133: plural
     expect(compact(await page.locator('.ie__type').textContent())).toContain('CodersTrust’s WSDFM program, women in Dhaka');
-    expect(compact(await page.locator('main').textContent())).toContain('The trial evaluated CodersTrust’s 200-hour WSDFM program for women in Dhaka, not today’s 100-hour tracks.');
+    // WP166-C (R4-03): the lead's caveat sentence moved out of the hero; the caveat stays on the page in "How to Read This Trial" (above) and in FAQ Q15 (below)
+    expect(compact(await page.locator('main').textContent())).not.toContain('The trial evaluated CodersTrust’s 200-hour WSDFM program for women in Dhaka, not today’s 100-hour tracks.');
     expect(faqs.find((f) => f.id === 'Q15')?.a).toContain('evaluated CodersTrust’s 200-hour WSDFM program for women in Dhaka, not today’s 100-hour tracks');
     // WP166-A (marketing review R7-21): BRAC, the name funders know, in the description; the program stays named
     expect(compact(await page.locator('meta[name="description"]').getAttribute('content'))).toBe('A BRAC University (BIGD) randomized trial of CodersTrust’s WSDFM program: women offered a place were 10.3 percentage points more likely to be employed.');
     await open(page, 'impact/case-studies/wsdfm-women-freelancers/');
-    await expect(page.getByRole('heading', { level: 1 })).toHaveText('CodersTrust’s WSDFM Program Evaluated by a Randomized Trial');
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText('WSDFM: Freelancing Skills for Women, Evaluated by a Randomized Trial'); // WP166-C (R4-29); it still names the WSDFM program, not a "predecessor"
     expect(await page.locator('meta[name="description"]').getAttribute('content')).toBe('WSDFM (Porticus): a randomized trial of the program found women offered a place had an estimated 41% higher monthly income than the control group.');
   });
 
@@ -372,9 +373,13 @@ test.describe('Item 6: 85.0%, 68.2% and 19.6% describe all responding alumni, no
 
   test('no sentence on a built page that gives 85.0%, 68.2% or 19.6% calls the people "surveyed completers" or "completers"', () => {
     const offenders: string[] = [];
+    // WP166-C: the text is read block by block (a heading, paragraph, list item or cell ends a sentence), so a chart caption without a closing period ("… Among Surveyed Completers … Scores of 7 or higher: 82.5%")
+    // is not read as one sentence with the next band's opening ("Who Responded" now follows the recommendation chart on /impact/outcomes-2026/)
     for (const p of sitePages()) {
-      for (const s of visible(p.html).split(/(?<=[.!?])\s+/)) {
-        if (/\b(85\.0%|68\.2%|19\.6%)/.test(s) && /completers/i.test(s)) offenders.push(`${p.route}: ${s.slice(0, 140)}`);
+      for (const block of p.html.split(/<\/(?:p|li|h[1-6]|dd|dt|td|th|figcaption|caption|summary)>/)) {
+        for (const s of visible(block).split(/(?<=[.!?])\s+/)) {
+          if (/\b(85\.0%|68\.2%|19\.6%)/.test(s) && /completers/i.test(s)) offenders.push(`${p.route}: ${s.slice(0, 140)}`);
+        }
       }
     }
     expect(offenders).toEqual([]);

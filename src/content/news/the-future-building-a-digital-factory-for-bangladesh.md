@@ -1,7 +1,7 @@
 ---
-title: "The Future: Building a Digital Factory for Bangladesh"
+title: "Aziz Ahmad on Building a Digital Factory for Bangladesh"
 date: 2026-07-17
-updated: 2026-11-02
+updated: 2026-11-21
 topic: insights
 excerpt: "Aziz Ahmad outlines a vision of Bangladesh as a digital factory, with AI and digital skills reaching every district, town and village."
 cover: ../../assets/images/news/the-future-building-a-digital-factory-for-bangladesh/technical-excellence.jpg

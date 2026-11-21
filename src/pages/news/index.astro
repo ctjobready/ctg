@@ -8,20 +8,31 @@ import HeroArt from '../../components/ui/HeroArt.astro';
 import Badge from '../../components/system/Badge.astro';
 import Icon from '../../components/system/Icon.astro';
 import NewsGrid from '../../components/pages/news/NewsGrid.astro';
-import { allNews, coverAlt, newsHref, TOPICS } from '../../components/pages/news/news';
+import NewsCard from '../../components/ui/NewsCard.astro';
+import CTABand from '../../components/ui/CTABand.astro';
+import { allNews, coverAlt, featuredNews, newsHref, NEWS_CTA, TOPICS } from '../../components/pages/news/news';
 import { curlyApostrophes, formatDate, isoDate } from '../../lib/format';
 import { pageUrl, webPage } from '../../lib/schema';
 import { mayRender } from '../../lib/permissions';
 import { url } from '../../lib/url';
+import { ctaHref } from '../../lib/mailto';
+import { CTAS } from '../../data/ctas';
 
 const posts = await allNews();
 const latest = posts[0];
 // D13: the featured cover carries the same asset ID as on its card and article (news-<slug>); staging swaps in the illustration when the gate says so.
 const latestAsset = `news-${latest.id}`;
 const showLatestCover = Boolean(latest.data.cover) && mayRender(latestAsset);
+// WP166-C (R5-01): four proof stories above the dated list (FEATURED_NEWS, news.ts); the dated list below is unchanged and still opens on "Latest".
+const featured = featuredNews(posts);
+// WP166-C (R5-02): the index ends on the general band the posts carry (NEWS_CTA.general), word for word, instead of dropping into the footer.
+const closing = NEWS_CTA.general;
+const closingCta = { label: CTAS[closing.cta].label, href: ctaHref(closing.cta) };
+// WP166-C (R5-06, R5-07): a headline and lead that say what the archive holds; the two dating notes are one note under "Browse by Topic".
+const description = 'CodersTrust news since 2014: government contracts, partnerships and MOUs, recognition and program events.';
 const jsonLd = [
   {
-    ...webPage({ path: '/news/', name: 'News', description: 'News from CodersTrust: partnerships and MOUs, recognition, program events and leadership.', type: 'CollectionPage', breadcrumb: [{ name: 'Home', path: '/' }, { name: 'News', path: '/news/' }] }),
+    ...webPage({ path: '/news/', name: 'News', description, type: 'CollectionPage', breadcrumb: [{ name: 'Home', path: '/' }, { name: 'News', path: '/news/' }] }),
     mainEntity: {
       '@type': 'ItemList',
       itemListElement: posts.map((p, i) => ({ '@type': 'ListItem', position: i + 1, url: pageUrl(newsHref(p)), name: p.data.title })),
@@ -32,14 +43,21 @@ const jsonLd = [
 
 <BaseLayout
   title="News: Partnerships, Recognition and Events"
-  description="News from CodersTrust: partnerships and MOUs, recognition, program events and leadership, each dated by publication or event."
+  description={description}
   breadcrumbs={[{ label: 'News' }]}
   jsonLd={jsonLd}
 >
-  <Hero eyebrow="Newsroom" title="News from CodersTrust" lead="Partnerships and MOUs, recognition, program events and leadership: what CodersTrust has announced, each post dated by its publication or, for posts written later from dated sources, by its event date." art={false} />
+  <Hero eyebrow="Newsroom" title="Contracts, Partnerships and Recognition Since 2014" lead="Government contracts, partnerships and MOUs, recognition and program events, from the 2014 launch in Copenhagen to this year." art={false} />
+
+  <Section id="featured" aria-labelledby="featured-h">
+    <SectionHeader id="featured-h" title="Featured" />
+    <div class="grid-cards">
+      {featured.map((p) => <NewsCard title={p.data.title} date={p.data.date} topic={TOPICS[p.data.topic]} excerpt={p.data.excerpt} image={p.data.cover} imageAlt={coverAlt(p.data.coverAlt)} href={newsHref(p)} />)}
+    </div>
+  </Section>
 
   <Section id="archive" aria-labelledby="archive-h">
-    <SectionHeader id="archive-h" eyebrow="All News" title="Browse by Topic" lead="Older posts are lightly edited from the original; each carries the dates its titles, offices and figures reflect." />
+    <SectionHeader id="archive-h" eyebrow="All News" title="Browse by Topic" lead="Posts carry their publication date; posts written later from dated sources carry the event date. Older posts are lightly edited from the original, and each carries the dates its titles, offices and figures reflect." />
     <!-- The most recent post is the first, full-width item of the same list, so the topic counts cover every post and the filter applies to it too. -->
     <NewsGrid posts={posts}>
       <article slot="featured" class="feat card card--link" data-reveal>
@@ -59,6 +77,8 @@ const jsonLd = [
       </article>
     </NewsGrid>
   </Section>
+
+  <CTABand id="cta" heading={closing.heading} text={closing.text} cta={closingCta} secondary={closing.offer} />
 </BaseLayout>
 
 <style>

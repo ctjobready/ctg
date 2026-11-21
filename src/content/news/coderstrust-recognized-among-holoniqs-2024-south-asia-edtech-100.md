@@ -1,9 +1,9 @@
 ---
-title: "CodersTrust Recognized Among HolonIQ’s 2024 South Asia EdTech 100"
+title: "CodersTrust Named in HolonIQ’s 2024 South Asia EdTech 100, Its Second Listing"
 date: 2025-01-22
-updated: 2026-11-02
+updated: 2026-11-21
 topic: recognition
-excerpt: "CodersTrust is named in HolonIQ’s 2024 South Asia EdTech 100."
+excerpt: "CodersTrust is named in HolonIQ’s 2024 South Asia EdTech 100, its second listing after 2023."
 cover: ../../assets/images/news/coderstrust-recognized-among-holoniqs-2024-south-asia-edtech-100/holoniq-24.jpg
 coverAlt: "Graphic of the HolonIQ 2024 South Asia EdTech 100 list"
 legacyUrl: "https://coderstrust.global/coderstrust-recognized-among-holoniqs-2024-south-asia-edtech-100/"

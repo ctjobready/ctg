@@ -1,9 +1,9 @@
 ---
-title: "CodersTrust Students Were Invited to Apply to UPEACE’s “Young Leaders for Peace” Summer Programme 2026"
+title: "CodersTrust Alumna Attends UPEACE’s Young Leaders for Peace Summer Programme on a Scholarship"
 date: 2026-04-17
-updated: 2026-11-03
+updated: 2026-11-21
 topic: programs-events
-excerpt: "CodersTrust learners were invited to apply for UPEACE’s Young Leaders for Peace Summer Programme 2026, which ran June 14 to 28 in San José, Costa Rica."
+excerpt: "A CodersTrust alumna attended UPEACE’s Young Leaders for Peace Summer Programme in San José, Costa Rica, on a scholarship in June 2026."
 cover: ../../assets/images/news/coderstrust-students-invited-to-join-upeaces-young-leaders-for-peace-summer-programme-2026/upace-students.jpg
 coverAlt: "A man in a white shirt standing beside young students who hold their certificates, in front of a University for Peace banner"
 legacyUrl: "https://coderstrust.global/coderstrust-students-invited-to-join-upeaces-young-leaders-for-peace-summer-programme-2026/"
@@ -19,7 +19,7 @@ gallery:
     alt: "Students in life jackets sitting together on a boat on a river"
   - image: ../../assets/images/news/coderstrust-students-invited-to-join-upeaces-young-leaders-for-peace-summer-programme-2026/upace-students-8.jpg
     alt: "Students sitting around a long table in a University for Peace classroom while a man speaks"
-seoTitle: "Young Leaders for Peace Summer Programme 2026"
+seoTitle: "Alumna Attends UPEACE Young Leaders for Peace"
 ---
 
 ![](../../assets/images/news/coderstrust-students-invited-to-join-upeaces-young-leaders-for-peace-summer-programme-2026/upace-students.jpg)
@@ -55,11 +55,6 @@ Eligible students within the CodersTrust network were encouraged to take this st
 
 Update: A CodersTrust alumna attended the June 2026 program on a scholarship.
 
-## Program Information
-
-The 2026 program has concluded. Program details remain available from UPEACE.
-
-- [Explore Program Details](https://www.upeaceny.org/young-leaders-for-peace)
-- [Download Brochure](https://www.upeaceny.org/_files/ugd/cb3bb5_52599eefe4a84fecb7dc5d38225a2b8e.pdf)
+The 2026 program has concluded. Program details remain available from [UPEACE](https://www.upeaceny.org/young-leaders-for-peace).
 
 ![Two young women in Sustainable Development Goals t-shirts feeding sloths in a tree at a wildlife sanctuary](../../assets/images/news/coderstrust-students-invited-to-join-upeaces-young-leaders-for-peace-summer-programme-2026/upeace-students-activity.jpg)

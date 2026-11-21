@@ -74,12 +74,13 @@ test.describe('WP94 A4: Investors points back to its reconciliation; Impact keep
     expect(CONTRACT_TOTAL_NOTE_INVESTORS.facts).toEqual(CONTRACT_TOTAL_NOTE.facts);
   });
 
-  test('the Investors contract note prints the pointer and Impact prints the full sentence', async ({ page }) => {
+  // WP166-C (R4-17, owner approval of 21 November 2026, item 5): Impact's tile keeps the note's first sentence only
+  test('the Investors contract note prints the pointer and Impact prints the first sentence only', async ({ page }) => {
     await page.setViewportSize(DESKTOP);
     await open(page, 'partner-with-us/investors/');
     await expect(page.locator('#reach .ir__note')).toHaveText(CONTRACT_TOTAL_NOTE_INVESTORS.text);
     await open(page, 'impact/');
-    await expect(page.locator('#glance [data-fact~="GV-12"] .glance__note, #glance [data-fact~="GV-12"]').first()).toContainText(FULL);
+    await expect(page.locator('#glance [data-fact~="GV-12"] .glance__note, #glance [data-fact~="GV-12"]').first()).not.toContainText(FULL);
   });
 });
 

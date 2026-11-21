@@ -200,17 +200,14 @@ test.describe('R5 (Grok): YouthWIDE’s country answer does not read as all 16 s
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 test.describe('R6 (Grok): Independent Evaluation does not read the classes result as a dose effect', () => {
-  test('the band is "Freelancing Share by Classes Attended" (heading and contents link, anchor unchanged) and says it as this study’s finding', async ({ page }) => {
+  // WP166-C (R4-10, owner approval of 21 November 2026, item 5): the classes-attended band (RC-08) this item worded is cut; the page's freelancing exhibit is the randomized comparison (RC-09), so no dose effect can be read into it
+  test('the classes band is gone and the freelancing band is the randomized comparison; nothing reads as a dose effect', async ({ page }) => {
     await open(page, EVALUATION);
-    await expect(page.locator('#classes h2')).toHaveText('Freelancing Share by Classes Attended');
-    await expect(page.locator('a[href="#classes"]').first()).toHaveText('Freelancing Share by Classes Attended');
-    await expect(page.locator('#classes .rsec__body > p').first()).toHaveText('In this study, freelancing was higher among women who attended more classes (attendance was not randomly assigned).'); // WP161-B (Fable review A-41)
-    // the chart under it is titled "Share of Women Freelancing", not the heading's words again; its data (RC-08) and rows are unchanged
-    await expect(page.locator('#classes [data-fact="RC-08"] .bars__title')).toHaveText('Share of Women Freelancing');
-    await expect(page.locator('#classes [data-fact="RC-08"] .bars__data caption')).toHaveText('Share of Women Freelancing');
-    expect(await texts(page, '#classes [data-fact="RC-08"] .bars__label')).toEqual(['Control Group', 'Attended 1–10 Classes', 'Attended 11–24 Classes', 'Attended 25 or More Classes']);
-    await expect(page.locator('#classes [data-fact="RC-08"] .bars__row')).toHaveCount(4);
-    expect(await texts(page, '#classes [data-fact="RC-08"] .bars__value')).toEqual(['12%', '16%', '21%', '42%']);
+    await expect(page.locator('#classes')).toHaveCount(0);
+    await expect(page.locator('a[href="#classes"]')).toHaveCount(0);
+    await expect(page.locator('[data-fact="RC-08"]')).toHaveCount(0);
+    await expect(page.locator('#freelancing h2')).toHaveText('Freelancing: Women Offered a Place vs. the Control Group');
+    await expect(page.locator('#freelancing [data-fact="RC-09"]')).toHaveCount(1);
     const html = readFileSync(listPages().find((p) => p.route === '/impact/independent-evaluation/')!.file, 'utf8');
     expect(visible(html)).not.toMatch(/More Classes, More Freelancing|more likely to be freelancing at follow-up/);
   });
@@ -306,12 +303,13 @@ test.describe('S4 (Claude; owner answer 2026-10-20: "711 of 1000 is correct. The
     expect(((await tile.getAttribute('data-fact')) ?? '').split(' ')).toEqual(expect.arrayContaining(['PR-01', 'PR-06', 'RC-07']));
   });
 
-  test('the WSDFM case study: the note above the tiles says the 425 women offered a place were among the 1,000 (WP82), beside the first tile’s "711 of 1,000"', async ({ page }) => {
+  // WP166-C (R4-05): the note follows the tiles, directly under the "711 of 1,000" tile (now the last), and says "BIGD" (the first tile spells it out, WP54 G8)
+  test('the WSDFM case study: the note under the tiles says the 425 women offered a place were among the 1,000 (WP82), beside the "711 of 1,000" tile', async ({ page }) => {
     await open(page, 'impact/case-studies/wsdfm-women-freelancers/');
     const note = page.locator('[data-hero-note]');
-    await expect(note).toHaveText('Program records, not trial results; the 425 women offered a place in the randomized trial by the BRAC Institute of Governance and Development (BIGD) were among the 1,000 women enrolled.');
+    await expect(note).toHaveText('Program records, not trial results; the 425 women offered a place in the randomized trial by BIGD were among the 1,000 women enrolled.');
     await expect(note).toHaveAttribute('data-fact', 'RC-07');
-    await expect(page.locator('.cs__stat').first()).toContainText('711 of 1,000');
+    await expect(page.locator('.cs__stat').last()).toContainText('711 of 1,000');
   });
 
   test('no page says the 833 are "of" the 1,000 (the trial’s sample includes 408 women who were not offered a place)', () => {
@@ -408,7 +406,7 @@ test.describe('K1 and K2 (Kimi): the Case Studies hub is "Five Programs Across K
   test('the H1, the lead and the grid’s H2 read as below, and the old H1 and H2 are gone', async ({ page }) => {
     await open(page, HUB);
     await expect(page.getByRole('heading', { level: 1 })).toHaveText('Five Programs Across Kosovo, Albania and Bangladesh');
-    await expect(page.locator('main .hero__lead').first()).toHaveText('Five programs, each with its figure and its base.'); // WP164 (every card has a figure again; WP162 had "Five programs, with the figures and bases where they exist.")
+    await expect(page.locator('main .hero__lead').first()).toHaveText('With the World Bank, UNDP, Porticus and the Government of Bangladesh. Each program shows its figure and its base.'); // WP164 (every card has a figure again; WP162 had "Five programs, with the figures and bases where they exist."); WP166-C (R4-07): the lead names the partners
     await expect(page.getByRole('heading', { level: 2, name: 'Results First, Program by Program' })).toHaveCount(1);
     expect(sitePages().filter((p) => /Learners Reaching Paid Work, from Kosovo|Five Programs, Results First|Five Programs, from Kosovo to Bangladesh/.test(visible(p.html))).map((p) => p.route)).toEqual([]);
   });

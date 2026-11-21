@@ -73,15 +73,16 @@ test.describe('WP105 item 1: the YouthWIDE 1 million aim is stated in full once'
 });
 
 // --------------------------------------------------------------------------------------------------------------------------------
-test.describe('WP105 item 2: the Trial page household line has no percentages', () => {
-  const LINE = 'Household effects for women who attended, against the control group: higher food and non-food spending, more of them with savings, fewer loans and less stress.';
+// WP166-C (R4-32, owner approval of 21 November 2026, item 5): the RC-05 plain-words line this item pinned is replaced by RC-14, the register's verified household figure; RC-05's six figures still never render.
+test.describe('WP105 item 2: the Trial page household line (WP166-C: RC-14)', () => {
+  const LINE = 'Household spending was 43% higher for women who attended, against the control group (food spending 48% higher), and fewer took out loans.';
 
-  test('"Women Who Attended" lists the new household line (data-fact RC-05) and none of the six figures', async ({ page }) => {
+  test('"Women Who Attended" lists the household line (data-fact RC-14), and none of RC-05\'s six figures', async ({ page }) => {
     await open(page, 'impact/independent-evaluation/');
-    const li = page.locator('#results li[data-fact="RC-05"]');
+    await expect(page.locator('#results li[data-fact="RC-05"]')).toHaveCount(0);
+    const li = page.locator('#results li[data-fact="RC-14"]');
     await expect(li).toHaveCount(1);
     expect(compact(await li.textContent())).toBe(LINE);
-    expect(compact(await li.textContent())).not.toMatch(/%|\d/);
     expect(compact(await page.locator('#results').textContent())).not.toMatch(/\+48|\+41|\+83|never felt stressed/);
   });
 });
@@ -209,7 +210,7 @@ test.describe('WP105 item 9: stamps and dateModified of the pages this WP change
   // WP129: every page here except Independent Evaluation changed again on 30 October (WP126 to WP128) and moved on to 2026-10-31.
   const STAMPED = [
     { route: 'privacy-policy/', selector: '.lf-updated', day: 'November 3, 2026', iso: '2026-11-03' }, // WP148: "Post Graduate Diploma" capitalised; WP161-A: the Video section and the legal-basis line
-    { route: 'impact/independent-evaluation/', selector: '.lf-updated', day: 'November 2, 2026', iso: '2026-11-02' }, // WP134: WP133 changed its text
+    { route: 'impact/independent-evaluation/', selector: '.lf-updated', day: 'November 21, 2026', iso: '2026-11-21' }, // WP166-C (the marketing-effectiveness review). Earlier: WP134: WP133 changed its text
     { route: 'programs/youthwide/', selector: '.updated', day: 'November 3, 2026', iso: '2026-11-03' }, // WP163 (one exam fee per trainee; the delivery model). Earlier: WP151
     { route: 'programs/nu-postgraduate-diploma/', selector: '.updated', day: 'November 2, 2026', iso: '2026-11-02' }, // WP151 (WP148: as Privacy)
     { route: 'programs/jobready-campus/', selector: '.updated', day: 'November 3, 2026', iso: '2026-11-03' }, // WP163 (as YouthWIDE). Earlier: WP151

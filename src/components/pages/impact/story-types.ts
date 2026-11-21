@@ -14,4 +14,6 @@ export interface StoryCardData {
   caveat?: string;
   /** Three fields, only where the learner's story text supports all three. */
   steps?: { start: string; did: string; now: string };
+  /** WP166-C (R4-25): the case study that holds the group result behind the story ("Read the Case Study"); `name` is the case, for the link's accessible name. */
+  caseStudy?: { href: string; name: string };
 }

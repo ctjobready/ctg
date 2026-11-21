@@ -20,13 +20,17 @@ import { linkAttrs } from '../../../lib/url';
 // WP60 (cycle-32 review, Grok R1): the note no longer says the table "distinguishes training, partnerships and launch activity" (seven rows have no note, so it did not, row by row). It says what the notes mark: "Rows that are a partnership or the launch say so in their note;
 // the other rows are training programs." (Benin, Egypt, Uganda, Albania and Kosovo name a partner, Iraq an announced cooperation, Denmark the launch; Bangladesh's and Somaliland's notes describe training, so the rule is "says so", not "has a note".)
 const path = '/impact/global-reach/';
-const headline = `${fact('SC-03').text}.`;
+// WP166-C (R4-31): the lead names the partners that make the list credible (the table's World Bank, WFP and SOS Children's Villages rows) instead of repeating the H1 (it was SC-03's sentence, "CodersTrust has worked in 16 countries
+// and territories across Asia, Africa, Europe and the Americas, including Bangladesh since 2014."). The build stops if a named partner leaves the table.
+const lead = 'Across Asia, Africa, Europe and the Americas, with partners including the World Bank, the World Food Programme and SOS Children’s Villages. In Bangladesh since 2014.';
+for (const p of ['World Bank', 'World Food Programme', 'SOS Children’s Villages']) if (!locations.some((l) => l.note?.includes(p))) throw new Error(`Global Reach: no table row names ${p}`);
+if (!fact('SC-03').text.includes('across Asia, Africa, Europe and the Americas, including Bangladesh since 2014')) throw new Error('Global Reach: SC-03 changed; check the lead');
 // WP55 (owner decision 2026-10-18; 16 countries and territories since WP56 removed Somalia): the count in the description is SC-03's, and the number of locations beyond Bangladesh is that count less one, so neither is typed.
 // WP58: "... and 15 international locations" (it was ", plus 15 international locations"), so the sentence stays within the 155-character limit after "CodersTrust has worked in" replaced "Programs in".
 const count = val('SC-03');
 const description = desc(`CodersTrust has worked in ${count} countries and territories: Bangladesh since 2014 and ${Number(count) - 1} international locations, with years and, where known, target groups.`); // WP157 (adversarial review F6): the Denmark row has no target group and no skills, so the line promises years for every location and target groups where known.
 // WP161-A (adversarial review A-04): the Article headline is the H1's words (a plain space where the H1 joins the count to "Countries" with a no-break space).
-const jsonLd = [articleNode({ path, headline: `Where We Have Worked: ${count} Countries and Territories`, description, datePublished: '2026-10-08', dateModified: '2026-11-03', author: 'CodersTrust' })]; // WP164 (2026-11-03): the Albania row's years are 2021–2022 again (CodersTrust began the program, Learnio completed it). Earlier: WP162 (2026-11-03): the Albania row's years were 2021. Earlier: WP157: the meta description changed (2026-11-02).
+const jsonLd = [articleNode({ path, headline: `Where We Have Worked: ${count} Countries and Territories`, description, datePublished: '2026-10-08', dateModified: '2026-11-21', author: 'CodersTrust' })]; // WP166-C (2026-11-21): the lead. Earlier: WP164 (2026-11-03): the Albania row's years are 2021–2022 again (CodersTrust began the program, Learnio completed it). Earlier: WP162 (2026-11-03): the Albania row's years were 2021. Earlier: WP157: the meta description changed (2026-11-02).
 // WP30e: the footprint leads. The locations beyond Bangladesh are listed from the same data as the map and the table, so the list cannot drift from them.
 const beyond = locations.filter((l) => l.id !== 'bangladesh').map((l) => l.name).sort((x, y) => x.localeCompare(y));
 const beyondLine = `${beyond.slice(0, -1).join(', ')} and ${beyond[beyond.length - 1]}`;
@@ -34,7 +38,7 @@ const d = discoveryCta();
 ---
 
 <BaseLayout title={title(`Global Reach: ${val('SC-03')} Countries and Territories`)} description={description} path={path} breadcrumbs={[{ label: 'Impact', href: '/impact/' }, { label: 'Global Reach' }]} jsonLd={jsonLd}>
-  <Hero variant="inner" eyebrow="Impact" title={`Where We Have Worked: ${val('SC-03')}\u00a0Countries and Territories`} lead={headline} artSeed="global-reach" />
+  <Hero variant="inner" eyebrow="Impact" title={`Where We Have Worked: ${val('SC-03')}\u00a0Countries and Territories`} lead={lead} artSeed="global-reach" />
 
   <Section id="map" aria-labelledby="map-h">
     <SectionHeader id="map-h" eyebrow="Where We Have Worked" title="Beyond Bangladesh" lead={`${beyondLine}.`} />

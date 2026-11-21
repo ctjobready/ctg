@@ -15,9 +15,54 @@ export async function allNews(): Promise<NewsEntry[]> {
   return posts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 }
 
-/** Related posts: same topic first, then the most recent others. */
+/**
+ * WP166-C (owner approval of 21 November 2026, "Archive label: narrow and shorten"; R5-05, R6-05): a post dated 2026 or later is current news, so its banner
+ * shows the "Published …; updated …" line alone (no "Archived post" label, no disclaimer). An older post keeps one shorter note, date first, with the same meaning.
+ */
+export const CURRENT_NEWS_FROM_YEAR = 2026;
+export const isCurrentNews = (date: Date): boolean => date.getUTCFullYear() >= CURRENT_NEWS_FROM_YEAR;
+
+/**
+ * WP166-C (R5-01, owner approval of 21 November 2026): the News index's "Featured" row, four proof stories in this order, above the dated list. A meeting,
+ * visit or reception post is never featured; the build stops if an entry is missing or is a draft.
+ */
+export const FEATURED_NEWS = [
+  '25000-trainees-her-power-empowerment-of-women-through-ict-frontier-initiative',
+  'coderstrust-and-doict-shaping-a-smart-future-through-trainer-empowerment',
+  'a-proud-milestone-for-coderstrust',
+  'aziz-ahmad-co-founder-and-global-chairman-of-coderstrust-appointed-as-global-upeace-ambassador',
+] as const;
+
+export function featuredNews(all: NewsEntry[]): NewsEntry[] {
+  return FEATURED_NEWS.map((id) => {
+    const p = all.find((x) => x.id === id);
+    if (!p) throw new Error(`News index: the featured post ${id} is missing or a draft`);
+    return p;
+  });
+}
+
+/**
+ * WP166-C (R5-20): a post with the government band offers the other government-band posts as "More News", Her Power first, then the Training of Trainers
+ * post, EDGE and SKIT, then any other government-band post, newest first; so a ministry reader is offered the other contracts, not a placement MOU.
+ */
+const GOVERNMENT_RELATED_FIRST = [
+  '25000-trainees-her-power-empowerment-of-women-through-ict-frontier-initiative',
+  'coderstrust-and-doict-shaping-a-smart-future-through-trainer-empowerment',
+  '1000-trainees-enhancing-digital-government-economy-edge',
+  '1000-trainees-sheikh-kamal-ict-incubator-training',
+];
+
+/** Related posts: same topic first, then the most recent others; a government-band post gets the other government-band posts (WP166-C). */
 export function relatedNews(all: NewsEntry[], post: NewsEntry, count = 3): NewsEntry[] {
   const others = all.filter((p) => p.id !== post.id);
+  if (newsAudience(post) === 'government') {
+    const gov = others.filter((p) => newsAudience(p) === 'government');
+    const rank = (p: NewsEntry) => {
+      const i = GOVERNMENT_RELATED_FIRST.indexOf(p.id);
+      return i === -1 ? GOVERNMENT_RELATED_FIRST.length : i;
+    };
+    return [...gov].sort((a, b) => rank(a) - rank(b) || b.data.date.valueOf() - a.data.date.valueOf()).slice(0, count);
+  }
   const same = others.filter((p) => p.data.topic === post.data.topic);
   const rest = others.filter((p) => p.data.topic !== post.data.topic);
   return [...same, ...rest].slice(0, count);
@@ -91,7 +136,7 @@ export function coverDuplicatesBody(post: NewsEntry): boolean {
  * Which closing call to action an archived post gets (WP20a). The posts carry no audience field, so the choice is listed by post slug; a post that is
  * not listed (a new one, or one that is about CodersTrust generally) gets the discovery session. The archived text itself is never touched.
  */
-export type NewsAudience = 'corporate' | 'university' | 'government' | 'general';
+export type NewsAudience = 'corporate' | 'university' | 'government' | 'school' | 'general';
 
 const AUDIENCE_BY_POST: Record<string, NewsAudience> = {
   'coderstrust-provides-corporate-training-to-akij-group-one-of-the-largest-conglomerates-of-south-asia': 'corporate',
@@ -106,9 +151,34 @@ const AUDIENCE_BY_POST: Record<string, NewsAudience> = {
   '25000-trainees-her-power-empowerment-of-women-through-ict-frontier-initiative': 'government',
   'coderstrust-and-doict-shaping-a-smart-future-through-trainer-empowerment': 'government',
   'coderstrust-seals-groundbreaking-mou-with-nctb-paving-the-way-for-competency-based-learning-opportunities': 'government',
+  // WP166-C (R6-24): the two Digital Factory pieces set out a national-skills vision, so they close on the ministry briefing.
+  'the-future-building-a-digital-factory-for-bangladesh': 'government',
+  'why-we-call-it-a-digital-factory': 'government',
+  // WP166-C (R5-19): STEM and coding content for schools closes on the school band.
+  'coderstrust-brings-discovery-education-the-global-leader-of-stem-education-to-bangladeshi-schools-and-learners': 'school',
 };
 
 export const newsAudience = (post: NewsEntry): NewsAudience => AUDIENCE_BY_POST[post.id] ?? 'general';
+
+/**
+ * WP166-C (R5-08, R6-25 to R6-28): the closing band's text link follows the story where the band's default offer is the wrong next page; the heading, line and
+ * button stay the audience's. Labels and anchors are the ones the site already uses for these pages.
+ */
+const OFFER_BY_POST: Record<string, { label: string; href: string }> = {
+  '25000-trainees-her-power-empowerment-of-women-through-ict-frontier-initiative': { label: 'Read the Her Power Case Study', href: '/impact/case-studies/her-power/' },
+  'coderstrust-organizes-career-carnival-for-students-and-affiliates': { label: 'Hire Talent', href: '/partner-with-us/employers/#hire-talent' },
+  'coderstrust-launches-in-copenhagen-with-a-virgin-unite-dinner': { label: 'See Global Reach', href: '/impact/global-reach/' },
+  'coderstrust-presents-at-in5-in-dubai': { label: 'See Global Reach', href: '/impact/global-reach/' },
+  'coderstrust-sets-up-in-india': { label: 'See Global Reach', href: '/impact/global-reach/' },
+  'hour-of-code-in-somaliland': { label: 'See Global Reach', href: '/impact/global-reach/' },
+  'coderstrust-earns-recognition-among-top-100-edtech-companies-in-south-asia': { label: 'See Recognition and Media', href: '/about/recognition/' },
+  'coderstrust-recognized-among-holoniqs-2024-south-asia-edtech-100': { label: 'See Recognition and Media', href: '/about/recognition/' },
+  'empowering-women-in-digital-economy-certificate-giving-ceremony-by-coderstrust-with-joyeeta-foundation': { label: 'Read the Trial Results', href: '/impact/independent-evaluation/' },
+  'coderstrust-teaching-you-freelancing-the-right-way': { label: 'More Learner Stories', href: '/impact/stories/' },
+};
+
+/** The closing band's text link for a post: its own (OFFER_BY_POST) or its audience's. */
+export const newsOffer = (post: NewsEntry): { label: string; href: string } => OFFER_BY_POST[post.id] ?? NEWS_CTA[newsAudience(post)].offer;
 
 /** The closing module per audience: the heading and line, the CTA from the CTA library, and one text link to the current offer. */
 export const NEWS_CTA: Record<NewsAudience, { heading: string; text: string; cta: 'discovery' | 'work' | 'campus' | 'briefing'; offer: { label: string; href: string } }> = {
@@ -135,5 +205,12 @@ export const NEWS_CTA: Record<NewsAudience, { heading: string; text: string; cta
     text: 'Tell us your agency and program target, with two suitable times for a briefing.',
     cta: 'briefing',
     offer: { label: 'Explore Government Partnerships', href: '/partner-with-us/governments/' },
+  },
+  // WP166-C (R5-19): a school reader (STEM and coding content for classrooms) is asked about the school, with the SuperKids page as the offer.
+  school: {
+    heading: 'Bringing Coding and Robotics into Your Classroom?',
+    text: 'Tell us your school, grade levels and two suitable times for a discovery session.',
+    cta: 'discovery',
+    offer: { label: 'Explore SuperKids', href: '/programs/superkids/' },
   },
 };

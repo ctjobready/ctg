@@ -1,9 +1,9 @@
 ---
 title: "Why We Call It a Digital Factory"
 date: 2026-07-18
-updated: 2026-11-02
+updated: 2026-11-21
 topic: insights
-excerpt: "Why Bangladesh’s greatest natural resource is its young people, and what a digital factory means for them."
+excerpt: "For decades, developing countries exported labor. CodersTrust’s case for a Bangladesh that exports knowledge and digital services instead."
 cover: ../../assets/images/news/why-we-call-it-a-digital-factory/why-we-call-it-a-digital-factory.jpg
 coverAlt: "A large crowd of people posing together, many making peace signs, photographed from above"
 legacyUrl: "https://coderstrust.global/why-we-call-it-a-digital-factory/"

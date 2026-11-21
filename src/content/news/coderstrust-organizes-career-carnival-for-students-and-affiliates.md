@@ -1,15 +1,15 @@
 ---
-title: "CodersTrust Organizes Career Carnival for Students and Affiliates"
+title: "Career Carnival Brings Around 20 Employers and 60+ Job Openings to 1,000+ Students and Alumni"
 date: 2024-10-08
-updated: 2026-10-31
+updated: 2026-11-21
 countToday: true
 topic: programs-events
-excerpt: "CodersTrust holds a Career Carnival at its Dhaka office in Banani to create job placement opportunities for students and alumni."
+excerpt: "Around 20 companies offer 60+ job openings to more than 1,000 CodersTrust students and alumni at a Career Carnival in Dhaka."
 cover: ../../assets/images/news/coderstrust-organizes-career-carnival-for-students-and-affiliates/coderstrust-organizes-career-carnival-1.jpg
 coverAlt: "A large group of participants posing in front of the CodersTrust building entrance, decorated with balloons"
 legacyUrl: "https://coderstrust.global/coderstrust-organizes-career-carnival-for-students-and-affiliates/"
 tags: []
-seoTitle: "Career Carnival for Students and Affiliates"
+seoTitle: "Career Carnival: 60+ Job Openings"
 ---
 
 CodersTrust recently organized a “Career Carnival” at its Dhaka office in Banani. The event aimed to provide unique job placement opportunities for its students and alumni. The Chairman of CodersTrust, Mr. Aziz Ahmad, inaugurated the event virtually from New York, USA.

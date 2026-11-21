@@ -1,15 +1,15 @@
 ---
-title: "Empowering Women in Digital Economy: Certificate Giving Ceremony by CodersTrust with Joyeeta Foundation"
+title: "Women Complete Advanced Training for the Digital Economy with CodersTrust and the Joyeeta Foundation"
 date: 2024-05-28
-updated: 2026-10-31
+updated: 2026-11-21
 countToday: true
 topic: programs-events
-excerpt: "CodersTrust and the Joyeeta Foundation hold a certificate ceremony for women who completed advanced social media marketing training."
+excerpt: "Women who completed advanced training in social media marketing and accounts management receive certificates from CodersTrust and the Joyeeta Foundation."
 cover: ../../assets/images/news/empowering-women-in-digital-economy-certificate-giving-ceremony-by-coderstrust-with-joyeeta-foundation/certifictae-ceremony.jpg
 coverAlt: "Women learners and guests posing for a group photograph in front of the ceremony banner"
 legacyUrl: "https://coderstrust.global/empowering-women-in-digital-economy-certificate-giving-ceremony-by-coderstrust-with-joyeeta-foundation/"
 tags: []
-seoTitle: "Joyeeta Foundation Certificate Ceremony"
+seoTitle: "Women Complete Joyeeta Foundation Training"
 ---
 
 ![Women learners and guests seated together in front of the Certificate Giving Ceremony banner](../../assets/images/news/empowering-women-in-digital-economy-certificate-giving-ceremony-by-coderstrust-with-joyeeta-foundation/certificate-giving-ceremony-by-coderstrust-with-joyeeta-foundation-3-scaled.jpg)

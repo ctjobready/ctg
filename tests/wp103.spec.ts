@@ -20,9 +20,10 @@ const builtHtml = () => listPages().map((p) => ({ route: p.route, html: readFile
 const ldJson = async (page: import('@playwright/test').Page) => (await page.locator('script[type="application/ld+json"]').allTextContents()).join('\n');
 
 test.describe('WP103 item 1: Case Studies index says "figure"', () => {
-  test('the lead reads "Five programs, each with its figure and its base." (WP164 restores it; WP162 had "Five programs, with the figures and bases where they exist.")', async ({ page }) => {
+  // WP166-C (R4-07): the lead names the partners and keeps "figure" and "base" (it read "Five programs, each with its figure and its base.")
+  test('the lead says "figure" and "base" (WP164 restored them; WP162 had "Five programs, with the figures and bases where they exist."; WP166-C names the partners)', async ({ page }) => {
     await open(page, 'impact/case-studies/');
-    await expect(page.locator('main .hero__lead').first()).toHaveText('Five programs, each with its figure and its base.');
+    await expect(page.locator('main .hero__lead').first()).toHaveText('With the World Bank, UNDP, Porticus and the Government of Bangladesh. Each program shows its figure and its base.');
   });
 
   test('the meta description reads with "figure", stays within 155 characters, and keeps the rest of its sentence', async ({ page }) => {

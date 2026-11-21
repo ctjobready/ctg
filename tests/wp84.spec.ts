@@ -131,20 +131,23 @@ test.describe('WP84: the shared contract-scope note', () => {
     expect(CONTRACT_TOTAL_NOTE.text).toContain(`Her Power’s ${fact('GV-01').stat?.value} is the same group counted in the ${fact('SC-02').stat?.value} enrollments through CodersTrust’s curriculum`);
   });
 
-  test('every page that prints the overlap sentence prints the whole note (Impact); Investors words it as a pointer back (WP94); no other page words it', () => {
+  // WP166-C (R4-17, owner approval of 21 November 2026, item 5): Impact's tile keeps the first sentence only, so no page prints the overlap sentence in these words now; Investors still words it as a pointer back
+  test('every page that prints the overlap sentence prints the whole note (none since WP166-C); Investors words it as a pointer back (WP94); no other page words it', () => {
     const pages = builtPages().filter((p) => visible(p.html).includes(OVERLAP)).map((p) => p.route).sort();
-    expect(pages).toEqual(['/impact/']);
+    expect(pages).toEqual([]);
     for (const p of builtPages().filter((q) => pages.includes(q.route))) expect(visible(p.html), p.route).toContain(FULL_NOTE);
     const investors = builtPages().find((q) => q.route === '/partner-with-us/investors/');
     expect(visible(investors?.html ?? ''), 'investors').toContain('Her Power’s 25,125 are already counted in the 150,000+ enrollments above, not additional people.');
   });
 
-  test('Impact prints the whole note tied to SC-02; Governments and JobReady Platform print the first sentence, tied to their own facts', async ({ page }) => {
+  // WP166-C (R4-17): Impact prints the first sentence too, so its tile no longer cites SC-02 (the 150,000+ the overlap sentence named)
+  test('Impact, Governments and JobReady Platform print the first sentence, tied to their own facts', async ({ page }) => {
     await page.setViewportSize(DESKTOP);
     await open(page, 'impact/');
     const tile = page.locator('#glance [data-fact~="GV-12"]').first();
-    expect(compact(await tile.textContent())).toContain(FULL_NOTE);
-    expect((await tile.getAttribute('data-fact')) ?? '').toContain('SC-02');
+    expect(compact(await tile.textContent())).toContain(SHORT_NOTE);
+    expect(compact(await tile.textContent())).not.toContain(OVERLAP);
+    expect(((await tile.getAttribute('data-fact')) ?? '').split(' ')).not.toContain('SC-02');
     await open(page, 'partner-with-us/governments/');
     const gov = page.locator('#glance li', { hasText: '30,000+' });
     expect(compact(await gov.locator('.pg__note').textContent())).toBe(SHORT_NOTE);

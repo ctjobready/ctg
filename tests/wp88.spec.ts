@@ -51,9 +51,10 @@ test.describe('Items 1 and 10: the Her Power overlap and the cohort wording', ()
     expect(body).not.toContain('counted separately');
   });
 
-  test('the Her Power case study heading is "National Scale: The Wider Program" and says the 2,400 are among the 25,125', async ({ page }) => {
+  // WP166-C (R4-12): the heading states the national result (it was "National Scale: The Wider Program")
+  test('the Her Power case study heading states the national result and the band says the 2,400 are among the 25,125', async ({ page }) => {
     await open(page, 'impact/case-studies/her-power/');
-    await expect(page.getByRole('heading', { level: 3, name: 'National Scale: The Wider Program' })).toBeVisible();
+    await expect(page.getByRole('heading', { level: 3, name: 'The National Program Trained 25,125 Women Across 130 Sub-Districts' })).toBeVisible();
     const body = compact(await page.locator('body').textContent());
     expect(body).toContain('meeting its target. The 2,400 women CodersTrust trained directly are among them.');
     expect(body).not.toContain('A Different Measure');

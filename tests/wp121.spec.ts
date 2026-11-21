@@ -24,7 +24,7 @@ test.describe('WP121', () => {
     expect(t).not.toContain('Vice President of the University for Peace');
   });
   test('headlines: "High-Demand" and the BIMSTEC Secretariat', () => {
-    expect(NEWS).toContain('1,000 People to Be Trained in High-Demand IT Skills | Sheikh Kamal ICT Incubator Training');
+    expect(NEWS).toContain('CodersTrust Contracted to Train 1,000 People in High-Demand IT Skills in Barishal'); // WP166-C (R5-11): the headline names CodersTrust; "High-Demand" stays
     expect(NEWS).toContain('CodersTrust Visits the BIMSTEC Secretariat to Discuss Science, Technology and Innovation Cooperation');
   });
   test('Discovery Education post: "Senior Director of Educational Partnerships"', () => {

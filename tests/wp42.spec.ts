@@ -253,24 +253,24 @@ test.describe('the WSDFM case study: one line above the tiles instead of two par
     await expect(hero.locator('[data-plain-line]')).toHaveCount(0);
     await expect(page.locator('[data-plain-line]'), 'the plain-language line is not on this page at all (the evaluation page keeps it)').toHaveCount(0);
     await expect(hero.locator('.cs__stat')).toHaveCount(3);
-    expect(await texts(page, '.hero .cs__stat .stat__value')).toEqual(['711 of 1,000', '+10.3 percentage points', '+41%']);
+    expect(await texts(page, '.hero .cs__stat .stat__value')).toEqual(['+10.3 percentage points', '+41%', '711 of 1,000']); // WP166-C (R4-05): the trial tiles lead, the program record follows
   });
 
-  test('the one line names the two kinds of evidence and sits directly above the tiles, in the same row group', async ({ page }) => {
+  // WP166-C (R4-05): the claim comes before its caveat: the note follows the tiles, directly under the program-record tile it qualifies; the first tile now spells the evaluator out (WP54 G8), so the note says "BIGD"
+  test('the one line names the two kinds of evidence and sits directly under the tiles, in the same row group', async ({ page }) => {
     await page.setViewportSize(DESKTOP);
     await open(page, URL);
     const note = page.locator('.hero [data-hero-note]');
     await expect(note).toHaveCount(1);
-    // WP54 (cycle-28 review, GPT-6.1 Sol G8): the note is where the page first names the evaluator, so it spells it out (tests/wp54.spec.ts)
-    await expect(note).toHaveText('Program records, not trial results; the 425 women offered a place in the randomized trial by the BRAC Institute of Governance and Development (BIGD) were among the 1,000 women enrolled.');
+    await expect(note).toHaveText('Program records, not trial results; the 425 women offered a place in the randomized trial by BIGD were among the 1,000 women enrolled.');
     expect(await note.evaluate((e) => e.parentElement?.className ?? '')).toContain('hero__stats');
-    expect(await note.evaluate((e) => e.nextElementSibling?.className ?? '')).toContain('cs__stat');
-    const [noteBox, firstTile, button] = await Promise.all([note.boundingBox(), page.locator('.hero .cs__stat').first().boundingBox(), page.locator('.hero .hero__actions a').boundingBox()]);
-    expect(noteBox!.y + noteBox!.height, 'the line is above the first tile').toBeLessThanOrEqual(firstTile!.y + 1);
-    expect(firstTile!.y - (noteBox!.y + noteBox!.height), 'and close to it').toBeLessThan(40);
-    expect(button!.y, 'the button stays above both').toBeLessThan(noteBox!.y);
+    expect(await note.evaluate((e) => e.previousElementSibling?.className ?? '')).toContain('cs__stat');
+    const [noteBox, lastTile, button] = await Promise.all([note.boundingBox(), page.locator('.hero .cs__stat').last().boundingBox(), page.locator('.hero .hero__actions a').boundingBox()]);
+    expect(noteBox!.y, 'the line is under the last tile').toBeGreaterThanOrEqual(lastTile!.y + lastTile!.height - 1);
+    expect(noteBox!.y - (lastTile!.y + lastTile!.height), 'and close to it').toBeLessThan(40);
+    expect(button!.y, 'the button stays above both').toBeLessThan(lastTile!.y);
     // each tile still carries its own evidence tag
-    expect(await page.locator('.hero .cs__stat').evaluateAll((els) => els.map((e) => e.querySelector('[data-evidence]')?.getAttribute('data-evidence')))).toEqual(['Program Record', 'Randomized Trial', 'Randomized Trial']);
+    expect(await page.locator('.hero .cs__stat').evaluateAll((els) => els.map((e) => e.querySelector('[data-evidence]')?.getAttribute('data-evidence')))).toEqual(['Randomized Trial', 'Randomized Trial', 'Program Record']);
     await page.setViewportSize(MOBILE);
     await open(page, URL);
     expect(await noOverflow(page), '390px').toBe(true);

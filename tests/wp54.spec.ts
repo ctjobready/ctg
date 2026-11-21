@@ -187,13 +187,15 @@ test.describe('BIGD is spelled out at its first mention on every page that names
     expect(await everything(page)).not.toContain('BIGD’s');
   });
 
-  test('the WSDFM case study: the hero note names the evaluator in full, and the tiles, the trial sub-heading and the chart note use the abbreviation it introduces', async ({ page }) => {
+  // WP166-C (R4-05): the trial tiles lead the hero, so the first tile's evidence line is the first mention and spells the evaluator out; the note (now under the tiles) uses the abbreviation
+  test('the WSDFM case study: the first trial tile names the evaluator in full, and the note, the second tile, the trial sub-heading and the chart note use the abbreviation it introduces', async ({ page }) => {
     await open(page, WSDFM);
-    await expect(page.locator('[data-hero-note]')).toHaveText('Program records, not trial results; the 425 women offered a place in the randomized trial by the BRAC Institute of Governance and Development (BIGD) were among the 1,000 women enrolled.');
+    await expect(page.locator('.hero .cs__stat').first()).toContainText('Randomized trial by the BRAC Institute of Governance and Development (BIGD), May 2022');
+    await expect(page.locator('[data-hero-note]')).toHaveText('Program records, not trial results; the 425 women offered a place in the randomized trial by BIGD were among the 1,000 women enrolled.');
     const text = await everything(page);
     expect(count(text, SPELLED)).toBe(1);
     expect(text.indexOf(SPELLED)).toBeLessThan(text.indexOf('BIGD randomized trial'));
-    expect(count(text, 'BIGD randomized trial'), 'the tiles, the trial sub-heading and the chart note keep the abbreviation').toBeGreaterThanOrEqual(3);
+    expect(count(text, 'BIGD randomized trial'), 'the second tile, the trial sub-heading and the chart note keep the abbreviation').toBeGreaterThanOrEqual(3);
   });
 });
 

@@ -1,14 +1,14 @@
 ---
-title: "Aziz Ahmad Joins the Jahangirnagar University MOU Signing"
+title: "Freelancing Training Supported by CodersTrust Is Inaugurated at Jahangirnagar University"
 date: 2023-11-04
-updated: 2026-11-02
+updated: 2026-11-21
 topic: leadership-advocacy
-excerpt: "Aziz Ahmad joins the MOU signing between Jahangirnagar University’s Institute of IT and the Department of ICT (DoICT) and speaks on IT skills for youth."
+excerpt: "Freelancing training supported by CodersTrust opens at Jahangirnagar University as its Institute of IT signs an MOU with the Department of ICT (DoICT)."
 cover: ../../assets/images/news/coderstrust-is-committed-to-the-vision-of-a-smart-bangladesh-within-2041-aziz-ahmad/whatsapp-image-2023-11-05-at-10-28-23-am.jpg
 coverAlt: "Officials seated at a table in a meeting room, with a man appearing on a large screen by video link"
 legacyUrl: "https://coderstrust.global/coderstrust-is-committed-to-the-vision-of-a-smart-bangladesh-within-2041-aziz-ahmad/"
 tags: ["Latest News", "News and Events"]
-seoTitle: "Aziz Ahmad at the Jahangirnagar MOU Signing"
+seoTitle: "Freelancing Training Opens at Jahangirnagar"
 political: true
 ---
 

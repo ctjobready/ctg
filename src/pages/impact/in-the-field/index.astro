@@ -23,13 +23,24 @@ import { webPage } from '../../../lib/schema';
 const path = '/impact/in-the-field/';
 const description = desc('Photographs from CodersTrust programs, partner meetings and events, organized into program, partner and recognition collections.');
 const jsonLd = [
-  webPage({ path, name: 'In the field: CodersTrust programs in photographs', description, type: 'CollectionPage', dateModified: '2026-11-02' }),
-  articleNode({ path, headline: 'In the Field: Programs in Action', description, datePublished: '2026-10-11', dateModified: '2026-11-02', author: 'CodersTrust' }), // WP157 (owner decision 2026-11-02): the four SuperKids learner portraits carry no first names
+  webPage({ path, name: 'In the field: CodersTrust programs in photographs', description, type: 'CollectionPage', dateModified: '2026-11-21' }),
+  articleNode({ path, headline: 'In the Field: Programs in Action', description, datePublished: '2026-10-11', dateModified: '2026-11-21', author: 'CodersTrust' }), // WP166-C (2026-11-21): the case-study and SuperKids links under three collections. Earlier: WP157 (owner decision 2026-11-02): the four SuperKids learner portraits carry no first names
 ];
 
 const reg = (keys: string[]): Photo[] => keys.map(photo);
 
 // Programs, partners and recognition: the photo registry (src/data/photos.ts), one section each.
+// WP166-C (R4-26): a collection from a program with a case study (or a program page) links to it, so a photograph leads to the result behind it.
+const CASE_LINKS: Record<string, { label: string; href: string }[]> = {
+  women: [
+    { label: 'Women in Online Work, Kosovo', href: '/impact/case-studies/kosovo-women-in-online-work/' },
+    { label: 'WSDFM', href: '/impact/case-studies/wsdfm-women-freelancers/' },
+    { label: 'Her Power', href: '/impact/case-studies/her-power/' },
+  ],
+  youth: [{ label: 'Read the UNDP YES, Korail Case Study', href: '/impact/case-studies/undp-yes-korail/' }],
+  superkids: [{ label: 'See SuperKids', href: '/programs/superkids/' }],
+};
+
 const groups: { id: string; eyebrow: string; title: string; lead: string; photos: Photo[] }[] = [
   {
     id: 'superkids',
@@ -113,7 +124,18 @@ const d = discoveryCta();
     </nav>
   </Section>
 
-  {programGroups.map((g, i) => <GalleryDisclosure id={g.id} eyebrow={g.eyebrow} title={g.title} lead={g.lead} photos={g.photos} visible={6} moreLabel={fullLabel(g)} tone={i % 2 === 0 ? 'white' : 'airy'} />)}
+  {programGroups.map((g, i) => (
+    <GalleryDisclosure id={g.id} eyebrow={g.eyebrow} title={g.title} lead={g.lead} photos={g.photos} visible={6} moreLabel={fullLabel(g)} tone={i % 2 === 0 ? 'white' : 'airy'}>
+      <Fragment slot="after-lead">
+        {CASE_LINKS[g.id] && g.id === 'women' && (
+          <p class="itf__cases">Case studies: {CASE_LINKS[g.id].map((l, j) => <>{j > 0 && ' · '}<a class="link" href={linkAttrs(l.href).href}>{l.label}</a></>)}</p>
+        )}
+        {CASE_LINKS[g.id] && g.id !== 'women' && (
+          <p class="itf__cases">{CASE_LINKS[g.id].map((l) => <a class="link" href={linkAttrs(l.href).href}>{l.label}<Icon name="arrow-right" size={16} /></a>)}</p>
+        )}
+      </Fragment>
+    </GalleryDisclosure>
+  ))}
 
   <Section pad="sm" aria-labelledby="itf-later-h">
     <SectionHeader id="itf-later-h" eyebrow="More Collections" title="Partners, Forums and Recognition" lead="Signings, awards, forums and meetings." />

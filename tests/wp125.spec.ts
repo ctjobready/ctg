@@ -67,9 +67,10 @@ test.describe('WP125 item 1, Global Reach: Iraq is training delivered with the W
 });
 
 test.describe('WP125 item 2, the News index does not say every post is dated when it was published', () => {
-  const LEDE = 'Partnerships and MOUs, recognition, program events and leadership: what CodersTrust has announced, each post dated by its publication or, for posts written later from dated sources, by its event date.';
-  const META = 'News from CodersTrust: partnerships and MOUs, recognition, program events and leadership, each dated by publication or event.';
-  test('lede and meta description are reworded, and the meta stays within 155 characters', () => {
+  // WP166-C (R5-06, R5-07): the dating sentence moved from the lede to the one note under "Browse by Topic", still saying which posts carry which date; the description now says what the archive holds.
+  const LEDE = 'Posts carry their publication date; posts written later from dated sources carry the event date.';
+  const META = 'CodersTrust news since 2014: government contracts, partnerships and MOUs, recognition and program events.';
+  test('the dating note says which date each post carries, and the meta stays within 155 characters', () => {
     const raw = html('news/index.html');
     expect(searchable(raw)).toContain(LEDE);
     expect(metaDescription(raw)).toBe(META);
@@ -103,8 +104,8 @@ test.describe('WP125 items 3 to 5 and 7, News post wording', () => {
     expect(t).toContain('emphasized CodersTrust’s dedication to equal rights');
     expect(t).not.toContain('the institute’s dedication');
   });
-  test('each changed post carries dateModified 2026-10-29', () => {
-    for (const slug of [WSIS, AKIJ, FREELANCING, OSTITTO]) expect(dateModified(html(post(slug))), slug).toMatch(/^2026-(10-(29|30)|11-03)$/); // WP127 re-dated three of the four (serial-comma sweep); WP161-B re-dated WSIS, Akij and Ostitto to 2026-11-03 (the owner answers of 2 November)
+  test('each changed post carries a dateModified of its own, at or after 2026-10-29', () => {
+    for (const slug of [WSIS, AKIJ, FREELANCING, OSTITTO]) expect(dateModified(html(post(slug))), slug).toMatch(/^2026-(10-(29|30)|11-(03|21))$/); // WP127 re-dated three of the four (serial-comma sweep); WP161-B re-dated WSIS, Akij and Ostitto to 2026-11-03 (the owner answers of 2 November); WP166-C re-dated every post to 2026-11-21
   });
 });
 

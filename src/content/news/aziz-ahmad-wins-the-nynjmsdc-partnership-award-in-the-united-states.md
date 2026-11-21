@@ -1,7 +1,7 @@
 ---
 title: "UTC Associates, Led by Aziz Ahmad, Receives NYNJMSDC Partnership Award"
 date: 2022-10-20
-updated: 2026-11-01
+updated: 2026-11-21
 topic: leadership-advocacy
 excerpt: "UTC Associates, led by Aziz Ahmad, received the Partnership Award from the New York & New Jersey Minority Supplier Development Council."
 cover: ../../assets/images/news/aziz-ahmad-wins-the-nynjmsdc-partnership-award-in-the-united-states/aziz-ahmad.jpg

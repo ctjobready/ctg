@@ -39,7 +39,7 @@ const worldBankEarnings = parts[1];
   stats={[{ id: 'PR-02' }]}
   context={[
     'The World Bank Group sought market-oriented skills to help young women in Kosovo find meaningful employment.',
-    'The Women in Online Work (WoW) pilot prepared young women in five municipalities in Kosovo for online work.',
+    // WP166-C (R4-28): "The Women in Online Work (WoW) pilot prepared young women in five municipalities in Kosovo for online work." is cut; the H1, the eyebrow and the subline say it.
   ]}
   challenges={[
     'Limited infrastructure.',
@@ -60,7 +60,8 @@ const worldBankEarnings = parts[1];
         {results.map((r) => <div><dt>{r.label}</dt><dd>{r.text}</dd></div>)}
       </dl>
     </Callout>
-    <p>Women in Online Work was a pilot with the World Bank Group in 2016–2017. The figures above are from CodersTrust program records.</p>
+    <!-- WP166-C (R4-28): "Women in Online Work was a pilot with the World Bank Group in 2016–2017." is cut (the H1 and the eyebrow say it). -->
+    <p>The figures above are from CodersTrust program records.</p>
     <!-- WP55 (owner decision 2026-10-17, "Show both"): the World Bank's own count for the same pilot, in its full sentence (PR-02b), directly after the program records. -->
     <p><Fact id="PR-02b" /></p>
     <p>World Bank: {worldBankEarnings}.</p>

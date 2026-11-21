@@ -174,7 +174,7 @@ const CARDS = [
   { prefix: '/our-model/', file: 'our-model', label: 'Our Model', line: 'One Path from Learning to Earning, with Outcomes Tracked' },
   { prefix: '/impact/', file: 'impact', label: 'Impact', line: 'Impact You Can Verify' },
   { prefix: '/about/', file: 'about', label: 'About', line: 'A Global Workforce Organization, Built on Evidence' },
-  { prefix: '/news/', file: 'news', label: 'News', line: 'Partnerships and MOUs, recognition, program events and leadership' },
+  { prefix: '/news/', file: 'news', label: 'News', line: 'Government contracts, partnerships and MOUs, recognition and program events' }, // WP166-C (R5-06): the opening of the News page's new lead (it was the old lead's opening)
   { prefix: '/careers/', file: 'careers', label: 'Careers', line: 'We judge youth-employment programs by whether young people end up working and earning, not by how many attended.' },
   { prefix: '/contact/', file: 'contact', label: 'Contact', line: 'Choose the route that fits you, and the right team will respond.' },
 ];

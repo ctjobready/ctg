@@ -238,10 +238,12 @@ test.describe('G4 (GPT-6.1 Sol): Local Partners’ first pain says what CodersTr
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 test.describe('G5 (GPT-6.1 Sol): Independent Evaluation’s lead opens with the result', () => {
+  // WP166-C (R4-03, owner approval of 21 November 2026, item 5): the result still leads, now with why it matters (the nine-trial benchmark, RC-06a); the scope caveat (200 hours, today's 100) moved to
+  // "How to Read This Trial" (it was "… than the control group. The trial evaluated CodersTrust’s 200-hour WSDFM program for women in Dhaka, not today’s 100-hour tracks.")
   const LEAD =
-    'In a randomized trial by the BRAC Institute of Governance and Development (BIGD), women offered a place were 10.3 percentage points more likely to be employed than the control group. The trial evaluated CodersTrust’s 200-hour WSDFM program for women in Dhaka, not today’s 100-hour tracks.';
+    'In a randomized trial of CodersTrust’s WSDFM program by the BRAC Institute of Governance and Development (BIGD), women offered a place were 10.3 percentage points more likely to be employed than the control group: over four times the 2.3-point average across nine randomized trials of vocational training.';
 
-  test('the lead reads as above (45 words, inside the 40 to 60 of the direct answer; WP99: 46 before "predecessor" left the second sentence), names the evaluator in full once, and the register still backs its figures', async ({ page }) => {
+  test('the lead reads as above (47 words, inside the 40 to 60 of the direct answer; WP99 had 45), names the evaluator in full once, and the register still backs its figures', async ({ page }) => {
     expect(BIGD_FULL).toBe('the BRAC Institute of Governance and Development (BIGD)');
     expect(fact('RC-01').text).toContain('10.3 percentage points');
     expect(fact('RC-07').text).toContain('200 hours');
@@ -249,8 +251,9 @@ test.describe('G5 (GPT-6.1 Sol): Independent Evaluation’s lead opens with the 
     await open(page, EVALUATION);
     const lead = compact(await page.locator('main .lf-head .lead').textContent());
     expect(lead).toBe(LEAD);
-    expect(lead.split(/\s+/)).toHaveLength(45);
-    expect(lead.split(/(?<=\.)\s+/)).toHaveLength(2);
+    expect(lead.split(/\s+/)).toHaveLength(47);
+    expect(compact(await page.locator('#summary details').textContent())).toContain('CodersTrust’s 200-hour WSDFM program; today’s tracks are 100 hours.'); // WP166-C: the scope caveat, on the page
+    expect(lead.split(/(?<=\.)\s+/)).toHaveLength(1); // WP166-C: one sentence (the benchmark joins it after a colon)
     expect(compact(await page.locator('main').textContent()).split('BRAC Institute of Governance and Development').length - 1).toBe(1);
     await expect(page.locator('[data-fact~="RC-01"]').first()).toBeAttached();
     await expect(page.locator('[data-fact~="RC-07"]').first()).toBeAttached();
@@ -374,16 +377,15 @@ test.describe('P1 (Kimi): the badge on the 16-countries tiles says "Where We Hav
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 test.describe('L4 (GLM): Outcomes 2026 "How to Read This Survey" names the respondents’ gender as well as their education', () => {
-  test('the line reads the two shares from OC-09 and says the group is mostly graduate and majority-male', async ({ page }) => {
+  // WP166-C (R4-20, owner approval of 21 November 2026, item 5): the "Who the respondents are" item is cut; the respondent profile (OC-09: education, 19.6% women) is stated once, in "Who Responded", directly above this disclosure
+  test('the respondents’ education and gender are stated once, in OC-09’s profile directly above the disclosure', async ({ page }) => {
     expect(fact('OC-09').stat?.value).toBe('85.0%');
     expect(fact('OC-09').text).toContain('19.6% women');
     await open(page, 'impact/outcomes-2026/');
-    const item = page.locator('#methodology li', { hasText: 'Who the respondents are.' });
-    await expect(item).toHaveCount(1);
-    expect(compact(await item.evaluate((el) => el.textContent))).toBe(
-      'Who the respondents are. 85.0% of respondents hold a bachelor’s degree or higher and 19.6% are women, so results describe a mostly graduate, majority-male group.',
-    );
-    expect(await item.getAttribute('data-fact')).toBe('OC-09');
+    await expect(page.locator('#methodology li', { hasText: 'Who the respondents are.' })).toHaveCount(0);
+    const profile = page.locator('#respondents [data-fact="OC-09"]').first();
+    expect(compact(await profile.textContent())).toContain('85.0% hold a bachelor’s degree or higher; 68.2% aged 15–35; 19.6% women;');
+    expect(await page.evaluate(() => (document.getElementById('respondents')?.nextElementSibling?.id ?? ''))).toBe('methodology');
     expect(pagesWith('so results describe a mostly graduate group')).toEqual([]);
   });
 });

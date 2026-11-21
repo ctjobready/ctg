@@ -1,14 +1,14 @@
 ---
-title: "Gardiner Emphasizes Skill Development and Access to U.S. Digital Platforms for Bangladesh"
+title: "U.S. Embassy Economic Officer Highlights Skills and Access to U.S. Digital Platforms at CodersTrust Ceremony"
 date: 2022-11-16
-updated: 2026-10-30
+updated: 2026-11-21
 topic: leadership-advocacy
 excerpt: "U.S. Embassy Economic Officer James Gardiner stresses skill development and access to U.S. digital platforms for Bangladeshi ICT professionals."
 cover: ../../assets/images/news/gardinar-emphasizes-skill-development-and-access-for-bangladeshis-to-us-digital-platform/gardinar-emphasizes-skill-development.jpg
 coverAlt: "A man speaking into a microphone at the CodersTrust Certificate and Award Giving Ceremony 2022, with guests seated at a table beside him"
 legacyUrl: "https://coderstrust.global/gardinar-emphasizes-skill-development-and-access-for-bangladeshis-to-us-digital-platform/"
 tags: ["Featured News"]
-seoTitle: "Gardiner on Skills and U.S. Digital Platforms"
+seoTitle: "U.S. Embassy Officer on Skills and Platforms"
 political: true
 ---
 

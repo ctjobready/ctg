@@ -7,6 +7,7 @@ import Img from '../../ui/Img.astro';
 import HeroArt from '../../ui/HeroArt.astro';
 import { fact } from '../../../data/facts';
 import { linkAttrs } from '../../../lib/url';
+import { labelWithoutUnit, spellUnit } from '../../../lib/format';
 import { CASE_STUDIES } from './case-studies';
 import { caseCardPhoto } from '../../../data/photos';
 import { CASE_CARD_LABELS } from '../home/caseStudies'; // WP125: the Her Power card reads the clause the other cards use
@@ -37,11 +38,15 @@ const cards = CASE_STUDIES.filter((c) => c.slug !== except).map((c) => {
   if (!c.factId) return { ...c, result: undefined, photo };
   const s = fact(c.factId).stat;
   if (!s) throw new Error(`case card: ${c.factId} has no stat`);
-  return { ...c, result: { stat: s, label: c.factId === 'PR-01' ? wsdfmFigureLabel() : c.factId === 'PR-05' ? CASE_CARD_LABELS['PR-05'] : s.label, evidence: evidenceOf(c.factId) }, photo };
+  // WP166-C (R4-06): the trial figure (RC-02 on the WSDFM card) as its tile reads: "+10.3", "percentage points" and the register's label without the unit, with its evidence tag.
+  const ts = c.trialFactId ? fact(c.trialFactId).stat : undefined;
+  if (c.trialFactId && !ts) throw new Error(`case card: ${c.trialFactId} has no stat`);
+  const trial = ts && c.trialFactId ? { ...spellUnit(ts.value), label: labelWithoutUnit(ts.label), evidence: evidenceOf(c.trialFactId) } : undefined;
+  return { ...c, trial, result: { stat: s, label: c.factId === 'PR-01' ? wsdfmFigureLabel() : c.factId === 'PR-05' ? CASE_CARD_LABELS['PR-05'] : s.label, evidence: evidenceOf(c.factId) }, photo };
 });
 ---
 
-<div class:list={['grid-cards', className]} data-fact={[...cards.flatMap((c) => (c.factId ? [c.factId] : [])), ...cards.flatMap((c) => c.note?.facts ?? [])].join(' ')}>
+<div class:list={['grid-cards', className]} data-fact={[...cards.flatMap((c) => (c.factId ? [c.factId] : [])), ...cards.flatMap((c) => (c.trialFactId ? [c.trialFactId] : [])), ...cards.flatMap((c) => c.note?.facts ?? [])].join(' ')}>
   {
     cards.map((c) => {
       const a = linkAttrs(c.path);
@@ -58,6 +63,12 @@ const cards = CASE_STUDIES.filter((c) => c.slug !== except).map((c) => {
                 <div class="case__result">
                   <dt>Result</dt>
                   <dd>
+                    {c.trial && (
+                      <span class="case__trial">
+                        {c.trial.evidence && <span class="case__tags"><EvidenceTag type={c.trial.evidence} /></span>}
+                        <span class="case__value">{c.trial.figure}</span>{' '}<span class="case__label">{c.trial.unit ? `${c.trial.unit} ${c.trial.label}` : c.trial.label}</span>
+                      </span>
+                    )}
                     {c.result.evidence && <span class="case__tags"><StatusTag status="Delivered" /><EvidenceTag type={c.result.evidence} /></span>}
                     <span class="case__value">{c.result.stat.value}</span>{' '}<span class="case__label">{c.result.label}</span>
                     {c.note && <span class="case__second" data-fact={c.note.facts.join(' ')}>{c.note.text}</span>}
@@ -109,6 +120,13 @@ const cards = CASE_STUDIES.filter((c) => c.slug !== except).map((c) => {
     flex-wrap: wrap;
     gap: var(--space-sm);
     margin-bottom: var(--space-xs);
+  }
+  /* WP166-C: the trial figure above the program record on the WSDFM card, laid out as the result under it */
+  .case__trial {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    margin-bottom: var(--space-sm);
   }
   .case__value {
     font-size: var(--fs-heading-2xl);

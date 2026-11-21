@@ -167,7 +167,8 @@ test.describe('16 countries and territories wherever SC-03 and SC-16 render (own
     await expect(page.locator('main h1')).toHaveText('Where We Have Worked: 16 Countries and Territories');
     expect(await page.title()).toContain('Global Reach: 16 Countries and Territories');
     expect(await page.locator('meta[name="description"]').getAttribute('content')).toMatch(/^CodersTrust has worked in 16 countries and territories: Bangladesh since 2014 and 15 international locations/);
-    expect(compact(await page.locator('main .hero__lead').first().textContent())).toBe('CodersTrust has worked in 16 countries and territories across Asia, Africa, Europe and the Americas, including Bangladesh since 2014.');
+    // WP166-C (R4-31): the lead names the partners instead of repeating the H1's count (it was SC-03's sentence); the 16 is in the H1, the title and the description
+    expect(compact(await page.locator('main .hero__lead').first().textContent())).toBe('Across Asia, Africa, Europe and the Americas, with partners including the World Bank, the World Food Programme and SOS Children’s Villages. In Bangladesh since 2014.');
     await open(page, INVESTORS);
     expect(await texts(page, '#guide .ig__tile .stat__value')).toEqual(['130,000+', '150,000+', '16']);
     await open(page, 'programs/');

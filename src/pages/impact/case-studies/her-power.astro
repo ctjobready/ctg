@@ -28,6 +28,11 @@ for (const phrase of [
 // WP84 (CLR review, Sonnet Max run 2, finding 2): GV-01 now reads "Her Power (DoICT, under the ICT Division) is a national program to train 25,125 women ..." (it had a colon after the parenthesis), so the sentence has one colon: "The national program’s target is separate: Her Power (DoICT, under the ICT Division) is a national program to train 25,125 women across 130 sub-districts (upazilas)."
 // WP85 (owner update 2026-10-24: a CodersTrust team member confirmed that the government achieved 100% of Her Power's 25,125-trainee target): the heading is "National Scale: A Different Measure" again and the sentence reads
 // "The national program’s reach is a separate measure: Her Power (DoICT, under the ICT Division) is a national program that trained 25,125 women across 130 sub-districts (upazilas), meeting its target." (GV-01, still one colon).
+// WP166-C (R4-12, owner approval of 21 November 2026, item 5): the hero shows the register's GV-01 tile (25,125 women trained across 130 sub-districts in the national program, its full target) beside the program record, and the
+// results band's sub-heading states the national result (it was "National Scale: The Wider Program"); the paragraph under it is unchanged.
+const gv01 = /national program that trained ([\d,]+) women across (\d+) sub-districts/.exec(fact('GV-01').text);
+if (!gv01 || gv01[1] !== fact('GV-01').stat?.value) throw new Error('GV-01 no longer reads "… national program that trained N women across M sub-districts …" with the stat value N');
+const nationalHeading = `The National Program Trained ${gv01[1]} Women Across ${gv01[2]} Sub-Districts`;
 const excerpt = 'Maria Dewan joined Her Power as a third-year Biology student. She studied Graphic Design, won logo-design work on Freelancer.com and built a portfolio with more clients and higher-paying projects.';
 ---
 
@@ -35,7 +40,7 @@ const excerpt = 'Maria Dewan joined Her Power as a third-year Biology student. S
   slug="her-power"
   pageTitle="Her Power: Women’s Digital Skills with DoICT"
   description={`Her Power, a program of DoICT under Bangladesh’s ICT Division: ${fact('PR-05').stat?.value} ${CASE_CARD_LABELS['PR-05']}.`}
-  stats={[{ id: 'PR-05', label: CASE_CARD_LABELS['PR-05'] }]}
+  stats={[{ id: 'PR-05', label: CASE_CARD_LABELS['PR-05'] }, { id: 'GV-01' }]}
   heroPhoto={{ src: photo, alt: 'Women working on laptops in a Her Power training lab', assetId: 'case-her-power-training-lab', width: 1093, height: 714 }}
   context={[
     'Her Power is a national program of the Department of ICT (DoICT), under the ICT Division of the Government of Bangladesh. It aimed to help women become entrepreneurs and self-employed through digital skills, using technology safely.',
@@ -63,7 +68,7 @@ const excerpt = 'Maria Dewan joined Her Power as a third-year Biology student. S
       <Fact id="PR-05" as="p" />
     </Callout>
     <div class="hp__scale" data-fact="GV-01">
-      <h3 class="t-heading-m">National Scale: The Wider Program</h3>
+      <h3 class="t-heading-m">{nationalHeading}</h3>
       <p>The in-work figure above covers 800 tracked women from the 2,400 that CodersTrust trained directly. The national program’s reach is a separate measure: <Fact id="GV-01" as="span" /> The 2,400 women CodersTrust trained directly are among them.</p>
     </div>
   </Fragment>

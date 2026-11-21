@@ -52,7 +52,7 @@ test.describe('WP79 item 2: Case Studies lead', () => {
   // WP162 made the lead and description say "with the figures and bases where they exist" (Albania had no figure); WP164 (Albania has PR-09 now) restores "each with its figure and its base".
   test('the lead reads "Five programs, each with its figure and its base." (WP103: "figure", not "result"; WP164) and drops the claim about what the figures do not show', async ({ page }) => {
     await open(page, 'impact/case-studies/');
-    await expect(page.locator('main .hero__lead').first()).toHaveText('Five programs, each with its figure and its base.');
+    await expect(page.locator('main .hero__lead').first()).toHaveText('With the World Bank, UNDP, Porticus and the Government of Bangladesh. Each program shows its figure and its base.'); // WP166-C (R4-07): the lead names the partners
     const description = (await page.locator('meta[name="description"]').getAttribute('content')) ?? '';
     expect(description).not.toContain('do not show');
     expect(description).toContain('each with its figure and its base');
@@ -62,7 +62,7 @@ test.describe('WP79 item 2: Case Studies lead', () => {
 test.describe('WP79 item 3: Kosovo case study scope', () => {
   test('the context says the pilot was in five municipalities, not "around the country"', async ({ page }) => {
     await open(page, 'impact/case-studies/kosovo-women-in-online-work/');
-    await expect(page.locator('main')).toContainText('prepared young women in five municipalities in Kosovo for online work.');
+    await expect(page.locator('main')).toContainText('Young women in five municipalities trained in two phases and bid on real online work.'); // WP166-C (R4-28): the subline carries the five municipalities (the context sentence that said it is cut)
     await expect(page.locator('main')).not.toContainText('around the country');
   });
 });
@@ -70,9 +70,9 @@ test.describe('WP79 item 3: Kosovo case study scope', () => {
 test.describe('WP79 item 4: Independent Evaluation last-updated date', () => {
   test('the page reads "Last updated October 29, 2026" and its JSON-LD dateModified is 2026-10-29 (WP104; WP99 had October 28)', async ({ page }) => {
     await open(page, 'impact/independent-evaluation/');
-    await expect(page.locator('body')).toContainText('Last updated November 2, 2026'); // WP134: WP133 changed its text; WP141 changed it again
+    await expect(page.locator('body')).toContainText('Last updated November 21, 2026'); // WP134: WP133 changed its text; WP141 changed it again; WP166-C (the marketing-effectiveness review)
     await expect(page.locator('body')).not.toContainText('Last updated October 23, 2026');
     const ld = await page.locator('script[type="application/ld+json"]').evaluateAll((els) => els.map((e) => e.textContent ?? '').join('\n'));
-    expect(ld).toMatch(/"dateModified"\s*:\s*"2026-11-02"/); // WP157: re-dated 2026-11-02
+    expect(ld).toMatch(/"dateModified"\s*:\s*"2026-11-21"/); // WP157: re-dated 2026-11-02; WP166-C: 2026-11-21
   });
 });

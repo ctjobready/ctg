@@ -1,14 +1,14 @@
 ---
-title: "Enhanced Technology Skills Can Support Peace, Says Aziz Ahmad"
+title: "At the United Nations, Aziz Ahmad Says Technology Skills Can Support Peace"
 date: 2023-05-04
-updated: 2026-11-02
+updated: 2026-11-21
 topic: leadership-advocacy
-excerpt: "Speaking on UN World Press Freedom Day, Aziz Ahmad says closing the digital divide and building technology skills can support peace."
+excerpt: "At United Nations Headquarters, Aziz Ahmad joins panelists from Microsoft, The New York Times and NYU at a UPEACE seminar for World Press Freedom Day 2023."
 cover: ../../assets/images/news/aziz-ahmad-advocates-technology-skills-for-peace-at-un-world-press-freedom-day/aziz-ahmad-at-un-1.jpg
 coverAlt: "Three people seated at a United Nations conference table with name plates in front of them"
 legacyUrl: "https://coderstrust.global/aziz-ahmad-advocates-technology-skills-for-peace-at-un-world-press-freedom-day/"
 tags: []
-seoTitle: "Aziz Ahmad on Technology Skills and Peace"
+seoTitle: "Aziz Ahmad at the UN: Skills for Peace"
 ---
 
 ![Three people seated at a United Nations conference table with name plates in front of them](../../assets/images/news/aziz-ahmad-advocates-technology-skills-for-peace-at-un-world-press-freedom-day/aziz-ahmad-at-un-1.jpg)

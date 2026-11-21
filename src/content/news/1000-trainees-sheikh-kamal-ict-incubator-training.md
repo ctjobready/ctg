@@ -1,7 +1,7 @@
 ---
-title: "1,000 People to Be Trained in High-Demand IT Skills | Sheikh Kamal ICT Incubator Training"
+title: "CodersTrust Contracted to Train 1,000 People in High-Demand IT Skills in Barishal"
 date: 2023-01-05
-updated: 2026-11-02
+updated: 2026-11-21
 topic: partnerships
 excerpt: "CodersTrust is contracted to train 1,000 people in high-demand IT skills at the Sheikh Kamal IT Training and Incubation Center in Barishal."
 cover: ../../assets/images/news/1000-trainees-sheikh-kamal-ict-incubator-training/sheikh-kamal-it-centre.jpg
@@ -9,6 +9,8 @@ coverAlt: "Architect’s rendering of the Sheikh Kamal IT Center, a curved glass
 legacyUrl: "https://coderstrust.global/1000-trainees-sheikh-kamal-ict-incubator-training/"
 tags: []
 seoTitle: "Sheikh Kamal ICT: Contract to Train 1,000"
+archiveNote: "Contract scope: 1,000 people. We confirm each contract’s delivery status in a briefing."
+archiveNoteFacts: ["GV-03", "GV-10"]
 ---
 
 ![Officials signing an agreement at a table with a group standing behind them](../../assets/images/news/1000-trainees-sheikh-kamal-ict-incubator-training/image-2.jpg)
