@@ -338,7 +338,8 @@ test.describe('Where the new figures render, and what they never say', () => {
       .filter((p) => /data-fact="[^"]*\bSC-11[a-d]?\b[^"]*"/.test(p.html))
       .map((p) => p.route)
       .sort();
-    const expected = [ABOUT, CAREERS, HUB, LOCAL, GOVERNMENTS, UNIVERSITIES, DEV_PARTNERS, FOUNDATIONS, EMPLOYERS].map((r) => `/${r}`).sort();
+    // WP166-A (marketing review R1-05, owner approval of 21 November 2026): Home's track-record band opens with SC-11's sentence, so Home ('/') is the tenth page
+    const expected = ['', ABOUT, CAREERS, HUB, LOCAL, GOVERNMENTS, UNIVERSITIES, DEV_PARTNERS, FOUNDATIONS, EMPLOYERS].map((r) => `/${r}`).sort();
     expect(routes).toEqual(expected);
   });
 

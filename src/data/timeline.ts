@@ -14,5 +14,10 @@ export const timeline: TimelineItem[] = [
   // WP52 (cycle-27 review): two sentences in place of one semicolon chain that ended in a fragment ("...; Impact Survey 2026."). The clause "and lets funders deploy the CodersTrust model in a country" (IN-02) is gone with the chain, so the entry no longer cites IN-02.
   // WP60 (cycle-32 review, Claude S3): the 2030 aim carries the dependency clause every page that states it carries. WP99 (owner answers 2026-10-28, Q1): the aim is IN-01’s own statement (AIM_STATEMENT, src/data/copy.ts), which ends with that clause: "... by 2030, in Bangladesh and similar countries ..., depending on government and donor commitments; ...".
   // WP163 (owner answers of 3 November 2026): no capability carries a rollout status, and IN-04 no longer says "Modules are rolling out in stages", so the JobReady sentence is IN-04's definition (it read "JobReady rolls out in stages.").
-  { year: '2025–2026', title: 'JobReady, YouthWIDE and the Impact Survey', text: `JobReady is CodersTrust’s digital learning and earning platform. YouthWIDE aims to train ${AIM_STATEMENT}. CodersTrust published Impact Survey 2026.`, factIds: ['IN-04', 'IN-01', 'OC-01'] },
+  // WP166-A (marketing review R1-25, owner approval of 21 November 2026, item 5: register text may be moved): the YouthWIDE aim (IN-01, AIM_STATEMENT, verbatim) is no longer the middle sentence of this entry; it closes the
+  // About page's story band under "Where We Are Going" (AIM_LINE, below), so the entry is the two sentences that are history and its title names what it holds.
+  { year: '2025–2026', title: 'JobReady and the Impact Survey', text: `JobReady is CodersTrust’s digital learning and earning platform. CodersTrust published Impact Survey 2026.`, factIds: ['IN-04', 'OC-01'] },
 ];
+
+/** WP166-A (R1-25): the YouthWIDE aim as the About page states it at the close of its story band (IN-01 verbatim, with its dependency clause). */
+export const AIM_LINE = { text: `YouthWIDE aims to train ${AIM_STATEMENT}.`, factIds: ['IN-01'] };

@@ -6,7 +6,6 @@
  * as its text (About: Governance and Accountability; Our Model: the JobReady Platform status; Programs: YouthWIDE; Partner with Us: Governments).
  */
 import { fact } from './facts';
-import { NU_ELIGIBILITY } from './copy';
 import { COURSES_URL } from '../lib/site';
 
 const stat = (id: string) => {
@@ -22,7 +21,9 @@ const trialPoints = `+${trial.numeric} Percentage Points`;
  * WP54 (cycle-28 review, Claude S7): the line no longer carries the Bangladesh aim. It said "..., with a Bangladesh initiative that aims to train ... by 2030" (IN-01; WP45, cycle-21 review: "a national initiative in Bangladesh" read as an existing national
  * program; WP48: IN-01's own wording), which put a Bangladesh target in the menu of every page of a global site. The aim stays on the YouthWIDE page, the Programs hub and Impact, where it is labeled as an aim; this line states IN-02 only.
  */
-const youthwideLine = 'Co-funded country cohorts, designed for three regions, from training to paid digital work.';
+// WP166-A (marketing review R7-12, owner approval of 21 November 2026): the menu line names the program's audience first, as the other partner programs' lines do ("For universities and
+// colleges."), so a ministry or funder can tell the flagship is theirs (the YouthWIDE page's lead: "YouthWIDE helps governments and funders ..."). The featured panel says something else (R7-08, below).
+const youthwideLine = 'For governments and funders: co-funded country cohorts designed for three regions.';
 
 export interface NavLink {
   label: string;
@@ -80,11 +81,12 @@ export const navGroups: NavGroup[] = [
       { label: 'Careers', href: '/careers/', description: 'Working at CodersTrust and how to apply.' },
       { label: 'Contact', href: '/contact/', description: 'Offices, email and phone.' },
     ],
+    // WP166-A (R7-08): a featured panel adds something the menu item beside it does not say (four of five panels repeated their item's description word for word); headings and links unchanged.
     feature: {
       kind: 'about',
-      eyebrow: 'Accountability',
+      eyebrow: 'For Due-Diligence Teams',
       title: 'Governance and Accountability',
-      text: 'How CodersTrust is organized and reports to partners.',
+      text: 'The contracting entity, safeguarding and reporting, in one place.',
       cta: { label: 'See How We Report to Partners', href: '/about/governance/' },
     },
   },
@@ -94,7 +96,8 @@ export const navGroups: NavGroup[] = [
     href: '/our-model/',
     items: [
       { label: 'How It Works', href: '/our-model/', description: 'From partner goals to training, placement support and tracked outcomes.' },
-      { label: 'TalentLEAP', href: '/our-model/talentleap/', description: 'Our competency-based talent model.' },
+      // WP166-A (R7-11): what a reader gets, from the TalentLEAP page's H1 ("A Skill-by-Skill Path from Learning to Earning"), not a category term for the brand name.
+      { label: 'TalentLEAP', href: '/our-model/talentleap/', description: 'A skill-by-skill path from learning to earning.' },
       // WP45 (cycle-21 review): IN-04 names two marketplaces in pre-launch, the employer marketplace and the gig-work marketplace, so the menu names both (tests/wp25s.spec.ts forbids "employer and gig-work").
       // WP163 (owner answers of 3 November 2026): no capability carries a live or pre-launch label, so the menu line and the feature say what the platform offers (IN-04).
       { label: 'JobReady Platform', href: '/our-model/jobready-platform/', description: 'An AI Tutor, adaptive learning paths, an AI career coach, partner portals and work marketplaces.' },
@@ -103,7 +106,8 @@ export const navGroups: NavGroup[] = [
       kind: 'pilot',
       eyebrow: 'AI Capabilities',
       title: 'JobReady Platform',
-      text: 'An AI Tutor, adaptive learning paths, an AI career coach, partner portals and work marketplaces.',
+      // WP166-A (R7-08): the platform page's H1 ("A Platform Built to Connect Learning to Work"); the menu item beside the panel lists the capabilities.
+      text: 'Built to connect learning to work.',
       cta: { label: 'See the Platform Capabilities', href: '/our-model/jobready-platform/' },
     },
   },
@@ -119,21 +123,23 @@ export const navGroups: NavGroup[] = [
       { label: 'JobReady@Work', href: '/programs/jobready-work/', description: 'For employers and corporate teams.', group: PARTNER_PROGRAMS },
       { label: 'SuperKids', href: '/programs/superkids/', description: 'For schools and young learners.', group: PARTNER_PROGRAMS },
       // WP27: admissions' eligibility sentence (NU-01), the same words on the NU pages, the Programs hub and the FAQs (Home's programs slide, which carried it too, is gone: WP53).
-      { label: 'NU Post Graduate Diploma', href: '/programs/nu-postgraduate-diploma/', description: `Eligibility: ${NU_ELIGIBILITY}.`, factIds: ['NU-01'], group: LEARNER_PROGRAMS },
+      // WP166-A (R7-10): the line says what the offer is before it screens anyone out ("NU" unexplained, eligibility first); eligibility stays on the five diploma pages, the Programs hub and the FAQs.
+      { label: 'NU Post Graduate Diploma', href: '/programs/nu-postgraduate-diploma/', description: 'Four National University of Bangladesh diploma courses, from digital marketing to data analytics.', group: LEARNER_PROGRAMS },
       { label: 'Digital Marketing', href: '/programs/nu-postgraduate-diploma/digital-marketing/', description: 'SEO, social media, advertising and analytics.', group: LEARNER_PROGRAMS, menuOnly: true, parent: NU_PARENT, footer: false },
       { label: 'ICT', href: '/programs/nu-postgraduate-diploma/ict/', description: 'Programming, databases, networks, mobile and web development.', group: LEARNER_PROGRAMS, menuOnly: true, parent: NU_PARENT, footer: false },
       // WP76 (owner answer 2026-10-22: the diploma has four courses): Cyber Security and Data Analytics nest under the diploma the same way (header menu and mobile drawer; the footer does not list courses).
       { label: 'Cyber Security', href: '/programs/nu-postgraduate-diploma/cyber-security/', description: 'Cryptography, network security, digital forensics, cyber law and risk management.', group: LEARNER_PROGRAMS, menuOnly: true, parent: NU_PARENT, footer: false },
       { label: 'Data Analytics', href: '/programs/nu-postgraduate-diploma/data-analytics/', description: 'Analytics tools, databases, data visualization and machine learning.', group: LEARNER_PROGRAMS, menuOnly: true, parent: NU_PARENT, footer: false },
       // WP161 (A-35): JobReady.global sells self-paced, live-online and on-campus courses, so the line does not say "self-paced" only
-      { label: 'Courses', href: COURSES_URL, description: 'Courses for individual learners on JobReady.global.', group: LEARNER_PROGRAMS, menuOnly: true },
+      // WP166-A (R7-14): families too (SuperKids courses are on JobReady.global: the SuperKids page's lead), so a parent looking under "For Individual Learners" finds them.
+      { label: 'Courses', href: COURSES_URL, description: 'Courses for individual learners and families on JobReady.global, including SuperKids.', group: LEARNER_PROGRAMS, menuOnly: true },
     ],
     feature: {
       kind: 'pilot',
       eyebrow: 'Partner Programs',
       title: 'YouthWIDE',
-      text: youthwideLine,
-      factIds: ['IN-02'],
+      // WP166-A (R7-08): the YouthWIDE page's H1, not the menu line beside it.
+      text: 'From training to paid digital work, country by country.',
       cta: { label: 'Explore YouthWIDE', href: '/programs/youthwide/' },
     },
   },
@@ -142,12 +148,14 @@ export const navGroups: NavGroup[] = [
     label: 'Impact',
     href: '/impact/',
     items: [
-      { label: 'Impact Overview', href: '/impact/', description: 'Headline outcomes and the evidence ladder.' },
-      { label: 'Independent Evaluation', href: '/impact/independent-evaluation/', description: 'The randomized trial of CodersTrust’s WSDFM program.' },
-      { label: 'Impact Survey 2026', href: '/impact/outcomes-2026/', description: 'Findings from the Impact Survey 2026.' },
-      { label: 'Case Studies', href: '/impact/case-studies/', description: 'Five programs with partners, in depth.' },
+      // WP166-A (R7-09, R7-13, R7-15): each line states the concrete thing its page leads with; the trial page is named "Randomized Trial Results" (its <title>) in the menu, the drawer and the footer, the phrase funders scan for.
+      // The reviewer's trial line ended "... by BIGD."; the menu is on every page, and the settled rule is that an acronym is spelled out where a page first names it and Home names BIGD nowhere (WP35, tests/wp35.spec.ts), so it stops at the program.
+      { label: 'Impact Overview', href: '/impact/', description: 'Headline results, each with its kind of evidence.' },
+      { label: 'Randomized Trial Results', href: '/impact/independent-evaluation/', description: 'An independent evaluation of CodersTrust’s WSDFM program.' },
+      { label: 'Impact Survey 2026', href: '/impact/outcomes-2026/', description: 'Employment and income among surveyed completers at the October 2026 survey.' },
+      { label: 'Case Studies', href: '/impact/case-studies/', description: 'Five programs across Kosovo, Albania and Bangladesh.' },
       { label: 'Success Stories', href: '/impact/stories/', description: 'Individual learner stories and outcomes.' },
-      { label: 'Global Reach', href: '/impact/global-reach/', description: 'Where we have worked.' },
+      { label: 'Global Reach', href: '/impact/global-reach/', description: `${stat('SC-03').value} ${stat('SC-03').label}.`, factIds: ['SC-03'] },
       { label: 'In the Field', href: '/impact/in-the-field/', description: 'Photographs from programs and events.' },
       { label: 'News Photographs', href: '/impact/in-the-field/news-photos/', description: 'Photographs published with CodersTrust news.', parent: '/impact/in-the-field/' },
     ],
@@ -166,7 +174,8 @@ export const navGroups: NavGroup[] = [
     href: '/partner-with-us/',
     items: [
       { label: 'Partnership Overview', href: '/partner-with-us/', description: 'Choose the route that fits your organization.' },
-      { label: 'Development Partners and NGOs', href: '/partner-with-us/development-partners/', description: 'Evidence-led delivery for your portfolio.' },
+      // WP166-A (R7-15): the Development Partners page's H1 ("Youth Employment Results You Can Report"), not consultancy jargon.
+      { label: 'Development Partners and NGOs', href: '/partner-with-us/development-partners/', description: 'Youth employment results you can report.' },
       // WP48 (cycle-23 review): not "National programs for youth employment." (a 100,000+ national program is a design option CodersTrust has not yet delivered); the blurb says what the Governments page offers. The featured panel below and the audience router (Home, 404, partner hub) say the same.
       { label: 'Governments', href: '/partner-with-us/governments/', description: 'Curriculum, trainer training and phased delivery for ministries.' },
       { label: 'Foundations and CSR', href: '/partner-with-us/foundations/', description: 'Fund outcomes you can track.' },
@@ -179,7 +188,8 @@ export const navGroups: NavGroup[] = [
       kind: 'discovery',
       eyebrow: 'For Ministries and Public Agencies',
       title: 'Governments',
-      text: 'Curriculum, trainer training and phased delivery for ministries.',
+      // WP166-A (R7-08): the partner hub's own title for the government route; the menu item beside the panel keeps the inputs.
+      text: 'Turn existing labs into a workforce pipeline.',
       cta: { label: 'Explore the Government Route', href: '/partner-with-us/governments/' },
     },
   },
@@ -266,7 +276,8 @@ if (!jobreadyDefinition) throw new Error('nav: IN-04 no longer opens "JobReady i
 
 /** Audience router (Home, 404, partner hub): who are you? Same order as the Partner with Us menu. */
 export const audiences = [
-  { id: 'development-partners', title: 'Development Partners', icon: 'globe', text: 'Evidence-led delivery for your portfolio', href: '/partner-with-us/development-partners/' },
+  // WP166-A (R7-15): as the Partner with Us menu line (the 404 page's router reads it; Home's router has its own card lines since WP166-A, R1-04).
+  { id: 'development-partners', title: 'Development Partners', icon: 'globe', text: 'Youth employment results you can report', href: '/partner-with-us/development-partners/' },
   { id: 'governments', title: 'Governments', icon: 'landmark', text: 'Curriculum, trainer training and phased delivery for ministries', href: '/partner-with-us/governments/' },
   { id: 'foundations', title: 'Foundations and CSR', icon: 'heart-handshake', text: 'Fund outcomes you can track', href: '/partner-with-us/foundations/' },
   { id: 'universities', title: 'Universities', icon: 'graduation-cap', text: 'Make students job-ready', href: '/partner-with-us/universities/' },

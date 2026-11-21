@@ -61,7 +61,7 @@ test.describe('Item 1: route emails ask for two suitable times', () => {
     test(`${route} "${subjectStart}" prefilled body asks for two suitable times (WP130: for a discovery session; Investors, for an introduction call)`, () => {
       const email = mailtos(htmlFor(route)).find((m) => m.subject.startsWith(subjectStart));
       expect(email, `${route}: mailto with subject starting "${subjectStart}"`).toBeDefined();
-      expect(email!.body).toContain(route === '/partner-with-us/investors/' ? 'Two suitable times for an introduction call: ' : 'Two suitable times for a discovery session: ');
+      expect(email!.body).toContain(route === '/partner-with-us/investors/' ? 'Two suitable times for an introduction call (with your time zone): ' : 'Two suitable times for a discovery session (with your time zone): '); // WP166-A (R7-30): the times line asks for the time zone
     });
   }
 
@@ -84,7 +84,8 @@ test.describe('Item 2: Universities problem heading', () => {
 // ---- Item 3: photo caption on Home and JobReady@Campus ---------------------------------------------------------------------------
 
 test.describe('Item 3: photo caption covers programs and offices', () => {
-  for (const route of ['/', '/programs/jobready-campus/']) {
+  // WP166-A (marketing review R1-14): Home's Imagine band, which carried the caption, is gone; JobReady@Campus keeps it
+  for (const route of ['/programs/jobready-campus/']) {
     test(`${route} captions its photographs as programs and offices`, () => {
       const html = htmlFor(route);
       expect(html, route).toContain('Photographs are from CodersTrust programs and offices, shown for context.');
@@ -129,9 +130,9 @@ test.describe('Item 5: Careers scopes the outcome principle', () => {
 // ---- Item 6: Governance and Accessibility dates -----------------------------------------------------------------------------------
 
 test.describe('Item 6: legal page dates match their last content change', () => {
-  test('Governance reads "Last updated November 2, 2026" (WP141: November 1; WP155: November 2)', async ({ page }) => {
+  test('Governance reads "Last updated November 21, 2026" (WP141: November 1; WP155: November 2; WP166-A: November 21)', async ({ page }) => {
     await open(page, 'about/governance/');
-    expect(compact(await page.locator('.gov-updated').textContent())).toBe('Last updated November 2, 2026');
+    expect(compact(await page.locator('.gov-updated').textContent())).toBe('Last updated November 21, 2026');
     await expect(page.locator('body')).not.toContainText('Last updated October 10, 2026');
   });
 

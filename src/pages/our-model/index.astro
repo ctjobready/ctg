@@ -69,7 +69,8 @@ const faqSources: FaqSource[] = [
 ];
 ---
 
-<BaseLayout title={title('Our Model')} description={description} path={path} breadcrumbs={[{ label: 'Our Model' }]}>
+<!-- WP166-A (marketing review R7-04): the page title carries the page's H1 clause ("Our Model: One Path from Learning to Earning"), not the label alone. -->
+<BaseLayout title={title('Our Model: One Path from Learning to Earning')} description={description} path={path} breadcrumbs={[{ label: 'Our Model' }]}>
   <Hero variant="inner" eyebrow="Our Model" title="One Path from Learning to Earning, with Outcomes Tracked" lead={answer} artSeed="our-model-hub">
     <Fragment slot="actions">
       <Button href={d.href} iconEnd="arrow-right">{d.label}</Button>

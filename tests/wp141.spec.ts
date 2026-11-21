@@ -215,7 +215,9 @@ test.describe('WP141 item 1: the program-scope qualifier is stated once per page
 /* ------------------------------------------------------------------------------------------------------------------------------------- */
 test.describe('WP141 item 1: the in-sentence copies are rewritten (spot checks)', () => {
   test('the positioning statements read without the clause (Home, YouthWIDE, Development Partners, Governments, Universities, JobReady@Campus)', () => {
-    expect(main('index.html')).toContain('with monthly reports on progress toward paid work. ');
+    // WP166-A (marketing review R1-03): Home's statement is gone; the hero lead carries the monthly reports, without the clause
+    expect(main('index.html')).toContain('with monthly reports on their progress.');
+    expect(main('index.html')).not.toContain('as agreed in the program scope');
     expect(main('programs/youthwide/index.html')).toContain('Partners receive monthly reports on progress toward paid work.');
     expect(main('partner-with-us/development-partners/index.html')).toContain('We combine training, mentoring and placement support. Partners receive monthly reports.'); // WP155 (Polish 5): was "Partners receive monthly reports, and outcomes are tracked after each course."
     expect(main('partner-with-us/governments/index.html')).toContain('Your agency receives monthly reports on progress toward paid work.');
@@ -252,8 +254,9 @@ test.describe('WP141 item 1: the in-sentence copies are rewritten (spot checks)'
   });
 
   // WP161-A (adversarial review A-27): "every supported cohort"
-  test('the Home comparison row and the hub due-diligence card read "Included for every supported cohort: ..."', () => {
-    expect(main('index.html')).toContain('Included for every supported cohort: monthly reports and follow-up surveys at 3, 6 and 12 months');
+  // WP166-A (marketing review R1-15): Home's comparison band (and its row) is gone; the hub card keeps the wording
+  test('the hub due-diligence card reads "Included for every supported cohort: ..." (the Home comparison row is gone, WP166-A)', () => {
+    expect(main('index.html')).not.toContain('Included for every supported cohort');
     expect(main('partner-with-us/index.html')).toContain('Included for every supported cohort: follow-up surveys at 3, 6 and 12 months and monthly reports.');
   });
 

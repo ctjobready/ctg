@@ -1,6 +1,6 @@
 ---
 import PartnerStrip from '../../system/PartnerStrip.astro';
-import { PARTNER_CAPTION } from '../../../lib/logos';
+import { PARTNER_CAPTION, PARTNER_CAPTION_SENTENCE } from '../../../lib/logos';
 
 /**
  * The partner logo wall as relationship cards (WP24a, Benchmark): the same registered partner logos (src/data/partners.ts, PA-04), grouped by the kind of
@@ -8,18 +8,30 @@ import { PARTNER_CAPTION } from '../../../lib/logos';
  * Relationships, not endorsements: the caption says so, and no card implies that an organization endorses CodersTrust. Logos follow the permissions rule
  * of PartnerStrip (a logo that may not render shows the organization's name).
  * WP54 (cycle-28 review, Kimi K1): the caption is PARTNER_CAPTION in full ("Organizations we have worked with, 2014–2026. These are working relationships, not endorsements."), the one caption every logo band prints; this band added the second sentence by hand before.
+ * WP166-A (marketing review R1-05, owner approval of 21 November 2026): Home shows the funders' row directly under its hero (HomeHero), captioned with the caption's first sentence ("Organizations we have worked with,
+ * 2014–2026."), so the Track Record band shows the other three cards (`omit`) and the caption's second sentence once, under the full wall (`captionLast`: "These are working relationships, not endorsements.").
  */
-const groups = [
+interface Props {
+  /** Relationship groups left out (shown elsewhere on the page). */
+  omit?: ('development' | 'government' | 'academic' | 'private')[];
+  /** The caption after the cards instead of before them. */
+  captionLast?: boolean;
+}
+const { omit = [], captionLast = false } = Astro.props;
+const groups = ([
   { title: 'Funders and Development Partners', group: 'development', label: 'Funders and development partners' },
   { title: 'Government Programs', group: 'government', label: 'Government program partners' },
   { title: 'Education Partners', group: 'academic', label: 'Education partners' },
   // WP57 (cycle-29 review, GPT-6.1 Sol P1): the group holds AWS and BASIS beside the employers, so it is "Employers and Industry Partners" (the strip's landmark name follows the heading)
   { title: 'Employers and Industry Partners', group: 'private', label: 'Employers and industry partners' },
-] as const;
+] as const).filter((g) => !omit.includes(g.group));
+/** The caption's second sentence (K1), for the wall whose first sentence is printed above it elsewhere on the page. */
+const caveat = PARTNER_CAPTION.slice(PARTNER_CAPTION_SENTENCE.length).trim();
+if (!caveat || caveat === PARTNER_CAPTION) throw new Error('PartnerRelationships: PARTNER_CAPTION no longer opens with PARTNER_CAPTION_SENTENCE');
 ---
 
 <div class="rel">
-  <p class="rel__caption" data-reveal>{PARTNER_CAPTION}</p>
+  {!captionLast && <p class="rel__caption" data-reveal>{PARTNER_CAPTION}</p>}
   <ul class="rel__cards" role="list">
     {
       groups.map((g) => (
@@ -30,6 +42,7 @@ const groups = [
       ))
     }
   </ul>
+  {captionLast && <p class="rel__caption" data-reveal>{caveat}</p>}
 </div>
 
 <style>

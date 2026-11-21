@@ -10,25 +10,19 @@ import { open } from './support/browser';
 const compact = (t: string | null | undefined) => (t ?? '').replace(/\s+/g, ' ').trim();
 const UPEACE = 'news/coderstrust-students-invited-to-join-upeaces-young-leaders-for-peace-summer-programme-2026/';
 
-test.describe('What a Supported Youth Cohort Includes (#features; WP41: it was "What Your Partnership Includes")', () => {
-  // WP38 (cycle-15 review): on Home the band is three short cards (IncludesBand), not the concern / inclusion / benefit rows; the scoping stays in the card's sentences (tests/wp38.spec.ts holds the whole band)
-  // WP45 (cycle-21 review): the card is one line (the monthly reports, scoped); the follow-up surveys and the documentary evidence "where available" are in the FAQ and on the evidence pages
-  test('the reporting card is scoped: the band carries the page\'s one program-scope statement (WP141), not an in-sentence clause', async ({ page }) => {
+// WP166-A (marketing review R1-17, owner approval of 21 November 2026, item 1): the band is gone from Home; its training sentence is the mechanism band's "What We Deliver" card, the monthly reports are in the hero lead,
+// and the page's one program-scope statement sits under the mechanism band. The card checks below are replaced by those of what took the band's place.
+test.describe('What a Supported Youth Cohort Includes (#features; WP41: it was "What Your Partnership Includes"; gone from Home since WP166-A)', () => {
+  test('the monthly reports are unscoped in the sentence, and the page carries its one program-scope statement (WP141), under the mechanism band', async ({ page }) => {
     await open(page, '');
-    const card = page.locator('#features li[data-fact~="PD-08"]');
-    await expect(card).toHaveCount(1);
-    await expect(card.locator('.card__title')).toHaveText('Progress You Can Check');
-    const t = compact(await card.textContent());
-    expect(t).not.toContain('Documentary Evidence of Earnings');
-    expect(t).toContain('Monthly reports show progress toward paid work.');
-    expect(t).not.toContain('program scope');
-    expect(compact(await page.locator('#features').textContent())).toContain('Inclusions and reporting on this page are agreed in the program scope.'); // WP142: Home states no exam fees, attempts or eligibility, so the sentence names no exam terms
+    await expect(page.locator('#features')).toHaveCount(0);
+    expect(compact(await page.locator('.hh__lead').textContent())).toContain('with monthly reports on their progress.');
+    expect(compact(await page.locator('main').textContent())).not.toContain('Documentary Evidence of Earnings');
+    expect(compact(await page.locator('#mechanism').textContent())).toContain('Inclusions and reporting on this page are agreed in the program scope.'); // WP142: Home states no exam fees, attempts or eligibility, so the sentence names no exam terms
   });
 
-  test('no card on Home claims an "Employer-Ready Portfolio" (WP30c: the hands-on-labs row is gone; three cards answer the three ranked pains)', async ({ page }) => {
+  test('no card on Home claims an "Employer-Ready Portfolio" (WP30c: the hands-on-labs row is gone)', async ({ page }) => {
     await open(page, '');
-    const titles = (await page.locator('#features .card__title').allTextContents()).map(compact);
-    expect(titles).toEqual(['Training, Mentoring and Placement Support', 'Progress You Can Check', 'Tracks Chosen from Employer Demand']);
     expect(compact(await page.locator('main').textContent())).not.toMatch(/Employer-Ready Portfolio/i);
   });
 });

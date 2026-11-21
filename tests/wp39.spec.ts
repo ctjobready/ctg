@@ -361,8 +361,11 @@ test.describe('Investors: the platform-status question points to "What JobReady 
     await expect(page.locator('#platform')).toHaveCount(0);
   });
 
-  test('every other page keeps its "Our Approach" statement', async ({ page }) => {
-    for (const route of ['', 'partner-with-us/governments/', 'partner-with-us/development-partners/', 'partner-with-us/foundations/', 'partner-with-us/universities/', 'partner-with-us/employers/', 'partner-with-us/local-partners/', 'programs/youthwide/', 'programs/jobready-campus/', 'programs/jobready-work/', 'programs/superkids/']) {
+  // WP166-A (marketing review R1-03): Home's "Our Approach" repeated its hero lead and definition and is gone, so Home has none either; the other pages keep theirs
+  test('every other page keeps its "Our Approach" statement (WP166-A: Home no longer has one)', async ({ page }) => {
+    await open(page, '');
+    await expect(page.locator('#mechanism .pos__text'), 'home').toHaveCount(0);
+    for (const route of ['partner-with-us/governments/', 'partner-with-us/development-partners/', 'partner-with-us/foundations/', 'partner-with-us/universities/', 'partner-with-us/employers/', 'partner-with-us/local-partners/', 'programs/youthwide/', 'programs/jobready-campus/', 'programs/jobready-work/', 'programs/superkids/']) {
       await open(page, route);
       await expect(page.locator('#mechanism .pos__text'), route || 'home').toHaveCount(1);
     }
@@ -483,7 +486,8 @@ test.describe('smaller heading changes (item 10)', () => {
   // WP42 (cycle-19 review): the government slide is second, so the survey-income slide is the third
   test('Home slide 3 is "Surveyed Completers Report Higher Income" with the $245 tile and its before-training comparison', async ({ page }) => {
     await open(page, '');
-    const slide = page.locator('[data-hs-slide]').nth(2);
+    // WP166-A (marketing review R1-11): the slides run evidence, survey outcomes, program results, government (old slide 2 is now 4, 3 is 2, 4 is 3)
+    const slide = page.locator('[data-hs-slide]').nth(1);
     await expect(slide.locator('h3')).toHaveText('Surveyed Completers Report Higher Income');
     expect(titleCase('Surveyed Completers Report Higher Income')).toBe('Surveyed Completers Report Higher Income');
     expect(await slide.locator('h3').getAttribute('data-fact')).toBe('OC-03');

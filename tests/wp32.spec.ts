@@ -233,10 +233,12 @@ test.describe('benefit lines start with a capital letter', () => {
     }
   });
 
-  test('Home’s three cards open with a capital letter or a figure', async ({ page }) => {
+  // WP166-A (marketing review R1-17): Home's three "Includes" cards are gone; the mechanism band's four card sentences carry the rule there
+  test('Home’s mechanism card sentences open with a capital letter or a figure (the three "Includes" cards are gone since WP166-A)', async ({ page }) => {
     await open(page, '');
-    const lines = await texts(page, '#features .card__text');
-    expect(lines.length, 'home has three card sentences').toBe(3);
+    await expect(page.locator('#features')).toHaveCount(0);
+    const lines = await texts(page, '#mechanism .model__text');
+    expect(lines.length, 'home has four mechanism card sentences').toBe(4);
     for (const l of lines) expect(l, `home: "${l.slice(0, 40)}…"`).toMatch(/^[A-Z0-9]/);
   });
 
@@ -280,7 +282,8 @@ test.describe('Home', () => {
   // WP42 (cycle-19 review): the government slide is second
   test('slide 2 (government contracts and the National University partnership) links both audience pages', async ({ page }) => {
     await open(page, '');
-    const slide = page.locator('[data-hs-slide]').nth(1);
+    // WP166-A (marketing review R1-11): the slides run evidence, survey outcomes, program results, government (old slide 2 is now 4, 3 is 2, 4 is 3)
+    const slide = page.locator('[data-hs-slide]').nth(3);
     expect(await slide.locator('.hs__actions a').evaluateAll((els) => els.map((a) => ({ text: (a.textContent ?? '').trim(), href: a.getAttribute('href') ?? '' })))).toEqual([
       { text: 'For Governments', href: expect.stringMatching(/\/partner-with-us\/governments\/$/) },
       { text: 'For Universities', href: expect.stringMatching(/\/partner-with-us\/universities\/$/) },

@@ -16,7 +16,7 @@ import { listPages } from './support/pages';
  */
 
 const compact = (t: string | null | undefined) => (t ?? '').replace(/\s+/g, ' ').trim();
-const slide = (page: Page, n: number) => page.locator('[data-hs-slide]').nth(n - 1);
+const slide = (page: Page, n: number) => page.locator('[data-hs-slide]').nth([0, 3, 1, 2][n - 1]); // WP166-A (R1-11): n is the slide's position before the reorder (1 trial, 2 government, 3 survey, 4 program results); the carousel now runs trial, survey, program results, government
 const visible = (html: string) =>
   compact(
     html

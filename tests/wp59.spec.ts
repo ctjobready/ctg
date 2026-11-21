@@ -27,7 +27,7 @@ import { withoutRepostBody } from './support/repost';
 const compact = (t: string | null | undefined) => (t ?? '').replace(/\s+/g, ' ').trim();
 const texts = (page: Page, selector: string) => page.locator(selector).evaluateAll((els) => els.map((e) => (e.textContent ?? '').replace(/\s+/g, ' ').trim()));
 const noOverflow = (page: Page) => page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth);
-const slide = (page: Page, n: number) => page.locator('[data-hs-slide]').nth(n - 1);
+const slide = (page: Page, n: number) => page.locator('[data-hs-slide]').nth([0, 3, 1, 2][n - 1]); // WP166-A (R1-11): n is the slide's position before the reorder (1 trial, 2 government, 3 survey, 4 program results); the carousel now runs trial, survey, program results, government
 
 /** Built pages that are not archived news posts (those keep their original wording), with their HTML. */
 // WP165: the essay element of a /blog/<post>/ page is Aziz Ahmad's Substack text, republished without edits; the sweeps read the rest of the page (tests/support/repost.ts)
@@ -76,8 +76,8 @@ const unusedBelow = (page: Page) =>
   });
 /** Show slide n (1-based) the way a visitor does (a dot), and let the slide settle. */
 async function showSlide(page: Page, n: number) {
-  await page.locator('[data-hs-dot]').nth(n - 1).click();
-  await expect.poll(() => page.evaluate(() => Array.from(document.querySelectorAll('[data-hs-slide]')).findIndex((s) => s.classList.contains('is-active')))).toBe(n - 1);
+  await page.locator('[data-hs-dot]').nth([0, 3, 1, 2][n - 1]).click(); // WP166-A: the same old-to-new map as slide()
+  await expect.poll(() => page.evaluate(() => Array.from(document.querySelectorAll('[data-hs-slide]')).findIndex((s) => s.classList.contains('is-active')))).toBe([0, 3, 1, 2][n - 1]);
   await page.waitForTimeout(450);
 }
 
@@ -375,11 +375,11 @@ test.describe('K3: Home slide 1’s ">4×" callout states the +10.3 it compares'
     expect(fact('RC-06a').text).toContain('10.3 percentage points more likely to be employed, more than four times the average of the nine randomized trials');
     expect(fact('RC-06a').stat?.value).toBe('>4×');
     await open(page, HOME);
-    const proof = slide(page, 1).locator('.hs__proof');
-    expect(await proof.getAttribute('data-fact')).toBe('RC-06a');
-    await expect(proof.locator('.stat__value')).toHaveText('>4×');
-    expect(compact(await proof.locator('.stat__label').textContent())).toBe(CAPTION);
+    // WP166-A (marketing review R1-02): the comparison is the second sentence of the hero's trial card, directly under the +10.3 it compares (the slide's callout is now the peer-reviewed publication)
+    const proof = page.locator('.hh__card[data-fact="RC-02"] [data-fact="RC-06a"]');
+    await expect(proof).toHaveText('That is more than four times the 2.3-point average across nine vocational-training trials.');
     expect(compact(await proof.textContent())).not.toMatch(/typical/i);
+    expect(compact(await slide(page, 1).locator('.hs__proof').textContent())).not.toContain(CAPTION);
     // the hero’s trial card states the same figure
     await expect(page.locator('.hh__card[data-fact="RC-02"] .hh__num')).toHaveText('+10.3');
   });
@@ -483,7 +483,17 @@ test.describe('L3: SC-16 is two sentences', () => {
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 test.describe('GM1: the closing-band text link is "Read the Evidence"', () => {
-  const ROUTES = [HOME, 'partner-with-us/', 'about/', 'about/recognition/', 'partner-with-us/development-partners/', 'partner-with-us/universities/'];
+  // WP166-A (marketing review R1-01, R1-27): Home's closing band no longer sends the reader back to the evidence (it was the last of 17 bands of it), and About's second link goes to the partnership routes its line promises
+  const ROUTES = ['partner-with-us/', 'about/recognition/', 'partner-with-us/development-partners/', 'partner-with-us/universities/'];
+
+  test('Home’s closing band has no text link; About’s is "See Partnership Routes" to the partner hub (WP166-A)', async ({ page }) => {
+    await open(page, HOME);
+    await expect(page.locator('main #cta .cta-band__actions a.link')).toHaveCount(0);
+    await open(page, 'about/');
+    const link = page.locator('main .cta-band__actions a.link');
+    await expect(link).toHaveText('See Partnership Routes');
+    expect(await link.getAttribute('href')).toMatch(/\/partner-with-us\/$/);
+  });
 
   test('READ_THE_EVIDENCE is Title Case like the other text links', () => {
     expect(READ_THE_EVIDENCE).toBe('Read the Evidence');

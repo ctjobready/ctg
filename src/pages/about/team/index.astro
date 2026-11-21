@@ -20,6 +20,19 @@ const groups = [
   { key: 'executive', title: 'Executive Team', lead: undefined },
   { key: 'management', title: 'Bangladesh Leadership', lead: undefined },
 ] as const;
+/**
+ * WP166-A (marketing review R1-31, owner approval of 21 November 2026): an executive's card shows the one credential that persuades, in place of three skill tags (the tags stay on the profile). Each line is the person's
+ * own profile (src/content/team), word for word or shortened: Md. Shamsul Haque's post, Mahdee Zaman's AWS role, Shafqat Ullah's experience and degree, Asad Zaman's UNDP years, Rezaul Karim Khan's experience and AWS certification.
+ */
+const CREDENTIALS: Record<string, string> = {
+  'shamsul-haque': 'Former Additional Secretary, Ministry of Foreign Affairs of Bangladesh',
+  'mahdee-zaman': 'Led solutions architecture teams at Amazon Web Services',
+  'shafqat-ullah': 'Software architect with 25+ years of experience; computer science graduate of the Indian Institute of Technology (IIT)',
+  'asad-zaman': '20+ years of experience, including 14 years at UNDP',
+  'rezaul-karim-khan': '20+ years in global ICT projects and startups; AWS Certified Solutions Architect - Associate',
+};
+// WP166-A (R1-30): the lead gives the reasons to trust the team (the careers and posts its leaders and advisors held, from their profiles), where it listed the page's sections.
+const lead = 'Leaders with careers at UNDP, Amazon Web Services and Bangladesh’s Ministry of Foreign Affairs, advised by a former Principal Secretary and a former Executive Chairman of the National Skills Development Authority.';
 const description = 'Meet the founders, advisors, executive team and Bangladesh leadership of CodersTrust, the workforce-development organization behind the JobReady platform.';
 const jsonLd = [
   {
@@ -33,7 +46,7 @@ const jsonLd = [
 ---
 
 <BaseLayout title="Leadership and Team" description={description} breadcrumbs={[{ label: 'About', href: '/about/' }, { label: 'Team' }]} jsonLd={jsonLd}>
-  <Hero eyebrow="About Us" title="The Team Behind CodersTrust" lead="The founders, advisors, executive team and Bangladesh leadership of CodersTrust." art={false} />
+  <Hero eyebrow="About Us" title="The Team Behind CodersTrust" lead={lead} art={false} />
   <PageNav links={[...groups.map((g) => ({ label: g.title, href: `#${g.key}` })), { label: 'Talk to the Team', href: '#team-cta' }]} />
   {
     groups.map((g, i) => {
@@ -46,7 +59,7 @@ const jsonLd = [
           <div class="team-grid" style={`--cols-md:${perRow(3)};--cols-lg:${perRow(4)}`}>
             {people.map((p) => (
               <div class="team-cell">
-                <TeamCard name={p.data.name} role={p.data.role} photo={p.data.photo} alt={p.data.photoAlt} assetId={`team-${p.id}`} href={`/about/team/${p.id}/`} expertise={p.data.expertise} chips={3} />
+                <TeamCard name={p.data.name} role={p.data.role} photo={p.data.photo} alt={p.data.photoAlt} assetId={`team-${p.id}`} href={`/about/team/${p.id}/`} expertise={CREDENTIALS[p.id] ? [] : p.data.expertise} chips={3} credential={CREDENTIALS[p.id]} />
               </div>
             ))}
           </div>

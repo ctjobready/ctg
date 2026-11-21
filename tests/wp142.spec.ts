@@ -38,7 +38,9 @@ const allPages = (dir = DIST_DIR): string[] =>
  * ------------------------------------------------------------------------------------------------------------------------------------- */
 const STATEMENT_IN_TEXT = /[A-Z][^.]{0,80}\b(?:is|are) agreed in (?:the|each) program(?:[’']s)? scope\./;
 const EXAM_EVIDENCE = /\bexam fees?\b|\bexam eligibility\b|\beligibility, attempts\b|\battempts (?:and|or|set)\b|\bretakes\b/i;
-const INCLUSION_EVIDENCE = /\bstandard inclusions\b|\bwhere included\b|\bincluded for every cohort\b|\b(?:cohorts?|partnership|support) includes?\b|\bcohorts include\b|\bcohort pairs\b|\bincluding certification\b/i;
+// WP166-A (marketing review R1-17): Home's "What a Supported Youth Cohort Includes" band is gone; its training sentence is the mechanism band's "What We Deliver" card ("100 training hours per certification, including exam preparation, ..."),
+// which is the referent of Home's "Inclusions", so a "What We Deliver" card heading counts as one.
+const INCLUSION_EVIDENCE = /\bstandard inclusions\b|\bwhere included\b|\bincluded for every cohort\b|\b(?:cohorts?|partnership|support) includes?\b|\bcohorts include\b|\bcohort pairs\b|\bincluding certification\b|\bWhat We Deliver Skills, Certification Preparation and Mentoring 100 training hours\b/i;
 const REPORT_EVIDENCE = /\bmonthly reports?\b|\bprogress reports?\b|\bfollow-up surveys?\b|\breporting\b/i;
 const TRACKING_EVIDENCE = /\bfollow-up surveys?\b|\bbaseline\b/i;
 

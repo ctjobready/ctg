@@ -15,8 +15,8 @@ import Stat from '../../components/system/Stat.astro';
 import WorldStrip from '../../components/ui/WorldStrip.astro';
 import { WORLD_STRIP } from '../../data/globalStrip';
 import { fact } from '../../data/facts';
-import { BIGD_FULL, IDENTITY, MICRO_COMMITMENT, PROGRAM_SCOPE_REPORTING, RCT_HEADLINE, READ_THE_EVIDENCE, TRIAL_BAND_HEADING, spellOutBigd, withoutSince2014 } from '../../data/copy';
-import { timeline } from '../../data/timeline';
+import { BIGD_FULL, IDENTITY, MICRO_COMMITMENT, PROGRAM_SCOPE_REPORTING, RCT_HEADLINE, TRIAL_BAND_HEADING, spellOutBigd, withoutSince2014 } from '../../data/copy';
+import { AIM_LINE, timeline } from '../../data/timeline';
 import { ctaHref } from '../../lib/mailto';
 import { linkAttrs } from '../../lib/url';
 import { webPage } from '../../lib/schema';
@@ -47,6 +47,12 @@ const sc02Label = withoutSince2014(sc02Stat.label);
 const trial = spellOutBigd(RCT_HEADLINE.text.split(/(?<=\.)\s+(?=[A-Z])/)[0]);
 if (!/10\.3 percentage points more likely to be employed\.$/.test(trial)) throw new Error('About: RC-01 headline wording changed; update the trial line');
 if (!trial.includes(BIGD_FULL)) throw new Error('About: the RC-01 headline no longer says "by BIGD"; update the expansion');
+// WP166-A (marketing review R1-06, owner approval of 21 November 2026, item 5): the trial's peer-reviewed publication (RC-15), in the Trial page's own words ("The trial is also published in a peer-reviewed journal"), directly after the
+// trial sentence; the citation stays on the Trial page, one link below.
+if (!fact('RC-15').text.includes('is published in a peer-reviewed journal')) throw new Error('About: RC-15 no longer says the trial "is published in a peer-reviewed journal"');
+const peerReviewed = 'The trial is also published in a peer-reviewed journal.';
+// WP166-A (R1-26): why CodersTrust was founded, in the two founders' own profiles' words (src/content/team: Ferdinand Kjærulff's first paragraph; Aziz Ahmad's first and second paragraphs).
+const foundersLead = 'Ferdinand Kjærulff, a former Danish Army captain, saw a gap between access to online learning and the financing people needed to prepare for online work. He and Aziz Ahmad, a Bangladeshi-American business leader, launched CodersTrust in Copenhagen in 2014.';
 
 const principles = [
   {
@@ -83,13 +89,15 @@ const jsonLd = [
     name: 'About CodersTrust',
     description,
     type: 'AboutPage',
-    dateModified: '2026-11-03', // WP164 (the Albania tile reads "Albania, 2021–2022." again). Earlier: WP163 (the 2025–2026 timeline item's JobReady sentence is IN-04's definition, with no rollout status). Earlier: WP162 (the Albania tile reads "Albania, 2021."). Earlier: WP152 (the 2025–2026 timeline item is two sentences). Earlier: WP141 (2026-11-01: the program-scope qualifier is stated once per page). Earlier: WP129 (owner rule 2026-10-31: any change to visible text moves the date, copy edits included): the serial-comma, semicolon and copy edits of WP126 to WP128 and the WP129 edits. Earlier: WP106: the contracts-and-partnerships timeline band reads 2023–2025. WP105: EDGE is expanded in the timeline entry
+    dateModified: '2026-11-21', // WP166-A (marketing review, owner approval of 21 November 2026: the <title>, the peer-reviewed line, the founders' line, the YouthWIDE aim under "Where We Are Going" and the closing band's second link). Earlier: '2026-11-03', WP164 (the Albania tile reads "Albania, 2021–2022." again). Earlier: WP163 (the 2025–2026 timeline item's JobReady sentence is IN-04's definition, with no rollout status). Earlier: WP162 (the Albania tile reads "Albania, 2021."). Earlier: WP152 (the 2025–2026 timeline item is two sentences). Earlier: WP141 (2026-11-01: the program-scope qualifier is stated once per page). Earlier: WP129 (owner rule 2026-10-31: any change to visible text moves the date, copy edits included): the serial-comma, semicolon and copy edits of WP126 to WP128 and the WP129 edits. Earlier: WP106: the contracts-and-partnerships timeline band reads 2023–2025. WP105: EDGE is expanded in the timeline entry
     breadcrumb: [{ name: 'Home', path: '/' }, { name: 'About', path: '/about/' }],
   }),
 ];
 ---
 
-<BaseLayout title="About" description={description} breadcrumbs={[{ label: 'About' }]} jsonLd={jsonLd}>
+<!-- WP166-A (marketing review R7-04): the search and share headline carries the page's own H1 clause, not the menu label alone ("About | CodersTrust"). The reviewer's "About CodersTrust: A Global Workforce Organization"
+     had no suffix; every page but Home keeps the settled "{Page} | CodersTrust" pattern (doc 09 §3; tests/wp38.spec.ts, tests/wp61.spec.ts), so it is "About: A Global Workforce Organization | CodersTrust" (52 characters). -->
+<BaseLayout title="About: A Global Workforce Organization" description={description} breadcrumbs={[{ label: 'About' }]} jsonLd={jsonLd}>
   <Hero eyebrow="About Us" title="A Global Workforce Organization, Built on Evidence" lead={fact('ID-01').text} artSeed="about-codertrust">
     <!-- WP52 (cycle-27 review, Claude m10): where CodersTrust is based and how its entities relate (owner statement, ID-11) is the first thing under the lede, moved here from "Where We Are Today" (not repeated there).
          WP57b (cycle-29 review, GLM L8): the paragraph is ID-11 with its last sentence as "Additional country and regional offices are planned." (IDENTITY, src/data/copy.ts; the register's ID-11 adds "in the next few years") -->
@@ -146,6 +154,7 @@ const jsonLd = [
   <Section id="proof" tone="airy" aria-labelledby="proof-h">
     <SectionHeader id="proof-h" eyebrow="The Evidence" title={TRIAL_BAND_HEADING} />
     <p class="lead" data-fact="RC-01">{trial}</p>
+    <p class="about-peer" data-fact="RC-15">{peerReviewed}</p>
     <p class="cluster">
       <a class="link" href={linkAttrs('/impact/independent-evaluation/').href}>The Randomized Trial<Icon name="arrow-right" size={16} /></a>
       <a class="link" href={linkAttrs('/impact/outcomes-2026/').href}>Impact Survey 2026<Icon name="arrow-right" size={16} /></a>
@@ -157,10 +166,16 @@ const jsonLd = [
     <StoryTimeline items={timeline} />
     <!-- WP55 (synthesis 3.1): the strip sits directly under the timeline, as a sub-heading of the Our Story band (an H3, so the jump list above keeps its eight H2s); its Copenhagen tile illustrates the 2014 entry. -->
     <div class="about-world"><WorldStrip tiles={WORLD_STRIP} level={3} id="world" /></div>
+    <!-- WP166-A (marketing review R1-25): the organization's one forward-looking aim closes the story band, verbatim (IN-01, with its dependency clause), under a bold subhead; it was the middle sentence of the last timeline entry. -->
+    <div class="about-going">
+      <h3 class="t-heading-xl">Where We Are Going</h3>
+      <p data-fact={AIM_LINE.factIds.join(' ')}>{AIM_LINE.text}</p>
+      <a class="link" href={linkAttrs('/programs/youthwide/').href}>Explore YouthWIDE<Icon name="arrow-right" size={16} /></a>
+    </div>
   </Section>
 
   <Section id="founders" aria-labelledby="founders-h">
-    <SectionHeader id="founders-h" eyebrow="Founders" title="The People Who Started It" />
+    <SectionHeader id="founders-h" eyebrow="Founders" title="The People Who Started It" lead={foundersLead} />
     <div class="grid-cards grid-cards--2 about-founders">
       {founders.map((p) => <TeamCard name={p.data.name} role={p.data.role} photo={p.data.photo} alt={p.data.photoAlt} assetId={`team-${p.id}`} href={`/about/team/${p.id}/`} />)}
     </div>
@@ -200,9 +215,10 @@ const jsonLd = [
     heading="Start a Conversation"
     text="Tell us your goals and two suitable times, and we will discuss the right partnership route."
     cta={{ label: 'Request a Discovery Session', href: ctaHref('discovery') }}
-    secondary={{ label: READ_THE_EVIDENCE, href: '/impact/' }}
+    secondary={{ label: 'See Partnership Routes', href: '/partner-with-us/' }}
     micro={MICRO_COMMITMENT}
   />
+  <!-- WP166-A (marketing review R1-27): the closing line promises "the right partnership route", so the second link goes to the routes (the partner hub's own button label); the page already links the evidence five times above. -->
 
 </BaseLayout>
 
@@ -269,6 +285,23 @@ const jsonLd = [
   /* WP55: the strip sits one sub-section step (40px) under the last timeline entry */
   .about-world {
     margin-top: var(--space-xl);
+  }
+  /* WP166-A (R1-25): the aim closes the story band, one section step under the world strip */
+  .about-going {
+    margin-top: var(--space-xl);
+    max-width: 48rem;
+    display: grid;
+    gap: var(--space-sm);
+    justify-items: start;
+  }
+  .about-going > * {
+    margin: 0;
+  }
+  .about-going h3 {
+    color: var(--secondary);
+  }
+  .about-peer {
+    margin: var(--space-sm) 0 0;
   }
   .principle__icon {
     display: inline-flex;

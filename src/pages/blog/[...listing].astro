@@ -4,6 +4,9 @@ import Hero from '../../components/system/Hero.astro';
 import Section from '../../components/ui/Section.astro';
 import SectionHeader from '../../components/ui/SectionHeader.astro';
 import NewsCard from '../../components/ui/NewsCard.astro';
+import CTABand from '../../components/ui/CTABand.astro';
+import { NEWS_CTA } from '../../components/pages/news/news';
+import { cta } from '../../lib/mailto';
 import { allBlogPosts, authorProfile } from '../../components/pages/blog/blog';
 import { blogHref } from '../../lib/blogPosts';
 import { desc } from '../../components/pages/impact/page-utils';
@@ -24,8 +27,15 @@ const { posts } = Astro.props;
 const chair = await authorProfile('Aziz Ahmad');
 if (!chair) throw new Error('Blog: Aziz Ahmad has no team profile (src/content/team), so the lead cannot name his role.');
 const path = '/blog/';
-const lead = `Essays by Aziz Ahmad, ${chair.role} of CodersTrust, on youth, work and technology.`;
-const description = desc(lead);
+/*
+ * WP166-A (marketing review of 21 November 2026, R7): the H1 states what the page holds, "Essays on Youth, Work and Technology" (it was the menu label "Blog", which the eyebrow now carries), and the lead names the
+ * author (R7-28); the <title> is "Blog: Aziz Ahmad on Youth, Work and Technology | CodersTrust" (R7-19); the page closes with the news posts' general band (NEWS_CTA.general, verbatim), so a reader the essays
+ * persuaded has a next step (R7-29). The meta description keeps the full sentence.
+ */
+const lead = `By Aziz Ahmad, ${chair.role} of CodersTrust.`;
+const description = desc(`Essays by Aziz Ahmad, ${chair.role} of CodersTrust, on youth, work and technology.`);
+const closing = NEWS_CTA.general;
+const closingCta = cta(closing.cta);
 // Re-posts say where they first appeared; an essay written for this site does not.
 const reposts = posts.filter((p) => p.data.repost).length;
 const sectionLead =
@@ -36,7 +46,7 @@ const sectionLead =
       : undefined;
 const jsonLd = [
   {
-    ...webPage({ path, name: 'Blog', description, type: 'CollectionPage', dateModified: '2026-11-05', breadcrumb: [{ name: 'Home', path: '/' }, { name: 'Blog', path }] }),
+    ...webPage({ path, name: 'Blog', description, type: 'CollectionPage', dateModified: '2026-11-21', breadcrumb: [{ name: 'Home', path: '/' }, { name: 'Blog', path }] }), // WP166-A: the H1, the lead and the closing band changed (it was 2026-11-05)
     mainEntity: {
       '@type': 'ItemList',
       itemListElement: posts.map((p, i) => ({ '@type': 'ListItem', position: i + 1, url: pageUrl(blogHref(p)), name: p.data.title })),
@@ -45,8 +55,8 @@ const jsonLd = [
 ];
 ---
 
-<BaseLayout title="Blog" description={description} path={path} breadcrumbs={[{ label: 'Blog' }]} jsonLd={jsonLd}>
-  <Hero eyebrow="Essays" title="Blog" lead={lead} art={false} />
+<BaseLayout title="Blog: Aziz Ahmad on Youth, Work and Technology" description={description} path={path} breadcrumbs={[{ label: 'Blog' }]} jsonLd={jsonLd}>
+  <Hero eyebrow="Blog" title="Essays on Youth, Work and Technology" lead={lead} art={false} />
 
   <Section id="essays" aria-labelledby="essays-h">
     <SectionHeader id="essays-h" title="Latest Essays" lead={sectionLead} />
@@ -54,4 +64,6 @@ const jsonLd = [
       {posts.map((p) => <NewsCard title={p.data.title} date={p.data.date} excerpt={p.data.excerpt} image={p.data.cover} imageAlt={p.data.coverAlt ?? ''} href={blogHref(p)} assetId={`blog-${p.id}`} />)}
     </div>
   </Section>
+
+  <CTABand id="blog-cta" heading={closing.heading} text={closing.text} cta={{ label: closingCta.label, href: closingCta.href }} secondary={closing.offer} />
 </BaseLayout>

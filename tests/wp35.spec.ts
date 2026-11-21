@@ -139,17 +139,21 @@ test.describe('the trial and the survey are shown once per page', () => {
   test('Home: the hero’s Randomized Trial card carries the plain-language reading of the trial (the check:facts anchor moved here), and the first slide still states the offered-place results', async ({ page }) => {
     await open(page, '');
     const card = page.locator('.hh__card[data-fact="RC-02"]');
-    await expect(card.locator('.hh__eyebrow')).toHaveText('Randomized Trial');
+    // WP166-A (marketing review R1-02): "Independent Randomized Trial", and the caption's second sentence states the nine-trial benchmark (it was on the first slide's callout)
+    await expect(card.locator('.hh__eyebrow')).toHaveText('Independent Randomized Trial');
     await expect(card.locator('.hh__num')).toHaveText('+10.3');
     await expect(card.locator('.hh__unit')).toHaveText('percentage points');
     // WP50 (cycle-25 review, item 28): "10.3 more", RC-02's own figure (it read "about 10 more"); tests/wp50.spec.ts
-    await expect(card.locator('.hh__figlabel')).toHaveText('For every 100 women offered a place in CodersTrust’s 200-hour WSDFM program, about 10 more were in work than among 100 comparable women in the control group.');
+    await expect(card.locator('.hh__figlabel')).toHaveText('For every 100 women offered a place in CodersTrust’s 200-hour WSDFM program, about 10 more were in work than among 100 comparable women in the control group. That is more than four times the 2.3-point average across nine vocational-training trials.');
     const first = page.locator('[data-hs-slide]').nth(0);
     expect(compact(await first.locator('.hs__lead').textContent())).toContain('women offered a place had an estimated 41% higher monthly income than the control group'); // WP63 (cycle-35 review, GLM L4)
     // WP50 (cycle-25 review, item 18): the slide's >4× tile said the multiple in words and no longer repeated the +10.3 percentage points, which this card states
     // WP54 (cycle-28 review, Grok R2): "Employment effect: more than four times the 2.3-point average across nine vocational-training trials." (tests/wp54.spec.ts)
     // WP59 (cycle-31 review, Kimi K3, reversing WP50 on this point): the tile reads apart from its base, so the caption states it: "Employment effect, not income: +10.3 percentage points, more than four times the 2.3-point average ..."
-    expect(compact(await first.locator('.hs__proof').textContent())).toContain('Employment effect, not income: +10.3 percentage points, more than four times the 2.3-point average across nine vocational-training trials.');
+    // WP166-A (R1-02, R1-06): the callout moved to the hero card above; the slide's callout is the peer-reviewed publication (RC-15)
+    await expect(first.locator('.hs__proof .stat__value')).toHaveText('Peer-Reviewed');
+    expect(compact(await first.locator('.hs__proof').textContent())).toContain('Published in a peer-reviewed journal: Economic Development and Cultural Change (October 2026).');
+    expect(compact(await first.locator('.hs__proof').textContent())).not.toContain('Employment effect');
   });
 
   for (const slug of THREE) {
@@ -183,7 +187,8 @@ test.describe('the WSDFM 71% is off the glance tiles of Development Partners and
   // WP42 (cycle-19 review): the government slide is second, so the program-results slide is the fourth
   test('Home slide 4 lists four programs: Women in Online Work, WSDFM, UNDP YES and Her Power', async ({ page }) => {
     await open(page, '');
-    const slide = page.locator('[data-hs-slide]').nth(3);
+    // WP166-A (marketing review R1-11): the slides run evidence, survey outcomes, program results, government (old slide 2 is now 4, 3 is 2, 4 is 3)
+    const slide = page.locator('[data-hs-slide]').nth(2);
     await expect(slide.locator('h3')).toHaveText('Results by Program');
     await expect(slide.locator('.hs__lead')).toHaveText('Results from the records of four programs.');
     // WP36 (cycle-13 review): each result names its base (Kosovo "(102 of 150)", WSDFM "(711 of 1,000 ...)", UNDP YES "of the 350 enrolled"; Her Power already said "of 800 tracked women")
@@ -223,7 +228,8 @@ test.describe('the WSDFM 71% is off the glance tiles of Development Partners and
       expect((await texts(page, '#cases article')).join(' | '), route).toContain('WSDFM program records (not trial results; the trial’s 425 women offered a place were among these 1,000): 71% of enrolled women in work');
     }
     await open(page, '');
-    await expect(page.locator('[data-hs-slide]').nth(3)).toContainText('WSDFM: 711 of 1,000 enrolled in work (71%).');
+    // WP166-A (marketing review R1-11): the slides run evidence, survey outcomes, program results, government (old slide 2 is now 4, 3 is 2, 4 is 3)
+    await expect(page.locator('[data-hs-slide]').nth(2)).toContainText('WSDFM: 711 of 1,000 enrolled in work (71%).');
     await open(page, 'impact/case-studies/wsdfm-women-freelancers/');
     expect(await mainText(page)).toContain('711 of 1,000');
   });
@@ -233,7 +239,8 @@ test.describe('the evaluator is spelled out where a page first names it', () => 
   test('Home names BIGD nowhere: the Impact menu line no longer introduces the acronym', async ({ page }) => {
     await open(page, '');
     expect(await page.content()).not.toContain('BIGD');
-    await expect(page.locator('#mega-impact a.mega__link[href$="independent-evaluation/"] .mega__desc')).toHaveText('The randomized trial of CodersTrust’s WSDFM program.');
+    // WP166-A (marketing review R7-13): the item is labelled "Randomized Trial Results", so its line says what kind of trial it was, still without the acronym
+    await expect(page.locator('#mega-impact a.mega__link[href$="independent-evaluation/"] .mega__desc')).toHaveText('An independent evaluation of CodersTrust’s WSDFM program.');
   });
 
   test('Foundations: the track-record band spells it out once; the benefits cards no longer name the evaluator (WP44: the second card is the scorecard)', async ({ page }) => {
@@ -415,10 +422,11 @@ test.describe('plain words and plain claims', () => {
     const timeline = compact(await page.locator('#story').textContent());
     expect(timeline).toContain('Government Contracts and University Partnerships');
     expect(timeline).toContain('partnerships with National University (official training partner since 2023) and the University for Peace (UPEACE)');
-    expect(timeline).toContain('JobReady, YouthWIDE and the Impact Survey');
+    // WP166-A (marketing review R1-25): the last entry is "JobReady and the Impact Survey" (the YouthWIDE aim closes the band under "Where We Are Going")
+    expect(timeline).toContain('JobReady and the Impact Survey');
     expect(await items.count()).toBeGreaterThanOrEqual(5);
-    const later = compact(await page.locator('#story', { has: page.getByText('JobReady, YouthWIDE and the Impact Survey') }).textContent());
-    const afterHeading = later.slice(later.indexOf('JobReady, YouthWIDE and the Impact Survey'));
+    const later = compact(await page.locator('#story', { has: page.getByText('JobReady and the Impact Survey') }).textContent());
+    const afterHeading = later.slice(later.indexOf('JobReady and the Impact Survey'));
     expect(afterHeading).not.toContain('National University');
   });
 

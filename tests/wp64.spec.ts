@@ -24,7 +24,7 @@ import { listPages } from './support/pages';
 const compact = (t: string | null | undefined) => (t ?? '').replace(/\s+/g, ' ').trim();
 const texts = (page: Page, selector: string) => page.locator(selector).evaluateAll((els) => els.map((e) => (e.textContent ?? '').replace(/\s+/g, ' ').trim()));
 const noOverflow = (page: Page) => page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth);
-const slide = (page: Page, n: number) => page.locator('[data-hs-slide]').nth(n - 1);
+const slide = (page: Page, n: number) => page.locator('[data-hs-slide]').nth([0, 3, 1, 2][n - 1]); // WP166-A (R1-11): n is the slide's position before the reorder (1 trial, 2 government, 3 survey, 4 program results); the carousel now runs trial, survey, program results, government
 
 /** Built pages that are not archived news posts (those keep their original wording), with their HTML. */
 const sitePages = () => listPages().filter((p) => !p.route.startsWith('/news/')).map((p) => ({ route: p.route, html: readFileSync(p.file, 'utf8') }));
@@ -54,8 +54,8 @@ const unusedBelow = (page: Page) =>
     return Math.round(controls.getBoundingClientRect().top - contentBottom);
   });
 async function showSlide(page: Page, n: number) {
-  await page.locator('[data-hs-dot]').nth(n - 1).click();
-  await expect.poll(() => page.evaluate(() => Array.from(document.querySelectorAll('[data-hs-slide]')).findIndex((s) => s.classList.contains('is-active')))).toBe(n - 1);
+  await page.locator('[data-hs-dot]').nth([0, 3, 1, 2][n - 1]).click(); // WP166-A: the same old-to-new map as slide()
+  await expect.poll(() => page.evaluate(() => Array.from(document.querySelectorAll('[data-hs-slide]')).findIndex((s) => s.classList.contains('is-active')))).toBe([0, 3, 1, 2][n - 1]);
   await page.waitForTimeout(450);
 }
 
@@ -87,16 +87,17 @@ test.describe('Item 1 (GLM, GPT-6.1 Sol, Grok, Kimi): Home slide 2 is "Six Gover
     const gov = slide(page, 2);
     await expect(gov.locator('h3')).toHaveText(HEADING);
     expect(await gov.locator('h3').getAttribute('data-fact')).toBe('GV-12');
-    await expect(gov).toHaveAttribute('aria-label', `2 of 4: ${HEADING}`);
+    await expect(gov).toHaveAttribute('aria-label', `4 of 4: ${HEADING}`); // WP166-A (marketing review R1-11): the government slide is the last of four, after the three results slides
     await expect(gov.locator('.hs__eyebrow')).toHaveText('Government and University Partners');
     await expect(gov.locator('.hs__lead')).toHaveText(
       'Six government contracts with training and curriculum work scoped for 30,000+ people, not a count of completers. Her Power, one of the six, trained 25,125 women nationally, its full target; CodersTrust trained 2,400 directly. As the official training partner of Bangladesh’s National University for digital career skills and credentials, CodersTrust is onboarding 1.5M+ of the university’s own learners, who are not learners trained by CodersTrust.',
     );
+    // WP166-A (marketing review R1-11): the three results slides come first and the government slide closes the carousel
     expect(await texts(page, '#results [data-hs-slide] h3')).toEqual([
       'Women Offered a Place Earned an Estimated 41% More per Month',
-      HEADING,
       'Surveyed Completers Report Higher Income',
       'Results by Program',
+      HEADING,
     ]);
   });
 
@@ -173,12 +174,13 @@ test.describe('Item 4 (Gemini, GPT-6.1 Sol, Kimi): the Cost of Waiting card name
     expect(sources.MCKENZIE17.citation).toContain('McKenzie, D. (2017)');
   });
 
-  test('Home’s second Cost of Waiting card prints the sentence with a full stop and its data-fact, under the same heading', async ({ page }) => {
+  // WP166-A (marketing review R1-07): Home's Cost of Waiting band is gone; the sentence, with its full stop, closes pain 2, the pain it proves
+  test('Home’s pain 2 ends with the sentence and its full stop, tied to RC-06 (WP166-A; it was the second Cost of Waiting card)', async ({ page }) => {
     await open(page, HOME);
-    expect(await texts(page, '#cost .card__title')).toEqual(['AI Is Changing Freelance Demand', 'Training Does Not Always Lead to Employment']);
-    const data = page.locator('#cost .cost__data');
-    expect(compact(await data.nth(1).textContent())).toBe(`${TEXT}.`);
-    expect(await data.nth(1).getAttribute('data-fact')).toBe('RC-06');
+    await expect(page.locator('#cost')).toHaveCount(0);
+    const pain = page.locator('#problem li[data-pain="P2"]');
+    expect(compact(await pain.locator('.gp__a').textContent()).endsWith(`${TEXT}.`)).toBe(true);
+    expect(await pain.getAttribute('data-fact')).toBe('RC-06');
   });
 
   test('"by World Bank economist David McKenzie (2017) found only three" is on no built page (RC-06a keeps its own comparison sentence)', () => {
@@ -440,12 +442,16 @@ test.describe('RW2 (coordinator): "Since 2014" is said once in the bands whose h
     expect(await texts(page, '#guide .ig__tile .stat__label')).toEqual(['learners trained', 'enrollments', 'countries and territories where CodersTrust has worked']);
   });
 
-  test('a band whose heading does not carry the year keeps it in its tile (Careers), and founding-fact lines stay (Home: "CodersTrust launched in 2014 in Copenhagen ...")', async ({ page }) => {
+  // WP166-A (marketing review R1-05): Home's track-record band opens with the signed agreements (SC-11), not the founding line, and its heading still says "Since 2014"; About tells the launch
+  test('a band whose heading does not carry the year keeps it in its tile (Careers), and the founding fact stays where the story is told (About; WP166-A: Home’s band opens with the signed agreements)', async ({ page }) => {
     await open(page, 'careers/');
     await expect(page.locator('#why h2')).toHaveText('Why Join CodersTrust');
     expect(compact(await page.locator('#why .factstat[data-fact="SC-01"] .stat__label').textContent())).toBe('learners trained since 2014');
     await open(page, HOME);
-    expect(compact(await page.locator('#guide').textContent())).toContain('CodersTrust launched in 2014 in Copenhagen and began training freelancers in Bangladesh.');
+    await expect(page.locator('#guide h2')).toHaveText('We’ve Built This Path Since 2014');
+    expect(compact(await page.locator('#guide').textContent())).not.toContain('CodersTrust launched in 2014 in Copenhagen');
+    await open(page, ABOUT);
+    expect(compact(await page.locator('main').textContent())).toContain('launched CodersTrust in Copenhagen in 2014');
   });
 
   test('no built page prints the old origin line, "Since 2014, from a Copenhagen launch ...", because every page that prints it is headed with the year', () => {

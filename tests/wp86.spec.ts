@@ -172,9 +172,11 @@ test.describe('Item 11: the Recognition On This Page entries are the section hea
       const rendered = (await page.locator(`#${id}`).count()) > 0;
       expect(links.some((l) => l.id === id), `entry for #${id}`).toBe(rendered);
     }
-    for (const id of ['listing', 'honors', 'photos', 'coverage', 'press-kit']) {
+    // WP166-A (marketing review R1-39): the listing band is gone (its register sentence opens the hero lead); the World Bank section now has its entry near the top (R1-40)
+    for (const id of ['honors', 'world-bank', 'photos', 'coverage', 'press-kit']) {
       expect(links.some((l) => l.id === id), `entry for #${id}`).toBe(true);
     }
+    expect(links.some((l) => l.id === 'listing')).toBe(false);
   });
 });
 

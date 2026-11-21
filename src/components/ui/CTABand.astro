@@ -3,10 +3,15 @@ import Section from './Section.astro';
 import Button from '../system/Button.astro';
 import { linkAttrs } from '../../lib/url';
 import EmailFallback from './EmailFallback.astro';
+import CallLine from './CallLine.astro';
 
 /**
  * CTA band: ONE primary CTA + authentic urgency line + micro-commitment + secondary text link
  * (planning/04 §7–8). Slot = optional post-decision reinforcement (below the button).
+ * WP166-A (marketing review R1-01, owner approval of 21 November 2026): `promise` is one line directly under the button that says what the call gives the reader (Home: "A discovery
+ * session is a conversation, not a commitment. It covers ..."), before the other routes and the email fallback. A page that passes it states its micro-commitment there, not in `micro`.
+ * WP166-A (owner approval item 4): the phone number is a second route beside the main CTA on the partner and audience pages (CallLine, "Prefer to call? +1 212 344 4111"). `call` turns it on or off;
+ * left out, it is on for the pages under /partner-with-us/ and off elsewhere, so those pages carry it without each page opting in.
  */
 interface Props {
   heading: string;
@@ -25,8 +30,14 @@ interface Props {
   id?: string;
   /** Who the fallback address belongs to when it is a specific team ("the Bangladesh team at"). */
   fallbackLabel?: string;
+  /** WP166-A (R1-01): one line directly under the button: what the call gives the reader. `facts` are the register facts it states (data-fact). */
+  promise?: { text: string; facts?: string[] };
+  /** WP166-A (owner approval item 4): the phone line beside the main CTA (CallLine). Default: on under /partner-with-us/, off elsewhere. */
+  call?: boolean;
 }
-const { heading, text, cta, urgency, micro, secondary, more = [], routes = [], reinforce = [], tone = 'airy', id, fallbackLabel } = Astro.props;
+const { heading, text, cta, urgency, micro, secondary, more = [], routes = [], reinforce = [], tone = 'airy', id, fallbackLabel, promise, call } = Astro.props;
+/** The partner hub and its audience routes carry the phone line unless a page turns it off (owner approval of 21 November 2026, item 4). */
+const showCall = call ?? /\/partner-with-us\//.test(Astro.url.pathname);
 // A withheld route (empty href) is not drawn.
 const shownRoutes = routes.filter((r) => r.href);
 const dark = tone === 'klein';
@@ -49,6 +60,8 @@ const withheld = !cta.href;
         )
       }
     </div>
+    {promise && <p class="cta-band__promise" data-reveal data-fact={promise.facts?.join(' ')}>{promise.text}</p>}
+    {showCall && <CallLine />}
     {
       more.length > 0 && (
         <p class="cta-band__more" data-reveal>
@@ -108,6 +121,11 @@ const withheld = !cta.href;
     align-items: center;
     justify-content: center;
     gap: var(--space-md) var(--space-lg);
+  }
+  .cta-band__promise {
+    max-width: 40rem;
+    font-size: var(--fs-body-base);
+    color: var(--ctx-text);
   }
   .cta-band__more {
     display: flex;

@@ -26,7 +26,7 @@ import { listPages } from './support/pages';
 const compact = (t: string | null | undefined) => (t ?? '').replace(/\s+/g, ' ').trim();
 const texts = (page: Page, selector: string) => page.locator(selector).evaluateAll((els) => els.map((e) => (e.textContent ?? '').replace(/\s+/g, ' ').trim()));
 const noOverflow = (page: Page) => page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth);
-const slide = (page: Page, n: number) => page.locator('[data-hs-slide]').nth(n - 1);
+const slide = (page: Page, n: number) => page.locator('[data-hs-slide]').nth([0, 3, 1, 2][n - 1]); // WP166-A (R1-11): n is the slide's position before the reorder (1 trial, 2 government, 3 survey, 4 program results); the carousel now runs trial, survey, program results, government
 
 /** Built pages that are not archived news posts (those keep their original wording), with their HTML. */
 const sitePages = () => listPages().filter((p) => !p.route.startsWith('/news/')).map((p) => ({ route: p.route, html: readFileSync(p.file, 'utf8') }));
@@ -56,8 +56,8 @@ const unusedBelow = (page: Page) =>
     return Math.round(controls.getBoundingClientRect().top - contentBottom);
   });
 async function showSlide(page: Page, n: number) {
-  await page.locator('[data-hs-dot]').nth(n - 1).click();
-  await expect.poll(() => page.evaluate(() => Array.from(document.querySelectorAll('[data-hs-slide]')).findIndex((s) => s.classList.contains('is-active')))).toBe(n - 1);
+  await page.locator('[data-hs-dot]').nth([0, 3, 1, 2][n - 1]).click(); // WP166-A: the same old-to-new map as slide()
+  await expect.poll(() => page.evaluate(() => Array.from(document.querySelectorAll('[data-hs-slide]')).findIndex((s) => s.classList.contains('is-active')))).toBe([0, 3, 1, 2][n - 1]);
   await page.waitForTimeout(450);
 }
 
@@ -309,16 +309,18 @@ test.describe('P1 (GPT-6.1 Sol): the WSDFM case study’s learner card shows Sam
 });
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-test.describe('K2 (Kimi): the About page title is "About | CodersTrust"', () => {
+// WP166-A (marketing review R7-04): the title carries the page's H1 clause, "About: A Global Workforce Organization | CodersTrust", still in the "{Page} | CodersTrust" pattern
+const ABOUT_TITLE = 'About: A Global Workforce Organization | CodersTrust';
+test.describe('K2 (Kimi): the About page title is "About | CodersTrust" (since WP166-A "About: A Global Workforce Organization | CodersTrust")', () => {
   test('the page, social and structured titles agree, no other page has the title, and every page title still ends " | CodersTrust" within 60 characters', async ({ page }) => {
     await open(page, 'about/');
-    expect(await page.title()).toBe('About | CodersTrust');
-    await expect(page.locator('meta[property="og:title"]')).toHaveAttribute('content', 'About | CodersTrust');
-    await expect(page.locator('meta[name="twitter:title"]')).toHaveAttribute('content', 'About | CodersTrust');
+    expect(await page.title()).toBe(ABOUT_TITLE);
+    await expect(page.locator('meta[property="og:title"]')).toHaveAttribute('content', ABOUT_TITLE);
+    await expect(page.locator('meta[name="twitter:title"]')).toHaveAttribute('content', ABOUT_TITLE);
     // the hero keeps its eyebrow
     expect(compact(await page.locator('main').first().textContent())).toContain('About Us');
     const titles = listPages().map((p) => ({ route: p.route, title: /<title>([^<]*)<\/title>/.exec(readFileSync(p.file, 'utf8'))?.[1] ?? '' }));
-    expect(titles.filter((t) => t.title === 'About | CodersTrust').map((t) => t.route)).toEqual(['/about/']);
+    expect(titles.filter((t) => t.title === ABOUT_TITLE).map((t) => t.route)).toEqual(['/about/']);
     expect(titles.filter((t) => t.title === 'About Us | CodersTrust')).toEqual([]);
     const odd = titles.filter((t) => t.route !== '/' && (!t.title.endsWith(' | CodersTrust') || t.title.length > 60));
     expect(odd).toEqual([]);
@@ -427,11 +429,12 @@ test.describe('L5 (GLM): Governments’ glance runs trial, Her Power, Kosovo, th
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 test.describe('L6 (GLM, with Kimi): Contact no longer closes on a partner logo wall', () => {
-  test('the page has no logo band; it ends on "What Happens After Your Inquiry", its steps and its first-cohort lines', async ({ page }) => {
+  // WP166-A (marketing review R7-06): "What Happens After Your Inquiry" answers the page's main objection, so it follows the route cards directly and the offices close the page
+  test('the page has no logo band; "What Happens After Your Inquiry", its steps and its first-cohort lines follow the routes, and the offices close it (WP166-A)', async ({ page }) => {
     await open(page, CONTACT);
     await expect(page.locator('section.partners')).toHaveCount(0);
     expect(compact(await page.locator('main').textContent())).not.toContain('Organizations we have worked with');
-    expect(await page.locator('main section.band').evaluateAll((els) => els.map((e) => e.id))).toEqual(['routes', 'offices', 'next']);
+    expect(await page.locator('main section.band').evaluateAll((els) => els.map((e) => e.id))).toEqual(['routes', 'next', 'offices']);
     await expect(page.locator('#next h2')).toHaveText('What Happens After Your Inquiry');
     await expect(page.locator('#next .steps__item')).toHaveCount(3);
     await expect(page.locator('#next .ct-c14 li')).toHaveCount(2);

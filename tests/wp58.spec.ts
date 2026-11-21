@@ -37,7 +37,7 @@ import { listPages } from './support/pages';
 const compact = (t: string | null | undefined) => (t ?? '').replace(/\s+/g, ' ').trim();
 const texts = (page: Page, selector: string) => page.locator(selector).evaluateAll((els) => els.map((e) => (e.textContent ?? '').replace(/\s+/g, ' ').trim()));
 const noOverflow = (page: Page) => page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth);
-const slide = (page: Page, n: number) => page.locator('[data-hs-slide]').nth(n - 1);
+const slide = (page: Page, n: number) => page.locator('[data-hs-slide]').nth([0, 3, 1, 2][n - 1]); // WP166-A (R1-11): n is the slide's position before the reorder (1 trial, 2 government, 3 survey, 4 program results); the carousel now runs trial, survey, program results, government
 
 /** Built pages that are not archived news posts (those keep their original wording), with their HTML. */
 const sitePages = () => listPages().filter((p) => !p.route.startsWith('/news/')).map((p) => ({ route: p.route, html: readFileSync(p.file, 'utf8') }));
@@ -215,7 +215,7 @@ test.describe('S1, G1 and L7: "16 countries and territories" is where CodersTrus
     expect(lines[3]).toBe('CodersTrust has worked in 16 countries and territories across Asia, Africa, Europe and the Americas, including Bangladesh since 2014.');
     await open(page, HOME);
     const header = compact(await page.locator('header').first().textContent());
-    expect(header).toContain('Global Reach Where we have worked.');
+    expect(header).toContain('Global Reach 16 countries and territories where CodersTrust has worked.'); // WP166-A (marketing review R7-15): SC-03's own label, the concrete fact the page leads with
     expect(header).not.toContain('Where our programs have run');
   });
 
@@ -237,14 +237,13 @@ test.describe('S5: the PX-06 sentence names its source inside it', () => {
     expect(fact('PX-06').text).not.toContain('Demirci');
   });
 
-  test('Home’s cost-of-waiting card ends its sentence "... of ChatGPT’s release (Demirci, Hannane and Zhu, 2025).", still tied to PX-06, with no footnote or source list', async ({ page }) => {
+  // WP166-A (marketing review R1-07): Home's cost band is gone; the sentence, verbatim, closes pain 3, the pain it proves
+  test('Home’s pain 3 ends with the sentence "... of ChatGPT’s release (Demirci, Hannane and Zhu, 2025)." (WP166-A; it was the cost-of-waiting card), still tied to PX-06, with no footnote or source list', async ({ page }) => {
     await open(page, HOME);
-    const data = page.locator('#cost article').first().locator('.cost__data');
-    expect(compact(await data.textContent())).toBe(
-      'On one major freelancing platform, automation-prone writing and coding postings fell 21% relative to manual-intensive jobs within eight months of ChatGPT’s release (Demirci, Hannane and Zhu, 2025).',
-    );
-    expect(await data.getAttribute('data-fact')).toBe('PX-06');
-    expect(await page.locator('#cost sup, #cost .fn, #cost [role="doc-footnote"]').count()).toBe(0);
+    const pain = page.locator('#problem li[data-pain="P3"]');
+    expect(compact(await pain.locator('.gp__a').textContent()).endsWith('On one major freelancing platform, automation-prone writing and coding postings fell 21% relative to manual-intensive jobs within eight months of ChatGPT’s release (Demirci, Hannane and Zhu, 2025).')).toBe(true);
+    expect(await pain.getAttribute('data-fact')).toBe('PX-06');
+    expect(await page.locator('#problem sup, #problem .fn, #problem [role="doc-footnote"]').count()).toBe(0);
   });
 
   test('the note is in the card’s sentence only: no title or meta description carries it, and no built page prints the study twice', () => {
@@ -315,16 +314,11 @@ test.describe('S9: the press line is not repeated on About', () => {
     await expect(about.locator('.cov')).toHaveCount(0);
     await expect(about.locator('a[href^="http"]')).toHaveCount(0);
     expect(compact(await page.locator('main').textContent())).not.toMatch(/Early press coverage|World Bank coverage|World Bank pages/); // WP161-B: Home's pointer says "the World Bank pages"
+    // WP166-A (marketing review R1-19): Home's pointer sentence is gone too (it only described the link under it); the link to Recognition and Media stays
     await open(page, HOME);
-    const home = page.locator('#recognition .cov');
-    await expect(home).toHaveCount(1);
-    const homeLine = await home.evaluate((el) => {
-      const c = el.cloneNode(true) as HTMLElement;
-      c.querySelectorAll('.sr-only').forEach((n) => n.remove());
-      return (c.textContent ?? '').replace(/\s+/g, ' ').trim();
-    });
-    expect(homeLine).toBe('Early press coverage, 2014–2016, and the World Bank pages on our work in Kosovo and Albania are on the Recognition and Media page.'); // WP161-B (Fable review A-12)
-    expect(await home.locator('a').count()).toBe(0);
+    await expect(page.locator('#recognition .cov')).toHaveCount(0);
+    expect(compact(await page.locator('main').textContent())).not.toMatch(/Early press coverage/);
+    await expect(page.locator('#recognition a', { hasText: 'See All Recognition and Media' })).toHaveCount(1);
   });
 
   test('Recognition and Media keeps its press list (the outlets with their logos), tied to PA-09', async ({ page }) => {
@@ -339,14 +333,16 @@ test.describe('S9: the press line is not repeated on About', () => {
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 test.describe('S10 and S11: headings', () => {
-  test('Home’s second card is "Progress You Can Check" (and no page says "Results You Can Check"); the line under it is unchanged', async ({ page }) => {
+  // WP166-A (marketing review R1-17): the Includes band and its "Progress You Can Check" card are gone. S10 kept "results" off a card about monthly progress reports; R1-11 heads Home's carousel
+  // "Results You Can Check", where every slide is a result that links its evidence page, so that heading is the one use and no reporting card says it
+  test('Home’s "Progress You Can Check" card is gone (WP166-A); "Results You Can Check" heads only Home’s results carousel, and no page says "Results Your Evaluators Can Check"', async ({ page }) => {
     await open(page, HOME);
-    expect(await texts(page, '#features .card__title')).toEqual(['Training, Mentoring and Placement Support', 'Progress You Can Check', 'Tracks Chosen from Employer Demand']);
-    const card = page.locator('#features li.card', { has: page.locator('h3', { hasText: 'Progress You Can Check' }) });
-    expect(compact(await card.locator('.card__text').textContent())).toBe('Monthly reports show progress toward paid work.');
-    expect(await card.getAttribute('data-fact')).toContain('PD-08');
+    await expect(page.locator('#features')).toHaveCount(0);
+    await expect(page.locator('#results-h')).toHaveText('Results You Can Check');
     const hits = sitePages().filter((p) => /Results You Can Check|Results Your Evaluators Can Check/.test(visible(p.html))).map((p) => p.route);
-    expect(hits).toEqual([]);
+    expect(hits).toEqual(['/']);
+    const home = sitePages().find((p) => p.route === '/')!;
+    expect((visible(home.html).match(/Results You Can Check/g) ?? []).length).toBe(1);
   });
 
   test('Development Partners’ third card is "Progress Your Evaluators Can Check", tied to PD-08 and PD-09', async ({ page }) => {
@@ -591,7 +587,8 @@ test.describe('R3 (Grok): Home slide 4 states Her Power’s count and base', () 
   test('the line fits one row at 1280 (as the Kosovo and WSDFM lines do), so the slide keeps its height budget (tests/hero-slider.spec.ts); the slide has no sideways scroll at 390', async ({ page }) => {
     await page.setViewportSize(DESKTOP);
     await open(page, HOME);
-    await page.locator('[data-hs-dot]').nth(3).click();
+    // WP166-A (marketing review R1-11): the slides run evidence, survey outcomes, program results, government (old slide 2 is now 4, 3 is 2, 4 is 3)
+    await page.locator('[data-hs-dot]').nth(2).click();
     await page.waitForTimeout(600);
     const heights = await slide(page, 4).locator('.hs__lines li').evaluateAll((els) => els.map((e) => Math.round(e.getBoundingClientRect().height)));
     expect(heights[3], 'the Her Power line is one row').toBe(heights[0]);

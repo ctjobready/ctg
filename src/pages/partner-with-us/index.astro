@@ -34,7 +34,10 @@ import { linkAttrs } from '../../lib/url';
 // Compact cross-audience FAQ: the two questions every partner type asks before it starts (the country and the cost). The proof (Q3) and safeguarding (Q9) answers are in the due-diligence view below and on the route pages (WP45).
 const HUB_FAQ = ['Q1', 'Q8'];
 const path = '/partner-with-us/';
-const title = 'Partner with Us';
+// WP166-A (marketing review R7-04, owner approval of 21 November 2026): the search and share headline carries the page's own H1 clause, not the menu label alone ("Partner with Us | CodersTrust"). The reviewer's
+// "Partner with CodersTrust: Turn Training into Paid Work" had no suffix; every page but Home keeps the settled "{Page} | CodersTrust" pattern (doc 09 §3; tests/wp38.spec.ts, tests/wp61.spec.ts), so it is
+// "Partner with Us: Turn Training into Paid Work | CodersTrust" (59 characters).
+const title = 'Partner with Us: Turn Training into Paid Work';
 // WP32 (cycle-9 review): the hub routes more than cohorts (campus skills, team training, hiring, the JobReady platform), so the hero asks for the choice of partnership and does not
 // describe a cohort; each route page states what its own partnership delivers, with outcome tracking scope-conditional as agreed in the program scope (PD-02).
 const BLUF = 'Choose a partnership for youth employment, campus skills, team training, hiring or JobReady’s staged rollout.';

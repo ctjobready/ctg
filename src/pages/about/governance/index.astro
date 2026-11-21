@@ -17,12 +17,13 @@ import ContractingPanel from '../../../components/pages/about/ContractingPanel.a
 import PageNav from '../../../components/pages/about/PageNav.astro';
 import { diligenceCta } from '../../../components/pages/about/routes';
 import { BIGD_FULL, GOVERNANCE, SAFEGUARDING, RCT_HEADLINE, spellOutBigd } from '../../../data/copy';
+import { fact } from '../../../data/facts';
 import { formatDate, isoDate } from '../../../lib/format';
 import { webPage } from '../../../lib/schema';
 import { OFFICES } from '../../../lib/site';
 import { linkAttrs } from '../../../lib/url';
 
-const UPDATED = '2026-11-02'; // WP157 (owner decision 2026-11-02: the legal-status line says CT USA, Inc. is a for-profit company). WP155 (Opus Max run 2, kit 122, Polish 6: the hero lead and the "How Outcome Records Are Used" card changed; owner date rule): 2026-11-02. Earlier: WP141 (owner answer 2026-11-01): the program-scope qualifier is stated once per page and the "On This Page" list gains its closing heading, so the date moves to 2026-11-01. Earlier: WP129 (owner rule 2026-10-31: any change to visible text moves the date, copy edits included): WP127 and WP128 changed the page's copy and meta description on 2026-10-30 (it was 2026-10-24).
+const UPDATED = '2026-11-21'; // WP166-A (marketing review, owner approval of 21 November 2026: the peer-reviewed line under the trial sentence and the closing band's line and link). Earlier: '2026-11-02', WP157 (owner decision 2026-11-02: the legal-status line says CT USA, Inc. is a for-profit company). WP155 (Opus Max run 2, kit 122, Polish 6: the hero lead and the "How Outcome Records Are Used" card changed; owner date rule): 2026-11-02. Earlier: WP141 (owner answer 2026-11-01): the program-scope qualifier is stated once per page and the "On This Page" list gains its closing heading, so the date moves to 2026-11-01. Earlier: WP129 (owner rule 2026-10-31: any change to visible text moves the date, copy edits included): WP127 and WP128 changed the page's copy and meta description on 2026-10-30 (it was 2026-10-24).
 // WP24c: Q3 reads "How Do You Track and Verify Outcomes?" here (the shared answer is kept)
 // WP30e: two decision questions. Tracking gets the short answer (the shared Q3 reduced to its two claims); safeguarding is answered in its own section above.
 const faqSources: FaqSource[] = [
@@ -41,6 +42,8 @@ const [usa, bd] = OFFICES;
 const trialLine = spellOutBigd(RCT_HEADLINE.text.split(/(?<=\.)\s+(?=[A-Z])/)[0]);
 if (!/10\.3 percentage points more likely to be employed\.$/.test(trialLine)) throw new Error('Governance: RC-01 headline wording changed; update the trial line');
 if (!trialLine.includes(BIGD_FULL)) throw new Error('Governance: the RC-01 headline no longer says "by BIGD"; update the expansion');
+// WP166-A (marketing review R1-06, owner approval item 5): the trial's peer-reviewed publication (RC-15), in the Trial page's own words, after the trial sentence; the citation is on the Trial page.
+if (!fact('RC-15').text.includes('is published in a peer-reviewed journal')) throw new Error('Governance: RC-15 no longer says the trial "is published in a peer-reviewed journal"');
 const leaders = (await getCollection('team', (e) => ['aziz-ahmad', 'shamsul-haque'].includes(e.id))).sort((a, b) => a.data.order - b.data.order);
 
 // The checklist ("What We Confirm with You in Co-Design", below) restates PD-13 as three lines (owner decision 2026-10-16, WP53): the legal status (ID-12, built from the register), the audited accounts (they exist; shared on request) and the safeguarding,
@@ -106,6 +109,7 @@ const jsonLd = [
     <SectionHeader id="evid-h" eyebrow="Independent Evidence" title="Independent Evaluation and Funder Reporting" />
     <div class="gov-text">
       <p class="lead" data-fact="RC-01"><strong>Independent evaluation is welcome.</strong> {trialLine}</p>
+      <p data-fact="RC-15">The trial is also published in a peer-reviewed journal.</p>
       <p data-fact="PD-08">Funders receive monthly reports from the first cohort.</p>
       <p><a class="link" href={linkAttrs('/impact/independent-evaluation/').href}>The Randomized Trial<Icon name="arrow-right" size={16} /></a></p>
     </div>
@@ -129,10 +133,11 @@ const jsonLd = [
   <CTABand
     id="diligence-cta"
     heading="Ask About Due Diligence"
-    text="Send the program or grant you are considering and the questions you need answered. We will reply with what can be shared."
+    text="Send the program or grant you are considering and the questions you need answered. We will reply with the documents and answers we can share."
     cta={{ label: diligence.label, href: diligence.href }}
-    secondary={{ label: 'Read our evidence', href: '/impact/' }}
+    secondary={{ label: 'Read the Evidence', href: '/impact/' }}
   />
+  <!-- WP166-A (marketing review R1-29): the page no longer ends on a note of withholding ("what can be shared"), and the link is in Title Case as on every other page. -->
 
 </BaseLayout>
 

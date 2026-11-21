@@ -57,70 +57,74 @@ export const CTAS: Record<CtaKey, CtaDef> = {
     key: 'discovery',
     label: 'Request a Discovery Session',
     subject: 'Discovery session request — [your organization]',
+    // WP166-A (marketing review R7-01, owner approval of 21 November 2026): the email behind the site's main button asks who is writing and for the time zone of the two
+    // times, and folds the cohort questions (priority groups, trainees, timeline) into one optional line, so a reader who is not yet a cohort buyer can still send it.
     body: [
       'Organization',
+      'Your name and role',
       'Country/region',
-      'Priority groups',
-      'Approx. number of trainees',
-      'Preferred timeline',
-      'Two suitable times for a discovery session',
+      'What you want to achieve (groups, numbers and timeline, if known)',
+      'Two suitable times for a discovery session (with your time zone)',
     ],
   },
+  // WP166-A (R7-30): every template that asks for two times asks for the time zone too, and every template has a line for the sender (Governments has "Contact person",
+  // Investors "Name and role"; the others gain "Your name and role" after their first field).
   briefing: {
     key: 'briefing',
     label: 'Request a Briefing for Your Ministry',
     subject: 'Briefing request — [ministry/agency]',
-    body: ['Ministry or agency', 'Country', 'Priority groups and locations', 'Target number of trainees', 'Contact person', 'Two suitable times for a briefing'], // WP161-A (adversarial review A-31): the fields the Governments page's agenda names
+    body: ['Ministry or agency', 'Country', 'Priority groups and locations', 'Target number of trainees', 'Contact person', 'Two suitable times for a briefing (with your time zone)'], // WP161-A (adversarial review A-31): the fields the Governments page's agenda names
   },
   funding: {
     key: 'funding',
-    label: 'Explore a Funding Partnership',
+    // WP166-A (R7-23): a verb that says what happens (the button opens an email), not the browsing verb "Explore".
+    label: 'Discuss a Funding Partnership',
     subject: 'Funding partnership — [foundation/company]',
-    body: ['Organization', 'Focus regions', 'Interest: platform grant / YouthWIDE cohort', 'Timeline', 'Two suitable times for a discovery session'],
+    body: ['Organization', 'Your name and role', 'Focus regions', 'Interest: platform grant / YouthWIDE cohort', 'Timeline', 'Two suitable times for a discovery session (with your time zone)'],
   },
   /** WP27: the two funding routes on /partner-with-us/foundations/ (hero text links), each with its own prefilled subject so the team sees which route the sender means. */
   fundingYouthwide: {
     key: 'fundingYouthwide',
     label: 'Discuss a YouthWIDE Cohort Grant',
     subject: 'YouthWIDE cohort grant — [foundation/company]',
-    body: ['Organization', 'Focus regions', 'Priority groups', 'Timeline', 'Two suitable times for a discovery session'],
+    body: ['Organization', 'Your name and role', 'Focus regions', 'Priority groups', 'Timeline', 'Two suitable times for a discovery session (with your time zone)'],
   },
   fundingPlatform: {
     key: 'fundingPlatform',
     label: 'Discuss a JobReady Platform Grant',
     subject: 'JobReady platform grant — [foundation/company]',
-    body: ['Organization', 'Questions about the platform grant', 'Timeline', 'Two suitable times for a discovery session'],
+    body: ['Organization', 'Your name and role', 'Questions about the platform grant', 'Timeline', 'Two suitable times for a discovery session (with your time zone)'],
   },
   /** YouthWIDE in Bangladesh (/programs/youthwide/): the secondary CTA for national funders, in place of `funding` (review round 15, F4): districts and priority groups, not a platform grant. */
   nationalFunding: {
     key: 'nationalFunding',
     label: 'Explore Co-Funding YouthWIDE in Bangladesh',
     subject: 'YouthWIDE co-funding in Bangladesh — [organization]',
-    body: ['Organization', 'Funding scope (districts, priority groups)', 'Approximate trainees', 'Timeline', 'Two suitable times for a discovery session'],
+    body: ['Organization', 'Your name and role', 'Funding scope (districts, priority groups)', 'Approximate trainees', 'Timeline', 'Two suitable times for a discovery session (with your time zone)'],
   },
   investor: {
     key: 'investor',
     label: 'Request an Introduction Call',
     subject: 'Introduction call request — [firm]',
-    body: ['Firm', 'Name and role', 'Impact focus', 'Two suitable times for an introduction call'],
+    body: ['Firm', 'Name and role', 'Impact focus', 'Two suitable times for an introduction call (with your time zone)'],
   },
   campus: {
     key: 'campus',
     label: 'Bring JobReady@Campus to Your Institution',
     subject: 'JobReady@Campus inquiry — [institution]',
-    body: ['Institution', 'Country', 'Students you have in mind (approximate number)', 'Programs of interest', 'Two suitable times for a discovery session'], // WP161-A (adversarial review A-31)
+    body: ['Institution', 'Your name and role', 'Country', 'Students you have in mind (approximate number)', 'Programs of interest', 'Two suitable times for a discovery session (with your time zone)'], // WP161-A (adversarial review A-31)
   },
   work: {
     key: 'work',
     label: 'Plan Your First Team Program',
     subject: 'JobReady@Work inquiry — [company]',
-    body: ['Company', 'Team size', 'Skills needed', 'Timeline', 'Two suitable times for a discovery session'],
+    body: ['Company', 'Your name and role', 'Team size', 'Skills needed', 'Timeline', 'Two suitable times for a discovery session (with your time zone)'],
   },
   talent: {
     key: 'talent',
     label: 'Hire JobReady Talent',
     subject: 'Talent request — [company]',
-    body: ['Company', 'Roles', 'Number of hires', 'Location/remote', 'Two suitable times for a discovery session'],
+    body: ['Company', 'Your name and role', 'Roles', 'Number of hires', 'Location/remote', 'Two suitable times for a discovery session (with your time zone)'],
   },
   /** Withheld while REPORT_EDITION_READY is false (src/lib/site.ts): `cta('report')` then returns an empty href and nothing renders. */
   report: {
@@ -131,7 +135,8 @@ export const CTAS: Record<CtaKey, CtaDef> = {
   },
   media: {
     key: 'media',
-    label: 'Media Inquiries',
+    // WP166-A (R7-24): a verb first, as every other email button.
+    label: 'Send a Media Inquiry',
     subject: 'Media inquiry — [outlet]',
     body: ['Outlet', 'Deadline', 'Topic'],
   },
@@ -142,11 +147,12 @@ export const CTAS: Record<CtaKey, CtaDef> = {
     subject: 'Local partnership inquiry — [organization]',
     body: [
       'Organization',
+      'Your name and role',
       'Type (NGO, college, chamber, association)',
       'District',
       'Groups you work with',
       'Facilities (labs, classrooms)',
-      'Two suitable times for a discovery session',
+      'Two suitable times for a discovery session (with your time zone)',
     ],
   },
   /** Opens a conversation; no ready document set is promised (PD-13b is unverified, `U`). */
@@ -159,15 +165,18 @@ export const CTAS: Record<CtaKey, CtaDef> = {
   /** Careers page: applications go to the CodersTrust Bangladesh HR team (address from the legacy careers page). */
   careers: {
     key: 'careers',
-    label: 'Send a Speculative Application',
+    // WP166-A (R7-25, R7-27): no roles are open, so the button asks for what the page asks for (a resume), in American usage ("speculative application" is British),
+    // and the email has no role line and takes an attached file or a link.
+    label: 'Send Your Resume',
     to: 'career@coderstrustbd.com', // CAREERS_EMAIL (checked below)
-    subject: 'Application — [role or "speculative application"]',
-    body: ['Name', 'Role you are applying for (or "speculative application")', 'Location', 'Link to your resume or portfolio'],
+    subject: 'Resume — [your name]',
+    body: ['Name', 'Area of work you are interested in', 'Location', 'Resume attached (or link to your resume or portfolio)'],
   },
   /** Mentor applications (About / Mentors): same pattern as `media`, general address. */
   mentor: {
     key: 'mentor',
-    label: 'Mentor Application',
+    // WP166-A (R1-37, R7-24): a verb first, in the words of the Mentors page's closing heading ("Become a Mentor").
+    label: 'Apply to Become a Mentor',
     subject: 'Mentor application — [your name]',
     body: ['Name', 'Area of expertise', 'Years of experience', 'LinkedIn or portfolio link', 'Availability'],
   },
@@ -176,7 +185,7 @@ export const CTAS: Record<CtaKey, CtaDef> = {
     key: 'superkids',
     label: 'Request a Discovery Session',
     subject: 'SuperKids discovery session request — [school or organization]',
-    body: ['School or organization', 'Location', 'Age groups', 'Approx. number of learners', 'Preferred timeline', 'Two suitable times for a discovery session'],
+    body: ['School or organization', 'Your name and role', 'Location', 'Age groups', 'Approx. number of learners', 'Preferred timeline', 'Two suitable times for a discovery session (with your time zone)'],
   },
   'nu-pgd': {
     key: 'nu-pgd',

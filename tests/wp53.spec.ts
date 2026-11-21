@@ -21,7 +21,7 @@ const noOverflow = (page: Page) => page.evaluate(() => document.documentElement.
 const sitePages = () => listPages().map((p) => ({ route: p.route, html: readFileSync(p.file, 'utf8') }));
 /** The routes of the built pages (the head included: meta descriptions and JSON-LD) that contain any of these patterns. */
 const pagesMatching = (...needles: RegExp[]) => sitePages().filter((p) => needles.some((n) => n.test(p.html))).map((p) => p.route);
-const slide = (page: Page, n: number) => page.locator('[data-hs-slide]').nth(n - 1);
+const slide = (page: Page, n: number) => page.locator('[data-hs-slide]').nth(n - 1); // WP166-A (R1-11): direct positions; TITLES below is in the new carousel order
 
 const HOME = '';
 const GOVERNANCE = 'about/governance/';
@@ -34,11 +34,12 @@ const CAMPUS = 'programs/jobready-campus/';
 const LOCAL = 'partner-with-us/local-partners/';
 const DP = 'partner-with-us/development-partners/';
 
+// WP166-A (marketing review R1-11, owner approval of 21 November 2026): the outcomes first, strongest first; the government contracts close the carousel
 const TITLES = [
   'Women Offered a Place Earned an Estimated 41% More per Month',
-  'Six Government Contracts and a National University Partnership',
   'Surveyed Completers Report Higher Income',
   'Results by Program',
+  'Six Government Contracts and a National University Partnership',
 ];
 // WP54 (cycle-28 reviews, Claude S23 and GLM L1): the line leads with its base, in the words of OC-05's own text (it was "58.8% of the 170 surveyed new earners (completers who first earned during or after training) had started earning ...")
 const TIMING = 'Of the 172 surveyed completers who first earned during or after training, 58.7% had started earning by six months after finishing the course.';
@@ -46,10 +47,11 @@ const TIMING = 'Of the 172 surveyed completers who first earned during or after 
 test.describe('Home: the carousel is four slides (item 1)', () => {
   test.use({ viewport: DESKTOP });
 
-  test('four slides in the owner’s order, labelled "n of 4", with four dots; the band is headed "Results" and has no framing sentence', async ({ page }) => {
+  // WP166-A (marketing review R1-11): the band is headed "Results You Can Check" (it was the one-word label "Results"), since each slide links its evidence
+  test('four slides in the owner’s order, labelled "n of 4", with four dots; the band is headed "Results You Can Check" and has no framing sentence', async ({ page }) => {
     await open(page, HOME);
-    await expect(page.locator('#results-h')).toHaveText('Results');
-    expect('Results').toBe(titleCase('Results'));
+    await expect(page.locator('#results-h')).toHaveText('Results You Can Check');
+    expect('Results You Can Check').toBe(titleCase('Results You Can Check'));
     await expect(page.locator('#results')).toHaveAttribute('aria-labelledby', 'results-h');
     await expect(page.locator('.hs__intro')).toHaveCount(0);
     await expect(page.locator('[data-hs-slide]')).toHaveCount(4);
@@ -59,7 +61,7 @@ test.describe('Home: the carousel is four slides (item 1)', () => {
       await expect(page.locator('[data-hs-dot]').nth(i)).toHaveAttribute('aria-label', `Show slide ${i + 1} of 4: ${t}`);
     }
     await expect(page.locator('[data-hs-dot]')).toHaveCount(4);
-    expect(await texts(page, '[data-hs-slide] .hs__eyebrow')).toEqual(['Randomized Trial of CodersTrust’s WSDFM Program', 'Government and University Partners', 'Impact Survey 2026', 'Program Records']);
+    expect(await texts(page, '[data-hs-slide] .hs__eyebrow')).toEqual(['Randomized Trial of CodersTrust’s WSDFM Program', 'Impact Survey 2026', 'Program Records', 'Government and University Partners']);
   });
 
   test('the next control wraps from slide 4 to slide 1 (and the previous control from 1 to 4)', async ({ page }) => {
@@ -101,7 +103,7 @@ test.describe('Home: the carousel is four slides (item 1)', () => {
 
   test('the survey slide: the income heading, the eyebrow, the $245 tile and the evidence link are unchanged; the timing is ONE body line from OC-05 leading with its base, stated once', async ({ page }) => {
     await open(page, HOME);
-    const s = slide(page, 3);
+    const s = slide(page, 2); // WP166-A: the survey slide is the second
     await expect(s.locator('.hs__eyebrow')).toHaveText('Impact Survey 2026');
     await expect(s.locator('h3')).toHaveText('Surveyed Completers Report Higher Income');
     expect(await s.locator('h3').getAttribute('data-fact')).toBe('OC-03');
@@ -168,9 +170,9 @@ test.describe('JobReady is "CodersTrust’s digital learning and earning platfor
     expect(pagesMatching(/education and employment platform/i)).toEqual([]);
   });
 
-  test('Home’s role router reads "Back JobReady’s staged rollout" (WP109, a fragment); the partner hub carries the definition on the investor card', async ({ page }) => {
+  test('Home’s role router reads "Back JobReady, CodersTrust’s digital learning and earning platform" (WP166-A; WP109 had the fragment "Back JobReady’s staged rollout"); the partner hub carries the definition on the investor card', async ({ page }) => {
     await open(page, HOME);
-    expect(compact(await page.locator('#router a.cat[href$="partner-with-us/investors/"] .cat__text').textContent())).toBe('Back JobReady’s staged rollout');
+    expect(compact(await page.locator('#router a.cat[href$="partner-with-us/investors/"] .cat__text').textContent())).toBe('Back JobReady, CodersTrust’s digital learning and earning platform'); // WP166-A (marketing review R1-04): Home defines JobReady where it first names it (it was "Back JobReady’s staged rollout")
     await open(page, HUB);
     expect(compact(await page.locator('main a.cat[href$="partner-with-us/investors/"] .cat__text').first().textContent())).toBe(`For impact investors: JobReady, ${DEFINITION}.`);
     await expect(page.locator('main a.cat[href$="partner-with-us/investors/"] .cat__title').first()).toHaveText('Back JobReady’s Staged Rollout');

@@ -5,6 +5,7 @@ import Icon from '../../system/Icon.astro';
 import PilotScorecard from '../../ui/PilotScorecard.astro';
 import CopyBlock from './CopyBlock.astro';
 import { optionDuration } from '../../../lib/format';
+import { linkAttrs } from '../../../lib/url';
 import { PROGRAM_OPTIONS, PROGRAM_OPTIONS_FACTS, type CopyBlock as CopyBlockData } from '../../../data/copy';
 
 /**
@@ -17,8 +18,13 @@ interface Props {
   title?: string;
   lead?: string;
   id?: string;
+  /**
+   * WP166-A (marketing review R1-20, owner approval of 21 November 2026): one line under the lead that names the program the three sizes belong to, with a link to it (Home sold YouthWIDE's sizes without naming it).
+   * IN-02's own words ("the program through which funders deploy the CodersTrust model in a country"), as the Development Partners page says them.
+   */
+  program?: string;
 }
-const { title = 'Choose Where to Start', lead, id = 'offer' } = Astro.props;
+const { title = 'Choose Where to Start', lead, id = 'offer', program } = Astro.props;
 const pricing: CopyBlockData = {
   text: 'Pricing is set per program, and we share an indicative budget in the discovery session. Devices, stipends, connectivity and independent evaluation are budgeted separately where a program needs them.',
   facts: ['PD-02', 'PD-02a'],
@@ -30,7 +36,16 @@ const options = PROGRAM_OPTIONS;
 ---
 
 <Section id={id} tone="white" aria-labelledby={`${id}-h`}>
-  <SectionHeader id={`${id}-h`} eyebrow="The Offer" title={title} lead={lead} />
+  <SectionHeader id={`${id}-h`} eyebrow="The Offer" title={title} lead={lead}>
+    {
+      program && (
+        <p class="offer__program" data-fact="IN-02">
+          {program}{' '}
+          <a class="link" href={linkAttrs('/programs/youthwide/').href}>How YouthWIDE Works<Icon name="arrow-right" size={16} /></a>
+        </p>
+      )
+    }
+  </SectionHeader>
   <ol class="grid-cards offer" role="list" data-fact={PROGRAM_OPTIONS_FACTS.join(' ')}>
     {
       options.map((o, i) => (
@@ -62,6 +77,10 @@ const options = PROGRAM_OPTIONS;
     list-style: none;
     margin: 0;
     padding: 0;
+  }
+  .offer__program {
+    margin: 0;
+    color: var(--on-surface-variant);
   }
   .offer__size {
     font-size: var(--fs-heading-l);

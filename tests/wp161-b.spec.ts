@@ -129,8 +129,10 @@ test.describe('A-12 "World Bank pages", not "World Bank coverage"', () => {
     expect(t).toMatch(/World Bank pages that name CodersTrust: Kosovo \(/);
   });
 
-  test('Home: the pointer sentence names the World Bank pages', () => {
-    expect(main(HOME)).toContain('Early press coverage, 2014–2016, and the World Bank pages on our work in Kosovo and Albania are on the Recognition and Media page.');
+  // WP166-A (marketing review R1-19, owner approval of 21 November 2026): Home's pointer sentence only described the link under it, so it is gone; the link stays, and the page it points to lists the World Bank pages first
+  test('Home: the pointer sentence is gone; its link to Recognition and Media stays', () => {
+    expect(main(HOME)).not.toContain('Early press coverage, 2014–2016, and the World Bank pages');
+    expect(main(HOME)).toContain('See All Recognition and Media');
   });
 
   test('no built page says "World Bank coverage"', () => {
@@ -141,8 +143,10 @@ test.describe('A-12 "World Bank pages", not "World Bank coverage"', () => {
 test.describe('A-13 Contact hero lead', () => {
   test('says the inquiry buttons open a prefilled email and the NU application form and JobReady.global open their own sites', () => {
     const t = main(CONTACT);
+    // WP166-A (marketing review R7-02): the hero promises a reply ("Choose the route that fits you, and the right team will respond."); the A-13 sentence is the routes' lead, once
+    expect(t).toContain('Choose the route that fits you, and the right team will respond.');
     expect(t).toContain(
-      'Choose the route that fits you. The inquiry buttons open a prefilled email to the CodersTrust team; the NU application form and JobReady.global open their own sites.',
+      'Choose Your Inquiry Route The inquiry buttons open a prefilled email to the CodersTrust team; the NU application form and JobReady.global open their own sites.',
     );
     expect(t).not.toContain('Each inquiry button opens a prefilled email');
   });

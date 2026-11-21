@@ -48,6 +48,11 @@ const SlideHeading = heading ? 'h3' : 'h2';
 /** The figure a tile shows, read from the register (throws when the fact has no stat, so a bad id fails the build). */
 const figure = (s: HeroSlideStat) => {
   const f = fact(s.factId);
+  // WP166-A (R1-06): a tile may show a word in place of a stat value (RC-15, the peer-reviewed publication, has no stat); it must then have its own caption.
+  if (s.value !== undefined) {
+    if (!s.caption) throw new Error(`HeroSlider: the tile for ${s.factId} shows "${s.value}" but has no caption`);
+    return { factId: s.factId, value: s.value, label: s.caption(f) };
+  }
   if (!f.stat) throw new Error(`HeroSlider: fact ${s.factId} has no stat`);
   return { factId: s.factId, value: f.stat.value, label: s.caption ? s.caption(f) : f.stat.label };
 };

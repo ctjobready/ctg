@@ -52,8 +52,8 @@ test.describe('home hero slider', () => {
     const region = page.locator('#results');
     await expect(region).toHaveAttribute('aria-roledescription', 'carousel');
     await expect(region).toHaveAttribute('aria-labelledby', 'results-h');
-    // WP53 (owner decision 2026-10-16): the band is headed "Results" (it was "Results and Programs"; the programs slide is gone)
-    await expect(page.locator('#results-h')).toHaveText('Results');
+    // WP53 (owner decision 2026-10-16): the band is headed "Results" (it was "Results and Programs"; the programs slide is gone). WP166-A (marketing review R1-11): "Results You Can Check".
+    await expect(page.locator('#results-h')).toHaveText('Results You Can Check');
     const slides = page.locator('[data-hs-slide]');
     await expect(slides).toHaveCount(4);
     await expect(slides.nth(0)).toHaveAttribute('aria-label', /^1 of 4: /);
@@ -61,7 +61,8 @@ test.describe('home hero slider', () => {
     await expect(slides.nth(0)).toHaveAttribute('role', 'group');
     await expect(slides.nth(0)).toHaveAttribute('aria-roledescription', 'slide');
     await expect(page.locator('h1')).toHaveCount(1);
-    await expect(page.locator('#hero h1')).toHaveText('Turn Youth Unemployment into a Digital Workforce — with Evidence');
+    // WP166-A (R1-10): "— and Show Who Starts Earning" (it ended "— with Evidence")
+    await expect(page.locator('#hero h1')).toHaveText('Turn Youth Unemployment into a Digital Workforce — and Show Who Starts Earning');
     await expect(page.locator('#results h1')).toHaveCount(0);
     await expect(page.locator('#results [data-hs-slide] h3')).toHaveCount(4);
     // WP45 (cycle-21 review): the trial slide leads with the income result (the employment result is the hero card's, the bar's and the >4× tile's)
@@ -72,13 +73,14 @@ test.describe('home hero slider', () => {
     await expect(page.locator('.hs__intro')).toHaveCount(0);
     const titles = await page.locator('#results [data-hs-slide] h3').allTextContents();
     // WP42 (cycle-19 review): the government slide is second, after the trial. WP53 (owner decision 2026-10-16): the speed, reach and programs slides are gone (the survey slide carries the timing as one body line, tests/wp53.spec.ts),
-    // so the order is the trial, the government scale, the survey and the program results
-    expect(titles.slice(1), 'government, survey and program-result headlines').toEqual([
-      'Six Government Contracts and a National University Partnership',
+    // so the order was the trial, the government scale, the survey and the program results. WP166-A (marketing review R1-11, owner approval item 5): the outcomes come first, strongest first, and the government contracts
+    // (scale and trust, not an outcome) close the carousel: the trial, the survey, the program results, the government contracts
+    expect(titles.slice(1), 'survey, program-result and government headlines').toEqual([
       'Surveyed Completers Report Higher Income',
       'Results by Program',
+      'Six Government Contracts and a National University Partnership',
     ]);
-    expect(titles[3], 'the program results stay last').toBe('Results by Program');
+    expect(titles[3], 'the government contracts close the carousel').toBe('Six Government Contracts and a National University Partnership');
     for (const t of titles) expect(t, 'slide titles carry no trailing period').not.toMatch(/\.$/);
     // WP31: the first slide states the offered-place results only; the attenders' income is on the trial page it links. WP45 (cycle-21 review): the income result (the employment result is the hero card's), still the offered-place women's
     const lead = (await slides.nth(0).locator('.hs__lead').textContent()) ?? '';
@@ -87,9 +89,10 @@ test.describe('home hero slider', () => {
     expect(lead).not.toContain('54%');
     expect(lead).not.toContain('who attended');
     // the placement slide lists four programs (WP35 had taken the WSDFM 71% off it, because it is program records, read beside the trial's 63.1%; WP50, cycle-25 review: it is back as the second program, with the qualifier "program records, not trial data")
-    await expect(slides.nth(3).locator('.hs__lines li')).toHaveCount(4);
-    await expect(slides.nth(3).locator('.hs__lines li').nth(1)).toHaveText('WSDFM: 711 of 1,000 enrolled in work (71%).');
-    await expect(slides.nth(3).locator('.hs__lines li').nth(3)).toHaveText('Her Power: 372 of 800 tracked in work (47%); 2,400 trained directly.');
+    // WP166-A (R1-11): the placement slide is the third
+    await expect(slides.nth(2).locator('.hs__lines li')).toHaveCount(4);
+    await expect(slides.nth(2).locator('.hs__lines li').nth(1)).toHaveText('WSDFM: 711 of 1,000 enrolled in work (71%).');
+    await expect(slides.nth(2).locator('.hs__lines li').nth(3)).toHaveText('Her Power: 372 of 800 tracked in work (47%); 2,400 trained directly.');
   });
 
   test('keyboard: the next, previous and dot controls change the slide, and focus stays put', async ({ page, browserName }) => {
@@ -179,8 +182,8 @@ test.describe('home hero slider', () => {
     for (const el of await hidden.all()) {
       await expect(el).toHaveAttribute('inert', '');
     }
-    // (the survey-income slide is the third, since WP42 put the government slide second)
-    await page.locator('[data-hs-dot]').nth(2).click();
+    // (the survey-income slide was the third, since WP42 put the government slide second; WP166-A, R1-11: it is the second again)
+    await page.locator('[data-hs-dot]').nth(1).click();
     // The leaving slide fades out before it leaves the accessibility tree: wait for that, then read the one heading that is left.
     await expect(hero.getByRole('heading')).toHaveCount(1);
     await expect(hero.getByRole('heading', { level: 3 })).toHaveText('Surveyed Completers Report Higher Income');

@@ -18,8 +18,10 @@ interface Props {
   expertise?: string[];
   /** How many expertise chips show (at most 3: no "N more" disclosure, the card stays short). */
   chips?: number;
+  /** WP166-A (marketing review R1-31, R1-38): one line of proof under the role (an employer, a post held, years in the field), from the person's own profile. */
+  credential?: string;
 }
-const { name, role, photo, alt, assetId, href, expertise = [], chips = 3 } = Astro.props;
+const { name, role, photo, alt, assetId, href, expertise = [], chips = 3, credential } = Astro.props;
 const a = href ? linkAttrs(href) : undefined;
 const shown = expertise.slice(0, Math.min(chips, 3));
 const initials = name.replace(/^(Md\.|Mr\.|Dr\.)\s+/i, '').split(/\s+/).map((w) => w[0]).slice(0, 2).join('').toUpperCase();
@@ -32,6 +34,7 @@ const initials = name.replace(/^(Md\.|Mr\.|Dr\.)\s+/i, '').split(/\s+/).map((w) 
   <div class="card__body">
     <h3 class="card__title">{a ? <a class="card__link" href={a.href}>{name}</a> : name}</h3>
     <p class="tc__role">{role}</p>
+    {credential && <p class="tc__credential">{credential}</p>}
     {
       shown.length > 0 && (
         <ul class="tc__chips" role="list" aria-label={`Expertise of ${name}`}>
@@ -78,6 +81,12 @@ const initials = name.replace(/^(Md\.|Mr\.|Dr\.)\s+/i, '').split(/\s+/).map((w) 
   .tc__role {
     margin: 0;
     color: var(--on-surface-variant);
+  }
+  .tc__credential {
+    margin: 0;
+    font-size: var(--fs-body-xs);
+    line-height: var(--lh-body-xs);
+    color: var(--on-surface);
   }
   .tc__chips {
     display: flex;

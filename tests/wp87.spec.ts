@@ -72,8 +72,9 @@ test.describe('Item 1: Her Power is dated "2023–2025" like the other program r
 
 test.describe('Item 2: the Her Power laptop photo reads the same in its alt text and its caption', () => {
   const ALT = 'A participant in a yellow coat receiving a laptop box from a man in a pink shirt and face mask at a Her Power laptop distribution ceremony';
-  test('Home, the Her Power case study and In the Field carry the new alt; the old alt is on no page', () => {
-    for (const route of ['', 'impact/case-studies/her-power/', 'impact/in-the-field/']) expect(pageHtml(route), route || 'home').toContain(`alt="${ALT}"`);
+  // WP166-A (marketing review R1-14): Home's Imagine band, which showed the photograph, is gone; the case study and In the Field keep it
+  test('the Her Power case study and In the Field carry the new alt; the old alt is on no page', () => {
+    for (const route of ['impact/case-studies/her-power/', 'impact/in-the-field/']) expect(pageHtml(route), route).toContain(`alt="${ALT}"`);
     expect(builtPages().filter((p) => p.html.includes('accepting a laptop box from a participant')).map((p) => p.route)).toEqual([]);
   });
 

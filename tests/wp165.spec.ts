@@ -308,8 +308,10 @@ test.describe('LIVE (a build with the drafts lifted: see the header of this file
       expect(text(/<h3[\s\S]*?<\/h3>/.exec(card)![0])).toBe(p.title);
       expect(text(card)).toContain(p.excerpt);
     });
-    expect(text(/<h1[\s\S]*?<\/h1>/.exec(raw)![0])).toBe('Blog');
-    expect(text(/<p class="hero__lead"[\s\S]*?<\/p>/.exec(raw)![0])).toBe('Essays by Aziz Ahmad, Co-Founder and Chairman of CodersTrust, on youth, work and technology.');
+    // WP166-A (marketing review R7-28, owner approval of 21 November 2026): the H1 states what the page holds and the lead names the author (it was "Blog" and "Essays by Aziz Ahmad, ..., on youth, work and technology.",
+    // which the meta description keeps); tests/wp166-a.spec.ts pins the eyebrow, the title and the closing band.
+    expect(text(/<h1[\s\S]*?<\/h1>/.exec(raw)![0])).toBe('Essays on Youth, Work and Technology');
+    expect(text(/<p class="hero__lead"[\s\S]*?<\/p>/.exec(raw)![0])).toBe(`${BYLINE}.`);
     const reposts = live().filter((p) => p.substack).length;
     const lead = /<p class="sh__lead lead"[^>]*>([\s\S]*?)<\/p>/.exec(raw)?.[1];
     if (reposts === live().length) expect(lead).toBe('Each essay first appeared on Aziz Ahmad’s Substack and is republished here with his permission.');
@@ -317,7 +319,7 @@ test.describe('LIVE (a build with the drafts lifted: see the header of this file
     else expect(lead).toBeUndefined();
     for (const h of [...raw.matchAll(/<h[1-6][^>]*>([\s\S]*?)<\/h[1-6]>/g)].map((m) => text(m[1]))) expect(h, 'Title Case').toBe(titleCase(h));
     const cp = nodeOf(INDEX, 'CollectionPage');
-    expect(cp.dateModified).toBe('2026-11-05');
+    expect(cp.dateModified).toBe('2026-11-21'); // WP166-A: the H1, the lead and the closing band changed (it was 2026-11-05)
     expect((cp.mainEntity as { itemListElement: { url: string }[] }).itemListElement.map((x) => x.url)).toEqual(live().map((p) => `${ORIGIN}/blog/${p.slug}/`));
   });
 

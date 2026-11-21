@@ -144,7 +144,8 @@ test.describe('G2, YouthWIDE: "Built Around What Funders and Agencies Ask" is go
     // the allowance is one page (PAIN_C8_OPTIONAL); the script's own negative self-tests (a page with no C2 band, two pains, a band with a pain missing, ...) run on every call
     const out = execFileSync(process.execPath, ['--experimental-strip-types', 'scripts/check-facts.mjs'], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] });
     expect(out).toContain('check-facts: OK');
-    expect(out).toMatch(/three ranked pains \(C2\) on 3 page\(s\), with one C8 card each on 2 of them/);
+    // WP166-A (marketing review R1-17): Home's C8 band ("What a Supported Youth Cohort Includes") is gone, so Home joins YouthWIDE in PAIN_C8_OPTIONAL and one page carries the band
+    expect(out).toMatch(/three ranked pains \(C2\) on 3 page\(s\), with one C8 card each on 1 of them/);
   });
 });
 
@@ -267,7 +268,9 @@ test.describe('P1, Home: the fourth logo group is "Employers and Industry Partne
   test('the group title and the strip’s name say so, the strip still holds AWS and BASIS beside the employers, and the other three groups are unchanged', async ({ page }) => {
     await open(page, HOME);
     const titles = await texts(page, '#guide .rel__title');
-    expect(titles).toEqual(['Funders and Development Partners', 'Government Programs', 'Education Partners', 'Employers and Industry Partners']);
+    // WP166-A (marketing review R1-05): the funders and development partners are the logo row under the hero's proof cards, so the track-record band keeps the other three groups
+    expect(titles).toEqual(['Government Programs', 'Education Partners', 'Employers and Industry Partners']);
+    await expect(page.locator('#hero .hh__funders')).toHaveCount(1);
     for (const t of titles) expect(t, t).toBe(titleCase(t));
     const strip = page.locator('#guide section.partners[aria-label="Employers and industry partners"]');
     await expect(strip).toHaveCount(1);
@@ -309,17 +312,15 @@ test.describe('P2, "As covered by" is two short sentences with every link kept, 
     });
   }
 
-  test('Home: the press line is one sentence, "Early press coverage, 2014–2016, and the World Bank pages on our work in Kosovo and Albania are on the Recognition and Media page."; no outlet is named in it', async ({ page }) => {
+  // WP166-A (marketing review R1-19, owner approval of 21 November 2026): Home's one-sentence pointer only described the link under it, so it is gone; Home names no outlet and keeps the link to Recognition and Media
+  test('Home: the press pointer sentence is gone (WP166-A); no outlet is named on Home', async ({ page }) => {
     await open(page, HOME);
-    const line = page.locator('p.cov');
-    await expect(line).toHaveCount(1);
-    const text = await visibleText(page, 'p.cov');
-    expect(text.split(/(?<=\.) (?=[A-Z])/)).toEqual(['Early press coverage, 2014–2016, and the World Bank pages on our work in Kosovo and Albania are on the Recognition and Media page.']); // WP161-B (Fable review A-12)
+    await expect(page.locator('p.cov')).toHaveCount(0);
+    const text = await visibleText(page, 'main');
     expect(text).not.toContain('As covered by');
-    // no stray space before a comma or a period
-    expect(text).not.toMatch(/ [,.]/);
+    expect(text).not.toContain('Early press coverage, 2014–2016');
     expect(text).not.toMatch(/Gulf News|TechCrunch|Forbes|Wall Street Journal|USA Today|Tech in Asia|Times of India/);
-    expect(await line.getAttribute('data-fact')).toBe('PA-09 PA-13');
+    await expect(page.locator('#recognition a', { hasText: 'See All Recognition and Media' })).toHaveCount(1);
   });
 });
 
@@ -534,7 +535,8 @@ test.describe('R2, the 30,000+ visibly includes Her Power’s national program (
   // WP60 (cycle-32 review, GPT-6.1 Sol G1): Home's slide 2 says the same facts in four plain sentences (the Governments tile and the other tiles keep NOTE); the page lists below no longer include Home
   test('Home, slide 2: the lead is the contracts sentence, the Her Power sentence and the National University sentences, tied to GV-12, GV-01, GV-11 and SC-04', async ({ page }) => {
     await open(page, HOME);
-    const lead = page.locator('#results [data-hs-slide]').nth(1).locator('.hs__lead');
+    // WP166-A (marketing review R1-11): the slides run evidence, survey outcomes, program results, government (old slide 2 is now 4, 3 is 2, 4 is 3)
+    const lead = page.locator('#results [data-hs-slide]').nth(3).locator('.hs__lead');
     expect(compact(await lead.textContent())).toBe(
       `Six government contracts with training and curriculum work scoped for 30,000+ people, not a count of completers. Her Power, one of the six, trained 25,125 women nationally, its full target; CodersTrust trained 2,400 directly. As the official training partner of Bangladesh’s National University for digital career skills and credentials, CodersTrust is onboarding 1.5M+ of the university’s own learners, who are not learners trained by CodersTrust.`,
     );

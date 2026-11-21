@@ -102,27 +102,28 @@ test.describe('Investors page structure', () => {
   });
 });
 
+// WP166-A (marketing review R1-15, owner approval of 21 November 2026): the comparison table is gone from Home (and WP34 had taken it off Investors), so no page shows its stacked cards; the check is that it stays gone
 test.describe('the comparison table (Home)', () => {
-  test('turns into stacked cards on a phone (table hidden, one card per approach)', async ({ page }) => {
+  test('is gone from Home (WP166-A); it was a table that turned into stacked cards on a phone', async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 800 });
     await page.goto('');
-    await expect(page.locator('#compare .cmp')).toBeHidden();
-    // WP31 dropped the "Conventional Skills Programs" and "Freelance Marketplaces Alone" columns on Home, so two approaches remain (CodersTrust and self-paced platforms);
-    // WP34 took the table off Investors, which had been its other home
-    await expect(page.locator('#compare .cmp-card')).toHaveCount(2);
-    await expect(page.locator('#compare .cmp-card').first()).toBeVisible();
+    await expect(page.locator('#compare')).toHaveCount(0);
+    await expect(page.locator('.cmp-card')).toHaveCount(0);
   });
 });
 
+// WP166-A (marketing review R1-05): the funders' row sits under the hero, captioned "Organizations we have worked with, 2014–2026."; the track-record band keeps the other three relationship cards, with "not endorsements" under them
 test.describe('home partner logo wall', () => {
   test('partners are grouped into four relationship cards, with "not endorsements" stated', async ({ page }) => {
     await page.goto('');
     // WP57 (cycle-29 review, GPT-6.1 Sol P1): the fourth group holds AWS and BASIS beside the employers, so it is "Employers and Industry Partners"
-    expect(await texts(page, '#guide .rel__title')).toEqual(['Funders and Development Partners', 'Government Programs', 'Education Partners', 'Employers and Industry Partners']);
+    expect(await texts(page, '#guide .rel__title')).toEqual(['Government Programs', 'Education Partners', 'Employers and Industry Partners']);
+    await expect(page.locator('#hero .hh__funders .partners__title')).toHaveText('Organizations we have worked with, 2014–2026.');
     await expect(page.locator('#guide .rel__caption')).toContainText('not endorsements');
-    await expect(page.locator('#guide [data-marquee]'), 'no scrolling marquee').toHaveCount(0);
-    for (const label of ['Funders and development partners', 'Government program partners', 'Education partners', 'Employers and industry partners']) {
+    await expect(page.locator('#guide [data-marquee], #hero [data-marquee]'), 'no scrolling marquee').toHaveCount(0);
+    for (const label of ['Government program partners', 'Education partners', 'Employers and industry partners']) {
       await expect(page.locator(`#guide section.partners[aria-label="${label}"]`)).toHaveCount(1);
     }
+    await expect(page.locator('#hero section.partners')).toHaveCount(1);
   });
 });

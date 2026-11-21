@@ -20,7 +20,7 @@ import { listPages } from './support/pages';
 
 const compact = (t: string | null | undefined) => (t ?? '').replace(/\s+/g, ' ').trim();
 const noOverflow = (page: Page) => page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth);
-const slide = (page: Page, n: number) => page.locator('[data-hs-slide]').nth(n - 1);
+const slide = (page: Page, n: number) => page.locator('[data-hs-slide]').nth([0, 3, 1, 2][n - 1]); // WP166-A (R1-11): n is the slide's position before the reorder (1 trial, 2 government, 3 survey, 4 program results); the carousel now runs trial, survey, program results, government
 
 /** Every built page (redirect stubs excluded) with its HTML. */
 const builtPages = () => listPages().map((p) => ({ route: p.route, html: readFileSync(p.file, 'utf8') }));
@@ -37,8 +37,8 @@ const unusedBelow = (page: Page) =>
     return Math.round(controls.getBoundingClientRect().top - contentBottom);
   });
 async function showSlide(page: Page, n: number) {
-  await page.locator('[data-hs-dot]').nth(n - 1).click();
-  await expect.poll(() => page.evaluate(() => Array.from(document.querySelectorAll('[data-hs-slide]')).findIndex((s) => s.classList.contains('is-active')))).toBe(n - 1);
+  await page.locator('[data-hs-dot]').nth([0, 3, 1, 2][n - 1]).click(); // WP166-A: the same old-to-new map as slide()
+  await expect.poll(() => page.evaluate(() => Array.from(document.querySelectorAll('[data-hs-slide]')).findIndex((s) => s.classList.contains('is-active')))).toBe([0, 3, 1, 2][n - 1]);
   await page.waitForTimeout(450);
 }
 

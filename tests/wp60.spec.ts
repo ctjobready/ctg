@@ -38,7 +38,7 @@ import { withoutRepostBody } from './support/repost';
 const compact = (t: string | null | undefined) => (t ?? '').replace(/\s+/g, ' ').trim();
 const texts = (page: Page, selector: string) => page.locator(selector).evaluateAll((els) => els.map((e) => (e.textContent ?? '').replace(/\s+/g, ' ').trim()));
 const noOverflow = (page: Page) => page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth);
-const slide = (page: Page, n: number) => page.locator('[data-hs-slide]').nth(n - 1);
+const slide = (page: Page, n: number) => page.locator('[data-hs-slide]').nth([0, 3, 1, 2][n - 1]); // WP166-A (R1-11): n is the slide's position before the reorder (1 trial, 2 government, 3 survey, 4 program results); the carousel now runs trial, survey, program results, government
 
 /** Built pages that are not archived news posts (those keep their original wording), with their HTML. */
 // WP165: the essay element of a /blog/<post>/ page is Aziz Ahmad's Substack text, republished without edits; the sweeps read the rest of the page (tests/support/repost.ts)
@@ -83,8 +83,8 @@ const unusedBelow = (page: Page) =>
     return Math.round(controls.getBoundingClientRect().top - contentBottom);
   });
 async function showSlide(page: Page, n: number) {
-  await page.locator('[data-hs-dot]').nth(n - 1).click();
-  await expect.poll(() => page.evaluate(() => Array.from(document.querySelectorAll('[data-hs-slide]')).findIndex((s) => s.classList.contains('is-active')))).toBe(n - 1);
+  await page.locator('[data-hs-dot]').nth([0, 3, 1, 2][n - 1]).click(); // WP166-A: the same old-to-new map as slide()
+  await expect.poll(() => page.evaluate(() => Array.from(document.querySelectorAll('[data-hs-slide]')).findIndex((s) => s.classList.contains('is-active')))).toBe([0, 3, 1, 2][n - 1]);
   await page.waitForTimeout(450);
 }
 
@@ -231,8 +231,9 @@ test.describe('S3 (Claude): the 1 million 2030 aim carries its dependency on eve
     await expect(tile).toHaveCount(1);
     expect(compact(await tile.locator('.glance__note').textContent())).toBe(`YouthWIDE in Bangladesh and similar countries in South Asia and the Middle East and North Africa, ${AIM_DEPENDENCY}. An ambition, not a result.`);
     await open(page, 'about/');
-    expect(compact(await page.locator('#story .timeline__item').last().locator('.timeline__text').textContent())).toBe(
-      `JobReady is CodersTrust’s digital learning and earning platform. YouthWIDE aims to train 1 million educated youth (Higher Secondary Certificate or above) for digital employment by 2030, in Bangladesh and similar countries in South Asia and the Middle East and North Africa, ${AIM_DEPENDENCY}. CodersTrust published Impact Survey 2026.`,
+    // WP166-A (marketing review R1-25): the aim closes the story band under "Where We Are Going" (it was the middle sentence of the last timeline entry), with its dependency
+    expect(compact(await page.locator('#story .about-going p').textContent())).toBe(
+      `YouthWIDE aims to train 1 million educated youth (Higher Secondary Certificate or above) for digital employment by 2030, in Bangladesh and similar countries in South Asia and the Middle East and North Africa, ${AIM_DEPENDENCY}.`,
     );
     await open(page, YOUTHWIDE);
     expect(compact(await page.locator('#program-glance .pg__row').first().textContent())).toContain(`YouthWIDE aims to train 1 million educated youth (Higher Secondary Certificate or above) for digital employment by 2030, in Bangladesh and similar countries in South Asia and the Middle East and North Africa, ${AIM_DEPENDENCY}.`);
@@ -265,7 +266,8 @@ test.describe('S4 (Claude; owner answer 2026-10-20: "711 of 1000 is correct. The
     await page.setViewportSize(DESKTOP);
     await open(page, HOME);
     const lines = slide(page, 4).locator('.hs__lines li');
-    expect((await texts(page, '[data-hs-slide]:nth-child(4) .hs__lines li'))[1]).toBe(LINE);
+    // WP166-A (marketing review R1-11): the slides run evidence, survey outcomes, program results, government (old slide 2 is now 4, 3 is 2, 4 is 3)
+    expect((await texts(page, '[data-hs-slide]:nth-child(3) .hs__lines li'))[1]).toBe(LINE);
     expect(await lines.nth(1).getAttribute('data-fact')).toBe('PR-01');
     const heights = await lines.evaluateAll((els) => els.map((e) => Math.round(e.getBoundingClientRect().height)));
     expect(heights[1], 'the WSDFM line wraps').toBe(heights[0]);
@@ -554,18 +556,17 @@ test.describe('GM7 (Gemini): Home’s "Our Approach" is one sentence that keeps 
   // WP63 (cycle-35 review, Grok R1): the audience is "educated, unemployed and underemployed youth" (it was "educated, unemployed youth"), the group ID-01 and the hero name
   const STATEMENT = 'CodersTrust connects training, mentoring and placement support for educated, unemployed and underemployed youth, with monthly reports on progress toward paid work.';
 
-  test('the statement is the one sentence, in the source and on Home; the gate declares it whole for Home, independently of the source', async ({ page }) => {
+  // WP166-A (marketing review R1-03): Home no longer prints the statement ("Our Approach" repeated the hero lead and the definition), so the gate no longer declares it for Home; the source keeps the one sentence
+  test('the statement is the one sentence in the source; Home prints none and the gate no longer declares one for Home (WP166-A)', async ({ page }) => {
     expect(POSITIONING.home.text).toBe(STATEMENT);
     expect(POSITIONING.home.facts).toEqual(['PD-08']);
+    expect(STATEMENT.split(/(?<=\.)\s+/)).toHaveLength(1);
     const gate = readFileSync(new URL('../scripts/check-facts.mjs', import.meta.url), 'utf8');
     const whole = /const POSITION_WHOLE_STATEMENT = \{([\s\S]*?)\n\};/.exec(gate)?.[1] ?? '';
-    expect(whole).toContain(`'/': '${STATEMENT}'`);
+    expect(whole).not.toMatch(/^\s*'\/':/m);
     expect(/const POSITION_EMPLOYER_CLOSING = \{([\s\S]*?)\n\};/.exec(gate)?.[1] ?? '').not.toMatch(/^\s*'\/':/m);
     await open(page, HOME);
-    const text = compact(await page.locator('#mechanism .pos__text').textContent());
-    expect(text).toBe(STATEMENT);
-    expect(text.split(/(?<=\.)\s+/)).toHaveLength(1);
-    expect(await page.locator('#mechanism .pos').getAttribute('data-fact')).toBe('PD-08');
+    await expect(page.locator('#mechanism .pos, #mechanism .pos__text')).toHaveCount(0);
     expect(compact(await page.locator('main').textContent())).not.toContain('For funders who need educated, unemployed youth in paid digital work');
   });
 });

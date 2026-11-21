@@ -37,7 +37,7 @@ const pagesWith = (...needles: string[]) => sitePages().filter((p) => needles.so
 
 /** Everything in main, including answers inside closed FAQ accordions (innerText leaves those out). */
 const everything = async (page: Page) => compact(await page.locator('main').evaluate((el) => el.textContent ?? ''));
-const slide = (page: Page, n: number) => page.locator('[data-hs-slide]').nth(n - 1);
+const slide = (page: Page, n: number) => page.locator('[data-hs-slide]').nth([0, 3, 1, 2][n - 1]); // WP166-A (R1-11): n is the slide's position before the reorder (1 trial, 2 government, 3 survey, 4 program results); the carousel now runs trial, survey, program results, government
 
 const HOME = '';
 const EMP = 'partner-with-us/employers/';
@@ -178,19 +178,21 @@ test.describe('Foundations: the cohort-grant offer’s lead is the program-sizes
 });
 
 test.describe('About: the 2025–2026 timeline entry is sentences, not a semicolon chain (item 7)', () => {
-  const TEXT = 'JobReady is CodersTrust’s digital learning and earning platform. YouthWIDE aims to train 1 million educated youth (Higher Secondary Certificate or above) for digital employment by 2030, in Bangladesh and similar countries in South Asia and the Middle East and North Africa, depending on government and donor commitments. CodersTrust published Impact Survey 2026.';
+  // WP166-A (marketing review R1-25, owner approval item 5): the YouthWIDE aim (IN-01, verbatim) left this entry to close the story band under "Where We Are Going" (tests/wp166-a.spec.ts), so the entry is its two sentences of
+  // history, under "JobReady and the Impact Survey", and no longer cites IN-01. Still sentences, not a semicolon chain.
+  const TEXT = 'JobReady is CodersTrust’s digital learning and earning platform. CodersTrust published Impact Survey 2026.';
 
-  test('the last entry reads as above, from data/timeline.ts, under its unchanged heading, and cites the facts its sentences rest on (IN-02 is no longer among them)', async ({ page }) => {
+  test('the last entry reads as above, from data/timeline.ts, under its heading, and cites the facts its sentences rest on (IN-02 is no longer among them)', async ({ page }) => {
     const last = timeline[timeline.length - 1];
-    expect(last.title).toBe('JobReady, YouthWIDE and the Impact Survey');
+    expect(last.title).toBe('JobReady and the Impact Survey');
     expect(last.text).toBe(TEXT);
-    expect(last.factIds).toEqual(['IN-04', 'IN-01', 'OC-01']);
+    expect(last.factIds).toEqual(['IN-04', 'OC-01']);
     await open(page, ABOUT);
     const item = page.locator('#story .timeline__item').last();
     expect(compact(await item.locator('.timeline__year').textContent())).toBe('2025–2026');
-    expect(compact(await item.locator('.timeline__title').textContent())).toBe('JobReady, YouthWIDE and the Impact Survey');
+    expect(compact(await item.locator('.timeline__title').textContent())).toBe('JobReady and the Impact Survey');
     expect(compact(await item.locator('.timeline__text').textContent())).toBe(TEXT);
-    expect(await item.getAttribute('data-fact')).toBe('IN-04 IN-01 OC-01');
+    expect(await item.getAttribute('data-fact')).toBe('IN-04 OC-01');
   });
 
   // WP163 (owner answers of 3 November 2026): IN-04 no longer carries the rollout status, so the JobReady sentence is IN-04's opening definition.
@@ -258,13 +260,15 @@ test.describe('"Surveyed new earners" is defined where the 58.7% appears: the Im
 });
 
 test.describe('Home: the hero line has a subject (item 9)', () => {
-  const HERO = 'We help educated, unemployed and underemployed youth reach paid digital work through training, mentoring and placement support.';
+  // WP166-A (marketing review R1-03, R1-10): the line names the buyer and the report (it was "We help educated, unemployed and underemployed youth reach paid digital work through training, mentoring and
+  // placement support."), and the H1's tail says what the evidence shows (it was "... — with Evidence"); the subject is still "We"
+  const HERO = 'We help funders and governments move educated, unemployed and underemployed youth into paid digital work, with monthly reports on their progress.';
 
-  test('"We help ...", read from VALUE_PROPOSITION.home; the H1 is unchanged and the earlier "Help ..." is on no built page', async ({ page }) => {
+  test('"We help ...", read from VALUE_PROPOSITION.home; the H1 reads as WP166-A set it and the earlier "Help ..." is on no built page', async ({ page }) => {
     expect(VALUE_PROPOSITION.home).toBe(HERO);
     await open(page, HOME);
     await expect(page.locator('.hh__lead')).toHaveText(HERO);
-    await expect(page.locator('#hero h1')).toHaveText('Turn Youth Unemployment into a Digital Workforce — with Evidence');
+    await expect(page.locator('#hero h1')).toHaveText('Turn Youth Unemployment into a Digital Workforce — and Show Who Starts Earning');
     expect(pagesWith('Help educated, unemployed and underemployed youth')).toEqual([]);
   });
 });
@@ -472,17 +476,20 @@ test.describe('Home: slide 2 is plain sentences (items 17 and 25; four since WP6
 });
 
 test.describe('Home: "Progress You Can Check" promises reports (item 36) and the recognition band gives the AWS item its line (item 24)', () => {
-  test('"Monthly reports show progress toward paid work."', async ({ page }) => {
+  // WP166-A (marketing review R1-03, R1-17): the Includes band and its "Progress You Can Check" card are gone; the hero lead promises the monthly reports
+  test('"Monthly reports show progress toward paid work." is gone with its card (WP166-A); the hero lead promises the reports', async ({ page }) => {
     await open(page, HOME);
-    expect(compact(await page.locator('#features .card__text').nth(1).textContent())).toBe('Monthly reports show progress toward paid work.');
+    await expect(page.locator('#features')).toHaveCount(0);
+    await expect(page.locator('.hh__lead')).toContainText('with monthly reports on their progress');
     expect(pagesWith('Monthly reports will show progress toward paid work')).toEqual([]);
   });
 
   test('every badge has a line under its title; the AWS one is "CodersTrust is an AWS Authorized Training Partner." (PA-06)', async ({ page }) => {
     await open(page, HOME);
+    // WP166-A (marketing review R1-19): the University Partners item is gone (the universities are in the logo wall), so two badges remain
     const badges = page.locator('#recognition .rec__badge');
-    await expect(badges).toHaveCount(3);
-    for (let i = 0; i < 3; i++) await expect(badges.nth(i).locator('.rec__badge-text'), `badge ${i + 1}`).toHaveCount(1);
+    await expect(badges).toHaveCount(2);
+    for (let i = 0; i < 2; i++) await expect(badges.nth(i).locator('.rec__badge-text'), `badge ${i + 1}`).toHaveCount(1);
     const aws = page.locator('#recognition .rec__badge[data-fact="PA-06"]');
     expect(compact(await aws.locator('.rec__badge-title').textContent())).toBe('Amazon Web Services (AWS)');
     expect(compact(await aws.locator('.rec__badge-text').textContent())).toBe('CodersTrust is an AWS Authorized Training Partner.');
@@ -547,7 +554,9 @@ test.describe('Development Partners: the glance is three tiles and the +10.3 til
       expect(await page.locator('#glance .pg__lead a').evaluateAll((els) => els.map((e) => (e.getAttribute('data-fact') ?? '').split(' ')[0])), route).toEqual(ids);
     }
     await open(page, HOME);
-    expect(compact(await slide(page, 1).locator('.hs__proof').textContent())).toContain('>4×');
+    // WP166-A (marketing review R1-02, R1-06): Home states the benchmark under the +10.3 on the hero's trial card; the first slide's callout is the peer-reviewed publication
+    await expect(page.locator('.hh__card[data-fact="RC-02"] [data-fact="RC-06a"]')).toHaveText('That is more than four times the 2.3-point average across nine vocational-training trials.');
+    expect(compact(await slide(page, 1).locator('.hs__proof').textContent())).toContain('Published in a peer-reviewed journal: Economic Development and Cultural Change (October 2026).');
   });
 
   // WP53 (owner follow-up, 2026-10-16): the card said "local, remote and global work" in its title and again in its text; the text is "Placement support and outcome tracking for 12 months after each course." (tests/wp53.spec.ts)

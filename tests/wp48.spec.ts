@@ -24,7 +24,7 @@ const texts = (page: Page, selector: string) => page.locator(selector).evaluateA
 const hrefs = (page: Page, selector: string) => page.locator(selector).evaluateAll((els) => els.map((e) => e.getAttribute('href') ?? ''));
 const sitePath = (href: string) => href.replace(/^\/ctg(?=\/)/, '');
 const count = (haystack: string, needle: string) => haystack.split(needle).length - 1;
-const slide = (page: Page, n: number) => page.locator('[data-hs-slide]').nth(n - 1);
+const slide = (page: Page, n: number) => page.locator('[data-hs-slide]').nth([0, 3, 1, 2][n - 1]); // WP166-A (R1-11): n is the slide's position before the reorder (1 trial, 2 government, 3 survey, 4 program results); the carousel now runs trial, survey, program results, government
 const noOverflow = (page: Page) => page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth);
 /** The ids of the page's top-level sections, in order. */
 const sectionIds = (page: Page) => page.evaluate(() => Array.from(document.querySelectorAll('main section[id]')).map((s) => s.id));
@@ -193,12 +193,13 @@ test.describe('YouthWIDE: no Cost of Waiting band, no Imagine band, no hero link
     expect((await hrefs(page, '#hero a')).filter((h) => /partner-with-us\//.test(h))).toEqual([]);
   });
 
-  test('Home keeps its Cost of Waiting and Imagine bands; no other program page has a Cost of Waiting band, and the unused component is gone', async ({ page }) => {
+  // WP166-A (marketing review R1-07, R1-14, owner approval of 21 November 2026): Home no longer carries them either (its two research findings close pains 2 and 3 of the problem band), so only the component gallery shows them
+  test('no page but the component gallery has a Cost of Waiting or Imagine band (Home lost them in WP166-A), and the unused component is gone', async ({ page }) => {
     await open(page, '');
-    await expect(page.locator('#cost')).toHaveCount(1);
-    await expect(page.locator('#future')).toHaveCount(1);
+    await expect(page.locator('#cost')).toHaveCount(0);
+    await expect(page.locator('#future')).toHaveCount(0);
     const withBand = sitePages().filter((p) => visible(p.html).includes('The Cost of Waiting')).map((p) => p.route);
-    expect(withBand.filter((r) => r !== '/' && r !== '/styleguide/'), 'pages other than Home and the component gallery').toEqual([]);
+    expect(withBand.filter((r) => r !== '/styleguide/'), 'pages other than the component gallery').toEqual([]);
     expect(existsSync(resolve('src/components/pages/programs/CostSection.astro'))).toBe(false);
     const photos = readFileSync(resolve('src/data/photos.ts'), 'utf8');
     expect(/const FUTURE[\s\S]*?\n};/.exec(photos)?.[0] ?? '').not.toMatch(/\byouthwide:/);
@@ -337,7 +338,7 @@ test.describe('Home: the proof strip and the evidence band (items 9 and 13)', ()
     const order = await page.evaluate(() => Array.from(document.querySelectorAll('[data-cmf]')).map((el) => el.getAttribute('data-cmf')));
     expect(order.filter((c) => c === 'C7'), 'one C7 proof position').toHaveLength(1);
     expect(order[order.indexOf('C6') + 1], 'the proof band follows the mechanism band').toBe('C7');
-    expect(order[order.indexOf('C7') + 1]).toBe('RECOGNITION');
+    expect(order[order.indexOf('C7') + 1]).toBe('C5'); // WP166-A (marketing review R1-08, R1-19): the track record and the recognition are one band (C5), which follows the proof band; it was a separate RECOGNITION band
   });
 
   test('the Impact Survey 2026 page keeps the pathways and the 70.8%', async ({ page }) => {
@@ -390,15 +391,18 @@ test.describe('Development Partners, Foundations and Governments: sector general
 test.describe('The Governments blurb and the 2030 aim (items 17 and 18)', () => {
   const BLURB = 'Curriculum, trainer training and phased delivery for ministries.';
   // WP54 (cycle-28 review, Claude S7): the Programs menu line no longer carries the aim (it was "..., with a Bangladesh initiative that aims to train 2 million vulnerable youth by 2030.")
-  const MENU_LINE = 'Co-funded country cohorts, designed for three regions, from training to paid digital work.';
+  // WP166-A (marketing review R7-12, R7-08): the menu line names the audience first, and the featured panel carries the YouthWIDE H1 (they no longer share one line); neither carries the aim
+  const MENU_LINE = 'For governments and funders: co-funded country cohorts designed for three regions.';
+  const PANEL_LINE = 'From training to paid digital work, country by country.';
 
   test('the Partner with Us menu, its featured panel, Home’s router and the partner hub say the new blurb; no page says "National programs for youth employment"', async ({ page }) => {
     test.setTimeout(120_000);
     await page.setViewportSize(DESKTOP);
     await open(page, '');
     expect(compact(await page.locator('#mega-partner a.mega__link[href$="partner-with-us/governments/"] .mega__desc').textContent())).toBe(BLURB);
-    expect(compact(await page.locator('#mega-partner .mega__feature-text').textContent())).toBe(BLURB);
-    expect(compact(await page.locator('#router a.cat[href$="partner-with-us/governments/"] .cat__text').textContent())).toBe(BLURB.replace(/\.$/, ''));
+    // WP166-A (marketing review R7-08, R1-04): the featured panel adds the hub's own title for the route, and Home's router card states the Governments H1, so neither repeats the menu line beside it
+    expect(compact(await page.locator('#mega-partner .mega__feature-text').textContent())).toBe('Turn existing labs into a workforce pipeline.');
+    expect(compact(await page.locator('#router a.cat[href$="partner-with-us/governments/"] .cat__text').textContent())).toBe('Build a national digital workforce through graduates and digital labs');
     await open(page, 'partner-with-us/');
     // the hub's route cards are written as "For <who>: <what the route offers>." (src/pages/partner-with-us/index.astro; they do not read nav.ts)
     expect(compact(await page.locator('main a.cat[href$="partner-with-us/governments/"] .cat__text').first().textContent())).toBe('For ministries and public agencies: curriculum, trainer training and phased delivery.');
@@ -410,7 +414,7 @@ test.describe('The Governments blurb and the 2030 aim (items 17 and 18)', () => 
     await page.setViewportSize(DESKTOP);
     await open(page, '');
     expect(compact(await page.locator('#mega-programs a.mega__link[href$="programs/youthwide/"] .mega__desc').textContent())).toBe(MENU_LINE);
-    expect(compact(await page.locator('#mega-programs .mega__feature-text').textContent())).toBe(MENU_LINE);
+    expect(compact(await page.locator('#mega-programs .mega__feature-text').textContent())).toBe(PANEL_LINE);
     await expect(page.locator('#results .hs__program')).toHaveCount(0);
     await open(page, 'programs/youthwide/');
     expect(compact(await page.locator('#program-glance .pg__row').first().textContent())).toContain('YouthWIDE aims to train 1 million educated youth (Higher Secondary Certificate or above) for digital employment by 2030, in Bangladesh and similar countries in South Asia and the Middle East and North Africa, depending on government and donor commitments.');
@@ -478,7 +482,8 @@ test.describe('Home: the low-risk band, the FAQ trial answer, the hero line, the
     await expect(cta.locator('.btn--primary, .btn--inverse')).toHaveCount(1);
     expect(await texts(page, '#cta .cta-band__route')).toHaveLength(2);
     const order = await page.evaluate(() => Array.from(document.querySelectorAll('[data-cmf]')).map((el) => el.getAttribute('data-cmf')));
-    expect(order.slice(order.indexOf('C11')), 'the offer, the closing call to action, the next steps').toEqual(['C11', 'C13', 'C14']);
+    // WP166-A (marketing review R1-08): the questions (C9) follow the offer they defend, then the closing call to action and the next steps
+    expect(order.slice(order.indexOf('C11')), 'the offer, the questions, the closing call to action, the next steps').toEqual(['C11', 'C9', 'C13', 'C14']);
     const adjacent = await page.evaluate(() => {
       const bands = Array.from(document.querySelectorAll('main section.band')).filter((b) => !b.parentElement?.closest('section.band'));
       const dark = bands.map((b) => /\bband--(klein|deep-ink)\b/.test(b.className));
@@ -500,15 +505,17 @@ test.describe('Home: the low-risk band, the FAQ trial answer, the hero line, the
     expect((await faqJsonLd(page)).find((q) => q.name === 'Does the Trial Apply to Your Program?')?.text).toBe(answer);
   });
 
+  // WP166-A (marketing review R1-03, R1-10): the lead names the buyer and the reporting, still with ID-01's group in full; the H1 ends "— and Show Who Starts Earning"
   test('the hero line names the underemployed, as ID-01 does; the H1 is unchanged', async ({ page }) => {
     await open(page, '');
-    await expect(page.locator('.hh__lead')).toHaveText('We help educated, unemployed and underemployed youth reach paid digital work through training, mentoring and placement support.');
-    await expect(page.locator('#hero h1')).toHaveText('Turn Youth Unemployment into a Digital Workforce — with Evidence');
+    await expect(page.locator('.hh__lead')).toHaveText('We help funders and governments move educated, unemployed and underemployed youth into paid digital work, with monthly reports on their progress.');
+    await expect(page.locator('#hero h1')).toHaveText('Turn Youth Unemployment into a Digital Workforce — and Show Who Starts Earning');
     expect(fact('ID-01').text).toContain('educated, unemployed and underemployed youth');
   });
 
   // WP50 (cycle-25 review): CodersTrust’s WSDFM program is named in the slide's eyebrow ("Randomized Trial of CodersTrust’s WSDFM Program") and the lead; the heading is short again (tests/wp50.spec.ts)
-  test('slide 1 names CodersTrust’s WSDFM program, in the eyebrow above its heading and in its lead; the >4× tile stays', async ({ page }) => {
+  // WP166-A (marketing review R1-02, R1-06): the >4× comparison moved to the hero's trial card; the slide's callout is the peer-reviewed publication
+  test('slide 1 names CodersTrust’s WSDFM program, in the eyebrow above its heading and in its lead; its callout is the peer-reviewed publication (the >4× tile until WP166-A)', async ({ page }) => {
     await open(page, '');
     const first = slide(page, 1);
     const title = 'Women Offered a Place Earned an Estimated 41% More per Month';
@@ -517,20 +524,21 @@ test.describe('Home: the low-risk band, the FAQ trial answer, the hero line, the
     expect(await first.locator('h3').getAttribute('data-fact')).toBe('RC-01');
     await expect(first.locator('.hs__eyebrow')).toHaveText('Randomized Trial of CodersTrust’s WSDFM Program');
     expect(compact(await first.locator('.hs__lead').textContent())).toBe('In CodersTrust’s WSDFM program, women offered a place had an estimated 41% higher monthly income than the control group, about $27 more a month.'); // WP63 (cycle-35 review, GLM L4)
-    expect(compact(await first.locator('.hs__proof').textContent())).toContain('>4×');
+    expect(compact(await first.locator('.hs__proof').textContent())).toContain('Published in a peer-reviewed journal');
+    expect(compact(await first.locator('.hs__proof').textContent())).not.toContain('>4×');
   });
 
-  test('the third Imagine scenario is "Employers Hiring from Your Cohort"; "AI-Ready Talent" is no longer a Home heading', async ({ page }) => {
+  // WP166-A (marketing review R1-14, owner approval of 21 November 2026): the Imagine band is gone from Home (real learner stories follow the case studies), so its scenario checks are removed; "AI-Ready Talent" stays off Home
+  test('the Imagine band is gone (WP166-A); "AI-Ready Talent" is no longer a Home heading', async ({ page }) => {
     await open(page, '');
-    expect(await texts(page, '#future h3')).toEqual(['A First Foreign Client, Billed from Home', 'First Earnings, Not Just Certificates', 'Employers Hiring from Your Cohort']);
-    expect('Employers Hiring from Your Cohort').toBe(titleCase('Employers Hiring from Your Cohort'));
-    expect(await texts(page, '#future .card__text')).toContain('You see employers hire completers whose skills match current employer demand.');
+    await expect(page.locator('#future')).toHaveCount(0);
     expect(await mainText(page)).not.toContain('AI-Ready Talent');
   });
 
-  test('"Our Track Record" says CodersTrust "began training freelancers in Bangladesh"', async ({ page }) => {
+  // WP166-A (marketing review R1-05): the Track Record band opens with the signed-agreement sentence (SC-11); the launch story is About's, so Home no longer prints it (and never "began developing freelancers")
+  test('"Our Track Record" opens with the signed agreements (WP166-A; it said CodersTrust "began training freelancers in Bangladesh")', async ({ page }) => {
     await open(page, '');
-    expect(compact(await page.locator('#guide').textContent())).toContain('CodersTrust launched in 2014 in Copenhagen and began training freelancers in Bangladesh. Our first UNDP-supported pilot (2015) was in Dhaka’s Korail settlement.');
+    expect(compact(await page.locator('#guide').textContent())).toContain('CodersTrust has signed MOUs, agreements or contracts with 70+ organizations');
     expect(builtPages().filter((p) => p.route === '/' && p.html.includes('began developing freelancers')).map((p) => p.route)).toEqual([]);
   });
 });
@@ -630,7 +638,8 @@ test.describe('The Home router’s investor card states the route (item 33)', ()
   // WP50 (cycle-25 review, item 14): Home's card reads "Back the staged rollout of JobReady, CodersTrust’s digital education and employment platform." (tests/wp50.spec.ts); the partner hub's card is the one this test still holds
   // WP53 (owner decision 2026-10-16): the definition is "CodersTrust’s digital learning and earning platform" on both cards (tests/wp53.spec.ts)
   test('Home states the investor’s route ("Back ..."); the partner hub’s card already names its audience and is unchanged', async ({ page }) => {
-    const BACK = 'Back JobReady’s staged rollout';
+    // WP166-A (marketing review R1-04): "Back JobReady, CodersTrust’s digital learning and earning platform" (IN-04's definition), so Home defines JobReady where it first names it (it was "Back JobReady’s staged rollout")
+    const BACK = 'Back JobReady, CodersTrust’s digital learning and earning platform';
     await open(page, '');
     expect(compact(await page.locator('#router a.cat[href$="partner-with-us/investors/"] .cat__text').textContent())).toBe(BACK);
     await open(page, 'partner-with-us/');

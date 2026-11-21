@@ -308,7 +308,8 @@ test.describe('JobReady Platform: adaptive learning is said once (item 6)', () =
 test.describe('Contact: the third group is "Educate, Hire or Train" (item 7)', () => {
   test('the group headings, with the group holding the universities, employers and schools', async ({ page }) => {
     await open(page, 'contact/');
-    expect(await texts(page, '.ct-group h3')).toEqual(['Partner or Fund', 'Educate, Hire or Train', 'Study or Contact the Media']);
+    // WP166-A (marketing review R7-05): the last group is "Learners and Media" (it was "Study or Contact the Media")
+    expect(await texts(page, '.ct-group h3')).toEqual(['Partner or Fund', 'Educate, Hire or Train', 'Learners and Media']);
     for (const h of await texts(page, '.ct-group h3')) expect(h, h).toBe(titleCase(h));
     const group = page.locator('.ct-group', { has: page.getByRole('heading', { level: 3, name: 'Educate, Hire or Train' }) });
     expect(await group.locator('h4').evaluateAll((els) => els.map((e) => (e.textContent ?? '').replace(/\s+/g, ' ').trim()))).toEqual(['Universities and Colleges', 'Employers: Train Your Team', 'Employers: Hire Talent', 'Schools and Education Partners']);
@@ -336,21 +337,23 @@ test.describe('Our Model: one slogan for the one path, and who agrees the tracki
   });
 });
 
-test.describe('Home: the government slide is second (item 10)', () => {
-  // WP53 (owner decision 2026-10-16): the speed, reach and programs slides are gone (the survey slide carries the timing as one body line), so the carousel runs trial, government scale, survey, program results
-  test('the carousel runs trial, government scale, survey, program results; the government slide’s text and links are unchanged', async ({ page }) => {
+// WP166-A (marketing review R1-11, owner approval of 21 November 2026): the outcomes come first and the government slide closes the carousel (it was second since this WP42 item)
+test.describe('Home: the government slide is second (item 10; last since WP166-A)', () => {
+  // WP53 (owner decision 2026-10-16): the speed, reach and programs slides are gone (the survey slide carries the timing as one body line), so the carousel ran trial, government scale, survey, program results
+  test('the carousel runs trial, survey, program results, government scale (WP166-A); the government slide’s text and links are unchanged', async ({ page }) => {
     await open(page, '');
     expect(await texts(page, '#results [data-hs-slide] h3')).toEqual([
       // WP48 (cycle-23 review): the heading named CodersTrust’s WSDFM program; WP50 (cycle-25 review): the eyebrow does ("Randomized Trial of CodersTrust’s WSDFM Program"), and the heading is short again
       'Women Offered a Place Earned an Estimated 41% More per Month',
-      'Six Government Contracts and a National University Partnership',
       'Surveyed Completers Report Higher Income',
       'Results by Program',
+      'Six Government Contracts and a National University Partnership',
     ]);
     const slides = page.locator('#results [data-hs-slide]');
-    await expect(slides.nth(1)).toHaveAttribute('aria-label', '2 of 4: Six Government Contracts and a National University Partnership');
-    await expect(slides.nth(3)).toHaveAttribute('aria-label', /^4 of 4: Results by Program/);
-    const gov = slides.nth(1);
+    // WP166-A (marketing review R1-11): the slides run evidence, survey outcomes, program results, government (old slide 2 is now 4, 3 is 2, 4 is 3)
+    await expect(slides.nth(3)).toHaveAttribute('aria-label', '4 of 4: Six Government Contracts and a National University Partnership');
+    await expect(slides.nth(2)).toHaveAttribute('aria-label', /^3 of 4: Results by Program/);
+    const gov = slides.nth(3);
     await expect(gov.locator('.hs__eyebrow')).toHaveText('Government and University Partners');
     // WP46 (cycle-22 review): the note says who trained whom, and the last sentence names its subject ("CodersTrust is the official training partner of ...")
     // WP48 (cycle-23 review): the body was two sentences with the clause "contract scope, not a count of completers"; WP57 (cycle-29 review, Grok R2): the clause is the note's WP35 wording, which names Her Power's national program (25,125 women trained; CodersTrust trained 2,500 directly)
@@ -371,7 +374,8 @@ test.describe('Home: the government slide is second (item 10)', () => {
       const track = await page.locator('[data-hs-track]').evaluate((e) => Math.round((e as HTMLElement).clientHeight));
       const scroll = await page.locator('#results [data-hs-slide]').evaluateAll((els) => els.map((e) => Math.round((e as HTMLElement).scrollHeight)));
       for (const h of scroll) expect(h, `${vp.width}px`).toBeLessThanOrEqual(track + 1);
-      await page.locator('[data-hs-dot]').nth(1).click();
+      // WP166-A (marketing review R1-11): the slides run evidence, survey outcomes, program results, government (old slide 2 is now 4, 3 is 2, 4 is 3)
+      await page.locator('[data-hs-dot]').nth(3).click();
       await expect(page.locator('#results [data-hs-slide].is-active h3')).toHaveText('Six Government Contracts and a National University Partnership');
       expect(await noOverflow(page), `${vp.width}px`).toBe(true);
     }
@@ -401,29 +405,8 @@ test.describe('Development Partners: the >4x comparison is the +10.3 tile’s no
   });
 });
 
-test.describe('Home: the comparison table is one style (item 13)', () => {
-  test('every cell is a fragment with no trailing period, in sentence case, in CodersTrust’s column and the comparison column alike', async ({ page }) => {
-    await open(page, '');
-    const rows = await page.locator('#compare tbody tr').evaluateAll((trs) => trs.map((tr) => Array.from(tr.querySelectorAll('th, td')).map((c) => (c.textContent ?? '').replace(/\s+/g, ' ').trim())));
-    expect(rows).toEqual([
-      ['Mentoring', 'Three months of milestone-based mentoring', 'Varies; often self-directed'],
-      ['Work Entry', 'Placement support into local, remote and global work', 'Work-entry support depends on the provider and package'],
-      ['Outcome Tracking', 'Included for every supported cohort: monthly reports and follow-up surveys at 3, 6 and 12 months', // WP161-A (A-27)
-       'Reporting emphasis varies; check whether employment outcomes are included'],
-      ['Independent Evidence', 'One randomized trial of CodersTrust’s WSDFM program (200 hours, women in Dhaka); independent evaluation of your cohort welcome', 'Varies'],
-    ]);
-    for (const [, ...cells] of rows) {
-      for (const cell of cells) {
-        expect(cell, `"${cell}" has no trailing period`).not.toMatch(/\.$/);
-        expect(cell, `"${cell}" starts with a capital letter`).toMatch(/^[A-Z]/);
-        // sentence case: no run of three capitalized words (Title Case)
-        expect(cell, `"${cell}" is not Title Case`).not.toMatch(/\b[A-Z][a-z]+ [A-Z][a-z]+ [A-Z][a-z]+\b/);
-      }
-    }
-    // the row and column headings stay Title Case (they are headings)
-    for (const h of await texts(page, '#compare th')) expect(h, h).toBe(titleCase(h));
-  });
-});
+// WP42 (cycle-19 review, item 13) pinned the style of Home's comparison table (every cell a fragment in sentence case, no trailing period). WP166-A (marketing review R1-15): the table
+// is gone from Home (tests/wp31.spec.ts) and no other page prints one, so the test is deleted with it.
 
 test.describe('Impact: the jump list names the goals heading in full (item 15)', () => {
   // WP57 (cycle-29 review, Kimi K3, item K1): the closing band ("Discuss the Evidence for Your Program", #cta) is now the last entry, so the goals entry is the one before it (tests/wp57.spec.ts)
@@ -451,6 +434,6 @@ test.describe('the facts gate carries the two WP42 allowances', () => {
     const out = execFileSync(process.execPath, ['--experimental-strip-types', 'scripts/check-facts.mjs'], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] });
     expect(out).toContain('check-facts: OK');
     expect(out).toMatch(/\[PLAIN-LINE\] on 1 page\(s\)/);
-    expect(out).toMatch(/\[POSITION\] opens C6 on 11 page\(s\)/);
+    expect(out).toMatch(/\[POSITION\] opens C6 on 10 page\(s\)/); // WP166-A (marketing review R1-03): Home's "Our Approach" statement is gone, so Home is exempt and ten pages declare one
   });
 });

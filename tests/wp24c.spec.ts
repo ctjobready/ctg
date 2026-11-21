@@ -212,27 +212,30 @@ test.describe('About, Governance, Recognition, Careers and Contact', () => {
 
   test('Recognition: appointments and honors, one primary hero button, a University Partnership eyebrow and a founder note (one sentence since WP161-B)', async ({ page }) => {
     await open(page, 'about/recognition/');
-    await expect(page.locator('main .hero')).toContainText('has received appointments and honors');
+    // WP166-A (marketing review R1-39, R7-24): the lead names the listing and what else the page holds ("founder honors, ..."), and the button starts with a verb ("Send a Media Inquiry")
+    await expect(page.locator('main .hero')).toContainText('Also on this page: founder honors');
     await expect(page.locator('main .hero .btn--primary')).toHaveCount(1);
-    await expect(page.locator('main .hero .btn--primary')).toContainText('Media Inquiries');
+    await expect(page.locator('main .hero .btn--primary')).toContainText('Send a Media Inquiry');
     await expect(page.locator('#endorsements .eyebrow').first()).toHaveText('University Partnership');
     await expect(page.locator('#coverage')).toContainText('as a co-founder of CodersTrust and of Skype; he was an early Skype investor, and CodersTrust’s founders are'); // WP161-B (Fable review A-11)
   });
 
   test('Careers: the hiring status sits in the hero above the button, and the equal-opportunity heading is "We Judge People on Merit"', async ({ page }) => {
     await open(page, 'careers/');
-    await expect(page.locator('main .hero')).toContainText('not hiring for specific roles right now');
+    // WP166-A (marketing review R7-25): "No open roles right now." (it was "We’re not hiring for specific roles right now, ...")
+    await expect(page.locator('main .hero')).toContainText('No open roles right now.');
     await expect(page.getByRole('heading', { level: 2, name: 'We Judge People on Merit' })).toBeVisible();
     await expect(page.locator('#eoe .cr-eoe')).toContainText('we judge people on their work and merit');
   });
 
-  test('Contact: no hero button, due-diligence under Partner or Fund, a Study or Contact the Media group and an NU applicant route', async ({ page }) => {
+  // WP166-A (marketing review R7-05): the third group is "Learners and Media" (it was "Study or Contact the Media")
+  test('Contact: no hero button, due-diligence under Partner or Fund, a Learners and Media group and an NU applicant route', async ({ page }) => {
     await open(page, 'contact/');
     await expect(page.locator('main .hero .btn')).toHaveCount(0);
     const group = (name: string) => page.locator('.ct-group', { has: page.getByRole('heading', { level: 3, name }) });
     await expect(group('Partner or Fund').getByRole('heading', { level: 4, name: 'Due-Diligence Teams' })).toHaveCount(1);
-    await expect(page.getByRole('heading', { level: 3, name: 'Study or Contact the Media' })).toBeVisible();
-    await expect(group('Study or Contact the Media').getByRole('heading', { level: 4, name: 'NU Post Graduate Diploma Applicants' })).toHaveCount(1);
+    await expect(page.getByRole('heading', { level: 3, name: 'Learners and Media' })).toBeVisible();
+    await expect(group('Learners and Media').getByRole('heading', { level: 4, name: 'NU Post Graduate Diploma Applicants' })).toHaveCount(1);
     // WP42 (cycle-19 review): the group is "Educate, Hire or Train" (it also holds the universities and the schools)
     await expect(group('Educate, Hire or Train')).toContainText('Connect with job-ready digital talent through the placement team.');
     await expect(page.locator('#next')).toContainText('Public procurement follows the agency’s own timeline.');
@@ -243,8 +246,11 @@ test.describe('About, Governance, Recognition, Careers and Contact', () => {
     const text = await page.locator('main').innerText();
     expect(text).not.toMatch(/Co-Founder & Chairman|Project & Training|Finance & Accounts/);
     expect(text).toContain('Co-Founder and Chairman');
-    expect(text).toContain('Technical and Vocational Education and Training (TVET)');
+    // WP166-A (marketing review R1-31): an executive's card shows one credential in place of the skill tags, so the spelled-out TVET tag is on Asad Zaman's profile, not the Team page
+    expect(text).toContain('20+ years of experience, including 14 years at UNDP');
     await expect(page.getByRole('link', { name: 'Explore Careers' })).toHaveCount(1);
+    await open(page, 'about/team/asad-zaman/');
+    expect(await page.locator('main').innerText()).toContain('Technical and Vocational Education and Training (TVET)');
   });
 });
 

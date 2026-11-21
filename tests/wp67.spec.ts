@@ -21,7 +21,7 @@ import { listPages } from './support/pages';
 const compact = (t: string | null | undefined) => (t ?? '').replace(/\s+/g, ' ').trim();
 const texts = (page: Page, selector: string) => page.locator(selector).evaluateAll((els) => els.map((e) => (e.textContent ?? '').replace(/\s+/g, ' ').trim()));
 const noOverflow = (page: Page) => page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth);
-const slide = (page: Page, n: number) => page.locator('[data-hs-slide]').nth(n - 1);
+const slide = (page: Page, n: number) => page.locator('[data-hs-slide]').nth([0, 3, 1, 2][n - 1]); // WP166-A (R1-11): n is the slide's position before the reorder (1 trial, 2 government, 3 survey, 4 program results); the carousel now runs trial, survey, program results, government
 const sentences = (t: string) => t.split(/(?<=[.!?])\s+(?=[A-Z“])/).filter(Boolean);
 
 /** Every built page (archived news posts included), with its HTML. */
@@ -195,9 +195,17 @@ test.describe('Item 4: "MoU" is "MOU" wherever it is printed', () => {
     expect(fact('PA-05').text).not.toContain('MoU');
   });
 
-  test('Home prints "a memorandum of understanding (MOU) partner since 2024"', async ({ page }) => {
+  // WP166-A (marketing review R1-19): Home's University Partners item, which printed PA-05's sentence, is gone (the universities are in the logo wall); Home names the MOU in its world-strip tile (TL-06),
+  // and JobReady@Campus and Investors still print PA-05's sentence
+  test('Home prints "MOU with The City College of New York" (WP166-A; it printed "a memorandum of understanding (MOU) partner since 2024", which JobReady@Campus and Investors keep)', async ({ page }) => {
     await open(page, HOME);
+    const text = compact(await page.locator('main').textContent());
+    expect(text).toContain('MOU with The City College of New York');
+    expect(text).not.toMatch(/MoU/);
+    await open(page, 'programs/jobready-campus/');
     expect(compact(await page.locator('main').textContent())).toContain('The City College of New York (CCNY), a memorandum of understanding (MOU) partner since 2024');
+    await open(page, 'partner-with-us/investors/');
+    expect(compact(await page.locator('main').textContent())).toContain('The City College of New York, a memorandum of understanding (MOU) partner since 2024');
   });
 
   test('the news topic is "Partnerships and MOUs" on the News page, with the page’s lead and its meta description', async ({ page }) => {

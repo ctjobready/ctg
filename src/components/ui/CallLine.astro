@@ -1,0 +1,28 @@
+---
+/**
+ * WP166-A (owner approval of 21 November 2026, item 4: "add the phone number as a second route beside the main CTA"): one short line with the registered New York number
+ * (CONTACT in src/lib/site.ts, the number the footer, the Contact page and the Accessibility page print), as a tel: link. No scheduling link (owner).
+ * It sits beside the main call to action on the Contact page and on the partner and audience pages (/partner-with-us/ and its routes): CTABand and DualCtaBand draw it there.
+ * The number is shown in its non-breaking form (html-validate tel-non-breaking); the href stays plain E.164.
+ */
+import { CONTACT } from '../../lib/site';
+
+interface Props {
+  class?: string;
+}
+const { class: className } = Astro.props;
+---
+
+<p class:list={['call-line', className]} data-call-line>Prefer to call? <a class="link" href={CONTACT.phoneHref}>{CONTACT.phone}</a></p>
+
+<style>
+  .call-line {
+    margin: 0;
+    font-size: var(--fs-body-base);
+    color: var(--ctx-text);
+  }
+  .call-line a {
+    font-weight: var(--fw-medium);
+    white-space: nowrap;
+  }
+</style>

@@ -73,10 +73,11 @@ test('Polish 5: Universities "The National University Partnership" has two cards
   for (const alt of ['National University, Bangladesh', 'University for Peace (UPEACE)', 'The City College of New York (CCNY), MOU partner since 2024']) expect(raw, alt).toContain(`alt="${alt}"`);
 });
 
-test('Polish 6: Home’s comparison table names its first column "What It Includes", not "Approach"', () => {
-  const b = band('index.html', 'compare');
-  const heads = [...b.matchAll(/<th\b[^>]*scope="col"[^>]*>([\s\S]*?)<\/th>/g)].map((m) => visible(m[1]));
-  expect(heads).toEqual(['What It Includes', 'CodersTrust Supported Cohort', 'Self-Paced Course Platforms']);
+// WP166-A (marketing review R1-15, owner approval of 21 November 2026): the comparison band this test pinned is gone from Home (its column said "Varies" in three of four rows, and each CodersTrust cell is stated
+// elsewhere on the page), so the column-name assertion is removed with it; no page carries a "Approach" column head instead.
+test('Polish 6: Home no longer carries the comparison table (WP166-A); no table on Home has an "Approach" column', () => {
+  expect(/\bid="compare"/.test(html('index.html'))).toBe(false);
+  expect(html('index.html')).not.toMatch(/<th\b[^>]*scope="col"[^>]*>\s*Approach\s*<\/th>/);
 });
 
 test('Owner rule 2026-10-31: the changed pages that carry their own date are on or after 2026-10-31 (Home, Local Partners and Universities are build-date pages)', () => {

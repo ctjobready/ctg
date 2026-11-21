@@ -190,8 +190,9 @@ test.describe('A-05 and A-06 Outcomes 2026: the Dataset description and the Down
 
 test.describe('A-07 Investors WebPage.name has no site-name suffix', () => {
   test('Investors: "Investors"; the hub keeps its CollectionPage name', () => {
-    expect(nodeOf('partner-with-us/investors/index.html', 'WebPage').name).toBe('Investors');
-    expect(nodeOf(HUB, 'CollectionPage').name).toBe('Partner with Us | CodersTrust');
+    // WP166-A (marketing review R7-04, R7-19): both titles carry the page's own clause; the Investors name still has no site-name suffix, and the hub's keeps its own
+    expect(nodeOf('partner-with-us/investors/index.html', 'WebPage').name).toBe('Investors: Back JobReady’s Staged Rollout');
+    expect(nodeOf(HUB, 'CollectionPage').name).toBe('Partner with Us: Turn Training into Paid Work | CodersTrust');
   });
 });
 
@@ -291,9 +292,9 @@ test.describe('A-26 and A-29 Governments and Foundations cards', () => {
 });
 
 test.describe('A-27 the reporting band applies to every supported cohort', () => {
-  test('the hub due-diligence card and the Home comparison row', () => {
+  // WP166-A (marketing review R1-15): Home's comparison band, and with it this row, is gone; Home still never says "Included for every cohort"
+  test('the hub due-diligence card (the Home comparison row is gone since WP166-A)', () => {
     expect(main(HUB)).toContain('Included for every supported cohort: follow-up surveys at 3, 6 and 12 months and monthly reports.');
-    expect(main('index.html')).toContain('Included for every supported cohort: monthly reports and follow-up surveys at 3, 6 and 12 months');
     expect(main(HUB)).not.toContain('Included for every cohort');
     expect(main('index.html')).not.toContain('Included for every cohort');
   });
@@ -325,12 +326,12 @@ test.describe('A-31 prefilled emails ask for the fields the pages name', () => {
   };
   test('ministry briefing (Governments)', () => {
     const body = bodyOf(GOVERNMENTS, /^Briefing request/);
-    expect(body).toContain('Ministry or agency: \r\nCountry: \r\nPriority groups and locations: \r\nTarget number of trainees: \r\nContact person: \r\nTwo suitable times for a briefing: ');
+    expect(body).toContain('Ministry or agency: \r\nCountry: \r\nPriority groups and locations: \r\nTarget number of trainees: \r\nContact person: \r\nTwo suitable times for a briefing (with your time zone): '); // WP166-A (R7-30): the times line asks for the time zone
     expect(body).not.toContain('Program/target');
   });
   test('JobReady@Campus (Universities)', () => {
     const body = bodyOf('partner-with-us/universities/index.html', /^JobReady@Campus inquiry/);
-    expect(body).toContain('Institution: \r\nCountry: \r\nStudents you have in mind (approximate number): \r\nPrograms of interest: \r\nTwo suitable times for a discovery session: ');
+    expect(body).toContain('Institution: \r\nYour name and role: \r\nCountry: \r\nStudents you have in mind (approximate number): \r\nPrograms of interest: \r\nTwo suitable times for a discovery session (with your time zone): '); // WP166-A (R7-30): a line for the sender after the first field, and the time zone
     expect(body).not.toContain('Number of students');
   });
   test('due diligence (hub)', () => {

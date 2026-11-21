@@ -237,7 +237,8 @@ test.describe('external statistics name their publisher and year inside the sent
 test.describe('L3, Home: slide 4 reads "Results from the records of four programs." (WP57b: "Four delivered programs, with results from each program’s records.")', () => {
   test('the lead is the shorter line, and the four program lines under it are unchanged', async ({ page }) => {
     await open(page, HOME);
-    const slide = page.locator('#results [data-hs-slide]').nth(3);
+    // WP166-A (marketing review R1-11): the slides run evidence, survey outcomes, program results, government (old slide 2 is now 4, 3 is 2, 4 is 3)
+    const slide = page.locator('#results [data-hs-slide]').nth(2);
     await expect(slide.locator('.hs__lead')).toHaveText('Results from the records of four programs.');
     await expect(slide.locator('.hs__lines li')).toHaveCount(4);
     expect(compact(await slide.textContent())).not.toContain('each with its partner');

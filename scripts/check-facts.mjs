@@ -294,19 +294,25 @@ function plainLineProblems(markup, text, stat, required) {
 // strength: the card's numbers are held to the register, as the [PLAIN-LINE]'s are). The card (<li class="hh__card" data-fact="RC-02">) carries the eyebrow "Randomized Trial", RC-02's value ("+10.3") with the unit
 // "percentage points", and the plain-language caption "For every 100 women offered a place in CodersTrust’s 200-hour WSDFM program, about 10 more were in work than among 100 comparable women in the control group." (WP109, Opus Low run 1: the Trial page's own wording; before it, "10.3 more ... than in the control group"). The caption's numbers
 // are re-derived here from RC-02 (its rounded whole number, "about 10", as the [PLAIN-LINE] keeps it; the card's figure stays "+10.3") and RC-07 ("... was 200 hours"), independently of src/data/heroSlides.ts, so a drift in either place fails the build.
+// WP166-A (marketing review R1-02, owner approval of 21 November 2026): the eyebrow is "Independent Randomized Trial", and the caption's second sentence states the nine-trial benchmark, "That is more than four times the
+// 2.3-point average across nine vocational-training trials.", re-derived here from RC-06a's glance label (independently of src/data/heroSlides.ts) and carried by a span tagged data-fact="RC-06a" inside the caption.
 const PROOF_CARD_PAGES = ['/'];
-const proofCardWanted = (stat, rc07Text) => {
+const proofCardBenchmark = (rc06aGlance) => {
+  const avg = /more than four times the ([\d.]+-point average across nine vocational-training trials)$/.exec(rc06aGlance ?? '')?.[1];
+  return avg ? `That is more than four times the ${avg}.` : '(RC-06a’s glance label no longer ends "more than four times the N-point average across nine vocational-training trials")';
+};
+const proofCardWanted = (stat, rc07Text, rc06aGlance = facts['RC-06a']?.stat?.glance?.label) => {
   const hours = /was (\d+) hours/.exec(rc07Text)?.[1];
   const figure = stat.numeric.toFixed(stat.decimals ?? 0);
   const value = `${stat.prefix ?? ''}${figure}`;
   return {
-    eyebrow: 'Randomized Trial',
+    eyebrow: 'Independent Randomized Trial',
     value,
     unit: 'percentage points',
-    caption: `For every 100 women offered a place in CodersTrust’s ${hours}-hour WSDFM program, about ${Math.round(stat.numeric)} more were in work than among 100 comparable women in the control group.`,
+    caption: `For every 100 women offered a place in CodersTrust’s ${hours}-hour WSDFM program, about ${Math.round(stat.numeric)} more were in work than among 100 comparable women in the control group. ${proofCardBenchmark(rc06aGlance)}`,
   };
 };
-/** Problems with the hero's trial card on one page: the card exists and its figure, unit and plain-language caption are RC-02's and RC-07's. */
+/** Problems with the hero's trial card on one page: the card exists and its figure, unit and plain-language caption are RC-02's and RC-07's, with RC-06a's benchmark (tagged) as the caption's second sentence. */
 function proofCardProblems(markup, stat, rc07Text) {
   const card = /<li\b[^>]*\bclass="hh__card"[^>]*\bdata-fact="RC-02"[^>]*>([\s\S]*?)<\/li>/.exec(markup);
   if (!card) return ['the hero\'s Randomized Trial card (<li class="hh__card" data-fact="RC-02">) is missing, so the plain-language trial reading has nowhere to sit'];
@@ -321,6 +327,7 @@ function proofCardProblems(markup, stat, rc07Text) {
   if (got.value !== want.value) out.push(`[PROOF-CARD] the figure reads "${got.value}" but RC-02 is "${want.value}"`);
   if (got.unit !== want.unit) out.push(`[PROOF-CARD] the unit reads "${got.unit}", expected "${want.unit}"`);
   if (got.caption !== want.caption) out.push(`[PROOF-CARD] the plain-language caption reads "${got.caption}", expected the register-derived "${want.caption}"`);
+  else if (!/<p\b[^>]*\bclass="hh__figlabel"[^>]*>[\s\S]*?<span\b[^>]*\bdata-fact="RC-06a"[^>]*>[\s\S]*?<\/p>/.test(card[1])) out.push('[PROOF-CARD] the caption\'s benchmark sentence is not tagged data-fact="RC-06a" (a <span> inside the caption)');
   return out;
 }
 
@@ -387,7 +394,7 @@ function sessionAgendaProblems(markup, wanted, bandId = 'cta') {
 // "Opens" means nothing precedes the statement in the band except its own eyebrow and H2 (the band's title): no lead line, no model heading as
 // body text, no diagram, no list. The [UNLIKE] sentence is declared here independently of src/data/copy.ts, so a change to it must be made twice on purpose.
 const POSITION_PAGES = [
-  '/',
+  // '/' is exempt since WP166-A: see POSITION_EXEMPT_PAGES below.
   // '/partner-with-us/investors/' is exempt: see POSITION_EXEMPT_PAGES below (WP39).
   '/partner-with-us/governments/',
   '/partner-with-us/development-partners/',
@@ -403,7 +410,9 @@ const POSITION_PAGES = [
 // WP39 (cycle-16 review): the one page that carries no positioning statement. Investors' "Our Approach" restated the hero lead and returned to cohort language on a page about backing the platform ("How JobReady Builds on
 // Delivery", lower on the page, said how the platform relates to delivery once; WP43 removed that band, and "What JobReady Does" says it), so the statement was deleted there. The page is exempt from [POSITION] and from nothing else: every page in POSITION_PAGES keeps the rule unchanged,
 // and the self-tests below keep the exemption to this one page (it must not also be listed, and it must be a real page of the site, so a rename cannot leave a stale entry).
-const POSITION_EXEMPT_PAGES = ['/partner-with-us/investors/'];
+// WP166-A (marketing review R1-03, owner approval of 21 November 2026): Home carries no positioning statement either. Its "Our Approach" sentence was the third near-identical statement of what CodersTrust does (the hero lead and the
+// "What Is CodersTrust?" band say it), so it is gone and the mechanism band opens with its four cards; Home is exempt from [POSITION] and from nothing else.
+const POSITION_EXEMPT_PAGES = ['/partner-with-us/investors/', '/'];
 // SuperKids' "unlike ... we ..." clause waits for CodersTrust's approval (doc 06 P14), so its statement carries no comparison clause (WP42: it says what the program offers and that the two agreements set targets, not delivered reach).
 const POSITION_WITHOUT_UNLIKE = ['/programs/superkids/'];
 const UNLIKE_SENTENCE =
@@ -429,10 +438,8 @@ const POSITION_EMPLOYER_CLOSING = {
 // these nine). Declared here independently of src/data/copy.ts (POSITIONING.home, POSITIONING.youthwide, POSITIONING.localPartners, POSITIONING.developmentPartners, POSITIONING.governments, POSITIONING.campus, POSITIONING.foundations, POSITIONING.universities, POSITIONING.work), so a change to any has to be made
 // twice on purpose; negative self-tests below.
 const POSITION_WHOLE_STATEMENT = {
-  // WP60 (cycle-32 review, Gemini GM7; raised in nearly every cycle): Home's "Our Approach" is one sentence that keeps the audience ("... for educated, unemployed youth, ..."), with the monthly reports scoped as every statement on the site scopes them; it replaces the audience sentence
-  // ("For funders who need educated, unemployed youth in paid digital work, CodersTrust offers an integrated training-to-earnings model.") and the closing sentence that followed it.
-  // WP63 (cycle-35 review, Grok R1): the audience is "educated, unemployed and underemployed youth", the group ID-01 and the hero's value proposition name; POSITIONING.home in src/data/copy.ts changed with it.
-  '/': 'CodersTrust connects training, mentoring and placement support for educated, unemployed and underemployed youth, with monthly reports on progress toward paid work.',
+  // WP60 (cycle-32 review, Gemini GM7; raised in nearly every cycle): Home's "Our Approach" was one sentence that kept the audience; WP63 named the group as ID-01 does. WP166-A (marketing review R1-03): Home carries no statement any more
+  // (POSITION_EXEMPT_PAGES), so its entry is gone and eight pages are listed; the self-tests below keep its last wording (RETIRED_HOME_STATEMENT) as a fixture, so a page still cannot carry another page's statement.
   // WP93 (triage A4): the YouthWIDE statement carried the scope guard "as agreed in the program scope", as every Approach statement did; WP141 (owner answer 2026-11-01): the guard is stated once per page now (PROGRAM_SCOPE_STATEMENT), so the statements are declared without it.
   // WP155 (Opus Max run 2, kit 122, Polish 1): without "in existing labs and colleges", which the band's "How We Reach Them" card says (with who teaches); src/data/copy.ts changed with it. Development Partners (Polish 5) and Universities (Polish 4) changed the same way below.
   '/programs/youthwide/': 'YouthWIDE combines training, mentoring and placement support. Partners receive monthly reports on progress toward paid work.',
@@ -485,7 +492,9 @@ function positionProblems(markup, { unlike = true, closing = UNLIKE_SENTENCE, wh
 const PAIN_PAGES = ['/', '/partner-with-us/local-partners/', '/programs/youthwide/'];
 // WP57 (cycle-29 review, GPT-6.1 Sol G2): YouthWIDE's three-card C8 band restated its glance and its delivery-model band, so the page no longer carries one. Like TRIAL_SCOPE_OPTIONAL, this is one page's allowance: it still states its three
 // ranked pains in C2, and any C8 band it shows again is held to the one-card-per-pain rule. Home and the local-partners page must still carry the band.
-const PAIN_C8_OPTIONAL = new Set(['/programs/youthwide/']);
+// WP166-A (marketing review R1-17, owner approval of 21 November 2026: Home consolidated to twelve bands): Home's "What a Supported Youth Cohort Includes" band re-explained the mechanism band, so it is gone (its training-hours sentence is the
+// mechanism's "What We Deliver" card); Home still states its three ranked pains in C2.
+const PAIN_C8_OPTIONAL = new Set(['/programs/youthwide/', '/']);
 const PAIN_IDS = ['P1', 'P2', 'P3'];
 /** The markup of the band whose <section> has this id, up to the next band (a <section class="band …">; a section nested in the band, such as a route card, is not one). */
 function bandMarkup(markup, id) {
@@ -978,8 +987,11 @@ function surveyEditionProblems(factsById, rows, pins = { facts: SURVEY_FACTS, ro
   // [PROOF-CARD]: Home's hero trial card carries RC-02's figure and the plain-language caption derived from RC-02 and RC-07 (WP35)
   const rc07 = facts['RC-07'].text;
   const cardWant = proofCardWanted(rc02, rc07);
-  if (cardWant.caption !== 'For every 100 women offered a place in CodersTrust’s 200-hour WSDFM program, about 10 more were in work than among 100 comparable women in the control group.') problems.push(`self-test: RC-02 and RC-07 no longer yield the hero card caption (derived: "${cardWant.caption}"); the card wording needs a decision`);
-  const heroCard = ({ eyebrow = cardWant.eyebrow, value = cardWant.value, unit = cardWant.unit, caption = cardWant.caption, fact = 'RC-02' } = {}) =>
+  if (cardWant.caption !== 'For every 100 women offered a place in CodersTrust’s 200-hour WSDFM program, about 10 more were in work than among 100 comparable women in the control group. That is more than four times the 2.3-point average across nine vocational-training trials.') problems.push(`self-test: RC-02, RC-07 and RC-06a no longer yield the hero card caption (derived: "${cardWant.caption}"); the card wording needs a decision`);
+  // WP166-A: the caption's second sentence (the RC-06a benchmark) sits in its own tagged span, as HomeHero renders it
+  const benchmarkAt = cardWant.caption.indexOf(' That is ');
+  const taggedCaption = `${cardWant.caption.slice(0, benchmarkAt)} <span data-fact="RC-06a">${cardWant.caption.slice(benchmarkAt + 1)}</span>`;
+  const heroCard = ({ eyebrow = cardWant.eyebrow, value = cardWant.value, unit = cardWant.unit, caption = taggedCaption, fact = 'RC-02' } = {}) =>
     `<main><ul class="hh__cards" role="list"><li class="hh__card" data-fact="${fact}" data-astro-cid-x><p class="hh__eyebrow" data-astro-cid-x>${eyebrow}</p><div class="hh__fig"><p class="hh__figvalue"><span class="hh__num">${value}</span> <span class="hh__unit">${unit}</span></p><p class="hh__figlabel">${caption}</p></div></li><li class="hh__card" data-fact="OC-01"><p class="hh__eyebrow">Impact Survey 2026</p></li></ul></main>`;
   if (proofCardProblems(heroCard(), rc02, rc07).length) problems.push(`self-test: the [PROOF-CARD] check rejected the register-derived card: ${proofCardProblems(heroCard(), rc02, rc07).join('; ')}`);
   const cardBad = (why, markup, stat = rc02) => {
@@ -994,6 +1006,10 @@ function surveyEditionProblems(factsById, rows, pins = { facts: SURVEY_FACTS, ro
   cardBad('"100-hour" (RC-07 says 200 hours)', heroCard({ caption: cardWant.caption.replace('200-hour', '100-hour') }));
   cardBad('a caption without the WSDFM-program scope', heroCard({ caption: 'For every 100 women offered a place, 10.3 more were in work than in the control group.' }));
   cardBad('a changed eyebrow', heroCard({ eyebrow: 'Independent Evaluation' }));
+  cardBad('the WP166 eyebrow without "Independent"', heroCard({ eyebrow: 'Randomized Trial' }));
+  cardBad('a caption without the nine-trial benchmark (RC-06a)', heroCard({ caption: cardWant.caption.slice(0, benchmarkAt) }));
+  cardBad('the benchmark sentence without its RC-06a tag', heroCard({ caption: cardWant.caption }));
+  cardBad('a benchmark that is not RC-06a’s ("three times")', heroCard({ caption: taggedCaption.replace('four times', 'three times') }));
   if (proofCardProblems(heroCard(), { ...rc02, numeric: 10.6, value: '+10.6 pp' }, rc07).length !== 2) problems.push('self-test: the [PROOF-CARD] check did not notice that RC-02 changed (10.6 would give "+10.6" and "10.6 more")');
   // copy conventions: curly apostrophes, "pp" spelled out before it is used
   if (conventionProblems('CodersTrust’s WSDFM training; +10.3 pp percentage points more employment; In percentage points, employment rose +10.3 pp.').length) problems.push('self-test: the copy-convention check rejected correct copy');
@@ -1115,7 +1131,8 @@ function surveyEditionProblems(factsById, rows, pins = { facts: SURVEY_FACTS, ro
   // WP40: Local Partners declares its statement whole too, with the same guarantees, and (WP42) so do Development Partners and Governments, and (WP43) JobReady@Campus; the declarations stay at these five pages
   const wholeLp = POSITION_WHOLE_STATEMENT['/partner-with-us/local-partners/'];
   if (wholeLp !== 'Your organization mobilizes learners and hosts training. CodersTrust supports delivery, mentoring, placement and reporting.') problems.push('self-test: the Local Partners whole statement is no longer the WP40 wording');
-  if (Object.keys(POSITION_WHOLE_STATEMENT).sort().join(' ') !== '/ /partner-with-us/development-partners/ /partner-with-us/foundations/ /partner-with-us/governments/ /partner-with-us/local-partners/ /partner-with-us/universities/ /programs/jobready-campus/ /programs/jobready-work/ /programs/youthwide/') problems.push('self-test: exactly /programs/youthwide/, /partner-with-us/local-partners/ (WP36, WP40), /partner-with-us/development-partners/ and /partner-with-us/governments/ (WP42), /programs/jobready-campus/ (WP43), /partner-with-us/foundations/ and /partner-with-us/universities/ (WP44), Home, / (WP60) and /programs/jobready-work/ (WP61) declare a whole positioning statement and no other page');
+  // WP166-A: Home is no longer in the list (it carries no statement; POSITION_EXEMPT_PAGES)
+  if (Object.keys(POSITION_WHOLE_STATEMENT).sort().join(' ') !== '/partner-with-us/development-partners/ /partner-with-us/foundations/ /partner-with-us/governments/ /partner-with-us/local-partners/ /partner-with-us/universities/ /programs/jobready-campus/ /programs/jobready-work/ /programs/youthwide/') problems.push('self-test: exactly /programs/youthwide/, /partner-with-us/local-partners/ (WP36, WP40), /partner-with-us/development-partners/ and /partner-with-us/governments/ (WP42), /programs/jobready-campus/ (WP43), /partner-with-us/foundations/ and /partner-with-us/universities/ (WP44) and /programs/jobready-work/ (WP61) declare a whole positioning statement and no other page (Home, WP60, until WP166-A)');
   posOk('the declared whole statement on the page that declares it (Local Partners)', mech(`${headerHtml}${posBlock(wholeLp)}</header>`), { whole: wholeLp });
   posBad('the shared audience-plus-[UNLIKE] statement on Local Partners, which declares a whole statement', mech(`${headerHtml}${posBlock()}</header>`), { whole: wholeLp });
   posBad('a reworded Local Partners statement', mech(`${headerHtml}${posBlock(wholeLp.replace('mobilizes', 'recruits'))}</header>`), { whole: wholeLp });
@@ -1169,8 +1186,9 @@ function surveyEditionProblems(factsById, rows, pins = { facts: SURVEY_FACTS, ro
   }
   posBad('a Universities statement that puts the in-sentence scope clause back (WP141: the qualifier is stated once per page, not in the statement)', mech(`${headerHtml}${posBlock(`${wholeUni.slice(0, -1)}, as agreed in the program scope.`)}</header>`), { whole: wholeUni });
   // WP60: Home declares its statement whole too (one sentence that keeps the audience), with the same guarantees: the exact wording including its audience and its scope clause, nothing in front of it, each page its own text only, and the earlier two-sentence statement is refused
-  const wholeHome = POSITION_WHOLE_STATEMENT['/'];
-  if (wholeHome !== 'CodersTrust connects training, mentoring and placement support for educated, unemployed and underemployed youth, with monthly reports on progress toward paid work.') problems.push('self-test: the Home whole statement is no longer the WP63 wording');
+  // WP166-A: Home declares no statement any more; the one it carried until WP166 stays a fixture of the whole-statement checks (each page carries only its own)
+  const wholeHome = 'CodersTrust connects training, mentoring and placement support for educated, unemployed and underemployed youth, with monthly reports on progress toward paid work.';
+  if (POSITION_WHOLE_STATEMENT['/'] !== undefined) problems.push('self-test: Home declares a whole positioning statement again, but it is exempt from [POSITION] since WP166-A');
   posOk('the declared whole statement on the page that declares it (Home)', mech(`${headerHtml}${posBlock(wholeHome)}</header>`), { whole: wholeHome });
   posOk('the declared Home statement with the statement before the header (nothing precedes it)', mech(`${posBlock(wholeHome)}${headerHtml}</header>`), { whole: wholeHome });
   posBad('the shared audience-plus-[UNLIKE] statement on Home, which declares a whole statement', mech(`${headerHtml}${posBlock()}</header>`), { whole: wholeHome });
@@ -1198,8 +1216,8 @@ function surveyEditionProblems(factsById, rows, pins = { facts: SURVEY_FACTS, ro
   posBad('the JobReady@Work statement on a page that must carry the audience sentence and [UNLIKE]', mech(`${headerHtml}${posBlock(wholeWork)}</header>`));
   posBad('the JobReady@Work statement on a page that declares an employer closing (Employers)', mech(`${headerHtml}${posBlock(wholeWork)}</header>`), { closing: empClosing });
   for (const wholePage of Object.keys(POSITION_WHOLE_STATEMENT)) if (!POSITION_PAGES.includes(wholePage)) problems.push(`self-test: ${wholePage} declares a whole positioning statement but is not one of the [POSITION] pages`);
-  // WP39: the exemption is one page and not also a [POSITION] page
-  if (POSITION_EXEMPT_PAGES.length !== 1 || POSITION_EXEMPT_PAGES[0] !== '/partner-with-us/investors/') problems.push('self-test: the [POSITION] exemption is exactly /partner-with-us/investors/ (WP39) and no other page');
+  // WP39: the exemption is one page and not also a [POSITION] page. WP166-A: two pages, Investors and Home.
+  if (POSITION_EXEMPT_PAGES.join(' ') !== '/partner-with-us/investors/ /') problems.push('self-test: the [POSITION] exemption is exactly /partner-with-us/investors/ (WP39) and / (WP166-A) and no other page');
   for (const exempt of POSITION_EXEMPT_PAGES) if (POSITION_PAGES.includes(exempt)) problems.push(`self-test: ${exempt} is exempt from [POSITION] but also listed as a [POSITION] page`);
 
   // ranked pains and the C8 map (M4): exactly P1, P2, P3 in C2, exactly one C8 row for each, in order; only the two bands are read
@@ -1258,8 +1276,8 @@ function surveyEditionProblems(factsById, rows, pins = { facts: SURVEY_FACTS, ro
   painOptBad('a page that may carry no C8 band and has no C2 band either', painPage({ c2: false, c8: false }));
   painOptBad('a page that may carry no C8 band but shows one with a pain missing (P2)', painPage({ cards: true, rows: ['P1', 'P3'] }));
   painOptBad('a page that may carry no C8 band but shows one whose cards are out of rank order', painPage({ cards: true, rows: ['P3', 'P1', 'P2'] }));
-  // the allowance is exactly YouthWIDE (Home and the local-partners page must still carry the C8 band)
-  if ([...PAIN_C8_OPTIONAL].join(' ') !== '/programs/youthwide/') problems.push('self-test: exactly /programs/youthwide/ (WP57) may carry no C8 band, and no other page');
+  // the allowance is exactly YouthWIDE and, since WP166-A, Home (the local-partners page must still carry the C8 band)
+  if ([...PAIN_C8_OPTIONAL].join(' ') !== '/programs/youthwide/ /') problems.push('self-test: exactly /programs/youthwide/ (WP57) and / (WP166-A) may carry no C8 band, and no other page');
   for (const optional of PAIN_C8_OPTIONAL) if (!PAIN_PAGES.includes(optional)) problems.push(`self-test: ${optional} may carry no C8 band but is not one of the ranked-pain pages`);
   // the trial relevance line (m2): directly under the trial headline, in the plan's words for the page's own offering
   const scopeWork = TRIAL_SCOPE_BY_PAGE['/programs/jobready-work/'];

@@ -14,7 +14,7 @@ import { pageByRoute } from './support/pages';
 
 const collapse = (t: string | null | undefined) => (t ?? '').replace(/\s+/g, ' ').trim();
 const text = async (page: Page, selector: string) => collapse(await page.locator(selector).first().textContent());
-const slide = (page: Page, n: number) => page.locator('[data-hs-slide]').nth(n - 1);
+const slide = (page: Page, n: number) => page.locator('[data-hs-slide]').nth([0, 3, 1, 2][n - 1]); // WP166-A (R1-11): n is the slide's position before the reorder (1 trial, 2 government, 3 survey, 4 program results); the carousel now runs trial, survey, program results, government
 
 test.describe('UNDP YES, Korail: first job, not "in work" (PR-03, PR-06)', () => {
   test('the register never says Korail trainees were in work', () => {
@@ -88,10 +88,11 @@ test.describe('carousel, vision, proof, FAQ and offer wording', () => {
   });
 
   // WP48 (cycle-23 review, three reviewers): the third scenario is "Employers Hiring from Your Cohort" ("AI-ready" is a positioning term that Employers and JobReady@Work explain, not Home; tests/wp48.spec.ts)
-  test('the third vision scenario is "Employers Hiring from Your Cohort": "You see employers hire completers whose skills match current employer demand."', async ({ page }) => {
+  // WP166-A (marketing review R1-14, owner approval of 21 November 2026): the vision band ("Imagine the Next 12 Months") is gone from Home; real learner stories follow Proof in Practice. Its scenario check is replaced by its absence.
+  test('the vision band is gone (WP166-A); Home says no "AI-ready"', async ({ page }) => {
     await open(page, pageByRoute('/'));
-    expect(await text(page, '#future')).toContain('You see employers hire completers whose skills match current employer demand.');
-    expect(await text(page, '#future')).not.toContain('AI-ready');
+    await expect(page.locator('#future')).toHaveCount(0);
+    expect(await text(page, 'main')).not.toContain('AI-ready');
   });
 
   test('Proof in Practice points to all five case studies, with a link', async ({ page }) => {
@@ -128,7 +129,7 @@ test.describe('Learner Journeys (#journeys)', () => {
   test('three registered stories, one per Proof in Practice program, with one caveat and a link to all stories', async ({ page }) => {
     await open(page, pageByRoute('/'));
     const strip = page.locator('#journeys');
-    await expect(strip.locator('h2')).toHaveText('Learner Journeys');
+    await expect(strip.locator('h2')).toHaveText('Three Learners Who Turned Training into Paid Work'); // WP166-A (marketing review R1-23): the heading states the band's point (it was the label "Learner Journeys")
     const cards = strip.locator('article.sc');
     await expect(cards).toHaveCount(3);
     await expect(cards.locator('.sc__name')).toHaveText(['Samina Tasneem Chowdhury', 'Erlisa Zherka', 'Maria Dewan']);

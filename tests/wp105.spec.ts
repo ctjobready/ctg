@@ -102,7 +102,9 @@ test.describe('WP105 item 3: Recognition no longer has "Recognition Connected to
 
   test('the other sections stay, and the page links to no #related anchor', async ({ page }) => {
     await open(page, 'about/recognition/');
-    for (const id of ['listing', 'honors', 'forums', 'photos', 'coverage', 'world-bank', 'press-kit']) await expect(page.locator(`#${id}`), id).toHaveCount(1);
+    // WP166-A (marketing review R1-39): the listing band is gone (its register sentence opens the hero lead); the others stay
+    for (const id of ['honors', 'forums', 'photos', 'coverage', 'world-bank', 'press-kit']) await expect(page.locator(`#${id}`), id).toHaveCount(1);
+    await expect(page.locator('#listing')).toHaveCount(0);
     expect(htmlOf('/about/recognition/')).not.toContain('#related');
   });
 
@@ -224,7 +226,8 @@ test.describe('WP105 item 9: stamps and dateModified of the pages this WP change
   // WP151: Governments moved on to 2026-11-02 (the learner card label is "Individual Story"). WP152: About moved on to 2026-11-02 (the 2025–2026 timeline item is two sentences).
   // WP161-A: Governments moved on to 2026-11-03; WP161-B: Recognition moved on to 2026-11-02.
   // WP162 and WP163: About moved on to 2026-11-03 (the 2025–2026 timeline item's JobReady sentence).
-  for (const [route, day] of [['about/', '2026-11-03'], ['partner-with-us/governments/', '2026-11-03'], ['about/recognition/', '2026-11-02']]) {
+  // WP166-A (marketing review, owner approval of 21 November 2026): About and Recognition and Media moved on to 2026-11-21.
+  for (const [route, day] of [['about/', '2026-11-21'], ['partner-with-us/governments/', '2026-11-03'], ['about/recognition/', '2026-11-21']]) {
     test(`${route} pins its JSON-LD dateModified to ${day} (the day it last changed: WP141, WP151, WP152, WP161, WP162, WP163), not the build date`, async ({ page }) => {
       await open(page, route);
       expect(await ldJson(page)).toMatch(new RegExp(`"dateModified"\\s*:\\s*"${day}"`));

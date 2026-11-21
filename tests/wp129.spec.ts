@@ -195,8 +195,9 @@ test.describe('WP129 item 3: Impact says one story is an outlier', () => {
 test.describe('WP129 item 4: the Recognition H1 lead opens with the listing', () => {
   test('lead text', () => {
     const t = text('about/recognition/index.html');
+    // WP166-A (marketing review R1-39, owner approval item 5): the listing band is gone and its register sentence (PA-08, with the STEAM category) opens the lead verbatim; the second sentence names the page's other sections
     expect(t).toContain(
-      'CodersTrust was listed in the HolonIQ South Asia EdTech 100 in 2023 and 2024. Its Co-Founder and Chairman, Aziz Ahmad, has received appointments and honors, and CodersTrust’s work has been covered in the press.',
+      'CodersTrust was listed in the HolonIQ South Asia EdTech 100 in 2023 (STEAM category) and 2024. Also on this page: founder honors, World Bank pages that name CodersTrust, press coverage from 2014 to 2016 and a press kit.',
     );
     expect(t).not.toContain('has received appointments and honors, and its work has been covered');
   });
@@ -317,8 +318,10 @@ test.describe('WP129 item 6: every dated page whose visible text changed carries
     'programs/jobready-work/index.html',
     'partner-with-us/investors/index.html',
   ]);
+  // WP166-A (marketing review, owner approval of 21 November 2026): Governance, About, Recognition and Media and Ferdinand Kjærulff's profile moved on (tests/wp166-a.spec.ts holds the rest)
+  const MOVED_1121 = new Set(['about/governance/index.html', 'about/index.html', 'about/recognition/index.html', 'about/team/ferdinand-kjaerulff/index.html']);
   for (const [route, cls] of STAMPED) {
-    const [day, long] = MOVED_1103.has(route) ? ['2026-11-03', 'November 3, 2026'] : MOVED_1102.has(route) ? ['2026-11-02', 'November 2, 2026'] : MOVED_1101.has(route) ? ['2026-11-01', 'November 1, 2026'] : ['2026-10-31', 'October 31, 2026'];
+    const [day, long] = MOVED_1121.has(route) ? ['2026-11-21', 'November 21, 2026'] : MOVED_1103.has(route) ? ['2026-11-03', 'November 3, 2026'] : MOVED_1102.has(route) ? ['2026-11-02', 'November 2, 2026'] : MOVED_1101.has(route) ? ['2026-11-01', 'November 1, 2026'] : ['2026-10-31', 'October 31, 2026'];
     test(`${route} reads "Last updated ${long}" and its JSON-LD dateModified is ${day}`, () => {
       const raw = html(route);
       const m = new RegExp(`<p class="${cls}[^"]*"[^>]*>([\\s\\S]*?)</p>`).exec(raw);
@@ -348,7 +351,7 @@ test.describe('WP129 item 6: every dated page whose visible text changed carries
     'programs/index.html',
   ];
   for (const route of JSONLD_ONLY) {
-    const day = MOVED_1103.has(route) ? '2026-11-03' : MOVED_1102.has(route) ? '2026-11-02' : MOVED_1101.has(route) ? '2026-11-01' : '2026-10-31';
+    const day = MOVED_1121.has(route) ? '2026-11-21' : MOVED_1103.has(route) ? '2026-11-03' : MOVED_1102.has(route) ? '2026-11-02' : MOVED_1101.has(route) ? '2026-11-01' : '2026-10-31';
     test(`${route} pins its own JSON-LD dateModified to ${day}`, () => {
       expect(dateModified(html(route))).toContain(day);
     });

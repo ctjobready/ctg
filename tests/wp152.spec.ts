@@ -328,7 +328,8 @@ test('4 Investors, "Connect Learning to Paid Work": the body does not repeat the
 
 test('5 About timeline 2025–2026: a period, not a semicolon, before "CodersTrust published Impact Survey 2026."', () => {
   const text = main(ABOUT);
-  expect(text).toMatch(/depending on government and donor commitments\. CodersTrust published Impact Survey 2026\./);
+  // WP166-A (marketing review R1-25): the aim left the entry to close the story band, so the period now follows the JobReady sentence
+  expect(text).toMatch(/digital learning and earning platform\. CodersTrust published Impact Survey 2026\./);
   expect(text).not.toContain('commitments; CodersTrust publishes');
   // The aim wording itself is unchanged.
   expect(text).toContain('YouthWIDE aims to train 1 million educated youth (Higher Secondary Certificate or above) for digital employment by 2030, in Bangladesh and similar countries in South Asia and the Middle East and North Africa, depending on government and donor commitments.');

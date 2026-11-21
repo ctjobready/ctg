@@ -32,7 +32,7 @@ import { listPages } from './support/pages';
 const compact = (t: string | null | undefined) => (t ?? '').replace(/\s+/g, ' ').trim();
 const texts = (page: Page, selector: string) => page.locator(selector).evaluateAll((els) => els.map((e) => (e.textContent ?? '').replace(/\s+/g, ' ').trim()));
 const noOverflow = (page: Page) => page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth);
-const slide = (page: Page, n: number) => page.locator('[data-hs-slide]').nth(n - 1);
+const slide = (page: Page, n: number) => page.locator('[data-hs-slide]').nth([0, 3, 1, 2][n - 1]); // WP166-A (R1-11): n is the slide's position before the reorder (1 trial, 2 government, 3 survey, 4 program results); the carousel now runs trial, survey, program results, government
 
 /** Built pages that are not archived news posts (those keep their original wording), with their HTML. */
 const sitePages = () => listPages().filter((p) => !p.route.startsWith('/news/')).map((p) => ({ route: p.route, html: readFileSync(p.file, 'utf8') }));
@@ -62,8 +62,8 @@ const unusedBelow = (page: Page) =>
     return Math.round(controls.getBoundingClientRect().top - contentBottom);
   });
 async function showSlide(page: Page, n: number) {
-  await page.locator('[data-hs-dot]').nth(n - 1).click();
-  await expect.poll(() => page.evaluate(() => Array.from(document.querySelectorAll('[data-hs-slide]')).findIndex((s) => s.classList.contains('is-active')))).toBe(n - 1);
+  await page.locator('[data-hs-dot]').nth([0, 3, 1, 2][n - 1]).click(); // WP166-A: the same old-to-new map as slide()
+  await expect.poll(() => page.evaluate(() => Array.from(document.querySelectorAll('[data-hs-slide]')).findIndex((s) => s.classList.contains('is-active')))).toBe([0, 3, 1, 2][n - 1]);
   await page.waitForTimeout(450);
 }
 /** The FAQ item of a question on the page, and its answer text. */
@@ -206,13 +206,14 @@ test.describe('K5 (Kimi): "Five Programs Across Kosovo, Albania and Bangladesh"'
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 test.describe('M3 (Gemini): Home’s recognition band', () => {
-  test('its first badge is "University Partners" (only UPEACE is UN-mandated, and its own line says so); "University and UN-Mandated Partners" is on no built page', async ({ page }) => {
+  // WP166-A (marketing review R1-19, owner approval of 21 November 2026): the University Partners badge is gone from Home (the universities are in the logo wall's Education Partners card);
+  // the UN-mandated wording stays UPEACE's alone, on the pages that still name the universities, and the combined label stays off every page
+  test('the University Partners badge is gone from Home (WP166-A); its two badges are AWS and HolonIQ; "University and UN-Mandated Partners" is on no built page', async ({ page }) => {
     await open(page, HOME);
     const band = page.locator('#recognition');
-    await expect(band.locator('h3')).toHaveText(['University Partners', 'Amazon Web Services (AWS)', 'HolonIQ South Asia EdTech 100']);
-    const first = band.locator('.rec__badge').first();
-    expect(compact(await first.textContent())).toContain('University for Peace (UPEACE), the UN-mandated university');
-    expect(await first.getAttribute('data-fact')).toBe('PA-05');
+    await expect(band.locator('h4')).toHaveText(['Amazon Web Services (AWS)', 'HolonIQ South Asia EdTech 100']);
+    await expect(band.locator('.rec__badge[data-fact="PA-05"]')).toHaveCount(0);
+    expect(pagesWith('University for Peace (UPEACE), the UN-mandated university')).not.toContain('/');
     expect(pagesWith('University and UN-Mandated Partners')).toEqual([]);
   });
 });
@@ -276,15 +277,16 @@ test.describe('M6 (Gemini): the Governments Her Power tile states the tracked ba
 test.describe('R1 (Grok): Home’s "Our Approach" names the group as ID-01 does', () => {
   const STATEMENT = 'CodersTrust connects training, mentoring and placement support for educated, unemployed and underemployed youth, with monthly reports on progress toward paid work.';
 
-  test('the statement is one sentence on Home, in the source, and declared whole in the facts gate, independently of the source', async ({ page }) => {
+  // WP166-A (marketing review R1-03): Home no longer prints the statement, so the gate no longer declares it; the source sentence keeps ID-01's group, and the hero lead names it the same way
+  test('the source statement is one sentence naming the group as ID-01 does; Home prints none, its hero lead names the group, and the gate no longer declares a statement for Home (WP166-A)', async ({ page }) => {
     expect(POSITIONING.home.text).toBe(STATEMENT);
+    expect(STATEMENT.split(/(?<=\.)\s+/)).toHaveLength(1);
     expect(fact('ID-01').text).toContain('educated, unemployed and underemployed youth');
     const gate = readFileSync(new URL('../scripts/check-facts.mjs', import.meta.url), 'utf8');
-    expect(/const POSITION_WHOLE_STATEMENT = \{([\s\S]*?)\n\};/.exec(gate)?.[1] ?? '').toContain(`'/': '${STATEMENT}'`);
+    expect(/const POSITION_WHOLE_STATEMENT = \{([\s\S]*?)\n\};/.exec(gate)?.[1] ?? '').not.toContain(`'/': '${STATEMENT}'`);
     await open(page, HOME);
-    const text = compact(await page.locator('#mechanism .pos__text').textContent());
-    expect(text).toBe(STATEMENT);
-    expect(text.split(/(?<=\.)\s+/)).toHaveLength(1);
+    await expect(page.locator('#mechanism .pos__text')).toHaveCount(0);
+    await expect(page.locator('.hh__lead')).toContainText('educated, unemployed and underemployed youth');
     expect(pagesWith('support for educated, unemployed youth, with monthly reports')).toEqual([]);
   });
 });
@@ -366,14 +368,16 @@ test.describe('RW1 (rework; coordinator, extending Grok R1): the target group is
   const GROUP = 'educated, unemployed and underemployed youth';
   const OLD_GROUP = /educated,\s+unemployed\s+(?:youth|young people)/i;
 
-  test('the Governments and Development Partners leads name the group as ID-01 does; the Governments line is also its meta description, within 155 characters', async ({ page }) => {
+  // WP166-A (marketing review R7-22): the Governments meta description is the page's own offer and next step ("Build a national digital workforce ... Request a briefing."), not a repeat of the lead
+  test('the Governments and Development Partners leads name the group as ID-01 does; the Governments meta description is its offer and next step, within 155 characters (WP166-A)', async ({ page }) => {
     expect(fact('ID-01').text).toContain(GROUP);
     expect(VALUE_PROPOSITION.governments).toBe('We help governments prepare educated, unemployed and underemployed youth for paid digital work through mentored, certification-focused training.');
     expect(VALUE_PROPOSITION.developmentPartners).toBe('We help development partners prepare educated, unemployed and underemployed youth for paid work through mentored, certification-focused training.');
     await open(page, GOVERNMENTS);
     expect(compact(await page.locator('main .hero__lead').first().textContent())).toBe(VALUE_PROPOSITION.governments);
     const description = (await page.locator('meta[name="description"]').getAttribute('content')) ?? '';
-    expect(description).toBe(VALUE_PROPOSITION.governments);
+    expect(description).toBe('Build a national digital workforce through graduates and existing digital labs: curriculum, trainer training and phased delivery. Request a briefing.');
+    expect(description).not.toMatch(OLD_GROUP);
     expect(description.length).toBeLessThanOrEqual(155);
     await open(page, DEV_PARTNERS);
     expect(compact(await page.locator('main .hero__lead').first().textContent())).toBe(VALUE_PROPOSITION.developmentPartners);

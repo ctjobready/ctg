@@ -37,7 +37,7 @@ const visible = (html: string) =>
 const sitePages = () => listPages().filter((p) => !p.route.startsWith('/news/')).map((p) => ({ route: p.route, html: withoutRepostBody(p.route, readFileSync(p.file, 'utf8')) }));
 /** Everything in main, including answers inside closed FAQ accordions (innerText leaves those out). */
 const everything = async (page: Page) => compact(await page.locator('main').evaluate((el) => el.textContent ?? ''));
-const slide = (page: Page, n: number) => page.locator('[data-hs-slide]').nth(n - 1);
+const slide = (page: Page, n: number) => page.locator('[data-hs-slide]').nth([0, 3, 1, 2][n - 1]); // WP166-A (R1-11): n is the slide's position before the reorder (1 trial, 2 government, 3 survey, 4 program results); the carousel now runs trial, survey, program results, government
 
 const HOME = '';
 const HUB = 'partner-with-us/';
@@ -198,14 +198,14 @@ test.describe('BIGD is spelled out at its first mention on every page that names
 });
 
 test.describe('The Programs menu describes YouthWIDE without the Bangladesh aim (item S7)', () => {
-  const LINE = 'Co-funded country cohorts, designed for three regions, from training to paid digital work.';
+  const LINE = 'For governments and funders: co-funded country cohorts designed for three regions.'; // WP166-A (marketing review R7-12): the menu line names the audience first
 
   test('the menu item and the featured panel say the line, tied to IN-02 alone', async ({ page }) => {
     await page.setViewportSize(DESKTOP);
     await open(page, HOME);
     const link = page.locator('#mega-programs a.mega__link[href$="programs/youthwide/"]');
     expect(compact(await link.locator('.mega__desc').textContent())).toBe(LINE);
-    expect(compact(await page.locator('#mega-programs .mega__feature-text').textContent())).toBe(LINE);
+    expect(compact(await page.locator('#mega-programs .mega__feature-text').textContent())).toBe('From training to paid digital work, country by country.'); // WP166-A (R7-08): the panel carries the YouthWIDE H1
     const ids = await link.evaluate((el) => `${el.getAttribute('data-fact') ?? ''} ${el.querySelector('[data-fact]')?.getAttribute('data-fact') ?? ''}`);
     expect(ids).toContain('IN-02');
     expect(ids).not.toContain('IN-01');
@@ -265,12 +265,13 @@ test.describe('Home slide 3: the income tile comes first, then a sentence that l
 
 test.describe('Home slide 1: the ">4×" callout names the comparison and its average (item R2)', () => {
   // WP59 (cycle-31 review, Kimi K3): the callout states the +10.3 it compares (RC-02's figure, which RC-06a's text states too): "Employment effect, not income: +10.3 percentage points, more than four times the 2.3-point average across nine vocational-training trials." (tests/wp59.spec.ts)
-  test('"Employment effect, not income: +10.3 percentage points, more than four times the 2.3-point average across nine vocational-training trials." with the tile and its fact tie unchanged; an average, never "typical"', async ({ page }) => {
+  // WP166-A (marketing review R1-02): the comparison moved to the hero's trial card, directly under the +10.3 it compares, so it needs no "not income" disclaimer; it still names the comparison and its average
+  test('the hero’s trial card says "That is more than four times the 2.3-point average across nine vocational-training trials." under the +10.3, tied to RC-06a (WP166-A; it was the slide’s ">4×" callout); an average, never "typical"', async ({ page }) => {
     await open(page, HOME);
-    const proof = slide(page, 1).locator('.hs__proof');
-    expect(await proof.getAttribute('data-fact')).toBe('RC-06a');
-    await expect(proof.locator('.stat__value')).toHaveText('>4×');
-    expect(compact(await proof.locator('.stat__label').textContent())).toBe('Employment effect, not income: +10.3 percentage points, more than four times the 2.3-point average across nine vocational-training trials.');
+    const proof = page.locator('.hh__card[data-fact="RC-02"] [data-fact="RC-06a"]');
+    await expect(proof).toHaveText('That is more than four times the 2.3-point average across nine vocational-training trials.');
+    await expect(page.locator('.hh__card[data-fact="RC-02"] .hh__num')).toHaveText('+10.3');
+    expect(compact(await slide(page, 1).locator('.hs__proof').textContent())).not.toContain('>4×');
     expect(fact('RC-06a').stat?.value).toBe('>4×');
     expect(fact('RC-06a').stat?.glance?.label).toMatch(/more than four times the 2\.3-point average across nine vocational-training trials$/);
     const text = compact(await proof.textContent());
@@ -317,16 +318,20 @@ test.describe('One caption on every partner-logo band (item K1)', () => {
     }
   });
 
-  test('Home prints the same caption once, over its relationship cards', async ({ page }) => {
+  // WP166-A (marketing review R1-05, owner approval of 21 November 2026): Home's funders row sits under the hero cards, captioned with the first sentence alone, and the caveat closes the full logo wall once
+  test('Home captions its funders row with the first sentence and closes its relationship cards with the caveat, each once (WP166-A; the whole caption was over the cards)', async ({ page }) => {
     await open(page, HOME);
-    await expect(page.locator('#guide .rel__caption')).toHaveText(CAPTION);
+    await expect(page.locator('#hero .hh__funders .partners__title')).toHaveText('Organizations we have worked with, 2014–2026.');
+    await expect(page.locator('#guide .rel__caption')).toHaveText('These are working relationships, not endorsements.');
     expect(count(await everything(page), 'These are working relationships, not endorsements.')).toBe(1);
+    expect(count(await everything(page), 'Organizations we have worked with, 2014–2026.')).toBe(1);
   });
 
   test('no built page prints the old caption sentence on its own', () => {
     // every printed caption continues with the second sentence (the styleguide’s sample captions are its own text)
+    // WP166-A (marketing review R1-05): Home prints the first sentence alone over its funders row, by design (above)
     const alone = sitePages()
-      .filter((p) => p.route !== '/styleguide/')
+      .filter((p) => p.route !== '/styleguide/' && p.route !== '/')
       .filter((p) => /Organizations we have worked with, 2014–2026\.(?! These are working relationships, not endorsements\.)/.test(visible(p.html)))
       .map((p) => p.route);
     expect(alone).toEqual([]);
@@ -380,13 +385,15 @@ test.describe('Universities: the meta description states only what the page stat
 });
 
 test.describe('Home: the first Imagine card is in the reader’s cohort (item L2)', () => {
-  test('"A young woman in your cohort invoices her first foreign client from her own laptop."', async ({ page }) => {
+  test('the Imagine band, whose first card was "A young woman in your cohort invoices her first foreign client from her own laptop.", is gone (WP166-A)', async ({ page }) => {
     await open(page, HOME);
-    expect(await texts(page, '#future .card__text')).toEqual([
+    // WP166-A (marketing review R1-14, owner approval of 21 November 2026): the Imagine band, three one-line hypotheticals, is gone (proof over imagination); none of its lines is on Home
+    await expect(page.locator('#future')).toHaveCount(0);
+    for (const line of [
       'A young woman in your cohort invoices her first foreign client from her own laptop.',
       'You review monthly reports showing who is earning, not only who completed.',
       'You see employers hire completers whose skills match current employer demand.',
-    ]);
+    ]) expect(compact(await page.locator('main').textContent()), line).not.toContain(line);
   });
 });
 

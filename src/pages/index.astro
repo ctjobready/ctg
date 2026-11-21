@@ -22,6 +22,14 @@
 // "Proof in Practice" link reads "See All Case Studies" (it said "Five", beside a carousel slide that says four delivered programs carry results); the "Where They Work" card says "for 12 months" (HomeMechanism).
 // WP64 (cycle-36 reviews): the carousel's government slide is headed "Six Government Contracts and a National University Partnership", its program-results slide leads "Results from the records of four programs." and its trial slide says "about $27 more a month" (src/data/heroSlides.ts);
 // the second Cost of Waiting card names the World Bank and the year, not the economist: "A 2017 World Bank review of nine randomized vocational-training trials found only three with significant employment impacts." (RC-06, source MCKENZIE17 unchanged).
+// WP166-A (marketing-effectiveness review of 21 November 2026, R1; owner approval item 1, "Home restructure: YES"): Home is twelve bands, with the offer at band 9 (it was band 16 of 18):
+//   1 hero, proof cards and the funders' logo row (R1-05) · 2 What Is CodersTrust? · 3 Results You Can Check (R1-11) · 4 router (R1-04) · 5 problem, with the two research findings folded into pains 2 and 3 (R1-07)
+//   6 One Path, with the Includes band's training sentence, the TalentLEAP method line and the page's scope sentence (R1-17, R1-18) · 7 Proof in Practice and three learner stories (R1-23)
+//   8 track record and recognition in one band: the signed-agreement sentence, the rest of the logo wall, AWS and HolonIQ, the world strip (R1-05, R1-19) · 9 Choose Where to Start, naming YouthWIDE (R1-20)
+//   10 Questions Partners Ask · 11 the closing call to action, with what the discovery session covers under the button (R1-01) · 12 What Happens Next.
+// Gone: the Cost of Waiting band (its two findings are in the problem band, PX-06 and RC-06 unchanged), Imagine the Next 12 Months (R1-14), the self-paced comparison (R1-15), What a Supported Youth Cohort Includes (R1-17),
+// "Our Approach" (R1-03: the hero lead now names the buyer and the reporting) and the launch story in the track-record band (R1-05: About tells it). No register sentence is reworded; register text was moved or cut.
+// Band grounds (Tone): hero, white, carousel, airy, white, ice, airy, white, ice, white, Klein, airy, so no two neighbors share a ground and no two dark bands touch.
 import LandingLayout from '../layouts/LandingLayout.astro';
 import HeroSlider from '../components/sections/HeroSlider.astro';
 import HomeHero from '../components/pages/home/HomeHero.astro';
@@ -29,30 +37,24 @@ import HomeRecognition from '../components/pages/home/HomeRecognition.astro';
 import LearnerJourneys from '../components/pages/home/LearnerJourneys.astro';
 import DefinitionBand from '../components/sections/DefinitionBand.astro';
 import ProblemBand from '../components/sections/ProblemBand.astro';
-import FutureBand from '../components/sections/FutureBand.astro';
 import CaseStudyCarousel from '../components/sections/CaseStudyCarousel.astro';
-import IncludesBand from '../components/sections/IncludesBand.astro';
 import FAQBand from '../components/sections/FAQBand.astro';
-import ComparisonBand from '../components/sections/ComparisonBand.astro';
 import CTABand from '../components/ui/CTABand.astro';
-import Section from '../components/ui/Section.astro';
 import WorldStrip from '../components/ui/WorldStrip.astro';
 import Tone from '../components/pages/home/Tone.astro';
 import HomeRouter from '../components/pages/home/HomeRouter.astro';
-import HomeCost from '../components/pages/home/HomeCost.astro';
 import HomeGuide from '../components/pages/home/HomeGuide.astro';
 import HomeMechanism from '../components/pages/home/HomeMechanism.astro';
 import Icon from '../components/system/Icon.astro';
 import HomeOffer from '../components/pages/home/HomeOffer.astro';
 import ConversionNextSteps from '../components/pages/home/ConversionNextSteps.astro';
 import { caseStudyItems } from '../components/pages/home/caseStudies';
-import { futurePhotos } from '../data/photos';
 import { WORLD_STRIP } from '../data/globalStrip';
 import { HOME_SLIDES } from '../data/heroSlides';
 import GainsPains from '../components/pages/partners/GainsPains.astro';
-import { C14, FUNDER_PAINS, HOME_META, MICRO_COMMITMENT, NEXT_STEPS_TITLE, POSITIONING, PROGRAM_SCOPE_STATEMENT, PROGRAM_SIZES_NOTE, READ_THE_EVIDENCE, painForList, painForRow } from '../data/copy';
+import { C14, FUNDER_PAINS, HOME_META, MICRO_COMMITMENT, NEXT_STEPS_TITLE, PROGRAM_SCOPE_STATEMENT, PROGRAM_SIZES_NOTE, painForList } from '../data/copy';
 import { fact } from '../data/facts';
-import { CLAIM_PX06, CLAIM_RC06, freelancePostingsFinding } from '../components/sections/copyText';
+import { freelancePostingsFinding } from '../components/sections/copyText';
 import { cta } from '../lib/mailto';
 import { linkAttrs } from '../lib/url';
 import { faqJsonLd } from '../lib/faq';
@@ -64,8 +66,9 @@ const caseStudies = linkAttrs('/impact/case-studies/');
 const trialResults = linkAttrs('/impact/independent-evaluation/');
 const surveyResults = linkAttrs('/impact/outcomes-2026/');
 // Q2 (national scale), Q7 (speed) and Q8 (cost) are not asked here: the offer band states the scale and the pricing, and the call to action states the timing, each once (WP17).
-// WP30c: three questions, the ones a funder decides on (the country, the trial's scope, the proof); the AI question is answered by the cost-of-waiting band and the curriculum row.
+// WP30c: three questions, the ones a funder decides on (the country, the trial's scope, the proof); the AI question is answered by the problem band's third pain and the curriculum row.
 // WP50 (cycle-25 review): the proof question is Home's own two-sentence variant (Q3-home), not the shared Q3, which reads as a governance answer and stays in the bank and on the audience pages that print it.
+// WP166-A (R1-08): the questions come after the offer they defend.
 const FAQ_IDS = ['Q1', 'Q15', 'Q3-home'];
 const jsonLd = [webPage({ path: '/', name: HOME_META.title, description: HOME_META.description }), faqJsonLd('home', '/', FAQ_IDS)];
 // The other two funder routes sit beside the single discovery button as text links (PRD: one primary button per view).
@@ -77,139 +80,81 @@ const introduction = cta('investor');
 // The closing steps band is headed NEXT_STEPS_TITLE, "What Happens Next", as on every other page with that band (it was "What Happens After You Contact Us").
 const problemBluf = 'Millions of educated young people are out of work and out of training. Your training budget needs to show who starts earning.';
 
-// C8: the three ranked pains (FUNDER_PAINS) and one C8 card for each, in that order. Numbers inside the cards come from the register.
-// WP30c: only the three rows that answer a ranked pain stay; the accessible readiness assessment, the 100 training hours and the exam preparation are stated in the program options and the comparison.
-// WP38 (cycle-15 review): on Home the rows are three short cards (IncludesBand), not the concern / inclusion / benefit matrix of FeaturesTable (WP39: the audience and program pages use IncludesBand too). Each card keeps its pain's id (`data-relieves`, held by
-// check:facts) and its register facts (`data-fact`); every clause rests on the register: PD-01 (100 hours, three months of milestone-based mentoring, placement support alongside), PD-19 (work-entry plan agreed before
-// enrollment), PD-08 and PD-09 (monthly reports, follow-up surveys, documentary evidence where available), PD-10 and PD-02 (tracks set from employer demand, AI-ready curriculum). The curriculum line keeps "designed to" (the register states the
-// track menu is set from employer demand, not that the curriculum follows every change), as YouthWIDE and Investors say it. WP49 (cycle-24 review, three reviewers): it no longer says "An AI-ready curriculum is ..." ("AI-ready" is a positioning term that
-// Employers and JobReady@Work explain, not Home): "A curriculum designed to follow the skills employers ask for as entry-level tasks change."
-const hours = fact('PD-01').stat?.value;
-// The comparison's "Independent Evidence" cell on Home (WP31): the trial in one clause, the program's length read from RC-07 (not retyped).
-const trialHours = /was (\d+) hours/.exec(fact('RC-07').text)?.[1];
-if (!trialHours) throw new Error('Home: RC-07 no longer reads "... was N hours"');
-// WP42 (cycle-19 review): a fragment with no trailing period, like every other cell of the table (ComparisonBand).
-const independentEvidence = `One randomized trial of CodersTrust’s WSDFM program (${trialHours} hours, women in Dhaka); independent evaluation of your cohort welcome`;
-const includes = [
-  {
-    painId: painForRow(FUNDER_PAINS, 'P1').painId,
-    icon: 'route',
-    // WP23, item 5: placement support, not matching, toward local, remote and global work.
-    title: 'Training, Mentoring and Placement Support',
-    text: `${hours} training hours per certification, including exam preparation, followed by three months of milestone-based mentoring and placement support. Each track’s work-entry plan is agreed before enrollment.`,
-    facts: ['PD-15', 'PD-01', 'PD-19'],
-  },
-  {
-    painId: painForRow(FUNDER_PAINS, 'P2').painId,
-    icon: 'clipboard-check',
-    // WP28: scoped like the FAQ and the comparison ("as agreed in the program scope"), not an unscoped inclusion. WP45 (cycle-21 review): one line. The follow-up surveys and the documentary evidence are in the FAQ ("How Do You Prove Outcomes?")
-    // and on the evidence pages, so the card states the monthly reports alone (PD-08), as the positioning statement and the comparison table do.
-    // WP52 (cycle-27 review, Grok M3): "Monthly reports will show ..." (it said "show", which states the reports as an existing standard; elsewhere the same promise is planned for every cohort).
-    // WP58 (cycle-30 review, Claude S10): "Progress You Can Check" (it was "Results You Can Check": the card promises monthly reports, a reporting plan, not results).
-    title: 'Progress You Can Check',
-    text: 'Monthly reports show progress toward paid work.',
-    facts: ['PD-08'],
-  },
-  {
-    painId: painForRow(FUNDER_PAINS, 'P3').painId,
-    icon: 'briefcase',
-    title: 'Tracks Chosen from Employer Demand',
-    text: 'A curriculum designed to follow the skills employers ask for as entry-level tasks change.',
-    facts: ['PD-02', 'PD-10'],
-  },
-];
+/**
+ * WP166-A (marketing review R1-07, owner approval item 1: "fold the two Cost of Waiting bands into the Problem band"): each research finding closes the pain it proves, on Home only (FUNDER_PAINS, which YouthWIDE prints too, is unchanged):
+ * pain 2 ("Results You Cannot Verify or Report") ends with RC-06, the register's sentence; pain 3 ("Skills That Age Fast ...") ends with PX-06's first finding as the cost-of-waiting card stated it (freelancePostingsFinding, with its source).
+ * Each pain's data-fact names the fact its finding states. The two "What It Means" lines of the former band are gone with it.
+ */
+const rc06 = fact('RC-06').text;
+if (!rc06.startsWith('A 2017 World Bank review of nine randomized vocational-training trials')) throw new Error('Home: RC-06 no longer opens "A 2017 World Bank review of nine randomized vocational-training trials"; update the problem band');
+const homePains = FUNDER_PAINS.map(painForList).map((p) => {
+  if (p.id === 'P2') return { ...p, text: `${p.text} ${rc06}.`, facts: [...(p.facts ?? []), 'RC-06'] };
+  if (p.id === 'P3') return { ...p, text: `${p.text} ${freelancePostingsFinding()}`, facts: [...new Set([...(p.facts ?? []), 'PX-06'])] };
+  return p;
+});
+
+/**
+ * WP166-A (R1-01): the closing band says what the discovery session gives the reader, directly under the button and before the other routes and the email fallback: the micro-commitment (MICRO_COMMITMENT, verbatim, once) and
+ * a shorter form of the Development Partners agenda ("What the discovery session covers: your country, priority groups and locations; ...; an indicative budget, the pilot scorecard ..."), resting on PD-02 as that agenda does.
+ * The secondary "Read the Evidence" link is gone from this band: the page has just shown the evidence, and the hero links it.
+ */
+const sessionPromise = { text: `${MICRO_COMMITMENT} It covers your country and priority groups, an indicative budget and the pilot scorecard.`, facts: ['PD-02'] };
+/** WP166-A (R1-20): IN-02's own words for YouthWIDE, the program the three sizes belong to. */
+const youthwide = /: (the program through which funders deploy the CodersTrust model in a country)\./.exec(fact('IN-02').text)?.[1];
+if (!youthwide) throw new Error('Home: IN-02 no longer reads "...: the program through which funders deploy the CodersTrust model in a country."; update the offer band');
 ---
 
 <LandingLayout title={HOME_META.title} titleSuffix={false} description={HOME_META.description} jsonLd={jsonLd} stickyCta={{ label: discovery.label, href: discovery.href }}>
+  <!-- 1. Hero, proof cards and the funders' logo row (WP166-A, R1-05) -->
   <Tone cmf="C1"><HomeHero id="hero" /></Tone>
-  <!-- WP19, item 6: "What Is CodersTrust?" sits directly under the hero, before the Results carousel. -->
+  <!-- 2. WP19, item 6: "What Is CodersTrust?" sits directly under the hero, before the Results carousel. -->
   <Tone cmf="GEO"><DefinitionBand id="definition" /></Tone>
+  <!-- 3. WP166-A (R1-11): "Results You Can Check": each slide links its evidence page; trial, survey, program records, then the government contracts. -->
   <Tone cmf="RESULTS">
-    <HeroSlider id="results" label="Results" heading="Results" slides={HOME_SLIDES} />
+    <HeroSlider id="results" label="Results You Can Check" heading="Results You Can Check" slides={HOME_SLIDES} />
   </Tone>
 
-  <!-- WP47 (owner decision 2026-10-15): the site is the hook for an introductory call, so the role router sits directly after the Results carousel, where a reader can reach their audience page sooner (it was the band before the
-       closing call to action; WP23). One router on the page; the hero's own audience links stay. Its own light ground (airy) keeps the rhythm between the carousel above and the white problem band below. -->
+  <!-- 4. WP47 (owner decision 2026-10-15): the role router sits directly after the Results carousel, where a reader can reach their audience page sooner. -->
   <Tone cmf="ROUTER"><HomeRouter id="router" /></Tone>
 
+  <!-- 5. The problem, with the two research findings that prove pains 2 and 3 (WP166-A, R1-07). -->
   <Tone cmf="C2">
     <ProblemBand id="problem" title="Education Alone Is Not Leading to Jobs" bluf={problemBluf} factIds={['PX-01', 'PX-02']}>
-      <GainsPains slot="lead" painsHeading="What Gets in the Way" pains={FUNDER_PAINS.map(painForList)} />
+      <GainsPains slot="lead" painsHeading="What Gets in the Way" pains={homePains} />
     </ProblemBand>
   </Tone>
 
-  <Tone cmf="C3">
-    <HomeCost
-      id="cost"
-      title="Training and Evidence Fall Behind While You Wait"
-      blocks={[
-        // WP38 (cycle-15 review): the card states the first finding of PX-06 (the 21% on one platform), not both findings of the study in one sentence; PX-06 stays the fact the line rests on.
-        { icon: 'cpu', claim: CLAIM_PX06, factId: 'PX-06', text: freelancePostingsFinding(), implication: 'Training has to follow current employer demand, not last year’s job market.' },
-        { icon: 'trending-down', claim: CLAIM_RC06, factId: 'RC-06', implication: 'Without outcome tracking, funders cannot tell which programs reach earnings.' },
-      ]}
-    />
-  </Tone>
+  <!-- 6. One Path from Learning to Earning: the four cards (the "What We Deliver" card states the training hours), the model and TalentLEAP links, and the page's one program-scope sentence (WP166-A, R1-03, R1-17, R1-18). -->
+  <Tone cmf="C6" tone="ice"><HomeMechanism id="mechanism" title="One Path from Learning to Earning" tone="white" link={{ label: 'How Our Model Works', href: '/our-model/' }} method scope={PROGRAM_SCOPE_STATEMENT} /></Tone>
 
-  <!-- WP19, item 6 of the home order: credibility (the guide) comes before the vision (the next 12 months). Home only. -->
-  <Tone cmf="C5" tone="white"><HomeGuide id="guide" /></Tone>
-
-  <Tone cmf="C4" tone="airy">
-    <FutureBand
-      photos={futurePhotos('home')}
-      id="future"
-      title="Imagine the Next 12 Months"
-      lead="Three illustrative scenarios, not case studies."
-      vignettes={[
-        { kind: 'Functional', title: 'A First Foreign Client, Billed from Home', text: 'A young woman in your cohort invoices her first foreign client from her own laptop.' },
-        { kind: 'Emotional', title: 'First Earnings, Not Just Certificates', text: 'You review monthly reports showing who is earning, not only who completed.' },
-        // WP48 (cycle-23 review, three reviewers): not "AI-Ready Talent" ("AI-ready" is a positioning term explained on Employers and JobReady@Work, which Home does not carry); the scenario says what the reader sees.
-        { kind: 'Social', title: 'Employers Hiring from Your Cohort', text: 'You see employers hire completers whose skills match current employer demand.' },
-      ]}
-    />
-  </Tone>
-
-  <Tone cmf="C6"><HomeMechanism id="mechanism" title="One Path from Learning to Earning" tone="white" positioning={POSITIONING.home} link={{ label: 'How Our Model Works', href: '/our-model/' }} /></Tone>
-
-  <!-- WP19, item 8: the "At a Glance" band is gone. WP25h: the band no longer retells the trial and the survey (the carousel states them). WP35 (cycle-12 review): nor the trial at all (the hero card and the first slide state it); the band kept the paid-work pathways
-       beside the 72.3% no-prior-income result (34 of 47). WP48 (cycle-23 review): both are gone from Home (the hero's survey card and the carousel carry the survey; the Impact Survey 2026 page keeps the table and the 72.3%), which left "Evidence You Can Check" with its two
-       links alone, so the band is gone and its two links sit in the link row of "Proof in Practice" below (the C7 proof position). -->
+  <!-- 7. Proof in Practice and the learner stories. WP37/WP51: the program-results slide of the carousel states the figures, so the three cards show delivery context and none repeats a figure. -->
   <Tone cmf="C7" join>
-    <!-- WP37 (cycle-14 review): the program-results slide of the carousel (slide 4) states the Kosovo and Her Power figures, so those two cards show delivery context instead (caseStudyItems). WP51 (cycle-26 review): the same slide states the WSDFM figure too
-         (WP50), so all three cards show delivery context and none repeats a figure. -->
     <CaseStudyCarousel id="cases" eyebrow="Case Studies" title="Proof in Practice" items={caseStudyItems}>
       <a slot="more" class="link" href={caseStudies.href}>See All Case Studies<Icon name="arrow-right" size={16} /></a>
       <a slot="more" class="link" href={trialResults.href}>Read the Trial Results<Icon name="arrow-right" size={16} /></a>
       <a slot="more" class="link" href={surveyResults.href}>Impact Survey 2026<Icon name="arrow-right" size={16} /></a>
     </CaseStudyCarousel>
-    <!-- WP25h (benchmark review): three registered learner stories, one from each program above, replace the single Her Power learner voice (Maria Dewan is one of the three). -->
+    <!-- WP25h (benchmark review): three registered learner stories, one from each program above. -->
     <LearnerJourneys id="journeys" tone="airy" />
   </Tone>
 
-  <Tone cmf="RECOGNITION"><HomeRecognition id="recognition" /></Tone>
-
-  <!-- WP55 (owner decisions 2026-10-17/18, global positioning): CodersTrust is a New York organization with work in 16 countries and territories, so Home carries one small strip of where, in order, ending on Bangladesh (where most delivery has been). Its own
-       light ground (ice) keeps the rhythm between the white recognition band above and the airy band below. -->
-  <Tone cmf="GLOBAL" tone="ice">
-    <Section tone="ice" aria-labelledby="world-h"><WorldStrip tiles={WORLD_STRIP} level={2} id="world" /></Section>
+  <!-- 8. Track record and recognition in one band (WP166-A, R1-05, R1-19): the signed agreements, the rest of the logo wall, AWS and HolonIQ, and the world strip (WP55, owner global positioning: New York, 16 countries and territories, ending on Bangladesh). -->
+  <Tone cmf="C5" tone="white">
+    <HomeGuide id="guide">
+      <HomeRecognition id="recognition" />
+      <WorldStrip tiles={WORLD_STRIP} level={3} id="world" class="guide__world" />
+    </HomeGuide>
   </Tone>
 
-  <!-- WP38: three short cards (IncludesBand) in place of the concern / inclusion / benefit matrix; one band, so no `join` (it had left this band without bottom padding). -->
-  <Tone cmf="C8" tone="airy">
-    <IncludesBand id="features" tone="airy" title="What a Supported Youth Cohort Includes" cards={includes} scope={PROGRAM_SCOPE_STATEMENT} />
-  </Tone>
+  <!-- 9. The offer, naming YouthWIDE (WP166-A, R1-20). -->
+  <Tone cmf="C11" tone="ice"><HomeOffer id="offer" lead={PROGRAM_SIZES_NOTE} program={`This is YouthWIDE, ${youthwide}.`} /></Tone>
 
+  <!-- 10. Questions Partners Ask, after the offer they defend (WP166-A, R1-08). -->
   <Tone cmf="C9" tone="white">
     <FAQBand id="faq" audience="home" ids={FAQ_IDS} title="Questions Partners Ask" allLink={{ label: 'Find the Answers for Your Route', href: '/partner-with-us/#audiences' }} />
   </Tone>
 
-  <Tone cmf="C10" tone="ice"><ComparisonBand id="compare" title="How CodersTrust Compares with Self-Paced Courses" lead="What each approach typically includes." withoutDoingNothing onlyRows={['Mentoring', 'Work Entry', 'Outcome Tracking', 'Independent Evidence']} dropColumns={['Conventional Skills Programs', 'Freelance Marketplaces Alone']} ownCells={{ 'Independent Evidence': independentEvidence }} /></Tone>
-
-  <Tone cmf="C11"><HomeOffer id="offer" lead={PROGRAM_SIZES_NOTE} /></Tone>
-
-  <!-- C12 (Low Risk) is left to the audience pages since WP48 (cycle-23 review): Home's four cards (pilot, scorecard thresholds, expansion review, independent evaluation) repeated points made in "Choose Where to Start", the FAQ and the comparison, so
-       the one line that survives is the closing band's lead, directly above the call to action. -->
-
-  <!-- WP45 (cycle-21 review): the band has no "Planning a Grant-Funded Cohort?" block: it assumed grant funding for every audience that reaches the page (ministries, employers, impact investors), and the grant timeline is in the C14 steps below. -->
+  <!-- 11. The closing call to action (WP166-A, R1-01): the button, then what the discovery session covers, then the government and investor routes and the email fallback. -->
   <Tone cmf="C13">
     <CTABand
       id="cta"
@@ -217,18 +162,16 @@ const includes = [
       heading="Let’s Design Your First Cohort"
       text="Start with a multi-cohort pilot, agree the scorecard up front and decide on expansion from the evidence."
       cta={{ label: discovery.label, href: discovery.href }}
-      secondary={{ label: READ_THE_EVIDENCE, href: '/impact/' }}
+      promise={sessionPromise}
       routes={[
         { audience: 'Governments', label: briefing.label, href: briefing.href },
         { audience: 'Impact investors', label: introduction.label, href: introduction.href },
       ]}
-      micro={MICRO_COMMITMENT}
     />
   </Tone>
 
+  <!-- 12. What Happens Next. The 6–8 week start is stated in the "First cohort" step only (doc 04 §4, one statement per fact). -->
   <Tone cmf="C14">
-    <!-- The 6–8 week start is stated in the "First cohort" step only (doc 04 §4, one statement per fact; WP45 removed the C13 plan line that stated it too): no PD-04 timing line, no reminder. The micro-commitment is stated once, in C13. -->
-    <!-- WP28: the week-by-week steps are labelled "For Grant-Funded Pilots" (WP46, cycle-22 review: it read "Cohorts"; the hub's and Development Partners' timing is for grant-funded pilots), and one line names the audiences that get a route-specific next step. WP30c: the four steps were their headings alone (each names its week; the sentences under them restated the headings); WP49 (cycle-24 review): each step has its one-line description again, the hub's (grantStartSteps, ConversionNextSteps' default), because the hub and the audience pages describe theirs. -->
     <ConversionNextSteps
       id="next-steps"
       eyebrow="Target Timing for Grant-Funded Pilots"
@@ -245,7 +188,4 @@ const includes = [
       }}
     />
   </Tone>
-
-  <!-- WP31 (cycle-8 review): the "Latest News" band (Bangladesh posts after the final call to action) is gone, so the page ends on its next steps. The News menu item stays. -->
 </LandingLayout>
-

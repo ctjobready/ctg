@@ -73,9 +73,11 @@ test.describe('WP91 A2: Home slide 2 names the country and the university’s ow
 });
 
 test.describe('WP91 A3: the trial callout says what the employment effect is', () => {
-  test('the Home slide 1 caption reads "Employment effect, not income: +10.3 ..."', async ({ page }) => {
+  // WP166-A (marketing review R1-02): the benchmark is the hero trial card's second sentence, right under the +10.3 (so it needs no "not income" disclaimer); the slide's callout is the peer-reviewed publication
+  test('the nine-trial benchmark sits under the +10.3 on the hero’s trial card (WP166-A; it was the slide 1 caption "Employment effect, not income: ...")', async ({ page }) => {
     await open(page, '');
-    await expect(page.locator('.hs__proof', { hasText: 'Employment effect' })).toContainText(TRIAL_CAPTION);
+    await expect(page.locator('.hs__proof', { hasText: 'Employment effect' })).toHaveCount(0);
+    await expect(page.locator('.hh__card[data-fact="RC-02"] .hh__figlabel')).toContainText('That is more than four times the 2.3-point average across nine vocational-training trials.');
   });
 });
 

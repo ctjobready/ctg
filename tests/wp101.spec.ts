@@ -165,7 +165,8 @@ test.describe('WP101 A: new NU course banners', () => {
 
 /** Base-less prefix, card file, label (Title Case) and the line: each line is verbatim in that page's own copy (the hero title or lead, or its first sentence). */
 const CARDS = [
-  { prefix: '/', file: 'default', label: 'Learn. Earn. Prosper.', line: 'Turn Youth Unemployment into a Digital Workforce — with Evidence' },
+  // WP166-A (marketing review of 21 November 2026): the Home, Careers and Contact cards follow those pages' new H1 and leads (R1-10, R7-25, R7-02)
+  { prefix: '/', file: 'default', label: 'Learn. Earn. Prosper.', line: 'Turn Youth Unemployment into a Digital Workforce — and Show Who Starts Earning' },
   { prefix: '/partner-with-us/', file: 'partner-with-us', label: 'Partner with Us', line: 'Choose a partnership for youth employment, campus skills, team training, hiring or JobReady’s staged rollout.' },
   { prefix: '/partner-with-us/investors/', file: 'investors', label: 'Investors', line: 'Back JobReady’s staged rollout, built on CodersTrust’s training and mentoring programs.' },
   { prefix: '/programs/', file: 'programs', label: 'Programs', line: 'Digital Skills Programs, from School to Work' },
@@ -174,8 +175,8 @@ const CARDS = [
   { prefix: '/impact/', file: 'impact', label: 'Impact', line: 'Impact You Can Verify' },
   { prefix: '/about/', file: 'about', label: 'About', line: 'A Global Workforce Organization, Built on Evidence' },
   { prefix: '/news/', file: 'news', label: 'News', line: 'Partnerships and MOUs, recognition, program events and leadership' },
-  { prefix: '/careers/', file: 'careers', label: 'Careers', line: 'We are building a team that finds practical answers and delivers.' },
-  { prefix: '/contact/', file: 'contact', label: 'Contact', line: 'Choose the route that fits you.' },
+  { prefix: '/careers/', file: 'careers', label: 'Careers', line: 'We judge youth-employment programs by whether young people end up working and earning, not by how many attended.' },
+  { prefix: '/contact/', file: 'contact', label: 'Contact', line: 'Choose the route that fits you, and the right team will respond.' },
 ];
 const altOf = (c: (typeof CARDS)[number]) => (c.file === 'default' ? 'CodersTrust: Learn. Earn. Prosper.' : `CodersTrust: ${c.label}. ${c.line}${/[.!?]$/.test(c.line) ? '' : '.'}`);
 

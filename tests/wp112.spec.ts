@@ -92,8 +92,8 @@ test.describe('WP112 Polish 7: dates', () => {
     expect(visibleText(html)).toContain('Last updated November 3, 2026');
   });
 
-  test('Governance reads "Last updated November 2, 2026" (WP127 and WP128 changed its text on 30 October, WP129 applied the owner rule that any visible text change moves the date; WP141 changed it again; WP155 on 2 November)', () => {
-    expect(visibleText(distHtml('about/governance/index.html'))).toContain('Last updated November 2, 2026');
+  test('Governance reads "Last updated November 21, 2026" (WP127 and WP128 changed its text on 30 October, WP129 applied the owner rule that any visible text change moves the date; WP141 changed it again; WP155 on 2 November; WP166-A on 21 November)', () => {
+    expect(visibleText(distHtml('about/governance/index.html'))).toContain('Last updated November 21, 2026');
   });
 });
 

@@ -255,7 +255,8 @@ test.describe('WP104 item 8: meta descriptions name the full target group', () =
     {
       route: '',
       name: 'Home',
-      text: 'CodersTrust trains and mentors educated, unemployed and underemployed youth for digital work, with evidence from a randomized trial of its WSDFM program.',
+      // WP166-A (marketing review R7-03): no acronym a searcher does not know, one registered figure and an action
+      text: 'CodersTrust trains and mentors educated, unemployed and underemployed youth for paid digital work. 130,000+ learners trained since 2014. See the evidence.',
     },
     {
       route: 'programs/youthwide/',
@@ -265,7 +266,7 @@ test.describe('WP104 item 8: meta descriptions name the full target group', () =
     {
       route: 'careers/',
       name: 'Careers',
-      text: 'Join CodersTrust and help prepare educated, unemployed and underemployed young people for paid digital work. We welcome speculative applications.', // WP135: the second sentence is whole (was "How to apply, and speculative applications.")
+      text: 'Join CodersTrust and help prepare educated, unemployed and underemployed young people for paid digital work. Send your resume for when a role opens.', // WP135: the second sentence is whole (was "How to apply, and speculative applications."); WP166-A (R7-39): American usage, the page's own ask
     },
   ];
   for (const c of CASES) {

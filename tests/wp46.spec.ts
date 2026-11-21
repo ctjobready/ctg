@@ -20,7 +20,7 @@ const texts = (page: Page, selector: string) => page.locator(selector).evaluateA
 const count = (haystack: string, needle: string) => haystack.split(needle).length - 1;
 const noOverflow = (page: Page) => page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth);
 const builtPages = () => listPages().map((p) => ({ route: p.route, html: readFileSync(p.file, 'utf8') }));
-const slide = (page: Page, n: number) => page.locator('[data-hs-slide]').nth(n - 1);
+const slide = (page: Page, n: number) => page.locator('[data-hs-slide]').nth([0, 3, 1, 2][n - 1]); // WP166-A (R1-11): n is the slide's position before the reorder (1 trial, 2 government, 3 survey, 4 program results); the carousel now runs trial, survey, program results, government
 
 /** Every FAQPage question and answer text in the page's JSON-LD. */
 async function faqJsonLd(page: Page) {
@@ -291,11 +291,11 @@ test.describe('Home: the investor route card says what JobReady is (item 15)', (
   // WP49 (cycle-24 review): the card's title is "Investors" (it was "Impact Investors"); its text is unchanged
   // WP50 (cycle-25 review, item 14): the text is "Back the staged rollout of JobReady, CodersTrust’s digital education and employment platform." (IN-04's definition; tests/wp50.spec.ts)
   // WP53 (owner decision 2026-10-16): IN-04's definition is "CodersTrust’s digital learning and earning platform", so the card reads "... digital learning and earning platform." (tests/wp53.spec.ts)
-  test('the "Investors" card reads "Back JobReady’s staged rollout"', async ({ page }) => {
+  test('the "Investors" card reads "Back JobReady, CodersTrust’s digital learning and earning platform" (WP166-A)', async ({ page }) => {
     await open(page, '');
     const card = page.locator('#router .cat', { has: page.locator('.cat__title', { hasText: 'Investors' }) });
     await expect(card).toHaveCount(1);
-    expect(compact(await card.textContent())).toContain('Back JobReady’s staged rollout');
+    expect(compact(await card.textContent())).toContain('Back JobReady, CodersTrust’s digital learning and earning platform'); // WP166-A (marketing review R1-04): Home defines JobReady where it first names it (it was "Back JobReady’s staged rollout")
     expect(compact(await card.textContent())).not.toContain('For impact investors:');
     expect(await mainText(page)).not.toContain('For impact investors backing JobReady');
   });
@@ -322,7 +322,9 @@ test.describe('Track Record bands: "with progressive levels" is gone (item 16)',
 
   test('Home and Investors read "…organizes skills into career paths." and keep their TalentLEAP link', async ({ page }) => {
     await open(page, '');
-    expect(compact(await page.locator('#guide .guide__method').textContent())).toBe('Our method organizes skills into career paths. We call it TalentLEAP. How TalentLEAP Works');
+    // WP166-A (marketing review R1-18): on Home the sentence and its link sit at the foot of the Mechanism band, the band that explains the method
+    expect(compact(await page.locator('#mechanism .mech__method').textContent())).toBe('Our method organizes skills into career paths. We call it TalentLEAP. How TalentLEAP Works');
+    await expect(page.locator('#guide .guide__method')).toHaveCount(0);
     await open(page, 'partner-with-us/investors/');
     expect(compact(await page.locator('#guide .ig__method').textContent())).toBe('TalentLEAP, our method, organizes skills into career paths. How TalentLEAP Works');
   });

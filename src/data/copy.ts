@@ -32,7 +32,9 @@ export type Audience =
 export const VALUE_PROPOSITION: Record<Audience, string> = {
   // WP48 (cycle-23 review): "unemployed and underemployed", as ID-01 has the group (16 words, one over the CMF guideline above; no gate enforces it and the audience lines below run longer).
   // WP52 (cycle-27 review): "We help ..." (it began "Help ...", an instruction with no subject), as the audience lines below begin; 17 words, two over the guideline.
-  home: 'We help educated, unemployed and underemployed youth reach paid digital work through training, mentoring and placement support.',
+  // WP166-A (marketing review R1-03, owner approval of 21 November 2026): the hero lead names the buyer the H1 addresses ("We help funders and governments ..."), as YouthWIDE's hero does, and
+  // carries the reporting promise; Home's "Our Approach" sentence, which said the same a third time, is gone. The target group keeps ID-01's wording.
+  home: 'We help funders and governments move educated, unemployed and underemployed youth into paid digital work, with monthly reports on their progress.',
   // WP63 rework RW1 (coordinator, extending Grok R1): the Development Partners and Governments lines name the group as ID-01 and the Home line do, "educated, unemployed and underemployed youth" (the Governments line is also that page's meta description: 144 characters, within 155).
   developmentPartners: 'We help development partners prepare educated, unemployed and underemployed youth for paid work through mentored, certification-focused training.',
   governments: 'We help governments prepare educated, unemployed and underemployed youth for paid digital work through mentored, certification-focused training.',
@@ -48,7 +50,8 @@ export const VALUE_PROPOSITION: Record<Audience, string> = {
 
 /** C1 identity-hook headlines — 6 to 12 words, about the reader (CMF). */
 export const HEADLINE: Record<Audience, string> = {
-  home: 'Turn Youth Unemployment into a Digital Workforce — with Evidence',
+  // WP166-A (R1-10): the abstract tail "— with Evidence" is the funder's own question ("Your training budget needs to show who starts earning."); the evidence is the three proof cards below it.
+  home: 'Turn Youth Unemployment into a Digital Workforce — and Show Who Starts Earning',
   developmentPartners: 'Youth Employment Results You Can Report — Not Just Training Numbers',
   governments: 'Build a National Digital Workforce Through Graduates and Digital Labs',
   foundations: 'Fund a Supported Path from Learning to Earning',
@@ -497,6 +500,8 @@ const UNLIKE_APPROVED =
  * receive monthly reports on progress toward paid work, as agreed in the program scope."). scripts/check-facts.mjs declares it whole for Home (POSITION_WHOLE_STATEMENT['/']), independently of this file, so a change to it has to be made twice on purpose.
  * WP63 (cycle-35 review, Grok R1): the audience is "educated, unemployed and underemployed youth", the group ID-01 and the hero's value proposition name ("... for educated, unemployed and underemployed youth, with monthly reports ..."); the declaration in scripts/check-facts.mjs changed with it.
  */
+// WP166-A (marketing review R1-03, owner approval of 21 November 2026): Home no longer prints this statement (its hero lead names the buyer and the reporting, and "What Is CodersTrust?" says what CodersTrust does);
+// scripts/check-facts.mjs lists Home among the pages exempt from [POSITION]. The entry stays for reference; no page reads it.
 const HOME_POSITIONING =
   'CodersTrust connects training, mentoring and placement support for educated, unemployed and underemployed youth, with monthly reports on progress toward paid work.';
 
@@ -1029,12 +1034,23 @@ export const C14 = {
 /** "What is CodersTrust?" sits in DefinitionBand directly below each hero (GEO definition, not C1 copy). */
 export const DEFINITION_HEADING = 'What Is CodersTrust?';
 
+/** WP166-A (R7-03): SC-16's reach in its glance label's words ("130,000+ learners trained since 2014"), read from the register for Home's meta description, never typed. */
+function homeReach(): string {
+  const s = fact('SC-16').stat;
+  if (!s?.glance || s.glance.label !== 'learners trained since 2014') throw new Error('HOME_META: SC-16 no longer has the glance label "learners trained since 2014"; update the Home description');
+  return `${s.value} ${s.glance.label}`;
+}
+
 export const HOME_META = {
   // A colon, not a dash: scripts/check-title-case.mjs lowercases "From" after an em dash, and the title keeps its capital F.
-  title: 'CodersTrust: From Learning to Earning for Youth',
+  // WP166-A (marketing review R1-21, owner approval of 21 November 2026): the search and share headline names the buyers, not "for Youth". The reviewer's wording, "CodersTrust: Youth Workforce Programs for
+  // Funders and Governments", is 65 characters against the 60 the SEO gate allows (scripts/check-seo.mjs), so "Workforce" became "Jobs" (60 characters).
+  title: 'CodersTrust: Youth Jobs Programs for Funders and Governments',
   // WP23: at most 155 characters. WP41 (cycle-18 review): it opens with what CodersTrust does (ID-01: it trains and mentors educated, unemployed youth for digital work) and ends with the evidence, instead of leading with the trial abstract.
   // WP104 (Sonnet High run 1): the description names ID-01's full group ("educated, unemployed and underemployed youth"), in 153 characters: "paid" and "CodersTrust’s" (for "its") went to make room (WP63 had kept the short group because the full one was 162 characters).
-  description: 'CodersTrust trains and mentors educated, unemployed and underemployed youth for digital work, with evidence from a randomized trial of its WSDFM program.',
+  // WP166-A (marketing review R7-03, priority A; preferred to R1-21's description): no acronym a searcher does not know ("WSDFM"), one figure (SC-16's 130,000+ learners trained since 2014, in its glance
+  // label's words) and an action. The trial is not stated beside the 130,000, so it is not generalized to them. 154 characters.
+  description: `CodersTrust trains and mentors educated, unemployed and underemployed youth for paid digital work. ${homeReach()}. See the evidence.`,
 };
 
 /**

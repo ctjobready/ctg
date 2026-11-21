@@ -40,7 +40,8 @@ test.describe('figures say what they measure', () => {
   // WP42 (cycle-19 review): the government slide is second, so the survey-income slide is the third. WP53 (owner decision 2026-10-16): it also carries the former speed slide's finding as one body line (OC-05), which does not repeat the heading
   test('Home slide 3 reads as what surveyed completers report; its one body line is the timing of first earnings (OC-05), not a repeat of the heading', async ({ page }) => {
     await open(page, '');
-    const slide = page.locator('[data-hs-slide]').nth(2);
+    // WP166-A (marketing review R1-11): the slides run evidence, survey outcomes, program results, government (old slide 2 is now 4, 3 is 2, 4 is 3)
+    const slide = page.locator('[data-hs-slide]').nth(1);
     await expect(slide.locator('h3')).toHaveText('Surveyed Completers Report Higher Income');
     await expect(slide.locator('.hs__lead')).toHaveCount(1);
     expect(await slide.locator('.hs__lead').getAttribute('data-fact')).toBe('OC-05');
@@ -53,7 +54,8 @@ test.describe('figures say what they measure', () => {
     await open(page, '');
     const lead = compact(await page.locator('[data-hs-slide]').nth(0).locator('.hs__lead').textContent());
     expect(lead).toBe('In CodersTrust’s WSDFM program, women offered a place had an estimated 41% higher monthly income than the control group, about $27 more a month.'); // WP63 (cycle-35 review, GLM L4)
-    await expect(page.locator('[data-hs-slide]').nth(3)).toContainText('WSDFM: 711 of 1,000 enrolled in work (71%).');
+    // WP166-A (marketing review R1-11): the slides run evidence, survey outcomes, program results, government (old slide 2 is now 4, 3 is 2, 4 is 3)
+    await expect(page.locator('[data-hs-slide]').nth(2)).toContainText('WSDFM: 711 of 1,000 enrolled in work (71%).');
     // WP51 (cycle-26 review): the Home card shows delivery context in place of the figure and its caption ("WSDFM program records (not trial results; the trial’s 425 women offered a place were among these 1,000): 71% of enrolled women in work"), which the pages that keep the figure still print (below; tests/wp51.spec.ts)
     expect(compact(await page.locator('#cases article').first().textContent())).not.toContain('WSDFM program records');
   });
@@ -83,12 +85,14 @@ test.describe('figures say what they measure', () => {
   test('the Home Track Record band has no tile for the six government contracts; slide 2 says the 30,000+ is contract scope, not a count of completers', async ({ page }) => {
     await open(page, '');
     await expect(page.locator('#guide .guide__tile, #guide [data-evidence="Contract Scope"]')).toHaveCount(0);
-    expect(compact(await page.locator('[data-hs-slide]').nth(1).locator('.hs__lead').textContent())).toContain('30,000+ people, not a count of completers. Her Power, one of the six, trained 25,125 women nationally, its full target; CodersTrust trained 2,400 directly.');
+    // WP166-A (marketing review R1-11): the slides run evidence, survey outcomes, program results, government (old slide 2 is now 4, 3 is 2, 4 is 3)
+    expect(compact(await page.locator('[data-hs-slide]').nth(3).locator('.hs__lead').textContent())).toContain('30,000+ people, not a count of completers. Her Power, one of the six, trained 25,125 women nationally, its full target; CodersTrust trained 2,400 directly.');
   });
 
   test('the National University relationship is worded one way: official training partner for digital career skills and credentials', async ({ page }) => {
     await open(page, '');
-    const lead = compact(await page.locator('[data-hs-slide]').nth(1).locator('.hs__lead').textContent());
+    // WP166-A (marketing review R1-11): the slides run evidence, survey outcomes, program results, government (old slide 2 is now 4, 3 is 2, 4 is 3)
+    const lead = compact(await page.locator('[data-hs-slide]').nth(3).locator('.hs__lead').textContent());
     // WP46 (cycle-22 review): the sentence names its subject ("CodersTrust is the official training partner of ..."), where it was a fragment
     // WP61 (cycle-33 review, GPT-6.1 Sol G1): "As the official training partner of Bangladesh’s National University for digital career skills and credentials, CodersTrust is onboarding 1.5M+ of the university’s own learners, who are not learners trained by CodersTrust."
     expect(lead).toContain('As the official training partner of Bangladesh’s National University for digital career skills and credentials, CodersTrust is onboarding 1.5M+ of the university’s own learners, who are not learners trained by CodersTrust.');
@@ -324,7 +328,7 @@ test.describe('smaller wording fixes', () => {
     await open(page, '');
     const desc = compact(await page.locator('#mega-programs a.mega__link[href$="programs/youthwide/"] .mega__desc').textContent());
     // WP54 (cycle-28 review, Claude S7): the line no longer carries the Bangladesh aim (tests/wp54.spec.ts)
-    expect(desc).toBe('Co-funded country cohorts, designed for three regions, from training to paid digital work.');
+    expect(desc).toBe('For governments and funders: co-funded country cohorts designed for three regions.'); // WP166-A (marketing review R7-12): the menu line names the audience first
     expect(await page.evaluate(() => document.body.innerText.includes('across three regions'))).toBe(false);
   });
 
@@ -347,9 +351,8 @@ test.describe('smaller wording fixes', () => {
       expect(text, route || 'home').not.toMatch(/[Tt]racks have to follow|Tracks and Evidence Fall Behind|[Tt]racer [Ss]urveys?|Tracers\b/);
     }
     await open(page, '');
-    await expect(page.locator('#cost h2')).toHaveText('Training and Evidence Fall Behind While You Wait');
-    // WP38: Home's band is three short cards; WP45 (cycle-21 review): the reporting card is one line about the monthly reports (the "follow-up surveys" are in Home's FAQ answer)
-    expect(compact(await page.locator('#features .card__text').nth(1).textContent())).toBe('Monthly reports show progress toward paid work.');
+    // WP166-A (marketing review R1-07, R1-17): Home's cost band ("Training and Evidence Fall Behind While You Wait") is folded into the pains it proves, and the Includes band, whose reporting card read "Monthly reports show progress toward paid work.", is gone
+    await expect(page.locator('#cost, #features')).toHaveCount(0);
     expect(compact(await page.locator('#faq').textContent())).toContain('follow-up survey results at 3, 6 and 12 months'); // WP147: it read "follow-up surveys"
     await open(page, 'programs/youthwide/');
     // WP39 (cycle-16 review): YouthWIDE's features band was three short cards; the second said "follow-up surveys". WP57 (cycle-29 review, GPT-6.1 Sol G2): the band is gone, and the glance's Reporting row says them
@@ -358,23 +361,28 @@ test.describe('smaller wording fixes', () => {
     expect(compact(await reporting.locator('dd').textContent())).toContain('Monthly reports and follow-up surveys');
   });
 
-  // WP53 (owner decision 2026-10-16): the carousel's programs slide ("Find Your Program") is gone, so its last slide is the program results
-  test('Home: no "outside Dhaka", no Latest News band after the final call to action, the carousel’s last slide is "Results by Program"', async ({ page }) => {
+  // WP53 (owner decision 2026-10-16): the carousel's programs slide ("Find Your Program") is gone, so its last slide was the program results
+  // WP166-A (marketing review R1-11, R1-14): the results lead the carousel and the government slide is last, so "Results by Program" is the third slide; the Imagine band ("A young woman in your cohort invoices ...") is gone
+  test('Home: no "outside Dhaka", no Latest News band after the final call to action, the carousel’s third slide is "Results by Program" (WP166-A: it was the last)', async ({ page }) => {
     await open(page, '');
     expect(await mainText(page)).not.toContain('outside Dhaka');
-    await expect(page.locator('#future')).toContainText('A young woman in your cohort invoices her first foreign client from her own laptop.');
+    await expect(page.locator('#future')).toHaveCount(0);
+    expect(await mainText(page)).not.toContain('A young woman in your cohort invoices her first foreign client from her own laptop.');
     await expect(page.locator('#news, #news-teaser')).toHaveCount(0);
     const order = await ids(page);
     expect(order[order.length - 1], 'the page ends on its next steps').toBe('next-steps');
     await expect(page.locator('[data-hs-slide]')).toHaveCount(4);
-    await expect(page.locator('[data-hs-slide]').nth(3).locator('h3')).toHaveText('Results by Program');
+    // WP166-A (marketing review R1-11): the slides run evidence, survey outcomes, program results, government (old slide 2 is now 4, 3 is 2, 4 is 3)
+    await expect(page.locator('[data-hs-slide]').nth(2).locator('h3')).toHaveText('Results by Program');
   });
 
-  // WP48 (cycle-23 review): the evidence band (it had no scope line and no trial sub-heading) is gone from Home (tests/wp48.spec.ts); the comparison below it is unchanged
-  test('Home: the evidence band is gone; the comparison drops the freelance-marketplace column', async ({ page }) => {
+  // WP48 (cycle-23 review): the evidence band (it had no scope line and no trial sub-heading) is gone from Home (tests/wp48.spec.ts)
+  // WP166-A (marketing review R1-15): the comparison ("What It Includes" / "CodersTrust Supported Cohort" / "Self-Paced Course Platforms") is gone too, so no freelance-marketplace column can come back
+  test('Home: the evidence band is gone; the comparison, which had dropped the freelance-marketplace column, is gone (WP166-A)', async ({ page }) => {
     await open(page, '');
     await expect(page.locator('#proof-band')).toHaveCount(0);
-    expect(await texts(page, '#compare thead th')).toEqual(['What It Includes', 'CodersTrust Supported Cohort', 'Self-Paced Course Platforms']); // WP136 (Opus High run 11, Polish): the criteria column's heading was 'Approach'
+    await expect(page.locator('#compare')).toHaveCount(0);
+    expect(await mainText(page)).not.toMatch(/Self-Paced Course Platforms|[Ff]reelance [Mm]arketplaces?\b.*Varies/);
   });
 
   test('Partner with Us hub: the hero asks for the choice of partnership (WP32) with one "See Partnership Routes" button and no email before the closing call to action (WP35), three evidence tiles (trial, survey, reach), the investor card says "we are building"', async ({ page }) => {

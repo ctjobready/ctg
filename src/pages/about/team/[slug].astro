@@ -11,6 +11,8 @@ import Icon from '../../../components/system/Icon.astro';
 import Badge from '../../../components/system/Badge.astro';
 import NewsCard from '../../../components/ui/NewsCard.astro';
 import TeamCard from '../../../components/pages/about/TeamCard.astro';
+import CTABand from '../../../components/ui/CTABand.astro';
+import { cta } from '../../../lib/mailto';
 import { allNews, coverAlt, newsHref, newsMentioning, TOPICS } from '../../../components/pages/news/news';
 import { person, webPage, pageUrl } from '../../../lib/schema';
 import { PRODUCTION_ORIGIN } from '../../../lib/site';
@@ -54,7 +56,15 @@ const title = titleFull.length + ' | CodersTrust'.length <= 60 ? titleFull : d.n
 // WP106: the four profiles whose <title> gained a role changed on 2026-10-29; WP129: the Ferdinand Kjaerulff and Fahim Sheikh biographies changed again on 2026-10-30 (WP126), so they read 2026-10-31 (the other two are unchanged); the others state no "last updated" date, so their JSON-LD dateModified is the build date.
 // WP161-B: Faruque Hossain's role and bio say "former Executive Chairman" (2026-11-02), a role the Abdul Karim and Ferdinand Kjaerulff profiles show on their colleague cards; the owner answers of 2 November (applied 2026-11-03) changed
 // Aziz Ahmad's awards sentences, Md. Shamsul Haque's title (his profile now has its own date) and Ferdinand Kjaerulff's year of death.
-const MODIFIED: Record<string, string> = { 'abdul-karim': '2026-11-02', 'faruque-hossain': '2026-11-02', 'ferdinand-kjaerulff': '2026-11-03', 'fahim-sheikh': '2026-10-31', 'aziz-ahmad': '2026-11-03', 'shamsul-haque': '2026-11-03' }; // WP157: Aziz Ahmad's biography says "has spoken" (2026-11-02)
+// WP166-A (marketing review, owner approval of 21 November 2026): the six leadership profiles gained the closing band (R1-32), and the Asad Zaman (R1-33), Md. Shamsul Haque (R1-34) and Ferdinand Kjaerulff (R1-53) biographies changed, so those seven read 2026-11-21
+// (Mahdee Zaman, Shafqat Ullah, Asad Zaman and Rezaul Karim Khan gain their own date here: their visible text changed).
+const MODIFIED: Record<string, string> = { 'abdul-karim': '2026-11-02', 'faruque-hossain': '2026-11-02', 'ferdinand-kjaerulff': '2026-11-21', 'fahim-sheikh': '2026-10-31', 'aziz-ahmad': '2026-11-21', 'shamsul-haque': '2026-11-21', 'mahdee-zaman': '2026-11-21', 'shafqat-ullah': '2026-11-21', 'asad-zaman': '2026-11-21', 'rezaul-karim-khan': '2026-11-21' }; // WP157: Aziz Ahmad's biography says "has spoken" (2026-11-02)
+/**
+ * WP166-A (marketing review R1-32): the Chairman's and the executives' profiles are where a funder or investor goes after a meeting or a search, so they close with the Team page's own band (heading, line and button verbatim),
+ * not on two archive links. Not on the In Memoriam page, the advisors' or the staff profiles. The "two suitable times" request appears once on these pages (nowhere else on a profile).
+ */
+const TALK_TO_TEAM = new Set(['aziz-ahmad', 'shamsul-haque', 'mahdee-zaman', 'shafqat-ullah', 'asad-zaman', 'rezaul-karim-khan']);
+const discovery = cta('discovery');
 const img = d.photo ? await getImage({ src: d.photo, width: 800, height: 800, format: 'jpg' }) : undefined;
 const imgUrl = img ? PRODUCTION_ORIGIN + stripBase(img.src) : undefined;
 // WP161-B (owner 2026-11-02): the bio gives the year only ("passed away in 2023"; the month is unconfirmed), so the month is optional and deathDate is the year.
@@ -142,6 +152,16 @@ const jsonLd = [
   <Section pad="sm" aria-label="Back to the team">
     <p class="prof__back"><a class="link" href={url('/about/team/')}><Icon name="arrow-left" size={16} />All Leadership and Team</a></p>
   </Section>
+  {
+    TALK_TO_TEAM.has(p.id) && (
+      <CTABand
+        id="team-cta"
+        heading="Talk to the Team"
+        text="Tell us your goals and two suitable times, and we will discuss the right partnership route."
+        cta={{ label: discovery.label, href: discovery.href }}
+      />
+    )
+  }
 </BaseLayout>
 
 <style>

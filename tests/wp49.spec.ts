@@ -378,7 +378,7 @@ test.describe('Home: the router card, the closing steps and the first-step line 
     await open(page, '');
     expect(await texts(page, '#router .cat__title')).toEqual(['Development Partners and NGOs', 'Governments', 'Foundations and CSR', 'Investors']);
     const card = page.locator('#router a.cat[href$="partner-with-us/investors/"]');
-    expect(compact(await card.locator('.cat__text').textContent())).toBe('Back JobReady’s staged rollout');
+    expect(compact(await card.locator('.cat__text').textContent())).toBe('Back JobReady, CodersTrust’s digital learning and earning platform'); // WP166-A (marketing review R1-04): Home defines JobReady where it first names it (it was "Back JobReady’s staged rollout")
     expect(sitePages().filter((p) => /cat__title[^>]*>\s*Impact Investors/.test(p.html)).map((p) => p.route)).toEqual([]);
   });
 
@@ -502,9 +502,9 @@ test.describe('"What Happens When Funding Ends?" (item 22)', () => {
 test.describe('Home: the curriculum line (item 23)', () => {
   test('"Tracks Chosen from Employer Demand" says "A curriculum designed to follow the skills employers ask for as entry-level tasks change."; no page keeps "An AI-ready curriculum is designed to follow"; the AI-ready positioning stays where it is explained', async ({ page }) => {
     await open(page, '');
-    const card = page.locator('#features li.card').nth(2);
-    await expect(card.locator('h3')).toHaveText('Tracks Chosen from Employer Demand');
-    expect(await texts(page, '#features li.card:nth-child(3) p')).toEqual(['A curriculum designed to follow the skills employers ask for as entry-level tasks change.']);
+    // WP166-A (marketing review R1-17): the Includes band and its "Tracks Chosen from Employer Demand" card are gone; the earlier wording stays off every page (below)
+    await expect(page.locator('#features')).toHaveCount(0);
+    expect(await mainText(page)).not.toContain('Tracks Chosen from Employer Demand');
     expect(sitePages().filter((p) => visible(p.html).includes('An AI-ready curriculum is designed to follow')).map((p) => p.route)).toEqual([]);
     await open(page, 'partner-with-us/employers/');
     expect(await mainText(page)).toContain('An AI-ready curriculum, designed to prepare people to work with AI tools.');
@@ -530,7 +530,8 @@ test.describe('The OC-05 and RC-06a labels (items 24 and 26)', () => {
     expect(compact(await page.locator('#glance a[data-fact~="OC-05"]').textContent())).toContain('surveyed new earners');
     await open(page, '');
     // WP53 (owner decision 2026-10-16): Home's survey slide (slide 3) states it in its body line (it was the speed slide's tile). WP54 (cycle-28 reviews, Claude S23 and GLM L1): that line leads with its base and no longer uses the term
-    expect(compact(await page.locator('[data-hs-slide]').nth(2).locator('.hs__lead').textContent())).toContain('Of the 172 surveyed completers who first earned during or after training, 58.7% had started earning by six months after finishing the course');
+    // WP166-A (marketing review R1-11): the slides run evidence, survey outcomes, program results, government (old slide 2 is now 4, 3 is 2, 4 is 3)
+    expect(compact(await page.locator('[data-hs-slide]').nth(1).locator('.hs__lead').textContent())).toContain('Of the 172 surveyed completers who first earned during or after training, 58.7% had started earning by six months after finishing the course');
   });
 
   // WP52 (cycle-27 review, Kimi M2): Development Partners no longer shows a ">4×" tile; the register's glance label is the source of the +10.3 tile's note ("More than four times the 2.3-point average across nine vocational-training trials."; tests/wp52.spec.ts)

@@ -99,13 +99,14 @@ test.describe('Employers and JobReady@Work: the closing steps name their routes'
 });
 
 test.describe('Investors: no cohort comparison, and (WP43) no one-sentence platform band in its place', () => {
-  test('the approaches comparison is gone from Investors and stays on Home', async ({ page }) => {
+  // WP166-A (marketing review R1-15, owner approval of 21 November 2026): the comparison is gone from Home too
+  test('the approaches comparison is gone from Investors (and, since WP166-A, from Home)', async ({ page }) => {
     await open(page, 'partner-with-us/investors/');
     await expect(page.locator('#compare')).toHaveCount(0);
     const text = await mainText(page);
     expect(text).not.toMatch(/How the Approaches Compare|Self-Paced Course Platforms|Freelance Marketplaces Alone/);
     await open(page, '');
-    await expect(page.locator('#compare h2')).toHaveText('How CodersTrust Compares with Self-Paced Courses');
+    await expect(page.locator('#compare')).toHaveCount(0);
   });
 
   // WP43 (cycle-20 review): the one-sentence band WP34 added after the FAQ ("The Platform": "How JobReady Builds on Delivery", tied to IN-04) is gone: the evidence block ends "Youth-program outcomes are not platform

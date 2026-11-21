@@ -41,7 +41,8 @@ test.describe('Home: each figure once', () => {
   // WP42 (cycle-19 review): the government slide is second, so the survey, program-result, speed and reach slides are the third to the sixth
   test('slide 3 shows the income result only; the 78.2% is the hero’s survey card', async ({ page }) => {
     await open(page, '');
-    const slide = page.locator('[data-hs-slide]').nth(2);
+    // WP166-A (marketing review R1-11): the slides run evidence, survey outcomes, program results, government (old slide 2 is now 4, 3 is 2, 4 is 3)
+    const slide = page.locator('[data-hs-slide]').nth(1);
     await expect(slide.locator('h3')).toHaveText('Surveyed Completers Report Higher Income');
     await expect(slide.locator('.hs__stat')).toHaveCount(1);
     expect(await slide.locator('.hs__stat').getAttribute('data-fact')).toBe('OC-03');
@@ -66,7 +67,8 @@ test.describe('Home: each figure once', () => {
   // first earned during or after training, 58.7% ...", and no longer uses the register's term "surveyed new earners" (tests/wp54.spec.ts).
   test('the survey slide’s body line states the 58.7% with its base ("the 172 surveyed completers who first earned during or after training"), tied to OC-05; no slide carries the former speed heading', async ({ page }) => {
     await open(page, '');
-    const slide = page.locator('[data-hs-slide]').nth(2);
+    // WP166-A (marketing review R1-11): the slides run evidence, survey outcomes, program results, government (old slide 2 is now 4, 3 is 2, 4 is 3)
+    const slide = page.locator('[data-hs-slide]').nth(1);
     await expect(slide.locator('h3')).toHaveText('Surveyed Completers Report Higher Income');
     expect(await slide.locator('h3').getAttribute('data-fact')).toBe('OC-03');
     await expect(slide.locator('.hs__lead')).toHaveCount(1);
@@ -78,7 +80,8 @@ test.describe('Home: each figure once', () => {
 
   test('slide 4 names the base of every result and no line calls the Korail result "in work"', async ({ page }) => {
     await open(page, '');
-    const lines = await page.locator('[data-hs-slide]').nth(3).locator('.hs__lines li').evaluateAll((els) => els.map((e) => (e.textContent ?? '').replace(/\s+/g, ' ').trim()));
+    // WP166-A (marketing review R1-11): the slides run evidence, survey outcomes, program results, government (old slide 2 is now 4, 3 is 2, 4 is 3)
+    const lines = await page.locator('[data-hs-slide]').nth(2).locator('.hs__lines li').evaluateAll((els) => els.map((e) => (e.textContent ?? '').replace(/\s+/g, ' ').trim()));
     // WP50 (cycle-25 review, item 10): WSDFM is the second of four programs, with its base and the qualifier "program records, not trial data" (tests/wp50.spec.ts); WP60 (cycle-32 review, Claude S4): "program records; trial studied 833"
     expect(lines).toEqual([
       'Women in Online Work, Kosovo (2016–2017): 68% in work (102 of 150).',
@@ -89,13 +92,8 @@ test.describe('Home: each figure once', () => {
     expect(lines[2]).not.toMatch(/in work/);
   });
 
-  // WP38 (cycle-15 review): Home's band is three short cards, so there are no Practical Benefit cells; the card titles are Title Case like every other heading
-  test('the three cards of "What a Supported Youth Cohort Includes" (WP41: it was "What Your Partnership Includes") carry Title Case headings', async ({ page }) => {
-    await open(page, '');
-    const titles = await texts(page, '#features .card__title');
-    expect(titles).toEqual(['Training, Mentoring and Placement Support', 'Progress You Can Check', 'Tracks Chosen from Employer Demand']);
-    for (const t of titles) expect(t, t).toBe(titleCase(t));
-  });
+  // WP38 (cycle-15 review): Home's band was three short cards with Title Case headings. WP166-A (marketing review R1-17): the band, and with it this test, is gone; its first card's sentence is the
+  // Mechanism's "What We Deliver" text (tests/wp38.spec.ts), and the title-case gate checks every heading still on Home.
 
   test('the carousel keeps its layout: slides share one height box at 1280 and 390 and no slide leaves more than 48 px unused', async ({ page }) => {
     for (const vp of [DESKTOP, MOBILE]) {

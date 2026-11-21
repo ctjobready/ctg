@@ -212,9 +212,9 @@ test.describe('F7 About timeline: completed periods in the past tense', () => {
   });
 
   test('2025–2026 (the current period): the JobReady sentence stays present (WP163: IN-04’s definition, no rollout status); "CodersTrust published Impact Survey 2026."', () => {
-    const line = between(t(), '2025–2026 JobReady, YouthWIDE and the Impact Survey', 'CodersTrust Around the World').trim();
-    expect(line.startsWith('2025–2026 JobReady, YouthWIDE and the Impact Survey JobReady is CodersTrust’s digital learning and earning platform. YouthWIDE aims to train')).toBe(true);
-    expect(line).toMatch(/depending on government and donor commitments\. CodersTrust published Impact Survey 2026\./);
+    // WP166-A (marketing review R1-25): the YouthWIDE aim left this entry to close the story band ("Where We Are Going"), so the entry is "JobReady and the Impact Survey" and its two sentences of history
+    const line = between(t(), '2025–2026 JobReady and the Impact Survey', 'CodersTrust Around the World').trim();
+    expect(line).toBe('2025–2026 JobReady and the Impact Survey JobReady is CodersTrust’s digital learning and earning platform. CodersTrust published Impact Survey 2026.');
     expect(t()).not.toContain('CodersTrust publishes Impact Survey 2026');
   });
 });

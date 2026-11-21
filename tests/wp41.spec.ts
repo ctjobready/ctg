@@ -84,12 +84,11 @@ test.describe('"What Does It Cost?" and Home’s inclusions heading: standard in
     expect(await mainText(page)).toContain('Standard inclusions are a needs assessment, a customized curriculum');
   });
 
-  test('Home’s band is headed "What a Supported Youth Cohort Includes" (Title Case) and keeps its id and its three cards', async ({ page }) => {
+  // WP166-A (marketing review R1-17): the band re-explained the Mechanism band and is gone (tests/wp38.spec.ts); neither its heading nor the earlier one comes back
+  test('Home’s inclusions band, headed "What a Supported Youth Cohort Includes", is gone (WP166-A), and the earlier heading stays gone', async ({ page }) => {
     await open(page, '');
-    await expect(page.locator('section#features')).toHaveCount(1);
-    await expect(page.locator('#features h2')).toHaveText('What a Supported Youth Cohort Includes');
-    expect('What a Supported Youth Cohort Includes').toBe(titleCase('What a Supported Youth Cohort Includes'));
-    await expect(page.locator('#features li.card')).toHaveCount(3);
+    await expect(page.locator('section#features')).toHaveCount(0);
+    expect(await mainText(page)).not.toContain('What a Supported Youth Cohort Includes');
     expect(await mainText(page)).not.toContain('What Your Partnership Includes');
   });
 });
@@ -210,9 +209,10 @@ test.describe('American English: "resume", not "CV" (item 7)', () => {
     await open(page, 'careers/');
     const apply = compact(await page.locator('#apply').textContent());
     expect(apply).toContain('Send your resume. We keep it on file for when a role opens.');
-    expect(apply).toContain('you can also send your resume to that address yourself');
+    // WP166-A (marketing review R7-26, R7-27): the step list ends with the button and "Or email your resume to ..." (it said "The button opens a prefilled email to ...; you can also send your resume to that address yourself."), and the email asks for the resume itself
+    expect(apply).toContain('Or email your resume to career@coderstrustbd.com.');
     const mailto = decodeURIComponent((await page.locator('main a[href^="mailto:"]').first().getAttribute('href')) ?? '');
-    expect(mailto).toContain('Link to your resume or portfolio');
+    expect(mailto).toContain('Resume attached (or link to your resume or portfolio)');
     expect(mailto).not.toMatch(/\bCV\b/);
   });
 
@@ -230,7 +230,8 @@ test.describe('Home: slide headings, tile and meta description (items 8, 13 and 
   // WP53 (owner decision 2026-10-16): that slide is gone; its finding is the survey slide's one body line (slide 3), so the heading carries no percentage and the 58.7% keeps its surveyed-completer base in that line
   test('the survey slide (slide 3) keeps the income heading without a percentage, and its one body line states the 58.7% with its surveyed-completer base', async ({ page }) => {
     await open(page, '');
-    const slide = page.locator('[data-hs-slide]').nth(2);
+    // WP166-A (marketing review R1-11): the slides run evidence, survey outcomes, program results, government (old slide 2 is now 4, 3 is 2, 4 is 3)
+    const slide = page.locator('[data-hs-slide]').nth(1);
     await expect(slide.locator('h3')).toHaveText('Surveyed Completers Report Higher Income');
     expect(await slide.locator('h3').textContent()).not.toMatch(/\d/);
     expect(await slide.locator('h3').getAttribute('data-fact')).toBe('OC-03');
@@ -245,7 +246,8 @@ test.describe('Home: slide headings, tile and meta description (items 8, 13 and 
 
   test('slide 2 counts the contracts and names a National University partnership', async ({ page }) => {
     await open(page, '');
-    const slide = page.locator('[data-hs-slide]').nth(1);
+    // WP166-A (marketing review R1-11): the slides run evidence, survey outcomes, program results, government (old slide 2 is now 4, 3 is 2, 4 is 3)
+    const slide = page.locator('[data-hs-slide]').nth(3);
     await expect(slide.locator('h3')).toHaveText('Six Government Contracts and a National University Partnership');
     expect('Six Government Contracts and a National University Partnership').toBe(titleCase('Six Government Contracts and a National University Partnership'));
     expect(await slide.locator('h3').getAttribute('data-fact')).toBe('GV-12');
@@ -262,13 +264,14 @@ test.describe('Home: slide headings, tile and meta description (items 8, 13 and 
     }
   });
 
-  test('the meta description opens with what CodersTrust does and ends with the evidence; the title is unchanged', async ({ page }) => {
+  // WP166-A (marketing review R7-03, R1-21): the description still opens with what CodersTrust does; it ends with one registered figure and an action (no "WSDFM"), and the title names the buyers
+  test('the meta description opens with what CodersTrust does and ends with the evidence; the title names the buyers', async ({ page }) => {
     await open(page, '');
     const description = (await page.locator('meta[name="description"]').getAttribute('content')) ?? '';
-    expect(description).toBe('CodersTrust trains and mentors educated, unemployed and underemployed youth for digital work, with evidence from a randomized trial of its WSDFM program.');
+    expect(description).toBe('CodersTrust trains and mentors educated, unemployed and underemployed youth for paid digital work. 130,000+ learners trained since 2014. See the evidence.');
     expect(description.length).toBeLessThanOrEqual(155);
     expect(description).not.toMatch(/10\.3|percentage points/);
-    await expect(page).toHaveTitle('CodersTrust: From Learning to Earning for Youth');
+    await expect(page).toHaveTitle('CodersTrust: Youth Jobs Programs for Funders and Governments');
     expect((await page.locator('meta[property="og:description"]').getAttribute('content')) ?? description).toBe(description);
   });
 });

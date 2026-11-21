@@ -89,14 +89,16 @@ test('mobile sticky CTA bar is hidden at the top of every landing page (extra) 3
  * WP47 (owner decision 2026-10-15): the role router ("What Brings You Here?") moved from just before the closing call to action to directly after the Results and Programs carousel (tests/wp47.spec.ts),
  * so the band before the closing call to action is the risk band (C12) again.
  * WP48 (cycle-23 review): the risk band (the four "Low Risk" cards) is gone from Home (the audience pages keep theirs); its one line leads the closing band, so the band before the closing call to action is the offer (C11).
+ * WP166-A (marketing review R1-08, owner approval of 21 November 2026): Home is twelve bands; the FAQ (C9) follows the offer it defends, so the order near the end is offer, FAQ, closing call to action. The Cost of Waiting
+ * band is gone (its two findings close pains 2 and 3 of the problem band, tests/wp166-a.spec.ts), so its card checks are dropped.
  */
-test('home: the router follows the carousel, and the band before the closing call to action (one primary button, two text routes) is the offer band (WP23, WP47, WP48)', async ({ page }) => {
+test('home: the router follows the carousel, and the bands before the closing call to action (one primary button, two text routes) are the offer and the FAQ (WP23, WP47, WP48, WP166-A)', async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 800 });
   await open(page, pageByRoute('/'));
   const order = await page.evaluate(() => Array.from(document.querySelectorAll('[data-cmf]')).map((el) => el.getAttribute('data-cmf')));
   const cta = order.indexOf('C13');
   expect(cta, 'the closing call-to-action band is on the page').toBeGreaterThan(0);
-  expect(order[cta - 1], `the band before the closing call to action (order: ${order.join(' > ')})`).toBe('C11');
+  expect(order.slice(cta - 2, cta), `the bands before the closing call to action (order: ${order.join(' > ')})`).toEqual(['C11', 'C9']);
   expect(order.indexOf('ROUTER'), `the router follows the Results and Programs carousel (order: ${order.join(' > ')})`).toBe(order.indexOf('RESULTS') + 1);
   expect(order.filter((c) => c === 'ROUTER'), 'one router').toHaveLength(1);
 
@@ -104,8 +106,7 @@ test('home: the router follows the carousel, and the band before the closing cal
   await expect(band.locator('.btn--primary, .btn--inverse')).toHaveCount(1);
   await expect(band.getByRole('link', { name: 'Request a Briefing for Your Ministry' })).toHaveAttribute('href', /^mailto:/);
   await expect(band.getByRole('link', { name: 'Request an Introduction Call' })).toHaveAttribute('href', /^mailto:/);
-  await expect(band, 'the ChatGPT statistic is stated once, in the Cost of Waiting band').not.toContainText('ChatGPT');
-
-  await expect(page.locator('#cost .card')).toHaveCount(2);
-  await expect(page.locator('#cost')).not.toContainText('72%');
+  await expect(band, 'the ChatGPT statistic is stated once, in the problem band (WP166-A; it was the Cost of Waiting band)').not.toContainText('ChatGPT');
+  await expect(page.locator('#problem')).toContainText('ChatGPT');
+  await expect(page.locator('#cost')).toHaveCount(0);
 });

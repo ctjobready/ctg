@@ -11,8 +11,8 @@ import CopyBlock from '../../components/pages/about/CopyBlock.astro';
 import OfficeCard from '../../components/pages/about/OfficeCard.astro';
 import { contactRoutes } from '../../components/pages/about/routes';
 import { FIRST_COHORT_REMINDER } from '../../components/pages/partners/partners';
-import { ctaHref } from '../../lib/mailto';
-import { OFFICES, SOCIAL } from '../../lib/site';
+import CallLine from '../../components/ui/CallLine.astro';
+import { COURSES_URL, OFFICES, SOCIAL } from '../../lib/site';
 import { linkAttrs } from '../../lib/url';
 import { webPage } from '../../lib/schema';
 
@@ -20,27 +20,42 @@ const routes = contactRoutes();
 // Thirteen routes in three groups, partnership first. A route that is withheld (no href) is filtered out of `routes` already.
 // WP36 (cycle-13 review): "Hire or Train" gains the Schools and Education Partners route (SuperKids' inquiry).
 // WP42 (cycle-19 review): the group also holds the universities (JobReady@Campus) and the schools, so it is "Educate, Hire or Train". Its id stays `hire`.
+// WP166-A (marketing review R7-05): the third group is "Learners and Media" (it was "Study or Contact the Media"), named for who it serves. Its id stays `study`.
 const GROUPS = [
   { id: 'partner', title: 'Partner or Fund', ids: ['discovery', 'briefing', 'funding', 'investor', 'local', 'diligence', 'report'] },
   { id: 'hire', title: 'Educate, Hire or Train', ids: ['campus', 'work', 'talent', 'schools'] },
-  { id: 'study', title: 'Study or Contact the Media', ids: ['nu-pgd', 'learners', 'media'] },
+  { id: 'study', title: 'Learners and Media', ids: ['nu-pgd', 'learners', 'media'] },
 ].map((g) => ({ ...g, routes: g.ids.map((id) => routes.find((r) => r.id === id)).filter((r): r is NonNullable<typeof r> => !!r) }));
 const grouped = new Set(GROUPS.flatMap((g) => g.ids));
 const ungrouped = routes.filter((r) => !grouped.has(r.id));
 if (ungrouped.length > 0) throw new Error(`Contact: routes without a group: ${ungrouped.map((r) => r.id).join(', ')}`);
 const description = 'Reach CodersTrust: pick the route for governments, funders, universities, employers, local partners, media or learners. Headquartered in New York.';
 const jsonLd = [webPage({ path: '/contact/', name: "Let’s Talk", description, type: 'ContactPage', breadcrumb: [{ name: 'Home', path: '/' }, { name: 'Contact', path: '/contact/' }] })];
+const courses = linkAttrs(COURSES_URL);
+/*
+ * WP166-A (marketing review of 21 November 2026, R7; owner approval item 4):
+ *   R7-19  the <title> says who the page serves: "Contact: Partners, Funders, Media and Learners | CodersTrust" (it was "Contact | CodersTrust"; the reviewer's "Contact CodersTrust: ..." had no suffix, and every page but
+ *          Home keeps the settled "{Page} | CodersTrust" pattern, tests/wp38.spec.ts and tests/wp61.spec.ts).
+ *   R7-02  the hero promises a reply ("Choose the route that fits you, and the right team will respond.") instead of explaining how the buttons work; the routes' lead says it once, with the fallback addresses.
+ *   item 4 the registered New York number is a second route beside the "Talk to Us" request, one short line under the lead (CallLine). No scheduling link.
+ *   R7-05  a learner sees the course route in the first screen ("Looking for a course? Go to JobReady.global."), and the third group is "Learners and Media".
+ *   R7-06  "What Happens After Your Inquiry" follows the route cards, before the offices (it closed the page); its lead is gone and step 3 is "A Next Step for Your Route".
+ */
 ---
 
-<BaseLayout title="Contact" description={description} breadcrumbs={[{ label: 'Contact' }]} jsonLd={jsonLd}>
-  <Hero eyebrow="Contact" title="Let’s Talk" lead="Choose the route that fits you. The inquiry buttons open a prefilled email to the CodersTrust team; the NU application form and JobReady.global open their own sites." artSeed="contact">
+<BaseLayout title="Contact: Partners, Funders, Media and Learners" description={description} breadcrumbs={[{ label: 'Contact' }]} jsonLd={jsonLd}>
+  <Hero eyebrow="Contact" title="Let’s Talk" lead="Choose the route that fits you, and the right team will respond." artSeed="contact">
+    <p class="ct-learners">Looking for a course? Go to <a class="link" href={courses.href} rel={courses.rel}>JobReady.global<span class="sr-only"> {courses.srText}</span></a>.</p>
     <Fragment slot="actions">
+      <CallLine />
       <a class="link" href="#offices">Offices and Phone<Icon name="arrow-right" size={16} /></a>
     </Fragment>
   </Hero>
 
   <Section id="routes" aria-labelledby="routes-h">
-    <SectionHeader id="routes-h" eyebrow="Inquiry Routes" title="Choose Your Inquiry Route" lead="If your email app does not open, write to contact@coderstrust.global. For local partnerships in Bangladesh, write to hello@coderstrustbd.com." />
+    <!-- WP166-A (R7-02): the reviewer's "Each button opens a prefilled email." is the wording WP161-B (adversarial review A-13) corrected, since the NU application form and JobReady.global open their own sites; the routes' lead keeps
+         A-13's accurate sentence (moved here from the hero) and adds the reviewer's fallback question. -->
+    <SectionHeader id="routes-h" eyebrow="Inquiry Routes" title="Choose Your Inquiry Route" lead="The inquiry buttons open a prefilled email to the CodersTrust team; the NU application form and JobReady.global open their own sites. Not sure which route fits, or your email app does not open? Write to contact@coderstrust.global. For local partnerships in Bangladesh, write to hello@coderstrustbd.com." />
     <p class="ct-copy"><CopyEmail /></p>
     {
       GROUPS.map((g) => (
@@ -72,8 +87,29 @@ const jsonLd = [webPage({ path: '/contact/', name: "Let’s Talk", description, 
     }
   </Section>
 
-  <Section id="offices" tone="airy" aria-labelledby="offices-h">
-    <SectionHeader id="offices-h" eyebrow="Offices" title="Where We Work From" lead="CodersTrust is headquartered in New York, with a country office in Dhaka. Use the contact route above; the right team will respond." />
+  <Section id="next" tone="airy" aria-labelledby="next-h">
+    <SectionHeader id="next-h" eyebrow="After You Write" title="What Happens After Your Inquiry" />
+    <div class="ct-next">
+      <StepFlow steps={[
+        // WP54 (cycle-28 review, Grok R7): step 1 asks for "two suitable times" without naming a discovery conversation; the route a reader chooses may begin with a briefing (governments) or an introduction call (investors), and step 2 says what the conversation covers.
+        { title: 'Your Inquiry', text: 'In your inquiry, include two suitable times.' },
+        { title: 'A Conversation', text: 'We talk through your goals and timeline.' },
+        // WP27: the third step follows the route chosen above; each line restates what that route's own page and contact card already say.
+        // WP36 (cycle-13 review): foundations choose between a cohort grant and a platform grant, so they are not in the "first cohort" sentence.
+        // WP54 (cycle-28 review, GPT-6.1 Sol G7): the recap was too dense (four partner types in one clause, both employer routes in full), so it is four short lines, one per kind of route: "Program partners" (development partners, governments, universities and local partners:
+        // the four whose next step is a program scope), foundations, employers (a needs assessment for a team, or a talent request) and impact investors. Every route and the hiring qualifier ("scoped against the candidate pool") stay; the route cards above name each partner type.
+        // WP166-A (R7-06): the heading says what the reader gets, "A Next Step for Your Route" (it was the label "The Next Step Depends on Your Route").
+        { title: 'A Next Step for Your Route', text: 'Program partners: a program scope, designed with you. Foundations: a cohort grant designed with you, or a platform-grant discussion. Employers: a needs assessment, or a talent request scoped against the candidate pool. Impact investors: the deck and data room, under NDA.' },
+      ]} />
+      <ul class="ct-c14" role="list">
+        <li><CopyBlock block={FIRST_COHORT_REMINDER} /></li>
+        <li data-fact="PD-04">Public procurement follows the agency’s own timeline.</li>
+      </ul>
+    </div>
+  </Section>
+
+  <Section id="offices" aria-labelledby="offices-h">
+    <SectionHeader id="offices-h" eyebrow="Offices" title="Where We Work From" lead="CodersTrust is headquartered in New York, with a country office in Dhaka." />
     <div class="grid-cards grid-cards--2">
       {OFFICES.map((o) => <OfficeCard {...o} city={`${o.city} · ${o.kind}`} note={o.id === 'bangladesh' ? 'Campuses in Mirpur (Dhaka) and Agrabad (Chattogram).' : undefined} />)}
     </div>
@@ -95,32 +131,16 @@ const jsonLd = [webPage({ path: '/contact/', name: "Let’s Talk", description, 
     </div>
   </Section>
 
-  <Section id="next" aria-labelledby="next-h">
-    <SectionHeader id="next-h" eyebrow="After You Write" title="What Happens After Your Inquiry" lead="For program and funding inquiries, the first two steps are shared and the third follows your route." />
-    <div class="ct-next">
-      <StepFlow steps={[
-        // WP54 (cycle-28 review, Grok R7): step 1 asks for "two suitable times" without naming a discovery conversation; the route a reader chooses may begin with a briefing (governments) or an introduction call (investors), and step 2 says what the conversation covers.
-        { title: 'Your Inquiry', text: 'In your inquiry, include two suitable times.' },
-        { title: 'A Conversation', text: 'We talk through your goals and timeline.' },
-        // WP27: the third step follows the route chosen above; each line restates what that route's own page and contact card already say.
-        // WP36 (cycle-13 review): foundations choose between a cohort grant and a platform grant, so they are not in the "first cohort" sentence.
-        // WP54 (cycle-28 review, GPT-6.1 Sol G7): the recap was too dense (four partner types in one clause, both employer routes in full), so it is four short lines, one per kind of route: "Program partners" (development partners, governments, universities and local partners:
-        // the four whose next step is a program scope), foundations, employers (a needs assessment for a team, or a talent request) and impact investors. Every route and the hiring qualifier ("scoped against the candidate pool") stay; the route cards above name each partner type.
-        { title: 'The Next Step Depends on Your Route', text: 'Program partners: a program scope, designed with you. Foundations: a cohort grant designed with you, or a platform-grant discussion. Employers: a needs assessment, or a talent request scoped against the candidate pool. Impact investors: the deck and data room, under NDA.' },
-      ]} />
-      <ul class="ct-c14" role="list">
-        <li><CopyBlock block={FIRST_COHORT_REMINDER} /></li>
-        <li data-fact="PD-04">Public procurement follows the agency’s own timeline.</li>
-      </ul>
-    </div>
-    <!-- WP61 (cycle-33 review, GLM L6, with Kimi): the page no longer closes on a partner logo wall; the track-record bands of the audience pages carry the logos. -->
-  </Section>
-
+  <!-- WP61 (cycle-33 review, GLM L6, with Kimi): the page no longer closes on a partner logo wall; the track-record bands of the audience pages carry the logos. -->
 </BaseLayout>
 
 <style>
   .ct-copy {
     margin: calc(-1 * var(--space-sm)) 0 var(--space-lg);
+  }
+  .ct-learners {
+    margin: 0;
+    color: var(--on-surface-variant);
   }
   .ct-group + .ct-group {
     margin-top: var(--space-xl);

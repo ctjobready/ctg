@@ -33,9 +33,10 @@ const MAX_BYTES = 200 * 1024;
  * `label` is the section name (Title Case, as the site writes it) and `line` one existing text from that section's own copy.
  * WP101 (owner 2026-10-28, "Refresh all 11"): each line is the page's own hero title or lead (or the lead's first sentence), verbatim and without a digit,
  * so the corpus check below passes unchanged; the cards and src/lib/og.ts are regenerated from this table.
+ * WP166-A (marketing review of 21 November 2026): the Home, Careers and Contact lines follow those pages' new H1 and leads (R1-10, R7-25, R7-02); the three cards and src/lib/og.ts were regenerated.
  */
 const CARDS = [
-  { file: 'default', prefix: '/', exact: true, label: 'Learn. Earn. Prosper.', line: 'Turn Youth Unemployment into a Digital Workforce — with Evidence' },
+  { file: 'default', prefix: '/', exact: true, label: 'Learn. Earn. Prosper.', line: 'Turn Youth Unemployment into a Digital Workforce — and Show Who Starts Earning' },
   { file: 'partner-with-us', prefix: '/partner-with-us/', label: 'Partner with Us', line: 'Choose a partnership for youth employment, campus skills, team training, hiring or JobReady’s staged rollout.' },
   { file: 'investors', prefix: '/partner-with-us/investors/', label: 'Investors', line: 'Back JobReady’s staged rollout, built on CodersTrust’s training and mentoring programs.' },
   { file: 'programs', prefix: '/programs/', label: 'Programs', line: 'Digital Skills Programs, from School to Work' },
@@ -44,8 +45,8 @@ const CARDS = [
   { file: 'impact', prefix: '/impact/', label: 'Impact', line: 'Impact You Can Verify' },
   { file: 'about', prefix: '/about/', label: 'About', line: 'A Global Workforce Organization, Built on Evidence' },
   { file: 'news', prefix: '/news/', label: 'News', line: 'Partnerships and MOUs, recognition, program events and leadership' },
-  { file: 'careers', prefix: '/careers/', label: 'Careers', line: 'We are building a team that finds practical answers and delivers.' },
-  { file: 'contact', prefix: '/contact/', label: 'Contact', line: 'Choose the route that fits you.' },
+  { file: 'careers', prefix: '/careers/', label: 'Careers', line: 'We judge youth-employment programs by whether young people end up working and earning, not by how many attended.' },
+  { file: 'contact', prefix: '/contact/', label: 'Contact', line: 'Choose the route that fits you, and the right team will respond.' },
 ];
 
 // ---------------------------------------------------------------------------------------------

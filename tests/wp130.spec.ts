@@ -45,7 +45,7 @@ test.describe('WP130 Minor 1: route emails name the first step as the pages do',
     for (const prefix of ['Funding partnership', 'YouthWIDE cohort grant', 'JobReady@Campus inquiry', 'JobReady@Work inquiry', 'Talent request']) {
       const found = all.filter((m) => m.subject.startsWith(prefix));
       expect(found.length, prefix).toBeGreaterThan(0);
-      for (const m of found) expect(m.body, prefix).toContain('Two suitable times for a discovery session: ');
+      for (const m of found) expect(m.body, prefix).toContain('Two suitable times for a discovery session (with your time zone): '); // WP166-A (R7-30): the times line asks for the time zone
     }
   });
 
@@ -53,7 +53,7 @@ test.describe('WP130 Minor 1: route emails name the first step as the pages do',
     expect(main('partner-with-us/investors/index.html')).toContain('Your first step: an introduction call.');
     const inv = mails().filter((m) => m.route === '/partner-with-us/investors/' && /Firm: /.test(m.body));
     expect(inv.length).toBeGreaterThan(0);
-    for (const m of inv) expect(m.body).toContain('Two suitable times for an introduction call: ');
+    for (const m of inv) expect(m.body).toContain('Two suitable times for an introduction call (with your time zone): '); // WP166-A (R7-30): the times line asks for the time zone
   });
 });
 

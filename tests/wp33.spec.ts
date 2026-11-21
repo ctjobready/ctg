@@ -121,11 +121,13 @@ test.describe('Outcomes 2026: "Results in Brief" has no bare 5.7% line', () => {
 });
 
 test.describe('Home mechanism card 3', () => {
-  test('reads exam preparation by track, then three months of mentoring, with no scope parenthesis; YouthWIDE keeps its scope sentence', async ({ page }) => {
+  // WP166-A (marketing review R1-17): the card states the fuller sentence of the former Includes band (exam preparation inside the 100 hours, then the mentoring and placement support), still with no scope parenthesis
+  test('reads the training hours with exam preparation, then three months of mentoring, with no scope parenthesis; YouthWIDE keeps its scope sentence', async ({ page }) => {
     await open(page, '');
     const card = page.locator('#mechanism .model__block', { hasText: 'Skills, Certification Preparation and Mentoring' });
     await expect(card).toHaveCount(1);
-    expect(compact(await card.textContent())).toContain('Industry certification exam preparation by track, then three months of milestone-based mentoring.');
+    expect(compact(await card.textContent())).toContain('100 training hours per certification, including exam preparation, followed by three months of milestone-based mentoring and placement support. Each track’s work-entry plan is agreed before enrollment.');
+    expect(compact(await card.textContent())).not.toContain('program scope');
     expect(await mainText(page)).not.toContain('eligibility and attempts agreed in the program scope');
     await open(page, 'programs/youthwide/');
     // WP145: the exam terms are stated once on YouthWIDE (the glance); "What We Deliver" no longer repeats them
@@ -174,7 +176,8 @@ test.describe('"skill and certification courses delivered" reads the same on eve
     expect(tileText).toContain('skill and certification courses delivered');
     expect(await mainText(page)).not.toContain('skill courses and certification courses');
     await open(page, 'about/mentors/');
-    await expect(page.locator('#mentors .lead[data-fact="SC-09"]')).toHaveText('150+ instructors and mentors.');
+    // WP166-A (marketing review R1-38): SC-09's words inside a sentence that says what the grid is
+    await expect(page.locator('#mentors .lead[data-fact="SC-09"]')).toHaveText('15 of CodersTrust’s 150+ instructors and mentors, by field.');
     expect(await mainText(page)).not.toContain('skill courses and certification courses');
   });
 });

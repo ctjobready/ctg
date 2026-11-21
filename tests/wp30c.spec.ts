@@ -57,7 +57,7 @@ test.describe('shorter pages', () => {
 test.describe('headings', () => {
   test('the H1s the owner chose are unchanged: Home, Governments, Investors', async ({ page }) => {
     const wanted: [string, string][] = [
-      ['', 'Turn Youth Unemployment into a Digital Workforce — with Evidence'],
+      ['', 'Turn Youth Unemployment into a Digital Workforce — and Show Who Starts Earning'], // WP166-A (marketing review R1-10, owner approval of 21 November 2026)
       ['partner-with-us/governments/', 'Build a National Digital Workforce Through Graduates and Digital Labs'],
       ['partner-with-us/investors/', 'Invest in a Platform Built to Connect Emerging-Market Youth to Work'],
     ];
@@ -120,37 +120,25 @@ test.describe('Home', () => {
     expect(region).not.toContain('Reach at Scale');
   });
 
-  test('the comparison answers each row with its own cell: the self-paced Mentoring cell is not its Work Entry cell; WP31 dropped the freelance-marketplace column on Home', async ({ page }) => {
+  // WP166-A (marketing review R1-15, owner approval of 21 November 2026): the comparison band is gone from Home (its other column said "Varies" in three of four rows; each CodersTrust cell is stated elsewhere on the page)
+  test('the comparison is gone from Home (WP166-A); the trial is still scoped to CodersTrust’s 200-hour WSDFM program where Home states it', async ({ page }) => {
     await open(page, '');
-    expect((await page.locator('#compare thead th').allTextContents()).map(compact)).toEqual(['What It Includes', 'CodersTrust Supported Cohort', 'Self-Paced Course Platforms']); // WP136 (Opus High run 11, Polish): the criteria column's heading was 'Approach'
-    const rows = await page.locator('#compare tbody tr').evaluateAll((trs) => trs.map((tr) => Array.from(tr.querySelectorAll('th, td')).map((c) => (c.textContent ?? '').replace(/\s+/g, ' ').trim())));
-    const byLabel = new Map(rows.map((r) => [r[0], r]));
-    const mentoring = byLabel.get('Mentoring')!;
-    const work = byLabel.get('Work Entry')!;
-    expect(mentoring[mentoring.length - 1]).toBe('Varies; often self-directed');
-    // WP42 (cycle-19 review): every cell is a fragment with no trailing period, in sentence case, in CodersTrust's column and the comparison column alike
-    expect(work[work.length - 1]).toBe('Work-entry support depends on the provider and package');
-    expect(mentoring[mentoring.length - 1]).not.toBe(work[work.length - 1]);
-    // WP31: the independent-evidence cell is one clause on Home (the shared cell keeps its longer wording elsewhere)
-    expect(byLabel.get('Independent Evidence')![1]).toBe('One randomized trial of CodersTrust’s WSDFM program (200 hours, women in Dhaka); independent evaluation of your cohort welcome');
+    await expect(page.locator('#compare')).toHaveCount(0);
+    expect(compact(await page.locator('.hh__card[data-fact="RC-02"]').textContent())).toContain('CodersTrust’s 200-hour WSDFM program');
   });
 
   // WP55 (owner decisions 2026-10-17/18, synthesis 3.5): the band ends with ONE press line (WP62, cycle-34 review: one pointer sentence to Recognition and Media; tests/wp55.spec.ts) above the link to the full list. The 2014–2016 press outlets are named
   // nowhere in the band: no logo list, no list in the line, no second mention.
-  test('the recognition band leads with the university partners (WP63, cycle-35 review, Gemini M3: "University Partners", it said "University and UN-Mandated Partners"; only UPEACE is UN-mandated, and its line says so), then AWS, then the EdTech listing; the press line is one sentence that names no outlet, and the full list is a link away', async ({ page }) => {
+  // WP166-A (marketing review R1-19, owner approval of 21 November 2026): the recognition items are the second half of the track-record band (an h3 with h4 items); the University Partners item and the press pointer sentence are gone
+  // (the universities are in the logo wall's Education Partners card; the pointer only described its link). AWS, then the EdTech listing; no outlet is named; the full list is a link away.
+  test('the recognition items list AWS, then the EdTech listing (WP166-A: in the track-record band, without the University Partners item or the press line); no outlet is named, and the full list is a link away', async ({ page }) => {
     await open(page, '');
     const band = page.locator('#recognition');
-    await expect(band.locator('h2')).toHaveText('Partners and Recognition');
-    await expect(band.locator('h3')).toHaveText(['University Partners', 'Amazon Web Services (AWS)', 'HolonIQ South Asia EdTech 100']);
-    expect(compact(await band.locator('.rec__badge').first().textContent())).toContain('University for Peace (UPEACE), the UN-mandated university');
-    await expect(band.locator('p.cov')).toHaveCount(1);
-    const outsideTheLine = await band.evaluate((el) => {
-      const copy = el.cloneNode(true) as HTMLElement;
-      copy.querySelector('p.cov')?.remove();
-      return copy.textContent ?? '';
-    });
-    expect(compact(outsideTheLine)).not.toMatch(/Forbes|Wall Street Journal|TechCrunch/);
-    expect(compact(await band.locator('p.cov').textContent())).not.toMatch(/Forbes|Wall Street Journal|TechCrunch|Gulf News|USA Today|Tech in Asia|Times of India/);
+    await expect(page.locator('#guide #recognition')).toHaveCount(1);
+    await expect(band.locator('h3')).toHaveText('Partners and Recognition');
+    await expect(band.locator('h4')).toHaveText(['Amazon Web Services (AWS)', 'HolonIQ South Asia EdTech 100']);
+    await expect(band.locator('p.cov')).toHaveCount(0);
+    expect(compact(await band.textContent())).not.toMatch(/Forbes|Wall Street Journal|TechCrunch|Gulf News|USA Today|Tech in Asia|Times of India/);
     await expect(band.locator('img')).toHaveCount(0);
     await expect(band.getByRole('link', { name: 'See All Recognition and Media' })).toHaveCount(1);
   });
@@ -211,21 +199,24 @@ test.describe('mega-menu featured panels point to a different decisive page than
     }
   });
 
-  test('each panel uses its target page’s own menu description (no new claim)', async ({ page }) => {
+  // WP166-A (marketing review R7-08, owner approval of 21 November 2026): a panel that repeated the item beside it word for word added nothing, so each panel now carries a line from its target page's own copy
+  // (its H1, a hub card title, its section headings) that the menu item does not say; still no new claim. This replaces WP30c's "the panel uses the item's own menu description".
+  test('each panel carries a line from its target page’s own copy that the menu item beside it does not say (no new claim; WP166-A)', async ({ page }) => {
     await open(page, '');
-    const cases: [string, string, string][] = [
-      ['about', '/about/governance/', 'How CodersTrust is organized and reports to partners.'],
-      // WP163 (owner answers of 3 November 2026): the platform line says what JobReady offers, with no live or pre-launch label
-      ['model', '/our-model/jobready-platform/', 'An AI Tutor, adaptive learning paths, an AI career coach, partner portals and work marketplaces.'],
-      // WP54 (cycle-28 review, Claude S7): the line no longer carries the Bangladesh aim (tests/wp54.spec.ts)
-      ['programs', '/programs/youthwide/', 'Co-funded country cohorts, designed for three regions, from training to paid digital work.'],
-      // WP48 (cycle-23 review): the Governments blurb no longer implies a delivered national program (tests/wp48.spec.ts)
-      ['partner', '/partner-with-us/governments/', 'Curriculum, trainer training and phased delivery for ministries.'],
+    const cases: [string, string, string, string][] = [
+      ['about', '/about/governance/', 'How CodersTrust is organized and reports to partners.', 'The contracting entity, safeguarding and reporting, in one place.'],
+      // WP163 (owner answers of 3 November 2026): the platform line says what JobReady offers, with no live or pre-launch label; WP166-A: the panel is the platform page's H1
+      ['model', '/our-model/jobready-platform/', 'An AI Tutor, adaptive learning paths, an AI career coach, partner portals and work marketplaces.', 'Built to connect learning to work.'],
+      // WP54 (cycle-28 review, Claude S7): the line no longer carries the Bangladesh aim (tests/wp54.spec.ts); WP166-A (R7-12): it names the audience first, and the panel is the YouthWIDE H1
+      ['programs', '/programs/youthwide/', 'For governments and funders: co-funded country cohorts designed for three regions.', 'From training to paid digital work, country by country.'],
+      // WP48 (cycle-23 review): the Governments blurb no longer implies a delivered national program (tests/wp48.spec.ts); WP166-A: the panel is the partner hub's title for the route
+      ['partner', '/partner-with-us/governments/', 'Curriculum, trainer training and phased delivery for ministries.', 'Turn existing labs into a workforce pipeline.'],
     ];
-    for (const [id, href, text] of cases) {
+    for (const [id, href, text, panel] of cases) {
       const target = page.locator(`#mega-${id} .mega__links a.mega__link[href$="${href}"] .mega__desc`);
       expect(compact(await target.textContent()), id).toBe(text);
-      expect(compact(await page.locator(`#mega-${id} .mega__feature-text`).textContent()), id).toBe(text);
+      expect(compact(await page.locator(`#mega-${id} .mega__feature-text`).textContent()), id).toBe(panel);
+      expect(panel, id).not.toBe(text);
       expect(await page.locator(`#mega-${id} .mega__feature a.link`).getAttribute('href'), id).toMatch(new RegExp(`${href.replace(/\//g, '\\/')}$`));
     }
   });

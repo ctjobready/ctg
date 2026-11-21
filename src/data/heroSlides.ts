@@ -58,6 +58,14 @@ import { cta } from '../lib/mailto';
  * the line is 715 px of text against 705 px at 1280 px (two rows either way; the Kosovo, WSDFM and Her Power lines are still one row, 571, 588 and 559 px in the 594 px row) and 577 px against 569 px at 390 px (two rows either way), so no slide's height changed: the unused space is still
  * 42, 42, 25 and 16 px at 1280 and 16 px on every slide at 390 (the limit is 48; measured). The slide titles are h3s under the band's "Results" h2 (WP75): same classes and styles, so the same size (measured: same type styles and box on all four slides at both widths).
  * Order: the randomized trial, the government contracts and the National University, the survey, the results by program.
+ * WP166-A (marketing review of 21 November 2026, owner approval items 1 and 5):
+ *   R1-02  the hero's trial card is "Independent Randomized Trial" and its caption adds the nine-trial benchmark (RC-06a's glance wording: "That is more than four times the 2.3-point average across nine
+ *          vocational-training trials."), so the benchmark is stated once, where the +10.3 first appears; the first slide no longer carries the ">4×" callout or its "not income" disclaimer.
+ *   R1-06  the first slide's callout is the peer-reviewed publication (RC-15): "Peer-Reviewed" over "Published in a peer-reviewed journal: Economic Development and Cultural Change (October 2026).",
+ *          the journal and the month read from RC-15's text, never typed.
+ *   R1-11  the band is headed "Results You Can Check" and the slides run trial, survey, program records, then the government contracts and the National University (the second slide is the next-strongest outcome).
+ *   R1-12  (three lines with bold lead-ins on the government slide) is not applied: it breaks the slides' height budget at 1280 px (see the slide).
+ * New order: the randomized trial, the survey, the results by program, the government contracts and the National University.
  */
 
 export interface HeroSlideStat {
@@ -65,6 +73,8 @@ export interface HeroSlideStat {
   factId: string;
   /** Caption under the figure, built from the register; the register's own label when omitted. */
   caption?: (f: Fact) => string;
+  /** WP166-A (R1-06): a word shown in place of the stat value, for a register fact that has no stat (RC-15, the peer-reviewed publication). The caption is then required. */
+  value?: string;
 }
 
 export interface HeroSlideLink {
@@ -138,8 +148,17 @@ if (fact('RC-06a').stat?.value !== '>4×') throw new Error('heroSlides: RC-06a n
 const nineTrialAverage = /more than four times the ([\d.]+-point average across nine vocational-training trials)$/.exec(fact('RC-06a').stat?.glance?.label ?? '')?.[1];
 if (!nineTrialAverage) throw new Error('heroSlides: RC-06a’s glance label no longer ends "more than four times the N-point average across nine vocational-training trials"; update the callout of the trial slide');
 if (!fact('RC-06a').text.includes(`${offeredPoints} percentage points more likely to be employed`)) throw new Error('heroSlides: RC-06a no longer states the employment effect RC-02 states ("N percentage points more likely to be employed"); update the callout of the trial slide');
-// WP91 (triage A3): "Employment effect, not income:" says what the caption measures, since the heading above it is about earnings.
-const trialMultiple = `Employment effect, not income: +${offeredPoints} percentage points, more than four times the ${nineTrialAverage}.`;
+// WP91 (triage A3): "Employment effect, not income:" said what the slide's callout measured, since the heading above it is about earnings.
+// WP166-A (R1-02): the callout is gone from the slide; the benchmark is the second sentence of the hero's trial card instead, directly under its +10.3 (RC-06a's glance wording, read above, never typed).
+// scripts/check-facts.mjs derives the card's caption on its own ([PROOF-CARD]).
+const trialBenchmark = `That is more than four times the ${nineTrialAverage}.`;
+/**
+ * WP166-A (R1-06): the first slide's callout is the trial's peer-reviewed publication, RC-15 ("The BIGD randomized trial of CodersTrust’s WSDFM program is published in a peer-reviewed journal: Arman, ... (2026), “...,”
+ * Economic Development and Cultural Change 75(1): 367–399 (October 2026)"). The journal and the month are read from RC-15's text; the build stops if it changes shape.
+ */
+const journal = /is published in a peer-reviewed journal: .+,” (Economic Development and Cultural Change) \d+\(\d+\): [\d–]+ \(([A-Z][a-z]+ \d{4})\)$/.exec(fact('RC-15').text);
+if (!journal) throw new Error('heroSlides: RC-15 no longer reads "... is published in a peer-reviewed journal: ..., “...,” Economic Development and Cultural Change V(I): P–P (Month YYYY)"; update the callout of the trial slide');
+const peerReviewed = `Published in a peer-reviewed journal: ${journal[1]} (${journal[2]}).`;
 /** Her Power's tracked base and in-work share, read from PR-05 ("372 of 800 tracked women ... in work (47%)"). */
 const herPower = /of (\d+) tracked women.*\((\d+)%\)/.exec(fact('PR-05').text);
 if (!herPower) throw new Error('heroSlides: PR-05 no longer reads "... of N tracked women ... (P%)"');
@@ -282,20 +301,23 @@ export const HOME_HERO = {
   /** The three proof cards: the trial, the survey, the scale. A card's own `value` and `caption` replace the register's stat value and label. */
   proof: [
     {
-      eyebrow: 'Randomized Trial',
+      // WP166-A (R1-02): "Independent Randomized Trial" (it was "Randomized Trial"): nothing beside the +10.3 said the trial was independent; "An Independent Randomized Trial" is the About page's heading for it.
+      eyebrow: 'Independent Randomized Trial',
       factId: 'RC-02',
       value: `+${offeredPoints}`,
       unit: 'percentage points',
       // WP109 (Opus Low run 1): "about 10 more were in work than among 100 comparable women in the control group", the Trial page's own wording, with RC-02 rounded (the "+10.3" above it keeps RC-02's figure). Before WP109 it read "10.3 more ... than in the control group" (WP50).
       // scripts/check-facts.mjs derives this caption on its own ([PROOF-CARD]).
       caption: `For every 100 women offered a place in CodersTrust’s ${hours}-hour WSDFM program, about ${Math.round(offeredPoints)} more were in work than among 100 comparable women in the control group.`,
+      // WP166-A (R1-02): the second sentence of the caption, the nine-trial benchmark, in its own span tagged with the fact it states (RC-06a); [PROOF-CARD] reads the caption with it.
+      benchmark: { text: trialBenchmark, factId: 'RC-06a' },
     },
     { eyebrow: 'Impact Survey 2026', factId: 'OC-01', caption: surveyCaption },
     { eyebrow: 'Reach Since 2014', factId: 'SC-16', caption: reachCaption },
-  ] as { eyebrow: string; factId: string; value?: string; unit?: string; caption?: string }[],
+  ] as { eyebrow: string; factId: string; value?: string; unit?: string; caption?: string; benchmark?: { text: string; factId: string } }[],
 };
 
-export const HOME_SLIDES: HeroSlide[] = [
+const SLIDES: HeroSlide[] = [
   {
     id: 'evidence',
     // WP50 (cycle-25 review): the eyebrow carries the qualifier ("Randomized Trial of CodersTrust’s WSDFM Program"; it was "Independent Evaluation"), so the heading can be short again. It is this slide's own text (the pill is not the shared evidence tag).
@@ -313,10 +335,12 @@ export const HOME_SLIDES: HeroSlide[] = [
     lead: `In CodersTrust’s WSDFM program, women offered a place had an estimated ${incomeOffered}% higher monthly income than the control group, about $${dollarsOffered} more a month.`,
     leadFacts: ['RC-01', 'RC-04'],
     // WP50 (cycle-25 review): the caption no longer repeats the trial's employment result (+10.3 percentage points), which the hero's trial card states; it says the multiple the tile shows.
-    // WP54 (cycle-28 review, Grok R2): "Employment effect: more than four times the 2.3-point average across nine vocational-training trials." (see trialMultiple); the tile (">4×") and its data-fact are unchanged.
+    // WP54 (cycle-28 review, Grok R2): "Employment effect: more than four times the 2.3-point average across nine vocational-training trials."; the tile (">4×") and its data-fact were unchanged.
+    // WP166-A (R1-02, R1-06): the benchmark moved to the hero's trial card, and the callout is the peer-reviewed publication (RC-15), the strongest third-party signal the trial has.
     proof: {
-      factId: 'RC-06a',
-      caption: () => trialMultiple,
+      factId: 'RC-15',
+      value: 'Peer-Reviewed',
+      caption: () => peerReviewed,
     },
     links: [{ label: 'See the Trial', href: '/impact/independent-evaluation/', variant: 'primary' }],
     crop: { zoom: 1.45, origin: '50% 100%' },
@@ -353,8 +377,10 @@ export const HOME_SLIDES: HeroSlide[] = [
     // WP83 (owner answer 2026-10-23: Her Power's 25,125 is the national program's TARGET, not a count of women trained): "Her Power, one of the six, is a national program to train 25,125 women; CodersTrust trained 2,500 directly." (it said "..., trained 25,125 women nationally; ...").
     // WP85 (owner update 2026-10-24: the government achieved 100% of Her Power's 25,125-trainee target): "Her Power, one of the six, trained 25,125 women nationally, its full target; CodersTrust trained 2,400 directly." (WP83 had "..., is a national program to train 25,125 women; ...").
     // WP91 (Perplexity cycle 40, triage A2): the National University sentence names the country and says the 1.5M+ are the university's own learners, read from GV-12's "onboarding N learners" (nuLearners).
+    // WP84 (owner answer 2026-10-24): the shared note's overlap sentence cites SC-02 (the 150,000+ enrollments), which this slide does not print, so SC-02 was left off the lead's data-fact (it was GV-12 GV-01 GV-11 SC-04).
+    // WP166-A (marketing review R1-12) asked for the three sentences as three lines with bold lead-ins. Not done: measured at 1280 px, the three-line form makes this the tallest slide and leaves the other three
+    // with 76, 59 and 50 px unused below their content (the limit is 48, tests/hero-slider.spec.ts); the paragraph stays as it was.
     lead: `${governmentScope[1]} for ${governmentScope[2]}, not a count of completers. Her Power, one of the six, trained ${CONTRACT_FIGURES.national} women nationally, its full target; CodersTrust trained ${CONTRACT_FIGURES.direct} directly. As the official training partner of Bangladesh’s National University ${governmentScope[3]}, CodersTrust is onboarding ${nuLearners} of the university’s own learners, who are not learners trained by CodersTrust.`,
-    // WP84 (owner answer 2026-10-24): the shared note's overlap sentence cites SC-02 (the 150,000+ enrollments), which this slide does not print, so SC-02 is left off the lead's data-fact (it stays GV-12 GV-01 GV-11 SC-04).
     leadFacts: [...CONTRACT_TOTAL_NOTE.facts.filter((f) => f !== 'SC-02'), 'SC-04'],
     // WP32 (cycle-9 review): the slide covers the contracts and the National University partnership, so it links both audience pages (the carousel renders every link as a text link, side by side).
     links: [
@@ -410,3 +436,15 @@ export const HOME_SLIDES: HeroSlide[] = [
     photo: 'general/yes-trainees-group',
   },
 ];
+
+/**
+ * WP166-A (marketing review R1-11, owner approval of 21 November 2026, item 5: evidence may be re-ordered): the carousel runs from the strongest outcome down, because views fall off slide by slide:
+ * the randomized trial, the Impact Survey 2026, the results by program, then the government contracts and the National University (scale and trust, not an outcome). The slides' words are unchanged by the order.
+ */
+const SLIDE_ORDER = ['evidence', 'outcomes', 'placement', 'government-trust'] as const;
+export const HOME_SLIDES: HeroSlide[] = SLIDE_ORDER.map((id) => {
+  const s = SLIDES.find((x) => x.id === id);
+  if (!s) throw new Error(`heroSlides: no slide "${id}"`);
+  return s;
+});
+if (HOME_SLIDES.length !== SLIDES.length) throw new Error('heroSlides: SLIDE_ORDER does not list every slide');

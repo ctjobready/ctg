@@ -50,7 +50,14 @@ if (ungrouped.length > 0) throw new Error(`Mentors: no discipline group for ${un
 // SC-09 states two 150+ figures; the lede shows only the instructors and mentors figure (WP109), so the courses figure is not read as a total for it.
 const [coursesPart, mentorsPart] = fact('SC-09').text.split('; ');
 if (!coursesPart || !mentorsPart || !/^150\+ skill and certification courses delivered$/.test(coursesPart) || !/^150\+ instructors and mentors$/.test(mentorsPart)) throw new Error('Mentors page: SC-09 wording changed; update the split');
-const scLine = `${mentorsPart}.`;
+// WP166-A (marketing review R1-38, owner approval of 21 November 2026): the line says what the grid is, around SC-09's own words ("150+ instructors and mentors", unchanged): "15 of CodersTrust’s 150+ instructors and mentors, by field."
+// The 15 is the number of cards below, counted, never typed.
+const scLine = `${mentors.length} of CodersTrust’s ${mentorsPart}, by field.`;
+// WP166-A (R1-38): one practice credential on the two mentor cards whose credential is already on the site (each person's own team profile); the others wait for the owner (one credential per mentor).
+const CREDENTIALS: Record<string, string> = {
+  'md-hazrat-ali-nahid': 'Registered tax preparer in the U.S., with over 15 years of experience',
+  'rezaul-karim-khan': '20+ years in global ICT projects and startups',
+};
 const apply = cta('mentor');
 const discovery = cta('discovery');
 const description = 'Meet CodersTrust mentors: practitioners in digital marketing, design, video, development and accounting who guide learners toward jobs and freelance work.';
@@ -63,7 +70,8 @@ const jsonLd = [
 ---
 
 <BaseLayout title="Instructors and Mentors" description={description} breadcrumbs={[{ label: 'About', href: '/about/' }, { label: 'Mentors' }]} jsonLd={jsonLd}>
-  <Hero eyebrow="About Us" title="Mentors Who Guide Learners into Work" lead="Practitioners who teach and mentor CodersTrust learners toward employment and freelance work." art={false}>
+  <!-- WP166-A (R1-38): the lead says what a mentor does in the model (the owner's delivery model: mentors' time goes to Q&A and handholding; PD-01: three months of milestone-based mentoring after the course). -->
+  <Hero eyebrow="About Us" title="Mentors Who Guide Learners into Work" lead="Practitioners who mentor CodersTrust learners toward employment and freelance work: Q&A and handholding during training, then three months of milestone-based mentoring." art={false}>
     <Fragment slot="actions">
       <Button href={apply.href} icon="mail">{apply.label}</Button>
       <a class="link" href={discovery.href}>{discovery.label}<Icon name="arrow-right" size={16} /></a>
@@ -85,7 +93,7 @@ const jsonLd = [
         <div class="mn-group">
           <h2 class="mn-group__title t-heading-xl" id={g.id}>{g.title}</h2>
           <div class="grid-cards grid-cards--4">
-            {g.mentors.map((m) => <TeamCard name={m.name} role={m.role} photo={photoFor(m.photo)} alt={m.photoAlt} assetId={`mentor-${m.id}`} expertise={m.expertise} chips={3} />)}
+            {g.mentors.map((m) => <TeamCard name={m.name} role={m.role} photo={photoFor(m.photo)} alt={m.photoAlt} assetId={`mentor-${m.id}`} expertise={m.expertise} chips={3} credential={CREDENTIALS[m.id]} />)}
           </div>
         </div>
       ))
@@ -97,7 +105,7 @@ const jsonLd = [
     heading="Become a Mentor"
     text="Work in a digital field? Tell us about your experience and availability."
     cta={{ label: apply.label, href: apply.href }}
-    secondary={{ label: 'See how mentoring works', href: '/our-model/talentleap/' }}
+    secondary={{ label: 'See How Mentoring Works', href: '/our-model/talentleap/' }}
   />
 </BaseLayout>
 

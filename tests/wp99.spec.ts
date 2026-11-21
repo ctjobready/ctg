@@ -87,7 +87,9 @@ test.describe('Item 1: the YouthWIDE aim is 1 million educated youth (Higher Sec
     // WP106 (Polish, accepted): the Programs card is sibling length, so it states the short aim (the figure from IN-01, the 2030 date and the clause); the full statement stays on About and YouthWIDE
     expect(compact(await page.locator('main').textContent())).toContain(`It aims to train 1 million educated youth by 2030, ${AIM_DEPENDENCY}.`);
     await open(page, 'about/');
-    expect(compact(await page.locator('#story .timeline__item').last().locator('.timeline__text').textContent())).toBe(`JobReady is CodersTrust’s digital learning and earning platform. YouthWIDE aims to train ${IN01_STATEMENT}. CodersTrust published Impact Survey 2026.`);
+    // WP166-A (marketing review R1-25): the aim closes the story band under "Where We Are Going", in IN-01's words, and the timeline entry keeps its two sentences of history
+    expect(compact(await page.locator('#story .about-going p').textContent())).toBe(`YouthWIDE aims to train ${IN01_STATEMENT}.`);
+    expect(compact(await page.locator('#story .timeline__item').last().locator('.timeline__text').textContent())).toBe('JobReady is CodersTrust’s digital learning and earning platform. CodersTrust published Impact Survey 2026.');
     await open(page, 'impact/');
     const tile = page.locator('#heading a[data-fact~="IN-01"]');
     await expect(tile).toHaveCount(1);
@@ -321,7 +323,8 @@ test.describe('Item 5: CodersTrust’s WSDFM program, not "predecessor program"'
     expect(compact(await page.locator('.ie__type').textContent())).toContain('CodersTrust’s WSDFM program, women in Dhaka');
     expect(compact(await page.locator('main').textContent())).toContain('The trial evaluated CodersTrust’s 200-hour WSDFM program for women in Dhaka, not today’s 100-hour tracks.');
     expect(faqs.find((f) => f.id === 'Q15')?.a).toContain('evaluated CodersTrust’s 200-hour WSDFM program for women in Dhaka, not today’s 100-hour tracks');
-    expect(compact(await page.locator('meta[name="description"]').getAttribute('content'))).toBe('A BIGD trial of CodersTrust’s WSDFM program: women offered a place were 10.3 percentage points more likely to be employed.');
+    // WP166-A (marketing review R7-21): BRAC, the name funders know, in the description; the program stays named
+    expect(compact(await page.locator('meta[name="description"]').getAttribute('content'))).toBe('A BRAC University (BIGD) randomized trial of CodersTrust’s WSDFM program: women offered a place were 10.3 percentage points more likely to be employed.');
     await open(page, 'impact/case-studies/wsdfm-women-freelancers/');
     await expect(page.getByRole('heading', { level: 1 })).toHaveText('CodersTrust’s WSDFM Program Evaluated by a Randomized Trial');
     expect(await page.locator('meta[name="description"]').getAttribute('content')).toBe('WSDFM (Porticus): a randomized trial of the program found women offered a place had an estimated 41% higher monthly income than the control group.');

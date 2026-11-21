@@ -32,12 +32,12 @@ function walkSrc(dir: string, out: string[] = []): string[] {
 }
 
 // --------------------------------------------------------------------------------------------------------------------------------
-test.describe('WP109 item 1: Governance is dated by its last content change (2026-10-24 until WP127 and WP128; 2026-10-31 since WP129; 2026-11-01 since WP141; 2026-11-02 since WP155)', () => {
-  test('the visible "Last updated" date and the JSON-LD dateModified are November 2, 2026', () => {
+test.describe('WP109 item 1: Governance is dated by its last content change (2026-10-24 until WP127 and WP128; 2026-10-31 since WP129; 2026-11-01 since WP141; 2026-11-02 since WP155; 2026-11-21 since WP166-A)', () => {
+  test('the visible "Last updated" date and the JSON-LD dateModified are November 21, 2026', () => {
     const html = distHtml('about/governance/index.html');
-    expect(html).toMatch(/<time datetime="2026-11-02"[^>]*>November 2, 2026<\/time>/);
+    expect(html).toMatch(/<time datetime="2026-11-21"[^>]*>November 21, 2026<\/time>/);
     expect(html).not.toContain('October 17, 2026');
-    expect(html).toMatch(/"dateModified":"2026-11-02"/);
+    expect(html).toMatch(/"dateModified":"2026-11-21"/);
   });
 });
 
@@ -102,7 +102,8 @@ test.describe('WP109 item 7: site-authored "US" is "U.S."', () => {
 test.describe('WP109 item 8: the Mentors lede keeps the instructors figure only', () => {
   test('the lede reads "150+ instructors and mentors." and SC-09 stays in the register', () => {
     const html = distHtml('about/mentors/index.html');
-    expect(html).toContain('150+ instructors and mentors.');
+    // WP166-A (marketing review R1-38): the register's words are unchanged, inside a sentence that says what the grid is
+    expect(html).toContain('15 of CodersTrust’s 150+ instructors and mentors, by field.');
     expect(html).not.toContain('150+ skill and certification courses delivered');
     expect(readFileSync('src/data/facts.ts', 'utf8')).toContain('150+ skill and certification courses delivered; 150+ instructors and mentors');
   });
@@ -119,7 +120,7 @@ test.describe('WP109 item 9: dates on the changed pages', () => {
     }
   });
   test('Recognition (2026-11-02 since WP161-B; 2026-11-01 since WP141), Fahim Sheikh and the outcomes page are dated', () => {
-    expect(distHtml('about/recognition/index.html')).toMatch(/"dateModified":"2026-11-02"/); // WP161-B: the Morten Lund note and the World Bank pages heading changed
+    expect(distHtml('about/recognition/index.html')).toMatch(/"dateModified":"2026-11-21"/); // WP161-B: the Morten Lund note and the World Bank pages heading changed; WP166-A (2026-11-21): the lead, the section order and the press band
     expect(distHtml('about/team/fahim-sheikh/index.html')).toMatch(/"dateModified":"2026-10-31"/);
     expect(distHtml('impact/outcomes-2026/index.html')).toContain('2026-11-03'); // WP161-A: 2026-11-03 (the rounding sentence, A-06). WP135: re-dated from 2026-10-29 (the closing line and "On This Page" changed); WP147: 2026-11-01 (the method line and the Speed to Earning tile changed)
   });

@@ -281,10 +281,10 @@ test.describe('the "It doesn’t have to be this way." line is gone from every p
   });
 
   // WP47 (owner decision 2026-10-15): the closing line ("A first cohort can show who is earning, and you decide on the evidence.") is gone, so Home's band ends with its cards like the others (tests/wp47.spec.ts)
-  test('Home’s cost band ends with its cards', async ({ page }) => {
+  // WP166-A (marketing review R1-07): Home's cost band is gone, its two findings folded into the pains they prove, so there is no band to close with a line
+  test('Home has no cost band (WP166-A; it ended with its cards)', async ({ page }) => {
     await open(page, '');
-    await expect(page.locator('#cost .cost__after, #cost .cost__transition, #cost .cost__turn')).toHaveCount(0);
-    expect(await page.locator('#cost .container > :last-child').getAttribute('class')).toContain('grid-cards');
+    await expect(page.locator('#cost, .cost__after, .cost__transition, .cost__turn')).toHaveCount(0);
   });
 
   // WP47 (owner decision 2026-10-15): the six audience pages that had a cost band have none now (tests/wp47.spec.ts). WP48 (cycle-23 reviews): YouthWIDE's is gone too (tests/wp48.spec.ts), and the Investors thesis band's closing stakes line is gone,
@@ -301,10 +301,11 @@ test.describe('the "It doesn’t have to be this way." line is gone from every p
   for (const vp of [DESKTOP, MOBILE]) {
     test(`at ${vp.width}px the cost band and the thesis band have no sideways scroll and keep room under their last element`, async ({ page }) => {
       await page.setViewportSize(vp);
+      // WP166-A (marketing review R1-07): Home's cost band is gone; Home's problem band, which now carries the findings, keeps the same room
       for (const route of ['', 'partner-with-us/investors/']) {
         await open(page, route);
         expect(await noOverflow(page), `${route || 'home'} at ${vp.width}px`).toBe(true);
-        const id = route === 'partner-with-us/investors/' ? '#thesis' : '#cost';
+        const id = route === 'partner-with-us/investors/' ? '#thesis' : '#problem';
         expect(await page.locator(id).evaluate((el) => parseFloat(getComputedStyle(el).paddingBottom)), `${route || 'home'}: bottom padding`).toBeGreaterThanOrEqual(40);
       }
     });
@@ -314,8 +315,8 @@ test.describe('the "It doesn’t have to be this way." line is gone from every p
 test.describe('the two research headings are short (item 8)', () => {
   const PX06 = 'AI Is Changing Freelance Demand';
   const RC06 = 'Training Does Not Always Lead to Employment';
-  /** The pages whose cost band shows each research card (WP47: Home and YouthWIDE; the audience pages have no cost band; WP48: Home alone). */
-  const PAGES: [string, string[]][] = [['', [PX06, RC06]]];
+  /** The pages whose cost band shows each research card (WP47: Home and YouthWIDE; the audience pages have no cost band; WP48: Home alone; WP166-A, R1-07: none, the findings close Home's pains). */
+  const PAGES: [string, string[]][] = [];
 
   test('both headings are in Title Case and the old sentence-length headings are on no page', async () => {
     expect(titleCase(PX06)).toBe(PX06);
@@ -340,9 +341,9 @@ test.describe('the two research headings are short (item 8)', () => {
     expect(fact('PX-06').text).toContain('postings for automation-prone writing and coding jobs on a major freelancing platform fell 21% relative to manual-intensive jobs');
     expect(fact('PX-06').text).toContain('image-creation postings fell 17%');
     await open(page, '');
-    const home = await texts(page, '#cost .cost__data');
-    expect(home[0]).toBe('On one major freelancing platform, automation-prone writing and coding postings fell 21% relative to manual-intensive jobs within eight months of ChatGPT’s release (Demirci, Hannane and Zhu, 2025).');
-    expect(home[1]).toContain('found only three with significant employment impacts');
-    expect(await page.locator('#cost .cost__data').evaluateAll((els) => els.map((e) => e.getAttribute('data-fact')))).toEqual(['PX-06', 'RC-06']);
+    // WP166-A (marketing review R1-07): each finding closes the pain it proves, verbatim (pain 2: RC-06; pain 3: PX-06)
+    expect(compact(await page.locator('#problem li[data-pain="P3"] .gp__a').textContent())).toContain('On one major freelancing platform, automation-prone writing and coding postings fell 21% relative to manual-intensive jobs within eight months of ChatGPT’s release (Demirci, Hannane and Zhu, 2025).');
+    expect(compact(await page.locator('#problem li[data-pain="P2"] .gp__a').textContent())).toContain('found only three with significant employment impacts');
+    expect(await page.locator('#problem li[data-pain="P2"], #problem li[data-pain="P3"]').evaluateAll((els) => els.map((e) => e.getAttribute('data-fact')))).toEqual(['RC-06', 'PX-06']);
   });
 });

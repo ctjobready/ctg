@@ -229,7 +229,8 @@ test('Polish 3: nothing links to the Universities #offer anchor, and the page ha
 
 test('Polish 4: the Careers meta description, og, twitter and JSON-LD are two full sentences', () => {
   const raw = html('careers/index.html');
-  const D = 'Join CodersTrust and help prepare educated, unemployed and underemployed young people for paid digital work. We welcome speculative applications.';
+  // WP166-A (marketing review R7-39): the second sentence is the page's own ask in American usage (it was "We welcome speculative applications."); still two full sentences
+  const D = 'Join CodersTrust and help prepare educated, unemployed and underemployed young people for paid digital work. Send your resume for when a role opens.';
   expect(D.length).toBeLessThanOrEqual(155);
   expect(raw.includes(`<meta name="description" content="${D}"`), 'meta description').toBe(true);
   expect(raw.includes(`<meta property="og:description" content="${D}"`), 'og:description').toBe(true);

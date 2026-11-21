@@ -24,7 +24,7 @@ import { listPages } from './support/pages';
 const compact = (t: string | null | undefined) => (t ?? '').replace(/\s+/g, ' ').trim();
 const texts = (page: Page, selector: string) => page.locator(selector).evaluateAll((els) => els.map((e) => (e.textContent ?? '').replace(/\s+/g, ' ').trim()));
 const noOverflow = (page: Page) => page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth);
-const slide = (page: Page, n: number) => page.locator('[data-hs-slide]').nth(n - 1);
+const slide = (page: Page, n: number) => page.locator('[data-hs-slide]').nth([0, 3, 1, 2][n - 1]); // WP166-A (R1-11): n is the slide's position before the reorder (1 trial, 2 government, 3 survey, 4 program results); the carousel now runs trial, survey, program results, government
 
 /** Built pages that are not archived news posts (those keep their original wording), with their HTML. */
 const sitePages = () => listPages().filter((p) => !p.route.startsWith('/news/')).map((p) => ({ route: p.route, html: readFileSync(p.file, 'utf8') }));
@@ -70,8 +70,8 @@ const unusedBelow = (page: Page) =>
     return Math.round(controls.getBoundingClientRect().top - contentBottom);
   });
 async function showSlide(page: Page, n: number) {
-  await page.locator('[data-hs-dot]').nth(n - 1).click();
-  await expect.poll(() => page.evaluate(() => Array.from(document.querySelectorAll('[data-hs-slide]')).findIndex((s) => s.classList.contains('is-active')))).toBe(n - 1);
+  await page.locator('[data-hs-dot]').nth([0, 3, 1, 2][n - 1]).click(); // WP166-A: the same old-to-new map as slide()
+  await expect.poll(() => page.evaluate(() => Array.from(document.querySelectorAll('[data-hs-slide]')).findIndex((s) => s.classList.contains('is-active')))).toBe([0, 3, 1, 2][n - 1]);
   await page.waitForTimeout(450);
 }
 
@@ -134,17 +134,16 @@ test.describe('Item 2 (Kimi, GPT-6.1 Sol, Gemini; rework R1 and R2): Home’s pr
       return (c.textContent ?? '').replace(/\s+/g, ' ').trim();
     });
 
-  test('Home: the recognition band keeps its three badges, then the one-sentence pointer naming Kosovo and Albania (no outlet, no link of its own), then the link to Recognition and Media', async ({ page }) => {
+  // WP166-A (marketing review R1-19, owner approval of 21 November 2026): the recognition items are the second half of the track-record band; the University Partners item and the pointer sentence are gone (the universities are in
+  // the logo wall's Education Partners card; the pointer only described the link under it), so two items (h4 under the h3 "Partners and Recognition") and the link remain
+  test('Home: the recognition items keep the AWS and HolonIQ badges (no outlet, no outside link), then the link to Recognition and Media; no pointer sentence', async ({ page }) => {
     await open(page, HOME);
     const band = page.locator('#recognition');
-    await expect(band.locator('h3')).toHaveText(['University Partners', 'Amazon Web Services (AWS)', 'HolonIQ South Asia EdTech 100']); // WP63 (cycle-35 review, Gemini M3)
-    const line = band.locator('p.cov');
-    await expect(line).toHaveCount(1);
-    expect(compact(await line.textContent())).toBe(POINTER);
-    await expect(line.locator('a')).toHaveCount(0);
-    expect(await line.getAttribute('data-fact')).toBe('PA-09 PA-13');
+    await expect(band.locator('h3')).toHaveText(['Partners and Recognition']);
+    await expect(band.locator('h4')).toHaveText(['Amazon Web Services (AWS)', 'HolonIQ South Asia EdTech 100']); // WP63 (cycle-35 review, Gemini M3)
+    await expect(band.locator('p.cov')).toHaveCount(0);
     expect(compact(await band.textContent())).not.toMatch(/Gulf News|TechCrunch|Forbes|Wall Street Journal|USA Today|Tech in Asia|Times of India/);
-    await expect(band.locator('p.cov + p.rec__press a')).toHaveText('See All Recognition and Media');
+    await expect(band.locator('p.rec__press a')).toHaveText('See All Recognition and Media');
     await expect(band.locator('a[href^="http"]')).toHaveCount(0);
   });
 
@@ -158,11 +157,12 @@ test.describe('Item 2 (Kimi, GPT-6.1 Sol, Gemini; rework R1 and R2): Home’s pr
     expect(await line.locator('a').evaluateAll((as) => as.every((a) => /noopener/.test(a.getAttribute('rel') ?? '') && a.getAttribute('href')!.startsWith('https://')))).toBe(true);
     expect(await line.locator('a .sr-only').count()).toBe(2);
     await expect(line.locator('img, svg, picture')).toHaveCount(0);
+    // WP166-A (marketing review R1-40): the World Bank pages come before the coverage band now (strongest proof first); the press kit still follows
     const order = await page.evaluate(() => {
       const follows = (a: Element, b: Element) => !!(a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING);
-      return { coverageThenLine: follows(document.querySelector('#coverage')!, document.querySelector('#world-bank')!), lineThenKit: follows(document.querySelector('#world-bank')!, document.querySelector('#press-kit')!) };
+      return { lineThenCoverage: follows(document.querySelector('#world-bank')!, document.querySelector('#coverage')!), lineThenKit: follows(document.querySelector('#world-bank')!, document.querySelector('#press-kit')!) };
     });
-    expect(order).toEqual({ coverageThenLine: true, lineThenKit: true });
+    expect(order).toEqual({ lineThenCoverage: true, lineThenKit: true });
   });
 
   // WP87: the cards link their articles themselves. WP132: the 2016 Kosovo story is a card, so it is linked once, by its card, and the line shares no link with the cards
@@ -192,7 +192,11 @@ test.describe('Item 2 (Kimi, GPT-6.1 Sol, Gemini; rework R1 and R2): Home’s pr
   test('the line fits at 1280 and 390 px with no sideways scroll, and its links stay inside the page', async ({ page }) => {
     for (const vp of [DESKTOP, MOBILE]) {
       await page.setViewportSize(vp);
-      for (const route of [HOME, RECOGNITION]) {
+      // WP166-A (marketing review R1-19): Home's pointer line is gone, so Home is checked for sideways scroll only
+      await open(page, HOME);
+      await scrollThrough(page);
+      expect(await noOverflow(page), `home at ${vp.width}px`).toBe(true);
+      for (const route of [RECOGNITION]) {
         await open(page, route);
         await scrollThrough(page);
         expect(await noOverflow(page), `${route || 'home'} at ${vp.width}px`).toBe(true);

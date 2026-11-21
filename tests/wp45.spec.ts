@@ -18,7 +18,7 @@ const mainText = async (page: Page) => compact(await page.locator('main').textCo
 const texts = (page: Page, selector: string) => page.locator(selector).evaluateAll((els) => els.map((e) => (e.textContent ?? '').replace(/\s+/g, ' ').trim()));
 const hrefs = (page: Page, selector: string) => page.locator(selector).evaluateAll((els) => els.map((e) => e.getAttribute('href') ?? ''));
 const sitePath = (href: string) => href.replace(/^\/ctg(?=\/)/, '');
-const slide = (page: Page, n: number) => page.locator('[data-hs-slide]').nth(n - 1);
+const slide = (page: Page, n: number) => page.locator('[data-hs-slide]').nth([0, 3, 1, 2][n - 1]); // WP166-A (R1-11): n is the slide's position before the reorder (1 trial, 2 government, 3 survey, 4 program results); the carousel now runs trial, survey, program results, government
 const noOverflow = (page: Page) => page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth);
 /** The visible text of a built page's HTML (scripts, styles and the head dropped), for scans across every page. */
 const visible = (html: string) =>
@@ -51,13 +51,13 @@ async function faqJsonLd(page: Page) {
 test.describe('The Bangladesh initiative is an aim, not an existing national program (item 9)', () => {
   // The three regions are named on the YouthWIDE page, the Programs hub card and the funding-route table; the one-line menu description says "three regions" (it was kept short for Home's former programs slide, which is gone: WP53)
   // WP54 (cycle-28 review, Claude S7): the menu line no longer carries the Bangladesh aim ("..., with a Bangladesh initiative that aims to train 2 million vulnerable youth by 2030."); the aim stays on the YouthWIDE page, the Programs hub and Impact (tests/wp54.spec.ts)
-  const LINE = 'Co-funded country cohorts, designed for three regions, from training to paid digital work.';
+  const LINE = 'For governments and funders: co-funded country cohorts designed for three regions.'; // WP166-A (marketing review R7-12): the menu line names the audience first
 
   test('the Programs menu and its featured panel say the cohorts are designed for three regions (IN-02) and no longer state the Bangladesh initiative’s aim (IN-01); WP53: Home’s carousel does not repeat it on a programs slide', async ({ page }) => {
     await open(page, '');
     expect(fact('IN-01').stat?.value, 'the register’s aim is 1 million (owner 2026-10-23)').toBe('1 million');
     expect(compact(await page.locator('#mega-programs a.mega__link[href$="programs/youthwide/"] .mega__desc').textContent())).toBe(LINE);
-    expect(compact(await page.locator('#mega-programs .mega__feature-text').textContent())).toBe(LINE);
+    expect(compact(await page.locator('#mega-programs .mega__feature-text').textContent())).toBe('From training to paid digital work, country by country.'); // WP166-A (R7-08): the panel carries the YouthWIDE H1
     await expect(page.locator('#results .hs__program')).toHaveCount(0);
     const factIds = await page.locator('#mega-programs a.mega__link[href$="programs/youthwide/"]').evaluate((el) => `${el.getAttribute('data-fact') ?? ''} ${el.querySelector('[data-fact]')?.getAttribute('data-fact') ?? ''}`);
     expect(factIds).toContain('IN-02');
@@ -95,9 +95,11 @@ test.describe('Home: the trial slide leads with income and keeps its scope (item
     expect(fact('RC-01').stat?.value).toBe('+41%');
     expect(fact('RC-04').stat?.value).toBe('+$27');
     await expect(first.locator('.hs__eyebrow')).toHaveText('Randomized Trial of CodersTrust’s WSDFM Program');
-    expect(compact(await first.locator('.hs__proof').textContent())).toContain('>4×');
-    // WP54 (cycle-28 review, Grok R2): the callout names the comparison and its average (tests/wp54.spec.ts); WP59 (cycle-31 review, Kimi K3): and states the +10.3 it compares
-    expect(compact(await first.locator('.hs__proof').textContent())).toContain('Employment effect, not income: +10.3 percentage points, more than four times the 2.3-point average across nine vocational-training trials.');
+    // WP54 (cycle-28 review, Grok R2): the callout named the comparison and its average (tests/wp54.spec.ts); WP59 (cycle-31 review, Kimi K3): and stated the +10.3 it compares
+    // WP166-A (marketing review R1-02, R1-06): the benchmark is the second sentence of the hero's trial card, right under the +10.3; the slide's callout is the peer-reviewed publication (RC-15)
+    expect(compact(await first.locator('.hs__proof').textContent())).not.toContain('>4×');
+    expect(compact(await first.locator('.hs__proof').textContent())).toContain('Published in a peer-reviewed journal: Economic Development and Cultural Change (October 2026).');
+    await expect(page.locator('.hh__card[data-fact="RC-02"] [data-fact="RC-06a"]')).toHaveText('That is more than four times the 2.3-point average across nine vocational-training trials.');
   });
 
   test('the employment result is no longer retold in the slide’s heading or lead (the hero card, the bar and the >4× tile state it)', async ({ page }) => {
@@ -107,13 +109,13 @@ test.describe('Home: the trial slide leads with income and keeps its scope (item
     expect(compact(await first.locator('.hs__lead').textContent())).not.toMatch(/more likely to be employed|10\.3/);
   });
 
-  test('"Progress You Can Check" is one line, scoped, tied to PD-08', async ({ page }) => {
+  // WP166-A (marketing review R1-03, R1-17): the Includes band and its "Progress You Can Check" card are gone; the hero lead makes the monthly-reports promise, and the page's one scope sentence closes the Mechanism band
+  test('"Progress You Can Check" is gone with the Includes band (WP166-A); the hero lead promises the monthly reports and the scope sentence stays', async ({ page }) => {
     await open(page, '');
-    const card = page.locator('#features li.card', { has: page.locator('h3', { hasText: 'Progress You Can Check' }) });
-    await expect(card).toHaveCount(1);
-    await expect(card.locator('.card__text')).toHaveText('Monthly reports show progress toward paid work.');
-    expect(await card.getAttribute('data-fact')).toBe('PD-08');
-    expect(await card.getAttribute('data-relieves')).toBe('P2');
+    await expect(page.locator('#features')).toHaveCount(0);
+    expect(await mainText(page)).not.toContain('Monthly reports show progress toward paid work.');
+    await expect(page.locator('main .hh__lead')).toContainText('with monthly reports on their progress');
+    await expect(page.locator('#mechanism .mech__scope')).toHaveText('Inclusions and reporting on this page are agreed in the program scope.');
   });
 });
 
@@ -273,7 +275,8 @@ test.describe('Our Model menu names the platform’s capabilities (item 15)', ()
   test('the menu line and the featured panel say it as IN-04 does, never "employer and gig-work"', async ({ page }) => {
     await open(page, '');
     expect(compact(await page.locator('#mega-model a.mega__link[href$="our-model/jobready-platform/"] .mega__desc').textContent())).toBe(LINE);
-    expect(compact(await page.locator('#mega-model .mega__feature-text').textContent())).toBe(LINE);
+    // WP166-A (marketing review R7-08): the featured panel no longer repeats the menu line beside it; it says what the platform is for (the JobReady Platform page's own words)
+    expect(compact(await page.locator('#mega-model .mega__feature-text').textContent())).toBe('Built to connect learning to work.');
     expect(fact('IN-04').text).toContain('the employer marketplace and the gig-work marketplace.');
     expect(compact(await page.locator('header').first().textContent())).not.toMatch(/employer and gig-work|pre-launch|are live/i);
   });
@@ -287,9 +290,10 @@ test.describe('Recognition: the H1 is the listing the register supports (item 17
     expect(fact('PA-08').text).toMatch(/2023 .*and 2024/);
     expect(await mainText(page)).not.toContain('Recognized, Honored and Covered Worldwide');
     // WP129 (owner run 4): the lead now opens with the listing the H1 states, so it has a subject (WP45 had dropped it)
-    expect(compact(await page.locator('main .hero').textContent())).toContain('CodersTrust was listed in the HolonIQ South Asia EdTech 100 in 2023 and 2024.');
-    expect(compact(await page.locator('main .hero').textContent())).toContain('has received appointments and honors');
-    expect(compact(await page.locator('#listing').textContent())).toContain('listed in the HolonIQ South Asia EdTech 100 in 2023 (STEAM category) and 2024');
+    // WP166-A (marketing review R1-39): the listing band, which repeated the H1, is gone; its sentence (PA-08, with the STEAM category) opens the lead verbatim, and the lead's second sentence names the page's other sections
+    expect(compact(await page.locator('main .hero').textContent())).toContain('CodersTrust was listed in the HolonIQ South Asia EdTech 100 in 2023 (STEAM category) and 2024. Also on this page: founder honors, World Bank pages that name CodersTrust, press coverage from 2014 to 2016 and a press kit.');
+    expect(compact(await page.locator('main .hero').textContent())).not.toContain('has received appointments and honors');
+    await expect(page.locator('#listing')).toHaveCount(0);
   });
 });
 

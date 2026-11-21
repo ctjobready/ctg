@@ -201,7 +201,8 @@ test.describe('3 XHigh Polish', () => {
     expect(text).not.toContain('How to Ask');
     expect(text).not.toContain('we reply with what can be shared');
     expect(count(text, 'Send the program or grant you are considering')).toBe(1);
-    expect(text).toContain('Send the program or grant you are considering and the questions you need answered. We will reply with what can be shared.');
+    // WP166-A (marketing review R1-29): the closing line no longer ends on a note of withholding
+    expect(text).toContain('Send the program or grant you are considering and the questions you need answered. We will reply with the documents and answers we can share.');
     expect(count(html(GOVERNANCE), /class="cp__item"/g)).toBe(5);
   });
 
@@ -228,7 +229,9 @@ test.describe('3 XHigh Polish', () => {
   test('running text says "NU Post Graduate Diploma courses" (the owner’s name), not "post graduate diploma courses"', () => {
     expect(fact('PA-05').text.startsWith('University partners: National University (official training partner; NU Post Graduate Diploma courses)')).toBe(true);
     expect(fact('SC-04').text).toContain('delivers NU Post Graduate Diploma courses');
-    for (const p of [HOME, CAMPUS]) expect(main(p), p).toContain('National University (official training partner; NU Post Graduate Diploma courses)');
+    // WP166-A (marketing review R1-19): Home's University Partners item (PA-05) is gone (the universities are in its logo wall), so JobReady@Campus is the page that prints PA-05's list
+    expect(main(HOME)).not.toContain('National University (official training partner;');
+    for (const p of [CAMPUS]) expect(main(p), p).toContain('National University (official training partner; NU Post Graduate Diploma courses)');
     for (const p of [INVESTORS, UNIVERSITIES]) expect(main(p), p).toContain('delivers NU Post Graduate Diploma courses');
     expect(main('programs/index.html')).toContain('National University Post Graduate Diploma courses delivered by CodersTrust, in ');
     const hits = walk(DIST_DIR)

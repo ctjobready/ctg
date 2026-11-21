@@ -330,7 +330,8 @@ test.describe(`5. every page whose visible text changed says ${TODAY}`, () => {
     });
   }
   test(`About (the 2025–2026 timeline item now says what JobReady is, with no rollout status): AboutPage.dateModified is ${TODAY}`, () => {
-    expect(mainOf('about/index.html')).toContain('2025–2026 JobReady, YouthWIDE and the Impact Survey JobReady is CodersTrust’s digital learning and earning platform. YouthWIDE aims to train');
-    expect(nodeOf('about/index.html', 'AboutPage').dateModified).toBe(TODAY);
+    // WP166-A (marketing review R1-25): the YouthWIDE aim moved out of this entry to close the story band, so the entry's title and text lost it; the page's date moved on to 2026-11-21 (on or after this package's)
+    expect(mainOf('about/index.html')).toContain('2025–2026 JobReady and the Impact Survey JobReady is CodersTrust’s digital learning and earning platform. CodersTrust published Impact Survey 2026.');
+    expect(String(nodeOf('about/index.html', 'AboutPage').dateModified) >= TODAY).toBe(true);
   });
 });

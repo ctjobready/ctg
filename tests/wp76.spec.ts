@@ -61,7 +61,7 @@ const faqJsonLd = async (page: Page) => {
   const faq = (await jsonLdNodes(page)).find((n) => n['@type'] === 'FAQPage');
   return ((faq?.mainEntity as { name: string; acceptedAnswer?: { text: string } }[]) ?? []).map((q) => ({ name: q.name, text: q.acceptedAnswer?.text ?? '' }));
 };
-const slide = (page: Page, n: number) => page.locator('[data-hs-slide]').nth(n - 1);
+const slide = (page: Page, n: number) => page.locator('[data-hs-slide]').nth([0, 3, 1, 2][n - 1]); // WP166-A (R1-11): n is the slide's position before the reorder (1 trial, 2 government, 3 survey, 4 program results); the carousel now runs trial, survey, program results, government
 /** The measure of tests/hero-slider.spec.ts (budget 48 px): unused space between the showing slide's content and the controls bar. */
 const unusedBelow = (page: Page) =>
   page.evaluate(() => {
@@ -73,8 +73,8 @@ const unusedBelow = (page: Page) =>
     return Math.round(controls.getBoundingClientRect().top - contentBottom);
   });
 async function showSlide(page: Page, n: number) {
-  await page.locator('[data-hs-dot]').nth(n - 1).click();
-  await expect.poll(() => page.evaluate(() => Array.from(document.querySelectorAll('[data-hs-slide]')).findIndex((s) => s.classList.contains('is-active')))).toBe(n - 1);
+  await page.locator('[data-hs-dot]').nth([0, 3, 1, 2][n - 1]).click(); // WP166-A: the same old-to-new map as slide()
+  await expect.poll(() => page.evaluate(() => Array.from(document.querySelectorAll('[data-hs-slide]')).findIndex((s) => s.classList.contains('is-active')))).toBe([0, 3, 1, 2][n - 1]);
   await page.waitForTimeout(450);
 }
 const readText = (path: string) => readFileSync(resolve(path), 'utf8');

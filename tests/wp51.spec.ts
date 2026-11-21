@@ -118,7 +118,8 @@ test.describe('Universities: the institution’s pain is headed as the goal (ite
 // WP54 (cycle-28 reviews, Claude S23 and GLM L1): the body line names the subgroup in the words of OC-05's text ("the 172 surveyed completers who first earned during or after training") instead of the term (tests/wp54.spec.ts)
 test.describe('Home: the survey slide names its subgroup (item 3; WP53: the speed slide it was named on is gone)', () => {
   const HEADING = 'Most Surveyed New Earners Were Earning by Six Months After the Course';
-  const survey = (page: Page) => page.locator('[data-hs-slide]').nth(2);
+  // WP166-A (marketing review R1-11): the slides run evidence, survey outcomes, program results, government (old slide 2 is now 4, 3 is 2, 4 is 3)
+  const survey = (page: Page) => page.locator('[data-hs-slide]').nth(1);
 
   test('the body line names the subgroup, keeps the cumulative "by ... after" wording, tied to OC-05; the former speed heading is on no slide', async ({ page }) => {
     expect(fact('OC-05').stat?.label).toContain('surveyed new earners');
@@ -130,7 +131,8 @@ test.describe('Home: the survey slide names its subgroup (item 3; WP53: the spee
     expect(line).toContain('had started earning by six months after finishing the course');
     expect(line).not.toMatch(/within|of finishing|of the course ending/i);
     expect(await survey(page).locator('.hs__lead').getAttribute('data-fact')).toBe('OC-05');
-    await expect(survey(page)).toHaveAttribute('aria-label', '3 of 4: Surveyed Completers Report Higher Income');
+    // WP166-A (marketing review R1-11): the slides run evidence, survey outcomes, program results, government (old slide 2 is now 4, 3 is 2, 4 is 3)
+    await expect(survey(page)).toHaveAttribute('aria-label', '2 of 4: Surveyed Completers Report Higher Income');
     expect(compact(await page.locator('#results').textContent())).not.toContain(HEADING);
   });
 
@@ -168,7 +170,8 @@ test.describe('Home: the WSDFM card of "Proof in Practice" shows a context line 
     // WP76 (owner answer 2026-10-22: the 1,000 are the women enrolled): slide 4 says "711 of 1,000 enrolled in work" and the card "711 of the 1,000 women enrolled were in work", so each form is on Home once
     expect(count(text, '711 of 1,000')).toBe(1);
     expect(count(text, '711 of the 1,000')).toBe(1);
-    await expect(page.locator('[data-hs-slide]').nth(3)).toContainText('WSDFM: 711 of 1,000 enrolled in work (71%).');
+    // WP166-A (marketing review R1-11): the slides run evidence, survey outcomes, program results, government (old slide 2 is now 4, 3 is 2, 4 is 3)
+    await expect(page.locator('[data-hs-slide]').nth(2)).toContainText('WSDFM: 711 of 1,000 enrolled in work (71%).');
   });
 
   test('Development Partners, Foundations, Local Partners and YouthWIDE list their own cards: the WSDFM card keeps the figure and its caption there', async ({ page }) => {
@@ -317,39 +320,39 @@ test.describe('Home: the Outcome Tracking row, the positioning statement and the
   // WP63 (cycle-35 review, Grok R1): "... for educated, unemployed and underemployed youth, ..." (the group ID-01 names)
   const CLOSING = 'CodersTrust connects training, mentoring and placement support for educated, unemployed and underemployed youth, with monthly reports on progress toward paid work.';
 
-  test('the Outcome Tracking row carries the scope qualifier and puts the reports first', async ({ page }) => {
+  // WP166-A (marketing review R1-15, owner approval of 21 November 2026): the comparison table is gone from Home, with its Outcome Tracking row and its heading (two tests that pinned them are deleted);
+  // the scoped follow-up surveys are still stated in Home's FAQ, and the old heading stays off every page
+  test('the comparison, its Outcome Tracking row and its heading are gone (WP166-A); the FAQ keeps the scoped follow-up surveys, and "How the Approaches Compare" stays gone', async ({ page }) => {
     await open(page, '');
-    const row = page.locator('#compare tbody tr', { has: page.locator('th', { hasText: 'Outcome Tracking' }) });
-    await expect(row).toHaveCount(1);
-    expect(compact(await row.locator('td').first().textContent())).toBe('Included for every supported cohort: monthly reports and follow-up surveys at 3, 6 and 12 months'); // WP161-A (A-27)
-  });
-
-  test('the Compare heading names the one approach the table compares with', async ({ page }) => {
-    await open(page, '');
-    await expect(page.locator('#compare h2')).toHaveText('How CodersTrust Compares with Self-Paced Courses');
-    expect('How CodersTrust Compares with Self-Paced Courses').toBe(titleCase('How CodersTrust Compares with Self-Paced Courses'));
-    expect(await texts(page, '#compare thead th')).toEqual(['What It Includes', 'CodersTrust Supported Cohort', 'Self-Paced Course Platforms']); // WP136 (Opus High run 11, Polish): the criteria column's heading was 'Approach'
+    await expect(page.locator('#compare')).toHaveCount(0);
+    expect(compact(await page.locator('main').textContent())).not.toContain('How CodersTrust Compares with Self-Paced Courses');
+    expect(compact(await page.locator('#faq').textContent())).toContain('follow-up survey results at 3, 6 and 12 months');
     expect(sitePages().filter((p) => visible(p.html).includes('How the Approaches Compare')).map((p) => p.route)).toEqual([]);
   });
 
   // WP60 (cycle-32 review, Gemini GM7): the statement is one sentence (CLOSING above), declared whole for Home in the gate (POSITION_WHOLE_STATEMENT['/']); it was an audience sentence followed by that closing sentence
-  test('the positioning statement’s reports are scoped, and the gate declares the same sentence independently', async ({ page }) => {
+  // WP166-A (marketing review R1-03): Home no longer prints the statement ("Our Approach" repeated the hero lead and the definition), so the gate exempts Home and no longer declares it; the source keeps the sentence, scoped
+  test('the positioning statement’s reports are scoped in the source; Home prints no statement and the gate exempts it (WP166-A; it declared the same sentence)', async ({ page }) => {
     expect(POSITIONING.home.text).toBe(CLOSING);
-    expect(readFileSync(resolve('scripts/check-facts.mjs'), 'utf8')).toContain(`'/': '${CLOSING}'`);
+    const gate = readFileSync(resolve('scripts/check-facts.mjs'), 'utf8');
+    expect(gate).not.toContain(`'/': '${CLOSING}'`);
+    expect(gate).toContain("const POSITION_EXEMPT_PAGES = ['/partner-with-us/investors/', '/'];");
     await open(page, '');
-    expect(compact(await page.locator('#mechanism .pos__text').textContent())).toBe(CLOSING);
+    await expect(page.locator('#mechanism .pos__text')).toHaveCount(0);
   });
 });
 
 test.describe('Home: the first Imagine card and the Learner Journeys lead (items 16 and 22)', () => {
   // WP54 (cycle-28 review, GLM L2): the scene is "A young woman in your cohort invoices her first foreign client from her own laptop." (the other two cards speak to the reader; tests/wp54.spec.ts)
-  test('the first Imagine card is a scene, "A young woman in your cohort invoices her first foreign client from her own laptop."', async ({ page }) => {
+  test('the Imagine band, whose first card was the scene "A young woman in your cohort invoices her first foreign client from her own laptop.", is gone (WP166-A)', async ({ page }) => {
     await open(page, '');
-    expect(await texts(page, '#future .card__text')).toEqual([
+    // WP166-A (marketing review R1-14, owner approval of 21 November 2026): the Imagine band, three one-line hypotheticals, is gone (proof over imagination); none of its lines is on Home
+    await expect(page.locator('#future')).toHaveCount(0);
+    for (const line of [
       'A young woman in your cohort invoices her first foreign client from her own laptop.',
       'You review monthly reports showing who is earning, not only who completed.',
       'You see employers hire completers whose skills match current employer demand.',
-    ]);
+    ]) expect(compact(await page.locator('main').textContent()), line).not.toContain(line);
     expect(await mainText(page)).not.toContain('You hear from a young woman');
   });
 
@@ -399,27 +402,29 @@ test.describe('The shared origin line on Development Partners and Investors (ite
 });
 
 test.describe('Home: the government slide and the program-results slide (items 25 and 26)', () => {
-  const slide = (page: Page, n: number) => page.locator('[data-hs-slide]').nth(n - 1);
+  const slide = (page: Page, n: number) => page.locator('[data-hs-slide]').nth([0, 3, 1, 2][n - 1]); // WP166-A (R1-11): n is the slide's position before the reorder (1 trial, 2 government, 3 survey, 4 program results); the carousel now runs trial, survey, program results, government
 
   // WP64 (cycle-36 review; GLM, GPT-6.1 Sol, Grok and Kimi): the heading is "Six Government Contracts and a National University Partnership" (it named "Bangladesh’s National University" after GV-12, the register's own name for the partner, which is unchanged);
   // "Six" is still read from GV-12 (tests/wp64.spec.ts)
-  test('slide 2 is "Six Government Contracts and a National University Partnership" (Title Case, tied to GV-12)', async ({ page }) => {
+  // WP166-A (marketing review R1-11): the government slide is the last of four, after the three results slides
+  test('slide 2 (WP166-A: now slide 4) is "Six Government Contracts and a National University Partnership" (Title Case, tied to GV-12)', async ({ page }) => {
     const HEADING = 'Six Government Contracts and a National University Partnership';
     expect(HEADING).toBe(titleCase(HEADING));
     expect(fact('GV-12').text).toContain('official training partner of Bangladesh’s National University');
     await open(page, '');
     await expect(slide(page, 2).locator('h3')).toHaveText(HEADING);
     expect(await slide(page, 2).locator('h3').getAttribute('data-fact')).toBe('GV-12');
-    await expect(slide(page, 2)).toHaveAttribute('aria-label', `2 of 4: ${HEADING}`);
+    await expect(slide(page, 2)).toHaveAttribute('aria-label', `4 of 4: ${HEADING}`);
   });
 
   test('slide 4’s Her Power line carries its base (the 2,400 trained directly), read from PR-05’s label, and stays one line at 1280 like the Kosovo and WSDFM lines', async ({ page }) => {
     expect(fact('PR-05').stat?.label).toBe('tracked women, from the 2,400 trained directly by CodersTrust, in work: 47%');
     await page.setViewportSize(DESKTOP);
     await open(page, '');
-    const heights = await page.locator('[data-hs-slide]').nth(3).locator('.hs__lines li').evaluateAll((els) => els.map((e) => Math.round(e.getBoundingClientRect().height)));
+    // WP166-A (marketing review R1-11): the slides run evidence, survey outcomes, program results, government (old slide 2 is now 4, 3 is 2, 4 is 3)
+    const heights = await page.locator('[data-hs-slide]').nth(2).locator('.hs__lines li').evaluateAll((els) => els.map((e) => Math.round(e.getBoundingClientRect().height)));
     expect(heights[3], 'the Her Power line wraps').toBe(heights[0]);
-    expect(await texts(page, '[data-hs-slide]:nth-child(4) .hs__lines li')).toEqual([
+    expect(await texts(page, '[data-hs-slide]:nth-child(3) .hs__lines li')).toEqual([
       'Women in Online Work, Kosovo (2016–2017): 68% in work (102 of 150).',
       'WSDFM: 711 of 1,000 enrolled in work (71%).',
       'UNDP YES, Korail (2017): 67% of the 350 enrolled found a first job within three months.',

@@ -192,9 +192,10 @@ test.describe('About', () => {
 
   test('Careers: the two application routes are explained in one line, and the H1 says what the work is', async ({ page }) => {
     await open(page, 'careers/');
-    await expect(page.locator('#apply .cr-mail')).toContainText('opens a prefilled email to');
+    // WP166-A (marketing review R7-26): the button is repeated right after the steps, so the line under it is the other route in one sentence: "Or email your resume to career@coderstrustbd.com."
+    await expect(page.locator('#apply .cr-apply .btn')).toContainText('Send Your Resume');
     // WP41 (cycle-18 review): American English, "resume" (tests/wp41.spec.ts)
-    await expect(page.locator('#apply .cr-mail')).toContainText('you can also send your resume to that address yourself');
+    await expect(page.locator('#apply .cr-mail')).toHaveText('Or email your resume to career@coderstrustbd.com.');
     await expect(page.getByRole('heading', { level: 1 })).toHaveText('Help Put Young People into Paid Digital Work');
   });
 

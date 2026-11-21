@@ -191,7 +191,7 @@ test.describe('A-35 JobReady.global is "a course for yourself" or "a shorter cou
   }
   test('the Programs menu: "Courses for individual learners on JobReady.global." on every page, the old line on none', () => {
     expect(html(HOME)).toContain('<span class="mega__desc"');
-    expect(visible(html(HOME))).toContain('Courses for individual learners on JobReady.global.');
+    expect(visible(html(HOME))).toContain('Courses for individual learners and families on JobReady.global, including SuperKids.'); // WP166-A (marketing review R7-14): families too
     const offenders = listPages().filter((p) => readFileSync(p.file, 'utf8').includes('Short, self-paced courses on JobReady.global.')).map((p) => p.route);
     expect(offenders).toEqual([]);
   });
@@ -254,8 +254,9 @@ test.describe('A-40 FutureBand note: SuperKids shows none, Home and JobReady@Cam
     expect(main(SUPERKIDS)).not.toContain(NOTE);
     expect(section(SUPERKIDS, 'future')).toContain('Photographs from SuperKids workshops, events and school partnerships.');
   });
-  test('Home and JobReady@Campus keep the default note', () => {
-    expect(main(HOME)).toContain(NOTE);
+  // WP166-A (marketing review R1-14, owner approval of 21 November 2026): Home's Imagine band (a FutureBand) is gone, and its note with it; JobReady@Campus keeps the default
+  test('JobReady@Campus keeps the default note (Home’s FutureBand is gone since WP166-A)', () => {
+    expect(main(HOME)).not.toContain(NOTE);
     expect(main(CAMPUS)).toContain(NOTE);
   });
 });

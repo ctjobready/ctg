@@ -66,7 +66,7 @@ const PERSON_START = /^(?:Professor|Prof\.|Dr\.|Mr\.|Mrs\.|Ms\.|Md\.|Aziz Ahmad|
 const ALLOWED: { has: string; why: string }[] = [
   { has: 'with a play button, and no request will go to YouTube', why: 'two clauses joined after an introductory clause (WP161-A, Privacy Policy Video section)' },
   { has: '78.2% at the October 2026 survey, and median monthly income rose', why: 'two clauses joined' },
-  { has: 'Early press coverage, 2014–2016, and the World Bank pages', why: 'the years are set off as a parenthetical' }, // WP161-B (Fable review A-12): "World Bank pages", not "World Bank coverage"
+  // WP166-A (marketing review R1-19): Home's pointer sentence "Early press coverage, 2014–2016, and the World Bank pages ..." is gone, so its entry is gone (a stale entry fails)
   { has: 'spoke at a start-up event at In5, Dubai Internet City, and met investors', why: 'one subject, two verbs; the place name carries its own comma' },
   { has: 'STEM students must continually reskill themselves, and CodersTrust plays', why: 'two clauses joined' },
   { has: 'particularly the youth, and takes pride', why: 'one subject, two verbs, after an apposition' },
@@ -79,7 +79,7 @@ const ALLOWED: { has: string; why: string }[] = [
   { has: 'mentorship guidelines and trainer training, and trained 2,400 women directly', why: 'two verbs; the first object is a list of its own' },
   { has: 'which used CodersTrust’s curriculum, and 15,027 enrollments', why: 'two figures only; the first carries a relative clause' },
   { has: 'job postings requiring AI skills grew 69% vs. 9% for all postings, and workers with AI skills', why: 'two clauses joined' },
-  { has: 'has received appointments and honors, and CodersTrust’s work has been covered in the press', why: 'two clauses joined; "Aziz Ahmad" is an apposition (WP129)' },
+  // WP166-A (marketing review R1-39): the Recognition lede's second sentence ("Its Co-Founder and Chairman, Aziz Ahmad, has received appointments and honors, and ...") is replaced, so its entry is gone
   { has: 'fell 21% relative to manual-intensive jobs, and image-creation postings fell 17%', why: 'two clauses joined' },
   // WP165: an essay title is the author's; it appears as the H1, the JSON-LD headline, the breadcrumb, the cards and llms.txt (the essay text itself is left out of the scan).
   // The entry applies while that essay is built: it is a draft until Aziz Ahmad approves it (WP165 follow-up), and the stale-entry check would otherwise fail.
@@ -188,7 +188,8 @@ test.describe('WP127 item 2: the serial-comma checker', () => {
     expect(seriesIn('The agreement was signed by Aziz Ahmad, Chairman of CodersTrust, and Professor Jane Roe, Rector.')).toEqual([]);
   });
   test('an allowed sentence is skipped only while `allow` is on', () => {
-    const s = 'Early press coverage, 2014–2016, and the World Bank pages on our work are on the Recognition and Media page.';
+    // WP166-A (marketing review R1-19): the fixture was Home's pointer sentence, which is gone with its ALLOWED entry; this one is still allowed
+    const s = 'He spoke at a start-up event at In5, Dubai Internet City, and met investors.';
     expect(seriesIn(s)).toEqual([]);
     expect(seriesIn(s, { allow: false })).toHaveLength(1);
   });
@@ -245,7 +246,7 @@ const PAGE_TEXT: [string, string][] = [
 ];
 // Clause-joining commas the sweep keeps (see ALLOWED), pinned so a later sweep does not strip them.
 const KEPT: [string, string][] = [
-  ['about/recognition/index.html', 'has received appointments and honors, and CodersTrust’s work has been covered in the press.'],
+  // WP166-A (R1-39): the Recognition lede no longer has this sentence (it is "... Also on this page: founder honors, World Bank pages that name CodersTrust, press coverage from 2014 to 2016 and a press kit.")
   ['news/coderstrust-is-committed-to-the-vision-of-a-smart-bangladesh-within-2041-aziz-ahmad/index.html', 'particularly the youth, and takes pride in contributing'],
   ['news/coderstrust-is-signing-mou-with-un-mandated-university-for-peace-on-academic-collaboration/index.html', 'Aziz Ahmad, Chairman of CodersTrust, and Professor Francisco Rojas Aravena'],
 ];
@@ -410,9 +411,10 @@ test.describe('WP127 items 3 to 7: copy polish', () => {
     expect(fact('PA-08').text).toBe('CodersTrust Was Listed in the HolonIQ South Asia EdTech 100 in 2023 (STEAM Category) and 2024');
   });
 
-  test('6. Recognition lede: "Its Co-Founder and Chairman, Aziz Ahmad," (WP129: the lede opens with the listing, so "Its" has an antecedent)', () => {
+  // WP166-A (marketing review R1-39): the lede's second sentence says what else the page holds; the lowercase "co-founder" form stays off the page
+  test('6. Recognition lede: opens with the listing, then names the page’s other sections (WP166-A; it was "Its Co-Founder and Chairman, Aziz Ahmad, ...")', () => {
     const t = text('about/recognition/index.html');
-    expect(t).toContain('Its Co-Founder and Chairman, Aziz Ahmad, has received appointments and honors');
+    expect(t).toContain('Also on this page: founder honors, World Bank pages that name CodersTrust, press coverage from 2014 to 2016 and a press kit.');
     expect(t).not.toContain('co-founder and Chairman, Aziz Ahmad');
   });
 

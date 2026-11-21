@@ -22,7 +22,8 @@ test.describe('one NU eligibility sentence', () => {
   test('the Programs menu description states it in the register’s words, and Home’s carousel no longer has a programs grid', async ({ page }) => {
     await open(page, '');
     const menu = page.locator(`#mega-programs a.mega__link[href$="${NU}"] .mega__desc`);
-    expect(compact(await menu.textContent())).toBe(`Eligibility: ${ELIGIBILITY}.`);
+    // WP166-A (marketing review R7-10): the menu line says what the diploma is before it screens anyone out; the eligibility sentence is on the hub card and the NU pages (tests below)
+    expect(compact(await menu.textContent())).toBe('Four National University of Bangladesh diploma courses, from digital marketing to data analytics.');
     await expect(page.locator('.hs__program')).toHaveCount(0);
     expect(compact(await page.locator('#results').textContent())).not.toContain('For individual learners');
   });
@@ -65,14 +66,14 @@ test.describe('one NU eligibility sentence', () => {
     await open(page, '');
     const desc = compact(await page.locator('#mega-programs a.mega__link[href$="programs/youthwide/"] .mega__desc').textContent());
     // WP31: designed for the three regions (no wording that implies cohorts already run in all of them). WP54 (cycle-28 review, Claude S7): the line no longer carries the Bangladesh aim (tests/wp54.spec.ts)
-    expect(desc).toBe('Co-funded country cohorts, designed for three regions, from training to paid digital work.');
+    expect(desc).toBe('For governments and funders: co-funded country cohorts designed for three regions.'); // WP166-A (marketing review R7-12): the menu line names the audience first
   });
 
   test('the Programs featured panel (WP30c) points to YouthWIDE with its menu description; individual learners stay in the menu group "For Individual Learners"', async ({ page }) => {
     await open(page, '');
     const text = compact(await page.locator('#mega-programs .mega__feature-text').textContent());
     // the panel states the target page's own menu description (WP30c); this line was left on the older wording until WP31. WP54 (cycle-28 review, Claude S7): the line no longer carries the Bangladesh aim
-    expect(text).toBe('Co-funded country cohorts, designed for three regions, from training to paid digital work.');
+    expect(text).toBe('From training to paid digital work, country by country.'); // WP166-A (R7-08): the panel carries the YouthWIDE H1, not the menu line beside it
     expect(await page.locator('#mega-programs .mega__feature a.link').getAttribute('href')).toMatch(/\/programs\/youthwide\/$/);
     const learners = (await page.locator('#mega-programs a.mega__link').allTextContents()).map(compact).join(' ');
     expect(learners).toContain('NU Post Graduate Diploma');
@@ -196,7 +197,7 @@ test.describe('evidence pages end with a next step for every reader', () => {
     const section = page.locator('#next');
     await expect(section.getByRole('heading', { level: 2, name: 'What Happens After Your Inquiry' })).toBeVisible();
     const steps = (await section.locator('.steps__title').allTextContents()).map((t) => compact(t.replace(/^Step \d+:/, '')));
-    expect(steps).toEqual(['Your Inquiry', 'A Conversation', 'The Next Step Depends on Your Route']);
+    expect(steps).toEqual(['Your Inquiry', 'A Conversation', 'A Next Step for Your Route']); // WP166-A (marketing review R7-06): the third step says what the reader gets
     const third = compact(await section.locator('.steps__item').nth(2).textContent());
     // WP54 (cycle-28 review, GPT-6.1 Sol G7): the recap is four short lines, one per kind of route (tests/wp54.spec.ts)
     for (const route of ['Program partners: a program scope, designed with you.', 'Foundations: a cohort grant designed with you, or a platform-grant discussion.', 'Employers: a needs assessment, or a talent request scoped against the candidate pool.', 'Impact investors: the deck and data room, under NDA.']) expect(third).toContain(route);

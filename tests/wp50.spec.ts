@@ -82,7 +82,8 @@ test.describe('Home: the challenge band and the positioning statement (items 1 a
     expect(POSITIONING.home.facts).toEqual(['PD-08']);
     await open(page, '');
     await expect(page.locator('#mechanism h2')).toHaveText('One Path from Learning to Earning');
-    expect(compact(await page.locator('#mechanism .pos__text').textContent())).toBe(expected);
+    // WP166-A (marketing review R1-03): Home no longer prints the statement ("Our Approach" repeated the hero lead and the definition); the source keeps it, unchanged
+    await expect(page.locator('#mechanism .pos__text')).toHaveCount(0);
     expect(await mainText(page)).not.toMatch(/Many programs cover one step|self-paced courses or freelance matching/);
   });
 
@@ -98,7 +99,8 @@ test.describe('Home: the challenge band and the positioning statement (items 1 a
 });
 
 test.describe('Home: the program-results slide lists four programs (item 10)', () => {
-  const slide = (page: Page) => page.locator('[data-hs-slide]').nth(3);
+  // WP166-A (marketing review R1-11): the slides run evidence, survey outcomes, program results, government (old slide 2 is now 4, 3 is 2, 4 is 3)
+  const slide = (page: Page) => page.locator('[data-hs-slide]').nth(2);
 
   test('the lead says "Four programs"; WSDFM is the second line, with its base and the qualifier "program records; trial studied 833" (WP60; it was "program records, not trial data"); each line names its facts', async ({ page }) => {
     await open(page, '');
@@ -118,7 +120,8 @@ test.describe('Home: the program-results slide lists four programs (item 10)', (
   // (interest and enrollment, no program-record result) and so is not a line on this slide.
   test('the four lines are Impact’s case studies with program-record results, in the same order ("Five Programs Across Kosovo, Albania and Bangladesh" adds Digital Jobs Albania), and WSDFM’s figure is the case card’s', async ({ page }) => {
     await open(page, '');
-    const lines = await texts(page, '[data-hs-slide]:nth-child(4) .hs__lines li');
+    // WP166-A (marketing review R1-11): the slides run evidence, survey outcomes, program results, government (old slide 2 is now 4, 3 is 2, 4 is 3)
+    const lines = await texts(page, '[data-hs-slide]:nth-child(3) .hs__lines li');
     expect(lines).toHaveLength(4);
     // WP51 (cycle-26 review): the slide's line is the one place Home states the figure, so Home's WSDFM card shows delivery context; the figure and its caption are the card's on Development Partners (tests/wp51.spec.ts)
     const homeCard = page.locator('#cases article', { hasText: 'Women’s Skill Development for Freelancing Marketplace (WSDFM)' });
@@ -152,7 +155,8 @@ test.describe('Home: the program-results slide lists four programs (item 10)', (
   test('at 390 px the slide has no sideways scroll and the four lines stay inside their cards', async ({ page }) => {
     await page.setViewportSize(MOBILE);
     await open(page, '');
-    await page.locator('[data-hs-dot]').nth(3).click();
+    // WP166-A (marketing review R1-11): the slides run evidence, survey outcomes, program results, government (old slide 2 is now 4, 3 is 2, 4 is 3)
+    await page.locator('[data-hs-dot]').nth(2).click();
     await expect(slide(page)).toHaveClass(/is-active/);
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth)).toBe(true);
     const inside = await slide(page).locator('.hs__lines li').evaluateAll((els) => els.every((e) => e.scrollWidth <= e.clientWidth + 1));
@@ -335,9 +339,9 @@ test.describe('Programs: the H1 (item 9)', () => {
 
 test.describe('Home: the Investors router card names the platform in IN-04’s words (item 14)', () => {
   // WP53 (owner decision 2026-10-16): IN-04's definition is "CodersTrust’s digital learning and earning platform" (it said "education and employment"; tests/wp53.spec.ts)
-  const CARD = 'Back JobReady’s staged rollout';
+  const CARD = 'Back JobReady, CodersTrust’s digital learning and earning platform'; // WP166-A (marketing review R1-04): Home defines JobReady where it first names it (it was "Back JobReady’s staged rollout")
 
-  test('the card reads "Back JobReady’s staged rollout"; the definition is IN-04’s own; the card does not say the platform "connects" youth to work', async ({ page }) => {
+  test('the card reads "Back JobReady, CodersTrust’s digital learning and earning platform" (WP166-A); the definition is IN-04’s own; the card does not say the platform "connects" youth to work', async ({ page }) => {
     expect(fact('IN-04').text.startsWith('JobReady is CodersTrust’s digital learning and earning platform,')).toBe(true);
     await open(page, '');
     const card = page.locator('#router a.cat[href$="partner-with-us/investors/"]');
@@ -431,19 +435,22 @@ test.describe('Home: the trial slide (items 17 and 18)', () => {
   test('the eyebrow is this slide’s own text: the menu’s trial card and the partner hub keep their wording, and the other slides keep their eyebrows', async ({ page }) => {
     await open(page, '');
     // WP53 (owner decision 2026-10-16): the second "Impact Survey 2026" slide, "Reach at Scale" and "Our Programs" are gone
-    expect(await texts(page, '[data-hs-slide] .hs__eyebrow')).toEqual(['Randomized Trial of CodersTrust’s WSDFM Program', 'Government and University Partners', 'Impact Survey 2026', 'Program Records']);
+    // WP166-A (marketing review R1-11): the results lead and the government slide is last
+    expect(await texts(page, '[data-hs-slide] .hs__eyebrow')).toEqual(['Randomized Trial of CodersTrust’s WSDFM Program', 'Impact Survey 2026', 'Program Records', 'Government and University Partners']);
     expect(sitePages().filter((p) => visible(p.html).includes('Women Offered a Place in a Predecessor Program Earned')).map((p) => p.route)).toEqual([]);
   });
 
   // WP54 (cycle-28 review, Grok R2): the support line is "Employment effect: more than four times the 2.3-point average across nine vocational-training trials." (it said "More than four times the average employment effect across nine
   // vocational-training trials." and stated no 2.3); WP59 (cycle-31 review, Kimi K3, reversing WP50 on this point): it states the +10.3 it compares, "Employment effect: +10.3 percentage points, more than four times the 2.3-point ..." (tests/wp54.spec.ts, tests/wp59.spec.ts)
-  test('the ">4×" tile’s support line states the +10.3 base and says the multiple in words; its value is still RC-06a’s', async ({ page }) => {
+  // WP166-A (marketing review R1-02, R1-06): the benchmark is the second sentence of the hero's trial card, directly under the +10.3 it compares, in RC-06a's words; the slide's callout is the peer-reviewed publication (RC-15)
+  test('the benchmark says the multiple in words under the +10.3 on the hero’s trial card (WP166-A; it was the slide’s ">4×" tile); the slide’s callout is the publication; RC-06a keeps its value', async ({ page }) => {
     expect(fact('RC-06a').stat?.value).toBe('>4×');
     await open(page, '');
     const proof = first(page).locator('.hs__proof');
-    expect(await proof.getAttribute('data-fact')).toBe('RC-06a');
-    await expect(proof.locator('.stat__value')).toHaveText('>4×');
-    expect(compact(await proof.locator('.stat__label').textContent())).toBe('Employment effect, not income: +10.3 percentage points, more than four times the 2.3-point average across nine vocational-training trials.');
+    expect(await proof.getAttribute('data-fact')).toBe('RC-15');
+    await expect(proof.locator('.stat__value')).toHaveText('Peer-Reviewed');
+    expect(compact(await proof.locator('.stat__label').textContent())).toBe('Published in a peer-reviewed journal: Economic Development and Cultural Change (October 2026).');
+    await expect(page.locator('.hh__card[data-fact="RC-02"] [data-fact="RC-06a"]')).toHaveText('That is more than four times the 2.3-point average across nine vocational-training trials.');
     // the register is unchanged: RC-06a keeps its tile label and its glance label
     expect(fact('RC-06a').stat?.label).toContain('+10.3 percentage points for women offered a place, against 2.3 on average');
   });
@@ -644,7 +651,8 @@ test.describe('Home: the hero trial card says "10.3 more" (item 28)', () => {
     const card = page.locator('.hh__card[data-fact="RC-02"]');
     await expect(card.locator('.hh__num')).toHaveText('+10.3');
     await expect(card.locator('.hh__unit')).toHaveText('percentage points');
-    await expect(card.locator('.hh__figlabel')).toHaveText('For every 100 women offered a place in CodersTrust’s 200-hour WSDFM program, about 10 more were in work than among 100 comparable women in the control group.');
+    // WP166-A (marketing review R1-02): the caption's second sentence states the nine-trial benchmark (RC-06a; tests/wp166-a.spec.ts)
+    await expect(card.locator('.hh__figlabel')).toHaveText('For every 100 women offered a place in CodersTrust’s 200-hour WSDFM program, about 10 more were in work than among 100 comparable women in the control group. That is more than four times the 2.3-point average across nine vocational-training trials.');
     await open(page, 'impact/independent-evaluation/');
     expect(compact(await page.locator('[data-plain-line]').textContent())).toBe('For every 100 women offered a place, about 10 more were in work at follow-up than among 100 comparable women in the control group (+10.3 percentage points).');
     expect(sitePages().filter((p) => visible(p.html).includes('about 10 more were in work than in the control group')).map((p) => p.route)).toEqual([]);

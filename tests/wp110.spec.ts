@@ -41,9 +41,10 @@ test.describe('WP110 item 1: Her Power contract scope on Governments includes di
 
 // --------------------------------------------------------------------------------------------------------------------------------
 test.describe('WP110 item 2: Home reporting card reads "Monthly reports show"', () => {
-  test('Home prints the new sentence and no built page keeps "Monthly reports will show progress"', () => {
+  // WP166-A (marketing review R1-17, owner approval of 21 November 2026): the Includes band with this card is gone from Home; the reporting promise is the hero lead's ("with monthly reports on their progress"). No page says "will show".
+  test('Home states its monthly reports in the hero lead, and no built page keeps "Monthly reports will show progress"', () => {
     const home = distHtml('index.html');
-    expect(visibleText(home)).toContain('Monthly reports show progress toward paid work.');
+    expect(visibleText(home)).toContain('with monthly reports on their progress.');
     expect(visibleText(home)).not.toContain('Monthly reports will show progress toward paid work');
     const offenders = walk(DIST_DIR).filter((f) => visibleText(readFileSync(f, 'utf8')).includes('Monthly reports will show progress toward paid work'));
     expect(offenders).toEqual([]);

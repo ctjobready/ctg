@@ -36,6 +36,18 @@
     },
     {
       "page": "/about/recognition/",
+      "tag": "h2",
+      "text": "Press Coverage, 2014–2016: TechCrunch, Forbes, The Wall Street Journal and More",
+      "reason": "WP166-A (marketing review R1-40): \"The Wall Street Journal\" is the newspaper's own name, whose \"The\" is capitalized; the rest of the heading is Title Case."
+    },
+    {
+      "page": "/about/recognition/",
+      "tag": "menu",
+      "text": "Press Coverage, 2014–2016: TechCrunch, Forbes, The Wall Street Journal and More",
+      "reason": "The page's On This Page entry for the same heading (WP166-A, R1-40): \"The Wall Street Journal\" is the newspaper's own name."
+    },
+    {
+      "page": "/about/recognition/",
       "tag": "h3",
       "text": "Building Code To Break Poverty In Bangladesh",
       "reason": "Verbatim headline of a third-party press article (TechCrunch), cited as published."

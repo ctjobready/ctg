@@ -17,7 +17,9 @@ import { hostOf, linkAttrs } from '../../../lib/url';
 const path = '/impact/independent-evaluation/';
 // H1 (WP30e): the result, in words; the <title> stays "Randomized Trial Results". The scope (CodersTrust’s WSDFM program, women in Dhaka) is the first sentence under it.
 const h1 = 'Randomized Trial: Women Offered a Place Were More Likely to Work';
-const description = desc('A BIGD trial of CodersTrust’s WSDFM program: women offered a place were 10.3 percentage points more likely to be employed.');
+// WP166-A (marketing review R7-21): BRAC, the name funders know, where "A BIGD trial" put two acronyms in six words. The reviewer's sentence dropped the program; the program stays named (the trial is never
+// generalized beyond CodersTrust’s WSDFM program), so the evaluator reads "BRAC University (BIGD)" to stay within 155 characters (151).
+const description = desc('A BRAC University (BIGD) randomized trial of CodersTrust’s WSDFM program: women offered a place were 10.3 percentage points more likely to be employed.');
 
 // RC-08 chart values must match the register text.
 const classes = [

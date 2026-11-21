@@ -430,6 +430,11 @@ const menus = navGroups.map((g) => ({ ...g, nodes: nestItems(g.items) }));
   .mega__item--span {
     grid-column: 1 / -1;
   }
+  /* WP166-A (marketing review R7-14): the item after a spanning parent, when it is the last one (Programs' "Courses"), sits alone in its row anyway, so it takes the whole row and its longer
+     description ("... and families on JobReady.global, including SuperKids.") stays on one line; the links still end where the WP76 measurements above say. */
+  .mega__item--span + li:last-child {
+    grid-column: 1 / -1;
+  }
   .mega__sub--two {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }

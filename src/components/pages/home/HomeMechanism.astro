@@ -6,6 +6,7 @@ import Icon from '../../system/Icon.astro';
 import PositioningStatement from '../../sections/PositioningStatement.astro';
 import { WHERE_THEY_WORK_TEXT } from '../partners/partners';
 import { DELIVERY_MODEL } from '../../../data/copy';
+import { fact } from '../../../data/facts';
 import { linkAttrs } from '../../../lib/url';
 
 /**
@@ -29,6 +30,10 @@ interface Props {
   ribbonLine?: string;
   eyebrow?: string;
   id?: string;
+  /** WP166-A (R1-18): the TalentLEAP method sentence (IN-06) and its link, at the foot of the band beside the model link (it was in the Track Record band). */
+  method?: boolean;
+  /** WP166-A (R1-17): the page's one program-scope statement (PROGRAM_SCOPE_STATEMENT), under the band (the "Includes" band that printed it is gone from Home). */
+  scope?: string;
 }
 const {
   title,
@@ -40,14 +45,18 @@ const {
     { label: 'Who We Reach', title: 'Educated, Unemployed and Underemployed Youth', text: 'Outreach and selection with local partners.', icon: 'users' },
     // WP163 (owner answers of 3 November 2026): Home states the delivery model once, here (DELIVERY_MODEL, the AI-supported flipped classroom).
     { label: 'How We Reach Them', title: 'AI-Supported Blended Training', text: `Training in existing labs and colleges, led by facilitators trained by CodersTrust (Training of Trainers), with delivery designed to work where connectivity is limited. ${DELIVERY_MODEL.text}`, icon: 'graduation-cap' },
-    { label: 'What We Deliver', title: 'Skills, Certification Preparation and Mentoring', text: 'Industry certification exam preparation by track, then three months of milestone-based mentoring.', icon: 'award' },
+    // WP166-A (marketing review R1-17, owner approval of 21 November 2026): the card states the fuller sentence of the former "What a Supported Youth Cohort Includes" band (PD-01, PD-15, PD-19; the hours read from PD-01), which is gone from Home.
+    { label: 'What We Deliver', title: 'Skills, Certification Preparation and Mentoring', text: `${fact('PD-01').stat?.value} training hours per certification, including exam preparation, followed by three months of milestone-based mentoring and placement support. Each track’s work-entry plan is agreed before enrollment.`, icon: 'award' },
     { label: 'Where They Work', title: 'Local, Remote and Global Work', text: WHERE_THEY_WORK_TEXT, icon: 'globe' },
   ],
   link,
   ribbon = ['Learn', 'Earn', 'Prosper'],
   ribbonLine,
   id = 'mechanism',
+  method = false,
+  scope,
 } = Astro.props;
+const talentleap = linkAttrs('/our-model/talentleap/');
 ---
 
 <Section id={id} tone={tone} aria-labelledby={`${id}-h`}>
@@ -60,6 +69,15 @@ const {
   </p>
   {ribbonLine && <p class="mech__line">{ribbonLine}</p>}
   {link && <p class="mech__link"><a class="link" href={linkAttrs(link.href).href}>{link.label}<Icon name="arrow-right" size={16} /></a></p>}
+  {
+    method && (
+      <p class="mech__method" data-fact="IN-06">
+        Our method organizes skills into career paths. We call it TalentLEAP.{' '}
+        <a class="link" href={talentleap.href}>How TalentLEAP Works<Icon name="arrow-right" size={16} /></a>
+      </p>
+    )
+  }
+  {scope && <p class="mech__scope">{scope}</p>}
   <slot />
 </Section>
 
@@ -88,5 +106,17 @@ const {
   }
   .mech__link {
     margin: var(--space-md) 0 0;
+  }
+  .mech__method {
+    margin: var(--space-md) 0 0;
+    max-width: 48rem;
+    color: var(--on-surface-variant);
+  }
+  .mech__scope {
+    margin: var(--space-md) 0 0;
+    max-width: 48rem;
+    font-size: var(--fs-body-xs);
+    line-height: var(--lh-body-xs);
+    color: var(--on-surface-variant);
   }
 </style>

@@ -303,7 +303,7 @@ test.describe('Nigeria is a timeline line only (owner decision 15): About, "Our 
     expect(items.filter((i) => /Nigeria/.test(i.text))).toHaveLength(1);
     await expect(page.locator('main [data-fact~="TL-07"]')).toHaveCount(1);
     // the other five entries are unchanged
-    expect(items.filter((_, i) => i !== 2).map((i) => i.title)).toEqual(['Launch in Copenhagen', 'Freelancer Development and Talent Financing', 'NGO Workforce Programs and COVID-19 Teacher Training', 'Government Contracts and University Partnerships', 'JobReady, YouthWIDE and the Impact Survey']);
+    expect(items.filter((_, i) => i !== 2).map((i) => i.title)).toEqual(['Launch in Copenhagen', 'Freelancer Development and Talent Financing', 'NGO Workforce Programs and COVID-19 Teacher Training', 'Government Contracts and University Partnerships', 'JobReady and the Impact Survey']); // WP166-A (R1-25): the last entry's title follows its text
   });
 
   test('Nigeria is not a location and is not counted: not in the data, the table, the pins, the cards or the headline', async ({ page }) => {

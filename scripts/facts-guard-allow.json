@@ -17,6 +17,21 @@
       "reason": "A team member's own career length in his biography (\"25+ years of experience\"), not an organizational result."
     },
     {
+      "page": "/about/team/",
+      "text": "20+",
+      "reason": "WP166-A (marketing review R1-31): the Asad Zaman and Rezaul Karim Khan cards' credential lines, each his own career length from his biography (\"20+ years of experience\", \"20+ years in global ICT projects\"), not an organizational result."
+    },
+    {
+      "page": "/about/team/",
+      "text": "25+",
+      "reason": "WP166-A (marketing review R1-31): the Shafqat Ullah card's credential line, his own career length from his biography (\"25+ years of experience\"), not an organizational result."
+    },
+    {
+      "page": "/about/mentors/",
+      "text": "20+",
+      "reason": "WP166-A (marketing review R1-38): the Rezaul Karim Khan mentor card's credential line, his own career length from his biography (\"20+ years in global ICT projects\"), not an organizational result."
+    },
+    {
       "page": "/news/",
       "text": "1,400+",
       "reason": "Excerpt of the archived post a-proud-milestone-for-coderstrust (a treasure-hunt registration count); archived /news/<post>/ pages are excluded from the guard (R8-m5) and the listing repeats their wording."

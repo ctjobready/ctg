@@ -234,7 +234,8 @@ test.describe('Home: the survey slide’s timing line is one sentence that repea
   // its finding is ONE body line on the survey slide (slide 3), the 58.7% with its defined base, stated once and in no tile.
   test('slide 3 has the 58.7% once, with its full base, in one body line; its one tile is the income result; the evidence link stays; the old repeating sentence is gone', async ({ page }) => {
     await open(page, '');
-    const slide = page.locator('[data-hs-slide]').nth(2);
+    // WP166-A (marketing review R1-11): the slides run evidence, survey outcomes, program results, government (old slide 2 is now 4, 3 is 2, 4 is 3)
+    const slide = page.locator('[data-hs-slide]').nth(1);
     await expect(slide.locator('.hs__eyebrow')).toHaveText('Impact Survey 2026');
     await expect(slide.locator('.hs__lead')).toHaveCount(1);
     expect(await slide.locator('.hs__lead').getAttribute('data-fact')).toBe('OC-05');

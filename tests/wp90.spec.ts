@@ -106,10 +106,11 @@ test.describe('WP90 item 3: Investors reach band', () => {
 });
 
 test.describe('WP90 item 4: comparison row', () => {
-  test('the Outcome Tracking row reads "Included for every cohort" on Home, the page that carries the comparison table', async ({ page }) => {
+  // WP166-A (marketing review R1-15): Home's comparison table, and this row, is gone; no page says "Planned for every cohort"
+  test('the comparison row is gone with Home’s comparison table (WP166-A); no page says "Planned for every cohort"', async ({ page }) => {
     await open(page, '');
     const text = compact(await page.locator('main').textContent());
-    expect(text).toContain('Included for every supported cohort: monthly reports and follow-up surveys at 3, 6 and 12 months'); // WP161-A (A-27): "every supported cohort"
+    expect(text).not.toContain('Included for every supported cohort: monthly reports and follow-up surveys');
     expect(text).not.toContain('Planned for every cohort');
   });
 });

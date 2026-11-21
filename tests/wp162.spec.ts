@@ -319,8 +319,10 @@ test.describe(`Dates: every page whose visible text changed in WP162 is dated ${
     [REACH, 'Article'],
     [ABOUT, 'AboutPage'],
   ] as const) {
-    test(`${rel}: ${type}.dateModified is ${TODAY}`, () => {
-      expect(nodeOf(rel, type).dateModified).toBe(TODAY);
+    // WP166-A: About's text changed again on 2026-11-21, so its date is on or after this package's
+    test(`${rel}: ${type}.dateModified is ${TODAY}${rel === ABOUT ? ' or later' : ''}`, () => {
+      if (rel === ABOUT) expect(String(nodeOf(rel, type).dateModified) >= TODAY).toBe(true);
+      else expect(nodeOf(rel, type).dateModified).toBe(TODAY);
     });
   }
   test('the Albania case study keeps datePublished 2026-10-08 and declares its own dateModified in the case-study data', () => {

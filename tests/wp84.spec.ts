@@ -158,7 +158,8 @@ test.describe('WP84: the shared contract-scope note', () => {
   test('Home’s government slide is unchanged: its own contract-scope sentences, no overlap sentence, data-fact still GV-12 GV-01 GV-11 SC-04', async ({ page }) => {
     await page.setViewportSize(DESKTOP);
     await open(page, '');
-    const lead = page.locator('[data-hs-slide]').nth(1).locator('.hs__lead');
+    // WP166-A (marketing review R1-11): the slides run evidence, survey outcomes, program results, government (old slide 2 is now 4, 3 is 2, 4 is 3)
+    const lead = page.locator('[data-hs-slide]').nth(3).locator('.hs__lead');
     expect(compact(await lead.textContent())).toContain('Her Power, one of the six, trained 25,125 women nationally, its full target; CodersTrust trained 2,400 directly.');
     expect(compact(await lead.textContent())).not.toContain('same group counted');
     expect(await lead.getAttribute('data-fact')).toBe('GV-12 GV-01 GV-11 SC-04');

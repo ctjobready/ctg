@@ -18,7 +18,7 @@ import { listPages } from './support/pages';
 
 const compact = (t: string | null | undefined) => (t ?? '').replace(/\s+/g, ' ').trim();
 const noOverflow = (page: Page) => page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth);
-const slide = (page: Page, n: number) => page.locator('[data-hs-slide]').nth(n - 1);
+const slide = (page: Page, n: number) => page.locator('[data-hs-slide]').nth(n - 1); // WP166-A (R1-11): direct positions; TITLES below is in the new carousel order
 
 const HOME = '';
 const DEV_PARTNERS = 'partner-with-us/development-partners/';
@@ -88,7 +88,7 @@ test.describe('WP75 item 1: the register says the 350 were enrolled (owner answe
 test.describe('WP75 item 1: every page that states the figure says "enrolled"', () => {
   test('Home slide 4: "UNDP YES, Korail (2017): 67% of the 350 enrolled found a first job within three months." tied to PR-03 and PR-06', async ({ page }) => {
     await open(page, HOME);
-    const line = slide(page, 4).locator('.hs__lines li').nth(2);
+    const line = slide(page, 3).locator('.hs__lines li').nth(2); // WP166-A: the program-results slide is the third
     await expect(line).toHaveText('UNDP YES, Korail (2017): 67% of the 350 enrolled found a first job within three months.');
     await expect(line).toHaveAttribute('data-fact', 'PR-03 PR-06');
     expect(compact(await page.locator('#results').textContent())).not.toContain('350 trained');
@@ -149,8 +149,8 @@ test.describe('WP75 item 1: the longer word keeps the carousel’s rows and its 
       test('slide 4: the UNDP YES line takes no more rows than the others allow, the Kosovo, WSDFM and Her Power lines stay on one row at 1280, no slide leaves more than 48 px unused, and nothing scrolls sideways', async ({ page }) => {
         await open(page, HOME);
         await scrollThrough(page);
-        await showSlide(page, 4);
-        const lines = await slide(page, 4)
+        await showSlide(page, 3); // WP166-A: the program-results slide is the third
+        const lines = await slide(page, 3)
           .locator('.hs__lines li')
           .evaluateAll((els) => els.map((e) => ({ height: Math.round(e.getBoundingClientRect().height * 10) / 10, lineHeight: parseFloat(getComputedStyle(e).lineHeight) })));
         expect(lines).toHaveLength(4);
@@ -176,11 +176,12 @@ test.describe('WP75 item 1: the longer word keeps the carousel’s rows and its 
 });
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+// WP166-A (marketing review R1-11, owner approval of 21 November 2026): the outcomes first, strongest first; the government contracts close the carousel
 const TITLES = [
   'Women Offered a Place Earned an Estimated 41% More per Month',
-  'Six Government Contracts and a National University Partnership',
   'Surveyed Completers Report Higher Income',
   'Results by Program',
+  'Six Government Contracts and a National University Partnership',
 ];
 
 /** Every heading of the document, in order, with its level, text and whether it sits in the Results band (the band's h2 and the carousel). */
@@ -189,21 +190,22 @@ const outlineOf = (page: Page) =>
     Array.from(document.querySelectorAll('h1, h2, h3, h4, h5, h6')).map((h) => ({ level: Number(h.tagName[1]), text: (h.textContent ?? '').replace(/\s+/g, ' ').trim(), inBand: !!h.closest('.hs-shell') })),
   );
 
-test.describe('WP75 item 2: the carousel’s slide headings are h3s under the band’s "Results" h2', () => {
+// WP166-A (marketing review R1-11): the band heading is "Results You Can Check" (it was "Results"); the outline is unchanged
+test.describe('WP75 item 2: the carousel’s slide headings are h3s under the band’s "Results You Can Check" h2', () => {
   test.use({ viewport: DESKTOP });
 
-  test('"Results" is an h2; the four slide headings that follow it are h3s with the same text; the next heading is an h2 again; the band holds no other heading', async ({ page }) => {
+  test('"Results You Can Check" is an h2; the four slide headings that follow it are h3s with the same text; the next heading is an h2 again; the band holds no other heading', async ({ page }) => {
     await open(page, HOME);
     const outline = await outlineOf(page);
-    const at = outline.findIndex((h) => h.inBand && h.text === 'Results');
-    expect(at, 'the "Results" band heading').toBeGreaterThan(-1);
+    const at = outline.findIndex((h) => h.inBand && h.text === 'Results You Can Check');
+    expect(at, 'the "Results You Can Check" band heading').toBeGreaterThan(-1);
     expect(outline[at].level).toBe(2);
     expect(outline.slice(at + 1, at + 5)).toEqual(TITLES.map((text) => ({ level: 3, text, inBand: true })));
     expect(outline[at + 5].level, 'the heading after the carousel').toBe(2);
     expect(outline[at + 5].inBand).toBe(false);
     expect(outline.filter((h) => h.inBand).map((h) => h.level)).toEqual([2, 3, 3, 3, 3]);
     await expect(page.locator('#results h2')).toHaveCount(0);
-    await expect(page.locator('#results-h')).toHaveText('Results');
+    await expect(page.locator('#results-h')).toHaveText('Results You Can Check');
     expect(await page.locator('#results-h').evaluate((h) => h.tagName)).toBe('H2');
   });
 
@@ -228,9 +230,10 @@ test.describe('WP75 item 2: the carousel’s slide headings are h3s under the ba
       await expect(slide(page, n)).toHaveAttribute('aria-label', `${n} of 4: ${TITLES[n - 1]}`);
     }
     expect(await slide(page, 1).locator('.hs__title').getAttribute('data-fact')).toBe('RC-01');
-    expect(await slide(page, 2).locator('.hs__title').getAttribute('data-fact')).toBe('GV-12');
-    expect(await slide(page, 3).locator('.hs__title').getAttribute('data-fact')).toBe('OC-03');
-    expect(await slide(page, 4).locator('.hs__title').getAttribute('data-fact')).toBeNull();
+    // WP166-A: survey second, program results third, government fourth
+    expect(await slide(page, 2).locator('.hs__title').getAttribute('data-fact')).toBe('OC-03');
+    expect(await slide(page, 3).locator('.hs__title').getAttribute('data-fact')).toBeNull();
+    expect(await slide(page, 4).locator('.hs__title').getAttribute('data-fact')).toBe('GV-12');
   });
 
   for (const vp of [DESKTOP, MOBILE]) {
@@ -275,10 +278,10 @@ test.describe('WP75 item 2: the carousel’s slide headings are h3s under the ba
 test.describe('WP75 item 2: the outline does not depend on JavaScript', () => {
   test.use({ viewport: DESKTOP, javaScriptEnabled: false });
 
-  test('without JavaScript the four slides stack, each with its h3 under the "Results" h2', async ({ page }) => {
+  test('without JavaScript the four slides stack, each with its h3 under the "Results You Can Check" h2 (WP166-A: it was "Results")', async ({ page }) => {
     await open(page, HOME);
     const outline = await outlineOf(page);
-    const at = outline.findIndex((h) => h.inBand && h.text === 'Results');
+    const at = outline.findIndex((h) => h.inBand && h.text === 'Results You Can Check');
     expect(outline.slice(at, at + 5).map((h) => h.level)).toEqual([2, 3, 3, 3, 3]);
     expect(outline.slice(at + 1, at + 5).map((h) => h.text)).toEqual(TITLES);
   });

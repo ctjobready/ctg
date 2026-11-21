@@ -64,10 +64,14 @@ const kosovo: StoryCardData = {
 // The order of the "Proof in Practice" cards above: WSDFM, Women in Online Work in Kosovo, Her Power.
 const cards = [await fromStoryFile('samina-tasneem-chowdhury', 'ST-03'), kosovo, await fromStoryFile('maria-dewan', 'ST-06')];
 const stories = linkAttrs('/impact/stories/');
+// WP166-A (marketing review R1-23, owner approval of 21 November 2026): the heading states the band's point, "Three Learners Who Turned Training into Paid Work" (it was the label "Learner Journeys"); each of the
+// three outcomes is paid work (Fiverr projects, a full-time online contract, Freelancer.com clients). The count is the number of cards, so the heading cannot overstate it.
+const COUNT = ['One Learner Who Turned', 'Two Learners Who Turned', 'Three Learners Who Turned'];
+const title = `${COUNT[cards.length - 1] ?? `${cards.length} Learners Who Turned`} Training into Paid Work`;
 ---
 
 <Section id={id} tone={tone} pad="md" aria-labelledby={`${id}-h`}>
-  <SectionHeader id={`${id}-h`} eyebrow="Individual Stories" title="Learner Journeys" lead="One learner from each program shown in Proof in Practice: individual stories, not typical or promised outcomes." />
+  <SectionHeader id={`${id}-h`} eyebrow="Individual Stories" title={title} lead="One learner from each program shown in Proof in Practice: individual stories, not typical or promised outcomes." />
   <div class="lj__cards" data-fact="ST-03 ST-05 ST-06">
     <StoryGallery cards={cards} filter={false} />
   </div>

@@ -46,51 +46,29 @@ test.describe('Home: "What a Supported Youth Cohort Includes" (WP41: it was "Wha
     },
   ];
 
-  test('three cards, each a heading and its sentences, in the order of the three ranked pains and tied to their register facts', async ({ page }) => {
+  // WP166-A (marketing review R1-17, owner approval of 21 November 2026): the band re-explained the Mechanism band, so it is gone; its first card's sentence, verbatim, is the
+  // Mechanism's "What We Deliver" text, and the other two cards' lines are on no Home band. The band's place, padding and layout tests (it sat after Recognition, before the
+  // questions; one row of three at 1280, one card per row at 390) pinned the band itself and are deleted with it.
+  test('the band is gone; its first card’s sentence is the Mechanism’s "What We Deliver" text, and its other two cards are on no Home band (WP166-A)', async ({ page }) => {
     await open(page, '');
-    await expect(page.locator('#features h2')).toHaveText('What a Supported Youth Cohort Includes');
-    const cards = page.locator('#features li.card');
-    await expect(cards).toHaveCount(3);
-    for (const [i, c] of CARDS.entries()) {
-      const card = cards.nth(i);
-      await expect(card.locator('h3'), c.title).toHaveText(c.title);
-      expect(c.title).toBe(titleCase(c.title));
-      expect(await texts(page, `#features li.card:nth-child(${i + 1}) p`), c.title).toEqual([c.text]);
-      expect(await card.getAttribute('data-relieves'), c.title).toBe(c.pain);
-      expect(((await card.getAttribute('data-fact')) ?? '').split(' ').sort(), c.title).toEqual([...c.facts].sort());
-    }
+    await expect(page.locator('#features')).toHaveCount(0);
+    const deliver = page.locator('#mechanism .model__block', { has: page.locator('.model__label', { hasText: 'What We Deliver' }) });
+    await expect(deliver.locator('.model__text')).toHaveText(CARDS[0].text);
+    const text = await mainText(page);
+    expect(text).not.toContain('What a Supported Youth Cohort Includes');
+    for (const c of CARDS.slice(1)) expect(text, c.title).not.toContain(c.text);
   });
 
   // WP39 and WP40 (cycle-16 and cycle-17 reviews): the audience and program pages and Investors state their features as three short cards too (tests/wp39.spec.ts and tests/wp40.spec.ts hold them)
   test('Home and Investors carry none of the matrix labels', async ({ page }) => {
     for (const route of ['', 'partner-with-us/investors/']) {
       await open(page, route);
-      expect(compact(await page.locator('#features').textContent()), route || 'home').not.toMatch(/Concern Addressed|What Is Included|Practical Benefit|Added Benefit/);
+      // WP166-A (R1-17): Home has no features band, so its whole main text is checked
+      const scope = route === '' ? 'main' : '#features';
+      expect(compact(await page.locator(scope).textContent()), route || 'home').not.toMatch(/Concern Addressed|What Is Included|Practical Benefit|Added Benefit/);
       await expect(page.locator('#features .fc__card'), route || 'home').toHaveCount(0);
     }
   });
-
-  test('the band keeps its id and its place (after Recognition, before the questions) and has room under the cards', async ({ page }) => {
-    await open(page, '');
-    const ids = (await bands(page)).map((b) => b.id);
-    expect(ids.indexOf('features')).toBe(ids.indexOf('recognition') + 1);
-    expect(ids.indexOf('faq')).toBe(ids.indexOf('features') + 1);
-    // the old wrapper's `join` had left this band with no bottom padding, so the cards touched the band's edge
-    const pad = await page.locator('#features').evaluate((el) => parseFloat(getComputedStyle(el).paddingBottom));
-    expect(pad, 'bottom padding of the band').toBeGreaterThanOrEqual(40);
-    expect(await page.locator('#features').getAttribute('class')).toMatch(/band--(airy|white|ice)/);
-  });
-
-  for (const vp of [DESKTOP, MOBILE]) {
-    test(`at ${vp.width}px the cards fit, stack on a phone and do not scroll sideways`, async ({ page }) => {
-      await page.setViewportSize(vp);
-      await open(page, '');
-      const tops = await page.locator('#features li.card').evaluateAll((els) => els.map((e) => Math.round(e.getBoundingClientRect().top)));
-      if (vp.width >= 1024) expect(new Set(tops).size, 'one row of three').toBe(1);
-      else expect(new Set(tops).size, 'one card per row').toBe(3);
-      expect(await noOverflow(page)).toBe(true);
-    });
-  }
 });
 
 test.describe('Home: the Guide band and the cost-of-waiting card', () => {
@@ -100,12 +78,17 @@ test.describe('Home: the Guide band and the cost-of-waiting card', () => {
     expect(guide).not.toMatch(/(?<![\d,])30,000|1\.5M/); // the 130,000+ learners are not the total
     await expect(page.locator('#guide .stat, #guide .guide__panel, #guide .guide__tile, #guide [data-evidence]')).toHaveCount(0);
     expect(guide).toContain('We’ve Built This Path Since 2014');
-    expect(guide).toContain('CodersTrust launched in 2014 in Copenhagen and began training freelancers in Bangladesh.');
-    await expect(page.locator('#guide').getByRole('link', { name: 'How TalentLEAP Works' })).toHaveCount(1);
+    // WP166-A (marketing review R1-05, R1-18): the band opens with the signed-agreements sentence (SC-11) where it told the launch story; the TalentLEAP line and its link sit at the foot of the
+    // Mechanism band; the development partners' logos are the hero's funders row, so three relationship cards remain here
+    expect(guide).toContain('CodersTrust has signed MOUs, agreements or contracts with 70+ organizations: 13 government bodies;');
+    expect(guide).not.toContain('CodersTrust launched in 2014 in Copenhagen and began training freelancers in Bangladesh.');
+    await expect(page.locator('#guide').getByRole('link', { name: 'How TalentLEAP Works' })).toHaveCount(0);
+    await expect(page.locator('#mechanism').getByRole('link', { name: 'How TalentLEAP Works' })).toHaveCount(1);
     await expect(page.locator('#guide').getByRole('link', { name: 'Meet the Leadership Team' })).toHaveCount(1);
-    await expect(page.locator('#guide .rel__title')).toHaveCount(4);
+    await expect(page.locator('#guide .rel__title')).toHaveCount(3);
     // (WP42, cycle-19 review: the government slide is the second slide)
-    const slide2 = compact(await page.locator('[data-hs-slide]').nth(1).textContent());
+    // WP166-A (marketing review R1-11): the slides run evidence, survey outcomes, program results, government (old slide 2 is now 4, 3 is 2, 4 is 3)
+    const slide2 = compact(await page.locator('[data-hs-slide]').nth(3).textContent());
     // (WP45, cycle-21 review: the scope was GV-12's own note, "The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained; CodersTrust trained 2,500 directly)."; WP48, cycle-23 review: the slide keeps the note's first clause, "30,000+ people: contract scope, not a count of completers.")
     // WP57 (cycle-29 review, Grok R2): the slide says the note's WP35 wording again
     // WP61 (cycle-33 review, GPT-6.1 Sol G1): "Her Power, one of the six, trained 25,125 women nationally; CodersTrust trained 2,500 directly." (it said "This includes Her Power’s national program: ...")
@@ -128,12 +111,14 @@ test.describe('Home: the Guide band and the cost-of-waiting card', () => {
   });
 
   // WP48 (cycle-23 review): YouthWIDE's cost band, the one other page that printed the whole PX-06 sentence, is gone; the register keeps the whole fact (tests/wp48.spec.ts)
-  test('the cost card states the 21% finding alone, still rests on PX-06, and keeps its "What It Means" line; the register keeps the whole fact', async ({ page }) => {
+  // WP166-A (marketing review R1-07): Home's cost band is gone too; the 21% finding closes pain 3, the pain it proves, and the "What It Means" line is gone with the band
+  test('the 21% finding is stated alone, closing pain 3, and still rests on PX-06 (WP166-A: it was the cost card, with a "What It Means" line); the register keeps the whole fact', async ({ page }) => {
     await open(page, '');
-    const card = page.locator('#cost article').first();
-    expect(compact(await card.locator('.cost__data').textContent())).toBe('On one major freelancing platform, automation-prone writing and coding postings fell 21% relative to manual-intensive jobs within eight months of ChatGPT’s release (Demirci, Hannane and Zhu, 2025).');
-    expect(await card.locator('.cost__data').getAttribute('data-fact')).toBe('PX-06');
-    expect(compact(await card.locator('.cost__impl').textContent())).toBe('What It Means Training has to follow current employer demand, not last year’s job market.');
+    await expect(page.locator('#cost')).toHaveCount(0);
+    const pain = page.locator('#problem li[data-pain="P3"]');
+    expect(compact(await pain.locator('.gp__a').textContent())).toContain('On one major freelancing platform, automation-prone writing and coding postings fell 21% relative to manual-intensive jobs within eight months of ChatGPT’s release (Demirci, Hannane and Zhu, 2025).');
+    expect(await pain.getAttribute('data-fact')).toBe('PX-06');
+    expect(await mainText(page)).not.toContain('Training has to follow current employer demand, not last year’s job market.');
     expect(await mainText(page)).not.toMatch(/image-creation|17%/);
     expect(fact('PX-06').text).toContain('image-creation postings fell 17% within about a year of image-generating AI');
   });
@@ -227,9 +212,12 @@ test.describe('Guide band: one origin line on the audience pages, the two-senten
     await expect(page.locator('#guide [data-fact="SC-03"]')).toHaveCount(1);
   });
 
-  test('Home keeps the two-sentence history; YouthWIDE and Local Partners never carried it', async ({ page }) => {
+  // WP166-A (marketing review R1-05): Home's track-record band opens with the signed agreements instead; the launch story is told on About and the Korail pilot in its case study
+  test('Home no longer carries the two-sentence history (WP166-A); YouthWIDE and Local Partners never carried it', async ({ page }) => {
     await open(page, '');
-    expect(compact(await page.locator('#guide').textContent())).toContain('CodersTrust launched in 2014 in Copenhagen and began training freelancers in Bangladesh. Our first UNDP-supported pilot (2015) was in Dhaka’s Korail settlement.');
+    expect(compact(await page.locator('#guide').textContent())).not.toMatch(/began training freelancers|Korail settlement/);
+    await open(page, 'about/');
+    expect(await mainText(page)).toContain('launched CodersTrust in Copenhagen in 2014');
     for (const route of ['programs/youthwide/', 'partner-with-us/local-partners/']) {
       await open(page, route);
       expect(compact(await page.locator('#guide').textContent()), route).not.toMatch(/began (?:developing|training) freelancers/);
@@ -273,7 +261,8 @@ test.describe('Home carousel: the reach slide and the speed slide are one survey
   // its finding is the survey slide's one body line, tied to OC-05, with the base the register defines.
   test('the survey slide (slide 3) states the 58.7% with its survey base in one body line tied to OC-05, under the unchanged income heading and "Impact Survey 2026" eyebrow', async ({ page }) => {
     await open(page, '');
-    const slide = page.locator('[data-hs-slide]').nth(2);
+    // WP166-A (marketing review R1-11): the slides run evidence, survey outcomes, program results, government (old slide 2 is now 4, 3 is 2, 4 is 3)
+    const slide = page.locator('[data-hs-slide]').nth(1);
     await expect(slide.locator('h3')).toHaveText('Surveyed Completers Report Higher Income');
     expect(await slide.locator('h3').getAttribute('data-fact')).toBe('OC-03');
     await expect(slide.locator('.hs__eyebrow')).toHaveText('Impact Survey 2026');
@@ -383,11 +372,12 @@ test.describe('one title pattern: "{Page} | CodersTrust", with Home’s brand-fo
     expect(odd).toEqual([]);
   });
 
-  test('Home keeps "CodersTrust: From Learning to Earning for Youth"; the three pages that had dropped the suffix carry it', () => {
+  // WP166-A (marketing review R1-21, R7-04): Home's title names the buyers ("CodersTrust: Youth Jobs Programs for Funders and Governments"; it was "CodersTrust: From Learning to Earning for Youth"), and About's carries its H1 clause
+  test('Home keeps a "CodersTrust: ..." title; the three pages that had dropped the suffix carry it', () => {
     const byRoute = new Map(listPages().map((p) => [p.route, titleOf(p.file)]));
-    expect(byRoute.get('/')).toBe('CodersTrust: From Learning to Earning for Youth');
-    // WP61 (cycle-33 review, Kimi K2): "About | CodersTrust" (it was "About Us | CodersTrust", which broke the "{Page} | CodersTrust" pattern)
-    expect(byRoute.get('/about/')).toBe('About | CodersTrust');
+    expect(byRoute.get('/')).toBe('CodersTrust: Youth Jobs Programs for Funders and Governments');
+    // WP61 (cycle-33 review, Kimi K2): "About | CodersTrust" (it was "About Us | CodersTrust", which broke the "{Page} | CodersTrust" pattern); WP166-A: "About: A Global Workforce Organization | CodersTrust"
+    expect(byRoute.get('/about/')).toBe('About: A Global Workforce Organization | CodersTrust');
     expect(byRoute.get('/about/team/shamsul-haque/')).toBe('Md. Shamsul Haque, CEO, CodersTrust Bangladesh | CodersTrust');
     expect(byRoute.get('/news/a-proud-milestone-for-coderstrust/')).toBe('A Proud Milestone for CodersTrust! | CodersTrust');
   });

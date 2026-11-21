@@ -16,7 +16,8 @@ test.describe('Contact: the inquiry fallback names both addresses (item 1)', () 
   test('the routes lead says where to write, with the local-partnership route to the Bangladesh team, and keeps its copy control', async ({ page }) => {
     await open(page, 'contact/');
     const routes = compact(await page.locator('#routes').textContent());
-    expect(routes).toContain('If your email app does not open, write to contact@coderstrust.global. For local partnerships in Bangladesh, write to hello@coderstrustbd.com.');
+    // WP166-A (marketing review R7-02): the fallback also serves a reader unsure of the route ("Not sure which route fits, or your email app does not open? Write to ..."); both addresses stay
+    expect(routes).toContain('Not sure which route fits, or your email app does not open? Write to contact@coderstrust.global. For local partnerships in Bangladesh, write to hello@coderstrustbd.com.');
     expect(routes).not.toContain('copy the address below');
     await expect(page.locator('#routes .copy-email')).toHaveCount(1);
   });

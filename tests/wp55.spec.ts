@@ -242,11 +242,12 @@ test.describe('"CodersTrust Around the World": seven tiles on Home and About, th
     ['bangladesh', 'Bangladesh, since 2014. Most delivery has been in Bangladesh.', 'legacy-general-women-learners-classroom'],
   ] as const;
 
-  test('Home: an H2 band of seven chronological tiles, each place and date first and one short line after it, tied to the register', async ({ page }) => {
+  // WP166-A (marketing review R1-08, R1-19): the strip closes the track-record band, so its heading is an H3 under "We’ve Built This Path Since 2014"; the tiles are unchanged
+  test('Home: seven chronological tiles, under an H3 in the track-record band (WP166-A; it was an H2 band), each place and date first and one short line after it, tied to the register', async ({ page }) => {
     await open(page, HOME);
-    const strip = page.locator('#world[data-world-strip]');
+    const strip = page.locator('#guide #world[data-world-strip]');
     await expect(strip).toHaveCount(1);
-    await expect(strip.getByRole('heading', { level: 2, name: 'CodersTrust Around the World' })).toHaveCount(1);
+    await expect(strip.getByRole('heading', { level: 3, name: 'CodersTrust Around the World' })).toHaveCount(1);
     expect('CodersTrust Around the World').toBe(titleCase('CodersTrust Around the World'));
     await expect(strip.locator('li[data-tile]')).toHaveCount(7);
     expect(await strip.locator('li[data-tile]').evaluateAll((els) => els.map((e) => e.getAttribute('data-tile')))).toEqual(EXPECTED.map((e) => e[0]));
@@ -401,15 +402,12 @@ test.describe('"As covered by": the press coverage line, text links and no logos
       return (c.textContent ?? '').replace(/\s+/g, ' ').trim();
     });
 
-  test('Home: the pointer reads as written (both places), has no link and no image, and the link to Recognition and Media is the next paragraph', async ({ page }) => {
+  // WP166-A (marketing review R1-19, owner approval of 21 November 2026): Home's pointer sentence only described the link under it, so it is gone; the link stays, in the recognition items of the track-record band
+  test('Home: the pointer sentence is gone (WP166-A), and the link to Recognition and Media stays', async ({ page }) => {
     await open(page, HOME);
-    const line = page.locator('p.cov');
-    await expect(line).toHaveCount(1);
-    expect(await textOf(page, 'p.cov')).toBe(POINTER);
-    await expect(line.locator('a')).toHaveCount(0);
-    await expect(line.locator('img, svg, picture')).toHaveCount(0);
-    expect(await line.getAttribute('data-fact')).toBe('PA-09 PA-13');
-    const next = page.locator('#recognition p.cov + p.rec__press a');
+    await expect(page.locator('p.cov')).toHaveCount(0);
+    expect(compact(await page.locator('main').textContent())).not.toContain(POINTER);
+    const next = page.locator('#recognition p.rec__press a');
     await expect(next).toHaveCount(1);
     expect(compact(await next.textContent())).toBe('See All Recognition and Media');
     expect(await next.getAttribute('href')).toMatch(/\/about\/recognition\/$/);
@@ -429,7 +427,8 @@ test.describe('"As covered by": the press coverage line, text links and no logos
   });
 
   // WP87 (CLR review, Opus XHigh run 1): the paragraph naming the seven outlets is gone (their links are on the cards); the World Bank line is the only content of its own section, so the 2021 Albania release is not under the "2014–2016" heading
-  test('the World Bank line sits in its own section, after the early-coverage band and before the press kit', async ({ page }) => {
+  // WP166-A (marketing review R1-40): the World Bank pages, the strongest third-party proof, now come first after the founder honors, before the early-coverage band; the press kit still closes the page
+  test('the World Bank line sits in its own section, before the early-coverage band and the press kit', async ({ page }) => {
     await open(page, RECOGNITION);
     await expect(page.locator('#coverage p.cov')).toHaveCount(0);
     await expect(page.locator('#world-bank p.cov')).toHaveCount(1);
@@ -437,9 +436,9 @@ test.describe('"As covered by": the press coverage line, text links and no logos
     const order = await page.evaluate(() => {
       const follows = (a: Element, b: Element) => !!(a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING);
       const q = (s: string) => document.querySelector(s)!;
-      return { coverageThenWorldBank: follows(q('#coverage'), q('#world-bank')), worldBankThenKit: follows(q('#world-bank'), q('#press-kit')) };
+      return { worldBankThenCoverage: follows(q('#world-bank'), q('#coverage')), worldBankThenKit: follows(q('#world-bank'), q('#press-kit')) };
     });
-    expect(order).toEqual({ coverageThenWorldBank: true, worldBankThenKit: true });
+    expect(order).toEqual({ worldBankThenCoverage: true, worldBankThenKit: true });
     expect(compact(await page.locator('#coverage').textContent())).not.toMatch(/Early press coverage|2021/);
   });
 
@@ -478,9 +477,10 @@ test.describe('"As covered by": the press coverage line, text links and no logos
     expect(await textOf(page, 'p.cov')).toContain('Kosovo (2017) and Albania (2021)');
   });
 
-  test('the line is on Home (the pointer) and on Recognition and Media (the list) only (WP58: About does not repeat it)', () => {
+  // WP166-A (marketing review R1-19): Home's pointer is gone, so the list on Recognition and Media is the one line
+  test('the line is on Recognition and Media (the list) only (WP58: About does not repeat it; WP166-A: Home’s pointer is gone)', () => {
     const on = sitePages().filter((p) => /class="cov[ "]/.test(p.html)).map((p) => p.route).sort();
-    expect(on).toEqual(['/', '/about/recognition/']);
+    expect(on).toEqual(['/about/recognition/']);
   });
 
   test('the line fits at 390 px with no sideways scroll, on both pages', async ({ page }) => {

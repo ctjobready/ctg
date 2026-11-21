@@ -174,15 +174,15 @@ const mails = (raw: string): Mail[] =>
     return { to: decodeURIComponent(u.pathname), subject: u.searchParams.get('subject') ?? '', body: (u.searchParams.get('body') ?? '').replace(/\r\n/g, '\n') };
   });
 const pages = () => listPages().map((p) => ({ route: p.route, raw: readFileSync(p.file, 'utf8') }));
-/** Templates that do not schedule a call: the report request, media, due diligence, applications. */
-const NO_TIMES_BY_DESIGN = /^(Impact Report 2026|Media inquiry|Due-diligence inquiry|Application|Mentor application)/;
+/** Templates that do not schedule a call: the report request, media, due diligence, applications (WP166-A, R7-27: the careers subject is "Resume — [your name]"). */
+const NO_TIMES_BY_DESIGN = /^(Impact Report 2026|Media inquiry|Due-diligence inquiry|Application|Resume|Mentor application)/;
 
 test.describe('WP126 A: every route email asks for two suitable times, as its page does', () => {
   test('the Governments briefing email has a "Two suitable times for a briefing:" line', () => {
     const gov = mails(html('partner-with-us/governments/index.html')).filter((m) => m.subject.startsWith('Briefing request'));
     expect(gov.length).toBeGreaterThan(0);
     for (const m of gov) {
-      expect(m.body).toContain('Two suitable times for a briefing: ');
+      expect(m.body).toContain('Two suitable times for a briefing (with your time zone): '); // WP166-A (R7-30): the times line asks for the time zone
       expect(m.body, 'one dates line, not two').not.toContain('Preferred dates');
     }
   });
@@ -190,7 +190,7 @@ test.describe('WP126 A: every route email asks for two suitable times, as its pa
     const lp = mails(html('partner-with-us/local-partners/index.html')).filter((m) => m.subject.startsWith('Local partnership inquiry'));
     expect(lp.length).toBeGreaterThan(0);
     for (const m of lp) {
-      expect(m.body).toContain('Two suitable times for a discovery session: ');
+      expect(m.body).toContain('Two suitable times for a discovery session (with your time zone): '); // WP166-A (R7-30): the times line asks for the time zone
       expect(m.body).not.toContain('Best times to talk');
     }
   });
@@ -226,8 +226,8 @@ test.describe('WP126 B: the JobReady platform page’s grant link opens the dedi
 test.describe('WP126 C: no serial comma in the six team bios', () => {
   const BIOS: [string, string][] = [
     ['aziz-ahmad', 'the European Parliament, Vatican City and events during World Economic Forum week in Davos, on the Future of Work'], // WP157 (O3): the U.S. Senate is dropped
-    ['asad-zaman', 'technical and vocational education and training (TVET), labor-market and migration strategist'],
-    ['asad-zaman', 'strategic partnerships, resource mobilization and digital transformation.'],
+    // WP166-A (marketing review R1-33): Asad Zaman's first paragraph leads with his UNDP years; the two lists it carried are now one, still without a serial comma
+    ['asad-zaman', 'skills development, technical and vocational education and training (TVET), labor markets and migration.'],
     ['asad-zaman', 'education, migration, e-governance and South-South Cooperation, organized'],
     ['hazrat-ali-nahid', 'bookkeeping, payroll, VAT, GST and tax filing'],
     ['hazrat-ali-nahid', 'the U.S., U.K., Australia and Canada.'],

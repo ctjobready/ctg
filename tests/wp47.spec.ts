@@ -18,7 +18,7 @@ const mainText = async (page: Page) => compact(await page.locator('main').textCo
 const texts = (page: Page, selector: string) => page.locator(selector).evaluateAll((els) => els.map((e) => (e.textContent ?? '').replace(/\s+/g, ' ').trim()));
 const count = (haystack: string, needle: string) => haystack.split(needle).length - 1;
 const noOverflow = (page: Page) => page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth);
-const slide = (page: Page, n: number) => page.locator('[data-hs-slide]').nth(n - 1);
+const slide = (page: Page, n: number) => page.locator('[data-hs-slide]').nth([0, 3, 1, 2][n - 1]); // WP166-A (R1-11): n is the slide's position before the reorder (1 trial, 2 government, 3 survey, 4 program results); the carousel now runs trial, survey, program results, government
 const builtPages = () => listPages().map((p) => ({ route: p.route, html: readFileSync(p.file, 'utf8') }));
 /** The ids of the page's top-level sections, in order. */
 const sectionIds = (page: Page) => page.evaluate(() => Array.from(document.querySelectorAll('main section[id]')).map((s) => s.id));
@@ -117,7 +117,8 @@ test.describe('Home: the router is the band after the carousel; Cost of Waiting,
     expect(order.indexOf('ROUTER'), `router after the carousel (order: ${order.join(' > ')})`).toBe(order.indexOf('RESULTS') + 1);
     expect(order[order.indexOf('ROUTER') + 1], 'problem band after the router').toBe('C2');
     // WP48 (cycle-23 review): the risk band (C12) is gone from Home; its one line leads the closing band (tests/wp48.spec.ts), so the offer (C11) is directly before the call to action
-    expect(order.slice(order.indexOf('C11')), 'offer, closing call to action, next steps').toEqual(['C11', 'C13', 'C14']);
+    // WP166-A (marketing review R1-08, owner approval of 21 November 2026): the FAQ (C9) follows the offer it defends, so the page ends offer, FAQ, closing call to action, next steps
+    expect(order.slice(order.indexOf('C11')), 'offer, FAQ, closing call to action, next steps').toEqual(['C11', 'C9', 'C13', 'C14']);
     // WP49 (cycle-24 review): the investor card is "Investors", as in the menu, the footer and the hub (it was "Impact Investors")
     expect(await texts(page, '#router .cat__title')).toEqual(['Development Partners and NGOs', 'Governments', 'Foundations and CSR', 'Investors']);
     expect(await texts(page, 'nav[aria-label="Choose your audience"] a')).toEqual(['Development Partners', 'Governments', 'Foundations', 'Investors']);
@@ -131,20 +132,20 @@ test.describe('Home: the router is the band after the carousel; Cost of Waiting,
     expect(y.problem).toBeGreaterThan(y.router);
   });
 
-  test('Cost of Waiting (C3), Imagine (C4) and Compare (C10) stay, and so does "What a Supported Youth Cohort Includes", because Home’s FAQ band does not ask what a supported cohort includes (Q8)', async ({ page }) => {
+  // WP166-A (marketing review R1-07, R1-14, R1-15, R1-17; owner approval of 21 November 2026, item 1: "Home restructure: YES"): Cost of Waiting, Imagine, Compare and "What a Supported Youth Cohort Includes" are gone from Home
+  // (the two research findings close pains 2 and 3 of the problem band; the training sentence is the mechanism band's "What We Deliver" card), which reverses this test's WP47 decision; the FAQ still does not ask the cost question
+  test('Cost of Waiting (C3), Imagine (C4), Compare (C10) and "What a Supported Youth Cohort Includes" are gone (WP166-A); the FAQ still does not ask what a supported cohort includes (Q8)', async ({ page }) => {
     await open(page, '');
     const ids = await sectionIds(page);
-    for (const id of ['cost', 'future', 'compare', 'features']) expect(ids, `#${id}`).toContain(id);
-    await expect(page.locator('#features h2')).toHaveText('What a Supported Youth Cohort Includes');
+    for (const id of ['cost', 'future', 'compare', 'features']) expect(ids, `#${id}`).not.toContain(id);
+    expect(await mainText(page)).not.toContain('What a Supported Youth Cohort Includes');
     expect(await texts(page, '#faq summary')).toEqual(['Will This Work in Our Country?', 'Does the Trial Apply to Your Program?', 'How Do You Prove Outcomes?']);
     expect(await texts(page, '#faq summary')).not.toContain('What Does It Cost?');
   });
 
-  test('the Cost of Waiting band ends with its two cards: the "A first cohort can show who is earning" line is gone', async ({ page }) => {
+  test('the Cost of Waiting band is gone (WP166-A); its "A first cohort can show who is earning" line stays gone', async ({ page }) => {
     await open(page, '');
-    await expect(page.locator('#cost .card')).toHaveCount(2);
-    await expect(page.locator('#cost .cost__after, #cost .cost__turn')).toHaveCount(0);
-    expect(await page.locator('#cost .container > :last-child').getAttribute('class')).toContain('grid-cards');
+    await expect(page.locator('#cost')).toHaveCount(0);
     expect(await mainText(page)).not.toContain('A first cohort can show who is earning');
   });
 
@@ -153,8 +154,10 @@ test.describe('Home: the router is the band after the carousel; Cost of Waiting,
     expect(await page.locator('#guide .guide__copy > *').evaluateAll((els) => els.slice(0, 2).map((e) => `${e.tagName} ${(e.textContent ?? '').trim()}`))).toEqual(['P Our Track Record', 'H2 We’ve Built This Path Since 2014']);
     expect(await mainText(page)).not.toContain('You need more than enrollment numbers');
     const guide = compact(await page.locator('#guide').textContent());
-    expect(guide).toContain('CodersTrust launched in 2014 in Copenhagen');
-    expect(guide).toContain('How TalentLEAP Works');
+    // WP166-A (marketing review R1-05, R1-18): the band opens with the signed-agreement sentence (SC-11; the launch story is About's) and the TalentLEAP line is in the mechanism band
+    expect(guide).toContain('CodersTrust has signed MOUs, agreements or contracts with 70+ organizations');
+    expect(guide).not.toContain('CodersTrust launched in 2014 in Copenhagen');
+    expect(compact(await page.locator('#mechanism').textContent())).toContain('How TalentLEAP Works');
     expect(guide).toContain('Meet the Leadership Team');
     await expect(page.locator('#guide .guide__origin')).toHaveCount(1);
     // the heading, now directly under the eyebrow, is set in the same section-heading color as the other Home bands' titles
@@ -171,11 +174,12 @@ test.describe('Home: the router is the band after the carousel; Cost of Waiting,
   });
 
   for (const vp of [DESKTOP, MOBILE]) {
-    test(`at ${vp.width}px Home has no sideways scroll, and the Cost of Waiting band keeps room under its cards`, async ({ page }) => {
+    // WP166-A: the Cost of Waiting band is gone, so the padding check moves to the problem band that now carries its findings
+    test(`at ${vp.width}px Home has no sideways scroll, and the problem band keeps room under its cards`, async ({ page }) => {
       await page.setViewportSize(vp);
       await open(page, '');
       expect(await noOverflow(page)).toBe(true);
-      expect(await page.locator('#cost').evaluate((el) => parseFloat(getComputedStyle(el).paddingBottom))).toBeGreaterThanOrEqual(40);
+      expect(await page.locator('#problem').evaluate((el) => parseFloat(getComputedStyle(el).paddingBottom))).toBeGreaterThanOrEqual(40);
     });
   }
 });

@@ -19,6 +19,7 @@ import { endorsements } from '../../../data/endorsements';
 import { READ_THE_EVIDENCE } from '../../../data/copy';
 import { fact } from '../../../data/facts';
 import { ctaHref } from '../../../lib/mailto';
+import { CTAS } from '../../../data/ctas';
 import { formatDate, isoDate, slugify } from '../../../lib/format';
 import { webPage } from '../../../lib/schema';
 import { linkAttrs, url } from '../../../lib/url';
@@ -95,42 +96,38 @@ const kit = [
 ];
 
 const description = 'HolonIQ South Asia EdTech 100 listing, founder honors, media coverage from 2014 to 2016 and a press kit with logos and boilerplate for CodersTrust.';
-const jsonLd = [webPage({ path: '/about/recognition/', name: 'Recognition and Media', description, dateModified: '2026-11-02', breadcrumb: [{ name: 'Home', path: '/' }, { name: 'About', path: '/about/' }, { name: 'Recognition and Media', path: '/about/recognition/' }] })];
-const media = { href: ctaHref('media'), label: 'Media Inquiries' };
+// WP166-A (marketing review, owner approval of 21 November 2026): the lead, the order of the sections, the press band's eyebrow and heading and the media button changed, so the page's date moves (it was 2026-11-02).
+const jsonLd = [webPage({ path: '/about/recognition/', name: 'Recognition and Media', description, dateModified: '2026-11-21', breadcrumb: [{ name: 'Home', path: '/' }, { name: 'About', path: '/about/' }, { name: 'Recognition and Media', path: '/about/recognition/' }] })];
+// WP166-A (R7-24): the media button's label is the CTA library's ("Send a Media Inquiry"), a verb first.
+const media = { href: ctaHref('media'), label: CTAS.media.label };
+/**
+ * WP166-A (marketing review R1-39, owner approval item 5: register text may be moved or cut, never reworded): the listing was stated four times in the first screen (H1, lead, band heading, band sentence), so the band is gone and its
+ * register sentence (PA-08, with the STEAM category) opens the lead, verbatim; the lead's second sentence says what else the page holds, in the new order (R1-40). The band's "More Recognition News" link sits beside the hero's "Press Kit".
+ */
+const lead = 'CodersTrust was listed in the HolonIQ South Asia EdTech 100 in 2023 (STEAM category) and 2024. Also on this page: founder honors, World Bank pages that name CodersTrust, press coverage from 2014 to 2016 and a press kit.';
 ---
 
 <BaseLayout title="Recognition and Media" description={description} breadcrumbs={[{ label: 'About', href: '/about/' }, { label: 'Recognition and Media' }]} jsonLd={jsonLd}>
   <!-- WP45 (cycle-21 review): the H1 states what the register supports (PA-08: listed in the HolonIQ South Asia EdTech 100 in 2023 and 2024), not "Recognized, Honored and Covered Worldwide", which claimed more than the listings, the founder's honors and the 2014 to 2016 press coverage show; the lead no longer repeats the listing (the Industry Recognition band below gives the years). -->
-  <Hero eyebrow="About Us" title="Twice Listed in the HolonIQ South Asia EdTech 100" lead="CodersTrust was listed in the HolonIQ South Asia EdTech 100 in 2023 and 2024. Its Co-Founder and Chairman, Aziz Ahmad, has received appointments and honors, and CodersTrust’s work has been covered in the press." art={false}>
+  <Hero eyebrow="About Us" title="Twice Listed in the HolonIQ South Asia EdTech 100" lead={lead} leadFacts={['PA-08']} art={false}>
     <Fragment slot="actions">
       <Button href={media.href} icon="mail">{media.label}</Button>
       <a class="link" href="#press-kit">Press Kit<Icon name="arrow-right" size={16} /></a>
+      <a class="link" href={`${url('/news/')}#nf-recognition`}>More Recognition News<Icon name="arrow-right" size={16} /></a>
     </Fragment>
   </Hero>
 
   <!-- WP86 (coordinator item 11): each entry is a section's own heading, and every section that renders gets one (the three conditional sections only when they render). -->
   <PageNav links={[
-    { label: 'HolonIQ South Asia EdTech 100, 2023 and 2024', href: '#listing' },
     { label: 'Aziz Ahmad’s Appointments and Honors', href: '#honors' },
-    ...(FORUMS.length > 0 ? [{ label: 'Where CodersTrust Has Taken Part', href: '#forums' }] : []),
-    ...(quotes.length > 0 ? [{ label: 'What University for Peace Says', href: '#endorsements' }] : []),
-    { label: 'Forums in Photographs', href: '#photos' },
-    { label: 'Early Coverage of CodersTrust’s First Years, 2014–2016', href: '#coverage' },
     { label: 'World Bank Pages on Our Work in Kosovo and Albania', href: '#world-bank' },
+    { label: 'Press Coverage, 2014–2016: TechCrunch, Forbes, The Wall Street Journal and More', href: '#coverage' },
+    ...(quotes.length > 0 ? [{ label: 'What University for Peace Says', href: '#endorsements' }] : []),
+    ...(FORUMS.length > 0 ? [{ label: 'Where CodersTrust Has Taken Part', href: '#forums' }] : []),
+    { label: 'Forums in Photographs', href: '#photos' },
     { label: 'Press Kit', href: '#press-kit' },
     { label: 'Working on a Story About Youth Employment?', href: '#rec-cta' },
   ]} />
-
-  <Section id="listing" aria-labelledby="listing-h">
-    <SectionHeader id="listing-h" eyebrow="Industry Recognition" title="HolonIQ South Asia EdTech 100, 2023 and 2024" />
-    <div class="rec-listing">
-      <span class="rec-listing__badge" aria-hidden="true"><Icon name="award" size={32} /></span>
-      <div>
-        <p class="lead" data-fact="PA-08">CodersTrust was listed in the HolonIQ South Asia EdTech 100 in 2023 (STEAM category) and 2024.</p>
-        <p><a class="link" href={`${url('/news/')}#nf-recognition`}>More Recognition News<Icon name="arrow-right" size={16} /></a></p>
-      </div>
-    </div>
-  </Section>
 
   <Section id="honors" tone="airy" aria-labelledby="honors-h">
     <SectionHeader id="honors-h" eyebrow="Founder Honors" title="Aziz Ahmad’s Appointments and Honors" />
@@ -159,45 +156,17 @@ const media = { href: ctaHref('media'), label: 'Media Inquiries' };
     </ul>
   </Section>
 
-  {
-    FORUMS.length > 0 && (
-      <Section id="forums" aria-labelledby="forums-h">
-        <SectionHeader id="forums-h" eyebrow="Forums and Events" title="Where CodersTrust Has Taken Part" />
-        <ul class="rec-forums" role="list">
-          {FORUMS.map((f) => (
-            <li>
-              <a class="rec-forum" href={url(newsHref(f))}>
-                <span class="rec-forum__date"><time datetime={isoDate(f.data.date)}>{formatDate(f.data.date)}</time></span>
-                <span class="rec-forum__title">{f.data.title}</span>
-                <Icon name="arrow-right" size={16} />
-              </a>
-            </li>
-          ))}
-        </ul>
-      </Section>
-    )
-  }
-
-  {
-    quotes.length > 0 && (
-      <Section id="endorsements" tone="airy" aria-labelledby="end-h">
-        <SectionHeader id="end-h" eyebrow="University Partnership" title="What University for Peace Says" />
-        <div class="rec-quotes">
-          {quotes.map((e) => (
-            <figure class="rec-quote" data-asset={`endorsement-${e.id}`} data-reveal>
-              <Img src={e.photo} alt={e.photoAlt} width={96} height={96} assetId={`endorsement-${e.id}`} class="rec-quote__photo" />
-              <Quote cite={e.name} role={e.title}>{tidy(e.quote)}</Quote>
-            </figure>
-          ))}
-        </div>
-      </Section>
-    )
-  }
-
-  <PhotoGallery id="photos" tone="white" eyebrow="In the Field" title="Forums in Photographs" photos={galleryPhotos('recognition')} />
+  <!-- WP166-A (marketing review R1-40, owner approval of 21 November 2026): after the founder honors, the strongest third-party proof comes first: the World Bank pages that name CodersTrust, then the 2014–2016 press coverage,
+       then the University for Peace quotes, the forums and the photographs; the press kit closes the page. The listing band is gone (R1-39): the H1 and the lead state the listing, with its category. -->
+  <!-- WP87 (CLR review, Opus XHigh run 1): the World Bank pages (Kosovo 2016 and 2017, Albania 2021, PA-13) keep their links, in a section of their own so the 2021 release does not sit under the 2014–2016 heading. (Home's pointer sentence to this page is gone since WP166-A, R1-19; its link stays.) -->
+  <Section id="world-bank" tone="white" pad="sm" aria-labelledby="wb-h">
+    <SectionHeader id="wb-h" eyebrow="World Bank" title="World Bank Pages on Our Work in Kosovo and Albania" />
+    <AsCoveredBy class="rec-covered" skip={coverage.filter((p) => p.outlet === 'World Bank').map((p) => p.a.href)} />
+  </Section>
 
   <Section id="coverage" tone="airy" aria-labelledby="coverage-h">
-    <SectionHeader id="coverage-h" eyebrow="For Journalists" title="Early Coverage of CodersTrust’s First Years, 2014–2016" />
+    <!-- WP166-A (R1-40): the press coverage is proof for every reader, not only journalists (the press kit keeps "For Journalists"), and the heading names the outlets, with the years kept. -->
+    <SectionHeader id="coverage-h" eyebrow="In the Press" title="Press Coverage, 2014–2016: TechCrunch, Forbes, The Wall Street Journal and More" />
     <ul class="rec-press" role="list" data-fact="PA-09">
       {
         coverage.map((c) => (
@@ -227,11 +196,42 @@ const media = { href: ctaHref('media'), label: 'Media Inquiries' };
     </aside>
   </Section>
 
-  <!-- WP87 (CLR review, Opus XHigh run 1): the World Bank pages (Kosovo 2016 and 2017, Albania 2021, PA-13) keep their links, in a section of their own so the 2021 release does not sit under the 2014–2016 heading. Home's pointer sentence still names this page for both. -->
-  <Section id="world-bank" tone="white" pad="sm" aria-labelledby="wb-h">
-    <SectionHeader id="wb-h" eyebrow="World Bank" title="World Bank Pages on Our Work in Kosovo and Albania" />
-    <AsCoveredBy class="rec-covered" skip={coverage.filter((p) => p.outlet === 'World Bank').map((p) => p.a.href)} />
-  </Section>
+  {
+    quotes.length > 0 && (
+      <Section id="endorsements" tone="white" aria-labelledby="end-h">
+        <SectionHeader id="end-h" eyebrow="University Partnership" title="What University for Peace Says" />
+        <div class="rec-quotes">
+          {quotes.map((e) => (
+            <figure class="rec-quote" data-asset={`endorsement-${e.id}`} data-reveal>
+              <Img src={e.photo} alt={e.photoAlt} width={96} height={96} assetId={`endorsement-${e.id}`} class="rec-quote__photo" />
+              <Quote cite={e.name} role={e.title}>{tidy(e.quote)}</Quote>
+            </figure>
+          ))}
+        </div>
+      </Section>
+    )
+  }
+
+  {
+    FORUMS.length > 0 && (
+      <Section id="forums" tone="airy" aria-labelledby="forums-h">
+        <SectionHeader id="forums-h" eyebrow="Forums and Events" title="Where CodersTrust Has Taken Part" />
+        <ul class="rec-forums" role="list">
+          {FORUMS.map((f) => (
+            <li>
+              <a class="rec-forum" href={url(newsHref(f))}>
+                <span class="rec-forum__date"><time datetime={isoDate(f.data.date)}>{formatDate(f.data.date)}</time></span>
+                <span class="rec-forum__title">{f.data.title}</span>
+                <Icon name="arrow-right" size={16} />
+              </a>
+            </li>
+          ))}
+        </ul>
+      </Section>
+    )
+  }
+
+  <PhotoGallery id="photos" tone="white" eyebrow="In the Field" title="Forums in Photographs" photos={galleryPhotos('recognition')} />
 
   <Section id="press-kit" tone="ice" aria-labelledby="kit-h">
     <SectionHeader id="kit-h" eyebrow="For Journalists" title="Press Kit" lead="Logos, boilerplate and a media contact." />
@@ -287,26 +287,6 @@ const media = { href: ctaHref('media'), label: 'Media Inquiries' };
 </BaseLayout>
 
 <style>
-  .rec-listing {
-    display: flex;
-    gap: var(--space-md);
-    align-items: flex-start;
-    max-width: var(--measure);
-  }
-  .rec-listing p {
-    margin: 0 0 var(--space-sm);
-  }
-  .rec-listing__badge {
-    flex: none;
-    display: inline-flex;
-    width: 64px;
-    height: 64px;
-    align-items: center;
-    justify-content: center;
-    border-radius: var(--radius-full);
-    background: var(--tertiary-container);
-    color: var(--on-tertiary-container);
-  }
   .rec-honors,
   .rec-press,
   .rec-forums,
