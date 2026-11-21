@@ -25,6 +25,7 @@ import WhyPartner from '../../components/pages/hub/WhyPartner.astro';
 import { grantStartSteps } from '../../components/pages/partners/partners';
 import FaqBlock from '../../components/pages/hub/FaqBlock.astro';
 import { MICRO_COMMITMENT, PROGRAM_SCOPE_STATEMENT_EXAMS, READ_THE_EVIDENCE } from '../../data/copy';
+import { fact } from '../../data/facts';
 import { cta } from '../../lib/mailto';
 import DueDiligenceView from '../../components/pages/hub/DueDiligenceView.astro';
 import { faqJsonLd } from '../../lib/faq';
@@ -40,7 +41,11 @@ const path = '/partner-with-us/';
 const title = 'Partner with Us: Turn Training into Paid Work';
 // WP32 (cycle-9 review): the hub routes more than cohorts (campus skills, team training, hiring, the JobReady platform), so the hero asks for the choice of partnership and does not
 // describe a cohort; each route page states what its own partnership delivers, with outcome tracking scope-conditional as agreed in the program scope (PD-02).
-const BLUF = 'Choose a partnership for youth employment, campus skills, team training, hiring or JobReady’s staged rollout.';
+// WP166-B (marketing review R3-18, owner approval of 21 November 2026): the hero leads with the record (SC-01's own text) and tells the reader what each route gives them; it said "Choose a partnership for youth employment, campus skills,
+// team training, hiring or JobReady’s staged rollout." (a list ending in a term a first-time visitor cannot decode). The route cards' lead that said "Each route has its own evidence, offer and next step." is gone (the hero says it).
+// The meta description below is unchanged (package A owns descriptions in WP166); the section's Open Graph card (src/lib/og.ts) still carries the old line until the cards are regenerated.
+const BLUF = '130,000+ learners trained since 2014. Pick the route built for your organization: each has its own evidence, offer and next step.';
+if (!BLUF.startsWith(`${fact('SC-01').text}.`)) throw new Error('Partner hub: the hero lead no longer opens with SC-01’s text');
 const description = 'Partner with CodersTrust on youth employment, campus skills, team training, hiring or JobReady’s staged rollout. Pick your route and talk to us.';
 if (description.length > 155) throw new Error(`Hub meta description is ${description.length} characters (max 155)`);
 const discovery = cta('discovery');
@@ -51,13 +56,14 @@ const introduction = cta('investor');
 // Seven decision-led route cards (a headline that names the decision, then who it is for), in the order of the nav menu (src/data/nav.ts). WP27: Investors is
 // a peer route card (it was a link in the "Not sure where you fit?" helper), and the seventh card takes the last row on its own (see .hub__routes).
 const audiences = [
-  { title: 'Prove Delivery in Your Portfolio', icon: 'globe', href: '/partner-with-us/development-partners/', text: 'For development partners and NGOs: evidence-led delivery for your portfolio.' },
+  // WP166-B (marketing review R3-19): the development-partner card says what that reader wants (to report results; the route page's H1 idea), and the investor card names the asset (it said "Back JobReady’s Staged Rollout", the risk disclosure as a headline).
+  { title: 'Report Results, Not Just Training Numbers', icon: 'globe', href: '/partner-with-us/development-partners/', text: 'For development partners and NGOs: evidence-led delivery for your portfolio.' },
   { title: 'Turn Existing Labs into a Workforce Pipeline', icon: 'landmark', href: '/partner-with-us/governments/', text: 'For ministries and public agencies: curriculum, trainer training and phased delivery.' },
   { title: 'Fund Tracked Paths to Earnings', icon: 'heart-handshake', href: '/partner-with-us/foundations/', text: 'For foundations and CSR teams: fund outcomes you can track.' },
   { title: 'Prepare Students and Graduates for Work', icon: 'graduation-cap', href: '/partner-with-us/universities/', text: 'For universities and colleges: JobReady@Campus alongside the degree.' },
   { title: 'Build AI-Ready Teams and Hire Talent', icon: 'briefcase', href: '/partner-with-us/employers/', text: 'For employers: train your team or hire job-ready talent.' },
   { title: 'Deliver Programs in Your Community', icon: 'map-pin', href: '/partner-with-us/local-partners/', text: 'For Bangladeshi NGOs, colleges, chambers and associations delivering locally.' },
-  { title: 'Back JobReady’s Staged Rollout', icon: 'trending-up', href: '/partner-with-us/investors/', text: 'For impact investors: JobReady, CodersTrust’s digital learning and earning platform.' },
+  { title: 'Invest in the JobReady Platform', icon: 'trending-up', href: '/partner-with-us/investors/', text: 'For impact investors: back the staged rollout of CodersTrust’s digital learning and earning platform.' },
 ];
 
 // Partnering steps: the weeks and the cohort window are read from PD-04 (never retyped); WP29: each step heading names its starting point. WP49 (cycle-24 review): the four steps and their one-line descriptions are grantStartSteps(), the source Home's closing band reads too.
@@ -78,14 +84,14 @@ const jsonLd = [
 
 <BaseLayout title={title} description={description} breadcrumbs={[{ label: 'Partner with Us' }]} jsonLd={jsonLd}>
   <Tone cmf="HERO">
-    <HeroBand variant="inner" audience="Partnerships" title="Partner with Us to Turn Training into Paid Work" lead={BLUF} cta={{ label: 'See Partnership Routes', href: '#audiences', icon: 'arrow-down' }} artSeed="partner-hub" />
+    <HeroBand variant="inner" audience="Partnerships" title="Partner with Us to Turn Training into Paid Work" lead={BLUF} leadFacts={['SC-01']} cta={{ label: 'See Partnership Routes', href: '#audiences', icon: 'arrow-down' }} artSeed="partner-hub" />
   </Tone>
 
   <DefinitionBand />
 
   <Tone cmf="AUDIENCES">
     <Section id="audiences" aria-labelledby="audiences-h">
-      <SectionHeader id="audiences-h" eyebrow="Partnership Routes" title="Which Route Is Yours?" lead="Each route has its own evidence, offer and next step." />
+      <SectionHeader id="audiences-h" eyebrow="Partnership Routes" title="Which Route Is Yours?" />
       <div class="grid-cards hub__routes">
         {audiences.map((a) => <CategoryCard title={a.title} icon={a.icon} text={a.text} href={a.href} />)}
       </div>

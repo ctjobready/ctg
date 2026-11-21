@@ -25,6 +25,8 @@ import { DIST_DIR, QA_DIR } from './support/env';
  */
 
 const TODAY = '2026-11-03';
+/** WP166-B (marketing review R3, owner approval of 21 November 2026): the seven partner route pages changed visible text again, so their WebPage.dateModified moved on from 2026-11-03. */
+const WP166B_DAY = '2026-11-21';
 
 const html = (rel: string) => readFileSync(join(DIST_DIR, rel), 'utf8');
 const decode = (s: string) =>
@@ -105,15 +107,16 @@ test.describe('A-01 case studies and Stories declare the day their visible text 
 test.describe('A-02 partner route pages declare their own dateModified', () => {
   // WP163 (owner answers of 3 November 2026): the three route pages and Investors changed visible text again on 2026-11-03 (one exam fee per trainee, the delivery model, no live or planned labels).
   for (const route of ['development-partners', 'local-partners', 'universities']) {
-    test(`${route}: WebPage.dateModified is ${TODAY}, its last visible change (WP163; it was 2026-11-02)`, () => {
-      expect(nodeOf(`partner-with-us/${route}/index.html`, 'WebPage').dateModified).toBe(TODAY);
+    test(`${route}: WebPage.dateModified is ${WP166B_DAY}, its last visible change (WP166-B; WP163 had ${TODAY}; it was 2026-11-02)`, () => {
+      expect(nodeOf(`partner-with-us/${route}/index.html`, 'WebPage').dateModified).toBe(WP166B_DAY); // WP166-B: it was TODAY (2026-11-03)
     });
   }
-  test(`Employers, Governments and Foundations change visible text in this package, so they say ${TODAY}; Investors does too since WP163`, () => {
-    expect(nodeOf(EMPLOYERS, 'WebPage').dateModified).toBe(TODAY);
-    expect(nodeOf(GOVERNMENTS, 'WebPage').dateModified).toBe(TODAY);
-    expect(nodeOf(FOUNDATIONS, 'WebPage').dateModified).toBe(TODAY);
-    expect(nodeOf('partner-with-us/investors/index.html', 'WebPage').dateModified).toBe(TODAY);
+  test(`Employers, Governments and Foundations change visible text in this package, so they say ${TODAY}; Investors does too since WP163 (WP166-B: all four say ${WP166B_DAY})`, () => {
+    // WP166-B: the four pages changed visible text again, so each is WP166B_DAY (they were TODAY, 2026-11-03).
+    expect(nodeOf(EMPLOYERS, 'WebPage').dateModified).toBe(WP166B_DAY);
+    expect(nodeOf(GOVERNMENTS, 'WebPage').dateModified).toBe(WP166B_DAY);
+    expect(nodeOf(FOUNDATIONS, 'WebPage').dateModified).toBe(WP166B_DAY);
+    expect(nodeOf('partner-with-us/investors/index.html', 'WebPage').dateModified).toBe(WP166B_DAY);
   });
 });
 
@@ -282,7 +285,7 @@ test.describe('A-09 Accessibility Statement: news-post photos are no exception; 
 test.describe('A-26 and A-29 Governments and Foundations cards', () => {
   test('Governments: three months of mentoring is stated, and spending is reported against the scorecard', () => {
     const t = main(GOVERNMENTS);
-    expect(t).toContain('Certification tracks chosen from employer demand, then three months of mentoring and placement support toward local, remote and global work.');
+    expect(t).toContain('Python programming and data analysis. Three months of mentoring and placement support follow, toward local, remote and global work.'); // WP166-B (marketing review R3-05, R3-24): the card opens with the track menu (PD-10), then the mentoring (it read "Certification tracks chosen from employer demand, then three months of mentoring and placement support toward local, remote and global work.")
     expect(t).toContain('A pilot scorecard with cost per completer and per verified outcome, and monthly reports. Spending is reported against the agreed scorecard.');
     expect(t).not.toContain('Your budget is assessed against the agreed scorecard.');
   });
@@ -306,7 +309,7 @@ test.describe('A-27 the reporting band applies to every supported cohort', () =>
 test.describe('A-28 Employers: the Hire Talent lead says where most delivery has been', () => {
   test('the lead, with the register sentence once on the page', () => {
     const lead = visible(byId(EMPLOYERS, 'section', 'hire-talent'));
-    expect(lead).toContain('Job-ready candidates are introduced through CodersTrust’s placement team. Most delivery has been in Bangladesh. Talent requests are scoped against the experience and credentials available in the candidate pool.');
+    expect(lead).toContain('Our placement team introduces job-ready candidates from tracks such as digital marketing, graphic design, video editing, web design and development, digital accounting, Python programming and data analysis. Most delivery has been in Bangladesh. Talent requests are scoped against the experience and credentials available in the candidate pool.'); // WP166-B (marketing review R3-07): the lead names the tracks (it opened "Job-ready candidates are introduced through CodersTrust’s placement team.")
     expect(count(main(EMPLOYERS), 'Most delivery has been in Bangladesh.')).toBe(1);
   });
 });
@@ -349,7 +352,8 @@ test.describe('A-31 prefilled emails ask for the fields the pages name', () => {
 /* ---------------------------------------------------------------------------------------------- */
 
 const ID12 = 'CT USA, Inc. is a for-profit company incorporated in New York. CodersTrust Bangladesh Ltd. is incorporated in Bangladesh.';
-const DD_LINE = 'The contracting entity, safeguarding arrangements and reporting plan are confirmed for your program.';
+// WP166-B (marketing review R3): the brief due-diligence band names the contracting entities (the line was "The contracting entity, safeguarding arrangements and reporting plan are confirmed for your program."); the legal form (ID-12) is still Foundations' alone.
+const DD_LINE = 'CodersTrust contracts through CT USA, Inc. in the United States or CodersTrust Bangladesh Ltd. in Bangladesh, depending on the program’s country and your requirements. Safeguarding and reporting are specified for each program.';
 
 test.describe('C-3 Foundations states the legal form once, beside its due-diligence line', () => {
   test('the due-diligence band: the line, then ID-12 from the register', () => {
@@ -362,7 +366,8 @@ test.describe('C-3 Foundations states the legal form once, beside its due-dilige
     test(`${route}: the shared brief band is unchanged`, () => {
       const band = visible(byId(`partner-with-us/${route}/index.html`, 'section', 'due-diligence'));
       expect(band).toContain(DD_LINE);
-      expect(band).not.toContain('CT USA, Inc.');
+      expect(band).not.toContain(ID12); // WP166-B: it was not.toContain('CT USA, Inc.'); the line names the entities now, so the check is on the legal form
+      expect(band).not.toContain('CT USA, Inc. is a for-profit company');
       expect(band).not.toContain('for-profit');
     });
   }

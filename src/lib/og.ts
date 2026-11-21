@@ -10,9 +10,9 @@ export const DEFAULT_OG: OgCard = { src: '/og/default.png', alt: 'CodersTrust: L
 
 /** Path prefix -> section card, longest prefix first. */
 const SECTION_CARDS: { prefix: string; card: OgCard }[] = [
-  { prefix: '/programs/nu-postgraduate-diploma/', card: { src: '/og/nu-postgraduate-diploma.png', alt: 'CodersTrust: NU Post Graduate Diploma. We help learners prepare for digital work through the National University Post Graduate Diploma.' } },
-  { prefix: '/partner-with-us/investors/', card: { src: '/og/investors.png', alt: 'CodersTrust: Investors. Back JobReady’s staged rollout, built on CodersTrust’s training and mentoring programs.' } },
-  { prefix: '/partner-with-us/', card: { src: '/og/partner-with-us.png', alt: 'CodersTrust: Partner with Us. Choose a partnership for youth employment, campus skills, team training, hiring or JobReady’s staged rollout.' } },
+  { prefix: '/programs/nu-postgraduate-diploma/', card: { src: '/og/nu-postgraduate-diploma.png', alt: 'CodersTrust: NU Post Graduate Diploma. A one-year National University Post Graduate Diploma, on campus, delivered by CodersTrust.' } },
+  { prefix: '/partner-with-us/investors/', card: { src: '/og/investors.png', alt: 'CodersTrust: Investors. JobReady is CodersTrust’s digital learning and earning platform for emerging markets.' } },
+  { prefix: '/partner-with-us/', card: { src: '/og/partner-with-us.png', alt: 'CodersTrust: Partner with Us. Partner with Us to Turn Training into Paid Work.' } },
   { prefix: '/our-model/', card: { src: '/og/our-model.png', alt: 'CodersTrust: Our Model. One Path from Learning to Earning, with Outcomes Tracked.' } },
   { prefix: '/programs/', card: { src: '/og/programs.png', alt: 'CodersTrust: Programs. Digital Skills Programs, from School to Work.' } },
   { prefix: '/careers/', card: { src: '/og/careers.png', alt: 'CodersTrust: Careers. We judge youth-employment programs by whether young people end up working and earning, not by how many attended.' } },

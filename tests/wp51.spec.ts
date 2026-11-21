@@ -75,20 +75,13 @@ const LOCAL = 'partner-with-us/local-partners/';
 const EMP = 'partner-with-us/employers/';
 const INVEST = 'partner-with-us/investors/';
 const FIRST_ACTION = 'Your first step: a discovery session. In your inquiry, include two suitable times for it.';
-const NOTE = 'These are program sizes, not commitments: in the discovery session you choose a starting scope for your goals, country and delivery capacity.';
+// WP166-B (marketing review R2-03): the reader's choice first, the disclaimer second (it was "These are program sizes, not commitments: in the discovery session you choose a starting scope for your goals, country and delivery capacity.").
+const NOTE = 'You choose the starting scope in the discovery session, for your goals, country and delivery capacity. The sizes below are program sizes, not commitments.';
 const WSDFM_TITLE = 'Women’s Skill Development for Freelancing Marketplace (WSDFM)';
 
 test.describe('JobReady@Campus: the problem cards say what the program does for the students (item 1)', () => {
-  const TITLES = ['Skills Employers Cannot See', 'Placement Evidence Is Missing'];
-  const TEXTS = ['Employers look for proof of job-ready skills beside the degree.', 'Without a baseline and follow-up surveys, placement results are hard to report.'];
-
-  test('the two cards are Title Case, read as above, and name the facts they rest on', async ({ page }) => {
-    await open(page, CAMPUS);
-    expect(await texts(page, '#problem .card__title')).toEqual(TITLES);
-    expect(await texts(page, '#problem .card__text')).toEqual(TEXTS);
-    for (const t of TITLES) expect(t, t).toBe(titleCase(t));
-    expect(await page.locator('#problem article.card').evaluateAll((els) => els.map((e) => e.getAttribute('data-fact')))).toEqual(['IN-09', 'PD-08 PD-09']);
-  });
+  // WP166-B (marketing review R2-15): the two problem cards ("Skills Employers Cannot See", "Placement Evidence Is Missing") repeated the lead and were replaced by two registered statistics; the test of their wording is gone with them.
+  // The removed cards are added to the "on no built page" list below.
 
   test('the wording uses the register’s own terms and adds no claim: IN-09 (preparation for industry-recognized certifications, alongside academic studies), PD-09 (a baseline and follow-up surveys), PD-08 (placements and first earnings)', () => {
     expect(fact('IN-09').text).toContain('industry-oriented skills training in parallel with academic studies');
@@ -99,7 +92,17 @@ test.describe('JobReady@Campus: the problem cards say what the program does for 
   });
 
   test('the earlier cards are on no built page', () => {
-    const gone = ['Employers Cannot See the Skills', 'Employers cannot see the skills your students have.', 'No Placement Results to Publish', 'Institutions are asked for placement results they cannot yet show.'];
+    const gone = [
+      'Employers Cannot See the Skills',
+      'Employers cannot see the skills your students have.',
+      'No Placement Results to Publish',
+      'Institutions are asked for placement results they cannot yet show.',
+      // WP166-B (marketing review R2-15): the WP51 cards that replaced them are gone too.
+      'Skills Employers Cannot See',
+      'Employers look for proof of job-ready skills beside the degree.',
+      'Placement Evidence Is Missing',
+      'Without a baseline and follow-up surveys, placement results are hard to report.',
+    ];
     expect(sitePages().flatMap((p) => gone.filter((g) => visible(p.html).includes(g)).map((g) => `${p.route}: ${g}`))).toEqual([]);
   });
 });
@@ -107,8 +110,9 @@ test.describe('JobReady@Campus: the problem cards say what the program does for 
 test.describe('Universities: the institution’s pain is headed as the goal (item 2)', () => {
   test('"Placement Results Are Hard to Publish" keeps the line under it; the earlier heading is on no built page', async ({ page }) => {
     await open(page, UNI);
-    expect(await texts(page, '#problem .gp__q')).toEqual(['Degree Holders Struggle to Find Work', 'Placement Results Are Hard to Publish']);
-    expect(await texts(page, '#problem .gp__a')).toEqual(['A degree alone does not guarantee a job offer.', 'Your institution needs placement data it can report to a board or ministry.']);
+    // WP166-B (marketing review R3-40): the students' pain is the 19M+ tile (PX-02) in place of the card "Degree Holders Struggle to Find Work" ("A degree alone does not guarantee a job offer."), so the institution's pain is the one card left.
+    expect(await texts(page, '#problem .gp__q')).toEqual(['Placement Results Are Hard to Publish']);
+    expect(await texts(page, '#problem .gp__a')).toEqual(['Your institution needs placement data it can report to a board or ministry.']);
     expect('Placement Results Are Hard to Publish').toBe(titleCase('Placement Results Are Hard to Publish'));
     expect(sitePages().filter((p) => visible(p.html).includes('Institutions Lack Placement Results They Can Publish')).map((p) => p.route)).toEqual([]);
   });
@@ -280,18 +284,22 @@ test.describe('Closing partner lines (items 9 and 17)', () => {
     expect(await everything(page)).not.toContain('University partners include National University, the University for Peace');
   });
 
-  test('Foundations: the line moved, unchanged, into the Track Record band directly after the BIGD line (not deleted); the closing strip holds the first-action line alone', async ({ page }) => {
+  // WP166-B (marketing review R3-28, owner approval of 21 November 2026): the line opens the Track Record band, in place of the origin line (it was the list's second item, directly after the BIGD line), still unchanged and once on the page;
+  // the list is the BIGD line and the signed-agreement sentence.
+  test('Foundations: the line moved, unchanged, into the Track Record band, which it now opens (not deleted); the closing strip holds the first-action line alone', async ({ page }) => {
     const LINE = 'Organizations that have worked with CodersTrust include the Rockefeller Foundation, DANIDA and Porticus.';
     expect(C14.validateFor.foundations.text).toBe(LINE);
     await open(page, FOUND);
+    const opening = page.locator('#guide .pg__copy > .pg__origin');
+    await expect(opening).toHaveCount(1);
+    expect(compact(await opening.textContent())).toBe(LINE);
+    expect(await opening.getAttribute('data-fact')).toBe('PA-01');
     const items = page.locator('#guide .pg__list li');
-    // WP66 (owner request 2026-10-20): a third line closes the list, the signed-agreement sentence for development partners and NGOs (SC-11c); the BIGD line and the moved line keep their places (tests/wp66.spec.ts)
-    await expect(items).toHaveCount(3);
+    // WP66 (owner request 2026-10-20): a line closes the list, the signed-agreement sentence for development partners and NGOs (SC-11c); the BIGD line keeps its place (tests/wp66.spec.ts). WP166-B: two items (it was three).
+    await expect(items).toHaveCount(2);
     expect(compact(await items.nth(0).textContent())).toContain('evaluated CodersTrust’s WSDFM program');
-    expect(compact(await items.nth(1).textContent())).toBe(LINE);
-    expect(await items.nth(1).getAttribute('data-fact')).toBe('PA-01');
-    expect(compact(await items.nth(2).textContent())).toBe('CodersTrust has signed MOUs, agreements or contracts with 13 development partners and NGOs.');
-    expect(await items.nth(2).getAttribute('data-fact')).toBe('SC-11c');
+    expect(compact(await items.nth(1).textContent())).toBe('CodersTrust has signed MOUs, agreements or contracts with 13 development partners and NGOs.');
+    expect(await items.nth(1).getAttribute('data-fact')).toBe('SC-11c');
     expect(await texts(page, '#reinforce li')).toEqual([FIRST_ACTION]);
     expect(count(await everything(page), LINE), 'said once on the page').toBe(1);
     // the band is the one headed "We’ve Built This Path Since 2014"
@@ -367,9 +375,10 @@ test.describe('Home: the first Imagine card and the Learner Journeys lead (items
 });
 
 test.describe('The shared origin line on Development Partners and Investors (items 13, 20 and 27)', () => {
-  test('Development Partners, Governments and Foundations print the same line, from the same source (ORIGIN_SHORT)', async ({ page }) => {
+  // WP166-B (marketing review R3-28): Foundations' band opens with the funders' line instead (checked in "Closing partner lines" above), so it no longer prints the origin line; Development Partners and Governments still do.
+  test('Development Partners and Governments print the same line, from the same source (ORIGIN_SHORT)', async ({ page }) => {
     expect(ORIGIN_SHORT.text).toBe('Since 2014, from a Copenhagen launch to work in 16 countries and territories.');
-    for (const route of [DP, GOV, FOUND]) {
+    for (const route of [DP, GOV]) {
       await open(page, route);
       const line = page.locator('#guide .pg__origin');
       await expect(line, route).toHaveCount(1);
@@ -379,12 +388,13 @@ test.describe('The shared origin line on Development Partners and Investors (ite
     }
   });
 
-  test('Development Partners: the band opens with the origin line and then the TalentLEAP line, and no longer prints the launch alone', async ({ page }) => {
+  // WP166-B (marketing review R3-29): the TalentLEAP method line is no longer printed in this credibility band; the assertion that it followed the origin line is gone with it, and the origin line is the band's one copy line.
+  test('Development Partners: the band opens with the origin line, and no longer prints the launch alone', async ({ page }) => {
     await open(page, DP);
     expect(compact(await page.locator('#guide').textContent())).not.toContain('Launched in Copenhagen in 2014.');
     const copy = await texts(page, '#guide .pg__copy > *');
     expect(copy[0]).toBe(originShortUnder('We’ve Built This Path Since 2014', { tile: true }).text); // WP150: the tile carries the 16; // WP64 rework RW2 (coordinator): the heading says "Since 2014", so the line drops that lead-in
-    expect(copy[1]).toContain('Our TalentLEAP method organizes skills into career paths.');
+    expect(copy).toHaveLength(1);
   });
 
   test('Investors prints the same line in its own band (InvestorGuide), followed by the TalentLEAP line', async ({ page }) => {
@@ -501,7 +511,12 @@ test.describe('"the gig-work marketplace" in prose; the product name Earn stays 
     for (const route of [INVEST, FOUND, EMP, 'programs/jobready-work/']) {
       await open(page, route);
       const text = await everything(page);
-      expect(text, route).toContain(route === FOUND ? 'partner portals and work marketplaces' : 'the employer marketplace and the gig-work marketplace');
+      // WP166-B (marketing review R3-09): the Investors hero no longer lists the features ("..., the employer marketplace and the gig-work marketplace."), so Investors names the two in its "Connect to Paid Work" card, where they open the sentence.
+      // WP166-B (marketing review R3-33, R2-21): Employers and JobReady@Work no longer ask the shared platform question, whose answer was where they named the marketplaces, so they name none now and the presence check on
+      // those two pages is gone with it (if either names a marketplace again, it must name the two as two); the prose rule (no "(Earn)", never "employer and gig-work") still holds on all four.
+      const named = route === FOUND ? 'partner portals and work marketplaces' : route === INVEST ? 'The employer marketplace and the gig-work marketplace connect learners to paid work' : null;
+      if (named) expect(text, route).toContain(named);
+      else if (/marketplace/i.test(text)) expect(text, route).toMatch(/the employer marketplace and the gig-work marketplace/i);
       expect(text, route).not.toMatch(/\(Earn\)|employer and gig-work/i);
     }
   });

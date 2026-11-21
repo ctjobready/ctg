@@ -58,7 +58,8 @@ const { AIM_GROUP, AIM_SCOPE, AIM_STATEMENT } = copy as unknown as Record<string
 const IN01_TEXT = 'YouthWIDE aims to train 1 million educated youth (Higher Secondary Certificate or above) for digital employment by 2030, in Bangladesh and similar countries in South Asia and the Middle East and North Africa, depending on government and donor commitments';
 const IN01_STATEMENT = '1 million educated youth (Higher Secondary Certificate or above) for digital employment by 2030, in Bangladesh and similar countries in South Asia and the Middle East and North Africa, depending on government and donor commitments';
 const IN01_SCOPE = 'in Bangladesh and similar countries in South Asia and the Middle East and North Africa';
-const BAND = 'Delivery Base in Bangladesh and the 2030 Aim';
+// WP166-B (marketing review R2): the band is headed with its benefit (it was "Delivery Base in Bangladesh and the 2030 Aim"); its 2030 aim tile is unchanged
+const BAND = 'Designed for the Digital Labs and Colleges Governments Already Have';
 
 test.describe('Item 1: the YouthWIDE aim is 1 million educated youth (Higher Secondary Certificate or above) by 2030, in Bangladesh and similar countries', () => {
   test('IN-01 is the register’s wording: the value, the text (ending with the dependency clause), the tile label and the glance row', () => {
@@ -82,10 +83,11 @@ test.describe('Item 1: the YouthWIDE aim is 1 million educated youth (Higher Sec
     expect(fact('IN-01').text).toBe(`YouthWIDE aims to train ${AIM_STATEMENT}`);
   });
 
-  test('the four pages that state the aim say it in IN-01’s words, and none says the clause twice in a sentence', async ({ page }) => {
+  test('the three pages that state the aim say it in IN-01’s words (WP166-B: the Programs card no longer states it), and none says the clause twice in a sentence', async ({ page }) => {
     await open(page, 'programs/');
     // WP106 (Polish, accepted): the Programs card is sibling length, so it states the short aim (the figure from IN-01, the 2030 date and the clause); the full statement stays on About and YouthWIDE
-    expect(compact(await page.locator('main').textContent())).toContain(`It aims to train 1 million educated youth by 2030, ${AIM_DEPENDENCY}.`);
+    // WP166-B (marketing review R2-41): the Programs card says what YouthWIDE does and no longer states the aim; the assertion is gone with it
+    expect(compact(await page.locator('main').textContent())).not.toContain('It aims to train 1 million educated youth');
     await open(page, 'about/');
     // WP166-A (marketing review R1-25): the aim closes the story band under "Where We Are Going", in IN-01's words, and the timeline entry keeps its two sentences of history
     expect(compact(await page.locator('#story .about-going p').textContent())).toBe(`YouthWIDE aims to train ${IN01_STATEMENT}.`);
@@ -100,7 +102,7 @@ test.describe('Item 1: the YouthWIDE aim is 1 million educated youth (Higher Sec
     expect(row.startsWith('Designed for Three Regions')).toBe(true);
     expect(row.endsWith(`South Asia, Sub-Saharan Africa and the Middle East and North Africa, as co-funded country cohorts. Bangladesh is where most delivery has been. YouthWIDE aims to train ${IN01_STATEMENT}.`)).toBe(true);
     const clause = new RegExp(escapeRe(AIM_DEPENDENCY), 'g');
-    for (const route of ['/programs/', '/about/', '/impact/', '/programs/youthwide/']) {
+    for (const route of ['/about/', '/impact/', '/programs/youthwide/']) { // WP166-B (marketing review R2-41): '/programs/' no longer states the aim or its clause
       const sentences = visible(pageHtml(route)).split(/(?<=[.;])\s+/);
       const doubled = sentences.filter((s) => (s.match(clause) ?? []).length > 1);
       expect(doubled, `${route}: a sentence with the clause twice`).toEqual([]);
@@ -108,7 +110,7 @@ test.describe('Item 1: the YouthWIDE aim is 1 million educated youth (Higher Sec
     }
   });
 
-  test('the YouthWIDE band is "Delivery Base in Bangladesh and the 2030 Aim"; its tile is the 1 million target with a note that fits a multi-country aim', async ({ page }) => {
+  test('the YouthWIDE band is headed BAND (WP166-B; it was "Delivery Base in Bangladesh and the 2030 Aim"); its tile is the 1 million target with a note that fits a multi-country aim', async ({ page }) => {
     await open(page, 'programs/youthwide/');
     const band = page.locator('section#governments');
     await expect(band.getByRole('heading', { level: 2 })).toHaveText(BAND);
@@ -362,8 +364,9 @@ test.describe('Item 6: 85.0%, 68.2% and 19.6% describe all responding alumni, no
       'Mostly university graduates from across Bangladesh, some of them already working before training. Among alumni who answered the October 2026 survey, 85.0% hold a bachelor’s degree or higher, 68.2% were aged 15–35 and 63.0% live outside Dhaka, across 58 of the country’s 64 districts. Among surveyed completers, 48.0% were working before training.',
     );
     await open(page, 'programs/jobready-campus/');
-    const answer = page.locator('#faq details', { hasText: 'Who Is JobReady@Campus For?' }).locator('p');
-    expect(compact(await answer.textContent())).toBe('Students and degree holders at universities and colleges. Among alumni of CodersTrust’s programs who answered the October 2026 survey, 85.0% hold a bachelor’s degree or higher.');
+    // WP166-B (marketing review R2): the question is "Has CodersTrust Worked with Degree Holders Before?" and the answer opens "Yes." (it was "Who Is JobReady@Campus For?", opening "Students and degree holders at universities and colleges.")
+    const answer = page.locator('#faq details', { hasText: 'Has CodersTrust Worked with Degree Holders Before?' }).locator('p');
+    expect(compact(await answer.textContent())).toBe('Yes. Among alumni of CodersTrust’s programs who answered the October 2026 survey, 85.0% hold a bachelor’s degree or higher.');
   });
 
   test('the two FitBrief lines say the outcomes are the completers’ and the districts are the responding alumni’s', () => {

@@ -60,7 +60,7 @@ test.describe('timelines name their starting point', () => {
     await open(page, 'partner-with-us/governments/');
     const gov = compact(await page.locator('#faq').textContent());
     // WP50 (cycle-25 review, item 23): the Governments answer is the procurement sentence alone, without the grant-pilot timing (tests/wp50.spec.ts)
-    expect(gov).toContain('Public procurement follows the agency’s own timeline, so the first step is a briefing for your ministry.');
+    expect(gov).toContain('Delivery uses government digital labs you already run. Timing follows your agency’s own procurement timeline, so the first step is a briefing for your ministry.'); // WP166-B (marketing review R3-26): the answer opens with the labs (it read "Public procurement follows the agency’s own timeline, so the first step is a briefing for your ministry.")
     expect(gov).not.toContain('agreement typically takes about three weeks from first conversation');
     expect(gov).not.toContain('Counting from the first conversation');
     await open(page, 'programs/youthwide/');

@@ -36,16 +36,33 @@ export const VALUE_PROPOSITION: Record<Audience, string> = {
   // carries the reporting promise; Home's "Our Approach" sentence, which said the same a third time, is gone. The target group keeps ID-01's wording.
   home: 'We help funders and governments move educated, unemployed and underemployed youth into paid digital work, with monthly reports on their progress.',
   // WP63 rework RW1 (coordinator, extending Grok R1): the Development Partners and Governments lines name the group as ID-01 and the Home line do, "educated, unemployed and underemployed youth" (the Governments line is also that page's meta description: 144 characters, within 155).
-  developmentPartners: 'We help development partners prepare educated, unemployed and underemployed youth for paid work through mentored, certification-focused training.',
-  governments: 'We help governments prepare educated, unemployed and underemployed youth for paid digital work through mentored, certification-focused training.',
-  foundations: 'We help funders back mentored, certification-focused training that prepares youth for paid digital work.',
-  universities: 'We help universities and colleges prepare students for paid work through mentored, certification-focused training.',
-  employers: 'We help employers upskill their teams for AI and digital work, and connect them to job-ready digital talent through our placement team.',
+  // WP166-B (marketing review R3-17, owner approval of 21 November 2026): the subhead states what makes the H1 true (placement support and the follow-up surveys at 3, 6 and 12 months, PD-02 and PD-09); it said "We help development partners prepare educated, unemployed and underemployed youth for paid work through mentored, certification-focused training."
+  developmentPartners: 'Mentored, certification-focused training for educated, unemployed and underemployed youth, with placement support and follow-up surveys at 3, 6 and 12 months that show who is in paid work.',
+  // WP166-B (marketing review R3-03, owner approval of 21 November 2026): the hero subhead names what a ministry buys (GV-11 curriculum and Training of Trainers, PD-05 phased delivery, government digital labs, PD-11 spending against the scorecard);
+  // it said "We help governments prepare educated, unemployed and underemployed youth for paid digital work through mentored, certification-focused training.", which is still the page's meta description (GOVERNMENTS_DESCRIPTION; descriptions are package A's in WP166).
+  governments: 'Curriculum, Training of Trainers and phased delivery in government digital labs, with spending reported against an agreed scorecard.',
+  // WP166-B (marketing review R3-01, owner approval of 21 November 2026): the subhead names what the grant buys and how its result is shown (PD-11 scorecard, PD-08 monthly reports, PD-02 tracking for 12 months); it said "We help funders back mentored, certification-focused training that prepares youth for paid digital work."
+  foundations: 'Fund mentored, certification-focused training for youth, with a pilot scorecard agreed with you, monthly reports and outcomes tracked for 12 months after each course.',
+  // WP166-B (marketing review R3-17, owner approval of 21 November 2026): the subhead delivers the H1's promise in the dean's terms (campus labs, alongside the degree, placement evidence; IN-09, PD-08); it said "We help universities and colleges prepare students for paid work through mentored, certification-focused training."
+  universities: 'Mentored, certification-focused training in your campus labs, alongside the degree, with placement evidence your institution can report.',
+  // WP166-B (marketing review R3-06, owner approval of 21 November 2026): the subhead no longer restates the H1; it says how the training is built (IN-10) and names the credential an L&D buyer recognizes (PA-06). It said
+  // "We help employers upskill their teams for AI and digital work, and connect them to job-ready digital talent through our placement team."
+  // ", and job-ready candidates" after "roles, tasks and tools" read as a serial comma (tests/wp127.spec.ts), so the two offers are joined by "plus"; the AWS sentence the reviewer added is not here, because the employer credentials are stated once, in the
+  // Track Record band (tests/wp32.spec.ts, WP32), where AWS is now the first bullet.
+  employers: 'Training built from a needs assessment of your roles, tasks and tools, plus job-ready candidates introduced by our placement team.',
   // WP32 (cycle-9 review): the hero's second sentence is IN-04's (the Investors page marks the lead data-fact="IN-04"); it is two sentences by design. The two marketplaces are named as two, as IN-04 and tests/wp25s.spec.ts ("named as two") have them.
   // WP163 (owner answers of 3 November 2026): no capability carries a live, pre-launch, planned or roadmap label, so the second sentence says what JobReady offers (it said "Partner portals and AI chat are live; ... are in pre-launch.").
-  investors: 'Back JobReady’s staged rollout, built on CodersTrust’s training and mentoring programs. JobReady offers an AI Tutor, adaptive learning paths, an AI career coach, partner portals, the employer marketplace and the gig-work marketplace.',
-  localPartners: 'We help local organizations prepare young people for paid digital work through mentored, certification-focused training.',
-  nuPgd: 'We help learners prepare for digital work through the National University Post Graduate Diploma.',
+  // WP166-B (marketing review R3-09, owner approval of 21 November 2026): the hero says what asset the investor backs and the record it builds on (SC-01, SC-11, as the hub renders them); the feature list is "What JobReady Does" below. It said
+  // "Back JobReady’s staged rollout, built on CodersTrust’s training and mentoring programs. JobReady offers an AI Tutor, adaptive learning paths, an AI career coach, partner portals, the employer marketplace and the gig-work marketplace."
+  // The reviewer's middle sentence ("It builds on 130,000+ learners trained since 2014 and signed MOUs, agreements or contracts with 70+ organizations.") is not here: on Investors each delivered figure is stated once, in the track-record band, beside its
+  // composition note (WP42, tests/wp42.spec.ts; SC-01's note).
+  investors: 'JobReady is CodersTrust’s digital learning and earning platform for emerging markets. Back its staged rollout.',
+  // WP166-B (marketing review R3-11, owner approval of 21 November 2026): the hero answers a local partner's first question, who does what (the partner mobilizes and hosts; CodersTrust Bangladesh brings the curriculum, Training of Trainers, mentoring and
+  // placement support; PD-06, GV-11, PD-01, PD-15); it said "We help local organizations prepare young people for paid digital work through mentored, certification-focused training."
+  localPartners: 'You mobilize learners and host the training. CodersTrust Bangladesh brings the curriculum, Training of Trainers, mentoring and placement support.',
+  // WP166-B (marketing review R2-04, owner approval of 21 November 2026): the lead says what a learner can act on, the diploma, its year on campus and the four fields (NU-02, NU-10, NU-13; "delivered by", as NU-04 allows);
+  // it said "We help learners prepare for digital work through the National University Post Graduate Diploma." (the NU section's Open Graph card, src/lib/og.ts, still carries that line until the cards are regenerated).
+  nuPgd: 'A one-year National University Post Graduate Diploma, on campus, delivered by CodersTrust. Choose digital marketing, information and communication technology (ICT), cybersecurity or data analytics.',
 };
 
 /** C1 identity-hook headlines — 6 to 12 words, about the reader (CMF). */
@@ -53,8 +70,10 @@ export const HEADLINE: Record<Audience, string> = {
   // WP166-A (R1-10): the abstract tail "— with Evidence" is the funder's own question ("Your training budget needs to show who starts earning."); the evidence is the three proof cards below it.
   home: 'Turn Youth Unemployment into a Digital Workforce — and Show Who Starts Earning',
   developmentPartners: 'Youth Employment Results You Can Report — Not Just Training Numbers',
+  // WP166-B: the reviewer's H1 (R3-03, "Turn Unemployed Graduates into a Digital Workforce in the Labs You Already Run") is not applied: this is one of the H1s the owner chose (tests/wp30c.spec.ts); reported to the owner.
   governments: 'Build a National Digital Workforce Through Graduates and Digital Labs',
-  foundations: 'Fund a Supported Path from Learning to Earning',
+  // WP166-B (marketing review R3-01): the line a program officer would repeat (it was the problem band's lead); it said "Fund a Supported Path from Learning to Earning".
+  foundations: 'Know What Your Grant Changed, Not Just the Hours It Paid For',
   universities: 'Give Your Students a Route into Paid Digital Work',
   employers: 'Upskill Your Teams for AI — and Hire Job-Ready Digital Talent',
   investors: 'Invest in a Platform Built to Connect Emerging-Market Youth to Work', // WP157 (adversarial review F9): the employer and gig-work marketplaces are pre-launch, so the H1 says what the platform is built to do (as the Platform page's "Built to Connect")
@@ -670,8 +689,11 @@ function trialSentence(): CopyBlock {
   if (!employment || !/^\+[\d.]+ pp$/.test(employment.value) || !income || !/^\+\d+%$/.test(income.value)) {
     throw new Error(`TRIAL_SENTENCE: RC-02 or RC-01 no longer has the expected stat: ${JSON.stringify([employment?.value, income?.value])}`);
   }
+  // WP166-B (marketing review R2-02, owner approval of 21 November 2026): the income result is no longer buried mid-sentence. The band shows RC-02's +10.3 tile and RC-01's +41% income tile side by side,
+  // so the sentence names the trial and introduces the two results (it said "..., women offered a place had an estimated 41% higher monthly income than the control group, alongside the employment effect below.").
+  // Used on YouthWIDE only (EvidenceBand `trialSentence`); the stat guard above still holds both tiles to the register.
   return {
-    text: `In the randomized trial of CodersTrust’s WSDFM program by ${BIGD_FULL}, women offered a place had an estimated ${income.value.replace(/^\+/, '')} higher monthly income than the control group, alongside the employment effect below.`,
+    text: `A randomized trial of CodersTrust’s WSDFM program by ${BIGD_FULL}. Two results for women offered a place:`,
     facts: ['RC-01', 'RC-02'],
   };
 }
@@ -931,12 +953,15 @@ export const READ_THE_EVIDENCE = 'Read the Evidence';
  * options to scope in the discovery session, not a commitment, so a campus reads them as a range to choose from rather than a quantity asked of it.
  * WP47 (cycle-22 review): a full sentence with its subject ("These are program sizes, not commitments: ..."), where it was a fragment that began with a noun phrase.
  */
-export const PROGRAM_SIZES_NOTE = 'These are program sizes, not commitments: in the discovery session you choose a starting scope for your goals, country and delivery capacity.';
+// WP166-B (marketing review R2-03, owner approval of 21 November 2026): the reader's choice comes first and the disclaimer second, so a single college does not read the smallest size as a quantity asked of it
+// (it said "These are program sizes, not commitments: in the discovery session you choose a starting scope for your goals, country and delivery capacity."). Shared: Home, JobReady@Campus, Development Partners and Foundations print it (Governments prints the briefing form below).
+export const PROGRAM_SIZES_NOTE = 'You choose the starting scope in the discovery session, for your goals, country and delivery capacity. The sizes below are program sizes, not commitments.';
 /**
  * The same note on the Governments page, whose first step is a briefing for the ministry, not a discovery session (WP49, cycle-24 review: the page's cost answer and its "Choose Where to Start" lead said "discovery session"
  * beside a "Request a Briefing" button). The page's cost answer says "in the briefing" too (faqs.ts, Q8-government).
  */
-export const PROGRAM_SIZES_NOTE_BRIEFING = 'These are program sizes, not commitments: in the briefing you choose a starting scope for your goals, country and delivery capacity.';
+// WP166-B: the same order as PROGRAM_SIZES_NOTE, so the two notes stay one sentence pair.
+export const PROGRAM_SIZES_NOTE_BRIEFING = 'You choose the starting scope in the briefing, for your goals, country and delivery capacity. The sizes below are program sizes, not commitments.';
 
 /**
  * [SESSION-AGENDA] (plan v1.12 round-11 enhancement, v1.13 wording; grounded in PD-04, PD-11, PD-19 and FAQ Q8): what the first conversation
@@ -1131,6 +1156,23 @@ function localPartnerEvidence(): CopyBlock[] {
 export const LOCAL_PARTNER_EVIDENCE: CopyBlock[] = localPartnerEvidence();
 
 /** C11 on funder-facing pages (Home, development partners, foundations, YouthWIDE), after the program options. */
+/**
+ * WP166-B (marketing review R3-05, owner approval of 21 November 2026): the entry-level track menu, PD-10, as one sentence a partner page prints once (Development Partners, Governments, Universities, Local Partners; Employers names the tracks
+ * in its placement sentence). The items are read from PD-10's text ("... : digital marketing · graphic design · ... · data analysis"; "&" written "and"), so the list cannot drift from the register; no vendor certification is named.
+ */
+function trackMenu(): { items: string[]; sentence: CopyBlock } {
+  const m = /\(set per country from employer demand\): (.+)$/.exec(fact('PD-10').text);
+  if (!m) throw new Error('TRACK_MENU: PD-10 no longer reads "Entry-level menu (set per country from employer demand): ..."');
+  const items = m[1].split(' · ').map((x) => x.replace(' & ', ' and '));
+  if (items.length < 5) throw new Error(`TRACK_MENU: PD-10 lists ${items.length} tracks`);
+  const list = `${items.slice(0, -1).join(', ')} and ${items[items.length - 1]}`;
+  return { items, sentence: { text: `Tracks are set per country from employer demand, from a menu that includes ${list}.`, facts: ['PD-10'] } };
+}
+const TRACKS = trackMenu();
+export const TRACK_MENU: CopyBlock = TRACKS.sentence;
+/** The menu's tracks as a list phrase ("digital marketing, graphic design, ... and data analysis"), for a sentence that names them in its own words (Employers' placement line). */
+export const TRACK_MENU_LIST = `${TRACKS.items.slice(0, -1).join(', ')} and ${TRACKS.items[TRACKS.items.length - 1]}`;
+
 export const ACCOUNTABILITY: CopyBlock = {
   text: 'Every pilot is judged against its scorecard, including cost per completer and per verified outcome, with thresholds agreed with you before the first cohort starts.',
   facts: ['PD-11'],

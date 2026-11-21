@@ -211,9 +211,11 @@ test.describe('WP105 item 9: stamps and dateModified of the pages this WP change
   const STAMPED = [
     { route: 'privacy-policy/', selector: '.lf-updated', day: 'November 3, 2026', iso: '2026-11-03' }, // WP148: "Post Graduate Diploma" capitalised; WP161-A: the Video section and the legal-basis line
     { route: 'impact/independent-evaluation/', selector: '.lf-updated', day: 'November 21, 2026', iso: '2026-11-21' }, // WP166-C (the marketing-effectiveness review). Earlier: WP134: WP133 changed its text
-    { route: 'programs/youthwide/', selector: '.updated', day: 'November 3, 2026', iso: '2026-11-03' }, // WP163 (one exam fee per trainee; the delivery model). Earlier: WP151
-    { route: 'programs/nu-postgraduate-diploma/', selector: '.updated', day: 'November 2, 2026', iso: '2026-11-02' }, // WP151 (WP148: as Privacy)
-    { route: 'programs/jobready-campus/', selector: '.updated', day: 'November 3, 2026', iso: '2026-11-03' }, // WP163 (as YouthWIDE). Earlier: WP151
+    // WP166-B: the three program pages below changed again on 21 November 2026 (the marketing review R2); they read November 3, November 2 and November 3, 2026.
+    { route: 'programs/youthwide/', selector: '.updated', day: 'November 21, 2026', iso: '2026-11-21' }, // WP166-B. Earlier: WP163 (one exam fee per trainee; the delivery model). Earlier: WP151
+    { route: 'programs/nu-postgraduate-diploma/', selector: '.updated', day: 'November 21, 2026', iso: '2026-11-21' }, // WP166-B. Earlier: WP151 (WP148: as Privacy)
+    { route: 'programs/jobready-campus/', selector: '.updated', day: 'November 21, 2026', iso: '2026-11-21' }, // WP166-B. Earlier: WP163 (as YouthWIDE). Earlier: WP151
+
   ];
   for (const s of STAMPED) {
     test(`${s.route} reads "Last updated ${s.day}" and its JSON-LD dateModified is ${s.iso}`, async ({ page }) => {
@@ -227,8 +229,8 @@ test.describe('WP105 item 9: stamps and dateModified of the pages this WP change
   // WP151: Governments moved on to 2026-11-02 (the learner card label is "Individual Story"). WP152: About moved on to 2026-11-02 (the 2025–2026 timeline item is two sentences).
   // WP161-A: Governments moved on to 2026-11-03; WP161-B: Recognition moved on to 2026-11-02.
   // WP162 and WP163: About moved on to 2026-11-03 (the 2025–2026 timeline item's JobReady sentence).
-  // WP166-A (marketing review, owner approval of 21 November 2026): About and Recognition and Media moved on to 2026-11-21.
-  for (const [route, day] of [['about/', '2026-11-21'], ['partner-with-us/governments/', '2026-11-03'], ['about/recognition/', '2026-11-21']]) {
+  // WP166-A: About and Recognition and Media moved on to 2026-11-21; WP166-B: Governments did too (the marketing review R3; it was 2026-11-03).
+  for (const [route, day] of [['about/', '2026-11-21'], ['partner-with-us/governments/', '2026-11-21'], ['about/recognition/', '2026-11-21']]) {
     test(`${route} pins its JSON-LD dateModified to ${day} (the day it last changed: WP141, WP151, WP152, WP161, WP162, WP163), not the build date`, async ({ page }) => {
       await open(page, route);
       expect(await ldJson(page)).toMatch(new RegExp(`"dateModified"\\s*:\\s*"${day}"`));

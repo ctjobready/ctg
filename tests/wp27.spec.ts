@@ -84,10 +84,13 @@ test.describe('one NU eligibility sentence', () => {
 test.describe('JobReady@Campus and JobReady@Work', () => {
   test('Campus states exam preparation, not the certification itself', async ({ page }) => {
     await open(page, 'programs/jobready-campus/');
-    // WP39 (cycle-16 review): the features band is three short cards
-    const cards = (await page.locator('#features .card__text').allTextContents()).map(compact).join(' ');
-    expect(cards).toContain('Industry certification exam preparation by track');
-    expect(cards.toLowerCase()).not.toContain('industry certifications by track');
+    // WP39 (cycle-16 review): the features band was three short cards, the first "Industry certification exam preparation by track, ...". WP166-B (marketing review R2-14): that band ("Built Around What Institutions Ask For")
+    // is gone, and the assertion on its card with it; the page states exam preparation in the glance's training row and in How It Works' "What" card, and still never the certification itself.
+    await expect(page.locator('#features')).toHaveCount(0);
+    const text = compact((await page.locator('main').textContent()) ?? '');
+    expect(text).toContain('100 training hours per certification, including certification exam preparation and one exam fee per trainee');
+    expect(text).toContain('Preparation for industry-recognized certifications on tracks set from employer demand');
+    expect(text.toLowerCase()).not.toContain('industry certifications by track');
   });
 
   for (const [route, label] of [
@@ -118,7 +121,7 @@ test.describe('Partner with Us', () => {
     await open(page, 'partner-with-us/');
     const hrefs = await hrefOf(page, '#audiences .grid-cards a');
     expect(hrefs.map((h) => h.replace(/^.*partner-with-us\//, ''))).toEqual(['development-partners/', 'governments/', 'foundations/', 'universities/', 'employers/', 'local-partners/', 'investors/']);
-    await expect(page.locator('#audiences .grid-cards')).toContainText('Back JobReady’s Staged Rollout');
+    await expect(page.locator('#audiences .grid-cards')).toContainText('Invest in the JobReady Platform'); // WP166-B (marketing review R3-19): the investor card's heading (it was "Back JobReady’s Staged Rollout")
   });
 
   test('the seventh route card does not sit alone beside empty cells', async ({ page }) => {
@@ -136,7 +139,8 @@ test.describe('Partner with Us', () => {
     await open(page, 'partner-with-us/');
     const lead = compact(await page.locator('.hero__lead').first().textContent());
     // WP32 (cycle-9 review): the hub routes more than cohorts (campus skills, team training, hiring, the platform), so one sentence names the choice and describes no cohort (the route cards name the audiences)
-    expect(lead).toBe('Choose a partnership for youth employment, campus skills, team training, hiring or JobReady’s staged rollout.');
+    // WP166-B (marketing review R3-18): the lead opens with the record (SC-01) and asks the reader to pick a route (it was "Choose a partnership for youth employment, campus skills, team training, hiring or JobReady’s staged rollout.").
+    expect(lead).toBe('130,000+ learners trained since 2014. Pick the route built for your organization: each has its own evidence, offer and next step.');
     expect(lead).not.toMatch(/Bangladesh|investors|cohort|co-design/i);
     await expect(page.locator('#audiences .grid-cards a[href$="partner-with-us/investors/"]')).toHaveCount(1);
     // WP35 (cycle-12 review): the hero's one button jumps to the route cards (it was an email button, with "Choose Your Route" a text link under it)
@@ -187,7 +191,7 @@ test.describe('evidence pages end with a next step for every reader', () => {
     await open(page, 'our-model/jobready-platform/');
     const end = page.locator('aside.jr__next');
     expect(compact(await end.locator('.email-fallback').textContent())).toBe('If your email app does not open, write to contact@coderstrust.global.');
-    const link = end.locator('a.link', { hasText: 'Backing the platform? See Investors' });
+    const link = end.locator('a.link', { hasText: 'Investing? See Investors' }); // WP166-B (marketing review R2-40): the link names its reader (it was "Backing the platform? See Investors")
     await expect(link).toHaveCount(1);
     expect(await link.getAttribute('href')).toMatch(/\/partner-with-us\/investors\/$/);
   });

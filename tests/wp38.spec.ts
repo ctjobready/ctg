@@ -157,8 +157,10 @@ test.describe('Universities: the one evidence strip, the National University hea
 
   test('the first band is "The National University Partnership" and keeps its clarifying sentence and its three figures', async ({ page }) => {
     await open(page, 'partner-with-us/universities/');
-    await expect(page.locator('#offer-evidence h2')).toHaveText('The National University Partnership');
-    expect(compact(await page.locator('#offer-evidence .sh__lead').textContent())).toBe('These cards describe the learners being onboarded and National University’s size, not learners trained by CodersTrust.'); // WP136: the band has two cards now, so the lead says "These cards" (WP132 had "The first two cards"), no dangling "they"
+    // WP166-B (marketing review R3-13): the heading states the claim (it was "The National University Partnership"); the clarifying sentence is the note under the cards (.pe__note; it was the lead, .sh__lead)
+    await expect(page.locator('#offer-evidence h2')).toHaveText('Official Training Partner of the World’s Second-Largest University by Enrollment');
+    await expect(page.locator('#offer-evidence .sh__lead')).toHaveCount(0);
+    expect(compact(await page.locator('#offer-evidence .pe__note').textContent())).toBe('These cards describe the learners being onboarded and National University’s size, not learners trained by CodersTrust.'); // WP136: the band has two cards now, so the lead says "These cards" (WP132 had "The first two cards"), no dangling "they"
     await expect(page.locator('#offer-evidence .pe__item')).toHaveCount(2); // WP136: the University Partners card is gone (its partners are the track-record logos)
   });
 });
@@ -179,7 +181,10 @@ test.describe('the three funder pains that had a heading and no line now have on
       await expect(item).toHaveCount(1);
       expect(compact(await item.locator('.gp__a').textContent())).toBe(line);
       // WP46 (cycle-22 review): Universities states two pains now, so every pain on it (two) still has its line
-      await expect(page.locator('.gp__pains li .gp__a')).toHaveCount(route === 'partner-with-us/universities/' ? 2 : 3);
+      // WP166-B (marketing review R3-40): the degree-holders pain on Universities and the "Graduates Struggle to Find Work" pain on Governments are the 19M+ tile (PX-02) now, so Universities has one pain (it was 2) and Governments two (it was 3)
+      const pains = route === 'partner-with-us/universities/' ? 1 : route === 'partner-with-us/governments/' ? 2 : 3;
+      await expect(page.locator('.gp__pains li .gp__q')).toHaveCount(pains);
+      await expect(page.locator('.gp__pains li .gp__a')).toHaveCount(pains);
     });
   }
 });
@@ -187,14 +192,16 @@ test.describe('the three funder pains that had a heading and no line now have on
 test.describe('Guide band: one origin line on the audience pages, the two-sentence history on Home', () => {
   const ORIGIN_SHORT = 'From a Copenhagen launch to work in 16 countries and territories.'; // WP64 rework RW2 (coordinator): under a heading that says "Since 2014" the band drops that lead-in (originShortUnder, src/data/copy.ts; ORIGIN_SHORT itself keeps it)
   // WP42 (cycle-19 review): Investors' Guide band shows SC-03's tile since "Delivered Since 2014" moved into it, so its origin line is the launch alone, as on Development Partners (tests/wp42.spec.ts)
+  // WP166-B (marketing review R3-28): Foundations' Guide band opens with the funders who have worked with CodersTrust in place of the origin line; the assertion is gone with it there (the band still tells no history, below).
   const AUDIENCE = ['partner-with-us/governments/', 'partner-with-us/foundations/', 'partner-with-us/universities/', 'partner-with-us/employers/'];
 
   for (const route of AUDIENCE) {
     test(`${route}: the Guide band says it in one line tied to ID-02 and SC-03`, async ({ page }) => {
       await open(page, route);
       const line = page.locator('#guide p[data-fact="ID-02 SC-03"]');
-      await expect(line).toHaveCount(1);
-      expect(compact(await line.textContent())).toBe(ORIGIN_SHORT);
+      await expect(line).toHaveCount(route === 'partner-with-us/foundations/' ? 0 : 1);
+      // WP166-B (marketing review R3-06): Employers' band is headed "Employers and Partners We Work With"; its signed-agreement sentence carries "since 2014" (WP66), so the origin line is the year-less one it printed before ("since 2014" once in the band, WP64).
+      if (route !== 'partner-with-us/foundations/') expect(compact(await line.textContent())).toBe(ORIGIN_SHORT);
       expect(compact(await page.locator('#guide').textContent())).not.toMatch(/began (?:developing|training) freelancers|first UNDP-supported pilot|Korail settlement/);
     });
   }
@@ -227,16 +234,17 @@ test.describe('Guide band: one origin line on the audience pages, the two-senten
 
 test.describe('Investors: the definition band no longer repeats the 130,000+', () => {
   // WP42 (cycle-19 review): the count is the first tile of "Delivered Since 2014", which moved from "Reach to Date" (now "Contracts and Recognition") into the track-record band (#guide)
-  test('the second paragraph is the platform sentence alone; the track-record band carries the count', async ({ page }) => {
+  test('the band is the ID-01 paragraph alone (WP166-B: the platform sentence, its second paragraph, opens the hero); the track-record band carries the count', async ({ page }) => {
     await open(page, 'partner-with-us/investors/');
     expect(await texts(page, '#definition .def__text')).toEqual([
       'CodersTrust is a workforce-development organization that trains and mentors educated, unemployed and underemployed youth in emerging markets for digital work and connects them to local, remote and global work.',
       // WP46 (cycle-22 review): no "AI-native" (an unexplained label; tests/wp46.spec.ts)
       // WP53 (owner decision 2026-10-16): "a digital learning and earning platform"
       // WP163 (owner answers of 3 November 2026: no capability is labelled in development): "JobReady is CodersTrust’s digital learning and earning platform for emerging markets." (it said "CodersTrust is building JobReady, ...")
-      'JobReady is CodersTrust’s digital learning and earning platform for emerging markets.',
+      // WP166-B (marketing review R3-09): that platform sentence opens the hero now, so the band is ID-01 alone; the second paragraph is gone, and the assertion with it.
     ]);
-    expect(await page.locator('#definition .def').getAttribute('data-fact')).toBe('ID-01 IN-04');
+    expect(await page.locator('#definition .def').getAttribute('data-fact')).toBe('ID-01'); // WP166-B: it was "ID-01 IN-04"
+    expect(compact(await page.locator('main .hero .hero__lead').first().textContent())).toContain('JobReady is CodersTrust’s digital learning and earning platform for emerging markets.'); // WP166-B: the platform sentence's new place
     expect(compact(await page.locator('#definition').textContent())).not.toContain('130,000');
     expect(compact(await page.locator('#guide').textContent())).toContain('130,000+');
     expect(compact(await page.locator('#reach').textContent())).not.toContain('130,000+');
@@ -300,10 +308,14 @@ test.describe('wording fixes', () => {
   test('SuperKids: the options lead is "Bring these three things to the conversation." and the pricing statement sits right under it', async ({ page }) => {
     await open(page, 'programs/superkids/');
     const band = page.locator('#offer');
-    await expect(band.locator('h2')).toHaveText('Options Are Shaped with You in a Discovery Session');
-    expect(compact(await band.locator('.sh__lead').textContent())).toBe('Bring these three things to the conversation.');
+    await expect(band.locator('h2')).toHaveText('Three Things to Bring to the Discovery Session'); // WP166-B (marketing review R2): the heading names the three things (it was "Options Are Shaped with You in a Discovery Session")
+    // WP166-B (marketing review R2-30): the lead "Bring these three things to the conversation." is gone (the heading says it); the assertion is gone with it.
+    await expect(band.locator('.sh__lead')).toHaveCount(0);
     expect(compact(await band.textContent())).not.toContain('We do not publish prices');
-    expect(compact(await band.locator('[data-fact="PD-02"]').textContent())).toBe('Pricing is set per program, and we share an indicative budget in the discovery session.');
+    // WP166-B (marketing review R2-30): the pricing sentence is the FAQ's "What Does It Cost?" answer (it sat in this band, tied to PD-02)
+    await expect(band.locator('[data-fact="PD-02"]')).toHaveCount(0);
+    const cost = page.locator('#faq details', { hasText: 'What Does It Cost?' });
+    expect(compact(await cost.locator('[data-fact="PD-02"]').textContent())).toBe('Pricing is set per program, and we share an indicative budget in the discovery session.');
   });
 
   for (const [route, label] of [

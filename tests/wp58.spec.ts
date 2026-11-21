@@ -422,16 +422,16 @@ test.describe('G6: Development Partners’ Adrian Afraham card', () => {
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 test.describe('G7: TalentLEAP’s results paragraph opens with the evaluation sentence (WP122: the repeated caveat is gone), and nothing says "The results below"', () => {
+  // WP166-B (marketing review R2-35): the "Evidence for Today’s Tracks" section (#results) is gone; its evaluation sentences are the note under At a Glance's figures, beside the program-results caveat
+  // (the section's first paragraph read "Today’s 100-hour tracks have not yet been independently evaluated. A pilot scorecard tracks agreed outcomes; independent evaluation is welcome."). The check that
+  // At a Glance came above the section is gone with the section.
   test('keeps the evaluation sentences, and nothing says "The results below"', async ({ page }) => {
     await open(page, TALENTLEAP);
-    const results = page.locator('#results');
-    expect(compact(await results.locator('p').first().textContent())).toBe(
-      'Today’s 100-hour tracks have not yet been independently evaluated. A pilot scorecard tracks agreed outcomes; independent evaluation is welcome.',
+    await expect(page.locator('#results')).toHaveCount(0);
+    expect(compact(await page.locator('#glance .tl__scope').textContent())).toBe(
+      'These results are from CodersTrust programs, not TalentLEAP’s features on their own. Today’s 100-hour tracks have not yet been independently evaluated; a pilot scorecard tracks agreed outcomes and independent evaluation is welcome.',
     );
     expect(compact(await page.locator('main').textContent())).not.toContain('The results below are for CodersTrust programs');
-    // At a Glance is above the results section, as the sentence says
-    const above = await page.evaluate(() => (document.querySelector('#glance')!.compareDocumentPosition(document.querySelector('#results')!) & Node.DOCUMENT_POSITION_FOLLOWING) !== 0);
-    expect(above).toBe(true);
   });
 });
 
@@ -460,7 +460,8 @@ test.describe('K5, revised by WP59 G2: the closing bands say a discovery session
 test.describe('L4: Universities’ second pain is a pain', () => {
   test('"Placement Results Are Hard to Publish" keeps the line under it; the goal-framed heading is on no built page', async ({ page }) => {
     await open(page, UNIVERSITIES);
-    expect(await texts(page, '#problem .gp__pains .gp__q')).toEqual(['Degree Holders Struggle to Find Work', 'Placement Results Are Hard to Publish']);
+    // WP166-B (marketing review R3-40): "Degree Holders Struggle to Find Work" is gone (the 19M+ tile, PX-02, states it), so this is the band's one pain (it was the second of two).
+    expect(await texts(page, '#problem .gp__pains .gp__q')).toEqual(['Placement Results Are Hard to Publish']);
     const line = page.locator('#problem .gp__pains li', { has: page.locator('.gp__q', { hasText: 'Placement Results Are Hard to Publish' }) }).locator('.gp__a');
     expect(compact(await line.textContent())).toBe('Your institution needs placement data it can report to a board or ministry.');
     expect('Placement Results Are Hard to Publish').toBe(titleCase('Placement Results Are Hard to Publish'));
@@ -493,7 +494,8 @@ test.describe('GM1: the contract-total note says who trained how many', () => {
     expect(compact(await tile.locator('.pg__note').textContent())).toBe('The total is contract scope, not a count of completers; it includes Her Power’s national program, which trained 25,125 women (CodersTrust trained 2,400 directly).');
     expect(await tile.locator('a').getAttribute('data-fact')).toBe('GV-12 SC-06 GV-01 GV-11');
     const printed = sitePages().filter((p) => p.html.includes('national program, which trained 25,125 women (CodersTrust trained 2,400 directly)')).map((p) => p.route).sort();
-    expect(printed).toEqual(['/impact/', '/our-model/jobready-platform/', '/partner-with-us/governments/', '/partner-with-us/investors/']);
+    // WP166-B (marketing review R2-39): the JobReady Platform's contract-scope tile and its note are gone, so the page is out of the list (it was one of the four).
+    expect(printed).toEqual(['/impact/', '/partner-with-us/governments/', '/partner-with-us/investors/']);
     expect(sitePages().filter((p) => p.html.includes('(25,125 women trained)')).map((p) => p.route)).toEqual([]);
   });
 
@@ -516,13 +518,17 @@ test.describe('S1 extended: the other statements of the 16 say "work", not "prog
 
   test('every page that prints the origin line prints it with "work", tied to ID-02 and SC-03 (the audience pages’ Track Record bands)', async ({ page }) => {
     const pages = listPages().filter((p) => /data-fact="ID-02 SC-03"/.test(readFileSync(p.file, 'utf8')));
+    // WP166-B (marketing review R3-28): Foundations' track-record band opens with the funders who have worked with CodersTrust in place of the origin line, so it is out of this list (it was in it).
     expect(pages.map((p) => p.route)).toEqual(
-      expect.arrayContaining(['/partner-with-us/governments/', '/partner-with-us/foundations/', '/partner-with-us/development-partners/', '/partner-with-us/investors/', '/partner-with-us/universities/', '/partner-with-us/employers/']),
+      expect.arrayContaining(['/partner-with-us/governments/', '/partner-with-us/development-partners/', '/partner-with-us/investors/', '/partner-with-us/universities/', '/partner-with-us/employers/']),
     );
+    expect(pages.map((p) => p.route)).not.toContain('/partner-with-us/foundations/');
+    // WP166-B (marketing review R3-06): Employers' band is headed "Employers and Partners We Work With"; its signed-agreement sentence carries "since 2014" (WP66), so the origin line is the year-less one it printed before ("since 2014" once in the band, WP64).
+    const HEADINGS: Record<string, string> = {};
     for (const p of pages) {
       await open(page, p);
       // WP64 rework RW2 (coordinator): every one of these bands is headed "... Since 2014", so the line drops that lead-in (ORIGIN_SHORT.text above keeps it)
-      expect(compact(await page.locator('[data-fact="ID-02 SC-03"]').first().textContent()), p.route).toBe(originShortUnder('Since 2014', { tile: ['/partner-with-us/development-partners/', '/partner-with-us/investors/'].includes(p.route) }).text); // WP150: where the SC-03 tile is shown the line names the regions
+      expect(compact(await page.locator('[data-fact="ID-02 SC-03"]').first().textContent()), p.route).toBe(originShortUnder(HEADINGS[p.route] ?? 'Since 2014', { tile: ['/partner-with-us/development-partners/', '/partner-with-us/investors/'].includes(p.route) }).text); // WP150: where the SC-03 tile is shown the line names the regions
     }
   });
 
@@ -630,8 +636,10 @@ test.describe('K3 (owner decision 2026-10-19): the six-contract total is 30,000+
     expect(CONTRACT_TOTAL_NOTE.text).toContain('The total is contract scope, not a count of completers; it includes Her Power’s national program, which trained 25,125 women (CodersTrust trained');
   });
 
+  // WP166-B (marketing review R2-39): the JobReady Platform no longer shows the total (its "Contracted Scope" tile is gone), so it is out of the list (it was in it).
   test('the pages that show the total are found in the build, and each says 30,000+ and never 31,200', () => {
-    expect(TOTAL_PAGES.map((p) => p.route)).toEqual(expect.arrayContaining(['/', '/impact/', '/partner-with-us/governments/', '/partner-with-us/investors/', '/our-model/jobready-platform/']));
+    expect(TOTAL_PAGES.map((p) => p.route)).toEqual(expect.arrayContaining(['/', '/impact/', '/partner-with-us/governments/', '/partner-with-us/investors/']));
+    expect(TOTAL_PAGES.map((p) => p.route)).not.toContain('/our-model/jobready-platform/');
     for (const p of TOTAL_PAGES) {
       const text = visible(readFileSync(p.file, 'utf8'));
       expect(text, p.route).toMatch(/(?<![\d,])30,000\+/); // not the 130,000+ learners
@@ -643,7 +651,8 @@ test.describe('K3 (owner decision 2026-10-19): the six-contract total is 30,000+
     expect(builtFiles().filter((f) => /31,200|31200/.test(f.text)).map((f) => f.file)).toEqual([]);
   });
 
-  test('Home’s government slide, the Governments tile, Impact’s tile and the Investors and JobReady tiles show 30,000+ with the Contract Scope tag', async ({ page }) => {
+  // WP166-B (marketing review R2-39): the JobReady Platform's tile is gone (it was checked with the Investors tile below), so the Investors tile is the one checked there.
+  test('Home’s government slide, the Governments tile, Impact’s tile and the Investors tile show 30,000+ with the Contract Scope tag', async ({ page }) => {
     await open(page, HOME);
     expect(compact(await slide(page, 2).locator('.hs__lead').textContent())).toMatch(/^Six government contracts with training and curriculum work scoped for 30,000\+ people, not a count of completers\. Her Power, one of the six, trained 25,125 women nationally, its full target;/);
     await open(page, GOVERNMENTS);
@@ -655,7 +664,7 @@ test.describe('K3 (owner decision 2026-10-19): the six-contract total is 30,000+
     const impact = page.locator('#glance a[data-fact~="GV-12"]');
     await expect(impact.locator('.glance__value')).toHaveText('30,000+');
     await expect(impact.locator('[data-evidence="Contract Scope"]')).toHaveCount(1);
-    for (const [route, tileSelector] of [[INVESTORS, '.ir__tile[data-fact="SC-06"]'], ['our-model/jobready-platform/', '.factstat[data-fact="SC-06"]']] as const) {
+    for (const [route, tileSelector] of [[INVESTORS, '.ir__tile[data-fact="SC-06"]']] as const) {
       await open(page, route);
       await expect(page.locator(`${tileSelector} .stat__value`).first(), route).toHaveText('30,000+');
     }

@@ -69,7 +69,8 @@ test.describe('WP90 A4: SuperKids "Who It Is For" drops the repeated clause', ()
   test('the row ends at "graphic design for kids."', async ({ page }) => {
     await open(page, 'programs/superkids/');
     const row = page.locator('.pg__row', { has: page.locator('dt', { hasText: 'Who It Is For' }) });
-    expect(compact(await row.locator('dd').textContent())).toBe('Schools and education partners that want young learners to build digital skills early, through block coding, robotics and graphic design for kids.');
+    // WP166-B (marketing review R2-27): the row is shorter still; the course list (", through block coding, robotics and graphic design for kids.") is in the hero and the two offer cards.
+    expect(compact(await row.locator('dd').textContent())).toBe('Schools and education partners that want young learners to build digital skills early.');
   });
 });
 
@@ -95,11 +96,14 @@ test.describe('WP90 item 3: Investors reach band', () => {
   test('the H2 is "Contracts and Recognition" and the NU sentence says the learners are being onboarded', async ({ page }) => {
     await open(page, 'partner-with-us/investors/');
     await expect(page.locator('#reach h2')).toHaveText('Contracts and Recognition');
+    // WP166-B (marketing review R3-16): the National University partnership is the band's first group, under its own subheading, in SC-04's own words (the bracketed qualifier kept); the paragraph came after
+    // the contract scope and opened "Not counted in the delivered reach: ...".
+    await expect(page.locator('#reach h3').first()).toHaveText('The National University Partnership');
     const p = page.locator('#reach p.ir__p');
     const text = compact(await p.textContent());
     expect(text).toBe(
       // WP155 (Polish 2): two sentences (SC-04 split at its semicolon); it began "Separately, and not counted in the delivered reach: ..." and was one 45-word sentence
-      'Not counted in the delivered reach: 1.5M+ National University learners being onboarded (the university’s own learners, not learners trained by CodersTrust). CodersTrust has been NU’s official training partner for digital career skills and credentials since 2023 and delivers NU Post Graduate Diploma courses.',
+      '1.5M+ National University learners being onboarded (the university’s own learners, not learners trained by CodersTrust). CodersTrust has been NU’s official training partner for digital career skills and credentials since 2023 and delivers NU Post Graduate Diploma courses.',
     );
     expect(text).not.toContain('onboarding pipeline');
   });

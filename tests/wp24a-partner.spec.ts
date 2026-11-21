@@ -57,17 +57,22 @@ test.describe('audience pages', () => {
   for (const slug of AUDIENCE_PAGES) {
     // WP34 (cycle-11 review): the four cards repeated what the page's own bands state, so the five pages other than Employers show one short item (tests/wp34.spec.ts pins its wording);
     // Employers keeps the compact view of its own offer (tests/wp25s.spec.ts); WP57 (cycle-29 review, GPT-6.1 Sol G7): three rows, its "Independent Evaluation Welcome" row is gone (tests/wp57.spec.ts)
-    test(`${slug}: the due-diligence block is ${slug === 'employers' ? 'the compact three-row "Due Diligence in One View"' : 'one short item'}`, async ({ page }) => {
+    // WP166-B (marketing review R3-32 and R3): Employers' block is its Contracting Entities card alone (its "Needs Assessment First" and "Progress Evaluation" rows are gone; it was three rows); the five brief bands
+    // are headed as the hub's ("Due Diligence in One View"; they were "Confirm Contracting, Safeguarding and Reporting") and link the due-diligence inquiry beside the Governance link (one link before).
+    test(`${slug}: the due-diligence block is ${slug === 'employers' ? 'the compact one-card "Due Diligence in One View"' : 'one short item'}`, async ({ page }) => {
       await page.goto(`partner-with-us/${slug}/`);
       const block = page.locator('#due-diligence');
       await expect(block).toHaveCount(1);
+      await expect(block.locator('h2')).toHaveText('Due Diligence in One View');
       if (slug === 'employers') {
-        await expect(block.locator('h2')).toHaveText('Due Diligence in One View');
-        expect(await block.locator('li').count()).toBe(3);
+        expect(await block.locator('li').count()).toBe(1); // WP166-B: it was 3
+        await expect(block.locator('li h3')).toHaveText('Contracting Entities');
+        await expect(block.getByRole('link', { name: 'Ask About Due Diligence' })).toHaveCount(1);
       } else {
-        await expect(block.locator('h2')).toHaveText('Confirm Contracting, Safeguarding and Reporting');
         expect(await block.locator('li').count()).toBe(0);
-        await expect(block.locator('a')).toHaveCount(1);
+        await expect(block.locator('a')).toHaveCount(2); // WP166-B: it was 1
+        await expect(block.getByRole('link', { name: 'Governance and Accountability' })).toHaveCount(1);
+        await expect(block.getByRole('link', { name: 'Ask About Due Diligence' })).toHaveCount(1);
       }
     });
 
@@ -162,7 +167,8 @@ test.describe('audience pages', () => {
     expect(ids.indexOf('offer-evidence'), 'NU band').toBeGreaterThan(-1);
     expect(ids.indexOf('offer-evidence')).toBeLessThan(ids.indexOf('problem'));
     // WP38 (cycle-15 review): the heading names the partnership; the sentence under it still says the figures are National University's, not learners trained by CodersTrust
-    await expect(page.locator('#offer-evidence h2')).toHaveText('The National University Partnership');
-    await expect(page.locator('#offer-evidence .sh__lead')).toContainText('These cards describe the learners being onboarded and National University’s size, not learners trained by CodersTrust.'); // WP136: the band has two cards now, so the lead says "These cards" (WP132 had "The first two cards") (was "...; they are not learners trained by CodersTrust")
+    // WP166-B (marketing review R3-13): the heading states the claim (it was "The National University Partnership"); the sentence is the note under the two cards (it was the lead, .sh__lead).
+    await expect(page.locator('#offer-evidence h2')).toHaveText('Official Training Partner of the World’s Second-Largest University by Enrollment');
+    await expect(page.locator('#offer-evidence .pe__note')).toContainText('These cards describe the learners being onboarded and National University’s size, not learners trained by CodersTrust.'); // WP136: the band has two cards now, so the lead says "These cards" (WP132 had "The first two cards") (was "...; they are not learners trained by CodersTrust")
   });
 });

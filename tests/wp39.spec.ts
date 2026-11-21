@@ -57,6 +57,9 @@ const EMPLOYER_SKILLS = 'Tracks are set from employer demand in an AI-ready curr
 const DELIVERY = 'Training follows an AI-supported flipped classroom: all lectures are pre-recorded and an AI Tutor supports every learner, so mentors’ time goes to Q&A and to handholding beyond what the AI Tutor can provide.';
 // JobReady@Work carries no three months of mentoring, so the Employers card uses the sentence without the mentors' clause (DELIVERY_MODEL_WORK).
 const DELIVERY_WORK = 'Training follows an AI-supported flipped classroom: all lectures are pre-recorded and an AI Tutor supports every learner.';
+// WP166-B (marketing review R3-05, R3-24 and the other R3 delivery-model findings): the delivery-model sentence (DELIVERY, DELIVERY_WORK) left these cards for each page's How It Works band, and the cards that named the tracks
+// in their own words name the track menu (src/data/copy.ts TRACK_MENU, PD-10) instead; tests/wp166-b.spec.ts pins the delivery model once per page.
+const TRACKS = 'Tracks are set per country from employer demand, from a menu that includes digital marketing, graphic design, video editing, web design and development, digital accounting, Python programming and data analysis.';
 
 /** The three cards of each page's "What You Get" band, in the order of the page's three pains. Each page's cards are derived from the rows its matrix had (cycle-16 review, item 1). */
 const PAGES: PageSpec[] = [
@@ -65,8 +68,9 @@ const PAGES: PageSpec[] = [
     h2: 'What Your Portfolio Gets',
     cards: [
       // WP49 (cycle-24 review): the 100 hours per certification stay in the delivery model above (tests/wp49.spec.ts); WP65 (cycle-37 review, Gemini, Sonnet): "CodersTrust connects training, mentoring and placement support in one program." (it said "One delivery partner connects ...")
-      { title: 'Training, Mentoring and Placement Support', text: 'Certification exam preparation and one exam fee per trainee (any further attempts set per program), three months of mentoring and placement support in one program. Training follows an AI-supported flipped classroom: all lectures are pre-recorded and an AI Tutor supports every learner, so mentors’ time goes to Q&A and to handholding beyond what the AI Tutor can provide.', facts: ['PD-01', 'PD-02a', 'IN-04'] },
-      { title: 'Accessible Local Delivery', text: 'Outreach, accessible selection and tracks chosen from employer demand, with safeguarding agreed for each program.', facts: ['PD-02', 'PD-10', 'PD-12'] },
+      // WP166-B: card 1 ended with DELIVERY (facts PD-01 PD-02a IN-04); card 2 now ends with the track menu (it ended "... agreed for each program.")
+      { title: 'Training, Mentoring and Placement Support', text: 'Certification exam preparation and one exam fee per trainee (any further attempts set per program), three months of mentoring and placement support in one program.', facts: ['PD-01', 'PD-02a'] },
+      { title: 'Accessible Local Delivery', text: `Outreach, accessible selection and tracks chosen from employer demand, with safeguarding agreed for each program. ${TRACKS}`, facts: ['PD-02', 'PD-10', 'PD-12'] },
       { title: 'Progress Your Evaluators Can Check', text: 'Baseline data, follow-up surveys and monthly reports, with documentary evidence where available.', facts: ['PD-08', 'PD-09'] },
     ],
   },
@@ -75,7 +79,8 @@ const PAGES: PageSpec[] = [
     h2: 'What Your Agency Gets',
     cards: [
       // WP49 (cycle-24 review): "completers", the site's word for people who finished a program (it said "graduates"); WP62 (cycle-34 review, Gemini): "... placement support toward local, remote and global work." (it said "... that point completers toward paid work.")
-      { title: 'Certification Preparation and Placement Support', text: `Certification tracks chosen from employer demand, then three months of mentoring and placement support toward local, remote and global work. ${DELIVERY}`, facts: ['PD-10', 'PD-01', 'IN-04'] },
+      // WP166-B: it read "Certification tracks chosen from employer demand, then three months of mentoring and placement support toward local, remote and global work. ${DELIVERY}" (facts PD-10 PD-01 IN-04)
+      { title: 'Certification Preparation and Placement Support', text: `${TRACKS} Three months of mentoring and placement support follow, toward local, remote and global work.`, facts: ['PD-10', 'PD-01'] },
       { title: 'Spending Measured Against Outcomes', text: 'A pilot scorecard with cost per completer and per verified outcome, and monthly reports. Spending is reported against the agreed scorecard.', facts: ['PD-11', 'PD-08'] },
       {
         title: 'Capacity Designed to Stay in Your System',
@@ -93,8 +98,9 @@ const PAGES: PageSpec[] = [
         title: 'Mentoring, Placement Support and Outcome Tracking',
         // WP49 (cycle-24 review): the scorecard also covers completion, certification and sustained work (PD-11), so results are measured against it, "including first paid work, not attendance alone"
         // WP161-A (A-26, A-29): three months of mentoring on both cards; Governments' spending is reported against the scorecard
-        text: `${DELIVERY} Three months of mentoring and placement support are standard inclusions, and outcomes are tracked for 12 months after each course. Results are measured against the agreed scorecard, including first paid work, not attendance alone.`,
-        facts: ['PD-01', 'PD-02', 'PD-11', 'IN-04'],
+        // WP166-B: the card opened with DELIVERY (facts also IN-04)
+        text: 'Three months of mentoring and placement support are standard inclusions, and outcomes are tracked for 12 months after each course. Results are measured against the agreed scorecard, including first paid work, not attendance alone.',
+        facts: ['PD-01', 'PD-02', 'PD-11'],
       },
       { title: 'A Pilot Scorecard Agreed with You', text: 'Cost per completer and per verified outcome, with thresholds agreed before the first cohort starts.', facts: ['PD-11'] },
       {
@@ -109,8 +115,9 @@ const PAGES: PageSpec[] = [
     route: 'partner-with-us/universities/',
     h2: 'What Your Students and Your Institution Get',
     cards: [
-      { title: 'Certification Exam Preparation and Mentoring', text: `${CERT_AND_MENTORING} ${DELIVERY}`, facts: ['PD-02', 'PD-01', 'IN-04'] },
-      { title: 'Skills Employers Ask For', text: EMPLOYER_SKILLS, facts: ['PD-10', 'PD-02'] },
+      // WP166-B (marketing review R3-24, R3-05): card 1 ended with DELIVERY (facts also IN-04); card 2 was EMPLOYER_SKILLS (facts PD-10 PD-02)
+      { title: 'Certification Exam Preparation and Mentoring', text: CERT_AND_MENTORING, facts: ['PD-02', 'PD-01'] },
+      { title: 'Skills Employers Ask For', text: TRACKS, facts: ['PD-10'] },
       { title: 'Placement Evidence You Can Report', text: SCOPE_RESULTS, facts: ['PD-08', 'PD-09'] },
     ],
   },
@@ -119,8 +126,10 @@ const PAGES: PageSpec[] = [
     h2: 'What Your Business Gets',
     cards: [
       { title: 'Job-Ready Candidates for Your Roles', text: 'Access to candidates from CodersTrust’s placement team for your roles, plus trainees from certification tracks chosen from employer demand.', facts: ['IN-04', 'PD-10'] },
-      { title: 'AI Content Agreed Before Training', text: 'An AI-ready curriculum, designed to prepare people to work with AI tools. Each track’s AI content is agreed with you before training starts.', facts: ['PD-02', 'IN-10'] }, // WP142 (kit 109): team-training wording, no youth-cohort "work-entry plan" or "enrollment"
-      { title: 'Customized Curriculum and Workshops', text: `JobReady@Work builds a customized curriculum and interactive workshops, so your team learns on tasks from your own roles. ${DELIVERY_WORK}`, facts: ['IN-10', 'PD-01', 'IN-04'] },
+      // WP166-B (marketing review R3-08): it was "AI Content Agreed Before Training", "An AI-ready curriculum, designed to prepare people to work with AI tools. Each track’s AI content is agreed with you before training starts." (facts PD-02 IN-10)
+      { title: 'AI Skills Scoped to Your Team’s Tasks', text: 'An AI-ready curriculum, designed to prepare people to work with AI tools, plus AI leadership and AI-transformation programs with AIvolve. Each track’s AI content is agreed with you before training starts.', facts: ['PD-02', 'IN-10', 'PA-07'] }, // WP142 (kit 109): team-training wording, no youth-cohort "work-entry plan" or "enrollment"
+      // WP166-B: the card ended with DELIVERY_WORK (facts IN-10 PD-01 IN-04)
+      { title: 'Customized Curriculum and Workshops', text: 'JobReady@Work builds a customized curriculum and interactive workshops, so your team learns on tasks from your own roles.', facts: ['IN-10'] },
     ],
   },
   {
@@ -130,8 +139,9 @@ const PAGES: PageSpec[] = [
       {
         title: 'Facilitator Training and a Local Curriculum',
         // WP52 (cycle-27 review): what stays after funding ends is scoped ("Where included, ..."); it read "Local capacity stays after a funded cohort ends, ..."
-        text: `Training of Trainers, a localized curriculum and preparation for industry certification. You do not have to build the curriculum or certification route yourself. ${DELIVERY}`,
-        facts: ['PD-06', 'PD-02', 'PD-01', 'IN-04'],
+        // WP166-B: the card ended with DELIVERY (facts PD-06 PD-02 PD-01 IN-04); it ends with the track menu now
+        text: `Training of Trainers, a localized curriculum and preparation for industry certification. You do not have to build the curriculum or certification route yourself. ${TRACKS}`,
+        facts: ['PD-06', 'PD-02', 'PD-01', 'PD-10'],
         pain: 'P1',
       },
       {
@@ -149,15 +159,7 @@ const PAGES: PageSpec[] = [
     ],
   },
   // WP57 (cycle-29 review, GPT-6.1 Sol G2): YouthWIDE's three-card band ("Built Around What Funders and Agencies Ask") is gone; tests/wp57.spec.ts holds the page to having no C8 band and its Reporting row
-  {
-    route: 'programs/jobready-campus/',
-    h2: 'Built Around What Institutions Ask For',
-    cards: [
-      { title: 'Certification Exam Preparation and Mentoring', text: CERT_AND_MENTORING, facts: ['PD-02', 'PD-01'] },
-      { title: 'Skills Employers Ask For', text: EMPLOYER_SKILLS, facts: ['PD-10', 'PD-02'] },
-      { title: 'Placement Evidence You Can Report', text: SCOPE_RESULTS, facts: ['PD-08', 'PD-09'] },
-    ],
-  },
+  // WP166-B (marketing review R2): JobReady@Campus's "Built Around What Institutions Ask For" band (#features) is gone; the assertions on it are gone with it (tests/wp166-b.spec.ts pins its absence).
 ];
 
 const MATRIX_LABELS = /Funder Concern Addressed|Concern Addressed|What Is Included|Practical Benefit|Added Benefit/;
@@ -179,6 +181,8 @@ test.describe('"What You Get" is three short cards on every audience and program
         expect(await card.getAttribute('data-relieves'), `${c.title}: the ranked pain it answers`).toBe(c.pain ?? null);
       }
       expect(compact(await page.locator('#features').textContent())).not.toMatch(MATRIX_LABELS);
+      // WP166-B: the delivery-model sentence and the old skills sentence are no longer in these cards (How It Works states the delivery model; the track menu replaced the skills sentence)
+      for (const old of [DELIVERY, DELIVERY_WORK, EMPLOYER_SKILLS]) expect(compact(await page.locator('#features').textContent())).not.toContain(old);
       await expect(page.locator('#features .fc__card')).toHaveCount(0);
     });
   }
@@ -276,8 +280,11 @@ test.describe('Universities: the Guide band does not repeat the National Univers
     expect(text).not.toContain('official training partner');
     expect(text).toContain('From a Copenhagen launch to work in 16 countries and territories.'); // WP64 rework RW2 (coordinator): the heading says "Since 2014", so the line does not
     // WP46 (cycle-22 review): "with progressive levels" is gone from the Track Record bands (only the first level is published)
-    expect(text).toContain('Our TalentLEAP method organizes skills into career paths.'); // WP153 (Opus XHigh run 7): the line no longer repeats "in parallel with academic studies"
-    await expect(guide.getByRole('link', { name: 'How TalentLEAP Works' })).toHaveCount(1);
+    // WP166-B (marketing review R3-29): the TalentLEAP line and its link close How It Works now, where career paths are relevant (they were in this band)
+    expect(text).not.toContain('Our TalentLEAP method');
+    await expect(guide.getByRole('link', { name: 'How TalentLEAP Works' })).toHaveCount(0);
+    expect(compact(await page.locator('#mechanism').textContent())).toContain('Our TalentLEAP method organizes skills into career paths.'); // WP153 (Opus XHigh run 7): the line no longer repeats "in parallel with academic studies"
+    await expect(page.locator('#mechanism').getByRole('link', { name: 'How TalentLEAP Works' })).toHaveCount(1);
     await expect(guide.locator('.partners__row img'), 'the logo strip stays: National University, UPEACE and CCNY').toHaveCount(3);
     await expect(guide.locator('.pg__proof')).toHaveCount(1);
     await expect(guide.locator('.pg--solo')).toHaveCount(0);
@@ -286,7 +293,7 @@ test.describe('Universities: the Guide band does not repeat the National Univers
 
   test('"The National University Partnership" band still states the relationship, once on the page', async ({ page }) => {
     await open(page, 'partner-with-us/universities/');
-    await expect(page.locator('#offer-evidence h2')).toHaveText('The National University Partnership');
+    await expect(page.locator('#offer-evidence h2')).toHaveText('Official Training Partner of the World’s Second-Largest University by Enrollment'); // WP166-B (marketing review R3-13): the heading states the claim (it was "The National University Partnership")
     await expect(page.locator('#offer-evidence .pe__item')).toHaveCount(2); // WP136: the University Partners card is gone
     expect(compact(await page.locator('#offer-evidence').textContent())).toContain('CodersTrust has been NU’s official training partner for digital career skills and credentials since 2023');
     expect(count(await mainText(page), 'since 2023'), 'the relationship is stated once, in the NU band').toBe(1);
@@ -314,31 +321,25 @@ test.describe('Investors: the platform-status question points to "What JobReady 
   const Q = 'What Does the JobReady Platform Offer?';
   const ANSWER = 'See What JobReady Does above, from the AI Tutor to the work marketplaces.';
 
-  test('the first question links "What JobReady Does" to the section above it; the JSON-LD carries the same words', async ({ page }) => {
+  // WP166-B (marketing review R3-33): the platform question (Q11-investor) is gone from Investors ("What JobReady Does" above it answers it); the assertions on its answer and link are gone with it.
+  test('the platform question is gone (WP166-B; it linked "What JobReady Does" to the section above it, in the page and the JSON-LD); the band stays', async ({ page }) => {
     await open(page, 'partner-with-us/investors/');
-    const item = page.locator('#faq details', { has: page.locator('summary', { hasText: Q }) }).first();
-    expect(compact(await item.locator('.faq__a').textContent())).toBe(ANSWER);
-    const link = item.locator('.faq__a a');
-    await expect(link).toHaveCount(1);
-    await expect(link).toHaveText('What JobReady Does');
-    const href = await link.getAttribute('href');
-    expect(href).toBe('#features');
-    await expect(page.locator(href!)).toHaveCount(1);
-    await expect(page.locator(`${href} h2`)).toHaveText('What JobReady Does');
-    expect(await item.locator('.faq__a p').getAttribute('data-fact')).toBe('IN-04');
-    const ld = (await faqJsonLd(page)).find((q) => q.name === Q);
-    expect(ld?.text).toBe(ANSWER);
-    expect(compact(await page.locator('main').textContent())).toContain(ANSWER);
+    await expect(page.locator('#faq details', { has: page.locator('summary', { hasText: Q }) })).toHaveCount(0);
+    expect((await faqJsonLd(page)).find((q) => q.name === Q)).toBeUndefined();
+    expect(compact(await page.locator('main').textContent())).not.toContain(ANSWER);
+    await expect(page.locator('#features h2')).toHaveText('What JobReady Does');
   });
 
   // WP41 (cycle-18 review): the platform page points to its "Rollout Status" band the same way (tests/wp41.spec.ts), so the shared answer is in full on Employers and JobReady@Work only
-  test('the shared answer stays in full wherever else it is asked (Employers, JobReady@Work); Investors no longer lists the status a third time', async ({ page }) => {
+  test('the shared answer is gone from Employers and JobReady@Work with the question (WP166-B; it stayed in full there); Investors no longer lists the status a third time', async ({ page }) => {
     // WP48 (cycle-23 review): the shared answer is "Partner portals and AI chat are live; the employer marketplace and the gig-work (Earn) marketplace are in pre-launch. Hiring currently runs through CodersTrust’s placement team." (tests/wp48.spec.ts)
     // WP163: the shared answer says what JobReady offers, with no live or pre-launch label.
     const shared = 'JobReady offers an AI Tutor, AI-driven personalized and adaptive learning paths, automated assessment and feedback, an AI career coach, partner portals, AI chat, the employer marketplace and the gig-work marketplace.';
+    // WP166-B (marketing review R2-21, R3-33): the platform question is gone from Employers and JobReady@Work too (each links the platform page instead); the assertion that its shared answer is there in full is gone with it.
     for (const route of ['partner-with-us/employers/', 'programs/jobready-work/']) {
       await open(page, route);
-      expect(await page.locator('main').evaluate((el) => el.textContent ?? ''), route).toContain(shared);
+      expect(await page.locator('main').evaluate((el) => el.textContent ?? ''), route).not.toContain(shared);
+      expect(await page.locator('main').evaluate((el) => el.textContent ?? ''), route).not.toContain(Q);
     }
     await open(page, 'partner-with-us/investors/');
     const text = await page.locator('main').evaluate((el) => el.textContent ?? '');
@@ -468,16 +469,19 @@ test.describe('NU Post Graduate Diploma course pages: "What Will I Be Able to Do
       ['Java Programming', 'Database Management Systems', 'Computer Networks Maintenance', 'Mobile Application Development']],
   ];
   for (const [route, sentence, modules] of CASES) {
-    test(`${route}: two plain sentences, the next-step line kept, every subject a module of the course, the JSON-LD the same`, async ({ page }) => {
+    // WP166-B (marketing review R2-26): the answer no longer ends with NEXT_STEP; the roles note says the caveat once, beside the roles ("... role readiness depends on your experience, portfolio and local market.")
+    test(`${route}: one plain sentence (WP166-B: the next-step line moved to the roles note), every subject a module of the course, the JSON-LD the same`, async ({ page }) => {
       await open(page, route);
       const item = page.locator('details', { has: page.locator('summary', { hasText: 'What Will I Be Able to Do After This Course?' }) }).first();
       const answer = compact(await item.locator('.faq__a').textContent());
-      expect(answer).toBe(`${sentence} ${NEXT_STEP}`);
+      expect(answer).toBe(sentence); // WP166-B: it was `${sentence} ${NEXT_STEP}`
+      expect(answer).not.toContain(NEXT_STEP);
+      expect(compact(await page.locator('.roles__note').textContent())).toBe('These are related fields; role readiness depends on your experience, portfolio and local market.');
       expect(answer).not.toMatch(/describe and show|such as|the local market/);
       const text = await mainText(page);
       for (const m of modules) expect(text, `"${m}" is a module of the course, listed on the page`).toContain(m);
       const ld = (await faqJsonLd(page)).find((q) => q.name === 'What Will I Be Able to Do After This Course?');
-      expect(ld?.text).toBe(`${sentence} ${NEXT_STEP}`);
+      expect(ld?.text).toBe(sentence); // WP166-B: it was `${sentence} ${NEXT_STEP}`
     });
   }
 });
@@ -514,7 +518,7 @@ test.describe('smaller heading changes (item 10)', () => {
     const band = page.locator('#agreements');
     await expect(band.locator('h2')).toHaveText('Delivery and Agreements');
     await expect(band.locator('.eyebrow')).toHaveText('What Is in Place');
-    expect(await texts(page, '#agreements h3.agree__h')).toEqual(['Delivered', 'Agreed, Not Delivered']);
+    expect(await texts(page, '#agreements h3.agree__h')).toEqual(['Delivered', 'Agreement Targets']); // WP166-B (marketing review R2): the second subheading is "Agreement Targets" (it was "Agreed, Not Delivered"); the caution below still says they are not delivered reach
     await expect(band.locator('.agree__delivered')).toHaveAttribute('data-fact', 'SK-05');
     expect(compact(await band.textContent())).toContain('These are agreement targets, not delivered reach.');
     expect(await mainText(page)).not.toContain('What Has Been Delivered, and What Is Only Agreed');

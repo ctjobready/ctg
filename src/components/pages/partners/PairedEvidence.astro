@@ -45,6 +45,10 @@ interface Props {
   items: Item[];
   /** One line each under the heading, before the links (WP38). */
   statements?: Statement[];
+  /** WP166-B (marketing review R3-13): a qualifier printed under the cards it qualifies (Universities: what the National University figures are not), so the claim comes before its qualifier. */
+  note?: string;
+  /** Facts the note rests on (data-fact). */
+  noteFacts?: string[];
   /** Compact links to the broader evidence. */
   broader?: { label: string; href: string }[];
   broaderLabel?: string;
@@ -55,6 +59,8 @@ const {
   title,
   eyebrow = 'Evidence for This Offer',
   lead,
+  note,
+  noteFacts = [],
   items,
   statements = [],
   broader = [
@@ -96,6 +102,7 @@ const linksOnly = views.length === 0;
       </ul>
     )
   }
+  {note && <p class="pe__note" data-fact={noteFacts.join(' ') || undefined}>{note}</p>}
   <nav class:list={['pe__more', linksOnly && 'pe__more--alone']} aria-label={broaderLabel}>
     {!linksOnly && <p class="pe__more-label">{broaderLabel}</p>}
     <ul role="list">
@@ -114,6 +121,11 @@ const linksOnly = views.length === 0;
   }
   .pe__lines > p {
     margin: 0;
+  }
+  .pe__note {
+    margin: var(--space-md) 0 0;
+    max-width: 52rem;
+    color: var(--on-surface-variant);
   }
   .pe {
     list-style: none;

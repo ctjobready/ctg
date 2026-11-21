@@ -17,7 +17,9 @@ const count = (haystack: string, needle: string) => haystack.split(needle).lengt
 test.describe('Partner with Us hub', () => {
   test('the hero asks for a choice of partnership and describes no cohort; the closing call to action offers help finding the route', async ({ page }) => {
     await open(page, 'partner-with-us/');
-    await expect(page.locator('.hero__lead').first()).toHaveText('Choose a partnership for youth employment, campus skills, team training, hiring or JobReady’s staged rollout.');
+    // WP166-B (marketing review R3-18): the hero leads with SC-01 and asks the reader to pick a route (it read "Choose a partnership for youth employment, campus skills, team training, hiring or JobReady’s staged rollout.")
+    await expect(page.locator('.hero__lead').first()).toHaveText('130,000+ learners trained since 2014. Pick the route built for your organization: each has its own evidence, offer and next step.');
+    expect(compact(await page.locator('.hero__lead').first().textContent())).not.toMatch(/first cohort|priority groups/);
     const cta = compact(await page.locator('#cta').textContent());
     expect(cta).toContain('Tell us your goals and two suitable times, and we will help you find the right partnership route.');
     expect(cta).not.toMatch(/first cohort|priority groups/);
@@ -83,7 +85,9 @@ test.describe('Foundations', () => {
     // the timing is the steps' own; the call to action keeps its button, its links and the agenda, and no urgency line
     const cta = compact(await page.locator('#cta').textContent());
     expect(cta).not.toMatch(/grant-funded pilots|three weeks|6–8|Public procurement/);
-    await expect(page.locator('#cta .cta-band__notes')).toHaveCount(0);
+    // WP166-B (marketing review R3-39): the band's one note is the reassurance line, not a timing line (the notes list was absent, count 0)
+    await expect(page.locator('#cta .cta-band__notes')).toHaveCount(1);
+    expect(await texts(page, '#cta .cta-band__notes li')).toEqual(['A discovery session is a conversation, not a commitment.']);
     expect(compact(await page.locator('#cta [data-session-agenda]').textContent())).toContain('For a platform grant, we discuss JobReady’s staged rollout.');
     expect(count(await mainText(page), '6–8'), 'the window is stated once on Foundations').toBe(1);
   });
@@ -109,7 +113,8 @@ test.describe('Investors', () => {
     const lead = page.locator('main .hero .hero__lead').first();
     // the two marketplaces are named as two (IN-04's wording; tests/wp25s.spec.ts forbids "employer and gig-work")
     // WP163 (owner answers of 3 November 2026): the second sentence says what JobReady offers (IN-04), with no live or pre-launch label.
-    await expect(lead).toHaveText('Back JobReady’s staged rollout, built on CodersTrust’s training and mentoring programs. JobReady offers an AI Tutor, adaptive learning paths, an AI career coach, partner portals, the employer marketplace and the gig-work marketplace.');
+    // WP166-B (marketing review R3-09): the lead names the platform in IN-04's words, then the ask (it read "Back JobReady’s staged rollout, built on CodersTrust’s training and mentoring programs. JobReady offers an AI Tutor, ...")
+    await expect(lead).toHaveText('JobReady is CodersTrust’s digital learning and earning platform for emerging markets. Back its staged rollout.');
     expect(await lead.getAttribute('data-fact')).toBe('IN-04');
     await expect(page.getByRole('heading', { level: 1 })).toHaveText('Invest in a Platform Built to Connect Emerging-Market Youth to Work');
     await expect(page.locator('main .hero .btn--primary')).toHaveCount(1);
@@ -135,6 +140,7 @@ test.describe('Employers', () => {
 });
 
 test.describe('YouthWIDE', () => {
+  // WP166-B (marketing review R2): the band is headed "More Employment for Women Offered a Place, in a Randomized Trial" (it was "Trial and Survey Evidence") and shows both trial tiles (RC-02 and RC-01)
   test('"Trial and Survey Evidence" states the trial once, in one sentence; the tiles, the chart and the links stay', async ({ page }) => {
     await open(page, 'programs/youthwide/');
     const band = page.locator('#proof-band');
@@ -142,7 +148,8 @@ test.describe('YouthWIDE', () => {
     await expect(band.locator('.eb__headline')).toHaveText(
       // WP54 (cycle-28 review, GPT-6.1 Sol G8): the evaluator is spelled out where YouthWIDE first names it (it said "In BIGD’s randomized trial of CodersTrust’s WSDFM program, ...")
       // WP146: the sentence gives the income result and points to the employment effect, which the +10.3 tile below states (it also said "were 10.3 percentage points more likely to be employed and").
-      'In the randomized trial of CodersTrust’s WSDFM program by the BRAC Institute of Governance and Development (BIGD), women offered a place had an estimated 41% higher monthly income than the control group, alongside the employment effect below.',
+      // WP166-B (marketing review R2): the sentence introduces the two trial tiles below it (it read "In the randomized trial of CodersTrust’s WSDFM program by the BRAC Institute of Governance and Development (BIGD), women offered a place had an estimated 41% higher monthly income than the control group, alongside the employment effect below.")
+      'A randomized trial of CodersTrust’s WSDFM program by the BRAC Institute of Governance and Development (BIGD). Two results for women offered a place:',
     );
     expect(await band.locator('.eb__headline').getAttribute('data-fact')).toBe('RC-01 RC-02');
     await expect(band.locator('[data-plain-line]')).toHaveCount(0);
@@ -153,7 +160,7 @@ test.describe('YouthWIDE', () => {
     // WP146: the trial sentence no longer carries the +10.3 figure; as a paragraph, the RC-02 tile's value line ("+10.3 percentage points") is the only statement of the effect, and no other paragraph repeats it
     expect((await texts(page, '#proof-band p:not(.stat__value)')).filter((p) => p.includes('10.3 percentage points')), 'no other paragraph states the effect').toHaveLength(0);
     expect((await texts(page, '#proof-band .eb__stat .stat__value')).filter((p) => p.includes('10.3 percentage points')), 'the tile states the effect once').toHaveLength(1);
-    await expect(band.locator('.eb__stat')).toHaveCount(2);
+    await expect(band.locator('.eb__stat')).toHaveCount(3); // WP166-B: the +41% income tile (RC-01) joined the +10.3 tile and the survey tile (it was 2)
     await expect(band.locator('svg[role="img"]').first()).toBeVisible();
     expect(await texts(page, '#proof-band .eb__links a')).toEqual(['Impact Survey 2026', 'The Randomized Trial']);
   });
@@ -169,7 +176,9 @@ test.describe('the employer credentials are stated once', () => {
       await open(page, route);
       const text = await mainText(page);
       for (const c of CREDENTIALS) expect(count(text, c), c).toBe(1);
-      expect(count(text, AIVOLVE), AIVOLVE).toBe(route === 'programs/jobready-work/' ? 1 : 0); // the one mention is the glance row's offering
+      // the one mention is an offering, never a credential: JobReady@Work's glance Training row; WP166-B (marketing review R3-08): Employers' "AI Skills Scoped to Your Team’s Tasks" card names it (PA-07) too (Employers' count was 0)
+      expect(count(text, AIVOLVE), AIVOLVE).toBe(1);
+      expect(compact(await page.locator('#guide').textContent()), `${route}: AIvolve is not in the Track Record band`).not.toContain(AIVOLVE);
       expect(count(text, '23,000+'), '23,000+').toBe(1);
       const strip = page.locator('#offer-evidence');
       await expect(strip.locator('h2')).toHaveText('Broader Evidence from Our Youth Programs');
@@ -222,7 +231,7 @@ test.describe('benefit lines start with a capital letter', () => {
     'partner-with-us/employers/',
     'partner-with-us/local-partners/',
     // WP57 (cycle-29 review, GPT-6.1 Sol G2): YouthWIDE's three-card band is gone, so the page is not in this list
-    'programs/jobready-campus/',
+    // WP166-B (marketing review R2): JobReady@Campus's "What You Get" band (#features) is gone; the assertion is gone with it.
   ];
   test('every card sentence on the audience and program pages opens with a capital letter or a figure', async ({ page }) => {
     for (const route of CARD_ROUTES) {

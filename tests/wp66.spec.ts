@@ -61,12 +61,15 @@ const CATEGORIES = [
   { id: 'SC-11c', count: 13, who: 'development partners and NGOs' },
   { id: 'SC-11d', count: 27, who: 'companies and industry bodies' },
 ] as const;
+// WP166-B (marketing review, owner approval of 21 November 2026): each page's band heading is listed with it. Foundations' names line (PA-01) opens the band now (R3-28), so its list is the BIGD line and the sentence
+// (it was ['PR-01 RC-01', 'PA-01', 'SC-11c']). Employers' band is headed "Employers and Partners We Work With" (R3-06; it was BAND_HEADING), which does not say the year, so its sentence ends "since 2014" (the WP66 rule;
+// it ended "... industry bodies."), and the AWS credential (PA-06) is the list's first line (it was ['GV-06', 'SC-11d']).
 const AUDIENCE = [
-  { route: GOVERNMENTS, id: 'SC-11a', sentence: `${LEAD} 13 government bodies.`, list: ['SC-04', 'SC-11a'] },
-  { route: UNIVERSITIES, id: 'SC-11b', sentence: `${LEAD} 20 universities and colleges.`, list: ['SC-11b'] },
-  { route: DEV_PARTNERS, id: 'SC-11c', sentence: `${LEAD} 13 development partners and NGOs.`, list: ['SC-11c'] },
-  { route: FOUNDATIONS, id: 'SC-11c', sentence: `${LEAD} 13 development partners and NGOs.`, list: ['PR-01 RC-01', 'PA-01', 'SC-11c'] },
-  { route: EMPLOYERS, id: 'SC-11d', sentence: `${LEAD} 27 companies and industry bodies.`, list: ['GV-06', 'SC-11d'] },
+  { route: GOVERNMENTS, heading: BAND_HEADING, id: 'SC-11a', sentence: `${LEAD} 13 government bodies.`, list: ['SC-04', 'SC-11a'] },
+  { route: UNIVERSITIES, heading: BAND_HEADING, id: 'SC-11b', sentence: `${LEAD} 20 universities and colleges.`, list: ['SC-11b'] },
+  { route: DEV_PARTNERS, heading: BAND_HEADING, id: 'SC-11c', sentence: `${LEAD} 13 development partners and NGOs.`, list: ['SC-11c'] },
+  { route: FOUNDATIONS, heading: BAND_HEADING, id: 'SC-11c', sentence: `${LEAD} 13 development partners and NGOs.`, list: ['PR-01 RC-01', 'SC-11c'] },
+  { route: EMPLOYERS, heading: 'Employers and Partners We Work With', id: 'SC-11d', sentence: `${LEAD} 27 companies and industry bodies since 2014.`, list: ['PA-06', 'GV-06', 'SC-11d'] },
 ] as const;
 const HUB_LINE = `${LEAD} 70+ organizations since 2014: 13 government bodies; 20 universities and colleges; 13 development partners and NGOs; and 27 companies and industry bodies.`;
 
@@ -154,7 +157,7 @@ test.describe('signedWith: the register’s wording as one sentence', () => {
   test('a category reads "CodersTrust has signed MOUs, agreements or contracts with N who since 2014."; under a heading that says "Since 2014" the sentence leaves the year to it', () => {
     expect(plain(signedWith('SC-11a'))).toBe(`${LEAD} 13 government bodies since 2014.`);
     expect(plain(signedWith('SC-11b', 'Why Partner with CodersTrust'))).toBe(`${LEAD} 20 universities and colleges since 2014.`);
-    for (const a of AUDIENCE) expect(plain(signedWith(a.id, BAND_HEADING)), a.route).toBe(a.sentence);
+    for (const a of AUDIENCE) expect(plain(signedWith(a.id, a.heading)), a.route).toBe(a.sentence); // WP166-B: each page's own band heading (Employers' is "Employers and Partners We Work With"; it was BAND_HEADING for all five)
     expect(plain(signedWith('SC-11d', 'A Record Built Since 2014'))).toBe(`${LEAD} 27 companies and industry bodies.`);
   });
 
@@ -217,11 +220,12 @@ test.describe('About, Careers and Local Partners: the SC-11 tile', () => {
     expect(compact(await page.locator('#why .factstat[data-fact="SC-01"] .stat__label').textContent())).toBe('learners trained since 2014');
   });
 
-  test('Local Partners: the authority row’s first tile is "70+" with the new label (its heading does not say the period, so the label keeps it) and the breakdown; the labs tile follows', async ({ page }) => {
+  // WP166-B (marketing review R3-38, owner approval of 21 November 2026): the second tile is CodersTrust's delivery scale (SC-01) in place of the government-lab count (GV-09) a local organization does not host in.
+  test('Local Partners: the authority row’s first tile is "70+" with the new label (its heading does not say the period, so the label keeps it) and the breakdown; the learners tile follows', async ({ page }) => {
     await open(page, LOCAL);
     await expect(page.locator('#guide h2')).toHaveText('Delivered with a Bangladesh Team Beside You');
     const tiles = page.locator('#guide .guide__stats .factstat');
-    expect(await tiles.evaluateAll((els) => els.map((e) => e.getAttribute('data-fact')))).toEqual(['SC-11', 'GV-09']);
+    expect(await tiles.evaluateAll((els) => els.map((e) => e.getAttribute('data-fact')))).toEqual(['SC-11', 'SC-01']);
     const tile = tiles.first();
     await expect(tile.locator('.stat__value')).toHaveText('70+');
     expect(compact(await tile.locator('.stat__label').textContent())).toBe(TOTAL_LABEL);
@@ -257,16 +261,18 @@ test.describe('Partner with Us hub: one line in "Why Partner with CodersTrust"',
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 test.describe('Audience pages: the Track Record band closes with the sentence for the page’s own category', () => {
   for (const a of AUDIENCE) {
-    test(`${a.route}: the list ends with "${a.sentence}", tied to ${a.id}; the band is headed "${BAND_HEADING}" and says "since 2014" once, in the heading`, async ({ page }) => {
+    // WP166-B: the heading is the page's own (a.heading); the year is in the heading or, where the heading does not say it (Employers), in the sentence, and the band says it once either way.
+    test(`${a.route}: the list ends with "${a.sentence}", tied to ${a.id}; the band is headed "${a.heading}" and says "since 2014" once`, async ({ page }) => {
       await open(page, a.route);
-      await expect(page.locator('#guide h2')).toHaveText(BAND_HEADING);
+      await expect(page.locator('#guide h2')).toHaveText(a.heading);
       const items = page.locator('#guide .pg__list li');
       expect(await items.evaluateAll((els) => els.map((e) => e.getAttribute('data-fact')))).toEqual([...a.list]);
       const last = items.last();
       expect(compact(await last.textContent())).toBe(a.sentence);
       expect(await last.getAttribute('data-fact')).toBe(a.id);
       expect(compact(await page.locator('#guide').textContent()).match(/since 2014/gi)).toHaveLength(1);
-      expect(a.sentence).not.toMatch(/since 2014/);
+      if (/Since 2014/.test(a.heading)) expect(a.sentence).not.toMatch(/since 2014/);
+      else expect(a.sentence).toMatch(/ since 2014\.$/);
       expect(count(await mainText(page), 'signed MOUs, agreements or contracts')).toBe(1);
     });
   }
@@ -318,16 +324,20 @@ test.describe('Audience pages: the Track Record band closes with the sentence fo
     await open(page, GOVERNMENTS);
     expect(compact(await page.locator('#guide .pg__list li').first().textContent())).toBe('CodersTrust has been National University’s official training partner for digital career skills and credentials since 2023.');
     await open(page, FOUNDATIONS);
+    // WP166-B (marketing review R3-28): the names line opens the band (in place of the origin line), so the list is the BIGD line and the new sentence (it was three items, the names line second).
+    await expect(page.locator('#guide .pg__copy > .pg__origin')).toHaveText('Organizations that have worked with CodersTrust include the Rockefeller Foundation, DANIDA and Porticus.');
     const items = page.locator('#guide .pg__list li');
-    await expect(items).toHaveCount(3);
+    await expect(items).toHaveCount(2);
     expect(compact(await items.nth(0).textContent())).toContain('evaluated CodersTrust’s WSDFM program');
-    expect(compact(await items.nth(1).textContent())).toBe('Organizations that have worked with CodersTrust include the Rockefeller Foundation, DANIDA and Porticus.');
     await open(page, EMPLOYERS);
+    // WP166-B (marketing review R3-06): the AWS credential is the list's first line, "AWS Authorized Training Partner." (it was the caption sentence "CodersTrust is an AWS Authorized Training Partner."), and the sentence ends
+    // "since 2014" because the band's heading, "Employers and Partners We Work With", does not say it.
     expect(await texts(page, '#guide .pg__list li')).toEqual([
+      'AWS Authorized Training Partner.',
       'Contract scope: ICT, networking and cybersecurity for 120+ professionals, for the Ministry of Power, Energy and Mineral Resources (via Bangladesh Petroleum Institute).',
-      `${LEAD} 27 companies and industry bodies.`,
+      `${LEAD} 27 companies and industry bodies since 2014.`,
     ]);
-    await expect(page.locator('#guide .partners__title [data-fact="PA-06"]')).toHaveText('CodersTrust is an AWS Authorized Training Partner.');
+    await expect(page.locator('#guide .partners__title [data-fact="PA-06"]')).toHaveCount(0);
   });
 });
 

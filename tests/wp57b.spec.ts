@@ -110,23 +110,30 @@ test.describe('external statistics name their publisher and year inside the sent
     'PX-08': '(PwC, 2026)',
   };
   /** Where each figure is shown today: route, fact, and how many elements carry it. */
+  // WP166-B (marketing review R3-40, R3-30, R2-15, R2-19): Governments shows PX-02 in place of PX-01; Universities adds PX-02; Employers adds PX-08 (its third pain card); JobReady@Campus shows PX-02 and
+  // PX-05 (its problem band's two tiles, in place of two cards); JobReady@Work shows PX-05 (its glance tile). It was 13 places on 9 pages.
   const PLACES: [string, string][] = [
     [HOME, 'PX-01'],
     [HOME, 'PX-02'],
     [DP, 'PX-01'],
     ['partner-with-us/employers/', 'PX-05'],
+    ['partner-with-us/employers/', 'PX-08'],
     ['partner-with-us/foundations/', 'PX-01'],
-    ['partner-with-us/governments/', 'PX-01'],
+    ['partner-with-us/governments/', 'PX-02'],
     [INVESTORS, 'PX-01'],
     [INVESTORS, 'PX-05'],
     [INVESTORS, 'PX-08'],
+    ['partner-with-us/universities/', 'PX-02'],
     ['partner-with-us/universities/', 'PX-05'],
     ['programs/nu-postgraduate-diploma/', 'PX-05'],
     ['programs/youthwide/', 'PX-01'],
     ['programs/youthwide/', 'PX-02'],
+    ['programs/jobready-campus/', 'PX-02'],
+    ['programs/jobready-campus/', 'PX-05'],
+    ['programs/jobready-work/', 'PX-05'],
   ];
 
-  test('every tile or sentence of the four figures ends with its note, inside the same sentence (13 places on 9 pages)', async ({ page }) => {
+  test('every tile or sentence of the four figures ends with its note, inside the same sentence (18 places on 11 pages)', async ({ page }) => {
     let last: string | null = null;
     for (const [route, id] of PLACES) {
       if (route !== last) await open(page, route);

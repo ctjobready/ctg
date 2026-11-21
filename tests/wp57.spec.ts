@@ -115,14 +115,20 @@ test.describe('G2, YouthWIDE: "Built Around What Funders and Agencies Ask" is go
     expect(compact(await page.locator('main').textContent()).split('offer letters, payslips, platform logs or bank receipts').length - 1).toBe(1);
   });
 
+  // WP166-B (marketing review R2-01): the proof band (klein) moved up, right after The Challenge (it sat right before the carousel), so the run is checked from the carousel: carousel (airy),
+  // photographs (white), questions (ice); the proof band stays on the page, after the problem band.
   test('the band rhythm holds after the removal: carousel (airy), photographs (white), questions (ice); no two dark bands meet', async ({ page }) => {
     await open(page, YOUTHWIDE);
     const order = await bandsOf(page);
     const ids = order.map((b) => b.id);
     const at = ids.indexOf('proof-band');
     expect(at, 'the proof band is on the page').toBeGreaterThanOrEqual(0);
-    expect(order.slice(at, at + 4)).toEqual([
+    expect(order.slice(at - 1, at + 1)).toEqual([
+      { id: 'problem', tone: 'white' },
       { id: 'proof-band', tone: 'klein' },
+    ]);
+    const cases = ids.indexOf('cases');
+    expect(order.slice(cases, cases + 3)).toEqual([
       { id: 'cases', tone: 'airy' },
       { id: 'in-the-field', tone: 'white' },
       { id: 'faq', tone: 'ice' },
@@ -210,27 +216,32 @@ test.describe('G6, the mobile drawer’s Programs accordion has the desktop menu
 });
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+// WP166-B (marketing review R3-32): Employers' compact view is one row, Contracting Entities (the "Needs Assessment First" and "Progress Evaluation" rows repeated How It Works), and the pilot band's
+// "Independent Evaluation Welcome" card is gone too (a funder concept); the tests below hold the one row and the page without that card.
 test.describe('G7, Employers: "Due Diligence in One View" is three rows without "Independent Evaluation Welcome"', () => {
   test('the rows are Contracting Entities, Needs Assessment First and Progress Evaluation; none links the independent-evaluation page; the hub keeps its four', async ({ page }) => {
     await open(page, EMPLOYERS);
-    expect(await texts(page, '#due-diligence .ddv__title')).toEqual(['Contracting Entities', 'Needs Assessment First', 'Progress Evaluation']);
+    expect(await texts(page, '#due-diligence .ddv__title')).toEqual(['Contracting Entities']); // WP166-B: one row (it was three)
     await expect(page.locator('#due-diligence a[href*="independent-evaluation"]')).toHaveCount(0);
     expect(compact(await page.locator('#due-diligence').textContent())).not.toContain('Independent Evaluation');
     await open(page, HUB);
     expect(await texts(page, '#due-diligence .ddv__title')).toEqual(['Contracting Entities', 'Monthly Reports and Follow-Up Surveys', 'Safeguarding Agreed per Program', 'Independent Evaluation Welcome']);
   });
 
-  test('"Independent Evaluation Welcome" is on the Employers page once, in the pilot-team band after it; "Broader Evidence from Our Youth Programs" still links the trial and the survey', async ({ page }) => {
+  test('"Independent Evaluation Welcome" is on the Employers page no times (WP166-B: the pilot-team band’s card is gone); "Broader Evidence from Our Youth Programs" still links the trial and the survey', async ({ page }) => {
     await open(page, EMPLOYERS);
     const main = compact(await page.locator('main').textContent());
-    expect(main.split('Independent Evaluation Welcome').length - 1).toBe(1);
-    expect(await texts(page, '#risk h3')).toContain('Independent Evaluation Welcome');
+    // WP166-B (marketing review R3-32): no times (it was once, the pilot-team band's card).
+    expect(main.split('Independent Evaluation Welcome').length - 1).toBe(0);
+    expect(await texts(page, '#risk h3')).not.toContain('Independent Evaluation Welcome');
     await expect(page.locator('#risk h2')).toHaveText('Start with a Pilot Team, Then Decide on Evidence');
     await expect(page.locator('#offer-evidence h2')).toHaveText('Broader Evidence from Our Youth Programs');
     expect(await texts(page, '#offer-evidence a')).toEqual(['The Randomized Trial', 'Impact Survey 2026']);
   });
 
-  test('the three cards sit in three columns at 1280, in two with the third across the row at 900, and stack at 390; no cell is left empty and nothing scrolls sideways', async ({ page }) => {
+  // WP166-B (marketing review R3-32): one card now (it was three: three columns at 1280, two with the third across the row at 900, stacked at 390). The rule this test holds is unchanged: no cell is
+  // left empty, so the one card fills its row at every width.
+  test('the one card fills its row at 1280, 900 and 390 (WP166-B: it was three cards); no cell is left empty and nothing scrolls sideways', async ({ page }) => {
     // reduced motion: the cards' reveal animation would still be moving them when they are measured
     await page.emulateMedia({ reducedMotion: 'reduce' });
     await page.setViewportSize(DESKTOP);
@@ -238,10 +249,8 @@ test.describe('G7, Employers: "Due Diligence in One View" is three rows without 
     await scrollThrough(page);
     const list = (await rectsOf(page, '#due-diligence .ddv'))[0];
     const wide = await rectsOf(page, '#due-diligence .ddv__item');
-    expect(wide).toHaveLength(3);
-    expect(new Set(wide.map((r) => r.top)).size, 'one row at 1280').toBe(1);
-    expect(Math.abs(wide[2].right - list.right), 'the row is filled: no empty fourth column').toBeLessThanOrEqual(2);
-    expect(Math.abs(wide[0].width - wide[2].width), 'equal columns').toBeLessThanOrEqual(2);
+    expect(wide).toHaveLength(1);
+    expect(Math.abs(wide[0].right - list.right), 'the row is filled: no empty column beside the card at 1280').toBeLessThanOrEqual(2);
     expect(await noOverflow(page)).toBe(true);
 
     await page.setViewportSize({ width: 900, height: 800 });
@@ -249,16 +258,15 @@ test.describe('G7, Employers: "Due Diligence in One View" is three rows without 
     await scrollThrough(page);
     const mid = await rectsOf(page, '#due-diligence .ddv__item');
     const midList = (await rectsOf(page, '#due-diligence .ddv'))[0];
-    expect(mid[0].top, 'two columns at 900').toBe(mid[1].top);
-    expect(mid[2].top, 'the third card is on the next row').toBeGreaterThan(mid[0].top);
-    expect(Math.abs(mid[2].width - midList.width), 'the third card is across the row, not alone beside an empty cell').toBeLessThanOrEqual(2);
+    expect(mid).toHaveLength(1);
+    expect(Math.abs(mid[0].width - midList.width), 'the card is across the row at 900, not alone beside an empty cell').toBeLessThanOrEqual(2);
     expect(await noOverflow(page)).toBe(true);
 
     await page.setViewportSize(MOBILE);
     await open(page, EMPLOYERS);
     await scrollThrough(page);
     const narrow = await rectsOf(page, '#due-diligence .ddv__item');
-    expect(new Set(narrow.map((r) => r.top)).size, 'one card per row at 390').toBe(3);
+    expect(narrow, 'one card at 390').toHaveLength(1);
     expect(await noOverflow(page)).toBe(true);
   });
 });
@@ -563,11 +571,12 @@ test.describe('R2, the 30,000+ visibly includes Her Power’s national program (
   });
 
   // WP59 (cycle-31 review, GPT-6.1 Sol G1): the Investors and JobReady Platform "Contracted Scope" tiles print the same note (tests/wp59.spec.ts)
-  test('the 25,125 is stated on Home’s government slide, on the Governments tile and on the Investors and JobReady Platform tiles in the same words (no page words the inclusion differently)', () => {
+  // WP166-B (marketing review R2-39): the JobReady Platform's "Contracted Scope" tile and its note are gone, so the page is out of the list (it was one of the four).
+  test('the 25,125 is stated on Home’s government slide, on the Governments tile and on the Investors tile in the same words (no page words the inclusion differently)', () => {
     const offenders = sitePages().filter((p) => /it includes Her Power(?:’|&#39;|')s national (?:program|target)/.test(p.html) && !p.html.includes('it includes Her Power’s national program, which trained 25,125 women (CodersTrust trained 2,400 directly)')).map((p) => p.route);
     expect(offenders).toEqual([]);
     const pages = sitePages().filter((p) => p.html.includes('it includes Her Power’s national program, which trained 25,125 women (CodersTrust trained 2,400 directly)')).map((p) => p.route).sort();
-    expect(pages).toEqual(['/impact/', '/our-model/jobready-platform/', '/partner-with-us/governments/', '/partner-with-us/investors/']);
+    expect(pages).toEqual(['/impact/', '/partner-with-us/governments/', '/partner-with-us/investors/']);
   });
 });
 
@@ -641,7 +650,8 @@ test.describe('R6, "about +$27": Home and the trial page say it; Foundations’ 
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 test.describe('P1 (Grok), "On This Page" is an H2 on the long-form pages', () => {
-  const LONGFORM = ['impact/independent-evaluation/', 'impact/outcomes-2026/', 'our-model/talentleap/', 'our-model/jobready-platform/', 'privacy-policy/', 'accessibility/'];
+  // WP166-B (marketing review R2-06): TalentLEAP and the JobReady Platform have no "On This Page" box any more; their two entries are gone with the boxes (the four pages that keep one are still checked).
+  const LONGFORM = ['impact/independent-evaluation/', 'impact/outcomes-2026/', 'privacy-policy/', 'accessibility/'];
 
   for (const route of LONGFORM) {
     test(`${route}: the contents box has one H2 "On This Page" in its summary, ahead of the page's other H2s; the box still opens and closes from it`, async ({ page }) => {

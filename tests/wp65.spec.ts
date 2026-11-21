@@ -261,8 +261,10 @@ test.describe('Item 6 (Gemini, Kimi, Sonnet): polish', () => {
     await open(page, DEV_PARTNERS);
     const card = page.locator('#features li.card').first();
     await expect(card.locator('h3')).toHaveText('Training, Mentoring and Placement Support');
-    expect(await texts(page, '#features li.card:nth-child(1) p')).toEqual(['Certification exam preparation and one exam fee per trainee (any further attempts set per program), three months of mentoring and placement support in one program. Training follows an AI-supported flipped classroom: all lectures are pre-recorded and an AI Tutor supports every learner, so mentors’ time goes to Q&A and to handholding beyond what the AI Tutor can provide.']);
-    expect(await card.getAttribute('data-fact')).toBe('PD-01 PD-02a IN-04'); // WP163: the card names one exam fee per trainee (PD-02a) and the AI Tutor (IN-04)
+    // WP166-B (marketing review R3-24): the delivery-model sentence ("Training follows an AI-supported flipped classroom: ...", IN-04) moved to the How It Works lead, so the card is its first sentence and rests on PD-01 and PD-02a
+    // (it ended with that sentence and carried IN-04).
+    expect(await texts(page, '#features li.card:nth-child(1) p')).toEqual(['Certification exam preparation and one exam fee per trainee (any further attempts set per program), three months of mentoring and placement support in one program.']);
+    expect(await card.getAttribute('data-fact')).toBe('PD-01 PD-02a'); // WP163: the card names one exam fee per trainee (PD-02a). WP166-B: no IN-04 (the AI Tutor sentence is in How It Works)
     expect(pagesWith('One delivery partner connects training')).toEqual([]);
   });
 

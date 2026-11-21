@@ -29,9 +29,11 @@ const WHERE_THEY_WORK_BODY =
 // WP163 (owner answers of 3 November 2026): the card is "AI-Supported Training and Certification Preparation" (it was "Blended Training and Certification Preparation"); it opens with the delivery model.
 const BLENDED_TITLE = 'AI-Supported Training and Certification Preparation';
 const GLOBAL_REACH_NOTE_END = 'New York is the headquarters, not one of the 16 locations. Most delivery has been in Bangladesh.';
-const PORTFOLIO_CARD_1 = 'Certification exam preparation and one exam fee per trainee (any further attempts set per program), three months of mentoring and placement support in one program. Training follows an AI-supported flipped classroom: all lectures are pre-recorded and an AI Tutor supports every learner, so mentors’ time goes to Q&A and to handholding beyond what the AI Tutor can provide.';
-const DOICT_LINE = 'DoICT agreement target: 20M+ students through 9,000+ digital labs in Bangladesh.';
-const NCTB_LINE = 'NCTB agreement target: 20M+ students.';
+// WP166-B (marketing review R3-24): the delivery-model sentence left this card for How It Works (the card ended "... in one program. Training follows an AI-supported flipped classroom: ...")
+const PORTFOLIO_CARD_1 = 'Certification exam preparation and one exam fee per trainee (any further attempts set per program), three months of mentoring and placement support in one program.';
+// WP166-B (marketing review R2-29): each agreement is one line, its scope and its target, and the agreement cards are gone (the lines read "DoICT agreement target: 20M+ students through 9,000+ digital labs in Bangladesh." and "NCTB agreement target: 20M+ students.")
+const DOICT_LINE = 'DoICT agreement, primary-school STEM and robotics: target of 20M+ students through 9,000+ digital labs in Bangladesh.';
+const NCTB_LINE = 'NCTB agreement, competency-based experiential learning: target of 20M+ students.';
 const SUPERKIDS_MEANS = 'A school can bring these into the classroom, so children build digital skills early.';
 const WSDFM_SOLUTION = 'Campus outreach, roadshows, seminars, parent counseling sessions and online campaigns.';
 
@@ -115,12 +117,12 @@ test.describe('WP92 A7: the first Development Partners portfolio card names the 
 });
 
 test.describe('WP92 A8: SuperKids agreement lines state the targets only', () => {
-  test('the DoICT and NCTB lines carry no subject; the cards keep the subjects and the tags', async ({ page }) => {
+  test('the DoICT and NCTB lines state each agreement’s subject and target in one line (WP166-B; the subjects were on cards, now gone)', async ({ page }) => {
     await open(page, 'programs/superkids/');
     const lines = await page.locator('#agreements .agree__fact p').allTextContents();
     expect(lines.map(compact)).toEqual([DOICT_LINE, NCTB_LINE, 'These are agreement targets, not delivered reach.']);
-    await expect(page.locator('#agreements .card', { hasText: 'Primary-school STEM and robotics.' })).toHaveCount(1);
-    await expect(page.locator('#agreements .card', { hasText: 'Competency-based experiential learning.' })).toHaveCount(1);
+    // WP166-B (marketing review R2-29): the two agreement cards are gone (each line names its subject now); the assertions on them are gone with them.
+    await expect(page.locator('#agreements .card')).toHaveCount(0);
   });
 });
 

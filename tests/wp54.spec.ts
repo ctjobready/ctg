@@ -69,7 +69,8 @@ test.describe('Governments: the third pain says capacity takes time to build; th
   test('the pain heading is Title Case, its line is unchanged, and the page no longer says the capacity "Is Thin"', async ({ page }) => {
     await open(page, GOV);
     expect(HEADING).toBe(titleCase(HEADING));
-    expect(await texts(page, '#problem .gp__q')).toEqual(['Graduates Struggle to Find Work', 'Training Budgets Do Not Show Up as Earnings', HEADING]);
+    // WP166-B (marketing review R3-40): the "Graduates Struggle to Find Work" card is gone (the band's PX-02 tile states the graduates' problem), so this pain is the second of two (it was the third of three).
+    expect(await texts(page, '#problem .gp__q')).toEqual(['Training Budgets Do Not Show Up as Earnings', HEADING]);
     const item = page.locator('#problem .gp__pains li', { has: page.locator('.gp__q', { hasText: HEADING }) });
     await expect(item).toHaveCount(1);
     expect(compact(await item.locator('.gp__a').textContent())).toBe('National delivery needs trained facilitators and localized curricula.');
@@ -180,8 +181,9 @@ test.describe('BIGD is spelled out at its first mention on every page that names
     await open(page, YOUTHWIDE);
     const headline = page.locator('#proof-band .eb__headline');
     await expect(headline).toHaveText(
-      // WP146: the sentence gives the income result and points to the employment effect below (the +10.3 tile states it); BIGD stays spelled out at the first mention
-      'In the randomized trial of CodersTrust’s WSDFM program by the BRAC Institute of Governance and Development (BIGD), women offered a place had an estimated 41% higher monthly income than the control group, alongside the employment effect below.',
+      // WP146: the sentence gave the income result and pointed to the employment effect below. WP166-B (marketing review R2-02): the income result is a tile of its own, so the sentence names the trial and introduces the two
+      // results (it was "In the randomized trial of ... (BIGD), women offered a place had an estimated 41% higher monthly income than the control group, alongside the employment effect below."); BIGD stays spelled out at the first mention
+      'A randomized trial of CodersTrust’s WSDFM program by the BRAC Institute of Governance and Development (BIGD). Two results for women offered a place:',
     );
     expect(await headline.getAttribute('data-fact')).toBe('RC-01 RC-02');
     expect(await everything(page)).not.toContain('BIGD’s');
@@ -215,13 +217,12 @@ test.describe('The Programs menu describes YouthWIDE without the Bangladesh aim 
     expect(menu).not.toMatch(/aims to train|2 million/);
   });
 
-  test('no page’s menu carries the aim, and it is still stated where it is labeled as an aim: YouthWIDE, the Programs hub and Impact', async ({ page }) => {
+  // WP166-B (marketing review R2-41, owner approval of 21 November 2026): the Programs hub's YouthWIDE card says what the program does and no longer states the aim (the aim is on the YouthWIDE page), so the hub is no longer one
+  // of the places checked here; the assertion on its short form ("It aims to train 1 million educated youth by 2030, ...") is gone with it.
+  test('no page’s menu carries the aim, and it is still stated where it is labeled as an aim: YouthWIDE and Impact', async ({ page }) => {
     expect(sitePages().filter((p) => visible(p.html).includes('Co-funded country cohorts, designed for three regions, with a Bangladesh initiative')).map((p) => p.route)).toEqual([]);
     await open(page, YOUTHWIDE);
     expect(compact(await page.locator('#program-glance .pg__row').first().textContent())).toContain('YouthWIDE aims to train 1 million educated youth (Higher Secondary Certificate or above) for digital employment by 2030, in Bangladesh and similar countries in South Asia and the Middle East and North Africa, depending on government and donor commitments.');
-    await open(page, PROGRAMS);
-    // WP106 (Polish, accepted): the Programs card is the short form of the aim; the full statement stays on YouthWIDE, About and Impact
-    expect(await everything(page)).toContain('It aims to train 1 million educated youth by 2030, depending on government and donor commitments.');
     await open(page, IMPACT);
     expect(await everything(page)).toContain('Aim: educated youth (Higher Secondary Certificate or above) trained for digital employment by 2030');
   });
@@ -351,12 +352,17 @@ test.describe('Employers: the closing band, the AWS credential and the first-ste
     for (const name of ['Grameenphone Academy', 'Robi', 'Accenture', 'BASIS', 'AWS']) expect(strip, name).toContain(name);
   });
 
-  test('"CodersTrust is an AWS Authorized Training Partner." is a sentence of the logo strip’s caption, tied to PA-06, not a lone paragraph under the logos', async ({ page }) => {
+  // WP166-B (marketing review R3-06, owner approval of 21 November 2026): the credential is the Track Record list's first bullet, "AWS Authorized Training Partner.", tied to PA-06 (it was the caption's third sentence, "CodersTrust is an
+  // AWS Authorized Training Partner."), so the caption is its two sentences; it is still not a lone paragraph under the logos, and it is stated once.
+  test('"AWS Authorized Training Partner." is the Track Record list’s first bullet, tied to PA-06, not a caption sentence or a lone paragraph under the logos', async ({ page }) => {
     await open(page, EMP);
     const caption = page.locator('#guide section.partners .partners__title');
     await expect(caption).toHaveCount(1);
-    expect(compact(await caption.textContent())).toBe('Organizations we have worked with, 2014–2026. These are working relationships, not endorsements. CodersTrust is an AWS Authorized Training Partner.');
-    expect(await caption.locator('[data-fact]').getAttribute('data-fact')).toBe('PA-06');
+    expect(compact(await caption.textContent())).toBe('Organizations we have worked with, 2014–2026. These are working relationships, not endorsements.');
+    await expect(caption.locator('[data-fact]')).toHaveCount(0);
+    const bullet = page.locator('#guide .pg__list li').first();
+    expect(compact(await bullet.textContent())).toBe('AWS Authorized Training Partner.');
+    expect(await bullet.getAttribute('data-fact')).toBe('PA-06');
     expect(fact('PA-06').text).toBe('AWS Authorized Training Partner');
     await expect(page.locator('#guide .pg__logonote, #guide section.partners > p:not(.partners__title)')).toHaveCount(0);
     expect(count(await everything(page), 'AWS Authorized Training Partner')).toBe(1);
@@ -377,7 +383,10 @@ test.describe('Universities: the meta description states only what the page stat
     expect(description).not.toMatch(/\d/);
     expect(await page.locator('meta[property="og:description"]').getAttribute('content')).toBe(description);
     const body = await everything(page);
-    expect(body).toContain('We help universities and colleges prepare students');
+    // WP166-B (marketing review R3-17): the hero lead no longer opens "We help universities and colleges prepare students ..." (it is "Mentored, certification-focused training in your campus labs, alongside the degree, ..."); the
+    // description's audience is the hero's eyebrow, "For Universities and Colleges", and the lead says the training is in campus labs alongside the degree.
+    expect(body).toContain('For Universities and Colleges');
+    expect(body).toContain('Mentored, certification-focused training in your campus labs, alongside the degree, with placement evidence your institution can report.');
     // WP155 (Polish 4): the statement is "... in campus labs."; the "alongside academic studies" of the description is the band's H2 ("Training Alongside the Degree") and its card ("Training runs in parallel with academic studies").
     expect(body).toContain('JobReady@Campus combines training, mentoring and placement support in campus labs.');
     expect(body).toContain('Training Alongside the Degree');

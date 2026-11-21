@@ -130,9 +130,10 @@ test.describe('16 countries and territories wherever SC-03 and SC-16 render (own
     expect([...pages, ...files]).toEqual([]);
   });
 
+  // WP166-B (marketing review R3-28): Foundations' Track Record band opens with the funders' line in place of the origin line (ID-02 SC-03), so Foundations renders neither fact now and is no longer in the list.
   test('the pages that render SC-03 or SC-16 are found in the build (the per-page checks below are not silently empty)', () => {
     expect(SC_PAGES.map((p) => p.route)).toEqual(
-      expect.arrayContaining(['/', '/about/', '/about/recognition/', '/careers/', '/impact/', '/impact/global-reach/', '/partner-with-us/', '/partner-with-us/development-partners/', '/partner-with-us/employers/', '/partner-with-us/foundations/', '/partner-with-us/governments/', '/partner-with-us/investors/', '/partner-with-us/universities/', '/programs/', '/programs/youthwide/']),
+      expect.arrayContaining(['/', '/about/', '/about/recognition/', '/careers/', '/impact/', '/impact/global-reach/', '/partner-with-us/', '/partner-with-us/development-partners/', '/partner-with-us/employers/', '/partner-with-us/governments/', '/partner-with-us/investors/', '/partner-with-us/universities/', '/programs/', '/programs/youthwide/']),
     );
   });
 

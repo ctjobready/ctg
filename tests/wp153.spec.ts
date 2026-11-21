@@ -107,15 +107,20 @@ test('2 Development Partners: the "Existing Labs and Colleges" card body does no
 const WITH_STUDIES = /(?:in parallel with|alongside) academic studies/gi;
 
 test.describe('3 "In parallel with / alongside academic studies" stays where it does work', () => {
-  test('Universities: the track-record line is the TalentLEAP line only; the approach line and the "In Parallel with the Degree" card keep the idea', () => {
+  test('Universities: the TalentLEAP line says nothing about academic studies; the approach line and the "In Parallel with the Degree" card keep the idea', () => {
     const text = main(UNIVERSITIES);
-    expect(text).toContain('Our TalentLEAP method organizes skills into career paths. How TalentLEAP Works');
+    // WP166-B (marketing review R3-29): the TalentLEAP line and its link moved from the track-record band to the end of How It Works, after the "In Parallel with the Degree" card and the
+    // Learn. Earn. Prosper. ribbon (it read "Our TalentLEAP method organizes skills into career paths. How TalentLEAP Works" in the track-record band).
+    expect(text).toContain('with professional internships where employer placements are available. Our TalentLEAP method organizes skills into career paths. Learn. Earn. Prosper. How TalentLEAP Works');
     expect(text).not.toContain('JobReady@Campus runs training in parallel with academic studies');
     // WP155 (Polish 4): the approach line no longer repeats the idea ("... in campus labs." then the monthly reports); the "In Parallel with the Degree" card is the one place on the page that states it.
     expect(text).toContain('JobReady@Campus combines training, mentoring and placement support in campus labs. Your institution receives monthly reports on progress toward paid work.');
     expect(text).not.toContain('JobReady@Campus combines training, mentoring and placement support in campus labs alongside academic studies.');
     expect(text).toContain('In Parallel with the Degree Training runs in parallel with academic studies, with professional internships where employer placements are available.');
-    expect(count(text, WITH_STUDIES)).toBe(1);
+    // WP166-B (marketing review R3-14): twice (it was once): the card and the new FAQ answer "Does It Change Our Curriculum?" ("Training runs in parallel with academic studies in your campus labs, and
+    // faculty members act as coordinators."), where it answers the question.
+    expect(text).toContain('Does It Change Our Curriculum? Training runs in parallel with academic studies in your campus labs, and faculty members act as coordinators.');
+    expect(count(text, WITH_STUDIES)).toBe(2);
   });
 
   test('JobReady@Campus: the track-record line is "built on the TalentLEAP model" and the last step is "The first cohort begins in your campus labs."; the hero and the approach line keep the idea', () => {
@@ -152,7 +157,8 @@ test.describe('4 Investors', () => {
     const titles = [...band.matchAll(/<h3 class="card__title"[^>]*>([^<]+)<\/h3>/g)].map((m) => decode(m[1]));
     expect(titles).toEqual(['Young People Need Work and Employers Need Skills', 'AI Skills Are in Rising Demand', 'Connect Learning to Paid Work']);
     const text = visible(band);
-    expect(text).toContain('JobReady is designed to link learners to paid work through mentoring and placement support.');
+    // WP166-B (marketing review R3-36): the answer card goes on to the record behind it (it ended "... through mentoring and placement support.").
+    expect(text).toContain('JobReady is designed to link learners to paid work through mentoring and placement support, the model CodersTrust has run since 2014.');
     expect(text.indexOf('AI Skills Are in Rising Demand')).toBeLessThan(text.indexOf('Connect Learning to Paid Work'));
   });
 });

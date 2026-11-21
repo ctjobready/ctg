@@ -305,7 +305,8 @@ export function nuModuleFaqs(c: NuCourse): { q: string; html: string }[] {
   if (!frame.finalModule.test(c.modules[c.modules.length - 1] ?? '')) throw new Error(`nuModuleFaqs: ${c.slug} no longer ends with its final module (${frame.finalModule})`);
   return [
     { q: 'What Will I Study?', html: `${c.modules.length} modules: ${names.slice(0, -1).join('; ')}; and ${last.toLowerCase().startsWith('internship') ? 'a final module of ' + last.toLowerCase() : last}.` },
-    { q: 'What Will I Be Able to Do After This Course?', html: `${frame.lead} ${andList(picked.map((m) => m.words))}, ${frame.closing}. Your next step depends on your experience, portfolio and local market.` },
+    // WP166-B (marketing review R2-26): the answer no longer ends "Your next step depends on your experience, portfolio and local market."; the role list's note says it once, beside the roles.
+    { q: 'What Will I Be Able to Do After This Course?', html: `${frame.lead} ${andList(picked.map((m) => m.words))}, ${frame.closing}.` },
   ];
 }
 const esc = (t: string) => t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');

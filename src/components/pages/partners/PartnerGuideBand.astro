@@ -52,13 +52,19 @@ interface Props {
   signed?: string;
   /** A registered credential as one more sentence in the logo strip's caption, instead of a bullet in the list above (same fields as a statement; the page gives the sentence in `text`). */
   captionNote?: Statement;
-  method: { text: string; link?: { label: string; href: string } };
+  /** WP166-B (marketing review R3-29): optional; the Development Partners, Foundations, Governments and Local Partners bands no longer print the TalentLEAP method line (it supported no claim in a credibility band). */
+  method?: { text: string; link?: { label: string; href: string } };
   partnerGroup?: PartnerGroup | PartnerGroup[];
+  /**
+   * WP166-B (marketing review R3-28): a registered sentence that opens the band in place of the origin line (Foundations: "Organizations that have worked with CodersTrust include the Rockefeller Foundation, DANIDA and Porticus.",
+   * the funder's second question; the 16 countries are on Global Reach and in the strip below). The page then leaves it out of `statements`.
+   */
+  opening?: Statement;
   /** WP55 (owner decisions 2026-10-17/18): the three-tile "CodersTrust Around the World" strip (Copenhagen, Dubai, Kosovo) under the origin line, for the audience pages that open their track record with it. */
   strip?: boolean;
   id?: string;
 }
-const { title = 'We’ve Built This Path Since 2014', empathy, stats = [], statSize = 'md', statements = [], signed, captionNote, method, partnerGroup, strip = false, id = 'guide' } = Astro.props;
+const { title = 'We’ve Built This Path Since 2014', empathy, stats = [], statSize = 'md', statements = [], signed, captionNote, method, opening, partnerGroup, strip = false, id = 'guide' } = Astro.props;
 const listed: Statement[] = signed ? [...statements, { facts: [signed], text: signedWith(signed, title) }] : statements;
 const hasProof = stats.length > 0 || listed.length > 0;
 const origin = originShortUnder(title, { tile: stats.includes('SC-03') }); // WP150: SC-03's tile carries the count, so the line names the regions instead
@@ -69,13 +75,17 @@ const origin = originShortUnder(title, { tile: stats.includes('SC-03') }); // WP
   <div class:list={['pg', !hasProof && 'pg--solo']}>
     <div class="pg__copy" data-reveal>
       {empathy && <p class="lead">{empathy}</p>}
-      <CopyText block={origin} markers={[]} class="pg__origin" />
-      <p class="pg__method">
-        {method.text}{' '}
-        {method.link && (
-          <a class="link" href={linkAttrs(method.link.href).href}>{method.link.label}<Icon name="arrow-right" size={16} /></a>
-        )}
-      </p>
+      {opening ? <p class="pg__origin" data-fact={opening.facts.join(' ')}>{endSentence(opening.text ?? fact(opening.facts[0]).text)}</p> : <CopyText block={origin} markers={[]} class="pg__origin" />}
+      {
+        method && (
+          <p class="pg__method">
+            {method.text}{' '}
+            {method.link && (
+              <a class="link" href={linkAttrs(method.link.href).href}>{method.link.label}<Icon name="arrow-right" size={16} /></a>
+            )}
+          </p>
+        )
+      }
     </div>
     {
       hasProof && (

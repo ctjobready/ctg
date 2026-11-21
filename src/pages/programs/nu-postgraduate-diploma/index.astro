@@ -22,11 +22,11 @@ import MechanismSection from '../../../components/pages/programs/MechanismSectio
 import FaqSection from '../../../components/pages/programs/FaqSection.astro';
 import { anchor, faqNode, type FaqSource } from '../../../components/pages/programs/faq';
 import { PAGE_UPDATED } from '../../../components/pages/programs/meta';
-import { NU_ADMISSIONS_NOTE, NU_APPLY, NU_CALL, NU_CALL_NUMBER, NU_CALL_TEXT, NU_COURSE_COPY, NU_COURSE_SUBJECT, NU_LOCATION_NOTE, NU_NAME, NU_NOTICES, NU_NOTICES_LEAD, NU_PATH, NU_SCHEDULE_NOTE, nuCourses, nuOverview } from '../../../components/pages/programs/nuPgd';
+import { NU_APPLY, NU_CALL, NU_CALL_NUMBER, NU_CALL_TEXT, NU_COURSE_COPY, NU_COURSE_SUBJECT, NU_LOCATION_NOTE, NU_NAME, NU_PATH, NU_SCHEDULE_NOTE, nuCourses, nuOverview } from '../../../components/pages/programs/nuPgd';
 import NuNoticeLinks from '../../../components/pages/programs/NuNoticeLinks.astro';
 import { HEADLINE, NU_ELIGIBILITY, VALUE_PROPOSITION } from '../../../data/copy';
 import { COURSES_URL } from '../../../lib/site';
-import { formatDate, isoDate, joinList } from '../../../lib/format';
+import { formatDate, isoDate } from '../../../lib/format';
 import { pageUrl, webPage } from '../../../lib/schema';
 
 const path = NU_PATH;
@@ -39,13 +39,16 @@ const courses = await nuCourses();
 // WP76: "Four courses, in digital marketing, ICT, cyber security and data analytics, delivered by ..." (it said "Two courses, delivered by ..."), built from the collection so the count and the names cannot drift from the cards below it
 const COUNT_WORD = ['No', 'One', 'Two', 'Three', 'Four', 'Five', 'Six'];
 // WP102 (owner answer 2026-10-28): on the NU pages CodersTrust is described only as an affiliated college (College Code: 6634), not as the official training partner.
-const coursesLead = `${COUNT_WORD[courses.length]} courses, in ${joinList(courses.map((c) => NU_COURSE_SUBJECT[c.slug]))}, delivered by CodersTrust, an affiliated college (College Code: 6634) under the National University of Bangladesh.`;
+// WP166-B (marketing review R2-04): the hero lead names the four fields now, so this lead no longer lists them a second time ("Four courses, delivered by CodersTrust, an affiliated college ...").
+const coursesLead = `${COUNT_WORD[courses.length]} courses, delivered by CodersTrust, an affiliated college (College Code: 6634) under the National University of Bangladesh.`;
+for (const c of courses) {
+  if (!VALUE_PROPOSITION.nuPgd.includes(NU_COURSE_SUBJECT[c.slug])) throw new Error(`NU overview: the hero lead (VALUE_PROPOSITION.nuPgd) no longer names the course "${NU_COURSE_SUBJECT[c.slug]}"`);
+}
 
 const faqSources: FaqSource[] = [
   // WP27: admissions' own eligibility sentence (NU-01), not "if you hold a degree". WP161 (A-35): "a shorter course" (JobReady.global also sells live-online and on-campus courses, not only self-paced ones).
   { q: 'Is the NU Post Graduate Diploma Right for Me?', html: `Eligibility: ${NU_ELIGIBILITY}. It is right for you if you meet that and want a digital career. Not right if you want a shorter course: see ${anchor(COURSES_URL, 'JobReady.global')}.`, evidence: ['NU-01'] },
-  // WP161 (WP160-B, owner answer 2026-11-02): the notices are introduced as National University's own intake (NU_NOTICES_LEAD), as in the Schedule and Intake row.
-  { q: 'Where Do I Find Eligibility, Schedule and Fees?', html: `The eligibility, duration, fee, payment and recognition details are in Before You Apply above. ${NU_ADMISSIONS_NOTE} ${NU_NOTICES_LEAD} ${NU_NOTICES.map((n) => anchor(n.href, n.label)).join(' and ')}. To ask, call ${anchor(NU_CALL.href, NU_CALL_NUMBER)}.` },
+  // WP166-B (marketing review R2-24): "Where Do I Find Eligibility, Schedule and Fees?" is gone: its answer pointed to Before You Apply and repeated the National University notices sentence that row already gives.
 ];
 
 const jsonLd = [
@@ -68,6 +71,8 @@ const jsonLd = [
       <a class="link" href={NU_CALL.href}>{NU_CALL_TEXT}</a>
       <!-- WP27: intake, schedule and location are not published; the link goes to the admissions contact block, where they are confirmed with each applicant -->
       <a class="link" href="#admissions-contact">Confirm Intake, Schedule and Location</a>
+      <!-- WP166-B (marketing review R2-23): what "Apply Now" opens, under the button (the closing band keeps its two steps). -->
+      <p class="hero-note">A short form: your name, contact details and course. Admissions then shares the application steps.</p>
     </Fragment>
     <dl slot="stats" class="keyfacts">
       <div><dt>Duration</dt><dd><Fact id="NU-02" /></dd></div>
@@ -101,8 +106,8 @@ const jsonLd = [
     bluf="You are aiming for interviews, a first digital job and credentials employers recognize."
     factIds={['PX-03', 'PX-05']}
     scope={{ 'PX-05': { label: 'of employers globally reported difficulty finding talent in 2026' } }}
-    extra={[{ title: 'It Is Hard to Know Which Skills to Pick', text: 'Which skills and certifications to add next is not obvious, and the wrong choice costs time.' }]}
   />
+  <!-- WP166-B (marketing review R2-24): the card "It Is Hard to Know Which Skills to Pick" is gone (it raised a worry the page never answered); the band keeps its heading, lead and two statistics. -->
 
   <Section id="before-you-apply" aria-labelledby="before-h">
     <!-- WP161 (A-32): the lead says these are CodersTrust's delivery terms (it said "as stated for the National University Post Graduate Diploma", which read as NU's own fee and eligibility) -->
@@ -241,6 +246,11 @@ const jsonLd = [
   .ba dd {
     margin: 0;
     color: var(--on-surface);
+  }
+  /* WP166-B (R2-23): the short-form line sits on its own line under the hero's actions */
+  .hero-note {
+    flex-basis: 100%;
+    margin: 0;
   }
   .updated {
     margin: 0 0 var(--space-md);

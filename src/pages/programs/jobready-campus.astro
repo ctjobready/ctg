@@ -19,10 +19,8 @@ import HeroBand from '../../components/sections/HeroBand.astro';
 import FutureBand from '../../components/sections/FutureBand.astro';
 import { futurePhotos } from '../../data/photos';
 import RouteLink from '../../components/pages/partners/RouteLink.astro';
-import IncludesBand from '../../components/sections/IncludesBand.astro';
 import Fact from '../../components/facts/Fact.astro';
 import ProgramGlance from '../../components/pages/programs/ProgramGlance.astro';
-import PairedEvidence from '../../components/pages/partners/PairedEvidence.astro';
 import CopyP from '../../components/pages/programs/CopyP.astro';
 import ProblemSection from '../../components/pages/programs/ProblemSection.astro';
 import GuideSection from '../../components/pages/programs/GuideSection.astro';
@@ -32,6 +30,8 @@ import OfferSection from '../../components/pages/programs/OfferSection.astro';
 import RiskSection from '../../components/pages/programs/RiskSection.astro';
 import NextSteps from '../../components/pages/programs/NextSteps.astro';
 import Section from '../../components/ui/Section.astro';
+import Icon from '../../components/system/Icon.astro';
+import { linkAttrs } from '../../lib/url';
 import { faqNode, type FaqSource } from '../../components/pages/programs/faq';
 import { C14_FIRST, PAGE_UPDATED, ctaFor, serviceNode, statValue } from '../../components/pages/programs/meta';
 import { DELIVERY_MODEL, EMPATHY, MICRO_COMMITMENT, POSITIONING, PRICING, PROGRAM_OPTIONS, PROGRAM_SCOPE_STATEMENT_EXAMS, PROGRAM_SIZES_NOTE, SPEED_UNIVERSITIES } from '../../data/copy';
@@ -51,14 +51,19 @@ const pricingFirst = PRICING.text.split('. ')[0] + '.';
 const bachelorShare = /(\d+\.\d+)% hold a bachelor/.exec(fact('OC-09').text)?.[1];
 if (!bachelorShare) throw new Error('OC-09 no longer states the bachelor’s-degree share ("N.N% hold a bachelor")');
 
+// WP166-B (marketing review R2-17, owner approval of 21 November 2026): the outcomes answer is the short shared one (Our Model and YouthWIDE print it; it was Q3-institution, 54 words); the fit question,
+// which the glance already answers, asks what a dean asks ("Has CodersTrust Worked with Degree Holders Before?", with OC-09's share); and the page answers what the institution provides (IN-09: campus labs as
+// blended-learning centers, faculty members as coordinators; PD-06: CodersTrust-trained facilitators, the short form after How It Works' long form).
 const faqSources: FaqSource[] = [
-  { audience: 'variants' as const, id: 'Q3-institution' },
-  // WP34 (cycle-11 review): the question is about this program's fit, so the answer names who it is for; the 85.0% is the October 2026 survey's profile of the alumni who answered, said as such (WP73; WP99: it describes all responding alumni, not completers).
+  { q: 'How Do You Prove Outcomes?', html: 'We plan a baseline at enrollment, follow-up surveys at 3, 6 and 12 months and monthly reports for every cohort, with documentary evidence of earnings where available. Independent evaluation is welcome.', evidence: ['PD-09', 'PD-08', 'RC-01'] },
+  // WP34 (cycle-11 review): the 85.0% is the October 2026 survey's profile of the alumni who answered, said as such (WP73; WP99: it describes all responding alumni, not completers).
   {
-    q: 'Who Is JobReady@Campus For?',
-    html: `Students and degree holders at universities and colleges. Among alumni of CodersTrust’s programs who answered the October 2026 survey, ${bachelorShare}% hold a bachelor’s degree or higher.`,
+    q: 'Has CodersTrust Worked with Degree Holders Before?',
+    html: `Yes. Among alumni of CodersTrust’s programs who answered the October 2026 survey, ${bachelorShare}% hold a bachelor’s degree or higher.`,
     evidence: ['OC-09'],
   },
+  // "Campus labs, which serve as blended-learning centers, and faculty members as coordinators." (the reviewer's words) read as a serial comma (tests/wp127.spec.ts), so the clause is unbracketed; the facts are the same.
+  { q: 'What Does Our Institution Need to Provide?', html: 'Campus labs to serve as blended-learning centers and faculty members to act as coordinators. The labs run with CodersTrust-trained facilitators.', evidence: ['IN-09', 'PD-06'] },
 ];
 
 const jsonLd = [
@@ -89,33 +94,34 @@ const options = [
     title="JobReady@Campus at a Glance"
     rows={[
       { label: 'Who It Is For', text: 'Universities and colleges that need a practical route into digital work for their students, beside the degree.', facts: ['IN-09'] },
-      { label: 'Training and Certification Preparation', text: `${hours} training hours per certification, including certification exam preparation and one exam fee per trainee, then three months of milestone-based mentoring; exam eligibility and any further attempts are set per program. ${DELIVERY_MODEL.text}`, facts: ['IN-09', 'PD-01', 'PD-03', 'PD-02a', 'IN-04'] },
+      // WP166-B (R2-08): the delivery-model sentence is in How It Works ("What" card), not in this glance row.
+      { label: 'Training and Certification Preparation', text: `${hours} training hours per certification, including certification exam preparation and one exam fee per trainee, then three months of milestone-based mentoring; exam eligibility and any further attempts are set per program.`, facts: ['IN-09', 'PD-01', 'PD-03', 'PD-02a'] },
       { label: 'Reporting', text: 'Baseline data, follow-up surveys and monthly reports, so your institution builds placement evidence from its own students.', facts: ['PD-08', 'PD-09'] },
     ]}
     scope={PROGRAM_SCOPE_STATEMENT_EXAMS}
   />
 
   <!-- C2 (WP24c): a short problem band, built only from content this page already states. WP34 (cycle-11 review): the Bangladesh graduate-unemployment tile (PX-03) is gone from this global page. -->
-  <ProblemSection
-    title="Capable Students Still Struggle to Find Work"
-    bluf={EMPATHY.universities}
-    extra={[
-      // WP51 (cycle-26 review): the cards say what the program does for the institution's students instead of presuming the institution is deficient. Card 1 rests on IN-09 (preparation for industry-recognized
-      // certifications, in parallel with academic studies); card 2 uses PD-09's own terms (a baseline at enrollment and follow-up surveys) and PD-08 (placements and first earnings reported monthly).
-      // WP114 (Opus Low run 6): the cards state the obstacle the reader faces (the band is "The Challenge"), not an instruction to the reader.
-      { title: 'Skills Employers Cannot See', text: 'Employers look for proof of job-ready skills beside the degree.', factIds: ['IN-09'] },
-      { title: 'Placement Evidence Is Missing', text: 'Without a baseline and follow-up surveys, placement results are hard to report.', factIds: ['PD-08', 'PD-09'] },
-    ]}
-  />
+  <!-- WP166-B (R2-15): the two cards repeated the lead almost word for word; the band shows two registered statistics instead (PX-02 and PX-05, as on YouthWIDE and the NU page). The lead still states the reader's obstacle. -->
+  <ProblemSection title="Capable Students Still Struggle to Find Work" bluf={EMPATHY.universities} factIds={['PX-02', 'PX-05']} />
 
   <!-- C5 (WP25s: credibility before the vision, as on Home and YouthWIDE). WP161 (A-39): the eyebrow says what the band lists (a diploma delivery and two MOUs, not JobReady@Campus cohorts); the default is "Our Track Record". -->
+  <!-- WP166-B (R2-16): the heading names the three partners, and National University's two figures (SC-04, SC-05) sit in this band beside the partner list, with their note after them and the three evidence links of the
+       former "Delivery Context: National University" band (that band is gone). -->
   <GuideSection
     eyebrow="Our University Partnerships"
-    title="Universities Partner with CodersTrust"
+    title="Working with National University, UPEACE and CCNY"
+    statIds={['SC-04', 'SC-05']}
     partnerGroup="academic"
     method={{ text: 'JobReady@Campus is built on the TalentLEAP model.', factId: 'IN-06', link: { label: 'How TalentLEAP Works', href: '/our-model/talentleap/' } }}
   >
     <p data-fact="PA-05"><Fact id="PA-05" />.</p>
+    <p data-fact="SC-04 SC-05">These figures describe National University’s size and the learners being onboarded; they are not learners trained by CodersTrust.</p>
+    <p>
+      Broader evidence from our youth programs: <a class="link" href={linkAttrs('/impact/independent-evaluation/').href}>The Randomized Trial<Icon name="arrow-right" size={16} /></a>{' '}
+      <a class="link" href={linkAttrs('/impact/outcomes-2026/').href}>Impact Survey 2026<Icon name="arrow-right" size={16} /></a>{' '}
+      <a class="link" href={linkAttrs('/impact/case-studies/').href}>Case Studies<Icon name="arrow-right" size={16} /></a>
+    </p>
   </GuideSection>
 
   <!-- C4 -->
@@ -137,34 +143,16 @@ const options = [
     blocks={[
       { label: 'When', title: 'In Parallel with Studies', text: 'Industry-oriented skills training for your students.', icon: 'calendar-check' },
       { label: 'Where', title: 'On-Campus Labs', text: 'Labs serve as blended-learning centers, with facilitators trained by CodersTrust (Training of Trainers) and faculty members as coordinators.', icon: 'school' },
-      { label: 'What', title: 'Certification Preparation and Internships', text: 'Preparation for industry-recognized certifications, plus professional internships where employer placements are available.', icon: 'award' },
+      // WP166-B (R2-14, R2-08): the cut "What You Get" band's one new idea (tracks set from employer demand, PD-10) and the page's one delivery-model sentence (DELIVERY_MODEL, from the glance) are in this card.
+      { label: 'What', title: 'Certification Preparation and Internships', text: `Preparation for industry-recognized certifications on tracks set from employer demand, plus professional internships where employer placements are available. ${DELIVERY_MODEL.text}`, icon: 'award' },
       { label: 'After', title: 'Local, Remote and Global Work', text: 'Mentoring and placement support toward paid work.', icon: 'globe' },
     ]}
-    factIds={['IN-09', 'PD-06']}
+    factIds={['IN-09', 'PD-06', 'PD-10', 'PD-01', 'IN-04']}
   />
 
-  <!-- C7: the National University partnership (its size and onboarding pipeline are shown apart from the track record and the outcome evidence) -->
-  <PairedEvidence
-    eyebrow="Delivery Context: National University"
-    title="The National University Partnership"
-    lead="These figures describe National University’s size and the learners being onboarded; they are not learners trained by CodersTrust."
-    items={[
-      { id: 'SC-04', label: 'Official Training Partner', stat: true },
-      { id: 'SC-05', label: 'National University', stat: true },
-    ]}
-  />
+  <!-- C7 ("The National University Partnership") is folded into the university band above since WP166-B (R2-16). -->
 
-  <!-- C8. WP39 (cycle-16 review): three short cards in place of the concern / inclusion / benefit matrix, in the order of the pains this page names (degree holders struggle to find work; students’ skills are not visible to
-       employers; placement evidence is missing; WP51 words the last two as the cards "Make Students’ Skills Visible" and "Build Placement Evidence"). The sentences keep the matrix rows' words and rest on the register: PD-02 and PD-01 (certification exam preparation, three months of milestone-based mentoring), PD-10
-       and PD-02 (tracks set from employer demand, an AI-ready curriculum), PD-08 and PD-09 (follow-up surveys, monthly reports, documentary evidence where available). -->
-  <IncludesBand
-    title="Built Around What Institutions Ask For"
-    cards={[
-      { icon: 'award', title: 'Certification Exam Preparation and Mentoring', text: 'Industry certification exam preparation by track, followed by three months of milestone-based mentoring toward a first client or a first job.', facts: ['PD-02', 'PD-01'] },
-      { icon: 'briefcase', title: 'Skills Employers Ask For', text: 'Tracks are set from employer demand in an AI-ready curriculum, built around the skills employers say they cannot find.', facts: ['PD-10', 'PD-02'] },
-      { icon: 'clipboard-check', title: 'Placement Evidence You Can Report', text: 'Follow-up surveys, monthly reports and documentary evidence where available give your institution outcome data it can report.', facts: ['PD-08', 'PD-09'] },
-    ]}
-  />
+  <!-- C8 ("Built Around What Institutions Ask For") is gone since WP166-B (R2-14): it repeated the glance, the vignettes and How It Works; its one new idea (tracks set from employer demand) is in the "What" card. -->
 
   <!-- C9 -->
   <FaqSection sources={faqSources} title="Questions Institutions Ask" />

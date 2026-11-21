@@ -141,10 +141,12 @@ test.describe('Programs hub: the trial is one line (item 4)', () => {
     expect(ids.indexOf('reach')).toBe(ids.indexOf('proof-band') + 1);
   });
 
-  test('YouthWIDE’s evidence band is unchanged: the single trial sentence, the tiles and the chart', async ({ page }) => {
+  // WP166-B (marketing review R2-02): the band shows RC-01's +41% income tile beside RC-02's +10.3 tile, so it has three tiles with the survey tile (it had two: RC-02 and OC-03); still one trial sentence and the chart.
+  test('YouthWIDE’s evidence band keeps its shape: the single trial sentence, the tiles and the chart', async ({ page }) => {
     await open(page, 'programs/youthwide/');
     await expect(page.locator('#proof-band .eb__headline')).toHaveCount(1);
-    await expect(page.locator('#proof-band .eb__stat')).toHaveCount(2);
+    await expect(page.locator('#proof-band .eb__stat')).toHaveCount(3);
+    expect(await page.locator('#proof-band .eb__stat').evaluateAll((els) => els.map((e) => e.getAttribute('data-fact')))).toEqual(['RC-02', 'RC-01', 'OC-03']);
     await expect(page.locator('#proof-band svg[role="img"]').first()).toBeVisible();
     await expect(page.locator('#proof-band .eb--single')).toHaveCount(0);
   });
@@ -155,31 +157,28 @@ test.describe('JobReady Platform: the platform question points to "Platform Capa
   const Q = 'What Does the JobReady Platform Offer?';
   const ANSWER = 'See Platform Capabilities above, from the AI Tutor to the work marketplaces.';
 
-  test('the answer is one short sentence, "Platform Capabilities" is a link to the capabilities band, and the FAQ JSON-LD says the same words', async ({ page }) => {
+  // WP166-B (marketing review R2-40, owner approval of 21 November 2026): the platform page's only question answered "see above" (Q11-platform) and is gone, its answer ("See Platform Capabilities above, ...", the link to #status
+  // and the JSON-LD entry) with it; the page asks the connectivity question instead. The capabilities band keeps its heading and its id, and the page's FAQ (page and JSON-LD) does not restate the capability list.
+  test('the "see above" platform question is gone from the page and its FAQ JSON-LD; the capabilities band keeps its heading and id', async ({ page }) => {
     await open(page, 'our-model/jobready-platform/');
-    const item = page.locator('#faq details', { has: page.locator('summary', { hasText: Q }) });
-    expect(compact(await item.locator('.faq__a').textContent())).toBe(ANSWER);
-    const link = item.locator('.faq__a a');
-    await expect(link).toHaveText('Platform Capabilities');
-    expect(await link.getAttribute('href')).toBe('#status');
+    await expect(page.locator('#faq details', { has: page.locator('summary', { hasText: Q }) })).toHaveCount(0);
+    expect((await faqJsonLd(page)).find((q) => q.name === Q)).toBeUndefined();
+    expect((await faqJsonLd(page)).map((q) => q.text).join(' ')).not.toContain(ANSWER);
     await expect(page.locator('section#status h2')).toHaveText('Platform Capabilities');
-    expect((await faqJsonLd(page)).find((q) => q.name === Q)?.text).toBe(ANSWER);
-    expect(await item.locator('.faq__a p').getAttribute('data-fact')).toBe('IN-04');
   });
 
-  test('the link reaches the band; the shared answer is unchanged where it is asked elsewhere (Employers)', async ({ page }) => {
-    await open(page, 'our-model/jobready-platform/');
-    await page.locator('#faq .faq__a a', { hasText: 'Platform Capabilities' }).click();
-    await expect(page).toHaveURL(/#status$/);
-    await open(page, 'partner-with-us/employers/');
-    const answer = compact(await page.locator('#faq details', { has: page.locator('summary', { hasText: Q }) }).locator('.faq__a').textContent());
-    // WP48 (cycle-23 review): the shared answer names what a partner or employer deals with, not the internal tooling (tests/wp48.spec.ts)
-    expect(answer).toContain('JobReady offers an AI Tutor, AI-driven personalized and adaptive learning paths, automated assessment and feedback, an AI career coach, partner portals, AI chat, the employer marketplace and the gig-work marketplace.');
+  // WP166-B (marketing review R3-33, R2-21): Employers and JobReady@Work no longer ask the shared platform question (Q11), so the check of its answer on Employers is gone with it; no built page prints the question now.
+  test('the shared platform question is asked on neither Employers nor JobReady@Work', async ({ page }) => {
+    for (const route of ['partner-with-us/employers/', 'programs/jobready-work/']) {
+      await open(page, route);
+      await expect(page.locator('#faq details', { has: page.locator('summary', { hasText: Q }) }), route).toHaveCount(0);
+    }
   });
 
   test('the page carries today’s date, the day its wording changed', async ({ page }) => {
     await open(page, 'our-model/jobready-platform/');
-    expect(compact(await page.locator('.lf-updated').textContent())).toBe('Last updated November 3, 2026'); // WP104: the page's wording last changed on 29 October (WP102); WP141 changed it on 1 November; WP163 on 3 November
+    // WP166-B (marketing review R2-06): the line is at the foot of the page (.jr__updated; it was .lf-updated in the header) and reads November 21, 2026 (it read November 3, 2026).
+    expect(compact(await page.locator('.jr__updated').textContent())).toBe('Last updated November 21, 2026'); // WP104: the page's wording last changed on 29 October (WP102); WP141 changed it on 1 November; WP163 on 3 November; WP166-B on 21 November
   });
 });
 
@@ -325,26 +324,33 @@ test.describe('Employers: "Our Track Record" leads with its delivered figure; "A
     expect(compact(await page.locator('#guide .pg__stats').textContent())).toContain('23,000+');
     expect(await page.locator('#guide .pg__stats .factstat').getAttribute('data-fact')).toBe('SC-15');
     // WP66 (owner request 2026-10-20): the list closes with the signed-agreement sentence for companies and industry bodies (SC-11d); the two lines before it are as they were (tests/wp66.spec.ts)
+    // WP166-B (marketing review R3-06): the AWS credential (PA-06) is the list's first bullet (it was a sentence of the logo caption), and the band is headed "Employers and Partners We Work With", which does not say the year,
+    // so the signed-agreement sentence ends "since 2014" (the WP66 rule; it ended "... industry bodies."). The contract line still follows the 23,000+ headline stat.
     expect(await texts(page, '#guide .pg__list li')).toEqual([
+      'AWS Authorized Training Partner.',
       'Contract scope: ICT, networking and cybersecurity for 120+ professionals, for the Ministry of Power, Energy and Mineral Resources (via Bangladesh Petroleum Institute).',
-      'CodersTrust has signed MOUs, agreements or contracts with 27 companies and industry bodies.',
+      'CodersTrust has signed MOUs, agreements or contracts with 27 companies and industry bodies since 2014.',
     ]);
-    expect(await page.locator('#guide .pg__list li').evaluateAll((els) => els.map((e) => e.getAttribute('data-fact')))).toEqual(['GV-06', 'SC-11d']);
+    expect(await page.locator('#guide .pg__list li').evaluateAll((els) => els.map((e) => e.getAttribute('data-fact')))).toEqual(['PA-06', 'GV-06', 'SC-11d']);
     // a scope of work is never worded as delivered training (register presentation rule for GV-02 to GV-06)
     expect(compact(await page.locator('#guide').textContent())).not.toMatch(/Also delivered/);
   });
 
   // WP54 (cycle-28 review, Kimi K3): the credential was a lone line under the logo strip ("AWS Authorized Training Partner."); it is a sentence of the strip's caption now ("... not endorsements. CodersTrust is an AWS Authorized Training Partner."; tests/wp54.spec.ts)
-  test('"AWS Authorized Training Partner" is a sentence of the logo strip’s caption, above the AWS logo, tied to PA-06, and is stated once', async ({ page }) => {
+  // WP166-B (marketing review R3-06, owner approval of 21 November 2026): the credential is the Track Record list's first bullet, "AWS Authorized Training Partner." (it was the caption sentence "CodersTrust is an AWS Authorized
+  // Training Partner." in the logo strip, and the list held no AWS line); it is still tied to PA-06, above the AWS logo and stated once on the page, and the caption no longer carries it.
+  test('"AWS Authorized Training Partner" is the Track Record list’s first bullet, above the AWS logo, tied to PA-06, and is stated once', async ({ page }) => {
     await open(page, 'partner-with-us/employers/');
-    const note = page.locator('#guide section.partners .partners__title [data-fact="PA-06"]');
-    await expect(note).toHaveText('CodersTrust is an AWS Authorized Training Partner.');
+    const note = page.locator('#guide .pg__list li[data-fact="PA-06"]');
+    await expect(note).toHaveText('AWS Authorized Training Partner.');
+    await expect(page.locator('#guide .pg__list li').first()).toHaveAttribute('data-fact', 'PA-06');
+    await expect(page.locator('#guide section.partners .partners__title [data-fact="PA-06"]')).toHaveCount(0);
+    await expect(page.locator('#guide section.partners .partners__title')).not.toContainText('AWS');
     await expect(page.locator('#guide .pg__logonote')).toHaveCount(0);
     await expect(page.locator('#guide .partners__row img[alt="AWS"]')).toHaveCount(1);
     const [rowBox, noteBox] = await Promise.all([page.locator('#guide .partners__row').boundingBox(), note.boundingBox()]);
-    expect(noteBox!.y + noteBox!.height, 'the sentence sits above the logos, in the caption').toBeLessThanOrEqual(rowBox!.y + 1);
+    expect(noteBox!.y + noteBox!.height, 'the bullet sits above the logos').toBeLessThanOrEqual(rowBox!.y + 1);
     expect(count(compact(await page.locator('main').textContent()), 'AWS Authorized Training Partner')).toBe(1);
-    await expect(page.locator('#guide .pg__list')).not.toContainText('AWS');
   });
 
   // WP47 (owner decision 2026-10-15): Employers has no cost-of-waiting band any more, so its AI card ("AI Is Reshaping the Workforce", the 11M and 9M jobs) is gone with it; the register sentence stays whole

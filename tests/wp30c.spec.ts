@@ -83,10 +83,11 @@ test.describe('FAQs: the decision questions, one to three sentences each', () =>
     { route: 'partner-with-us/governments/', selector: '#faq details', min: 5 },
     { route: 'partner-with-us/development-partners/', selector: '#faq details', min: 5 },
     { route: 'partner-with-us/foundations/', selector: '#faq details', min: 4 },
-    { route: 'partner-with-us/universities/', selector: '#faq details', min: 3 },
-    { route: 'partner-with-us/employers/', selector: '#faq details', min: 3 },
+    // WP166-B: Universities asks four (it was three: R3-14 adds "Does It Change Our Curriculum?"); Employers and Investors ask two (they were three: R3-33 cuts the platform question).
+    { route: 'partner-with-us/universities/', selector: '#faq details', min: 4 },
+    { route: 'partner-with-us/employers/', selector: '#faq details', min: 2 },
     { route: 'partner-with-us/local-partners/', selector: '#faq details', min: 3 },
-    { route: 'partner-with-us/investors/', selector: '#faq details', min: 3 },
+    { route: 'partner-with-us/investors/', selector: '#faq details', min: 2 },
   ];
   for (const p of FAQ_PAGES) {
     test(`${p.route || 'Home'}: every answer is at most three sentences`, async ({ page }) => {
@@ -177,13 +178,15 @@ test.describe('Partner with Us: sections that moved or went', () => {
   });
 
   // WP57 (cycle-29 review, GPT-6.1 Sol G7): Employers' compact view is three rows now (its "Independent Evaluation Welcome" row is gone; tests/wp57.spec.ts)
-  test('every audience page keeps its positioning statement, call to action and due-diligence block (WP34: one short item, three rows on Employers)', async ({ page }) => {
+  // WP166-B (marketing review R3-32): Employers' compact view is one row, Contracting Entities, plus its "Ask About Due Diligence" link (the "Needs Assessment First" and "Progress Evaluation" rows
+  // repeated How It Works); the block itself stays on every audience page.
+  test('every audience page keeps its positioning statement, call to action and due-diligence block (WP34: one short item, one row on Employers)', async ({ page }) => {
     for (const slug of ['development-partners', 'governments', 'foundations', 'universities', 'employers', 'local-partners']) {
       await open(page, `partner-with-us/${slug}/`);
       await expect(page.locator('#mechanism .pos__text'), slug).toHaveCount(1);
       await expect(page.locator('#cta'), slug).toHaveCount(1);
       await expect(page.locator('#due-diligence'), slug).toHaveCount(1);
-      await expect(page.locator('#due-diligence li'), slug).toHaveCount(slug === 'employers' ? 3 : 0);
+      await expect(page.locator('#due-diligence li'), slug).toHaveCount(slug === 'employers' ? 1 : 0); // WP166-B: one on Employers (it was three)
     }
   });
 });

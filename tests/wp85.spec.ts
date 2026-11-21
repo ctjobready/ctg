@@ -142,9 +142,10 @@ test.describe('WP85: every 25,125 on a built page is said as trained', () => {
     expect(offenders).toEqual([]);
   });
 
-  test('the pages that show the 25,125 are the seven that state it, the post, the news index and the style guide', () => {
+  // WP166-B (marketing review R2-39): the JobReady Platform no longer shows the contract-scope tile, whose note named the 25,125, so six pages state it now (it was seven, the platform page among them).
+  test('the pages that show the 25,125 are the six that state it, the post, the news index and the style guide', () => {
     const routes = builtPages().filter((p) => p.html.includes('25,125')).map((p) => p.route).sort();
-    expect(routes).toEqual(['/', '/impact/', '/impact/case-studies/her-power/', '/news/', POST, ...GOVERNMENT_BAND_POSTS.map((s) => `/news/${s}/`), '/our-model/jobready-platform/', '/partner-with-us/governments/', '/partner-with-us/investors/', '/programs/youthwide/', '/styleguide/'].sort());
+    expect(routes).toEqual(['/', '/impact/', '/impact/case-studies/her-power/', '/news/', POST, ...GOVERNMENT_BAND_POSTS.map((s) => `/news/${s}/`), '/partner-with-us/governments/', '/partner-with-us/investors/', '/programs/youthwide/', '/styleguide/'].sort());
   });
 
   test('the archived post keeps its headline as published; its banner note is a "Delivered" line tied to GV-01', () => {
@@ -187,7 +188,8 @@ test.describe('WP85: the pages that state the 25,125', () => {
     expect(builtPages().find((p) => p.route === '/partner-with-us/governments/')!.html).toContain(`"text":"${answer}"`);
   });
 
-  test('Investors: the track-record note, the 30,000+ note and the national-scale answer say trained; JobReady Platform prints the shared note', async ({ page }) => {
+  // WP166-B (marketing review R2-39): the JobReady Platform's contract-scope tile and its shared note are gone, and the check of that note with them.
+  test('Investors: the track-record note, the 30,000+ note and the national-scale answer say trained; the JobReady Platform no longer prints the shared note', async ({ page }) => {
     await open(page, 'partner-with-us/investors/');
     await expect(page.locator('#guide .ig__notes')).toHaveText(
       'Of 150,000+ enrollments, 112,926 were direct. Another 40,152 came through CodersTrust curriculum and courseware: 25,125 in Her Power’s national program, which used CodersTrust’s curriculum, and 15,027 enrollments in six CodersTrust-designed courses on UNDP’s FutureNation platform. Her Power’s 2,400 directly trained women are in both the 112,926 and the 25,125. Counted once, the total is 150,678 enrollments. Most delivery has been in Bangladesh.',
@@ -198,7 +200,7 @@ test.describe('WP85: the pages that state the 25,125', () => {
     const faq = page.locator('#faq details, #faqs details', { has: page.locator('summary', { hasText: 'Can You Deliver at National Scale?' }) }).first();
     expect(compact(await faq.textContent())).toContain('In Her Power, a national program of the Department of ICT (DoICT), under the ICT Division, CodersTrust provided the curriculum, training manuals and mentorship guidelines and trained women directly; the national program met its target (figures above).'); // WP155 (Polish 3): the answer no longer restates the counts ("... trained 2,400 women directly; the national program trained 25,125 women across 130 sub-districts (upazilas), meeting its target.")
     await open(page, 'our-model/jobready-platform/');
-    expect(compact(await page.locator('#why .jr__whynote').textContent())).toBe(SCOPE_NOTE);
+    await expect(page.locator('#why .jr__whynote')).toHaveCount(0);
   });
 
   test('YouthWIDE: "Her Power, a national program of the Department of ICT (DoICT), under the ICT Division, trained 25,125 women across 130 sub-districts (upazilas), meeting its target."', async ({ page }) => {

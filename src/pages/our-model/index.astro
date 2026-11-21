@@ -37,8 +37,10 @@ import { linkAttrs } from '../../lib/url';
 const path = '/our-model/';
 const lead = 'One integrated path: assessment, certification-focused training, three months of milestone-based mentoring, placement support and tracked outcomes.';
 const description = desc(lead);
-// WP25s: the answer under the H1 is the lead above, scoped (as the path section below says) to every supported cohort.
-const answer = `${lead.replace(/\.$/, '')}, agreed for each supported cohort.`;
+// WP25s: the answer under the H1 was the lead above, scoped to every supported cohort ("..., placement support and tracked outcomes, agreed for each supported cohort.").
+// WP166-B (marketing review R2-31, owner approval of 21 November 2026): the hero lead no longer restates the H1 ("One integrated path") and ends on what partners receive, monthly reports on progress toward paid work (PD-08, as the FAQ below says).
+// The meta description still reads `lead` (descriptions are package A's in WP166).
+const answer = 'Assessment, certification-focused training, three months of milestone-based mentoring and placement support, with monthly reports on progress toward paid work for every supported cohort.';
 // The trial's evaluator is spelled out once on this page, where the evidence first names it (the register's headline says "BIGD").
 const BIGD = 'the BRAC Institute of Governance and Development (BIGD)';
 if (!RCT_HEADLINE.text.includes('by BIGD')) throw new Error('Our Model: the RC-01 headline no longer says "by BIGD"; update the expansion');
@@ -82,12 +84,20 @@ const faqSources: FaqSource[] = [
 
   <Section id="path" tone="airy" aria-labelledby="path-h">
     <SectionHeader id="path-h" eyebrow="How It Works" title="Three Stages: Learn, Earn, Prosper" lead="Each stage prepares learners for the next. Partners agree an outcome-tracking plan for every supported cohort before delivery begins." />
+    <StagePipeline id="stage-pipeline" />
+    <!-- WP166-B (marketing review R2-32): the scope paragraph follows the pipeline it qualifies (it came before it). -->
     <p class="om__scope">
       For <a class="link" href={linkAttrs('/programs/youthwide/').href}>YouthWIDE</a> and <a class="link" href={linkAttrs('/programs/jobready-campus/').href}>JobReady@Campus</a> supported cohorts, this path is the delivery model. <a class="link" href={linkAttrs('/programs/jobready-work/').href}>JobReady@Work</a>, the <a class="link" href={linkAttrs('/programs/nu-postgraduate-diploma/').href}>NU Post Graduate Diploma</a> and <a class="link" href={linkAttrs('/programs/superkids/').href}>SuperKids</a> have their own delivery structures.
     </p>
-    <StagePipeline id="stage-pipeline" />
     <p class="om__link">{PROGRAM_SCOPE_STATEMENT_EXAMS}</p>
     <p class="om__link"><a class="link" href={linkAttrs('/our-model/talentleap/').href}>How TalentLEAP Works<Icon name="arrow-right" size={16} /></a></p>
+  </Section>
+
+  <!-- WP166-B (marketing review R2-32): the evidence follows the path it supports (it was the last band before the FAQ), headed with what the trial found (it said "Evidence Behind the Approach"). -->
+  <Section id="evidence" aria-labelledby="evid-h">
+    <SectionHeader id="evid-h" eyebrow="Evidence" title="What an Independent Randomized Trial Found" />
+    <div class="om__text"><CopyText block={trial} /></div>
+    <p class="om__link"><a class="link" href={linkAttrs('/impact/independent-evaluation/').href}>The Randomized Trial<Icon name="arrow-right" size={16} /></a></p>
   </Section>
 
   <Section id="delivery" aria-labelledby="delivery-h">
@@ -113,12 +123,6 @@ const faqSources: FaqSource[] = [
       <ProgramCard icon="route" title="TalentLEAP" text="CodersTrust’s competency-based talent development model: skill units, career paths and mentoring, with levels from Competent to Proficient and Expert." href="/our-model/talentleap/" linkLabel="How TalentLEAP Works" />
       <ProgramCard icon="layout-dashboard" title="JobReady Platform" text="The digital learning and earning platform, from the AI Tutor to the work marketplaces." href="/our-model/jobready-platform/" linkLabel="See the Platform Capabilities" />
     </div>
-  </Section>
-
-  <Section id="evidence" aria-labelledby="evid-h">
-    <SectionHeader id="evid-h" eyebrow="Evidence" title="Evidence Behind the Approach" />
-    <div class="om__text"><CopyText block={trial} /></div>
-    <p class="om__link"><a class="link" href={linkAttrs('/impact/independent-evaluation/').href}>The Randomized Trial<Icon name="arrow-right" size={16} /></a></p>
   </Section>
 
   <!-- WP24c: a compact partner Q&A band -->

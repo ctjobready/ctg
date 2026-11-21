@@ -4,6 +4,7 @@ import SectionHeader from '../../ui/SectionHeader.astro';
 import Icon from '../../system/Icon.astro';
 import Badge from '../../system/Badge.astro';
 import { pricingParts } from './partners';
+import { linkAttrs } from '../../../lib/url';
 
 /**
  * C11 offer cards for audiences whose options differ from the three-option OfferBand (universities:
@@ -23,6 +24,8 @@ interface Card {
   meta?: string;
   text: string;
   facts?: string[];
+  /** WP166-B (marketing review R3-31): the card's own next step as a text link under its text (Employers: each option links to its inquiry email; the closing band below keeps the one solid button). */
+  action?: { label: string; href: string };
 }
 interface Props {
   title: string;
@@ -55,6 +58,7 @@ const pricing = pricingParts();
             {c.headline && <p class="oc__headline">{c.headline}</p>}
             {c.meta && <p class="card__meta oc__meta">{c.meta}</p>}
             <p class="card__text">{c.text}</p>
+            {c.action && <p class="oc__action"><a class="link" href={linkAttrs(c.action.href).href} rel={linkAttrs(c.action.href).rel}>{c.action.label}<Icon name="arrow-right" size={16} /></a></p>}
           </div>
         </article>
       ))
@@ -77,6 +81,9 @@ const pricing = pricingParts();
 </Section>
 
 <style>
+  .oc__action {
+    margin: var(--space-sm) 0 0;
+  }
   .oc__rec {
     margin: 0 0 var(--space-xs);
   }

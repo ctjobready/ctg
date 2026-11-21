@@ -155,7 +155,8 @@ test('Minor 1: the Case Studies index and the JobReady Platform closing lines as
   expect(main('impact/case-studies/index.html')).toContain(`In a discovery session, we start planning a first cohort for your own program. ${ASK}`);
   const platform = main('our-model/jobready-platform/index.html');
   // WP163 (owner answers of 3 November 2026: no capability is labelled live or pending): "a platform grant supports JobReady’s platform infrastructure" (it said "helps CodersTrust roll out the remaining modules").
-  expect(platform).toContain(`A discovery session covers how JobReady fits your program, and a platform grant supports JobReady’s platform infrastructure. ${ASK}`);
+  // WP166-B (marketing review R2-40): the closing line no longer mixes the grant audience into it (it said "A discovery session covers how JobReady fits your program, and a platform grant supports JobReady’s platform infrastructure. ...").
+  expect(platform).toContain(`A discovery session covers how JobReady fits your program. ${ASK}`);
   expect(platform).not.toContain('details are shared in the discovery session');
   const local = main('partner-with-us/local-partners/index.html');
   expect(local).toContain('In your inquiry, include two suitable times for a discovery session.');

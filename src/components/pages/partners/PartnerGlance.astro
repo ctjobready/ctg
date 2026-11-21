@@ -111,6 +111,8 @@ const groupedTiles = single ? [] : moreTiles;
       </>
     )
   }
+  {/* WP166-B (marketing review R3-23): an optional note under the tiles (Development Partners, Foundations and Governments: what the trial and the survey describe, with the links to both; it was a band of its own, "See the Evidence Behind the Results"). */}
+  {Astro.slots.has('default') && <div class="pg__after"><slot /></div>}
 </Section>
 
 <style>
@@ -126,6 +128,15 @@ const groupedTiles = single ? [] : moreTiles;
     h2.pg__title {
       letter-spacing: -0.5px;
     }
+  }
+  .pg__after {
+    margin: var(--space-md) 0 0;
+    display: grid;
+    gap: var(--space-xs);
+    max-width: 52rem;
+  }
+  .pg__after > :global(*) {
+    margin: 0;
   }
   .pg__more-title {
     margin: var(--space-lg) 0 var(--space-sm);

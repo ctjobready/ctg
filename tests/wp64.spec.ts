@@ -214,21 +214,21 @@ test.describe('Item 5 (Kimi) and RW1: the 9,000+ labs name the publisher of the 
     expect(withSourceNote('SC-01', 'learners trained since 2014')).toBe('learners trained since 2014');
   });
 
-  test('YouthWIDE’s Bangladesh band and Local Partners’ track record print the label with the note after the labs and, under it, the register’s detail line; no year is made up', async ({ page }) => {
+  // WP166-B (marketing review R3-38): Local Partners' track-record band shows CodersTrust's delivery scale (SC-01) in place of the government-lab count (GV-09), so its labs tile is gone; the checks of that
+  // tile's label and note are gone with it, and YouthWIDE is the one band that prints the labs tile.
+  test('YouthWIDE’s Bangladesh band prints the label with the note after the labs and, under it, the register’s detail line; no year is made up (WP166-B: Local Partners’ labs tile is gone)', async ({ page }) => {
     await open(page, YOUTHWIDE);
     const yw = page.locator('#governments .mech-stat', { has: page.locator('[data-fact="GV-09"]') });
     await expect(yw).toHaveCount(1);
     expect(compact(await yw.locator('.stat__label').textContent())).toBe(SHOWN);
     expect(compact(await yw.locator('.stat__note').textContent())).toBe(QUALIFIER);
+    expect(compact(await yw.locator('.stat__label').textContent())).not.toMatch(/\b(?:19|20)\d{2}\b/);
     await open(page, LOCAL_PARTNERS);
-    const lp = page.locator('#guide .factstat[data-fact="GV-09"]');
-    await expect(lp).toHaveCount(1);
-    expect(compact(await lp.locator('.stat__label').textContent())).toBe(SHOWN);
-    expect(compact(await lp.locator('.stat__note').textContent())).toBe(QUALIFIER);
-    expect(compact(await lp.locator('.stat__label').textContent())).not.toMatch(/\b(?:19|20)\d{2}\b/);
+    await expect(page.locator('#guide .factstat[data-fact="GV-09"]')).toHaveCount(0);
   });
 
-  test('wherever a built page shows the labs figure it says Bangladesh within the same tile or sentence (YouthWIDE, Local Partners and SuperKids; nothing else shows it)', () => {
+  // WP166-B (marketing review R3-38): Local Partners no longer shows the labs figure (it was one of the three pages).
+  test('wherever a built page shows the labs figure it says Bangladesh within the same tile or sentence (YouthWIDE and SuperKids; nothing else shows it)', () => {
     const shown: string[] = [];
     const problems: string[] = [];
     for (const p of sitePages()) {
@@ -242,14 +242,15 @@ test.describe('Item 5 (Kimi) and RW1: the 9,000+ labs name the publisher of the 
       }
       if (hits) shown.push(p.route);
     }
-    expect(shown.sort()).toEqual(['/partner-with-us/local-partners/', '/programs/superkids/', '/programs/youthwide/']);
+    expect(shown.sort()).toEqual(['/programs/superkids/', '/programs/youthwide/']);
     expect(problems).toEqual([]);
   });
 
+  // WP166-B (marketing review R3-38): the Local Partners tile is gone, so YouthWIDE's is the one tile measured (it was the two).
   test('the tile’s whole text stays inside its box at 1280 and 390, with no sideways scroll', async ({ page }) => {
     for (const vp of [DESKTOP, MOBILE]) {
       await page.setViewportSize(vp);
-      for (const [route, selector] of [[YOUTHWIDE, '#governments .mech-stat:has([data-fact="GV-09"])'], [LOCAL_PARTNERS, '#guide .factstat[data-fact="GV-09"] .stat']] as const) {
+      for (const [route, selector] of [[YOUTHWIDE, '#governments .mech-stat:has([data-fact="GV-09"])']] as const) {
         await open(page, route);
         await scrollThrough(page);
         expect(await noOverflow(page), `${route} at ${vp.width}px`).toBe(true);
@@ -264,9 +265,10 @@ test.describe('Item 5 (Kimi) and RW1: the 9,000+ labs name the publisher of the 
 
   test('SuperKids’ DoICT target says the labs are in Bangladesh; the NCTB target and the agreement-target sentence are unchanged', async ({ page }) => {
     await open(page, SUPERKIDS);
+    // WP166-B (marketing review R2-29): each agreement line opens with its scope (GV-08's words) and then its target (they read "DoICT agreement target: ..." and "NCTB agreement target: 20M+ students.").
     expect(await texts(page, '.agree__fact p')).toEqual([
-      'DoICT agreement target: 20M+ students through 9,000+ digital labs in Bangladesh.',
-      'NCTB agreement target: 20M+ students.',
+      'DoICT agreement, primary-school STEM and robotics: target of 20M+ students through 9,000+ digital labs in Bangladesh.',
+      'NCTB agreement, competency-based experiential learning: target of 20M+ students.',
       'These are agreement targets, not delivered reach.',
     ]);
     expect(await page.locator('.agree__fact').getAttribute('data-fact')).toBe('GV-08');
@@ -372,14 +374,16 @@ test.describe('Item 7 (GLM, Gemini, Claude): three polish fixes', () => {
   test('TalentLEAP’s opening and Investors’ "Learn Through TalentLEAP" card say "The first published TalentLEAP level is Competent; Proficient and Expert levels are planned."; the old sentence is on no built page', async ({ page }) => {
     // WP163 (owner answers of 3 November 2026): no level is labelled planned; the opening names the three levels, and the Investors card names them with the adaptive learning paths and then states the
     // delivery model (it said "The first published TalentLEAP level is Competent; Proficient and Expert levels are planned." in both places).
-    const SENTENCE = 'Its levels run from Competent to Proficient and Expert.';
+    // WP166-B (marketing review R2-34): TalentLEAP's opening leads with the difference and names the levels in "Levels run from Competent to Proficient and Expert, ..." (it read "TalentLEAP organizes learning
+    // around assessed skill units and career paths. Its levels run from Competent to Proficient and Expert. Learners move through three stages, ..."); R3-24: the Investors card no longer carries the
+    // delivery-model sentence (it is the lead of "How JobReady Connects Learning to Work").
     await open(page, TALENTLEAP);
     expect(compact(await page.locator('.lf-head .lead').textContent())).toBe(
-      `TalentLEAP organizes learning around assessed skill units and career paths. ${SENTENCE} Learners move through three stages, Learn, Earn and Prosper, with three months of milestone-based mentoring after the course.`,
+      'TalentLEAP organizes learning around skill units that are assessed, not around hours attended alone. Levels run from Competent to Proficient and Expert, and three months of milestone-based mentoring follow the course.',
     );
     await open(page, INVESTORS);
     await expect(page.locator('#features li.card').first().locator('h3')).toHaveText('Learn Through TalentLEAP');
-    expect(await texts(page, '#features li.card:nth-child(1) p')).toEqual([`TalentLEAP’s levels run from Competent to Proficient and Expert, with AI-driven personalized and adaptive learning paths. Training follows an AI-supported flipped classroom: all lectures are pre-recorded and an AI Tutor supports every learner, so mentors’ time goes to Q&A and to handholding beyond what the AI Tutor can provide. Supported cohorts include mentoring, certification exam preparation and placement support. Cohort inclusions on this page are agreed in each program’s scope.`]); // WP142: the page's one scope sentence follows the cohort-inclusions sentence
+    expect(await texts(page, '#features li.card:nth-child(1) p')).toEqual([`TalentLEAP’s levels run from Competent to Proficient and Expert, with AI-driven personalized and adaptive learning paths. Supported cohorts include mentoring, certification exam preparation and placement support. Cohort inclusions on this page are agreed in each program’s scope.`]); // WP142: the page's one scope sentence follows the cohort-inclusions sentence
     expect(pagesWith('Competent is the published first level; Proficient and Expert are planned')).toEqual([]);
     expect(fact('IN-08').text).toContain('Competent is the first level; Proficient and Expert are planned');
   });
@@ -408,13 +412,20 @@ test.describe('RW2 (coordinator): "Since 2014" is said once in the bands whose h
     expect(fact('SC-01').stat?.label).toBe('learners trained since 2014');
   });
 
+  // WP166-B: two bands changed. Foundations (marketing review R3-28) opens with the funders who have worked with CodersTrust in place of the origin line, so it has no origin line; Employers (R3-06) is headed
+  // "Employers and Partners We Work With", so its origin line keeps the year (ORIGIN_SHORT; it read the LINE under the heading HEADING). The rule this test holds is unchanged: "since 2014" is said once in the band.
+  const BAND_STATE: Record<string, { heading: string; line: string | null }> = {
+    [FOUNDATIONS]: { heading: HEADING, line: null },
+    [EMPLOYERS]: { heading: 'Employers and Partners We Work With', line: LINE }, // WP166-B (marketing review R3-06): Employers' band is headed "Employers and Partners We Work With"; its signed-agreement sentence carries "since 2014" (WP66), so the origin line is the year-less one it printed before ("since 2014" once in the band, WP64)
+  };
   for (const route of BANDS) {
-    test(`${route}: the band is headed "${HEADING}", its origin line is "${LINE}" (still tied to ID-02 and SC-03), and "since 2014" is in the heading alone`, async ({ page }) => {
+    const want = BAND_STATE[route] ?? { heading: HEADING, line: route === DEV_PARTNERS ? LINE_REGIONS : LINE }; // WP150: Development Partners shows the SC-03 tile, so its line names the regions
+    test(`${route}: the band is headed "${want.heading}", its origin line is ${want.line ? `"${want.line}" (still tied to ID-02 and SC-03)` : 'gone (WP166-B)'}, and "since 2014" is said once in the band`, async ({ page }) => {
       await open(page, route);
-      await expect(page.locator('#guide h2')).toHaveText(HEADING);
+      await expect(page.locator('#guide h2')).toHaveText(want.heading);
       const line = page.locator('#guide p[data-fact="ID-02 SC-03"]');
-      await expect(line).toHaveCount(1);
-      expect(compact(await line.textContent())).toBe(route === DEV_PARTNERS ? LINE_REGIONS : LINE); // WP150: Development Partners shows the SC-03 tile, so its line names the regions
+      await expect(line).toHaveCount(want.line ? 1 : 0);
+      if (want.line) expect(compact(await line.textContent())).toBe(want.line);
       expect(compact(await page.locator('#guide').textContent()).match(/since 2014/gi)).toHaveLength(1);
     });
   }
@@ -454,9 +465,11 @@ test.describe('RW2 (coordinator): "Since 2014" is said once in the bands whose h
     expect(compact(await page.locator('main').textContent())).toContain('launched CodersTrust in Copenhagen in 2014');
   });
 
-  test('no built page prints the old origin line, "Since 2014, from a Copenhagen launch ...", because every page that prints it is headed with the year', () => {
-    expect(pagesWith('Since 2014, from a Copenhagen launch')).toEqual([]);
-    expect(pagesWith(LINE).sort()).toEqual(['/partner-with-us/employers/', '/partner-with-us/foundations/', '/partner-with-us/governments/', '/partner-with-us/universities/']); // WP150: Development Partners and Investors name the regions
+  // WP166-B (marketing review R3-06, R3-28): Employers' band is no longer headed with the year, so it prints the full origin line, "Since 2014, from a Copenhagen launch ..." (it printed LINE); Foundations prints
+  // no origin line. The other pages that print it are still headed with the year.
+  test('no built page prints the old origin line, "Since 2014, from a Copenhagen launch ..."', () => {
+    expect(pagesWith('Since 2014, from a Copenhagen launch')).toEqual([]); // WP166-B (marketing review R3-06): Employers' band is headed "Employers and Partners We Work With"; its signed-agreement sentence carries "since 2014" (WP66), so the origin line is the year-less one it printed before ("since 2014" once in the band, WP64)
+    expect(pagesWith(LINE).sort()).toEqual(['/partner-with-us/employers/', '/partner-with-us/governments/', '/partner-with-us/universities/']); // WP150: Development Partners and Investors name the regions
     expect(pagesWith(LINE_REGIONS).sort()).toEqual(['/partner-with-us/development-partners/', '/partner-with-us/investors/']);
   });
 

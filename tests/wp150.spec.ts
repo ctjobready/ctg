@@ -113,7 +113,8 @@ test.describe('1 Sweep: CodersTrust prepares for certification; it does not deli
 
   test('JobReady@Campus "What" card: "Certification Preparation and Internships"', () => {
     const text = main(CAMPUS);
-    expect(text).toContain('What Certification Preparation and Internships Preparation for industry-recognized certifications, plus professional internships where employer placements are available.');
+    // WP166-B (marketing review R2-14, R2-08): the card adds "on tracks set from employer demand" (from the cut "What You Get" band) and the page's one delivery-model sentence after this one (it read "Preparation for industry-recognized certifications, plus ...").
+    expect(text).toContain('What Certification Preparation and Internships Preparation for industry-recognized certifications on tracks set from employer demand, plus professional internships where employer placements are available.');
     expect(headings(CAMPUS)).toContain('Certification Preparation and Internships');
     expect(headings(CAMPUS)).not.toContain('Certification and Internships');
   });
@@ -275,10 +276,15 @@ test.describe('3 The origin line on Development Partners and Investors does not 
     expect(offenders).toEqual([]);
   });
 
-  test('the pages without the tile keep the sentence (Governments, Foundations, Universities, Employers)', () => {
-    for (const p of ['governments', 'foundations', 'universities', 'employers']) {
+  // WP166-B (marketing review R3-28, R3-06): Foundations' band opens with the funders who have worked with CodersTrust in place of the origin line (it is no longer on that page), and Employers' band is headed
+  // "Employers and Partners We Work With"; Employers' band is headed "Employers and Partners We Work With"; its signed-agreement sentence carries "since 2014" (WP66), so the origin line is the year-less one it printed before ("since 2014" once in the band, WP64). Governments, Universities and Employers keep the sentence as it was.
+  test('the pages without the tile keep the sentence (Governments, Universities, Employers)', () => {
+    for (const p of ['governments', 'universities', 'employers']) {
       expect(main(`partner-with-us/${p}/index.html`), p).toContain('From a Copenhagen launch to work in 16 countries and territories.');
     }
+    expect(main('partner-with-us/employers/index.html')).not.toContain('Since 2014, from a Copenhagen launch');
+    // WP166-B (marketing review R3-28): the Foundations origin line was replaced by the funders' line; the assertion on it is gone with it.
+    expect(main('partner-with-us/foundations/index.html')).toContain('Organizations that have worked with CodersTrust include the Rockefeller Foundation, DANIDA and Porticus.');
   });
 });
 
@@ -287,7 +293,7 @@ test.describe('4 YouthWIDE: "lab access and seats are confirmed per program" is 
   test('the Bangladesh band lead drops the clause; the tile caption keeps it (once on the page)', () => {
     const raw = /<section[^>]*id="governments"[\s\S]*?<\/section>/.exec(html(YOUTHWIDE))?.[0] ?? '';
     const band = visible(raw);
-    expect(band).toContain('Delivery Base in Bangladesh and the 2030 Aim');
+    expect(band).toContain('Designed for the Digital Labs and Colleges Governments Already Have'); // WP166-B (marketing review R2-11): the band's heading (it was "Delivery Base in Bangladesh and the 2030 Aim")
     expect(band).toContain('Designed for delivery through existing government digital labs and colleges.');
     expect(band).toContain(`In Bangladesh; ${Q}.`);
     expect(count(band, Q)).toBe(1);

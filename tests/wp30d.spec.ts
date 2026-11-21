@@ -70,11 +70,12 @@ test.describe('YouthWIDE leads with the global program', () => {
     expect(compact(await page.locator('section#governments').innerText())).toContain('not a delivered figure');
   });
 
-  test('the Programs hub card names the country cohorts before the Bangladesh aim', async ({ page }) => {
+  test('the Programs hub card names the country cohorts (WP166-B: it no longer states the Bangladesh aim)', async ({ page }) => {
     await open(page, 'programs/');
     const text = compact(await page.locator('#programs-grid li:has(a[href$="programs/youthwide/"])').textContent());
     expect(text.indexOf('co-funded country cohorts')).toBeGreaterThan(-1);
-    expect(text.indexOf('co-funded country cohorts')).toBeLessThan(text.indexOf('It aims to train')); // WP99: the aim sentence opens "It aims to train 1 million educated youth ..." (it opened "In Bangladesh it aims")
+    // WP166-B (marketing review R2-41): the card no longer states the 2030 aim (it is on the YouthWIDE page), so nothing follows the cohorts; the order assertion is gone with it.
+    expect(text).not.toContain('It aims to train');
   });
 
   test('the structured data lists no roadmap the page does not show', async ({ page }) => {
@@ -175,7 +176,8 @@ test.describe('anchors that other pages link to stay', () => {
     ['programs/youthwide/', ['governments', 'cta', 'cta-governments', 'mechanism', 'proof-band', 'next-steps']],
     // WP31: #proof-band left the Work page with its youth-program trial block; no page linked to that anchor (#mechanism and #next-steps are linked, from the employer due-diligence view)
     ['programs/jobready-work/', ['mechanism', 'next-steps', 'cta']],
-    ['programs/jobready-campus/', ['mechanism', 'features', 'next-steps', 'cta']],
+    // WP166-B (marketing review R2): the "What You Get" band (#features) left JobReady@Campus, and no page links to that anchor; the assertion is gone with it.
+    ['programs/jobready-campus/', ['mechanism', 'next-steps', 'cta']],
   ];
   for (const [route, ids] of ANCHORS) {
     test(`${route} keeps ${ids.map((i) => '#' + i).join(' ')}`, async ({ page }) => {

@@ -41,7 +41,8 @@ test.describe('Investors page structure', () => {
   test('delivered reach leads the track-record band; the contract scope is its own labeled block in the next reach band', async ({ page }) => {
     await page.goto(URL);
     expect(await texts(page, '#guide h3')).toEqual(['Scale and Partners']);
-    expect(await texts(page, '#reach h3')).toEqual(['Contracted Scope']);
+    // WP166-B (marketing review R3-16): the National University partnership is the reach band's first group, under its own subheading, before the contract scope (the band's subheadings were ['Contracted Scope']).
+    expect(await texts(page, '#reach h3')).toEqual(['The National University Partnership', 'Contracted Scope']);
     const order = await page.evaluate(() => {
       const top = (sel: string) => (document.querySelector(sel) as HTMLElement).getBoundingClientRect().top + window.scrollY;
       return { delivered: top('#guide .ig__delivered'), partners: top('#guide .ig__names'), leadership: top('#guide .ig__leaders') };
@@ -70,7 +71,7 @@ test.describe('Investors page structure', () => {
     // WP30c: the thesis band has no lead line; its three cards carry the argument. WP50 (cycle-25 review): the second card is "Connect Learning to Paid Work" with one line about what JobReady is being built to do
     // (it was "Online Learning Sells Content, Not Earnings" over a sentence about what many online courses lack; tests/wp50.spec.ts)
     // WP163 (owner answers of 3 November 2026: no capability is labelled in development): "is designed to" (it said "is being built to").
-    expect(text).toContain('JobReady is designed to link learners to paid work through mentoring and placement support.'); // WP152: the body no longer repeats its heading and has no comma before "through" (WP151: "connect learning to paid work, through ..."; before that "connect learning with mentoring and placement support.")
+    expect(text).toContain('JobReady is designed to link learners to paid work through mentoring and placement support, the model CodersTrust has run since 2014.'); // WP166-B (marketing review R3-36): the line adds ", the model CodersTrust has run since 2014." (it ended "... placement support."). WP152: the body no longer repeats its heading and has no comma before "through" (WP151: "connect learning to paid work, through ..."; before that "connect learning with mentoring and placement support.")
     expect(text).not.toContain('Many online courses provide content without the work-entry support that turns skills into income');
     // WP48 (cycle-23 review): the closing stakes line ("Every trained young person who remains out of work is an opportunity employers and communities are not yet capturing.") is gone; it added no fact
     expect(text).not.toContain('is an opportunity employers and communities are not yet capturing');

@@ -29,14 +29,16 @@ function fastAnswer(page: Page) {
 }
 
 test.describe('WP68 RW1: the Universities band keeps its heading and takes a page-level eyebrow', () => {
-  test('the band reads "Our Partnerships" over "The National University Partnership", keeps its anchor and its clarifying sentence and its three figures', async ({ page }) => {
+  // WP166-B (marketing review R3-13): the heading states the claim (it was "The National University Partnership"), and the clarifying sentence is the note under the two cards (.pe__note; it was the lead, .sh__lead, above them).
+  test('the band reads "Our Partnerships" over its heading (WP166-B: the claim), keeps its anchor and its clarifying sentence (now under the cards) and its figures', async ({ page }) => {
     await page.setViewportSize(DESKTOP);
     await open(page, 'partner-with-us/universities/');
     const band = page.locator('#offer-evidence');
     await expect(band).toHaveCount(1);
     await expect(band.locator('.eyebrow').first()).toHaveText('Our Partnerships');
-    await expect(band.locator('h2')).toHaveText('The National University Partnership');
-    expect(compact(await band.locator('.sh__lead').textContent())).toContain('These cards describe the learners being onboarded and National University’s size, not learners trained by CodersTrust.'); // WP136: the band has two cards now, so the lead says "These cards" (WP132 had "The first two cards") (was "...; they are not learners trained by CodersTrust")
+    await expect(band.locator('h2')).toHaveText('Official Training Partner of the World’s Second-Largest University by Enrollment');
+    await expect(band.locator('.sh__lead')).toHaveCount(0);
+    expect(compact(await band.locator('.pe__note').textContent())).toContain('These cards describe the learners being onboarded and National University’s size, not learners trained by CodersTrust.'); // WP136: the band has two cards now, so the lead says "These cards" (WP132 had "The first two cards") (was "...; they are not learners trained by CodersTrust")
     await expect(band.locator('.pe__item')).toHaveCount(2); // WP136: the University Partners card is gone
   });
 
@@ -45,9 +47,13 @@ test.describe('WP68 RW1: the Universities band keeps its heading and takes a pag
     await expect(page.locator('#offer-evidence .eyebrow', { hasText: 'Evidence for This Offer' })).toHaveCount(0);
   });
 
-  test('JobReady@Campus keeps its own eyebrow, "Delivery Context: National University", on its evidence band', async ({ page }) => {
+  // WP166-B (marketing review R2-16): JobReady@Campus' "Delivery Context: National University" band (#offer-evidence) is gone; its two National University figures (SC-04, SC-05) are in the university band
+  // (#guide), which keeps its own page-level eyebrow, "Our University Partnerships" (so the page still does not borrow Universities' "Our Partnerships").
+  test('JobReady@Campus keeps its own eyebrow on the band that carries the National University figures (WP166-B: "Our University Partnerships"; the "Delivery Context: National University" band is gone)', async ({ page }) => {
     await open(page, 'programs/jobready-campus/');
-    await expect(page.locator('#offer-evidence .eyebrow').first()).toHaveText('Delivery Context: National University');
+    await expect(page.locator('#offer-evidence')).toHaveCount(0);
+    await expect(page.locator('#guide .eyebrow').first()).toHaveText('Our University Partnerships');
+    await expect(page.locator('#guide [data-fact="SC-04"], #guide [data-fact="SC-05"]')).toHaveCount(2);
   });
 });
 

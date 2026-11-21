@@ -19,9 +19,9 @@ const { id = 'definition' } = Astro.props;
 ---
 
 <Section id={id} pad="sm" aria-labelledby={`${id}-h`}>
-  <div class="def" data-fact="ID-01 IN-04">
+  {/* WP166-B (marketing review R3-09, owner approval of 21 November 2026): "JobReady is CodersTrust’s digital learning and earning platform for emerging markets." opens the hero now, so the definition is ID-01 alone. */}
+  <div class="def" data-fact="ID-01">
     <h2 class="def__title" id={`${id}-h`}>{DEFINITION_HEADING}</h2>
     <p class="def__text">{fact('ID-01').text}</p>
-    <p class="def__text">JobReady is CodersTrust’s digital learning and earning platform for emerging markets.</p>
   </div>
 </Section>

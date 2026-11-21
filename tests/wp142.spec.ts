@@ -182,12 +182,13 @@ test.describe('WP142 item 4: Employers card 2', () => {
   test('the heading and body speak team training: AI content agreed in the needs assessment, before training starts', () => {
     const raw = html('partner-with-us/employers/index.html');
     const text = main('partner-with-us/employers/index.html');
-    expect(text).toContain('AI Content Agreed Before Training');
-    expect(text).toContain('An AI-ready curriculum, designed to prepare people to work with AI tools. Each track’s AI content is agreed with you before training starts.');
+    // WP166-B (marketing review R3-08): the card is headed "AI Skills Scoped to Your Team’s Tasks" (it was "AI Content Agreed Before Training") and names the AIvolve offering; its closing sentence is unchanged.
+    expect(text).toContain('AI Skills Scoped to Your Team’s Tasks');
+    expect(text).toContain('An AI-ready curriculum, designed to prepare people to work with AI tools, plus AI leadership and AI-transformation programs with AIvolve. Each track’s AI content is agreed with you before training starts.');
     expect(text).not.toContain('AI Content Agreed Before Enrollment');
     expect(text).not.toContain('work-entry plan');
     expect(text).not.toContain('agreed before enrollment');
-    expect(/<h3[^>]*>\s*AI Content Agreed Before Training\s*<\/h3>/.test(raw), 'card heading is an h3').toBe(true);
+    expect(/<h3[^>]*>\s*AI Skills Scoped to Your Team’s Tasks\s*<\/h3>/.test(raw), 'card heading is an h3').toBe(true);
   });
 });
 

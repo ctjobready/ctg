@@ -178,7 +178,10 @@ test.describe('R4 (Grok): the JobReady Platform pipeline tile says the 1.5M+ are
     expect(campus).not.toContain(`${BASE}, ${NU_NOT_TRAINED}`);
     expect(campus).toContain('they are not learners trained by CodersTrust');
     await open(page, 'partner-with-us/investors/');
-    expect(compact(await page.locator('main').textContent())).toContain('Not counted in the delivered reach: 1.5M+ National University learners being onboarded (the university’s own learners, not learners trained by CodersTrust)'); // WP155 (Polish 2): was "Separately, and not counted in the delivered reach: ..."
+    // WP155 (Polish 2): was "Separately, and not counted in the delivered reach: ...". WP166-B (marketing review R3-16): the separation is the band's eyebrow and the group's own subheading (the paragraph opened "Not counted in the delivered reach: ")
+    expect(compact(await page.locator('#reach p[data-fact="SC-04"]').textContent())).toContain('1.5M+ National University learners being onboarded (the university’s own learners, not learners trained by CodersTrust)');
+    await expect(page.locator('#reach .eyebrow')).toHaveText('Beyond Delivered Reach');
+    await expect(page.locator('#reach h3').first()).toHaveText('The National University Partnership');
   });
 });
 
@@ -219,10 +222,11 @@ test.describe('S3 (Claude): the 1 million 2030 aim carries its dependency on eve
     expect(AIM_DEPENDENCY).toBe('depending on government and donor commitments');
   });
 
-  test('Programs, Impact, About and YouthWIDE (the regions row and the 2030 aim tile) say it', async ({ page }) => {
+  test('Impact, About and YouthWIDE (the regions row and the 2030 aim tile) say it; Programs no longer states the aim (WP166-B)', async ({ page }) => {
     await open(page, 'programs/');
     // WP106 (Polish, accepted): the Programs card is the short form of the aim; the full statement stays on About and YouthWIDE
-    expect(compact(await page.locator('main').textContent())).toContain(`It aims to train 1 million educated youth by 2030, ${AIM_DEPENDENCY}.`);
+    // WP166-B (marketing review R2-41): the Programs card no longer states the aim (it says what YouthWIDE does); the assertion is gone with it, and the hub states no 1 million aim
+    expect(compact(await page.locator('main').textContent())).not.toContain('It aims to train 1 million educated youth');
     await open(page, 'impact/');
     const tile = page.locator('#heading a[data-fact~="IN-01"]');
     await expect(tile).toHaveCount(1);
@@ -242,7 +246,7 @@ test.describe('S3 (Claude): the 1 million 2030 aim carries its dependency on eve
       .map((p) => ({ route: p.route, text: visible(p.html) }))
       .map((p) => ({ route: p.route, windows: [...p.text.matchAll(/(?<![\d,.])1 million.{0,330}/g)].map((m) => m[0]).filter((w) => /educated youth/.test(w) && /2030/.test(w)) }))
       .filter((p) => p.windows.length > 0);
-    expect(pages.map((p) => p.route).sort()).toEqual(['/about/', '/impact/', '/programs/', '/programs/youthwide/']);
+    expect(pages.map((p) => p.route).sort()).toEqual(['/about/', '/impact/', '/programs/youthwide/']); // WP166-B (marketing review R2-41): the Programs hub card no longer states the aim (it was the third of four pages)
     for (const p of pages) for (const w of p.windows) expect(w, p.route).toContain(AIM_DEPENDENCY);
   });
 });
@@ -392,9 +396,10 @@ test.describe('G5 (GPT-6.1 Sol): Local Partners’ first "What Your Community Ge
     const card = page.locator('#features li', { has: page.locator('.card__title', { hasText: 'Facilitator Training and a Local Curriculum' }) });
     await expect(card).toHaveCount(1);
     const text = compact(await card.locator('.card__text').textContent());
-    expect(text).toBe('Training of Trainers, a localized curriculum and preparation for industry certification. You do not have to build the curriculum or certification route yourself. Training follows an AI-supported flipped classroom: all lectures are pre-recorded and an AI Tutor supports every learner, so mentors’ time goes to Q&A and to handholding beyond what the AI Tutor can provide.');
+    // WP166-B (marketing review R3-24, R3-05): the third sentence is the track menu (PD-10); the delivery model is in How It Works (it was "Training follows an AI-supported flipped classroom: ...", tied to IN-04)
+    expect(text).toBe('Training of Trainers, a localized curriculum and preparation for industry certification. You do not have to build the curriculum or certification route yourself. Tracks are set per country from employer demand, from a menu that includes digital marketing, graphic design, video editing, web design and development, digital accounting, Python programming and data analysis.');
     expect(text).not.toContain('funding ends');
-    expect(await card.getAttribute('data-fact')).toBe('PD-06 PD-02 PD-01 IN-04');
+    expect(await card.getAttribute('data-fact')).toBe('PD-06 PD-02 PD-01 PD-10');
     expect(compact(await page.locator('main').textContent())).toContain('Where included, what the program builds stays in place');
   });
 });
@@ -479,7 +484,7 @@ test.describe('L7 (GLM): the JobReady Platform capabilities table keeps the cour
     const first = rows.first();
     expect(compact(await first.locator('th').textContent())).toBe('Train');
     expect(compact(await first.locator('td[data-label="Capability"]').textContent())).toBe('Course storefront at jobready.global');
-    expect(compact(await first.locator('td[data-label="Note"]').textContent())).toBe('CodersTrust’s course storefront operates at jobready.global.');
+    expect(compact(await first.locator('td[data-label="What It Does"]').textContent())).toBe('CodersTrust’s course storefront operates at jobready.global.'); // WP166-B (marketing review R2): the column is "What It Does" (it was "Note")
     expect(await texts(page, '#status .badge')).toEqual([]);
   });
 });
@@ -498,9 +503,9 @@ test.describe('GM1 (Gemini): the Programs hub’s evidence band is scoped to you
     expect(sitePages().filter((p) => p.route === '/programs/' && visible(p.html).includes('Trial and Survey Evidence'))).toEqual([]);
   });
 
-  test('YouthWIDE, which is a youth-employment program, keeps "Trial and Survey Evidence"', async ({ page }) => {
+  test('YouthWIDE, which is a youth-employment program, keeps an unscoped trial heading (WP166-B: "More Employment for Women Offered a Place, in a Randomized Trial"; it was "Trial and Survey Evidence")', async ({ page }) => {
     await open(page, YOUTHWIDE);
-    await expect(page.locator('#proof-band h2')).toHaveText('Trial and Survey Evidence');
+    await expect(page.locator('#proof-band h2')).toHaveText('More Employment for Women Offered a Place, in a Randomized Trial'); // WP166-B (marketing review R2): the heading states the result (it was "Trial and Survey Evidence"); it is still not scoped as the hub's band is
   });
 });
 

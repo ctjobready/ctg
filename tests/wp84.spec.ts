@@ -140,8 +140,8 @@ test.describe('WP84: the shared contract-scope note', () => {
     expect(visible(investors?.html ?? ''), 'investors').toContain('Her Power’s 25,125 are already counted in the 150,000+ enrollments above, not additional people.');
   });
 
-  // WP166-C (R4-17): Impact prints the first sentence too, so its tile no longer cites SC-02 (the 150,000+ the overlap sentence named)
-  test('Impact, Governments and JobReady Platform print the first sentence, tied to their own facts', async ({ page }) => {
+  // WP166-B (marketing review R2-39, owner approval of 21 November 2026): the JobReady Platform's contract-scope tile and its note (the first sentence, GV-12 GV-01 GV-11) are gone; the assertions on that note are gone with it.
+  test('Impact prints the whole note tied to SC-02; Governments prints the first sentence, tied to its own facts; the JobReady Platform no longer prints it', async ({ page }) => {
     await page.setViewportSize(DESKTOP);
     await open(page, 'impact/');
     const tile = page.locator('#glance [data-fact~="GV-12"]').first();
@@ -153,9 +153,8 @@ test.describe('WP84: the shared contract-scope note', () => {
     expect(compact(await gov.locator('.pg__note').textContent())).toBe(SHORT_NOTE);
     expect(await gov.locator('a.pg__tile').getAttribute('data-fact')).toBe('GV-12 SC-06 GV-01 GV-11');
     await open(page, 'our-model/jobready-platform/');
-    const jr = page.locator('#why .jr__whynote');
-    expect(compact(await jr.textContent())).toBe(SHORT_NOTE);
-    expect(await jr.getAttribute('data-fact')).toBe('GV-12 GV-01 GV-11');
+    await expect(page.locator('#why .jr__whynote')).toHaveCount(0);
+    expect(compact(await page.locator('main').textContent())).not.toContain(SHORT_NOTE);
   });
 
   test('Home’s government slide is unchanged: its own contract-scope sentences, no overlap sentence, data-fact still GV-12 GV-01 GV-11 SC-04', async ({ page }) => {

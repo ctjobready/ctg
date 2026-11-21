@@ -68,8 +68,10 @@ test.describe('The Bangladesh initiative is an aim, not an existing national pro
   test('YouthWIDE: the Bangladesh band is headed "Delivery Base in Bangladesh and the 2030 Aim" (Title Case), the glance row says "aims", the meta description says "a 2030 aim"', async ({ page }) => {
     await open(page, 'programs/youthwide/');
     const heading = page.locator('section#governments').getByRole('heading', { level: 2 });
-    await expect(heading).toHaveText('Delivery Base in Bangladesh and the 2030 Aim');
-    expect('Delivery Base in Bangladesh and the 2030 Aim').toBe(titleCase('Delivery Base in Bangladesh and the 2030 Aim'));
+    // WP166-B (marketing review R2): the band is headed with its benefit (it was "Delivery Base in Bangladesh and the 2030 Aim"); its 2030 aim tile still says the aim is not a delivered figure
+    await expect(heading).toHaveText('Designed for the Digital Labs and Colleges Governments Already Have');
+    expect('Designed for the Digital Labs and Colleges Governments Already Have').toBe(titleCase('Designed for the Digital Labs and Colleges Governments Already Have'));
+    expect(compact(await page.locator('section#governments').textContent())).toContain('An ambition, depending on government and donor commitments; not a delivered figure.');
     expect(compact(await page.locator('#program-glance .pg__row').first().textContent())).toContain('Bangladesh is where most delivery has been. YouthWIDE aims to train 1 million educated youth (Higher Secondary Certificate or above) for digital employment by 2030, in Bangladesh and similar countries in South Asia and the Middle East and North Africa, depending on government and donor commitments.');
     const description = await page.locator('meta[name="description"]').getAttribute('content');
     expect(description).toContain('co-funded cohorts designed for three regions, with a 2030 aim.'); // WP107: the description no longer narrows the aim to Bangladesh (WP104 had dropped "with a" to stay within 155; the sentence is 147 characters now)
@@ -249,11 +251,13 @@ test.describe('Programs: the YouthWIDE card links every audience it names (item 
   test('"Governments, Development Partners and Foundations" (WP67, cycle-38 review: it said "... and Funders") has For Governments, For Development Partners and For Foundations links', async ({ page }) => {
     await open(page, 'programs/');
     const card = page.locator('#programs-grid li:has(a[href$="programs/youthwide/"])');
-    expect(await texts(page, '#programs-grid li:has(a[href$="programs/youthwide/"]) .hub__partner a')).toEqual(['For Governments', 'For Development Partners', 'For Foundations']);
-    expect((await hrefs(page, '#programs-grid li:has(a[href$="programs/youthwide/"]) .hub__partner a')).map(sitePath)).toEqual(['/partner-with-us/governments/', '/partner-with-us/development-partners/', '/partner-with-us/foundations/']);
+    // WP166-B (marketing review R2-41): the card's first link is its own page, "Explore YouthWIDE", before the three audience links
+    expect(await texts(page, '#programs-grid li:has(a[href$="programs/youthwide/"]) .hub__partner a')).toEqual(['Explore YouthWIDE', 'For Governments', 'For Development Partners', 'For Foundations']);
+    expect((await hrefs(page, '#programs-grid li:has(a[href$="programs/youthwide/"]) .hub__partner a')).map(sitePath)).toEqual(['/programs/youthwide/', '/partner-with-us/governments/', '/partner-with-us/development-partners/', '/partner-with-us/foundations/']);
     // WP106 (Polish, accepted): the card is sibling length; the full aim statement and the three regions stay on the YouthWIDE page (tests/wp106.spec.ts item 7)
-    expect(compact(await card.textContent())).toContain('designed as co-funded country cohorts.');
-    expect(compact(await card.textContent())).toContain('It aims to train 1 million educated youth by 2030, depending on government and donor commitments.');
+    // WP166-B (marketing review R2-41): the card says what the program does (it said "The youth digital-employment program, designed as co-funded country cohorts. It aims to train 1 million educated youth by 2030, depending on government and donor commitments."); the aim is on the YouthWIDE page only
+    expect(compact(await card.textContent())).toContain('Prepares educated, unemployed and underemployed youth for paid digital work through training, mentoring and placement support, in co-funded country cohorts.');
+    expect(compact(await card.textContent())).not.toContain('It aims to train');
   });
 });
 

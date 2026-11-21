@@ -294,13 +294,13 @@ test.describe('WP141 item 4: "On This Page" ends with the closing H2', () => {
     return { links: as.map((m) => txt(m[2])), hrefs: as.map((m) => m[1]), closing: h2s[h2s.length - 1] };
   }
 
-  test('the five pages the review named list their closing H2 last, and the entry jumps to it', () => {
+  // WP166-B (marketing review R2-06): the JobReady Platform and TalentLEAP pages have no "On This Page" box any more (it was two of the five pages named here: "Talk to Us About JobReady" and
+  // "See How TalentLEAP Would Run in Your Program"), so their entries are gone with the boxes; the three pages that keep a box are still checked.
+  test('the pages the review named that still have a box (three of the five) list their closing H2 last, and the entry jumps to it', () => {
     for (const [rel, heading] of [
       ['about/governance/index.html', 'Ask About Due Diligence'],
       ['about/recognition/index.html', 'Working on a Story About Youth Employment?'],
       ['about/team/index.html', 'Talk to the Team'],
-      ['our-model/jobready-platform/index.html', 'Talk to Us About JobReady'],
-      ['our-model/talentleap/index.html', 'See How TalentLEAP Would Run in Your Program'],
     ] as const) {
       const t = toc(rel)!;
       expect(t.links[t.links.length - 1], rel).toBe(heading);
@@ -309,9 +309,10 @@ test.describe('WP141 item 4: "On This Page" ends with the closing H2', () => {
     }
   });
 
-  test('sweep: on every built page with an "On This Page" box, the last entry is the last H2 (non-vacuous: 12 boxes today)', () => {
+  // WP166-B (marketing review R2-06): 10 boxes (it was 12; the JobReady Platform and TalentLEAP boxes are gone).
+  test('sweep: on every built page with an "On This Page" box, the last entry is the last H2 (non-vacuous: 10 boxes today)', () => {
     const boxes = allPages().filter(inScope).map((p) => [p, toc(p)] as const).filter(([, t]) => t);
-    expect(boxes.length).toBeGreaterThanOrEqual(12);
+    expect(boxes.length).toBeGreaterThanOrEqual(10);
     const offenders = boxes.filter(([, t]) => t!.links[t!.links.length - 1] !== t!.closing).map(([p, t]) => `${p}: box ends "${t!.links[t!.links.length - 1]}", page ends "${t!.closing}"`);
     expect(offenders).toEqual([]);
   });

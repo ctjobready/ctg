@@ -96,8 +96,9 @@ test.describe('JobReady@Campus: the problem band’s lead says what the program 
 
 test.describe('Local Partners: what stays after funding, and what the monthly reports cover, are scoped (items 3 and 4)', () => {
   // WP163 (owner answers of 3 November 2026): the card closes with the delivery model, the page's one statement of it, and carries PD-01 and IN-04 for it.
+  // WP166-B (marketing review R3-24, R3-05): the delivery model is in How It Works now; the card closes with the track menu (TRACK_MENU, PD-10) and carries PD-10 in place of IN-04 (it closed with the delivery-model sentence, "Training follows an AI-supported flipped classroom: ...")
   const CARD =
-    'Training of Trainers, a localized curriculum and preparation for industry certification. You do not have to build the curriculum or certification route yourself. Training follows an AI-supported flipped classroom: all lectures are pre-recorded and an AI Tutor supports every learner, so mentors’ time goes to Q&A and to handholding beyond what the AI Tutor can provide.';
+    'Training of Trainers, a localized curriculum and preparation for industry certification. You do not have to build the curriculum or certification route yourself. Tracks are set per country from employer demand, from a menu that includes digital marketing, graphic design, video editing, web design and development, digital accounting, Python programming and data analysis.';
   const BLOCK = 'Where a funder is involved, monthly reports cover enrollment, completion, certification, placements and first earnings.';
 
   // WP60 (cycle-32 review, GPT-6.1 Sol G5): the card no longer says what remains after funding ends; the page’s funding-ends answer (Q10) says it, with the scope words, and still opens with them
@@ -106,7 +107,7 @@ test.describe('Local Partners: what stays after funding, and what the monthly re
     const card = page.locator('#features li', { has: page.locator('.card__title', { hasText: 'Facilitator Training and a Local Curriculum' }) });
     await expect(card).toHaveCount(1);
     expect(compact(await card.locator('.card__text').textContent())).toBe(CARD);
-    expect(await card.getAttribute('data-fact')).toBe('PD-06 PD-02 PD-01 IN-04');
+    expect(await card.getAttribute('data-fact')).toBe('PD-06 PD-02 PD-01 PD-10'); // WP166-B: it was 'PD-06 PD-02 PD-01 IN-04'
     // Q10 ("What Happens When Funding Ends?") opens with the same scope words, and the page carries it
     expect(faqs.find((f) => f.id === 'Q10')!.a).toContain('Where included, what the program builds stays in place: facilitators trained by CodersTrust (Training of Trainers) and localized curricula'); // WP147: it read "certified local facilitators"; Local Partners prints the Q10-later variant ("CodersTrust-trained facilitators", WP148), as the definition block above it explains the model
     expect(compact(await page.locator('main').evaluate((el) => el.textContent ?? ''))).toContain('Where included, what the program builds stays in place');
@@ -276,7 +277,8 @@ test.describe('Home: the hero line has a subject (item 9)', () => {
 test.describe('Governments: the closing call to action does not repeat the procurement point (item 10)', () => {
   test('the call-to-action band has no urgency line, and no first-action strip closes the page', async ({ page }) => {
     await open(page, GOV);
-    await expect(page.locator('#cta .cta-band__notes')).toHaveCount(0);
+    // WP166-B (marketing review R3-39): the band's one note is the reassurance line, not an urgency line (the notes list was absent, count 0)
+    expect(await texts(page, '#cta .cta-band__notes li')).toEqual(['A briefing is a conversation, not a commitment.']);
     expect(compact(await page.locator('#cta').textContent())).not.toMatch(/procurement/i);
     await expect(page.locator('#reinforce')).toHaveCount(0);
     const text = await everything(page);
@@ -289,7 +291,7 @@ test.describe('Governments: the closing call to action does not repeat the procu
   test('what remains: the FAQ answer and the two steps that name the agency’s own timeline (three mentions in all)', async ({ page }) => {
     await open(page, GOV);
     const text = await everything(page);
-    expect(text).toContain('Public procurement follows the agency’s own timeline, so the first step is a briefing for your ministry.');
+    expect(text).toContain('Delivery uses government digital labs you already run. Timing follows your agency’s own procurement timeline, so the first step is a briefing for your ministry.'); // WP166-B (marketing review R3-26): the answer opens with the labs (it was "Public procurement follows the agency’s own timeline, so the first step is a briefing for your ministry.")
     const steps = compact(await page.locator('#next-steps').textContent());
     expect(steps).toContain('A briefing for your ministry or agency, shaped to its procurement timeline.');
     expect(steps).toContain('Scope, schedule and the pilot scorecard are agreed on the agency’s own procurement timeline.'); // WP138 (was "Scope and schedule follow the agency’s own procurement timeline.")
@@ -428,7 +430,7 @@ test.describe('YouthWIDE: the briefing link names its audience (item 15) and the
       'South Asia, Sub-Saharan Africa and the Middle East and North Africa, as co-funded country cohorts. Bangladesh is where most delivery has been. YouthWIDE aims to train 1 million educated youth (Higher Secondary Certificate or above) for digital employment by 2030, in Bangladesh and similar countries in South Asia and the Middle East and North Africa, depending on government and donor commitments.',
     );
     // WP53 (owner follow-up, 2026-10-16): the Bangladesh band’s heading had kept "Reference Country", the jargon this item removed from the glance row; it was "Bangladesh: Delivery Base and 2030 Aim"; WP99 (owner answer 2026-10-28, Q1): it is "Delivery Base in Bangladesh and the 2030 Aim"
-    await expect(page.locator('section#governments').getByRole('heading', { level: 2 })).toHaveText('Delivery Base in Bangladesh and the 2030 Aim');
+    await expect(page.locator('section#governments').getByRole('heading', { level: 2 })).toHaveText('Designed for the Digital Labs and Colleges Governments Already Have'); // WP166-B (marketing review R2): the band is headed with its benefit (it was "Delivery Base in Bangladesh and the 2030 Aim")
     expect(pagesWith('reference implementation')).toEqual([]);
     // the YouthWIDE service node in the page’s JSON-LD carries IN-02’s text
     const blobs = await page.locator('script[type="application/ld+json"]').allTextContents();
@@ -548,7 +550,7 @@ test.describe('Development Partners: the glance is three tiles and the +10.3 til
   test('Foundations and Governments never showed the ">4×" tile and still have their four; Home’s first slide keeps its own', async ({ page }) => {
     for (const [route, ids] of [
       [FOUND, ['RC-02', 'OC-03', 'PR-02', 'PR-03']], // WP62 (cycle-34 review): a program record is the fourth tile (the +$27 tile left); WP65 (cycle-37 review): it is the UNDP YES, Korail record (the WSDFM record is on the Proof in Practice card)
-      [GOV, ['RC-02', 'PR-05', 'PR-02', 'GV-12']], // WP61 (cycle-33 review, GLM L5): the contract scope is the fourth tile, after the results
+      [GOV, ['GV-12', 'PR-05', 'RC-02', 'PR-02']], // WP61 (cycle-33 review, GLM L5): the contract scope was the fourth tile, after the results; WP166-B (marketing review R3-04, R3-23): it leads, then Her Power, the trial and the WSDFM record (it was RC-02, PR-05, PR-02, GV-12)
     ] as const) {
       await open(page, route);
       expect(await page.locator('#glance .pg__lead a').evaluateAll((els) => els.map((e) => (e.getAttribute('data-fact') ?? '').split(' ')[0])), route).toEqual(ids);

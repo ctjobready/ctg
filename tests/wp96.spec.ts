@@ -113,7 +113,9 @@ test.describe('Item 3: the NU course is spelled Cyber Security in visible text (
   test('the Programs menu and the diploma overview name the course "Cyber Security"', async ({ page }) => {
     await open(page, 'programs/nu-postgraduate-diploma/');
     const html = builtPages().find((p) => p.route === 'programs/nu-postgraduate-diploma/')!.html;
-    expect(visible(html)).toContain('Four courses, in digital marketing, information and communication technology (ICT), cybersecurity and data analytics'); // WP161 (A-36)
+    // WP166-B (marketing review R2-04): the four fields are named in the hero lead now, so the courses lead no longer lists them (it read "Four courses, in digital marketing, information and communication
+    // technology (ICT), cybersecurity and data analytics, ..."); the common noun is still "cybersecurity".
+    expect(visible(html)).toContain('Choose digital marketing, information and communication technology (ICT), cybersecurity or data analytics.'); // WP161 (A-36)
     const labels = await page.locator('#mega-programs .mega__title, #courses h3').allTextContents();
     expect(labels.map(compact)).toContain('Cyber Security');
   });

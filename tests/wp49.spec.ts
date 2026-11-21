@@ -80,8 +80,9 @@ test.describe('Development Partners: the problem band and the first portfolio ca
     await open(page, DP);
     const card = page.locator('#features li.card').first();
     await expect(card.locator('h3')).toHaveText('Training, Mentoring and Placement Support');
-    expect(await texts(page, '#features li.card:nth-child(1) p')).toEqual(['Certification exam preparation and one exam fee per trainee (any further attempts set per program), three months of mentoring and placement support in one program. Training follows an AI-supported flipped classroom: all lectures are pre-recorded and an AI Tutor supports every learner, so mentors’ time goes to Q&A and to handholding beyond what the AI Tutor can provide.']);
-    expect(await card.getAttribute('data-fact')).toBe('PD-01 PD-02a IN-04'); // WP163: the card names one exam fee per trainee (PD-02a) and the AI Tutor (IN-04)
+    // WP166-B (marketing review R3-24): the delivery-model sentence ("Training follows an AI-supported flipped classroom: ...") and its fact (IN-04) left this card for the How It Works lead.
+    expect(await texts(page, '#features li.card:nth-child(1) p')).toEqual(['Certification exam preparation and one exam fee per trainee (any further attempts set per program), three months of mentoring and placement support in one program.']);
+    expect(await card.getAttribute('data-fact')).toBe('PD-01 PD-02a'); // WP163: the card names one exam fee per trainee (PD-02a). WP166-B: no IN-04 (it was "PD-01 PD-02a IN-04")
     expect(compact(await page.locator('#features').textContent())).not.toContain('100 training hours');
     expect(compact(await page.locator('#mechanism').textContent())).toContain('100 training hours per certification, including exam preparation, then three months of milestone-based mentoring and placement support.') // WP150: the 100 hours include exam preparation;
     expect(count(await mainText(page), '100 training hours per certification')).toBe(1);
@@ -97,7 +98,9 @@ test.describe('Governments, Universities and Local Partners: the wording the rev
     // WP54 (cycle-28 review, GPT-6.1 Sol G2): the heading is "Trainer and Curriculum Capacity Takes Time to Build" (it said "Is Thin"); the line under it is unchanged
     expect(compact(await pain('Trainer and Curriculum Capacity Takes Time to Build').locator('.gp__a').textContent())).toBe('National delivery needs trained facilitators and localized curricula.');
     // WP163 (owner answers of 3 November 2026): the card then states the delivery model, the page's one statement of it.
-    expect(await texts(page, '#features li.card:nth-child(1) p')).toEqual(['Certification tracks chosen from employer demand, then three months of mentoring and placement support toward local, remote and global work. Training follows an AI-supported flipped classroom: all lectures are pre-recorded and an AI Tutor supports every learner, so mentors’ time goes to Q&A and to handholding beyond what the AI Tutor can provide.']); // WP161-A (A-26): three months of mentoring
+    // WP166-B (marketing review R3-05, R3-24): the card opens with the track menu (TRACK_MENU, PD-10) and the delivery-model sentence is in How It Works (it read "Certification tracks chosen from employer demand, then three
+    // months of mentoring and placement support toward local, remote and global work. Training follows an AI-supported flipped classroom: ...").
+    expect(await texts(page, '#features li.card:nth-child(1) p')).toEqual(['Tracks are set per country from employer demand, from a menu that includes digital marketing, graphic design, video editing, web design and development, digital accounting, Python programming and data analysis. Three months of mentoring and placement support follow, toward local, remote and global work.']); // WP161-A (A-26): three months of mentoring
     const text = await mainText(page);
     expect(text).not.toContain('Budgets are measured by enrollment, not by who is earning afterward.');
     expect(text).not.toContain('rarely ready at national scale');
@@ -135,7 +138,8 @@ test.describe('Foundations: the first and third "What Your Cohort Grant Gets" ca
     await open(page, FOUND);
     expect(await texts(page, '#features li.card:nth-child(1) p')).toEqual([
       // WP161-A (A-26): three months of mentoring, stated before the FAQ refers to it. WP163 (owner answers of 3 November 2026): the card opens with the delivery model, the page's one statement of it.
-      'Training follows an AI-supported flipped classroom: all lectures are pre-recorded and an AI Tutor supports every learner, so mentors’ time goes to Q&A and to handholding beyond what the AI Tutor can provide. Three months of mentoring and placement support are standard inclusions, and outcomes are tracked for 12 months after each course. Results are measured against the agreed scorecard, including first paid work, not attendance alone.',
+      // WP166-B (marketing review R3-24): the delivery-model sentence left this card for the lead of "Two Ways to Fund the Path" (the card opened "Training follows an AI-supported flipped classroom: ...").
+      'Three months of mentoring and placement support are standard inclusions, and outcomes are tracked for 12 months after each course. Results are measured against the agreed scorecard, including first paid work, not attendance alone.',
     ]);
     expect(await mainText(page)).not.toContain('using the agreed scorecard');
   });
@@ -148,7 +152,8 @@ test.describe('Foundations: the first and third "What Your Cohort Grant Gets" ca
     expect(((await card.getAttribute('data-fact')) ?? '').split(' ').sort()).toEqual(['PD-08', 'PD-18']);
     // the scorecard: the second card (the Accountability callout was removed in WP90, triage A2); the due-diligence confirmation: the Due Diligence band
     await expect(page.locator('#features li.card:nth-child(2) h3')).toHaveText('A Pilot Scorecard Agreed with You');
-    expect(compact(await page.locator('#due-diligence .lead').textContent())).toBe('The contracting entity, safeguarding arrangements and reporting plan are confirmed for your program.');
+    // WP166-B (marketing review R3-21): the brief band's line names the contracting entities, then safeguarding and reporting (it said "The contracting entity, safeguarding arrangements and reporting plan are confirmed for your program.").
+    expect(compact(await page.locator('#due-diligence .lead').textContent())).toBe('CodersTrust contracts through CT USA, Inc. in the United States or CodersTrust Bangladesh Ltd. in Bangladesh, depending on the program’s country and your requirements. Safeguarding and reporting are specified for each program.');
     const text = await mainText(page);
     expect(text).not.toContain('For cohort grants, every pilot is judged on cost per completer and per verified outcome');
     expect(text).not.toContain('confirmed in co-design');
@@ -199,7 +204,9 @@ test.describe('JobReady Platform: the live-today callout (item 8)', () => {
     await expect(rows.filter({ hasText: 'Gig-work (Earn) marketplace' })).toHaveCount(1);
     await expect(rows.filter({ hasText: 'Employer marketplace' })).toHaveCount(1);
     await expect(page.locator('#status')).not.toContainText('Pre-Launch');
-    await expect(page.locator('#status a', { hasText: 'Visit jobready.global' })).toHaveCount(1);
+    // WP166-B (marketing review R2-06): the "Visit jobready.global" link moved from under the capabilities table to the first-screen action row, beside the discovery-session button (it was one link in #status).
+    await expect(page.locator('#status a', { hasText: 'Visit jobready.global' })).toHaveCount(0);
+    await expect(page.locator('.lf-actions a', { hasText: 'Visit jobready.global' })).toHaveCount(1);
     await expect(page.locator('#roadmap')).toHaveCount(0);
   });
 });
@@ -281,9 +288,11 @@ test.describe('Governments: the briefing, not a discovery session (items 12, 28 
     await open(page, GOV);
     expect(await answerOf(page, 'What Does It Cost?')).toBe(COST_GOV);
     expect((await faqJsonLd(page)).find((q) => q.name === 'What Does It Cost?')?.text).toBe(COST_GOV);
+    // WP166-B (marketing review R3-22): Development Partners' cost answer carries the accountability commitment after the same pricing line (Q8-development-partners); Foundations and Universities keep the one-line answer.
+    const COST_DP = 'Pricing is set per program; we share an indicative budget in the discovery session. Every pilot is judged against its scorecard, including cost per completer and per verified outcome, with thresholds agreed with you before the first cohort starts. See what a partnership includes.';
     for (const route of [DP, FOUND, UNI]) {
       await open(page, route);
-      expect(await answerOf(page, 'What Does It Cost?'), route).toBe(COST);
+      expect(await answerOf(page, 'What Does It Cost?'), route).toBe(route === DP ? COST_DP : COST);
     }
   });
 
@@ -317,7 +326,8 @@ test.describe('Results at a Glance: one secondary tile has no heading of its own
   // (tests/wp52.spec.ts). Each entry: the route, the tiles in order, the rows at 900 and the rows at 390.
   const PAGES: [string, string[], number, number][] = [
     [DP, ['RC-02', 'OC-01', 'PR-03'], 1, 3],
-    [GOV, ['RC-02', 'PR-05', 'PR-02', 'GV-12'], 2, 4], // WP61 (cycle-33 review, GLM L5): the contract scope is the fourth tile, after the results
+    // WP61 (cycle-33 review, GLM L5): the contract scope is the fourth tile, after the results. WP166-B (marketing review R3-04): it leads again, then Her Power, the trial and Kosovo (it was RC-02, PR-05, PR-02, GV-12).
+    [GOV, ['GV-12', 'PR-05', 'RC-02', 'PR-02'], 2, 4],
     [FOUND, ['RC-02', 'OC-03', 'PR-02', 'PR-03'], 2, 4], // WP62 (cycle-34 review): a program record is the fourth tile (the +$27 tile left); WP65 (cycle-37 review): it is the UNDP YES, Korail record (the WSDFM record is on the Proof in Practice card)
   ];
 
@@ -448,8 +458,10 @@ test.describe('Investors: the due-diligence line and the eyebrow (items 20 and 3
     await expect(page.locator('#offer h2')).toHaveText('What Happens After You Ask');
     const line = page.locator('#offer .io__diligence');
     await expect(line).toHaveCount(1);
-    expect(compact(await line.textContent())).toBe(`Due diligence: CodersTrust contracts through ${CONTRACTING_ENTITIES}. Governance and Accountability`);
-    expect(await line.getAttribute('data-fact')).toBe('ID-07 PD-13');
+    // WP166-B (marketing review R3-35): the investor's line names the corporate structure, the parent (CT USA, Inc., the for-profit company incorporated in New York, ID-12) and the country office, both by the
+    // register's names (ID-07); it said "Due diligence: CodersTrust contracts through CT USA, Inc. in the United States or CodersTrust Bangladesh Ltd. in Bangladesh." and rested on ID-07 PD-13.
+    expect(compact(await line.textContent())).toBe('Due diligence: CT USA, Inc., a for-profit company incorporated in New York, is CodersTrust’s parent company; CodersTrust Bangladesh Ltd. is its country office. Governance and Accountability');
+    expect(await line.getAttribute('data-fact')).toBe('ID-07 ID-12');
     expect((await line.locator('a').getAttribute('href')) ?? '').toMatch(/\/about\/governance\/$/);
     // the names are the register's (ID-07), and the Governance hero reads the same phrase (one constant)
     expect(fact('ID-07').text).toContain('CT USA, Inc.');
@@ -468,10 +480,14 @@ test.describe('Our Model: the definition band (item 21)', () => {
     expect(compact(await page.locator('#definition .def__text').textContent())).toBe(fact('ID-01').text);
     await expect(page.locator('#definition p')).toHaveCount(1);
     expect(compact(await page.locator('#definition').textContent())).not.toContain('62 million');
-    for (const route of ['', DP, GOV, FOUND]) {
+    for (const route of ['', DP, FOUND]) {
       await open(page, route);
       await expect(page.locator('#problem [data-fact="PX-01"]'), route || 'home').toHaveCount(1);
     }
+    // WP166-B (marketing review R3-40): Governments' problem band shows PX-02 (the 19M+) in place of PX-01 (it was in the PX-01 list above).
+    await open(page, GOV);
+    await expect(page.locator('#problem [data-fact="PX-02"]')).toHaveCount(1);
+    await expect(page.locator('#problem [data-fact="PX-01"]')).toHaveCount(0);
   });
 });
 
@@ -507,7 +523,8 @@ test.describe('Home: the curriculum line (item 23)', () => {
     expect(await mainText(page)).not.toContain('Tracks Chosen from Employer Demand');
     expect(sitePages().filter((p) => visible(p.html).includes('An AI-ready curriculum is designed to follow')).map((p) => p.route)).toEqual([]);
     await open(page, 'partner-with-us/employers/');
-    expect(await mainText(page)).toContain('An AI-ready curriculum, designed to prepare people to work with AI tools.');
+    // WP166-B (marketing review R3-08): the card goes on to the AIvolve programs (PA-07, an offering) after the same clause (it ended "... to work with AI tools.").
+    expect(await mainText(page)).toContain('An AI-ready curriculum, designed to prepare people to work with AI tools, plus AI leadership and AI-transformation programs with AIvolve.');
     await open(page, 'programs/youthwide/');
     expect(await mainText(page)).toContain('AI-Ready Training, Certification Preparation and Mentoring');
   });
@@ -555,7 +572,8 @@ test.describe('Programs: the JobReady@Campus card (item 30)', () => {
     expect(text).not.toContain('recognized credential');
     await open(page, 'programs/jobready-campus/');
     const campus = await mainText(page);
-    expect(campus).toContain('Industry certification exam preparation by track');
+    // WP166-B (marketing review R2-14): the "Built Around What Institutions Ask For" band and its card "Industry certification exam preparation by track, ..." are gone; the glance row states the exam preparation.
+    expect(campus).toContain('100 training hours per certification, including certification exam preparation');
     expect(campus).toContain('Preparation for industry-recognized certifications');
   });
 });

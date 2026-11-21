@@ -89,9 +89,11 @@ test.describe('Item 2: course titles use NU’s course names', () => {
 
   test('the overview cards carry the four course names, in order, with the full ICT name', async ({ page }) => {
     await open(page, OVERVIEW);
+    // WP166-B (marketing review R2): the hero lead names the four fields (VALUE_PROPOSITION.nuPgd), so the course lead no longer repeats them (it read "Four courses, in digital marketing, information and communication technology (ICT), cybersecurity and data analytics, delivered by ...")
     expect(compact(await page.locator('#courses .lead').textContent())).toBe(
-      'Four courses, in digital marketing, information and communication technology (ICT), cybersecurity and data analytics, delivered by CodersTrust, an affiliated college (College Code: 6634) under the National University of Bangladesh.',
+      'Four courses, delivered by CodersTrust, an affiliated college (College Code: 6634) under the National University of Bangladesh.',
     );
+    expect(compact(await page.locator('.hero__lead').first().textContent())).toContain('Choose digital marketing, information and communication technology (ICT), cybersecurity or data analytics.');
     const titles = (await page.locator('#courses article .course__title').allTextContents()).map(compact);
     expect(titles).toEqual([
       'NU Post Graduate Diploma in Digital Marketing',

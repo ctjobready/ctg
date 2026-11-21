@@ -83,9 +83,12 @@ test.describe('NU Post Graduate Diploma: one admissions sentence in the FAQ (ite
   test('the FAQ answer names intake dates, schedule and teaching location in one sentence; the Admissions rows keep their own wording', async ({ page }) => {
     await open(page, 'programs/nu-postgraduate-diploma/');
     const text = await mainText(page);
-    expect(text).toContain('Admissions confirms intake dates, schedule and teaching location with each applicant.');
+    // WP166-B (marketing review R2-24): the FAQ "Where Do I Find Eligibility, Schedule and Fees?" is gone (it pointed to Before You Apply); its one admissions sentence is gone with it, and the Admissions rows state each point once.
+    expect(text).not.toContain('Where Do I Find Eligibility, Schedule and Fees?');
+    expect(text).not.toContain('Admissions confirms intake dates, schedule and teaching location with each applicant.');
     expect(text).not.toContain('Admissions confirms intake dates and schedule with each applicant. Admissions confirms the teaching location');
     await expect(page.locator('.ba__row', { hasText: 'Schedule and Intake' })).toContainText('Admissions confirms intake dates and schedule with each applicant.');
+    await expect(page.locator('.ba__row', { hasText: 'Teaching Location' })).toContainText('Admissions confirms the teaching location with each applicant.');
   });
 });
 

@@ -74,16 +74,20 @@ test.describe('the OC-03 tile note says the survey once, without repeating $245'
 
 test.describe('the Governments "How Fast Can We Start?" answer does not count the weeks the steps band shows', () => {
   // WP50 (cycle-25 review, item 23): the answer is the procurement sentence alone; the grant-pilot timing sentence it carried (three weeks to agreement, 6–8 weeks to training) is gone (tests/wp50.spec.ts)
-  test('the answer is the procurement sentence alone and has no Week 1 to 3 sentence or grant-pilot timing, in the page and in its FAQ JSON-LD', async ({ page }) => {
+  // WP166-B (marketing review R3-26, owner approval of 21 November 2026): the answer opens with the labs the agency already runs, then the procurement sentence, reworded (it was the procurement sentence alone,
+  // "Public procurement follows the agency’s own timeline, so the first step is a briefing for your ministry."); it still gives no Week 1 to 3 sentence and no grant-pilot timing.
+  test('the answer is the labs sentence and the procurement sentence, with no Week 1 to 3 sentence or grant-pilot timing, in the page and in its FAQ JSON-LD', async ({ page }) => {
     await open(page, 'partner-with-us/governments/');
     const item = page.locator('#faq details', { hasText: 'How Fast Can We Start?' });
     await expect(item).toHaveCount(1);
     const answer = compact(await item.textContent());
-    expect(answer).toContain('Public procurement follows the agency’s own timeline, so the first step is a briefing for your ministry.');
+    const NEW = 'Delivery uses government digital labs you already run. Timing follows your agency’s own procurement timeline, so the first step is a briefing for your ministry.';
+    expect(answer).toContain(NEW);
+    expect(answer).not.toContain('6–8 weeks');
     expect(answer).not.toContain('agreement typically takes about three weeks from first conversation');
     expect(answer).not.toMatch(/Counting from the first conversation|Week 1 is a briefing|Week 3 the agreement/);
     const ld = (await page.locator('script[type="application/ld+json"]').allTextContents()).join(' ');
-    expect(ld).toContain('Public procurement follows the agency’s own timeline, so the first step is a briefing for your ministry.');
+    expect(ld).toContain(NEW);
     expect(ld).not.toContain('agreement typically takes about three weeks from first conversation');
     expect(ld).not.toContain('Counting from the first conversation');
     // the steps band after the FAQ still shows the sequence the answer no longer counts out

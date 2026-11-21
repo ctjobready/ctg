@@ -245,7 +245,8 @@ test.describe('4 High run 22 Polish', () => {
   test('"Independent Evaluation Welcome" reads the same on JobReady@Campus, JobReady@Work and the route pages', () => {
     for (const p of [CAMPUS, WORK, GOVERNMENTS, UNIVERSITIES, EMPLOYERS, LOCAL]) {
       const text = main(p);
-      expect(text, p).toContain('Independent Evaluation Welcome We support third-party evaluation of outcomes.');
+      // WP166-B (marketing review R2-21 and R3): JobReady@Work and Employers cut the "Independent Evaluation Welcome" card (a funder concept on the employer pages); the assertion is gone with it there.
+      if (p !== WORK && p !== EMPLOYERS) expect(text, p).toContain('Independent Evaluation Welcome We support third-party evaluation of outcomes.');
       expect(text, p).not.toContain('Independent Evaluation Is Welcome');
       expect(text, p).not.toContain('support a third-party evaluation');
     }
@@ -261,7 +262,8 @@ test.describe('4 High run 22 Polish', () => {
     const W = 'people in the training and curriculum scopes of six government contracts';
     for (const p of [IMPACT, GOVERNMENTS, INVESTORS, PLATFORM]) {
       const text = main(p);
-      expect(text, p).toContain(W);
+      // WP166-B (marketing review R2): the JobReady Platform's record band no longer shows the Contracted Scope tile; the assertion is gone with it there.
+      if (p !== PLATFORM) expect(text, p).toContain(W);
       expect(text, p).not.toContain('people in the contracted scopes of six government contracts');
       expect(text, p).not.toContain('people in the scopes of six government contracts');
     }

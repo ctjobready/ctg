@@ -276,7 +276,9 @@ test.describe('TalentLEAP and YouthWIDE', () => {
     const lead = compact(await page.locator('.lf-head .lead').textContent());
     expect(lead).toBe(
       // WP163 (owner answers of 3 November 2026): no level is labelled planned (it said "The first published TalentLEAP level is Competent; Proficient and Expert levels are planned.")
-      'TalentLEAP organizes learning around assessed skill units and career paths. Its levels run from Competent to Proficient and Expert. Learners move through three stages, Learn, Earn and Prosper, with three months of milestone-based mentoring after the course.', // WP64 (cycle-36 review, Claude): it said "Competent is the published first level; Proficient and Expert are planned."
+      // WP166-B (marketing review R2-34): the opening leads with the difference (it said "TalentLEAP organizes learning around assessed skill units and career paths. Its levels run from Competent to Proficient and Expert.
+      // Learners move through three stages, Learn, Earn and Prosper, with three months of milestone-based mentoring after the course.").
+      'TalentLEAP organizes learning around skill units that are assessed, not around hours attended alone. Levels run from Competent to Proficient and Expert, and three months of milestone-based mentoring follow the course.', // WP64 (cycle-36 review, Claude): it said "Competent is the published first level; Proficient and Expert are planned."
     );
     expect(lead).not.toMatch(/graduated|taught/);
     expect(compact(await page.locator('meta[name="description"]').getAttribute('content'))).not.toMatch(/graduated levels/);
@@ -303,17 +305,20 @@ test.describe('TalentLEAP and YouthWIDE', () => {
 
 test.describe('the ranked pains are statements, not questions', () => {
   const PAGES: [string, string[]][] = [
-    ['partner-with-us/governments/', ['Graduates Struggle to Find Work', 'Training Budgets Do Not Show Up as Earnings', 'Trainer and Curriculum Capacity Takes Time to Build']],
+    // WP166-B (marketing review R3-40): "Graduates Struggle to Find Work" is gone from Governments (the 19M+ tile, PX-02, states the graduates' pain), so two pains are left (it was three).
+    ['partner-with-us/governments/', ['Training Budgets Do Not Show Up as Earnings', 'Trainer and Curriculum Capacity Takes Time to Build']],
     // WP49 (cycle-24 review): the first two Development Partners pains were broad sector conclusions; they say what the partner needs (tests/wp49.spec.ts)
     ['partner-with-us/development-partners/', ['Training Must Connect to Paid Work', 'Barriers Can Interrupt Training', 'Outcomes Are Hard to Audit']],
     // WP50 (cycle-25 review): the first Foundations pain is "Earnings Must Be Tracked, Not Only Training Hours" (it was "Grants Buy Training Hours, but Rarely Earnings"; tests/wp50.spec.ts)
     ['partner-with-us/foundations/', ['Earnings Must Be Tracked, Not Only Training Hours', 'Independent Evidence Is Hard to Find', 'Accountability Must Keep Pace with Scale']],
     // WP46 (cycle-22 review): Universities states two pains; the employers' pain is the 72% tile directly below them
-    ['partner-with-us/universities/', ['Degree Holders Struggle to Find Work', 'Placement Results Are Hard to Publish']],
-    ['partner-with-us/employers/', ['You Struggle to Find the Digital Talent You Need', 'Hiring Alone Does Not Close the Gap', 'Your Teams Need Upskilling for AI Workflows']],
+    // WP166-B (marketing review R3-40): "Degree Holders Struggle to Find Work" is gone (the 19M+ tile, PX-02, states it), so one pain is left (it was two).
+    ['partner-with-us/universities/', ['Placement Results Are Hard to Publish']],
+    // WP166-B (marketing review R3-30): the third Employers pain is "AI Skills Carry a Wage Premium" (PX-08; it was "Your Teams Need Upskilling for AI Workflows", which restated the second).
+    ['partner-with-us/employers/', ['You Struggle to Find the Digital Talent You Need', 'Hiring Alone Does Not Close the Gap', 'AI Skills Carry a Wage Premium']],
   ];
   for (const [route, titles] of PAGES) {
-    test(`${route}: ${titles.length === 2 ? 'two' : 'three'} Title Case statements, none a question, and no answer line that repeats its title`, async ({ page }) => {
+    test(`${route}: ${['one', 'two', 'three'][titles.length - 1]} Title Case statement${titles.length === 1 ? '' : 's'}, none a question, and no answer line that repeats its title`, async ({ page }) => {
       await open(page, route);
       expect(await texts(page, '.gp__q')).toEqual(titles);
       for (const t of titles) expect(t, t).toBe(titleCase(t));
@@ -339,13 +344,15 @@ test.describe('cost and safeguarding: full on the hub, one line and a link on th
   const COST = 'Pricing is set per program; we share an indicative budget in the discovery session. See what a partnership includes.';
   // WP49 (cycle-24 review): Governments' action is a ministry briefing, so its one-line answer says "in the briefing" (Q8-government; tests/wp49.spec.ts)
   const COST_GOVERNMENTS = 'Pricing is set per program; we share an indicative budget in the briefing. See what a partnership includes.';
+  // WP166-B (marketing review R3-22): Development Partners' cost answer carries the page's accountability commitment (ACCOUNTABILITY, PD-11), which was an orphan callout after the options; the one pricing line and the link stay.
+  const COST_DEV = 'Pricing is set per program; we share an indicative budget in the discovery session. Every pilot is judged against its scorecard, including cost per completer and per verified outcome, with thresholds agreed with you before the first cohort starts. See what a partnership includes.';
   const SAFE = 'Safeguarding and data protection are specified for each program and agreed before enrollment. See how we handle them.';
 
   for (const route of ['partner-with-us/development-partners/', 'partner-with-us/governments/', 'partner-with-us/foundations/', 'partner-with-us/universities/']) {
     test(`${route}: "What Does It Cost?" is one line and links to the hub FAQ; the FAQ JSON-LD says the same words`, async ({ page }) => {
       await open(page, route);
       const answer = await answerOf(page, 'What Does It Cost?');
-      const COST_HERE = route === 'partner-with-us/governments/' ? COST_GOVERNMENTS : COST;
+      const COST_HERE = route === 'partner-with-us/governments/' ? COST_GOVERNMENTS : route === 'partner-with-us/development-partners/' ? COST_DEV : COST;
       expect(answer).toBe(COST_HERE);
       const link = page.locator('#faq details', { has: page.locator('summary', { hasText: 'What Does It Cost?' }) }).locator('.faq__a a');
       await expect(link).toHaveText('See what a partnership includes.');
@@ -407,9 +414,11 @@ test.describe('cost and safeguarding: full on the hub, one line and a link on th
 test.describe('SuperKids: two separate 20M+ targets, each labeled', () => {
   test('the DoICT and NCTB targets are labeled apart, and the page says they are agreement targets, not delivered reach', async ({ page }) => {
     await open(page, 'programs/superkids/');
+    // WP166-B (marketing review R2-29): each agreement is one line, its scope (GV-08's words, from the two agreement cards, now gone) and its target (they read "DoICT agreement target: 20M+ students through
+    // 9,000+ digital labs in Bangladesh." and "NCTB agreement target: 20M+ students.").
     expect(await texts(page, '.agree__fact p')).toEqual([
-      'DoICT agreement target: 20M+ students through 9,000+ digital labs in Bangladesh.', // WP64 (cycle-36 review, Kimi): the labs figure says where the labs are
-      'NCTB agreement target: 20M+ students.',
+      'DoICT agreement, primary-school STEM and robotics: target of 20M+ students through 9,000+ digital labs in Bangladesh.', // WP64 (cycle-36 review, Kimi): the labs figure says where the labs are
+      'NCTB agreement, competency-based experiential learning: target of 20M+ students.',
       'These are agreement targets, not delivered reach.',
     ]);
     expect(await page.locator('.agree__fact').getAttribute('data-fact')).toBe('GV-08');
@@ -419,7 +428,9 @@ test.describe('SuperKids: two separate 20M+ targets, each labeled', () => {
 
 test.describe('option bands: program sizes are not a commitment', () => {
   // WP47 (cycle-22 review): a full sentence with its subject (it was "Program sizes, not a commitment: use the discovery session to choose ...")
-  const NOTE = 'These are program sizes, not commitments: in the discovery session you choose a starting scope for your goals, country and delivery capacity.';
+  // WP166-B (marketing review R2-03): the reader's choice comes first, the disclaimer second (it was "These are program sizes, not commitments: in the discovery session you choose a starting scope for your goals,
+  // country and delivery capacity.").
+  const NOTE = 'You choose the starting scope in the discovery session, for your goals, country and delivery capacity. The sizes below are program sizes, not commitments.';
 
   // WP57 (cycle-29 review, Grok R5): Universities' "Choose Where to Start" has no size cards, so it carries no program-sizes note either (its lead is one line; tests/wp57.spec.ts)
   for (const route of ['', 'programs/jobready-campus/']) {
@@ -444,11 +455,12 @@ test.describe('option bands: program sizes are not a commitment', () => {
 
 test.describe('one figure, one label: the 30,000+ is tagged "Contract Scope" everywhere', () => {
   // WP38 (cycle-15 review): Home's Track Record band has no tile for it any more; slide 2 (since WP42) states it and says "contract scope, not people trained" (tests/wp31.spec.ts)
+  // WP166-B (marketing review R2-39): the JobReady Platform's "Contracted Scope" tile (#why .jr__whystat with SC-06) and its caveat are gone (the Governments page keeps them); the row for that tile is gone
+  // with it, and the page is checked below for no 30,000+ and no Agreement status tag.
   const TILES: [string, string][] = [
     ['partner-with-us/governments/', '#glance li'],
     ['impact/', '#glance li'],
     ['partner-with-us/investors/', '#reach .ir__tile'],
-    ['our-model/jobready-platform/', '#why .jr__whystat'],
   ];
   for (const [route, selector] of TILES) {
     test(`${route || 'Home'}: the tile that shows 30,000+ carries the Contract Scope evidence tag and no Agreement status tag`, async ({ page }) => {
@@ -460,6 +472,12 @@ test.describe('one figure, one label: the 30,000+ is tagged "Contract Scope" eve
       await expect(page.locator('main [data-status="Agreement"]')).toHaveCount(0);
     });
   }
+
+  test('our-model/jobready-platform/: no tile shows the 30,000+ (WP166-B, R2-39: the contract-scope tile is gone) and no Agreement status tag', async ({ page }) => {
+    await open(page, 'our-model/jobready-platform/');
+    await expect(page.locator('#why .jr__whystat', { hasText: /(?<![\d,])30,000\+/ })).toHaveCount(0);
+    await expect(page.locator('main [data-status="Agreement"]')).toHaveCount(0);
+  });
 });
 
 test.describe('dating lines', () => {
@@ -469,16 +487,18 @@ test.describe('dating lines', () => {
     expect(compact(await page.locator('.lf-updated').textContent())).toBe('Source snapshot: October 2026 · Last updated November 21, 2026'); // WP104; WP135: October 31; WP147: November 1 (the closing line and "On This Page" changed); WP161-A: November 3 (the rounding sentence); WP166-C: November 21
     for (const route of ['impact/independent-evaluation/', 'our-model/talentleap/', 'programs/youthwide/', 'programs/superkids/']) {
       await open(page, route);
-      expect(compact(await page.locator('.lf-updated, .updated').first().textContent()), route).toMatch(/^Last updated [A-Z][a-z]+ \d{1,2}, 2026$/);
+      // WP166-B (marketing review R2-06): TalentLEAP's line is at the foot of the page (.tl__updated; it was .lf-updated in the header).
+      expect(compact(await page.locator('.lf-updated, .updated, .tl__updated').first().textContent()), route).toMatch(/^Last updated [A-Z][a-z]+ \d{1,2}, 2026$/);
       expect(await mainText(page), route).not.toContain('Page last reviewed');
     }
   });
 
   test('TalentLEAP and SuperKids carry today’s date, the day their wording changed', async ({ page }) => {
     await open(page, 'our-model/talentleap/');
-    expect(compact(await page.locator('.lf-updated').textContent())).toBe('Last updated November 3, 2026'); // WP112: TalentLEAP's wording last changed on 29 October (was 28 October, WP104); WP141 changed it on 1 November; WP154 on 2 November; WP163 on 3 November
+    // WP166-B (marketing review R2-06, R2-34): November 21 (it was November 3), and the line is at the foot of the page (.tl__updated; it was .lf-updated in the header).
+    expect(compact(await page.locator('.tl__updated').textContent())).toBe('Last updated November 21, 2026'); // WP112: TalentLEAP's wording last changed on 29 October (was 28 October, WP104); WP141 changed it on 1 November; WP154 on 2 November; WP163 on 3 November; WP166-B on 21 November
     await open(page, 'programs/superkids/');
-    expect(compact(await page.locator('.updated').textContent())).toBe('Last updated November 2, 2026'); // WP143 moved it; WP104: SuperKids gained its consent line on 29 October
+    expect(compact(await page.locator('.updated').textContent())).toBe('Last updated November 21, 2026'); // WP166-B (marketing review R2, 21 November; it was November 2). WP143 moved it; WP104: SuperKids gained its consent line on 29 October
   });
 });
 

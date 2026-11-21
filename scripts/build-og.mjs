@@ -35,12 +35,14 @@ const MAX_BYTES = 200 * 1024;
  * so the corpus check below passes unchanged; the cards and src/lib/og.ts are regenerated from this table.
  * WP166-A (marketing review of 21 November 2026): the Home, Careers and Contact lines follow those pages' new H1 and leads (R1-10, R7-25, R7-02); the three cards and src/lib/og.ts were regenerated.
  */
+// WP166-B (marketing review, owner approval of 21 November 2026): the Partner with Us, Investors and NU Post Graduate Diploma heroes changed, so their cards carry the new copy: the hub's H1 (its new lead opens with a figure, and cards
+// carry no digit), the Investors lead and the NU lead's first sentences. The other eight cards are unchanged.
 const CARDS = [
   { file: 'default', prefix: '/', exact: true, label: 'Learn. Earn. Prosper.', line: 'Turn Youth Unemployment into a Digital Workforce — and Show Who Starts Earning' },
-  { file: 'partner-with-us', prefix: '/partner-with-us/', label: 'Partner with Us', line: 'Choose a partnership for youth employment, campus skills, team training, hiring or JobReady’s staged rollout.' },
-  { file: 'investors', prefix: '/partner-with-us/investors/', label: 'Investors', line: 'Back JobReady’s staged rollout, built on CodersTrust’s training and mentoring programs.' },
+  { file: 'partner-with-us', prefix: '/partner-with-us/', label: 'Partner with Us', line: 'Partner with Us to Turn Training into Paid Work' },
+  { file: 'investors', prefix: '/partner-with-us/investors/', label: 'Investors', line: 'JobReady is CodersTrust’s digital learning and earning platform for emerging markets.' },
   { file: 'programs', prefix: '/programs/', label: 'Programs', line: 'Digital Skills Programs, from School to Work' },
-  { file: 'nu-postgraduate-diploma', prefix: '/programs/nu-postgraduate-diploma/', label: 'NU Post Graduate Diploma', line: 'We help learners prepare for digital work through the National University Post Graduate Diploma.' },
+  { file: 'nu-postgraduate-diploma', prefix: '/programs/nu-postgraduate-diploma/', label: 'NU Post Graduate Diploma', line: 'A one-year National University Post Graduate Diploma, on campus, delivered by CodersTrust.' },
   { file: 'our-model', prefix: '/our-model/', label: 'Our Model', line: 'One Path from Learning to Earning, with Outcomes Tracked' },
   { file: 'impact', prefix: '/impact/', label: 'Impact', line: 'Impact You Can Verify' },
   { file: 'about', prefix: '/about/', label: 'About', line: 'A Global Workforce Organization, Built on Evidence' },

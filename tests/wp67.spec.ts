@@ -285,7 +285,8 @@ test.describe('Item 7: the Programs hub says "Best For: Governments, Development
     await open(page, PROGRAMS);
     const card = page.locator('#programs-grid li:has(a[href$="programs/youthwide/"])');
     expect(compact(await card.locator('.hub__aud:not(.hub__partner)').textContent())).toBe('Best For: Governments, Development Partners and Foundations');
-    expect(await texts(page, '#programs-grid li:has(a[href$="programs/youthwide/"]) .hub__partner a')).toEqual(['For Governments', 'For Development Partners', 'For Foundations']);
+    // WP166-B (marketing review R2-41): the card's links open with its own page, "Explore YouthWIDE", then the three routes (it was the three routes alone).
+    expect(await texts(page, '#programs-grid li:has(a[href$="programs/youthwide/"]) .hub__partner a')).toEqual(['Explore YouthWIDE', 'For Governments', 'For Development Partners', 'For Foundations']);
     for (const aud of await texts(page, '#programs-grid .hub__aud:not(.hub__partner)')) expect(aud).not.toMatch(/funders/i);
   });
 });

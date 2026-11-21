@@ -278,7 +278,9 @@ test.describe('2 Certification: every mention is preparation (A) or something th
 
   test('Governments: the third card is "Certification Preparation and Placement Support" (the allowlist entry is gone)', () => {
     const text = main(GOVERNMENTS);
-    expect(text).toContain('Certification Preparation and Placement Support Certification tracks chosen from employer demand, then three months of mentoring and placement support toward local, remote and global work.'); // WP161-A (A-26): three months of mentoring
+    // WP166-B (marketing review R3-05, R3-24): the card opens with the track menu (TRACK_MENU, PD-10) and the delivery-model sentence moved to How It Works; it read "Certification tracks chosen from employer demand, then three months of mentoring and
+    // placement support toward local, remote and global work." The heading is unchanged.
+    expect(text).toContain('Certification Preparation and Placement Support Tracks are set per country from employer demand, from a menu that includes digital marketing, graphic design, video editing, web design and development, digital accounting, Python programming and data analysis. Three months of mentoring and placement support follow, toward local, remote and global work.'); // WP161-A (A-26): three months of mentoring
     expect(text).not.toContain('Certification Tracks and Placement Support');
   });
 
@@ -320,7 +322,8 @@ test('3 Our Model: "Each certification track has 100 training hours, including e
 
 test('4 Investors, "Connect Learning to Paid Work": the body does not repeat the heading and has no comma before "through"', () => {
   const text = main(INVESTORS);
-  expect(text).toContain('Connect Learning to Paid Work JobReady is designed to link learners to paid work through mentoring and placement support.');
+  // WP166-B (marketing review R3-36): the body adds why CodersTrust can deliver it, ", the model CodersTrust has run since 2014." (it ended "... through mentoring and placement support.").
+  expect(text).toContain('Connect Learning to Paid Work JobReady is designed to link learners to paid work through mentoring and placement support, the model CodersTrust has run since 2014.');
   expect(text).not.toContain('connect learning to paid work, through');
   expect(text).not.toMatch(/JobReady is being built to connect learning to paid work/);
   expect(text).not.toMatch(/paid work, through mentoring/);

@@ -21,7 +21,8 @@ export const STAGE_GROUPS: PipelineGroup[] = [
     stage: 'Learn',
     steps: [
       { name: 'Assess', icon: 'clipboard-check', text: 'A readiness assessment routes applicants to a career or foundation track.' },
-      { name: 'Learn', icon: 'graduation-cap', text: 'Skill units on a track set from employer demand, with hands-on labs.' },
+      // WP166-B (marketing review R2-33, owner approval of 21 November 2026): the step is "Train" (a step called Learn sat inside the stage called Learn); the caption under the pipeline says the same.
+      { name: 'Train', icon: 'graduation-cap', text: 'Skill units on a track set from employer demand, with hands-on labs.' },
       { name: 'Prepare for Certification', icon: 'award', text: 'Certification exam preparation and one exam fee per trainee (any further attempts set per program).' },
     ],
   },

@@ -160,11 +160,13 @@ test.describe('figures say what they measure', () => {
 });
 
 test.describe('Governments speaks to any ministry', () => {
-  test('the Challenge heading no longer names a country, and (WP34, cycle-11 review) neither does its tile: the global 62 million (PX-01) stands where the Bangladesh 13.5% (PX-03) was', async ({ page }) => {
+  test('the Challenge heading no longer names a country, and (WP34, cycle-11 review) neither does its tile: a global figure (WP166-B: the 19M+, PX-02) stands where the Bangladesh 13.5% (PX-03) was', async ({ page }) => {
     await open(page, 'partner-with-us/governments/');
     await expect(page.locator('#problem h2')).toHaveText('Training Budgets Need Employment Results');
-    const tile = page.locator('#problem [data-fact="PX-01"]');
-    await expect(tile).toContainText('62 million');
+    // WP166-B (marketing review R3-40): the band's one context figure is PX-02, the 19M+ university-educated people unemployed across three regions (it was PX-01, the 62 million).
+    const tile = page.locator('#problem [data-fact="PX-02"]');
+    await expect(tile).toContainText('19M+');
+    await expect(page.locator('#problem [data-fact="PX-01"]')).toHaveCount(0);
     await expect(page.locator('#problem [data-fact="PX-03"]')).toHaveCount(0);
     expect(compact(await page.locator('#problem').textContent())).not.toMatch(/13\.5%|Bangladesh/);
     await expect(page.locator('main h1')).toHaveText('Build a National Digital Workforce Through Graduates and Digital Labs');
@@ -323,7 +325,8 @@ test.describe('smaller wording fixes', () => {
     await open(page, 'programs/');
     const card = compact(await page.locator('#programs-grid li', { hasText: 'YouthWIDE' }).first().textContent());
     // WP106 (Polish, accepted): the card is sibling length; the three regions and "builds on results from earlier programs" stay on the YouthWIDE page and in the menu lines (tests/wp106.spec.ts item 7)
-    expect(card).toContain('designed as co-funded country cohorts.');
+    // WP166-B (marketing review R2-41): the card says what the program does, "..., in co-funded country cohorts." (it said "The youth digital-employment program, designed as co-funded country cohorts. ...").
+    expect(card).toContain('Prepares educated, unemployed and underemployed youth for paid digital work through training, mentoring and placement support, in co-funded country cohorts.');
     expect(card).not.toContain('outcome evidence so far');
     await open(page, '');
     const desc = compact(await page.locator('#mega-programs a.mega__link[href$="programs/youthwide/"] .mega__desc').textContent());
@@ -387,12 +390,14 @@ test.describe('smaller wording fixes', () => {
 
   test('Partner with Us hub: the hero asks for the choice of partnership (WP32) with one "See Partnership Routes" button and no email before the closing call to action (WP35), three evidence tiles (trial, survey, reach), the investor card says "we are building"', async ({ page }) => {
     await open(page, 'partner-with-us/');
-    await expect(page.locator('.hero__lead').first()).toHaveText('Choose a partnership for youth employment, campus skills, team training, hiring or JobReady’s staged rollout.');
+    // WP166-B (marketing review R3-18): the lead opens with the record (SC-01) and asks the reader to pick a route (it said "Choose a partnership for youth employment, campus skills, team training, hiring or JobReady’s staged rollout.").
+    await expect(page.locator('.hero__lead').first()).toHaveText('130,000+ learners trained since 2014. Pick the route built for your organization: each has its own evidence, offer and next step.');
     await expect(page.locator('#hero .btn')).toHaveText('See Partnership Routes');
     await expect(page.locator('#hero a[href^="mailto:"], #audiences a[href^="mailto:"]')).toHaveCount(0);
     await expect(page.locator('#why-partner li')).toHaveCount(3);
     expect(await mainText(page)).not.toContain('The platform connecting emerging-market youth to work');
-    await expect(page.locator('#audiences .grid-cards')).toContainText('JobReady, CodersTrust’s digital learning and earning platform.');
+    // WP166-B (marketing review R3-19): the investor card reads "For impact investors: back the staged rollout of CodersTrust’s digital learning and earning platform." (it said "... JobReady, CodersTrust’s digital learning and earning platform.").
+    await expect(page.locator('#audiences .grid-cards')).toContainText('For impact investors: back the staged rollout of CodersTrust’s digital learning and earning platform.');
   });
 
   // WP54 (cycle-28 review, GPT-6.1 Sol G7): the step's recap is shorter ("Employers: a needs assessment, or a talent request scoped against the candidate pool."); the Employers page keeps the full scope wording
@@ -409,8 +414,11 @@ test.describe('smaller wording fixes', () => {
       await open(page, `partner-with-us/${slug}/`);
       const text = await mainText(page);
       expect((text.match(/randomized trial by/gi) ?? []).length, `${slug}: no BIGD trial sentence`).toBe(0);
-      await expect(page.locator('#proof-band')).toHaveCount(1);
-      await expect(page.locator('#proof-band .proofband')).toHaveCount(0);
+      // WP166-B (marketing review R3-23): the proof band ("See the Evidence Behind the Results", #proof-band) is gone; its sentence and its strip of two links are the note under the glance tiles
+      // (it was one #proof-band with no chart).
+      await expect(page.locator('#proof-band')).toHaveCount(0);
+      await expect(page.locator('#glance .pg__after a')).toHaveText(['Read the Trial Results', 'Impact Survey 2026']);
+      await expect(page.locator('#glance .proofband')).toHaveCount(0);
       await expect(page.locator('#mechanism .pos__text')).not.toContainText('randomized trial');
     }
   });

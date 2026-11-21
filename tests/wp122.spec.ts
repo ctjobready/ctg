@@ -53,15 +53,19 @@ test.describe('WP122, Discovery Education post: every person is "Name, Title"', 
 });
 
 test.describe('WP122, TalentLEAP: the caveat once, and no "planned" levels inside the Level 1 example', () => {
-  test('the program caveat appears once (in At a Glance), and Evidence for Today’s Tracks opens with the evaluation sentence', () => {
+  // WP166-B (marketing review R2-35, owner approval of 21 November 2026): the "Evidence for Today’s Tracks" section is gone; its evaluation sentence follows the caveat in At a Glance's note, once on the page
+  // (it checked "Evidence for Today’s Tracks Today’s 100-hour tracks have not yet been independently evaluated.").
+  test('the program caveat appears once (in At a Glance), and the evaluation sentence follows it there, once', () => {
     const t = text(TL);
     expect(count(t, 'not TalentLEAP’s features on their own')).toBe(1);
     expect(count(t, 'not individual TalentLEAP features')).toBe(0);
-    expect(t).toContain('Evidence for Today’s Tracks Today’s 100-hour tracks have not yet been independently evaluated.'); // WP144: the band is "Evidence for Today’s Tracks" (was "Results from CodersTrust Programs") // WP132: "Today’s 100-hour tracks" (was "The current 100-hour track")
+    expect(t).toContain('These results are from CodersTrust programs, not TalentLEAP’s features on their own. Today’s 100-hour tracks have not yet been independently evaluated;'); // WP132: "Today’s 100-hour tracks" (was "The current 100-hour track")
+    expect(count(t, 'Today’s 100-hour tracks have not yet been independently evaluated')).toBe(1);
   });
   test('the Example band lists no "Proficient and Expert levels are planned." card, and it has no "Example only" footnote (WP157, F12)', () => {
     const h = html(TL);
-    const band = h.slice(h.indexOf('id="example"'), h.indexOf('id="different"'));
+    // WP166-B (R2-34): "What Makes TalentLEAP Different" opens the page now, so the Example band ends where the FAQ starts (it was sliced up to id="different").
+    const band = h.slice(h.indexOf('id="example"'), h.indexOf('id="faq"'));
     const t = decode(band.replace(/<[^>]+>/g, ' ')).replace(/\s+/g, ' ');
     expect(t).not.toContain('Proficient and Expert levels are planned.');
     expect(t).toContain('Level 1 · Competent');
@@ -71,7 +75,9 @@ test.describe('WP122, TalentLEAP: the caveat once, and no "planned" levels insid
   });
   // WP163 (owner answers of 3 November 2026): no level is labelled planned; the lede names the three levels once instead ("Its levels run from Competent to Proficient and Expert.").
   test('the lede names the three levels once and no longer says they are planned', () => {
-    expect(count(text(TL), 'Its levels run from Competent to Proficient and Expert.')).toBe(1);
+    // WP166-B (marketing review R2-34): the lede reads "Levels run from Competent to Proficient and Expert, and three months of milestone-based mentoring follow the course." (it was "Its levels run from Competent to Proficient and Expert.").
+    expect(count(text(TL), 'Levels run from Competent to Proficient and Expert, and three months of milestone-based mentoring follow the course.')).toBe(1);
+    expect(count(text(TL), 'run from Competent to Proficient and Expert')).toBe(1);
     expect(count(text(TL), 'Proficient and Expert levels are planned.')).toBe(0);
   });
 });

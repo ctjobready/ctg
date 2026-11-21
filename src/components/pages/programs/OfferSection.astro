@@ -3,6 +3,8 @@ import Section from '../../ui/Section.astro';
 import SectionHeader from '../../ui/SectionHeader.astro';
 import Icon from '../../system/Icon.astro';
 import Badge from '../../system/Badge.astro';
+import Button from '../../system/Button.astro';
+import { linkAttrs } from '../../../lib/url';
 import { optionDuration } from '../../../lib/format';
 
 /**
@@ -19,6 +21,11 @@ interface CardItem {
   title: string;
   text: string;
   icon?: string;
+  /**
+   * WP166-B (marketing review R2-20): the card's own next step, under its text, so a choice and its action sit together (JobReady@Work's closing band: "Train Your Team" with its button, "Hire Job-Ready Talent" with its link).
+   * `primary` draws the band's one solid button; any other action is a text link.
+   */
+  action?: { label: string; href: string; primary?: boolean };
 }
 interface Props {
   eyebrow?: string;
@@ -64,6 +71,17 @@ const grid = count === 2 ? 'grid-cards grid-cards--2' : 'grid-cards';
               {c.icon && <Icon name={c.icon} size={36} strokeWidth={1.5} class="offer__icon" />}
               <h3 class="card__title">{c.title}</h3>
               <p class="card__text">{c.text}</p>
+              {
+                c.action && (
+                  <p class="offer__action">
+                    {c.action.primary ? (
+                      <Button href={c.action.href} iconEnd="arrow-right">{c.action.label}</Button>
+                    ) : (
+                      <a class="link" href={linkAttrs(c.action.href).href} rel={linkAttrs(c.action.href).rel}>{c.action.label}<Icon name="arrow-right" size={16} /></a>
+                    )}
+                  </p>
+                )
+              }
             </div>
           </article>
         ))}
@@ -89,6 +107,9 @@ const grid = count === 2 ? 'grid-cards grid-cards--2' : 'grid-cards';
   }
   .offer :global(.offer__icon) {
     color: var(--primary);
+  }
+  .offer__action {
+    margin: var(--space-md) 0 0;
   }
   .offer__after {
     margin-top: var(--space-lg);

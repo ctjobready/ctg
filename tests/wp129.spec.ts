@@ -232,8 +232,9 @@ test.describe('WP129 item 6: every dated page whose visible text changed carries
   const STAMPED: [string, string][] = [
     ['about/governance/index.html', 'gov-updated'],
     ['accessibility/index.html', 'lf-updated'],
-    ['our-model/talentleap/index.html', 'lf-updated'],
-    ['our-model/jobready-platform/index.html', 'lf-updated'],
+    // WP166-B (marketing review R2-06): TalentLEAP and the JobReady Platform print "Last updated" at the foot of the page (tl__updated, jr__updated; it was lf-updated in the header).
+    ['our-model/talentleap/index.html', 'tl__updated'],
+    ['our-model/jobready-platform/index.html', 'jr__updated'],
     ['privacy-policy/index.html', 'lf-updated'],
     ['programs/youthwide/index.html', 'updated'],
     ['programs/jobready-campus/index.html', 'updated'],
@@ -318,8 +319,28 @@ test.describe('WP129 item 6: every dated page whose visible text changed carries
     'programs/jobready-work/index.html',
     'partner-with-us/investors/index.html',
   ]);
-  // WP166-A (marketing review, owner approval of 21 November 2026): Governance, About, Recognition and Media and Ferdinand Kjærulff's profile moved on (tests/wp166-a.spec.ts holds the rest)
-  const MOVED_1121 = new Set(['about/governance/index.html', 'about/index.html', 'about/recognition/index.html', 'about/team/ferdinand-kjaerulff/index.html']);
+  // WP166-B (marketing review R2 and R3, owner approval of 21 November 2026): the program, model and partner pages whose visible text changed moved on to 2026-11-21 (their own "Last updated" line, or their own JSON-LD dateModified).
+  const MOVED_1121 = new Set([
+    'our-model/talentleap/index.html',
+    'our-model/jobready-platform/index.html',
+    'programs/youthwide/index.html',
+    'programs/jobready-campus/index.html',
+    'programs/jobready-work/index.html',
+    'programs/superkids/index.html',
+    'programs/nu-postgraduate-diploma/index.html',
+    'programs/nu-postgraduate-diploma/cyber-security/index.html',
+    'programs/nu-postgraduate-diploma/data-analytics/index.html',
+    'programs/nu-postgraduate-diploma/digital-marketing/index.html',
+    'programs/nu-postgraduate-diploma/ict/index.html',
+    'programs/index.html',
+    'partner-with-us/foundations/index.html',
+    'partner-with-us/governments/index.html',
+    'partner-with-us/investors/index.html',
+    'about/governance/index.html',
+    'about/index.html',
+    'about/recognition/index.html',
+    'about/team/ferdinand-kjaerulff/index.html',
+  ]); // WP166-A: the last four
   for (const [route, cls] of STAMPED) {
     const [day, long] = MOVED_1121.has(route) ? ['2026-11-21', 'November 21, 2026'] : MOVED_1103.has(route) ? ['2026-11-03', 'November 3, 2026'] : MOVED_1102.has(route) ? ['2026-11-02', 'November 2, 2026'] : MOVED_1101.has(route) ? ['2026-11-01', 'November 1, 2026'] : ['2026-10-31', 'October 31, 2026'];
     test(`${route} reads "Last updated ${long}" and its JSON-LD dateModified is ${day}`, () => {
@@ -364,7 +385,7 @@ test.describe('WP129 item 6: every dated page whose visible text changed carries
     'impact/case-studies/wsdfm-women-freelancers/index.html',
   ]);
   for (const route of JSONLD_ONLY) {
-    const day = MOVED_1121.has(route) ? '2026-11-21' : MOVED_1103.has(route) ? '2026-11-03' : MOVED_1102.has(route) ? '2026-11-02' : MOVED_1101.has(route) ? '2026-11-01' : '2026-10-31';
+    const day = MOVED_1121.has(route) ? '2026-11-21' : MOVED_1103.has(route) ? '2026-11-03' : MOVED_1102.has(route) ? '2026-11-02' : MOVED_1101.has(route) ? '2026-11-01' : '2026-10-31'; // WP166-B: MOVED_1121 first
     test(`${route} pins its own JSON-LD dateModified to ${day}`, () => {
       expect(dateModified(html(route))).toContain(day);
     });

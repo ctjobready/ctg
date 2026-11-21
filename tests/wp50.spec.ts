@@ -211,7 +211,9 @@ test.describe('Foundations: the first pain and the track-record band (items 2 an
   test('the track-record band opens with the origin line ("Since 2014, ..."), not an empathy line', async ({ page }) => {
     await open(page, FOUND);
     await expect(page.locator('#guide p.lead')).toHaveCount(0);
-    expect(compact(await page.locator('#guide .pg__copy > :first-child').textContent())).toBe(ORIGIN_LINE);
+    // WP166-B (marketing review R3-28): the band opens with the funders who have worked with CodersTrust, in place of the origin line (it opened with ORIGIN_LINE); still a record line, not an empathy line
+    expect(compact(await page.locator('#guide .pg__copy > :first-child').textContent())).toBe('Organizations that have worked with CodersTrust include the Rockefeller Foundation, DANIDA and Porticus.');
+    expect(compact(await page.locator('#guide').textContent())).not.toContain(ORIGIN_LINE);
     expect(await everything(page)).not.toContain('You want your grant to change a young person’s income');
     expect(Object.keys(EMPATHY)).not.toContain('foundations');
   });
@@ -244,8 +246,9 @@ test.describe('Investors: the thesis card (item 3)', () => {
     expect(await texts(page, '#thesis .card__title')).toEqual(['Young People Need Work and Employers Need Skills', 'AI Skills Are in Rising Demand', 'Connect Learning to Paid Work']); // WP153: the problem cards sit together and the JobReady answer follows
     for (const t of await texts(page, '#thesis .card__title')) expect(t, t).toBe(titleCase(t));
     const second = cards.nth(2); // WP153: the answer card is last
-    expect(compact(await second.locator('.card__text').textContent())).toBe('JobReady is designed to link learners to paid work through mentoring and placement support.'); // WP152 (WP151: "connect learning to paid work, through ...")
-    expect(await second.locator('.card__text').getAttribute('data-fact')).toBe('IN-04');
+    // WP166-B (marketing review R3-36): the line ends with the record it builds on, "..., the model CodersTrust has run since 2014.", tied to ID-02 as well (it ended "... placement support.", tied to IN-04)
+    expect(compact(await second.locator('.card__text').textContent())).toBe('JobReady is designed to link learners to paid work through mentoring and placement support, the model CodersTrust has run since 2014.'); // WP152 (WP151: "connect learning to paid work, through ...")
+    expect(await second.locator('.card__text').getAttribute('data-fact')).toBe('IN-04 ID-02');
     expect(sitePages().filter((p) => /Online Learning Sells Content|Many online courses provide content/.test(visible(p.html))).map((p) => p.route)).toEqual([]);
   });
 });
@@ -310,16 +313,22 @@ test.describe('Employers and JobReady@Work: the pricing sentence is said once, i
     await expect(page.locator('#offer .sh__lead')).toHaveCount(0);
     await expect(page.locator('#offer article.card')).toHaveCount(2);
     await open(page, 'programs/jobready-work/');
-    await expect(page.locator('#offer .sh__lead')).toHaveText('Pick one or both.');
-    await expect(page.locator('#offer .note')).toHaveCount(0);
-    await expect(page.locator('#offer article.card')).toHaveCount(2);
+    // WP166-B (marketing review R2-20): the options band and the closing band are one band (#cta); its lead "Pick one or both." is gone (the hero lead keeps it), and the two cards carry no pricing note
+    await expect(page.locator('#offer')).toHaveCount(0);
+    await expect(page.locator('#cta .sh__lead')).toHaveCount(0);
+    await expect(page.locator('#cta .note')).toHaveCount(0);
+    await expect(page.locator('#cta article.card')).toHaveCount(2);
+    expect(compact(await page.locator('#cta').textContent())).not.toContain('Pricing is set per program');
   });
 
   test('the pages that still carry a pricing line in their offer band are unchanged (SuperKids and JobReady@Campus keep their note)', async ({ page }) => {
+    // WP166-B (marketing review R2-30): SuperKids' pricing sentence is its FAQ's cost answer now (the offer band's note is gone); JobReady@Campus keeps its note
     for (const route of ['programs/superkids/', 'programs/jobready-campus/']) {
       await open(page, route);
-      await expect(page.locator('#offer .note--key'), route).toHaveCount(1);
+      await expect(page.locator('#offer .note--key'), route).toHaveCount(route === 'programs/superkids/' ? 0 : 1);
     }
+    await open(page, 'programs/superkids/');
+    expect(await answerOf(page, 'What Does It Cost?')).toBe('Pricing is set per program, and we share an indicative budget in the discovery session.');
   });
 });
 
@@ -356,7 +365,7 @@ test.describe('Home: the Investors router card names the platform in IN-04’s w
     // WP109: Home's card is the fragment; the 404 page keeps the shared nav.ts text with the definition.
     expect(compact(await page.locator('main a.cat[href$="partner-with-us/investors/"] .cat__text').first().textContent())).toBe('Back the staged rollout of JobReady, CodersTrust’s digital learning and earning platform.');
     await open(page, 'partner-with-us/');
-    expect(compact(await page.locator('main a.cat[href$="partner-with-us/investors/"] .cat__text').first().textContent())).toBe('For impact investors: JobReady, CodersTrust’s digital learning and earning platform.');
+    expect(compact(await page.locator('main a.cat[href$="partner-with-us/investors/"] .cat__text').first().textContent())).toBe('For impact investors: back the staged rollout of CodersTrust’s digital learning and earning platform.'); // WP166-B (marketing review R3-19): the card says what the investor backs (it read "For impact investors: JobReady, CodersTrust’s digital learning and earning platform.")
     expect(sitePages().filter((p) => /Back JobReady, the platform we are building/.test(visible(p.html))).map((p) => p.route)).toEqual([]);
   });
 });
@@ -558,7 +567,8 @@ test.describe('Learner stories: the evidence tag takes the kicker’s place (ite
 });
 
 test.describe('Governments: the timing answer is the procurement sentence alone (item 23)', () => {
-  const GOV_ANSWER = 'Public procurement follows the agency’s own timeline, so the first step is a briefing for your ministry.';
+  // WP166-B (marketing review R3-26): the answer opens with the labs the agency already runs (it was "Public procurement follows the agency’s own timeline, so the first step is a briefing for your ministry.")
+  const GOV_ANSWER = 'Delivery uses government digital labs you already run. Timing follows your agency’s own procurement timeline, so the first step is a briefing for your ministry.';
 
   test('"How Fast Can We Start?" on Governments is one sentence, tied to PD-04, with the same words in the FAQ JSON-LD; no grant-pilot timing and no unregistered "after contracting" claim', async ({ page }) => {
     const variant = faqsFor('variants').find((f) => f.id === 'Q7-government')!;
@@ -585,7 +595,7 @@ test.describe('Programs: no "Last updated" line on the overview (item 24)', () =
     await expect(page.locator('main .updated, main .lf-updated')).toHaveCount(0);
     expect(await everything(page)).not.toMatch(/Last updated/);
     const ld = (await page.locator('script[type="application/ld+json"]').allTextContents()).join(' ');
-    expect(ld).toContain('"dateModified":"2026-11-02"'); // WP161 moved it to 2026-11-02 (the learner line, the SuperKids card, "cybersecurity"); WP141 moved it to 2026-11-01; WP106: the YouthWIDE card changed on 2026-10-29 (it was 2026-10-15)
+    expect(ld).toContain('"dateModified":"2026-11-21"'); // WP166-B (marketing review R2-41) moved it to 2026-11-21 (the YouthWIDE card, the "Explore ..." links); WP161 moved it to 2026-11-02 (the learner line, the SuperKids card, "cybersecurity"); WP141 moved it to 2026-11-01; WP106: the YouthWIDE card changed on 2026-10-29 (it was 2026-10-15)
     for (const route of ['programs/youthwide/', 'programs/superkids/', 'programs/jobready-work/', 'programs/nu-postgraduate-diploma/', 'impact/independent-evaluation/', 'privacy-policy/']) {
       await open(page, route);
       expect(await page.locator('.updated, .lf-updated').count(), route).toBeGreaterThan(0);
@@ -619,7 +629,7 @@ test.describe('TalentLEAP stage pipeline: the Prosper step (item 27; WP154: it n
 
   test('Our Model and TalentLEAP print the same five steps from one source; the last step is the one sentence; the TalentLEAP structured data says the same', async ({ page }) => {
     expect(STAGE_STEPS).toHaveLength(5);
-    expect(STAGE_STEPS.map((s) => s.name)).toEqual(['Assess', 'Learn', 'Prepare for Certification', 'Earn', 'Prosper']);
+    expect(STAGE_STEPS.map((s) => s.name)).toEqual(['Assess', 'Train', 'Prepare for Certification', 'Earn', 'Prosper']); // WP166-B (marketing review R2): the second step is "Train" (it was "Learn", the stage's own name)
     expect(STAGE_STEPS[4].text).toBe(PROSPER);
     for (const route of ['our-model/', 'our-model/talentleap/']) {
       await open(page, route);

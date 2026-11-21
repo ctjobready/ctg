@@ -75,7 +75,7 @@ test.describe('WP130 Polish 3 and 4', () => {
     const text = main('our-model/talentleap/index.html');
     expect(text).not.toContain('TalentLEAP organizes skills into career paths with progressive levels. In this example, Level 1 is Competent; Proficient and Expert are the planned next levels.');
     // WP163 (owner answers of 3 November 2026): no level is labelled planned; the opening names the three levels (it said "The first published TalentLEAP level is Competent; Proficient and Expert levels are planned.").
-    expect(text).toContain('Its levels run from Competent to Proficient and Expert.');
+    expect(text).toContain('Levels run from Competent to Proficient and Expert, and three months of milestone-based mentoring follow the course.'); // WP166-B (marketing review R2): the new opening (it read "Its levels run from Competent to Proficient and Expert.")
     expect(text).not.toContain('Proficient and Expert levels are planned.');
     expect(text).not.toContain('In this example the levels are Competent, Proficient and Expert.');
   });

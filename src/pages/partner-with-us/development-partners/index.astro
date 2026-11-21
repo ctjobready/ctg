@@ -41,7 +41,7 @@
  * WP67 (cycle-38 review, Sonnet): the "Where They Work" card closes "..., as agreed in the program scope." (WHERE_THEY_WORK_TEXT, partners.ts, the same text Home, the shared mechanism band and YouthWIDE print).
  */
 import PartnerGlance from '../../../components/pages/partners/PartnerGlance.astro';
-import PairedEvidence from '../../../components/pages/partners/PairedEvidence.astro';
+import Icon from '../../../components/system/Icon.astro';
 import DueDiligenceView from '../../../components/pages/hub/DueDiligenceView.astro';
 import LearnerVoice from '../../../components/pages/impact/LearnerVoice.astro';
 import LandingLayout from '../../../layouts/LandingLayout.astro';
@@ -59,20 +59,20 @@ import GainsPains from '../../../components/pages/partners/GainsPains.astro';
 import PartnerGuideBand from '../../../components/pages/partners/PartnerGuideBand.astro';
 import SubBand from '../../../components/pages/partners/SubBand.astro';
 import Callout from '../../../components/pages/partners/Callout.astro';
-import CopyText from '../../../components/pages/partners/CopyText.astro';
 import OfferCards from '../../../components/pages/partners/OfferCards.astro';
 import RouteLink from '../../../components/pages/partners/RouteLink.astro';
 import Reinforcement from '../../../components/pages/partners/Reinforcement.astro';
 import PageEnhancements from '../../../components/pages/partners/PageEnhancements.astro';
 import { HOURS, KOSOVO_WOW_TILE_LABEL, LINKS, UNDP_YES_TILE_LABEL, WHERE_THEY_WORK_TEXT, funderOptionCards, meta } from '../../../components/pages/partners/partners';
-import { ACCOUNTABILITY, DELIVERY_MODEL, HEADLINE, MICRO_COMMITMENT, POSITIONING, PROGRAM_SCOPE_STATEMENT_EXAMS, PROGRAM_SIZES_NOTE, READ_THE_EVIDENCE, VALUE_PROPOSITION, WB_KOSOVO } from '../../../data/copy';
+import { DELIVERY_MODEL, HEADLINE, MICRO_COMMITMENT, POSITIONING, PROGRAM_SCOPE_STATEMENT_EXAMS, PROGRAM_SIZES_NOTE, READ_THE_EVIDENCE, TRACK_MENU, VALUE_PROPOSITION, WB_KOSOVO } from '../../../data/copy';
 import { fact } from '../../../data/facts';
 import { faqJsonLd } from '../../../lib/faq';
 import { cta } from '../../../lib/mailto';
 import { webPage } from '../../../lib/schema';
+import { linkAttrs } from '../../../lib/url';
 
 const PATH = '/partner-with-us/development-partners/';
-// WP161-A (adversarial review A-02): the WebPage carries the page's own dateModified, 2026-11-02, its last visible change (it fell back to the build date).
+// WP161-A (adversarial review A-02): the WebPage carries the page's own dateModified, its last visible change (it fell back to the build date). WP166-B: 2026-11-21 (the marketing review R3 changes).
 const primary = cta('discovery');
 
 const { title, description } = meta(
@@ -89,7 +89,8 @@ const benchmarkNote = `${benchmark[0].toUpperCase()}${benchmark.slice(1)}.`;
 // Q8-route: the one-line cost answer with a link to the partner hub FAQ, which keeps the full answer (WP36).
 // Q6-development-partners: the women-and-marginalized-groups answer points to Proof in Practice above instead of stating its three program figures again (WP37); the bank's shared Q6 keeps the figures.
 // WP152 (Opus XHigh run 6): the "How We Reach Them" card is the delivery explanation and names the facilitators trained by CodersTrust (Training of Trainers); the funding-ends answer is Q10-later ("CodersTrust-trained facilitators").
-const FAQ_IDS = ['Q1-development-partners', 'Q6-development-partners', 'Q3', 'Q10-later', 'Q8-route'];
+// WP166-B (marketing review R3-22): the cost answer is this page's own (Q8-development-partners: Q8-route plus the accountability commitment, ACCOUNTABILITY, which was an orphan callout).
+const FAQ_IDS = ['Q1-development-partners', 'Q6-development-partners', 'Q3', 'Q10-later', 'Q8-development-partners'];
 ---
 
 <LandingLayout
@@ -97,7 +98,7 @@ const FAQ_IDS = ['Q1-development-partners', 'Q6-development-partners', 'Q3', 'Q1
   description={description}
   path={PATH}
   breadcrumbs={[{ label: 'Partner with Us', href: LINKS.hub }, { label: 'Development Partners and NGOs' }]}
-  jsonLd={[webPage({ path: PATH, name: title, description, dateModified: '2026-11-03' }), faqJsonLd('development-partners', PATH, FAQ_IDS)]}
+  jsonLd={[webPage({ path: PATH, name: title, description, dateModified: '2026-11-21' }), faqJsonLd('development-partners', PATH, FAQ_IDS)]}
   stickyCta={{ label: primary.label, href: primary.href }}
 >
   <!-- C1 · Identity hook -->
@@ -114,7 +115,11 @@ const FAQ_IDS = ['Q1-development-partners', 'Q6-development-partners', 'Q3', 'Q1
   <PartnerGlance
     lead={[{ id: 'RC-02', href: '/impact/independent-evaluation/', note: benchmarkNote, also: ['RC-06a'] }, { id: 'OC-01', href: '/impact/outcomes-2026/' }, { id: 'PR-03', href: LINKS.caseUndp, label: UNDP_YES_TILE_LABEL }]}
     more={[]}
-  />
+  >
+    <!-- WP166-B (marketing review R3-23): the "See the Evidence Behind the Results" band was one qualifying sentence and two links the tiles above already carry; they are this note under the tiles. -->
+    <p>The trial evaluated CodersTrust’s WSDFM program; the survey describes what completers who responded report about work and income.</p>
+    <p class="cluster"><a class="link" href={linkAttrs(LINKS.trial).href}>Read the Trial Results<Icon name="arrow-right" size={16} /></a><a class="link" href={linkAttrs(LINKS.outcomes).href}>Impact Survey 2026<Icon name="arrow-right" size={16} /></a></p>
+  </PartnerGlance>
   <LearnerVoice story="adrian-afraham" excerpt="Following my completion of the course, I successfully secured my very first freelance job, which was followed by an enticing job offer." program="Graphic Designing course, CodersTrust Bangladesh" tone="white" summary={false} />
 
   <!-- C2 · Problem -->
@@ -140,19 +145,19 @@ const FAQ_IDS = ['Q1-development-partners', 'Q6-development-partners', 'Q3', 'Q1
   <!-- C3 (Cost of Waiting) and C4 (Imagine) are left to Home since WP47 (owner decision 2026-10-15). -->
 
   <!-- C5 · Guide. WP44 (cycle-21 review): no empathy line; the band opens with the origin line. WP51 (cycle-26 review): that line is the one Governments and Foundations print, "Since 2014, from a Copenhagen launch to programs in 15 countries and territories." (ORIGIN_SHORT), in place of the launch alone. -->
+  <!-- WP166-B (marketing review R3-29): no TalentLEAP method line in the track record (it supported no claim there; How Our Model Works links the model). -->
   <PartnerGuideBand
     stats={['SC-01', 'SC-03']}
     signed="SC-11c"
-    method={{ text: 'Our TalentLEAP method organizes skills into career paths.', link: { label: 'How TalentLEAP Works', href: LINKS.talentleap } }}
     partnerGroup="development"
     strip
   />
 
-  <!-- C6 · Mechanism (YouthWIDE) -->
+  <!-- C6 · Mechanism (YouthWIDE). WP166-B (marketing review R3-24): the approach lead closes with the page's one delivery-model sentence (DELIVERY_MODEL; it led the first "What Your Portfolio Gets" card). -->
   <MechanismBand
     title="An Integrated Path from Training to Earnings"
     positioning={POSITIONING.developmentPartners}
-    lead="YouthWIDE is the program through which funders deploy the CodersTrust model in a country; it builds on results from earlier programs in Bangladesh and Kosovo."
+    lead={`YouthWIDE is the program through which funders deploy the CodersTrust model in a country; it builds on results from earlier programs in Bangladesh and Kosovo. ${DELIVERY_MODEL.text}`}
     blocks={[
       { label: 'Who We Reach', title: 'Priority Groups', text: 'Priority groups are agreed with you in co-design; women are a priority in every program.', icon: 'users' },
       { label: 'How We Reach Them', title: 'Existing Labs and Colleges', text: 'Outreach and selection with local partners, then blended delivery by facilitators trained by CodersTrust (Training of Trainers).', icon: 'graduation-cap' },
@@ -162,19 +167,7 @@ const FAQ_IDS = ['Q1-development-partners', 'Q6-development-partners', 'Q3', 'Q1
     link={{ label: 'How Our Model Works', href: LINKS.model }}
   />
 
-  <!-- C7 · Proof: the trial and survey results are the tiles above; this strip links the full evidence (WP35, cycle-12 review) -->
-  <PairedEvidence
-    id="proof-band"
-    eyebrow="The Evidence"
-    title="See the Evidence Behind the Results"
-    lead="The trial evaluated CodersTrust’s WSDFM program; the survey describes what completers who responded report about work and income."
-    items={[]}
-    broader={[
-      { label: 'Read the Trial Results', href: LINKS.trial },
-      { label: 'Impact Survey 2026', href: LINKS.outcomes },
-    ]}
-    broaderLabel="The evidence behind the results"
-  />
+  <!-- C7 · Proof: the trial and survey results are the tiles above, with their note and links (WP166-B, R3-23: the evidence strip is folded into the glance) -->
   <CaseStudyCarousel
     title="Proof in Practice"
     items={[
@@ -192,8 +185,9 @@ const FAQ_IDS = ['Q1-development-partners', 'Q6-development-partners', 'Q3', 'Q1
     title="What Your Portfolio Gets"
     cards={[
       // WP163 (owner answers of 3 November 2026): one exam fee per trainee is included, any further attempts set per program, and the card states the delivery model once on this page (DELIVERY_MODEL).
-      { icon: 'route', title: 'Training, Mentoring and Placement Support', text: `Certification exam preparation and one exam fee per trainee (any further attempts set per program), three months of mentoring and placement support in one program. ${DELIVERY_MODEL.text}`, facts: ['PD-01', 'PD-02a', 'IN-04'] },
-      { icon: 'map-pin', title: 'Accessible Local Delivery', text: 'Outreach, accessible selection and tracks chosen from employer demand, with safeguarding agreed for each program.', facts: ['PD-02', 'PD-10', 'PD-12'] },
+      // WP166-B (marketing review R3-24, R3-05): the delivery-model sentence is in How It Works; the delivery card names the track menu once (TRACK_MENU, PD-10).
+      { icon: 'route', title: 'Training, Mentoring and Placement Support', text: 'Certification exam preparation and one exam fee per trainee (any further attempts set per program), three months of mentoring and placement support in one program.', facts: ['PD-01', 'PD-02a'] },
+      { icon: 'map-pin', title: 'Accessible Local Delivery', text: `Outreach, accessible selection and tracks chosen from employer demand, with safeguarding agreed for each program. ${TRACK_MENU.text}`, facts: ['PD-02', 'PD-10', 'PD-12'] },
       { icon: 'clipboard-check', title: 'Progress Your Evaluators Can Check', text: 'Baseline data, follow-up surveys and monthly reports, with documentary evidence where available.', facts: ['PD-08', 'PD-09'] },
     ]}
     scope={PROGRAM_SCOPE_STATEMENT_EXAMS}
@@ -210,9 +204,7 @@ const FAQ_IDS = ['Q1-development-partners', 'Q6-development-partners', 'Q3', 'Q1
 
   <!-- C11 · Offer -->
   <OfferCards eyebrow="Options" title="Choose Where to Start" lead={PROGRAM_SIZES_NOTE} cards={funderOptionCards()} recommended={0} />
-  <SubBand tone="airy" pull>
-    <Callout eyebrow="Accountability"><CopyText block={ACCOUNTABILITY} /></Callout>
-  </SubBand>
+  <!-- WP166-B (marketing review R3-22): the "Accountability" callout is the cost answer's second sentence in the FAQ above (Q8-development-partners). -->
 
   <!-- C12 · Risk reversal (immediately before C13): WP34 (cycle-11 review): the four diligence cards repeated what this page's bands state, so one item and a link stand in. WP45 (cycle-21 review): the hub's reporting band (#review-cycle) is gone,
        so the callout below states the reporting and review once and has no link to it (the due-diligence item above links to Governance and Accountability). -->

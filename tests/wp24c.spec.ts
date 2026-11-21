@@ -42,10 +42,11 @@ test.describe('YouthWIDE (/programs/youthwide/)', () => {
     await expect(routes).toHaveCount(1);
   });
 
-  test('WP30d: the Bangladesh initiative is one band (#governments, headed as the delivery base and its 2030 aim; WP53: "Reference Country" became "Delivery Base") and the 2030 aim is the only Target-tagged tile', async ({ page }) => {
+  test('WP30d: the Bangladesh initiative is one band (#governments, headed with its benefit to governments; WP53: "Reference Country" became "Delivery Base"; WP166-B R2-11) and the 2030 aim is the only Target-tagged tile', async ({ page }) => {
     await open(page, 'programs/youthwide/');
     const band = page.locator('section#governments');
-    await expect(band.getByRole('heading', { level: 2 })).toHaveText('Delivery Base in Bangladesh and the 2030 Aim');
+    // WP166-B (marketing review R2-11): headed with the benefit (it was "Delivery Base in Bangladesh and the 2030 Aim").
+    await expect(band.getByRole('heading', { level: 2 })).toHaveText('Designed for the Digital Labs and Colleges Governments Already Have');
     await expect(band.locator('.status-tag', { hasText: 'Target' })).toHaveCount(1);
     await expect(page.locator('main .status-tag', { hasText: 'Target' })).toHaveCount(1);
     await expect(band).toContainText('not a delivered figure');
@@ -69,10 +70,11 @@ test.describe('YouthWIDE (/programs/youthwide/)', () => {
     expect(titles.findIndex((t) => /Young People Earning, Locally and Globally/i.test(t))).toBe(-1);
   });
 
-  test('the FAQ is trimmed to five decision questions, the national-scale answer leading with Her Power in two short paragraphs', async ({ page }) => {
+  test('the FAQ is trimmed to six decision questions, the national-scale answer leading with Her Power in two short paragraphs', async ({ page }) => {
     await open(page, 'programs/youthwide/');
     const items = page.locator('#faq details');
-    await expect(items).toHaveCount(5);
+    // WP166-B (marketing review R2-13): six (it was five): the "Protected by Design" band is the one-line safeguarding answer (Q9-route) in the FAQ.
+    await expect(items).toHaveCount(6);
     const scale = items.filter({ hasText: 'Can You Deliver at National Scale?' });
     await expect(scale.locator('p').first()).toContainText(/^Her Power/);
     await expect(scale.locator('p')).toHaveCount(2);
@@ -287,14 +289,7 @@ test.describe('Our Model', () => {
     await open(page, 'our-model/talentleap/');
     await expect(page.locator('#how .sp__step')).toHaveCount(5);
     await expect(page.locator('#how .tl__row')).toHaveCount(0);
-    const links = page.locator('.lf-toc a[href^="#"]');
-    const n = await links.count();
-    expect(n).toBeGreaterThanOrEqual(6);
-    for (let i = 0; i < n; i++) {
-      const href = (await links.nth(i).getAttribute('href'))!;
-      const label = (await links.nth(i).innerText()).trim();
-      const heading = (await page.locator(`${href} h2`).first().innerText()).trim();
-      expect(label, href).toBe(heading);
-    }
+    // WP166-B (marketing review R2-06): TalentLEAP has no "On This Page" box any more (it had seven entries, each checked against its heading here); the label checks are gone with it.
+    await expect(page.locator('.lf-toc')).toHaveCount(0);
   });
 });

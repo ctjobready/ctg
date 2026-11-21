@@ -154,14 +154,15 @@ test.describe('3 "Post Graduate Diploma" is capitalised where it names the NU pr
     expect(bad).toEqual([]);
   });
 
+  // WP166-B (marketing review R2-04): the NU card and the overview lead carry the new lead's first sentence (they said "We help learners prepare for digital work through the National University Post Graduate Diploma.").
   test('the sources of the social-preview card carry the capitalised name too', () => {
-    expect(readFileSync('scripts/build-og.mjs', 'utf8')).toContain('through the National University Post Graduate Diploma.');
-    expect(readFileSync('src/lib/og.ts', 'utf8')).toContain('through the National University Post Graduate Diploma.');
+    expect(readFileSync('scripts/build-og.mjs', 'utf8')).toContain('A one-year National University Post Graduate Diploma, on campus, delivered by CodersTrust.');
+    expect(readFileSync('src/lib/og.ts', 'utf8')).toContain('A one-year National University Post Graduate Diploma, on campus, delivered by CodersTrust.');
     expect(readFileSync('src/lib/og.ts', 'utf8')).not.toContain('post graduate diploma');
   });
 
   test('NU overview: lead and meta name the Post Graduate Diploma; the meta stays within 155 characters', () => {
-    expect(main(NU)).toContain('We help learners prepare for digital work through the National University Post Graduate Diploma.');
+    expect(main(NU)).toContain('A one-year National University Post Graduate Diploma, on campus, delivered by CodersTrust.'); // WP166-B (R2-04), as above
     const d = metaDescription(NU);
     expect(d).toBe('Build practical digital skills after your degree with the National University Post Graduate Diploma, delivered by CodersTrust.');
     expect(d.length).toBeLessThanOrEqual(155);

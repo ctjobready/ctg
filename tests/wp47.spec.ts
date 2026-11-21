@@ -222,8 +222,10 @@ test.describe('Impact: each evidence-ladder rung name is the link (item 30)', ()
 
 test.describe('Single-source wording (items 31, 32, 34, 35, 36)', () => {
   test('item 31: the program-sizes note is a full sentence on every page that carries it', async ({ page }) => {
-    const NOTE = 'These are program sizes, not commitments: in the discovery session you choose a starting scope for your goals, country and delivery capacity.';
+    // WP166-B (marketing review R2 and R3): the note puts the reader's choice first (it read "These are program sizes, not commitments: in the discovery session you choose a starting scope for your goals, country and delivery capacity.")
+    const NOTE = 'You choose the starting scope in the discovery session, for your goals, country and delivery capacity. The sizes below are program sizes, not commitments.';
     expect(PROGRAM_SIZES_NOTE).toBe(NOTE);
+    expect(builtPages().filter((p) => p.html.includes('These are program sizes, not commitments:')).map((p) => p.route), 'the old wording').toEqual([]);
     // WP49 (cycle-24 reviews, items 12 and 33): the Governments page, whose action is a briefing, carries the same sentence with "in the briefing" (PROGRAM_SIZES_NOTE_BRIEFING; tests/wp49.spec.ts)
     // WP57 (cycle-29 review, Grok R5): Universities' band has no size cards, so the page does not carry the note (it must not carry the old wording either: the builtPages check below)
     for (const route of ['', 'partner-with-us/development-partners/', 'partner-with-us/foundations/', 'programs/jobready-campus/']) {
@@ -288,20 +290,21 @@ test.describe('Single-source wording (items 31, 32, 34, 35, 36)', () => {
     expect(platform).toContain('Marketing automation, customer relationship management and AI chat');
     expect(platform).toContain('Partner portals');
     await open(page, 'partner-with-us/employers/');
-    expect(await mainText(page)).toContain('partner portals, AI chat, the employer marketplace and the gig-work marketplace.'); // WP163: no live or pre-launch label
+    // WP166-B (marketing review R3-33): Employers' platform question, whose answer listed the capabilities, is gone ("See the Platform Capabilities" links the platform page); the assertion on its list is gone with it.
+    await expect(page.locator('#features').getByRole('link', { name: 'See the Platform Capabilities' })).toHaveCount(1);
     expect(await mainText(page)).not.toMatch(/marketing automation|customer relationship management/i);
   });
 
-  test('item 36: the degree-holders pain says "A degree alone does not guarantee a job offer." on Governments and Universities, under the unchanged card titles', async ({ page }) => {
+  // WP166-B (marketing review R3-40): the degree-holders pain cards on Governments and Universities are gone (the 19M+ tile, PX-02, states the problem); the assertions on their wording are gone with them.
+  test('item 36: the degree-holders pain ("A degree alone does not guarantee a job offer.") is off Governments and Universities (WP166-B: the 19M+ tile states it)', async ({ page }) => {
     for (const [route, title] of [
       ['partner-with-us/governments/', 'Graduates Struggle to Find Work'],
       ['partner-with-us/universities/', 'Degree Holders Struggle to Find Work'],
     ] as const) {
       await open(page, route);
       const item = page.locator('#problem .gp__pains li', { has: page.locator('.gp__q', { hasText: title }) });
-      await expect(item, route).toHaveCount(1);
-      expect(compact(await item.locator('.gp__q').textContent())).toBe(title);
-      expect(compact(await item.locator('.gp__a').textContent()), route).toBe('A degree alone does not guarantee a job offer.');
+      await expect(item, route).toHaveCount(0); // WP166-B: it was 1
+      await expect(page.locator('#problem [data-fact="PX-02"]'), route).toContainText('19M+');
       expect(await mainText(page), route).not.toContain('not producing job offers');
     }
   });

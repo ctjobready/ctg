@@ -42,10 +42,12 @@ async function faqJsonLd(page: Page) {
 
 test.describe('Investors: "What JobReady Does" is three short cards and one link (item 1)', () => {
   // WP163 (owner answers of 3 November 2026): the cards say what JobReady offers, with no live, pre-launch, planned or roadmap label; the Learn card states the delivery model, the page's one statement of it.
+  // WP166-B (marketing review R3-24): the delivery-model sentence ("Training follows an AI-supported flipped classroom: ...") left the Learn card for the lead of "How JobReady Connects Learning to Work"; the card's
+  // other sentences are unchanged.
   const CARDS = [
     {
       title: 'Learn Through TalentLEAP',
-      text: 'TalentLEAP’s levels run from Competent to Proficient and Expert, with AI-driven personalized and adaptive learning paths. Training follows an AI-supported flipped classroom: all lectures are pre-recorded and an AI Tutor supports every learner, so mentors’ time goes to Q&A and to handholding beyond what the AI Tutor can provide. Supported cohorts include mentoring, certification exam preparation and placement support. Cohort inclusions on this page are agreed in each program’s scope.', // WP142: the page's one scope sentence follows the cohort-inclusions sentence. WP64 (cycle-36 review, Claude): it said "Competent is the published first level; Proficient and Expert are planned."
+      text: 'TalentLEAP’s levels run from Competent to Proficient and Expert, with AI-driven personalized and adaptive learning paths. Supported cohorts include mentoring, certification exam preparation and placement support. Cohort inclusions on this page are agreed in each program’s scope.', // WP142: the page's one scope sentence follows the cohort-inclusions sentence. WP64 (cycle-36 review, Claude): it said "Competent is the published first level; Proficient and Expert are planned."
       facts: ['IN-06', 'IN-08', 'PD-01', 'PD-02', 'IN-04'],
     },
     {
@@ -114,14 +116,7 @@ test.describe('Investors: "What JobReady Does" is three short cards and one link
     await expect(page.locator('#status h2')).toHaveText('Platform Capabilities');
   });
 
-  test('the first FAQ answer still links to the band, which now holds the cards it points at', async ({ page }) => {
-    await open(page, 'partner-with-us/investors/');
-    const item = page.locator('#faq details', { has: page.locator('summary', { hasText: 'What Does the JobReady Platform Offer?' }) }).first(); // WP163: it asked "Is the JobReady Platform Live?"
-    const link = item.locator('.faq__a a');
-    await expect(link).toHaveText('What JobReady Does');
-    expect(await link.getAttribute('href')).toBe('#features');
-    await expect(page.locator('#features li.card')).toHaveCount(3);
-  });
+  // WP166-B (marketing review R3-33): the platform question whose answer linked to this band ("See What JobReady Does above ...", Q11-investor) is gone from Investors; the test of that link is gone with it.
 
   for (const vp of [DESKTOP, MOBILE]) {
     test(`at ${vp.width}px the cards sit in one row (1280) or stack (390), the band has room under them, nothing scrolls sideways and no two dark bands meet`, async ({ page }) => {

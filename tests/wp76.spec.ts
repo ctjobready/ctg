@@ -254,7 +254,9 @@ test.describe('WP76 item 1: the overview page, the Programs hub and the menus na
   test('"Choose Your Course" says "Four courses, in digital marketing, information and communication technology (ICT), cybersecurity and data analytics, ..." over four cards in the diploma’s order, each linked, with its banner and three topics', async ({ page }) => {
     await open(page, NU);
     await expect(page.locator('#courses h2')).toHaveText('Choose Your Course');
-    expect(compact(await page.locator('#courses .lead').textContent())).toBe('Four courses, in digital marketing, information and communication technology (ICT), cybersecurity and data analytics, delivered by CodersTrust, an affiliated college (College Code: 6634) under the National University of Bangladesh.');
+    // WP166-B (marketing review R2): the hero lead names the four fields (VALUE_PROPOSITION.nuPgd), so the course lead no longer repeats them (it read "Four courses, in digital marketing, information and communication technology (ICT), cybersecurity and data analytics, delivered by ...")
+    expect(compact(await page.locator('#courses .lead').textContent())).toBe('Four courses, delivered by CodersTrust, an affiliated college (College Code: 6634) under the National University of Bangladesh.');
+    expect(compact(await page.locator('.hero__lead').first().textContent())).toContain('Choose digital marketing, information and communication technology (ICT), cybersecurity or data analytics.');
     expect(await texts(page, '#courses article .course__title')).toEqual(COURSES.map((c) => c.title));
     for (const [i, c] of COURSES.entries()) {
       const card = page.locator('#courses article').nth(i);
@@ -371,14 +373,15 @@ test.describe('WP76 item 1: the two new course pages follow the course template'
       const bands = await page.evaluate(() =>
         Array.from(document.querySelectorAll('main > section.band, main section.band')).map((s) => ({ id: s.id, tone: /band--(white|airy|ice|klein|deep-ink)/.exec(s.className)?.[1] ?? '' })),
       );
-      expect(bands.map((b) => b.id)).toEqual(['before-you-apply', 'who', 'curriculum', 'also-consider', 'faq', 'cta', '']);
-      expect(bands.map((b) => b.tone)).toEqual(['white', 'white', 'airy', 'white', 'ice', 'airy', 'white']);
+      // WP166-B (marketing review R2-25): what the learner studies and where it leads come first, then Before You Apply (it was first: before-you-apply, who, curriculum, ...; tones white, white, airy, ...)
+      expect(bands.map((b) => b.id)).toEqual(['who', 'curriculum', 'before-you-apply', 'also-consider', 'faq', 'cta', '']);
+      expect(bands.map((b) => b.tone)).toEqual(['white', 'airy', 'white', 'white', 'ice', 'airy', 'white']);
       expect(await texts(page, 'main h1, main h2, main h3')).toEqual([
         c.title,
-        'Before You Apply',
         'For Learners Who Want a Digital Career',
         'Fields This Diploma Can Support',
         'What You Study',
+        'Before You Apply', // WP166-B: it was second, after the H1
         'Other NU Post Graduate Diploma Courses',
         'Questions About This Course',
         'Ready to Apply?',
@@ -448,13 +451,15 @@ test.describe('WP76 item 1: the two new course pages follow the course template'
       await expect(page.locator('#faq h2')).toHaveText('Questions About This Course');
       expect(await texts(page, '#faq summary')).toEqual(['What Will I Be Able to Do After This Course?', 'Is This the Right Course for Me?']);
       const doAnswer = await answerOf(page, 'What Will I Be Able to Do After This Course?');
-      expect(doAnswer).toBe(`${c.answer} ${NEXT_STEP}`);
+      // WP166-B (marketing review R2-26): the answer no longer ends with NEXT_STEP; the roles note says the caveat once (it was `${c.answer} ${NEXT_STEP}`)
+      expect(doAnswer).toBe(c.answer);
+      expect(doAnswer).not.toContain(NEXT_STEP);
       const rightAnswer = await answerOf(page, 'Is This the Right Course for Me?');
       expect(rightAnswer).toBe(`Eligibility: ${ELIGIBILITY}. ${c.fit} Not right if you want a shorter course: see JobReady.global.`); // WP161 (A-35): it said "a short self-paced course"
       // every subject the two sentences name is the subject of one of the course's own modules
       for (const m of [...c.answerModules, ...c.fitModules]) expect(modulesOf(slug), m).toContain(m);
       const ld = await faqJsonLd(page);
-      expect(ld.find((q) => q.name === 'What Will I Be Able to Do After This Course?')?.text).toBe(`${c.answer} ${NEXT_STEP}`);
+      expect(ld.find((q) => q.name === 'What Will I Be Able to Do After This Course?')?.text).toBe(c.answer); // WP166-B: it was `${c.answer} ${NEXT_STEP}`
       expect(ld.find((q) => q.name === 'Is This the Right Course for Me?')?.text).toContain(c.fit);
       // no outcome, placement or earnings promise
       expect(`${doAnswer} ${rightAnswer}`).not.toMatch(/guarantee|job placement|you will earn|get a job|will be hired/i);
@@ -470,7 +475,7 @@ test.describe('WP76 item 1: the two new course pages follow the course template'
       expect(JSON.stringify(course?.provider)).toContain('National University, Bangladesh');
       const crumbs = nodes.find((n) => n['@type'] === 'BreadcrumbList');
       expect(((crumbs?.itemListElement as { name: string }[]) ?? []).map((i) => i.name)).toEqual(['Home', 'Programs', 'NU Post Graduate Diploma', c.title]);
-      expect(nodes.filter((n) => n['@type'] === 'WebPage').some((n) => n.dateModified === '2026-11-02')).toBe(true); // WP152: the "Ready to Apply?" lead is "Submit the application form." (2026-11-02). WP148: "Post Graduate Diploma" capitalised in the lead and the meta (it read 2026-10-31)
+      expect(nodes.filter((n) => n['@type'] === 'WebPage').some((n) => n.dateModified === '2026-11-21')).toBe(true); // WP166-B (marketing review R2): the order, the short-form line and the single fit and caveat (2026-11-21; it was 2026-11-02). WP152: the "Ready to Apply?" lead is "Submit the application form." (2026-11-02). WP148: "Post Graduate Diploma" capitalised in the lead and the meta (it read 2026-10-31)
     });
 
     test(`${route}: the page is shorter than the 750-word cap the other course pages keep, shows its last-updated date, and does not scroll sideways at 1280 or 390`, async ({ page }) => {
@@ -481,7 +486,7 @@ test.describe('WP76 item 1: the two new course pages follow the course template'
         expect(await noOverflow(page), `${vp.width}px`).toBe(true);
       }
       expect(await wordsIn(page)).toBeLessThan(750);
-      expect(compact(await page.locator('.updated').textContent())).toBe('Last updated November 2, 2026'); // WP152 (moved with the lead). WP148: it read October 31, 2026; WP104: the course pages' wording last changed on 29 October (WP102)
+      expect(compact(await page.locator('.updated').textContent())).toBe('Last updated November 21, 2026'); // WP166-B: it was November 2, 2026. WP152 (moved with the lead). WP148: it read October 31, 2026; WP104: the course pages' wording last changed on 29 October (WP102)
     });
   }
 });
@@ -531,12 +536,13 @@ test.describe('WP76 item 1: "Also Consider" names the other three courses on eve
 test.describe('WP76 item 1: the existing course pages keep their wording and structure', () => {
   test('Digital Marketing and ICT: the same answer sentences, "What You Study" line, band order and Fields heading as before', async ({ page }) => {
     await open(page, `${NU}digital-marketing/`);
-    expect(await answerOf(page, 'What Will I Be Able to Do After This Course?')).toBe(`Build practical work in WordPress design, content marketing, SEO and analytics, followed by the final internship, project work and seminar module. ${NEXT_STEP}`);
+    // WP166-B (marketing review R2-26): both answers no longer end with NEXT_STEP (the roles note says it once)
+    expect(await answerOf(page, 'What Will I Be Able to Do After This Course?')).toBe('Build practical work in WordPress design, content marketing, SEO and analytics, followed by the final internship, project work and seminar module.');
     expect(compact(await page.locator('#curriculum .sh .lead, #curriculum header .lead').first().textContent())).toBe('Modules, in order. The final module combines internship, project work and a seminar; internship arrangements are confirmed with admissions.');
     expect(await texts(page, '#who .roles li')).toEqual(['Social Media Executive', 'SEO Executive/Expert', 'Google Ads, PPC and SEM Specialist', 'Content Marketer']);
     await open(page, `${NU}ict/`);
     // WP161 (A-33): ICT's final module is National University's "Project/ Intern" (it was "Internship/ Project Work & Seminar")
-    expect(await answerOf(page, 'What Will I Be Able to Do After This Course?')).toBe(`Build practical work in programming, databases, networks and mobile applications, followed by the final project or internship module. ${NEXT_STEP}`);
+    expect(await answerOf(page, 'What Will I Be Able to Do After This Course?')).toBe('Build practical work in programming, databases, networks and mobile applications, followed by the final project or internship module.');
     expect(await texts(page, '#who .roles li')).toEqual(['Software Developer', 'Programmer', 'Network Administrator', 'Network Engineer', 'Database Administrator', 'Web Developer', 'Web Designer', 'Mobile App Developer']);
   });
 });

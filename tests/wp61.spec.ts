@@ -128,13 +128,15 @@ test.describe('G2 (GPT-6.1 Sol; Kimi K1): the Employers and JobReady@Work track-
     expect(pagesWith(LINE, 'teams that need AI skills for their daily work')).toEqual([]);
   });
 
-  test('Employers: the band opens with the origin line, then the method line; the delivered figure and the logo strip stay', async ({ page }) => {
+  // WP166-B (marketing review R3-06, R3-29): the band is headed "Employers and Partners We Work With", so the origin line keeps "Since 2014" (it read "From a Copenhagen launch ..." under "We’ve Built This Path
+  // Since 2014"), and the TalentLEAP method line closes How It Works instead of following the origin line ("Our TalentLEAP method organizes skills into career paths. How TalentLEAP Works").
+  test('Employers: the band opens with the origin line (WP166-B: the method line is at the end of How It Works); the delivered figure and the logo strip stay', async ({ page }) => {
     await open(page, EMPLOYERS);
     await expect(page.locator('#guide p.lead')).toHaveCount(0);
     expect(await page.locator('#guide .pg__copy').evaluate((el) => Array.from(el.children).map((c) => (c.textContent ?? '').replace(/\s+/g, ' ').trim()))).toEqual([
-      'From a Copenhagen launch to work in 16 countries and territories.', // WP64 rework RW2 (coordinator): the heading says "Since 2014", so the line does not
-      'Our TalentLEAP method organizes skills into career paths. How TalentLEAP Works',
+      'From a Copenhagen launch to work in 16 countries and territories.', // WP166-B (marketing review R3-06): Employers' band is headed "Employers and Partners We Work With"; its signed-agreement sentence carries "since 2014" (WP66), so the origin line is the year-less one it printed before ("since 2014" once in the band, WP64)
     ]);
+    expect(compact(await page.locator('#mechanism .emp__method').textContent())).toBe('Our TalentLEAP method organizes skills into career paths.');
     await expect(page.locator('#guide .factstat[data-fact="SC-15"]')).toHaveCount(1);
     await expect(page.locator('#guide section.partners')).toHaveCount(1);
   });
@@ -227,7 +229,8 @@ test.describe('G4 (GPT-6.1 Sol): Local Partners’ first pain says what CodersTr
     await open(page, LOCAL);
     expect(await page.locator('#features li[data-relieves]').evaluateAll((els) => els.map((e) => e.getAttribute('data-relieves')))).toEqual(['P1', 'P2', 'P3']);
     // WP163 (owner answers of 3 November 2026): the card also states the delivery model, the page's one statement of it, so it adds PD-01 and IN-04 (the AI Tutor) to its facts.
-    expect(await page.locator('#features li[data-relieves="P1"]').getAttribute('data-fact')).toBe('PD-06 PD-02 PD-01 IN-04');
+    // WP166-B (marketing review R3-24, R3-05): the delivery-model sentence moved to How It Works and the card names the track menu (PD-10), so IN-04 gives way to PD-10 (it was "PD-06 PD-02 PD-01 IN-04").
+    expect(await page.locator('#features li[data-relieves="P1"]').getAttribute('data-fact')).toBe('PD-06 PD-02 PD-01 PD-10');
     expect(compact(await page.locator('#features li[data-relieves="P1"] .card__title').textContent())).toBe('Facilitator Training and a Local Curriculum');
   });
 
@@ -391,16 +394,18 @@ test.describe('L4 (GLM): Outcomes 2026 "How to Read This Survey" names the respo
 });
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+// WP166-B (marketing review R3-04, R3-15): Governments' glance is headed "Proof at a Glance" (it was "Results and Contract Scope at a Glance") and runs the contract scope (which carries Her Power's national
+// program in its note), Her Power, the trial (with its benchmark note) and Kosovo (it ran the trial, Her Power, Kosovo, then the contract scope); each tile's text is unchanged.
 test.describe('L5 (GLM): Governments’ glance runs trial, Her Power, Kosovo, then the contract scope', () => {
-  const ORDER = ['RC-02', 'PR-05', 'PR-02', 'GV-12'];
+  const ORDER = ['GV-12', 'PR-05', 'RC-02', 'PR-02'];
 
-  test('the four tiles are in that order, each tagged for what it is, with the contract scope last and no "More Results" heading', async ({ page }) => {
+  test('the four tiles are in that order, each tagged for what it is, with the contract scope first (WP166-B) and no "More Results" heading', async ({ page }) => {
     await open(page, GOVERNMENTS);
     expect(await page.locator('#glance .pg__lead a').evaluateAll((els) => els.map((e) => (e.getAttribute('data-fact') ?? '').split(' ')[0]))).toEqual(ORDER);
-    expect(await page.locator('#glance .pg__lead a [data-evidence]').evaluateAll((els) => els.map((e) => e.getAttribute('data-evidence')))).toEqual(['Randomized Trial', 'Program Record', 'Program Record', 'Contract Scope']);
-    expect(await texts(page, '#glance .pg__value')).toEqual(['+10.3 percentage points', '372 of 800', '102 of 150', '30,000+']);
+    expect(await page.locator('#glance .pg__lead a [data-evidence]').evaluateAll((els) => els.map((e) => e.getAttribute('data-evidence')))).toEqual(['Contract Scope', 'Program Record', 'Randomized Trial', 'Program Record']);
+    expect(await texts(page, '#glance .pg__value')).toEqual(['30,000+', '372 of 800', '+10.3 percentage points', '102 of 150']);
     await expect(page.locator('#glance h3')).toHaveCount(0);
-    await expect(page.locator('#glance h2')).toHaveText('Results and Contract Scope at a Glance');
+    await expect(page.locator('#glance h2')).toHaveText('Proof at a Glance');
     // the contract-scope tile keeps its label, note and facts
     const tile = page.locator('#glance a[data-fact~="GV-12"]');
     await expect(tile.locator('.pg__desc')).toHaveText('people in the training and curriculum scopes of six government contracts');

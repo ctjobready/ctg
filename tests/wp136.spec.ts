@@ -61,7 +61,10 @@ test('Polish 4 (guard): the register’s OC-05 text, and Home’s survey slide b
 test('Polish 5: Universities "The National University Partnership" has two cards and a lead that reads for two', () => {
   const rel = 'partner-with-us/universities/index.html';
   const b = band(rel, 'offer-evidence');
-  expect(visible(b)).toContain('The National University Partnership These cards describe the learners being onboarded and National University’s size, not learners trained by CodersTrust.');
+  // WP166-B (marketing review R3-13): the band is headed with its claim (it was "The National University Partnership") and the two-card qualifier is the note under the cards (it was the lead under the heading).
+  expect(visible(b)).toContain('Official Training Partner of the World’s Second-Largest University by Enrollment');
+  expect(visible(b)).not.toContain('The National University Partnership');
+  expect(visible(b)).toContain('National University The world’s second-largest university by enrollment — 3M+ students in 2,257 affiliated colleges. These cards describe the learners being onboarded and National University’s size, not learners trained by CodersTrust.');
   expect(visible(b)).not.toContain('The first two cards');
   expect(b.match(/<li class="pe__item"/g) ?? [], 'two cards in the band').toHaveLength(2);
   expect(/University Partners\b/.test(visible(b)), 'no "University Partners" card label ("Partnership" is not it)').toBe(false);

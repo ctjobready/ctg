@@ -71,6 +71,8 @@ const jsonLd = [
       <a class="link" href={NU_CALL.href}>{NU_CALL_TEXT}</a>
       <!-- WP27: intake, schedule and location are not published; the link goes to the admissions contact block, where they are confirmed with each applicant -->
       <a class="link" href="#admissions-contact">Confirm Intake, Schedule and Location</a>
+      <!-- WP166-B (marketing review R2-23): what "Apply Now" opens, under the button (the closing band keeps its two steps). -->
+      <p class="hero-note">A short form: your name, contact details and course. Admissions then shares the application steps.</p>
     </Fragment>
     <dl slot="stats" class="keyfacts">
       <div><dt>Duration</dt><dd><Fact id="NU-02" /></dd></div>
@@ -78,27 +80,10 @@ const jsonLd = [
     </dl>
   </Hero>
 
-  <Section id="before-you-apply" aria-labelledby="before-h">
-    <!-- WP161 (A-32): CodersTrust's delivery terms, not "as stated for" the National University diploma -->
-    <SectionHeader id="before-h" eyebrow="Admissions" title="Before You Apply" lead="Program details for this course as delivered by CodersTrust." />
-    <dl class="ba">
-      <div class="ba__row"><dt>Eligibility</dt><dd><Fact id={eligibilityId} /></dd></div>
-      <div class="ba__row"><dt>Duration</dt><dd><Fact id="NU-02" /></dd></div>
-      <div class="ba__row"><dt>Credit Hours and Subjects</dt><dd><Fact id="NU-09" /></dd></div>
-      <div class="ba__row"><dt>Schedule and Intake</dt><dd>{NU_SCHEDULE_NOTE} <NuNoticeLinks /></dd></div>
-      <div class="ba__row"><dt>Delivery</dt><dd><Fact id="NU-10" /></dd></div>
-      <div class="ba__row"><dt>Teaching Location</dt><dd>{NU_LOCATION_NOTE}</dd></div>
-      <div class="ba__row"><dt>Program Fee</dt><dd><Fact id="NU-03" /></dd></div>
-      <div class="ba__row"><dt>Payment</dt><dd><Fact id="NU-05" /></dd></div>
-      <div class="ba__row"><dt>Recognition</dt><dd><Fact id="NU-04" /></dd></div>
-      <!-- WP161 (A-34): the linked Google Form registers interest (name, contact details and course); admissions then shares the application steps -->
-      <div class="ba__row" id="admissions-contact"><dt>How to Apply</dt><dd>Complete the <a class="link" href={applyLink.href} rel={applyLink.rel}>short form</a> (name, contact details and course); admissions then shares the application steps. For help, call <a class="link" href={NU_CALL.href}>{NU_CALL_NUMBER}</a> or email <a class="link" href="mailto:hello@coderstrustbd.com">hello@coderstrustbd.com</a>.</dd></div>
-    </dl>
-  </Section>
-
-  <!-- WP161 (A-35): the lead points to the eligibility row above instead of repeating NU-01 (it is stated once in Before You Apply and once in the FAQ), and says "a shorter course" -->
+  <!-- WP166-B (marketing review R2-25, owner approval of 21 November 2026): what the learner studies and where it leads come first; the admissions detail (Before You Apply) follows, ahead of the other courses, the FAQ and the closing band. -->
+  <!-- WP161 (A-35): the lead pointed to the eligibility row instead of repeating NU-01. WP166-B (marketing review R2-26): the lead is gone; the FAQ "Is This the Right Course for Me?" states the fit once. -->
   <Section id="who" aria-labelledby="who-h">
-    <SectionHeader id="who-h" eyebrow="Who It Is For" title="For Learners Who Want a Digital Career" lead="Right for you if you meet the eligibility above and want to add practical digital skills. If you want a shorter course instead, see JobReady.global." />
+    <SectionHeader id="who-h" eyebrow="Who It Is For" title="For Learners Who Want a Digital Career" />
     {
       c.roles.length > 0 && (
         <div class="roles" data-reveal>
@@ -127,6 +112,24 @@ const jsonLd = [
     </details>
   </Section>
 
+  <Section id="before-you-apply" aria-labelledby="before-h">
+    <!-- WP161 (A-32): CodersTrust's delivery terms, not "as stated for" the National University diploma -->
+    <SectionHeader id="before-h" eyebrow="Admissions" title="Before You Apply" lead="Program details for this course as delivered by CodersTrust." />
+    <dl class="ba">
+      <div class="ba__row"><dt>Eligibility</dt><dd><Fact id={eligibilityId} /></dd></div>
+      <div class="ba__row"><dt>Duration</dt><dd><Fact id="NU-02" /></dd></div>
+      <div class="ba__row"><dt>Credit Hours and Subjects</dt><dd><Fact id="NU-09" /></dd></div>
+      <div class="ba__row"><dt>Schedule and Intake</dt><dd>{NU_SCHEDULE_NOTE} <NuNoticeLinks /></dd></div>
+      <div class="ba__row"><dt>Delivery</dt><dd><Fact id="NU-10" /></dd></div>
+      <div class="ba__row"><dt>Teaching Location</dt><dd>{NU_LOCATION_NOTE}</dd></div>
+      <div class="ba__row"><dt>Program Fee</dt><dd><Fact id="NU-03" /></dd></div>
+      <div class="ba__row"><dt>Payment</dt><dd><Fact id="NU-05" /></dd></div>
+      <div class="ba__row"><dt>Recognition</dt><dd><Fact id="NU-04" /></dd></div>
+      <!-- WP161 (A-34): the linked Google Form registers interest (name, contact details and course); admissions then shares the application steps -->
+      <div class="ba__row" id="admissions-contact"><dt>How to Apply</dt><dd>Complete the <a class="link" href={applyLink.href} rel={applyLink.rel}>short form</a> (name, contact details and course); admissions then shares the application steps. For help, call <a class="link" href={NU_CALL.href}>{NU_CALL_NUMBER}</a> or email <a class="link" href="mailto:hello@coderstrustbd.com">hello@coderstrustbd.com</a>.</dd></div>
+    </dl>
+  </Section>
+
   <Section id="also-consider" aria-labelledby="also-h">
     <SectionHeader id="also-h" eyebrow="Also Consider" title="Other NU Post Graduate Diploma Courses" />
     <ul class="others" role="list">
@@ -151,6 +154,11 @@ const jsonLd = [
 </BaseLayout>
 
 <style>
+  /* WP166-B (R2-23): the short-form line sits on its own line under the hero's actions */
+  .hero-note {
+    flex-basis: 100%;
+    margin: 0;
+  }
   .after {
     list-style: none;
     margin: 0;

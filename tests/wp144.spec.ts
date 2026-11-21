@@ -57,7 +57,9 @@ test('Polish 6: Investors names AI chat as platform-wide', () => {
 
 test('Polish 7: TalentLEAP "Evidence for Today’s Tracks" (heading and On This Page)', () => {
   const text = main('our-model/talentleap/index.html');
-  expect(text.split('Evidence for Today’s Tracks').length).toBe(3);
+  // WP166-B (marketing review R2-35, R2-06): the "Evidence for Today’s Tracks" section and the "On This Page" box are gone (its caveat is the note under At a Glance), so the heading is on the page
+  // no times (it was twice: the heading and its "On This Page" entry).
+  expect(text.split('Evidence for Today’s Tracks').length).toBe(1);
   expect(text).not.toContain('Results from CodersTrust Programs');
 });
 

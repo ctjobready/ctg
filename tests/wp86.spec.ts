@@ -46,10 +46,12 @@ test.describe('Item 1: the Governments contracts note carves out only the Her Po
 });
 
 test.describe('Item 2: the overlap sentence only where 150,000+ is printed', () => {
-  test('Governments and the JobReady Platform show the first sentence of the note alone', async () => {
+  // WP166-B (marketing review R2-39): the JobReady Platform's contract-scope tile and its note are gone, so the check that it prints the first sentence is gone with them; it still prints neither the overlap sentence nor the 150,000+.
+  test('Governments shows the first sentence of the note alone; the JobReady Platform shows neither the note nor the overlap sentence', async () => {
     for (const route of ['partner-with-us/governments/', 'our-model/jobready-platform/']) {
       const html = pageHtml(route);
-      expect(html, route).toContain(NOTE_SHORT_FIRST);
+      if (route === 'partner-with-us/governments/') expect(html, route).toContain(NOTE_SHORT_FIRST);
+      else expect(html, route).not.toContain(NOTE_SHORT_FIRST);
       expect(html, route).not.toContain(OVERLAP);
       expect(html, route).not.toContain('150,000+ enrollments');
     }
@@ -67,10 +69,11 @@ test.describe('Item 3: "Last updated" and the Her Power news date are October 24
   test('YouthWIDE and JobReady Platform show October 24, 2026', async ({ page }) => {
     await open(page, 'programs/youthwide/');
     // WP104: both stamps moved on with their later content changes (tests/wp104.spec.ts); WP141: November 1, 2026
-    await expect(page.locator('.updated')).toHaveText('Last updated November 3, 2026'); // WP151; WP163: re-dated 2026-11-03
+    await expect(page.locator('.updated')).toHaveText('Last updated November 21, 2026'); // WP151; WP163: re-dated 2026-11-03; WP166-B (marketing review R2): 2026-11-21
     await open(page, 'our-model/jobready-platform/');
-    await expect(page.locator('.lf-updated')).toHaveText('Last updated November 3, 2026'); // WP157: re-dated 2026-11-02; WP163: 2026-11-03
-    expect(pageHtml('our-model/jobready-platform/')).toContain('"dateModified":"2026-11-03"'); // WP163: re-dated 2026-11-03
+    // WP166-B (marketing review R2-06): the platform page prints the line at its foot (.jr__updated; it was .lf-updated in the header), dated 2026-11-21.
+    await expect(page.locator('.jr__updated')).toHaveText('Last updated November 21, 2026'); // WP157: re-dated 2026-11-02; WP163: 2026-11-03; WP166-B: 2026-11-21
+    expect(pageHtml('our-model/jobready-platform/')).toContain('"dateModified":"2026-11-21"'); // WP163: re-dated 2026-11-03; WP166-B: 2026-11-21
   });
 
   // WP124: the Her Power post moved on to October 29, 2026 with its quotation-mark fix (tests/wp124.spec.ts)
@@ -185,9 +188,14 @@ test.describe('Item 11: the Recognition On This Page entries are the section hea
 
 test.describe('Item 12: the JobReady Platform FAQ does not point to planned items', () => {
   // WP163 (owner answers of 3 November 2026): the answer points to the capabilities with no live, pre-launch or planned label at all (it read "Partly. See Rollout Status above for what is live and what is in pre-launch.").
-  test('the answer points to Platform Capabilities, with no "planned" (and no live or pre-launch label)', async () => {
+  // WP166-B (marketing review R2-40, owner approval of 21 November 2026): the platform question that pointed to Platform Capabilities ("See Platform Capabilities above, from the AI Tutor to the work marketplaces.") is gone, and the
+  // assertion on its answer with it; the page's FAQ (now the connectivity question) still carries no planned, live or pre-launch label.
+  test('the FAQ carries no "planned" (and no live or pre-launch label)', async () => {
     const html = pageHtml('our-model/jobready-platform/');
-    expect(html).toContain('See Platform Capabilities above, from the AI Tutor to the work marketplaces.');
+    expect(html).not.toContain('See Platform Capabilities above, from the AI Tutor to the work marketplaces.');
+    const faq = /<section[^>]*\bid="faq"[\s\S]*?<\/section>/.exec(html)?.[0] ?? '';
+    expect(faq, 'the FAQ band is on the page').not.toBe('');
+    expect(faq).not.toMatch(/\bplanned\b|pre-launch|live today/i);
     expect(html).not.toContain('pre-launch and planned capabilities');
     expect(html).not.toContain('what is live and what is in pre-launch');
   });

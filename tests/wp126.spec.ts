@@ -99,9 +99,10 @@ test.describe('WP126 item 1: archive posts that say "16 countries and territorie
 });
 
 test.describe('WP126 item 2: no serial comma in the three named lists', () => {
-  test('SuperKids "Who It Is For" reads "block coding, robotics and graphic design for kids."', () => {
+  // WP166-B (marketing review R2-27): the glance's "Who It Is For" row no longer lists the courses (it read "... early, through block coding, robotics and graphic design for kids."); the hero lead names the list, with no serial comma.
+  test('SuperKids names "block coding, robotics and graphic design for kids" with no serial comma (the hero lead)', () => {
     const raw = html('programs/superkids/index.html');
-    expect(strip(raw)).toContain('through block coding, robotics and graphic design for kids.');
+    expect(strip(raw)).toContain('SuperKids@School brings block coding, robotics and graphic design for kids into schools.');
     expect(strip(raw)).not.toContain('robotics, and graphic design');
   });
 
@@ -211,9 +212,10 @@ test.describe('WP126 A: every route email asks for two suitable times, as its pa
 });
 
 test.describe('WP126 B: the JobReady platform page’s grant link opens the dedicated platform-grant email', () => {
-  test('"Discuss a Platform Grant for JobReady’s Next Stage" opens "JobReady platform grant — [foundation/company]"', () => {
+  // WP166-B (marketing review R2-40): the link names its reader, "Funding the Platform? Discuss a Platform Grant" (it read "Discuss a Platform Grant for JobReady’s Next Stage"); the email it opens is unchanged.
+  test('"Funding the Platform? Discuss a Platform Grant" opens "JobReady platform grant — [foundation/company]"', () => {
     const raw = html('our-model/jobready-platform/index.html');
-    const link = /<a class="link" href="(mailto:[^"]*)"[^>]*>Discuss a Platform Grant for JobReady(?:’|&#39;|&#x27;)s Next Stage<\/a>/.exec(raw);
+    const link = /<a class="link" href="(mailto:[^"]*)"[^>]*>Funding the Platform\? Discuss a Platform Grant<\/a>/.exec(raw);
     expect(link).not.toBeNull();
     const u = new URL(decode(link![1]));
     expect(u.searchParams.get('subject')).toBe('JobReady platform grant — [foundation/company]');

@@ -1,6 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { expect, test } from '@playwright/test';
+import { DELIVERY_MODEL } from '../src/data/copy';
 import { DIST_DIR } from './support/env';
 
 /**
@@ -87,12 +88,14 @@ test.describe('1 YouthWIDE how-it-works band: the delivery place is said once, w
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 test.describe('2 Investors: the National University line is two sentences, wording register-exact', () => {
-  const NU1 = 'Not counted in the delivered reach: 1.5M+ National University learners being onboarded (the university’s own learners, not learners trained by CodersTrust).';
+  // WP166-B (marketing review R3-16): the line is the band's first group, under "The National University Partnership", before the contract scope; the band's eyebrow "Beyond Delivered Reach" says it is not delivered reach (NU1 opened "Not counted in the delivered reach: " after the contract-scope tile).
+  const NU1 = '1.5M+ National University learners being onboarded (the university’s own learners, not learners trained by CodersTrust).';
   const NU2 = 'CodersTrust has been NU’s official training partner for digital career skills and credentials since 2023 and delivers NU Post Graduate Diploma courses.';
 
-  test('two sentences after the contract-scope tile, each 30 words or fewer, with no semicolon', () => {
+  test('two sentences before the contract-scope tile (WP166-B; they were after it), each 30 words or fewer, with no semicolon', () => {
     const t = main(INVESTORS);
-    expect(t).toContain(`${NU1} ${NU2}`);
+    expect(t).toContain(`Beyond Delivered Reach Contracts and Recognition The National University Partnership ${NU1} ${NU2} Contracted Scope`); // WP166-B: it followed the contract-scope tile
+    expect(t).not.toContain('Not counted in the delivered reach');
     const para = `${NU1} ${NU2}`;
     expect(sentences(para)).toHaveLength(2);
     for (const s of sentences(para)) expect(words(s), s).toBeLessThanOrEqual(30);
@@ -107,7 +110,8 @@ test.describe('2 Investors: the National University line is two sentences, wordi
     expect(count(t, 'not learners trained by CodersTrust')).toBe(1);
     expect(count(t, 'since 2023 and delivers NU Post Graduate Diploma courses')).toBe(1);
     // The paragraph still rests on SC-04 (the register text is unchanged; the page splits it at its semicolon).
-    expect(mainRaw(INVESTORS)).toMatch(/<p[^>]*data-fact="SC-04"[^>]*>[^<]*Not counted in the delivered reach/);
+    expect(mainRaw(INVESTORS)).toMatch(/<p[^>]*data-fact="SC-04"[^>]*>1\.5M\+ National University learners being onboarded \(the university’s own learners, not learners trained by CodersTrust\)\. CodersTrust has been NU’s official training partner/); // WP166-B: the paragraph opened "Not counted in the delivered reach: "
+    expect(main(INVESTORS)).toContain('Beyond Delivered Reach Contracts and Recognition The National University Partnership 1.5M+'); // WP166-B: "not delivered reach" is the band's eyebrow now
   });
 });
 
@@ -144,7 +148,7 @@ test.describe('3 Investors: the national-scale answer does not restate Her Power
 test.describe('4 Universities "JobReady@Campus: Training Alongside the Degree"', () => {
   test('the statement does not say "alongside academic studies" again; the card states the timing once', () => {
     const band = between(main(UNIVERSITIES), 'JobReady@Campus: Training Alongside the Degree', 'About JobReady@Campus');
-    expect(band).toContain('Our Approach JobReady@Campus combines training, mentoring and placement support in campus labs. Your institution receives monthly reports on progress toward paid work. 1 Set Up');
+    expect(band).toContain(`Our Approach JobReady@Campus combines training, mentoring and placement support in campus labs. Your institution receives monthly reports on progress toward paid work. ${DELIVERY_MODEL.text} 1 Set Up`); // WP166-B (marketing review R3-24): the delivery-model sentence follows the statement (it led the first "What Your Students and Your Institution Get" card)
     expect(band).toContain('4 Alongside Studies In Parallel with the Degree Training runs in parallel with academic studies, with professional internships where employer placements are available.');
     expect(count(band, 'academic studies')).toBe(1);
     expect(band).not.toContain('alongside academic studies');
@@ -218,9 +222,11 @@ test.describe('8 Employers: the success measures are promised once', () => {
   test('the pilot band lead lists the measures; "agreed before you start" stays in the Needs Assessment First card, the check in the Progress Evaluation card', () => {
     const t = main(EMPLOYERS);
     expect(t).toContain('Start with a Pilot Team, Then Decide on Evidence Success measures cover completion, any certification the track offers and the role-specific skills you prioritize. Pilot Team First');
-    expect(t).toContain('A needs assessment scopes the skills and team size, and success measures are agreed before you start.');
-    expect(t).toContain('Progress Evaluation A progress evaluation checks results against the measures you set.');
-    expect(count(t, 'agreed before you start')).toBe(1);
+    // WP166-B (marketing review R3-32): the due-diligence band's "Needs Assessment First" and "Progress Evaluation" cards are gone (they repeated How It Works); the two assertions on their wording are gone with them.
+    expect(t).not.toContain('Needs Assessment First');
+    expect(t).not.toContain('Progress Evaluation A progress evaluation checks results against the measures you set.');
+    expect(count(t, 'agreed before you start')).toBe(0); // WP166-B: it was 1, in the Needs Assessment First card
+    expect(count(t, 'Success measures cover')).toBe(1); // the measures are still listed once, in the pilot band's lead
     expect(t).not.toContain('Success measures are agreed before you start (completion');
   });
 });

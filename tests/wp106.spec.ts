@@ -206,9 +206,11 @@ test.describe('WP106 item 6: Global Reach lists Somaliland as 2015–2016, 2020'
 
 // --------------------------------------------------------------------------------------------------------------------------------
 test.describe('WP106 item 7: the Programs page YouthWIDE card is sibling length', () => {
-  const CARD = 'The youth digital-employment program, designed as co-funded country cohorts. It aims to train 1 million educated youth by 2030, depending on government and donor commitments.';
+  // WP166-B (marketing review R2-41): the card says what the program does, in the YouthWIDE hero's words; the 2030 aim is stated on the YouthWIDE page only. It said
+  // "The youth digital-employment program, designed as co-funded country cohorts. It aims to train 1 million educated youth by 2030, depending on government and donor commitments."
+  const CARD = 'Prepares educated, unemployed and underemployed youth for paid digital work through training, mentoring and placement support, in co-funded country cohorts.';
 
-  test('the card text is the short form: the program, the co-funded cohorts, and the 1 million aim by 2030 with its dependency', async ({ page }) => {
+  test('the card text is the short form: what the program does, in co-funded country cohorts (WP166-B: the 2030 aim is on the YouthWIDE page)', async ({ page }) => {
     await open(page, 'programs/');
     const card = page.locator('#programs-grid li:has(a[href$="programs/youthwide/"])');
     const text = compact(await card.locator('.card__text').textContent());

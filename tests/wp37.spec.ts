@@ -391,25 +391,7 @@ test.describe('"CRM" is written out wherever the live-platform list is printed',
   // WP41 (cycle-18 review): the platform page has "Rollout Status" directly above its questions (the table and the "What Is Live Today" callout), so its answer points there instead of listing the status a third time
   // (tests/wp41.spec.ts); the shared answer stays in full on Employers and JobReady@Work
   // WP163 (owner answers of 3 November 2026): the question is "What Does the JobReady Platform Offer?" (it asked "Is the JobReady Platform Live?"), and no answer carries a live, pre-launch or planned label.
-  test('the "What Does the JobReady Platform Offer?" answer reads in full on Employers and JobReady@Work and points to "Platform Capabilities" on the platform page, and the FAQ JSON-LD says what the page says', async ({ page }) => {
-    const Q = 'What Does the JobReady Platform Offer?';
-    for (const route of ['partner-with-us/employers/', 'programs/jobready-work/']) {
-      await open(page, route);
-      const answer = await answerOf(page, Q);
-      // WP48 (cycle-23 review): the answer names what a partner or employer deals with, not the internal tooling (tests/wp48.spec.ts)
-      expect(answer, route).toBe('JobReady offers an AI Tutor, AI-driven personalized and adaptive learning paths, automated assessment and feedback, an AI career coach, partner portals, AI chat, the employer marketplace and the gig-work marketplace. Hiring runs through CodersTrust’s placement team.');
-      expect((await faqJsonLd(page)).find((q) => q.name === Q)?.text, route).toBe(answer);
-    }
-    await open(page, 'our-model/jobready-platform/');
-    const platform = await answerOf(page, Q);
-    expect(platform).toBe('See Platform Capabilities above, from the AI Tutor to the work marketplaces.');
-    expect((await faqJsonLd(page)).find((q) => q.name === Q)?.text).toBe(platform);
-    // WP39 (cycle-16 review): Investors lists the status in "What JobReady Does", directly above its questions, so its answer points there (tests/wp39.spec.ts); the JSON-LD still reads the same as the page
-    await open(page, 'partner-with-us/investors/');
-    const investors = await answerOf(page, Q);
-    expect(investors).toBe('See What JobReady Does above, from the AI Tutor to the work marketplaces.');
-    expect((await faqJsonLd(page)).find((q) => q.name === Q)?.text).toBe(investors);
-  });
+  // WP166-B (marketing review R3-33, R2-21, R2-40): the "What Does the JobReady Platform Offer?" question is cut from Employers, JobReady@Work, the JobReady Platform and Investors; the test of its answers is gone with it.
 
   // WP163 (owner answers of 3 November 2026): the description names capabilities the menu names, with no live label (it read "... Partner portals and AI chat are live; more modules follow.").
   test('the platform page’s meta description names the capabilities the menu names and fits the 155-character limit', async ({ page }) => {

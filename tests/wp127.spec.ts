@@ -221,7 +221,7 @@ test.describe('WP127 item 2: no serial comma on any built page, meta description
 const PAGE_TEXT: [string, string][] = [
   ['index.html', 'Start with a multi-cohort pilot, agree the scorecard up front and decide on expansion from the evidence.'],
   ['programs/youthwide/index.html', 'Missed thresholds trigger a corrective plan, expansion is your decision and independent evaluation is welcome.'],
-  ['our-model/jobready-platform/index.html', 'train youth through courses, including preparation for industry certification where a track offers one; connect learners to local, remote and global work; supply employers with job-ready talent; and give institutions a digital delivery platform.'],
+  ['our-model/jobready-platform/index.html', 'Train. Youth learn through courses, including preparation for industry certification where a track offers one. Connect to Work. Learners reach local, remote and global work.'], // WP166-B (marketing review R2): the four-jobs sentence is now four labelled jobs (it read "train youth through courses, ...; connect learners to local, remote and global work; supply employers ...; and give institutions ...")
   ['accessibility/index.html', 'Please tell us the page, what you were trying to do and the device or assistive technology you use.'],
   ['accessibility/index.html', 'Pages are built with one main heading, a logical heading order and landmarks; a “Skip to Main Content” link comes first.'],
   ['about/team/hazrat-ali-nahid/index.html', 'FreshBooks, QuickBooks Payroll and Gusto Payroll.'],
@@ -234,7 +234,7 @@ const PAGE_TEXT: [string, string][] = [
   ['partner-with-us/index.html', '70+ organizations since 2014: 13 government bodies; 20 universities and colleges; 13 development partners and NGOs; and 27 companies and industry bodies.'],
   ['programs/youthwide/index.html', 'South Asia, Sub-Saharan Africa and the Middle East and North Africa, as co-funded country cohorts.'],
   ['partner-with-us/foundations/index.html', 'Co-fundable country programs designed for South Asia, Sub-Saharan Africa and the Middle East and North Africa.'],
-  ['programs/jobready-campus/index.html', 'Baseline at enrollment, follow-up surveys at 3, 6 and 12 months and documentary evidence of earnings where available'],
+  ['programs/jobready-campus/index.html', 'a baseline at enrollment, follow-up surveys at 3, 6 and 12 months and monthly reports for every cohort, with documentary evidence of earnings where available'], // WP166-B (marketing review R2): the shorter outcomes answer (it read "Baseline at enrollment, follow-up surveys at 3, 6 and 12 months and documentary evidence of earnings where available")
   ['privacy-policy/index.html', 'It is a functional setting, it stays on your device and we never receive it.'],
   ['privacy-policy/index.html', 'to object to our use of it and to complain to your local data-protection authority.'],
   ['programs/nu-postgraduate-diploma/index.html', 'Pay instantly online; transfer via mobile merchant accounts; visit a CodersTrust Bangladesh (CTBD) campus for cash or POS payments; or make a bank deposit'],

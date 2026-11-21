@@ -134,7 +134,8 @@ test.describe('WP83 (WP85 wording): no built page words the 25,125 as a target s
       '/news/25000-trainees-her-power-empowerment-of-women-through-ict-frontier-initiative/',
       // WP166-C (R5-20): the government-band posts' "More News" lead with the Her Power card (its headline and its "Delivered" excerpt, R5-03)
       ...GOVERNMENT_BAND_POSTS.map((s) => `/news/${s}/`),
-      '/our-model/jobready-platform/',
+
+      // WP166-B (marketing review R2-39): the JobReady Platform no longer shows the contract-scope tile, so it states no 25,125 (it was in this list)
       '/partner-with-us/governments/',
       '/partner-with-us/investors/',
       '/programs/youthwide/',
@@ -185,13 +186,15 @@ test.describe('WP83 (WP85 wording): the pages that state the 25,125', () => {
     expect(compact(await faq.textContent())).toContain('We scale in phases. Her Power, a national program, met its full target with CodersTrust’s curriculum; the contract table above gives the figures. A 100,000+ program is a design option we have not yet delivered.');
   });
 
-  test('Investors: the tile and the FAQ say trained (CodersTrust’s role first); JobReady Platform’s tile says it too', async ({ page }) => {
+  test('Investors: the tile and the FAQ say trained (CodersTrust’s role first); JobReady Platform’s tile said it too (WP166-B: the tile is gone)', async ({ page }) => {
     await open(page, 'partner-with-us/investors/');
     expect(compact(await page.locator('#reach .ir__note').textContent())).toBe(CONTRACT_NOTE_INVESTORS);
     const faq = page.locator('#faq details, #faqs details', { has: page.locator('summary', { hasText: 'Can You Deliver at National Scale?' }) }).first();
     expect(compact(await faq.textContent())).toContain('trained women directly; the national program met its target (figures above).'); // WP155 (Polish 3): the answer no longer restates the counts ("... trained 2,400 women directly; the national program trained 25,125 women across 130 sub-districts (upazilas), meeting its target.")
     await open(page, 'our-model/jobready-platform/');
-    expect(compact(await page.locator('#why .jr__whynote').textContent())).toBe(SCOPE_NOTE);
+    // WP166-B (marketing review R2-39): the record band's contract-scope group and its note (.jr__whynote) are gone from the platform page (the Governments page keeps them); the assertion is gone with it.
+    await expect(page.locator('#why .jr__whynote')).toHaveCount(0);
+    expect(compact(await page.locator('main').textContent())).not.toContain('25,125');
   });
 
   test('YouthWIDE: the national-scale answer says Her Power, a national program of the Department of ICT (DoICT), under the ICT Division, trained 25,125 women, meeting its target', async ({ page }) => {
@@ -306,8 +309,9 @@ test.describe('WP83: CodersTrust trained 2,400 women directly in Her Power (owne
       }
     }
     expect(offenders).toEqual([]);
-    // the pages that carry the Her Power counts say it: Home, Impact, the case study, Governments, Investors, JobReady Platform and YouthWIDE
-    for (const route of ['/', '/impact/', '/impact/case-studies/her-power/', '/partner-with-us/governments/', '/partner-with-us/investors/', '/our-model/jobready-platform/', '/programs/youthwide/']) {
+    // the pages that carry the Her Power counts say it: Home, Impact, the case study, Governments, Investors and YouthWIDE
+    // WP166-B (marketing review R2-39): the JobReady Platform no longer carries the Her Power counts (its contract-scope tile is gone), so it is off the list
+    for (const route of ['/', '/impact/', '/impact/case-studies/her-power/', '/partner-with-us/governments/', '/partner-with-us/investors/', '/programs/youthwide/']) {
       expect(seen.has(route), `${route} states the 2,400`).toBe(true);
     }
   });

@@ -136,33 +136,42 @@ test.describe('the due-diligence item on the five audience pages', () => {
   const FIVE = ['development-partners', 'governments', 'foundations', 'universities', 'local-partners'];
 
   for (const slug of FIVE) {
-    test(`${slug}: one heading, one sentence and one link, in place of the four cards`, async ({ page }) => {
+    // WP166-B (marketing review R3-21, owner approval of 21 November 2026): the brief band is headed as the hub's full view is, "Due Diligence in One View" (it was "Confirm Contracting, Safeguarding and Reporting"); its line names the
+    // contracting entities, then safeguarding and reporting, in two sentences (it was "The contracting entity, safeguarding arrangements and reporting plan are confirmed for your program."); and the governance link is followed by the
+    // "Ask About Due Diligence" inquiry link (it was the one link). Still no cards: no list items and no card headings.
+    test(`${slug}: one heading, the contracting-entities line and two links, in place of the four cards`, async ({ page }) => {
       await open(page, `partner-with-us/${slug}/`);
       const block = page.locator('#due-diligence');
       await expect(block).toHaveCount(1);
       await expect(block.locator('.eyebrow')).toHaveText('Due Diligence');
-      await expect(block.locator('h2')).toHaveText('Confirm Contracting, Safeguarding and Reporting');
+      await expect(block.locator('h2')).toHaveText('Due Diligence in One View');
       const sentence = block.locator('p.lead');
-      expect(compact(await sentence.textContent())).toBe('The contracting entity, safeguarding arrangements and reporting plan are confirmed for your program.');
+      expect(compact(await sentence.textContent())).toBe('CodersTrust contracts through CT USA, Inc. in the United States or CodersTrust Bangladesh Ltd. in Bangladesh, depending on the program’s country and your requirements. Safeguarding and reporting are specified for each program.');
       expect(await sentence.getAttribute('data-fact')).toBe('ID-07 PD-13 PD-12 PD-08');
       await expect(block.locator('li, h3')).toHaveCount(0);
       const link = block.locator('a');
-      await expect(link).toHaveCount(1);
-      expect(compact(await link.textContent())).toBe('Governance and Accountability');
-      expect(await link.getAttribute('href')).toMatch(/\/about\/governance\/$/);
+      await expect(link).toHaveCount(2);
+      expect(compact(await link.nth(0).textContent())).toBe('Governance and Accountability');
+      expect(await link.nth(0).getAttribute('href')).toMatch(/\/about\/governance\/$/);
+      expect(compact(await link.nth(1).textContent())).toBe('Ask About Due Diligence');
+      expect(await link.nth(1).getAttribute('href')).toMatch(/^mailto:[^?]+\?subject=Due-diligence%20inquiry/);
       const main = await mainText(page);
-      expect(main).not.toMatch(/Due Diligence in One View|Contracting Entities|Independent Evaluation Welcome\s+We support third-party evaluation of outcomes, and the randomized trial/);
+      // WP166-B: "Due Diligence in One View" is this band's own heading now, so only the full view's card headings are checked for (it also ruled out the heading).
+      expect(main).not.toMatch(/Contracting Entities|Independent Evaluation Welcome\s+We support third-party evaluation of outcomes, and the randomized trial/);
     });
   }
 
   // WP57 (cycle-29 review, GPT-6.1 Sol G7): Employers' compact view is three rows now (its "Independent Evaluation Welcome" row is gone; tests/wp57.spec.ts); the hub keeps all four
-  test('the hub keeps the full "Due Diligence in One View" (the same component, not changed), and Employers keeps its compact view of three rows', async ({ page }) => {
+  // WP166-B (marketing review R3-32): Employers' compact view is the Contracting Entities row alone, with the "Ask About Due Diligence" link (its "Needs Assessment First" and "Progress Evaluation" rows repeated How It Works and are gone; it was three rows).
+  test('the hub keeps the full "Due Diligence in One View" (the same component, not changed), and Employers keeps its compact view, now one row', async ({ page }) => {
     await open(page, 'partner-with-us/');
     await expect(page.locator('#due-diligence h2')).toHaveText('Due Diligence in One View');
     await expect(page.locator('#due-diligence .ddv__item')).toHaveCount(4);
     await open(page, 'partner-with-us/employers/');
     await expect(page.locator('#due-diligence h2')).toHaveText('Due Diligence in One View');
-    await expect(page.locator('#due-diligence .ddv__item')).toHaveCount(3);
+    await expect(page.locator('#due-diligence .ddv__item')).toHaveCount(1);
+    await expect(page.locator('#due-diligence .ddv__item')).toContainText('Contracting Entities');
+    await expect(page.locator('#due-diligence a.link', { hasText: 'Ask About Due Diligence' })).toHaveCount(1);
   });
 
   // WP48 (cycle-23 review): Foundations' callout is gone (its "Progress You Can See Every Month" card says the same; tests/wp48.spec.ts); Development Partners keeps its callout, the one place the page names the quarterly reviews
@@ -186,14 +195,16 @@ test.describe('Development Partners: the barriers answer names the barriers', ()
 });
 
 test.describe('the Bangladesh graduate-unemployment tile (PX-03) leaves the global pages', () => {
-  test('Governments opens its problem band with the global 62 million (PX-01), worded as on Home', async ({ page }) => {
+  // WP166-B (marketing review R3-40, owner approval of 21 November 2026): the band's one context figure is the global 19M+ (PX-02, as on Home and YouthWIDE), in place of the 62 million (PX-01); still a global figure, worded as on Home.
+  test('Governments opens its problem band with the global 19M+ (PX-02), worded as on Home', async ({ page }) => {
     await open(page, '');
-    const home = compact(await page.locator('#problem [data-fact="PX-01"]').textContent());
-    expect(home).toContain('62 million');
+    const home = compact(await page.locator('#problem [data-fact="PX-02"]').textContent());
+    expect(home).toContain('19M+');
     await open(page, 'partner-with-us/governments/');
-    const tile = page.locator('#problem [data-fact="PX-01"]');
+    const tile = page.locator('#problem [data-fact="PX-02"]');
     await expect(tile).toHaveCount(1);
     expect(compact(await tile.textContent())).toBe(home);
+    await expect(page.locator('#problem [data-fact="PX-01"]')).toHaveCount(0);
     await expect(page.locator('#problem [data-fact="PX-03"]')).toHaveCount(0);
     expect(compact(await page.locator('#problem').textContent())).not.toMatch(/13\.5%|SSC/);
   });
@@ -205,13 +216,17 @@ test.describe('the Bangladesh graduate-unemployment tile (PX-03) leaves the glob
     expect(compact(await page.locator('#problem').textContent())).not.toMatch(/13\.5%|SSC|graduate unemployment in Bangladesh/);
     // WP35 (cycle-12 review): the pain titles are card titles, so they are set in Title Case; WP36 (cycle-13 review): they are statements, not questions
     // WP46 (cycle-22 review): the employers' pain card is gone (the 72% tile directly below states it), so two pains are left
-    expect(await texts(page, '#problem .gp__pains .gp__q')).toEqual(['Degree Holders Struggle to Find Work', 'Placement Results Are Hard to Publish']);
+    // WP166-B (marketing review R3-40): the students' pain is the global 19M+ tile (PX-02) in place of the "Degree Holders Struggle to Find Work" card, so one pain card is left (it was two).
+    expect(await texts(page, '#problem .gp__pains .gp__q')).toEqual(['Placement Results Are Hard to Publish']);
+    await expect(page.locator('#problem [data-fact="PX-02"]')).toContainText('19M+');
 
     await open(page, 'programs/jobready-campus/');
     const problem = page.locator('#problem');
     await expect(problem.locator('[data-fact="PX-03"]')).toHaveCount(0);
     expect(compact(await problem.textContent())).not.toMatch(/13\.5%|SSC|graduate unemployment in Bangladesh/);
-    expect(await texts(page, '#problem .card__title')).toEqual(['Skills Employers Cannot See', 'Placement Evidence Is Missing']);
+    // WP166-B (marketing review R2-15): the two cards ("Skills Employers Cannot See", "Placement Evidence Is Missing") repeated the lead and are gone; the band shows the two global tiles, PX-02 and PX-05.
+    await expect(page.locator('#problem .card__title')).toHaveCount(0);
+    expect(await problem.locator('[data-fact]').evaluateAll((els) => els.map((e) => e.getAttribute('data-fact')))).toEqual(['PX-02', 'PX-05']);
   });
 
   test('the Bangladesh pages keep it: Local Partners and the NU Post Graduate Diploma', async ({ page }) => {
@@ -225,18 +240,22 @@ test.describe('the Bangladesh graduate-unemployment tile (PX-03) leaves the glob
 });
 
 test.describe('JobReady@Campus FAQ: who the program is for', () => {
-  test('the question is about the program, the answer says who it is for and keeps the survey profile as a wider-programs figure', async ({ page }) => {
+  // WP166-B (marketing review R2-17, owner approval of 21 November 2026): the fit question, which the glance's "Who It Is For" row already answers, asks what a dean asks, "Has CodersTrust Worked with Degree Holders Before?"
+  // (it was "Who Is JobReady@Campus For?", answered "Students and degree holders at universities and colleges. Among alumni ..."); the answer keeps the survey profile as a wider-programs figure (OC-09).
+  test('the question is about the program’s learners, and the answer keeps the survey profile as a wider-programs figure', async ({ page }) => {
     await open(page, 'programs/jobready-campus/');
-    const item = page.locator('#faq details', { hasText: 'Who Is JobReady@Campus For?' });
+    const Q = 'Has CodersTrust Worked with Degree Holders Before?';
+    const item = page.locator('#faq details', { hasText: Q });
     await expect(item).toHaveCount(1);
-    expect(compact(await item.locator('summary').textContent())).toBe('Who Is JobReady@Campus For?');
+    expect(compact(await item.locator('summary').textContent())).toBe(Q);
     const answer = item.locator('p');
-    expect(compact(await answer.textContent())).toBe('Students and degree holders at universities and colleges. Among alumni of CodersTrust’s programs who answered the October 2026 survey, 85.0% hold a bachelor’s degree or higher.');
+    expect(compact(await answer.textContent())).toBe('Yes. Among alumni of CodersTrust’s programs who answered the October 2026 survey, 85.0% hold a bachelor’s degree or higher.');
     expect(await answer.getAttribute('data-fact')).toBe('OC-09');
     expect(await mainText(page)).not.toMatch(/Typical Learners|Mostly university graduates from across Bangladesh/);
     const ld = (await page.locator('script[type="application/ld+json"]').allTextContents()).join(' ');
-    expect(ld).toContain('Who Is JobReady@Campus For?');
-    expect(ld).toContain('Students and degree holders at universities and colleges.');
+    expect(ld).toContain(Q);
+    expect(ld).toContain('Yes. Among alumni of CodersTrust’s programs who answered the October 2026 survey, 85.0% hold a bachelor’s degree or higher.');
+    expect(ld).not.toContain('Who Is JobReady@Campus For?');
     expect(ld).not.toContain('Typical Learners');
   });
 });
@@ -306,7 +325,7 @@ test.describe('NU Post Graduate Diploma: a link to the wider programs, not their
   test('the page shows today as its last-updated date', async ({ page }) => {
     await open(page, 'programs/nu-postgraduate-diploma/');
     // WP76 (2026-10-22): the page's wording changed that day (four courses), so PAGE_UPDATED.nu moved from 2026-10-15
-    await expect(page.locator('.updated time')).toHaveAttribute('datetime', '2026-11-02'); // WP151 (the FAQ "How Do I Apply?" is gone); WP148: "Post Graduate Diploma" capitalised (it read 2026-10-31); WP104: the page's wording last changed on 29 October (WP102; the Context heading, WP104)
+    await expect(page.locator('.updated time')).toHaveAttribute('datetime', '2026-11-21'); // WP166-B (marketing review R2: the hero lead, the short-form line, the skills card and the eligibility FAQ; it read 2026-11-02). WP151 (the FAQ "How Do I Apply?" is gone); WP148: "Post Graduate Diploma" capitalised (it read 2026-10-31); WP104: the page's wording last changed on 29 October (WP102; the Context heading, WP104)
   });
 });
 

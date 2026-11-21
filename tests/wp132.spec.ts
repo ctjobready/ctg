@@ -37,7 +37,7 @@ test('Polish 2: no step heading on a built page is plain "Discovery"; the five p
 
 test('Polish 3: TalentLEAP says today’s 100-hour tracks (plural)', () => {
   const text = main('our-model/talentleap/index.html');
-  expect(text).toContain('Today’s 100-hour tracks have not yet been independently evaluated.');
+  expect(text).toContain('Today’s 100-hour tracks have not yet been independently evaluated;'); // WP166-B (R2-35): the sentence is the second of At a Glance's note and ends in a semicolon (it ended in a full stop in "Evidence for Today’s Tracks", now gone)
   expect(text).not.toContain('The current 100-hour track');
 });
 

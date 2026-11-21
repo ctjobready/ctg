@@ -52,14 +52,16 @@ test.describe('WP95 A2: Programs hub links learners to JobReady.global for short
   });
 });
 
+// WP166-B (marketing review R3-23): the evidence band ("See the Evidence Behind the Results", #proof-band) is gone from the three pages; its one sentence and its two links are the note under the glance tiles
+// (#glance .pg__after). The band's heading is gone with the band; the sentence still sits above the links, and the link labels are unchanged.
 test.describe('WP95 A3: evidence band has one sentence between the heading and the two links', () => {
   const SENTENCE = 'The trial evaluated CodersTrust’s WSDFM program; the survey describes what completers who responded report about work and income.';
   for (const slug of ['governments', 'development-partners', 'foundations']) {
-    test(`${slug}: the sentence sits under the H2 and above the links; heading and link labels are unchanged`, async ({ page }) => {
+    test(`${slug}: the sentence sits above the links (WP166-B: under the glance tiles; the band and its H2 are gone); link labels are unchanged`, async ({ page }) => {
       await page.setViewportSize(DESKTOP);
       await open(page, `partner-with-us/${slug}/`);
-      const band = page.locator('#proof-band');
-      await expect(band.locator('h2')).toHaveText('See the Evidence Behind the Results');
+      await expect(page.locator('#proof-band')).toHaveCount(0);
+      const band = page.locator('#glance .pg__after');
       expect(compact(await band.textContent())).toContain(SENTENCE);
       expect((await band.locator('a').allTextContents()).map(compact)).toEqual(['Read the Trial Results', 'Impact Survey 2026']);
       const sentence = band.getByText(SENTENCE, { exact: true });

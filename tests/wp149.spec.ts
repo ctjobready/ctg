@@ -119,10 +119,13 @@ test.describe('1 The long facilitator form sits in the sentence where the page e
   test('JobReady@Campus: the "Illustrative" band’s Capacity card uses the short form; the long form is in How It Works only', () => {
     const text = main(CAMPUS);
     expect(text).toContain('Capacity Designed to Stay on Campus Campus labs keep working as blended-learning centers, with CodersTrust-trained facilitators.');
-    expect(count(text, SHORT)).toBe(1);
+    // WP166-B (marketing review R2): the new FAQ answer "What Does Our Institution Need to Provide?" also uses the short form, after How It Works (the count was 1).
+    expect(count(text, SHORT)).toBe(2);
+    expect(text).toContain('What Does Our Institution Need to Provide? Campus labs to serve as blended-learning centers and faculty members to act as coordinators. The labs run with CodersTrust-trained facilitators.');
     expect(count(text, LONG)).toBe(1);
     expect(text.indexOf('Illustrative:')).toBeLessThan(text.indexOf(SHORT));
     expect(text.indexOf(SHORT)).toBeLessThan(text.indexOf(LONG));
+    expect(text.lastIndexOf(SHORT)).toBeGreaterThan(text.indexOf(LONG)); // WP166-B: the FAQ's short form follows the long form
   });
 
   test('Governments: an earlier, generic mention says "trained facilitators" (not the long form); the long form is in the "Government Digital Labs" card and the "Capacity Designed to Stay in Your System" card says "CodersTrust-trained facilitators" (WP152)', () => {

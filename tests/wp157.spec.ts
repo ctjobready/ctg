@@ -188,8 +188,13 @@ test.describe('F8 JobReady@Work meta: the ManpowerGroup statistic is not adverti
   test('the meta, the JSON-LD description and llms.txt agree, within 155 characters', () => {
     expectDescription(WORK, 'https://coderstrust.global/programs/jobready-work/', NEW, [/ManpowerGroup/, /72%/]);
   });
-  test('the page body never states the statistic (so the meta must not)', () => {
-    expect(main(WORK)).not.toMatch(/72%|ManpowerGroup/);
+  // WP166-B (marketing review R2-19, owner approval of 21 November 2026): the glance opens with the registered PX-05 tile, so the body now states the statistic once, with its source; the meta description above still
+  // carries neither (descriptions are unchanged in WP166-B). It checked that the body never stated "72%" or "ManpowerGroup".
+  test('the page body states the statistic once, in the glance’s PX-05 tile with its source (the meta still does not advertise it)', () => {
+    const body = main(WORK);
+    expect(body.match(/72%/g) ?? []).toHaveLength(1);
+    expect(body.match(/ManpowerGroup/g) ?? []).toHaveLength(1);
+    expect(body).toMatch(/72% ?of employers globally reported difficulty finding talent in 2026 \(ManpowerGroup, 2026\)/);
   });
 });
 

@@ -20,7 +20,8 @@ import GainsPains from '../../../components/pages/partners/GainsPains.astro';
 import PairedEvidence from '../../../components/pages/partners/PairedEvidence.astro';
 import { LINKS } from '../../../components/pages/partners/partners';
 import { localCta } from '../../../components/pages/about/routes';
-import { DELIVERY_MODEL, LOCAL_PARTNER_EVIDENCE, LOCAL_PARTNER_PAINS, HEADLINE, MICRO_COMMITMENT, NEXT_STEPS_TITLE, POSITIONING, PROGRAM_SCOPE_STATEMENT, VALUE_PROPOSITION, painForList, painForRow } from '../../../data/copy';
+import { DELIVERY_MODEL, LOCAL_PARTNER_EVIDENCE, LOCAL_PARTNER_PAINS, HEADLINE, MICRO_COMMITMENT, NEXT_STEPS_TITLE, POSITIONING, PROGRAM_SCOPE_STATEMENT, TRACK_MENU, VALUE_PROPOSITION, painForList, painForRow } from '../../../data/copy';
+import { fact } from '../../../data/facts';
 import { faqJsonLd } from '../../../lib/faq';
 import { webPage } from '../../../lib/schema';
 import { BANGLADESH_HQ } from '../../../lib/site';
@@ -58,10 +59,10 @@ const local = localCta();
 // Q9-route: the one-line safeguarding answer with a link to the governance page, which keeps the full account (WP36).
 const FAQ_IDS = ['Q1-local', 'Q9-route', 'Q10-later']; // WP147: the definition block at the top of the page explains the facilitator model, so the funding-ends answer says "CodersTrust-trained facilitators"
 const path = '/partner-with-us/local-partners/';
-// WP161-A (adversarial review A-02): the WebPage carries the page's own dateModified, 2026-11-02, its last visible change (it fell back to the build date).
+// WP161-A (adversarial review A-02): the WebPage carries the page's own dateModified, its last visible change (it fell back to the build date). WP166-B: 2026-11-21 (the marketing review R3 changes).
 const description = 'Bangladeshi NGOs, colleges and chambers can deliver CodersTrust’s mentored digital-skills programs in their communities.';
 const jsonLd = [
-  webPage({ path, name: 'Local Implementing Partners', description, dateModified: '2026-11-03', breadcrumb: [{ name: 'Home', path: '/' }, { name: 'Partner with Us', path: '/partner-with-us/' }, { name: 'Local Partners', path }] }),
+  webPage({ path, name: 'Local Implementing Partners', description, dateModified: '2026-11-21', breadcrumb: [{ name: 'Home', path: '/' }, { name: 'Partner with Us', path: '/partner-with-us/' }, { name: 'Local Partners', path }] }),
   faqJsonLd('variants', path, FAQ_IDS),
 ];
 
@@ -97,27 +98,29 @@ const ways = [
   <!-- C3 (Cost of Waiting) and C4 (Imagine) are left to Home since WP47 (owner decision 2026-10-15). -->
 
   <!-- C5 -->
-  <div data-fact="ID-07 PA-01 PA-02 IN-06">
+  <!-- WP166-B (marketing review R3-38, R3-29): the band's second figure is CodersTrust's delivery scale (SC-01, "130,000+ learners trained since 2014", with SC-03's note "Most delivery has been in Bangladesh."), in place of the government-lab count a local
+       organization does not host in (GV-09, "9,000+ ... that could host blended learning"), and the TalentLEAP method line and link are gone. -->
+  <div data-fact="ID-07 PA-01 PA-02 SC-03">
     <GuideBand
       id="guide"
       title="Delivered with a Bangladesh Team Beside You"
-      authorityIds={['SC-11', 'GV-09']}
+      authorityIds={['SC-11', 'SC-01']}
       partnerGroup={['government', 'development']}
       variant="grid"
       method={{
-        text: `CodersTrust Bangladesh, our country office in ${BANGLADESH_HQ.city}, runs campuses in Mirpur and Agrabad, Chattogram. Our TalentLEAP method organizes skills into career paths.`,
-        link: { label: 'How TalentLEAP Works', href: '/our-model/talentleap/' },
+        text: `CodersTrust Bangladesh, our country office in ${BANGLADESH_HQ.city}, runs campuses in Mirpur and Agrabad, Chattogram. ${fact('SC-03').stat?.detail ?? ''}`.trim(),
       }}
     />
   </div>
 
-  <!-- C6: the light variant of the mechanism band (as on Home) -->
-  <div data-fact="PD-01 PD-06 PD-07 PD-08">
+  <!-- C6: the light variant of the mechanism band (as on Home). WP166-B (marketing review R3-24): the approach closes with the page's one delivery-model sentence (it led the first "What Your Community Gets" card). -->
+  <div data-fact="PD-01 PD-06 PD-07 PD-08 IN-04">
     <HomeMechanism
       id="mechanism"
       tone="airy"
       title="How a Local Partnership Works"
       positioning={POSITIONING.localPartners}
+      lead={DELIVERY_MODEL.text}
       blocks={[
         { label: 'Your Organization', title: 'Mobilizes and Hosts', text: 'You reach young people and host cohorts in your labs, classrooms or centers.', icon: 'building-2' },
         { label: 'With CodersTrust', title: 'Trains and Prepares for Certification', text: 'CodersTrust-trained facilitators, a localized curriculum and preparation for industry certification, delivered in blended classes.', icon: 'graduation-cap' },
@@ -163,9 +166,9 @@ const ways = [
         painId: painForRow(LOCAL_PARTNER_PAINS, 'P1').painId,
         icon: 'graduation-cap',
         title: 'Facilitator Training and a Local Curriculum',
-        // WP163 (owner answers of 3 November 2026): the card states the delivery model once on this page (DELIVERY_MODEL, the AI-supported flipped classroom).
-        text: `Training of Trainers, a localized curriculum and preparation for industry certification. You do not have to build the curriculum or certification route yourself. ${DELIVERY_MODEL.text}`,
-        facts: ['PD-06', 'PD-02', 'PD-01', 'IN-04'],
+        // WP163 (owner answers of 3 November 2026) put the delivery model in this card; WP166-B (marketing review R3-24, R3-05): it is in How It Works, and the card names the track menu once (TRACK_MENU, PD-10).
+        text: `Training of Trainers, a localized curriculum and preparation for industry certification. You do not have to build the curriculum or certification route yourself. ${TRACK_MENU.text}`,
+        facts: ['PD-06', 'PD-02', 'PD-01', 'PD-10'],
       },
       {
         painId: painForRow(LOCAL_PARTNER_PAINS, 'P2').painId,

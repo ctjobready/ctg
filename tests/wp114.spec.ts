@@ -77,16 +77,13 @@ test.describe('WP114 item 2: JobReady@Campus "The Challenge" band states obstacl
   const HEADING = 'Capable Students Still Struggle to Find Work';
   const LEAD = 'A degree alone does not show employers what students can do, and without follow-up data an institution cannot show where its students start earning.';
 
-  test('the H2 is unchanged; the lead and the two cards read as the reader’s obstacles', () => {
+  test('the H2 is unchanged; the lead reads as the reader’s obstacle (WP166-B: the two obstacle cards are gone)', () => {
     const html = distHtml('programs/jobready-campus/index.html');
     expect(problemBand(html)).toContain(`>${HEADING}</h2>`);
     expect(lead(html)).toBe(LEAD);
-    expect(cardTexts(html)).toEqual([
-      'Skills Employers Cannot See',
-      'Employers look for proof of job-ready skills beside the degree.',
-      'Placement Evidence Is Missing',
-      'Without a baseline and follow-up surveys, placement results are hard to report.',
-    ]);
+    // WP166-B (marketing review R2-15): the two cards ("Skills Employers Cannot See" / "Placement Evidence Is Missing") repeated the lead and are gone; the band shows the PX-02 and PX-05 tiles instead,
+    // so the band has no obstacle card left (it had the two cards' titles and bodies).
+    expect(cardTexts(html)).toEqual([]);
   });
 
   test('the old instruction wording is on no JobReady@Campus page', () => {

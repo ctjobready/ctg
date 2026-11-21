@@ -51,7 +51,9 @@ test.describe('1 JobReady@Campus: the How It Works card says who teaches', () =>
     expect(text).toContain('Capacity Designed to Stay on Campus Campus labs keep working as blended-learning centers, with CodersTrust-trained facilitators.');
     expect(text).not.toContain('Campus labs work as blended-learning centers');
     expect(count(text, LONG)).toBe(1);
-    expect(count(text, SHORT)).toBe(1);
+    // WP166-B (marketing review R2-17): twice (it was once): the Capacity card and the new FAQ answer "What Does Our Institution Need to Provide?" ("... The labs run with CodersTrust-trained facilitators.");
+    // the long form is still once, in How It Works.
+    expect(count(text, SHORT)).toBe(2);
   });
 });
 
@@ -105,7 +107,9 @@ test.describe('3 Repetition: said once', () => {
     expect(text).toContain('Not a Fit Yet Investors who need a finished marketplace now.');
     expect(text).not.toContain('finished marketplace now:');
     // The hero lead and the "Connect to Paid Work" tile are the only two statements naming the marketplaces; the FAQ points to the tiles. WP163 (owner answers of 3 November 2026): neither carries a pre-launch status any more.
-    expect(count(text, 'employer marketplace and the gig-work marketplace')).toBe(2);
+    // WP166-B (marketing review R3-09): the hero lead no longer lists the features ("JobReady is CodersTrust’s digital learning and earning platform for emerging markets. Back its staged rollout."), and the
+    // platform question is gone (R3-33), so the "Connect to Paid Work" tile is the one statement naming the marketplaces (it was two).
+    expect(count(text, 'employer marketplace and the gig-work marketplace')).toBe(1);
     expect(count(text, 'pre-launch')).toBe(0);
   });
 
@@ -120,14 +124,16 @@ test.describe('3 Repetition: said once', () => {
     expect(text).toContain('Admissions Contacts You. Our admissions team shares the application steps.'); // WP161 (A-34): it said "shares the next steps"
     // The other two FAQ questions stay, and the FAQ structured data matches the visible questions.
     expect(text).toContain('Is the NU Post Graduate Diploma Right for Me?');
-    expect(text).toContain('Where Do I Find Eligibility, Schedule and Fees?');
+    // WP166-B (marketing review R2-24): "Where Do I Find Eligibility, Schedule and Fees?" is gone (its answer pointed to Before You Apply and repeated that row's notices sentence), so one question stays.
+    expect(text).not.toContain('Where Do I Find Eligibility, Schedule and Fees?');
     expect(html(NU)).not.toMatch(/"name":"How Do I Apply\?"/);
   });
 });
 
 test('4 Investors, "Connect Learning to Paid Work": the body says paid work', () => {
   const text = main(INVESTORS);
-  expect(text).toContain('Connect Learning to Paid Work JobReady is designed to link learners to paid work through mentoring and placement support.'); // WP152: no heading echo, no comma before "through"
+  // WP166-B (marketing review R3-36): the sentence goes on to the record behind it (it ended "... through mentoring and placement support.").
+  expect(text).toContain('Connect Learning to Paid Work JobReady is designed to link learners to paid work through mentoring and placement support, the model CodersTrust has run since 2014.'); // WP152: no heading echo, no comma before "through"
   expect(text).not.toContain('connect learning with mentoring and placement support');
 });
 

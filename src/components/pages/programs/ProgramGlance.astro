@@ -26,6 +26,8 @@ const { rows, title = 'Program at a Glance', lead, id = 'program-glance', scope 
 
 <Section id={id} tone="airy" aria-labelledby={`${id}-h`}>
   <SectionHeader id={`${id}-h`} eyebrow="Decision Summary" title={title} lead={lead} />
+  {/* WP166-B (marketing review R2-19): an optional registered tile above the rows (JobReady@Work opens its glance with the ManpowerGroup statistic, PX-05). */}
+  {Astro.slots.has('default') && <div class="pg__stat"><slot /></div>}
   <dl class="pg">
     {
       rows.map((r) => (
@@ -43,6 +45,9 @@ const { rows, title = 'Program at a Glance', lead, id = 'program-glance', scope 
   /* WP141: the page's one program-scope statement, one step under the rows */
   .pg__scope {
     margin: var(--space-md) 0 0;
+  }
+  .pg__stat {
+    margin: 0 0 var(--space-lg);
   }
   .pg {
     margin: 0;

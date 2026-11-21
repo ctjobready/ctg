@@ -34,7 +34,7 @@ import { webPage } from '../../lib/schema';
 import { linkAttrs } from '../../lib/url';
 
 const path = '/programs/superkids/';
-const LAST_UPDATED = '2026-11-02'; // WP161 (owner answer 2026-11-02: SuperKids@School for schools and SuperKids courses for families; A-40: no template photo note). Earlier: WP157 (owner decision 2026-11-02: the four learner portraits are captioned "SuperKids learner", with no first names). Earlier: WP143: the glance row with the repeated 400+ figure is gone. WP129 (owner rule 2026-10-31: any change to visible text moves the date, copy edits included): the serial-comma, semicolon and copy edits of WP126 to WP128 and the WP129 edits. Earlier: WP104: the gallery's consent line was added. WP36: the cycle-13 wording changes (the two agreement targets, the safeguarding answer); WP20c had 2026-10-14 (PAGE_UPDATED.superkids is 2026-10-10)
+const LAST_UPDATED = '2026-11-21'; // WP166-B (marketing review R2, owner approval of 21 November 2026): the parents' link in the hero, the shorter glance rows, the "The Program" band cut, the agreements as two lines under "Agreement Targets", the cost question in the FAQ and the gallery before the start band. Earlier: WP161 (owner answer 2026-11-02: SuperKids@School for schools and SuperKids courses for families; A-40: no template photo note). Earlier: WP157 (owner decision 2026-11-02: the four learner portraits are captioned "SuperKids learner", with no first names). Earlier: WP143: the glance row with the repeated 400+ figure is gone. WP129 (owner rule 2026-10-31: any change to visible text moves the date, copy edits included): the serial-comma, semicolon and copy edits of WP126 to WP128 and the WP129 edits. Earlier: WP104: the gallery's consent line was added. WP36: the cycle-13 wording changes (the two agreement targets, the safeguarding answer); WP20c had 2026-10-14 (PAGE_UPDATED.superkids is 2026-10-10)
 const title = 'SuperKids: STEAM, Coding and Robotics';
 // WP161 (WP160-B, owner answer 2026-11-02: "SuperKids D2C offer is for parents to enroll their kids. SuperKids@School is the B2B2C program with schools."): the meta description names both offers, in plain words (never "D2C" or "B2B2C").
 const description = 'SuperKids brings STEAM, coding and robotics to young learners in schools and in courses for families on JobReady.global. 400+ learners since 2021.';
@@ -52,11 +52,18 @@ if (!gv08) throw new Error('GV-08 wording changed: update the SuperKids agreemen
 if (!gv08[2].endsWith('9,000+ digital labs') || !fact('GV-09').text.startsWith('9,000+ government digital labs in Bangladesh')) throw new Error('SuperKids: GV-08 no longer ends its DoICT target "... 9,000+ digital labs", or GV-09 no longer places the labs in Bangladesh; update the DoICT target line');
 const doictReach = `${gv08[2]} in Bangladesh`;
 const nctbReach = gv08[4];
+// WP166-B (R2-29): each agreement's scope, from GV-08's own words, opens its line (the two "Agreement" cards that said them are folded in).
+const doictScope = gv08[1];
+const nctbScope = gv08[3].replace(/^C/, 'c');
 
 // Only the safeguarding question (Q9) applies to SuperKids: Q1 ("Will this work in our country?") answers with the adult course menu
 // and Q8 ("What does it cost?") with the adult program inclusions, and neither describes a K-12 program. Pricing is covered in C11.
 // WP36 (cycle-13 review): the one-line safeguarding answer with a link to the governance page, which keeps the full account (the hub FAQ has the full Q9).
-const faqSources: FaqSource[] = [{ audience: 'variants' as const, id: 'Q9-route' }];
+// WP166-B (marketing review R2-30): a principal's cost question is answered in the FAQ, with the one pricing sentence the start band printed (PRICING's first sentence; the adult inclusions of Q8 still do not apply here).
+const faqSources: FaqSource[] = [
+  { audience: 'variants' as const, id: 'Q9-route' },
+  { q: 'What Does It Cost?', html: pricingFirst, evidence: ['PD-02'] },
+];
 
 const jsonLd = [
   webPage({ path, name: 'SuperKids', description, dateModified: LAST_UPDATED, breadcrumb: [{ name: 'Home', path: '/' }, { name: 'Programs', path: '/programs/' }, { name: 'SuperKids', path }] }),
@@ -67,20 +74,23 @@ const courses = linkAttrs(COURSES_URL);
 ---
 
 <LandingLayout title={title} description={description} path={path} breadcrumbs={[{ label: 'Programs', href: '/programs/' }, { label: 'SuperKids' }]} jsonLd={jsonLd} stickyCta={inquiry}>
+  <!-- WP166-B (marketing review R2-27): the hero tells parents they can enroll, so it gives them the link (a text link under the one button, as on JobReady@Work). -->
   <!-- C1. WP161 (WP160-B, owner answer 2026-11-02): the eyebrow and the lead name both offers, SuperKids@School for schools and SuperKids courses that parents buy on JobReady.global (two sentences: ", and parents ..." after a series reads as a serial comma to tests/wp127); the discovery session is in the SuperKids@School card below. -->
   <HeroBand
     audience="SuperKids · For Schools, Education Partners and Families"
     title="Bring Coding, Robotics and Digital Art into Your Classroom"
     lead="SuperKids@School brings block coding, robotics and graphic design for kids into schools. Parents can enroll their children in SuperKids courses on JobReady.global."
     cta={inquiry}
+    routeLinks={[{ label: 'Parents: Explore SuperKids Courses at JobReady.global', href: COURSES_URL }]}
     artSeed="superkids"
   />
 
   <ProgramGlance
     title="SuperKids at a Glance"
     rows={[
-      { label: 'Who It Is For', text: 'Schools and education partners that want young learners to build digital skills early, through block coding, robotics and graphic design for kids.' },
-      { label: 'Agreements', text: 'Agreements with the Department of ICT (DoICT) and the National Curriculum and Textbook Board (NCTB); details below.', facts: ['GV-08'] },
+      // WP166-B (marketing review R2-27): shorter rows (the course list is in the hero and the two offer cards; "details below" is gone). The 400+ figure stays once on the page, in "Delivery and Agreements" (WP143), so no "Delivered" row is added here.
+      { label: 'Who It Is For', text: 'Schools and education partners that want young learners to build digital skills early.' },
+      { label: 'Agreements', text: 'Department of ICT (DoICT) and National Curriculum and Textbook Board (NCTB).', facts: ['GV-08'] },
     ]}
   />
 
@@ -113,12 +123,9 @@ const courses = linkAttrs(COURSES_URL);
     ]}
   />
 
-  <!-- C6 (the positioning statement opens the band) -->
-  <MechanismSection title="A School STEAM Program for Young Learners" positioning={POSITIONING.superkids} eyebrow="The Program">
-    <p class="courses__more" data-reveal>
-      Looking for a SuperKids course for your own child, or courses for older learners? <a class="link" href={courses.href} rel={courses.rel}>Explore Courses at JobReady.global<Icon name="arrow-up-right" size={16} /><span class="sr-only"> {courses.srText}</span></a>
-    </p>
-  </MechanismSection>
+  <!-- C6 (the positioning statement opens the band; scripts/check-facts.mjs [POSITION] requires the band on this page). WP166-B (marketing review R2-28): the band is the statement alone; its line "Looking for a SuperKids course for your own child,
+       or courses for older learners? Explore Courses at JobReady.global" is gone (the hero and the families card carry that link). The reviewer's cut of the whole band is not applied, because the gate needs it. -->
+  <MechanismSection title="A School STEAM Program for Young Learners" positioning={POSITIONING.superkids} eyebrow="The Program" />
 
   <!-- C7: agreements and targets only -->
   <Section id="agreements" tone="airy" aria-labelledby="agreements-h">
@@ -126,27 +133,12 @@ const courses = linkAttrs(COURSES_URL);
     <div class="agree">
       <h3 class="agree__h t-heading-xl" data-reveal>Delivered</h3>
       <div class="agree__delivered" data-reveal data-fact="SK-05"><StatusTag status="Delivered" /><p class="agree__num"><Fact id="SK-05" /></p></div>
-      <h3 class="agree__h agree__h--apart t-heading-xl" data-reveal>Agreed, Not Delivered</h3>
+      <!-- WP166-B (marketing review R2-29): headed "Agreement Targets" (it said "Agreed, Not Delivered", a heading about what has not been done); each agreement is one line, its scope and its target (GV-08's words), and the caveat is said once. -->
+      <h3 class="agree__h agree__h--apart t-heading-xl" data-reveal>Agreement Targets</h3>
       <div class="agree__fact" data-reveal data-fact="GV-08">
-        <p><strong>DoICT agreement target:</strong> {doictReach}.</p>
-        <p><strong>NCTB agreement target:</strong> {nctbReach}.</p>
+        <p><strong>DoICT agreement</strong>, {doictScope}: target of {doictReach}.</p>
+        <p><strong>NCTB agreement</strong>, {nctbScope}: target of {nctbReach}.</p>
         <p>These are agreement targets, not delivered reach.</p>
-      </div>
-      <div class="agree__cards">
-        <article class="card" data-reveal>
-          <div class="card__body">
-            <p><StatusTag status="Agreement" /></p>
-            <h3 class="card__title">DoICT</h3>
-            <p class="card__text">Primary-school STEM and robotics.</p>
-          </div>
-        </article>
-        <article class="card" data-reveal>
-          <div class="card__body">
-            <p><StatusTag status="Agreement" /></p>
-            <h3 class="card__title">NCTB</h3>
-            <p class="card__text">Competency-based experiential learning.</p>
-          </div>
-        </article>
       </div>
     </div>
   </Section>
@@ -154,20 +146,20 @@ const courses = linkAttrs(COURSES_URL);
   <!-- C9 -->
   <FaqSection sources={faqSources} title="Questions Schools and Partners Ask" />
 
-  <!-- C11 -->
+  <!-- WP166-B (marketing review R2-28): the gallery comes before the start band, so the three things to bring are followed directly by the button. -->
+  <GalleryDisclosure id="in-the-field" eyebrow="In the Field" title="Inside SuperKids Classrooms and Events" lead="Workshops, certificate ceremonies and school agreements, in photographs." note="Photographs are used with the consent of those pictured or their guardians." photos={galleryPhotos('superkids')} visible={4} />
+
+  <!-- C11. WP166-B (marketing review R2-30): headed "Three Things to Bring to the Discovery Session" (it said "Options Are Shaped with You in a Discovery Session", with the lead "Bring these three things to the conversation.", which the heading now says);
+       the pricing sentence is the FAQ's cost answer. -->
   <OfferSection
-    title="Options Are Shaped with You in a Discovery Session"
-    lead="Bring these three things to the conversation."
+    title="Three Things to Bring to the Discovery Session"
     cards={[
       { icon: 'school', title: 'Your School or Organization', text: 'Location, age groups and the approximate number of learners.' },
       { icon: 'target', title: 'Your Goals', text: 'Which of STEAM, coding, robotics and digital art you want to start with.' },
       { icon: 'calendar-check', title: 'Your Timeline', text: 'When you would like to begin.' },
     ]}
-  >
-    <p class="note note--key" data-fact="PD-02">{pricingFirst}</p>
-  </OfferSection>
+  />
 
-  <GalleryDisclosure id="in-the-field" eyebrow="In the Field" title="Inside SuperKids Classrooms and Events" lead="Workshops, certificate ceremonies and school agreements, in photographs." note="Photographs are used with the consent of those pictured or their guardians." photos={galleryPhotos('superkids')} visible={4} />
 
   <!-- C12 (risk reversal) is the micro-commitment line under the C13 button. Safeguarding is stated once on this page, in the FAQ answer
        above (Q9); the former "Safeguarding Is Agreed Before Enrollment" card repeated it word for word. -->
@@ -191,10 +183,6 @@ const courses = linkAttrs(COURSES_URL);
 </LandingLayout>
 
 <style>
-  .courses__more {
-    margin: var(--space-lg) 0 0;
-    color: var(--on-surface-variant);
-  }
   .two-ways__link {
     margin: var(--space-sm) 0 0;
   }
@@ -238,17 +226,6 @@ const courses = linkAttrs(COURSES_URL);
   }
   .agree__fact > :global(p:last-child) {
     margin-bottom: 0;
-  }
-  .agree__cards {
-    display: grid;
-    gap: var(--space-gutter);
-    grid-template-columns: minmax(0, 1fr);
-    max-width: 52rem;
-  }
-  @media (min-width: 768px) {
-    .agree__cards {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
   }
   .updated {
     margin: 0 0 var(--space-md);

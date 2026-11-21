@@ -157,27 +157,31 @@ test.describe('the trial and the survey are shown once per page', () => {
     expect(compact(await first.locator('.hs__proof').textContent())).not.toContain('Employment effect');
   });
 
+  // WP166-B (marketing review R3-23): the "See the Evidence Behind the Results" band (#proof-band) is gone from the three pages; its sentence and its strip of two links are the note under the
+  // Results at a Glance tiles (#glance .pg__after). The checks below hold the same strip, with no chart, figure or second trial or survey block, in its new place.
   for (const slug of THREE) {
-    test(`${slug}: #proof-band is a strip of two links under "See the Evidence Behind the Results"; no chart, no figure and no second trial or survey block`, async ({ page }) => {
+    test(`${slug}: the evidence strip is two links under the glance tiles (WP166-B: it was #proof-band, "See the Evidence Behind the Results"); no chart, no figure and no second trial or survey block`, async ({ page }) => {
       await open(page, `partner-with-us/${slug}/`);
-      const strip = page.locator('#proof-band');
+      await expect(page.locator('#proof-band')).toHaveCount(0);
+      const strip = page.locator('#glance .pg__after');
       await expect(strip).toHaveCount(1);
-      await expect(strip.locator('h2')).toHaveText('See the Evidence Behind the Results');
-      expect(await texts(page, '#proof-band a')).toEqual(['Read the Trial Results', 'Impact Survey 2026']);
-      expect((await hrefs(page, '#proof-band a')).map((h) => h.replace(/^.*\/ctg\//, ''))).toEqual(['impact/independent-evaluation/', 'impact/outcomes-2026/']);
+      expect(await texts(page, '#glance .pg__after a')).toEqual(['Read the Trial Results', 'Impact Survey 2026']);
+      expect((await hrefs(page, '#glance .pg__after a')).map((h) => h.replace(/^.*\/ctg\//, ''))).toEqual(['impact/independent-evaluation/', 'impact/outcomes-2026/']);
       await expect(strip.locator('svg:not(.icon), .stat, .ba, [data-fact]')).toHaveCount(0);
-      await expect(page.locator('[data-plain-line], main .ba, #proof-band .proofband')).toHaveCount(0);
+      await expect(page.locator('[data-plain-line], main .ba, main .proofband')).toHaveCount(0);
       const text = await mainText(page);
       expect(text).not.toMatch(/An Independent Randomized Trial|What Surveyed Completers Report|Employment Among Surveyed Completers|View Chart Data as a Table|found that women offered a place/);
       // Results at a Glance still carries the trial figure
       await expect(page.locator('#glance [data-evidence="Randomized Trial"]').first()).toBeVisible();
     });
 
-    test(`${slug}: the strip sits right after the mechanism band, on a light ground (so no two dark bands meet), and keeps one primary button on the page's closing call to action`, async ({ page }) => {
+    test(`${slug}: the band after the mechanism band is on a light ground (so no two dark bands meet; WP166-B: it was the strip, now gone), and the page keeps one primary button on its closing call to action`, async ({ page }) => {
       await open(page, `partner-with-us/${slug}/`);
       const order = await bandIds(page);
-      expect(order.indexOf('proof-band')).toBe(order.indexOf('mechanism') + 1);
-      expect(await page.locator('#proof-band').getAttribute('class')).toMatch(/band--(airy|ice|white)/);
+      expect(order).not.toContain('proof-band');
+      const next = order[order.indexOf('mechanism') + 1];
+      expect(next, 'a band follows the mechanism band').toBeTruthy();
+      expect(await page.locator(`main .band#${next}`).getAttribute('class')).toMatch(/band--(airy|ice|white)/);
       await expect(page.locator('#cta .btn--primary')).toHaveCount(1);
     });
   }
@@ -218,7 +222,8 @@ test.describe('the WSDFM 71% is off the glance tiles of Development Partners and
     expect(await page.locator('#glance .pg__lead a').evaluateAll((els) => els.map((e) => (e.getAttribute('data-fact') ?? '').split(' ')[0]))).toEqual(['RC-02', 'OC-03', 'PR-02', 'PR-03']);
     await open(page, 'partner-with-us/governments/');
     // WP61 (cycle-33 review, GLM L5): the results lead and the contract scope is the fourth tile (it led the glance): the trial, Her Power, Kosovo, then the contract scope (tests/wp61.spec.ts)
-    expect(await page.locator('#glance .pg__lead a').evaluateAll((els) => els.map((e) => (e.getAttribute('data-fact') ?? '').split(' ')[0]))).toEqual(['RC-02', 'PR-05', 'PR-02', 'GV-12']);
+    // WP166-B (marketing review R3-04): the contract scope leads again, then Her Power, the trial and Kosovo (it was RC-02, PR-05, PR-02, GV-12).
+    expect(await page.locator('#glance .pg__lead a').evaluateAll((els) => els.map((e) => (e.getAttribute('data-fact') ?? '').split(' ')[0]))).toEqual(['GV-12', 'PR-05', 'RC-02', 'PR-02']);
   });
 
   // WP51 (cycle-26 review): Home's card shows delivery context in place of the figure (the fourth carousel slide states it); the pages that keep the figure still print the caption
@@ -379,7 +384,8 @@ test.describe('plain words and plain claims', () => {
     expect(contracts).toContain('Training in digital technologies');
     expect(contracts).toContain('Training for staff on the learning platform and lab operations');
     const text = await mainText(page);
-    expect(text).toContain('Training for staff on the learning platform and lab operations.');
+    // WP166-B (marketing review R3-25): the services line names its contract (it ended "... and lab operations.").
+    expect(text).toContain('Training for staff on the learning platform and lab operations, as contracted for the Digital Lab Establishment Project (Phase II).');
     expect(text).not.toMatch(/4IR|LMS and operation/);
   });
 
@@ -409,12 +415,16 @@ test.describe('plain words and plain claims', () => {
       await open(page, route);
       const qs = await texts(page, '.gp__q');
       // WP46 (cycle-22 review): Universities states two pains (the employers' pain is the 72% tile directly below them)
-      expect(qs.length, route || 'home').toBeGreaterThanOrEqual(route === 'partner-with-us/universities/' ? 2 : 3);
+      // WP166-B (marketing review R3-40): Universities states one (it was two) and Governments two (it was three): the "Degree holders struggle to find work" and "Graduates struggle to find work" cards are the
+      // 19M+ tile (PX-02) now.
+      const min = route === 'partner-with-us/universities/' ? 1 : route === 'partner-with-us/governments/' ? 2 : 3;
+      expect(qs.length, route || 'home').toBeGreaterThanOrEqual(min);
       for (const q of qs) expect(q, `${route || 'home'}: "${q}"`).toBe(titleCase(q));
     }
     await open(page, 'partner-with-us/governments/');
     // WP36 (cycle-13 review): the audience pages state their pains as outcomes, as Home and YouthWIDE do ("Graduates Struggle to Find Work", not "Why Do Graduates Struggle to Find Work?")
-    expect(await texts(page, '.gp__q')).toContain('Graduates Struggle to Find Work');
+    // WP166-B (marketing review R3-40): "Graduates Struggle to Find Work" is gone from Governments, so the check is on its first remaining pain, stated as an outcome too.
+    expect(await texts(page, '.gp__q')).toContain('Training Budgets Do Not Show Up as Earnings');
   });
 
   test('About: National University sits with the 2023–2025 partnerships (official training partner since 2023), not with 2025–2026', async ({ page }) => {

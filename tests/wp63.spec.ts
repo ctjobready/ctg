@@ -359,7 +359,7 @@ test.describe('R9 (Grok, not done): YouthWIDE keeps its "Last updated" line', ()
     expect(withLine).toContain('/programs/youthwide/');
     expect(withLine.length, `pages with a "Last updated" line: ${withLine.join(', ')}`).toBeGreaterThan(5);
     await open(page, YOUTHWIDE);
-    await expect(page.locator('.updated')).toHaveText('Last updated November 3, 2026'); // WP104; WP141 moved it to November 1; WP151 to November 2; WP163 to November 3
+    await expect(page.locator('.updated')).toHaveText('Last updated November 21, 2026'); // WP104; WP141 moved it to November 1; WP151 to November 2; WP163 to November 3; WP166-B (marketing review R2) to November 21
   });
 });
 
@@ -368,11 +368,13 @@ test.describe('RW1 (rework; coordinator, extending Grok R1): the target group is
   const GROUP = 'educated, unemployed and underemployed youth';
   const OLD_GROUP = /educated,\s+unemployed\s+(?:youth|young people)/i;
 
-  // WP166-A (marketing review R7-22): the Governments meta description is the page's own offer and next step ("Build a national digital workforce ... Request a briefing."), not a repeat of the lead
-  test('the Governments and Development Partners leads name the group as ID-01 does; the Governments meta description is its offer and next step, within 155 characters (WP166-A)', async ({ page }) => {
+  // WP166-A (marketing review R7-22): the Governments meta description is the page's own offer and next step ("Build a national digital workforce ... Request a briefing."), not a repeat of the lead.
+  // WP166-B (R3-03, R3-17): the Governments hero subhead names what a ministry buys and no longer names the group; the Development Partners subhead names the group in a new sentence.
+  test('the Development Partners lead names the group as ID-01 does; the Governments lead says what a ministry buys and its meta description is its offer and next step, within 155 characters (WP166-A, WP166-B)', async ({ page }) => {
     expect(fact('ID-01').text).toContain(GROUP);
-    expect(VALUE_PROPOSITION.governments).toBe('We help governments prepare educated, unemployed and underemployed youth for paid digital work through mentored, certification-focused training.');
-    expect(VALUE_PROPOSITION.developmentPartners).toBe('We help development partners prepare educated, unemployed and underemployed youth for paid work through mentored, certification-focused training.');
+    expect(VALUE_PROPOSITION.governments).toBe('Curriculum, Training of Trainers and phased delivery in government digital labs, with spending reported against an agreed scorecard.');
+    expect(VALUE_PROPOSITION.developmentPartners).toBe('Mentored, certification-focused training for educated, unemployed and underemployed youth, with placement support and follow-up surveys at 3, 6 and 12 months that show who is in paid work.');
+    expect(VALUE_PROPOSITION.developmentPartners).toContain(GROUP);
     await open(page, GOVERNMENTS);
     expect(compact(await page.locator('main .hero__lead').first().textContent())).toBe(VALUE_PROPOSITION.governments);
     const description = (await page.locator('meta[name="description"]').getAttribute('content')) ?? '';

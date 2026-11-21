@@ -261,7 +261,8 @@ test.describe('4. no capability is labelled live, pre-launch, planned or roadmap
     const section = /<section[^>]*id="status"[\s\S]*?<\/table>/.exec(raw)?.[0] ?? '';
     expect(section.length).toBeGreaterThan(500);
     expect(visible(/<h2[\s\S]*?<\/h2>/.exec(section)?.[0] ?? '')).toBe('Platform Capabilities');
-    expect([...section.matchAll(/<th scope="col"[^>]*>([^<]*)<\/th>/g)].map((m) => m[1])).toEqual(['Job', 'Capability', 'Note']);
+    // WP166-B (marketing review R2-38): the third column is headed "What It Does" (it was "Note").
+    expect([...section.matchAll(/<th scope="col"[^>]*>([^<]*)<\/th>/g)].map((m) => m[1])).toEqual(['Job', 'Capability', 'What It Does']);
     const capabilities = [...section.matchAll(/<td data-label="Capability"[^>]*>([^<]*)<\/td>/g)].map((m) => decode(m[1]));
     expect(capabilities).toEqual([
       'Course storefront at jobready.global',
@@ -279,25 +280,26 @@ test.describe('4. no capability is labelled live, pre-launch, planned or roadmap
   });
 
   test('the platform question asks what JobReady offers, on every page that asks it and in its FAQ JSON-LD; "Is the JobReady Platform Live?" is asked nowhere', () => {
+    // WP166-B (marketing review R3-33 on Employers and Investors, R2-21 on JobReady@Work, R2-40 on the JobReady Platform): the platform question ("What Does the JobReady Platform Offer?", with the shared
+    // answer on Employers and JobReady@Work and the "See ... above" answers on the Platform and Investors pages) is cut from all four pages that asked it; the assertions on its wording are gone with it,
+    // and none of the four pages (page text or FAQ JSON-LD) asks it now.
     for (const rel of [EMPLOYERS, WORK, PLATFORM, INVESTORS]) {
-      expect(mainOf(rel), rel).toContain('What Does the JobReady Platform Offer?');
-      expect(ldText(rel), rel).toContain('"name":"What Does the JobReady Platform Offer?"');
+      expect(mainOf(rel), rel).not.toContain('What Does the JobReady Platform Offer?');
+      expect(ldText(rel), rel).not.toContain('"name":"What Does the JobReady Platform Offer?"');
     }
-    const shared = 'JobReady offers an AI Tutor, AI-driven personalized and adaptive learning paths, automated assessment and feedback, an AI career coach, partner portals, AI chat, the employer marketplace and the gig-work marketplace. Hiring runs through CodersTrust’s placement team.';
-    expect(mainOf(EMPLOYERS)).toContain(shared);
-    expect(mainOf(WORK)).toContain(shared);
-    expect(mainOf(PLATFORM)).toContain('See Platform Capabilities above, from the AI Tutor to the work marketplaces.');
-    expect(mainOf(INVESTORS)).toContain('See What JobReady Does above, from the AI Tutor to the work marketplaces.');
     expect(builtPages().filter((rel) => html(rel).includes('Is the JobReady Platform Live?'))).toEqual([]);
   });
 
   test('the menu, Investors, Foundations and TalentLEAP say what is offered, with no status', () => {
     const menu = 'An AI Tutor, adaptive learning paths, an AI career coach, partner portals and work marketplaces.';
     expect(visible(html('index.html'))).toContain(menu);
-    expect(mainOf(INVESTORS)).toContain('Back JobReady’s staged rollout, built on CodersTrust’s training and mentoring programs. JobReady offers an AI Tutor, adaptive learning paths, an AI career coach, partner portals, the employer marketplace and the gig-work marketplace.');
+    // WP166-B (marketing review R3-09): the Investors hero says what JobReady is and asks the investor to back it; the feature list is "What JobReady Does" below (the hero said "Back JobReady’s staged rollout,
+    // built on CodersTrust’s training and mentoring programs. JobReady offers an AI Tutor, adaptive learning paths, an AI career coach, partner portals, the employer marketplace and the gig-work marketplace.").
+    expect(mainOf(INVESTORS)).toContain('JobReady is CodersTrust’s digital learning and earning platform for emerging markets. Back its staged rollout.');
     expect(mainOf(INVESTORS)).toContain('Partner portals give institutions a digital delivery platform, with automated assessment and feedback and AI chat across the platform.');
     expect(mainOf(FOUNDATIONS)).toContain('A grant toward platform infrastructure, not toward cohorts: JobReady’s AI Tutor, adaptive learning paths, AI career coach, partner portals and work marketplaces.');
-    expect(mainOf(TALENTLEAP)).toContain('TalentLEAP organizes learning around assessed skill units and career paths. Its levels run from Competent to Proficient and Expert.');
+    // WP166-B (marketing review R2-34): the TalentLEAP opening leads with the difference (it said "TalentLEAP organizes learning around assessed skill units and career paths. Its levels run from Competent to Proficient and Expert.").
+    expect(mainOf(TALENTLEAP)).toContain('TalentLEAP organizes learning around skill units that are assessed, not around hours attended alone. Levels run from Competent to Proficient and Expert, and three months of milestone-based mentoring follow the course.');
     expect(mainOf(OUR_MODEL)).toContain('skill units, career paths and mentoring, with levels from Competent to Proficient and Expert.');
   });
 });
@@ -307,26 +309,29 @@ test.describe('4. no capability is labelled live, pre-launch, planned or roadmap
 /* ---------------------------------------------------------------------------------------------- */
 
 test.describe(`5. every page whose visible text changed says ${TODAY}`, () => {
+  // WP166-B (marketing review R2 and R3, owner approval of 21 November 2026): every page below changed again and reads 2026-11-21 (it read 2026-11-03); About did not change and keeps 2026-11-03.
+  // On TalentLEAP and the JobReady Platform the "Last updated" line is at the foot of the page (tl__updated, jr__updated), not in the header (lf-updated), since R2-06.
+  const WP166B_DAY = '2026-11-21';
   const STAMPED: [string, string][] = [
-    [TALENTLEAP, 'lf-updated'],
-    [PLATFORM, 'lf-updated'],
+    [TALENTLEAP, 'tl__updated'],
+    [PLATFORM, 'jr__updated'],
     [YOUTHWIDE, 'updated'],
     [CAMPUS, 'updated'],
     [WORK, 'updated'],
   ];
   for (const [rel, cls] of STAMPED) {
-    test(`${rel}: "Last updated November 3, 2026" and JSON-LD dateModified ${TODAY}`, () => {
+    test(`${rel}: "Last updated November 21, 2026" and JSON-LD dateModified ${WP166B_DAY}`, () => {
       const raw = html(rel);
       const m = new RegExp(`<p class="${cls}[^"]*"[^>]*>([\\s\\S]*?)</p>`).exec(raw);
-      expect(visible(m?.[1] ?? '')).toBe('Last updated November 3, 2026');
-      expect(raw).toMatch(new RegExp(`<time datetime="${TODAY}"`));
-      expect(dateModified(rel)).toContain(TODAY);
-      expect(dateModified(rel).filter((d) => d < TODAY)).toEqual([]);
+      expect(visible(m?.[1] ?? '')).toBe('Last updated November 21, 2026');
+      expect(raw).toMatch(new RegExp(`<time datetime="${WP166B_DAY}"`));
+      expect(dateModified(rel)).toContain(WP166B_DAY);
+      expect(dateModified(rel).filter((d) => d < WP166B_DAY)).toEqual([]);
     });
   }
   for (const rel of [DEV, UNIVERSITIES, LOCAL, INVESTORS, GOVERNMENTS, FOUNDATIONS, EMPLOYERS]) {
-    test(`${rel}: WebPage.dateModified is ${TODAY}`, () => {
-      expect(nodeOf(rel, 'WebPage').dateModified).toBe(TODAY);
+    test(`${rel}: WebPage.dateModified is ${WP166B_DAY}`, () => {
+      expect(nodeOf(rel, 'WebPage').dateModified).toBe(WP166B_DAY);
     });
   }
   test(`About (the 2025–2026 timeline item now says what JobReady is, with no rollout status): AboutPage.dateModified is ${TODAY}`, () => {

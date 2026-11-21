@@ -102,9 +102,10 @@ test.describe('Home slide 2 and the GV-12 note (items 1 and 12)', () => {
   // WP57 (cycle-29 review, Grok R2 with Gemini GM1): the WP35 wording is back on two pages by decision (it had been retired in WP46/WP48); the register's note and the Impact tile keep the later wording
   // WP59 (cycle-31 review, GPT-6.1 Sol G1): the Investors and JobReady Platform "Contracted Scope" tiles print the same note (tests/wp59.spec.ts)
   // WP60 (cycle-32 review, GPT-6.1 Sol G1): Home slide 2 says the same facts in plainer sentences and no longer prints the note, so it is not in the list
-  test('the old note ("The total is contract scope ... it includes Her Power’s national program") is printed on the Governments tile and the Investors and JobReady Platform tiles only', () => {
+  // WP166-B (marketing review R2-39): the JobReady Platform's "Contracted Scope" tile and its note are gone (the page was in this list), so the note is on Impact, Governments and Investors only.
+  test('the old note ("The total is contract scope ... it includes Her Power’s national program") is printed on the Governments tile and the Investors tile only (and Impact’s)', () => {
     const hits = builtPages().filter((p) => /The total is contract scope|it includes Her Power’s national program/.test(visible(p.html)));
-    expect(hits.map((p) => p.route).sort()).toEqual(['/impact/', '/our-model/jobready-platform/', '/partner-with-us/governments/', '/partner-with-us/investors/']);
+    expect(hits.map((p) => p.route).sort()).toEqual(['/impact/', '/partner-with-us/governments/', '/partner-with-us/investors/']);
   });
 });
 
@@ -164,16 +165,18 @@ test.describe('YouthWIDE: no Cost of Waiting band, no Imagine band, no hero link
     expect(builtPages().filter((p) => p.html.includes('>Training Without Work Entry Leaves Budgets Without Results<')).map((p) => p.route)).toEqual([]);
   });
 
-  test('the challenge band stays, then the track record and the delivery model; the tone alternates white, airy, white, airy and never puts two dark bands together', async ({ page }) => {
+  // WP166-B (marketing review R2-01): the evidence band (#proof-band, dark) follows the challenge band, before the track record (it came after the governments band), so the run is
+  // problem, proof-band, guide, mechanism, governments (it was problem, guide, mechanism, governments) and its tones white, klein, airy, white, airy (they were white, airy, white, airy).
+  test('the challenge band stays, then the evidence, the track record and the delivery model; the tone alternates white, klein, airy, white, airy and never puts two dark bands together', async ({ page }) => {
     await open(page, 'programs/youthwide/');
     const ids = await sectionIds(page);
     expect(ids.indexOf('problem'), 'the challenge band stays').toBeGreaterThanOrEqual(0);
-    expect(ids.slice(ids.indexOf('problem'), ids.indexOf('problem') + 4)).toEqual(['problem', 'guide', 'mechanism', 'governments']);
+    expect(ids.slice(ids.indexOf('problem'), ids.indexOf('problem') + 5)).toEqual(['problem', 'proof-band', 'guide', 'mechanism', 'governments']);
     const tones = await page.evaluate(() => {
       const tone = (id: string) => /\bband--(white|airy|ice|klein|deep-ink)\b/.exec(document.getElementById(id)?.className ?? '')?.[1];
-      return ['problem', 'guide', 'mechanism', 'governments'].map(tone);
+      return ['problem', 'proof-band', 'guide', 'mechanism', 'governments'].map(tone);
     });
-    expect(tones).toEqual(['white', 'airy', 'white', 'airy']);
+    expect(tones).toEqual(['white', 'klein', 'airy', 'white', 'airy']);
     const adjacent = await page.evaluate(() => {
       const bands = Array.from(document.querySelectorAll('main section.band')).filter((b) => !b.parentElement?.closest('section.band'));
       const dark = bands.map((b) => /\bband--(klein|deep-ink)\b/.test(b.className));
@@ -210,7 +213,7 @@ test.describe('YouthWIDE: no Cost of Waiting band, no Imagine band, no hero link
 test.describe('YouthWIDE: the labs tile carries the registered qualifier (item 10)', () => {
   const QUALIFIER = 'In Bangladesh; lab access and seats are confirmed per program.';
 
-  test('the qualifier is the fact’s own detail line, shown as the tile’s note on YouthWIDE and on Local Partners; the 2030 aim stays the only Target tile', async ({ page }) => {
+  test('the qualifier is the fact’s own detail line, shown as the tile’s note on YouthWIDE (WP166-B: Local Partners no longer shows the labs tile); the 2030 aim stays the only Target tile', async ({ page }) => {
     expect(fact('GV-09').stat?.detail).toBe(QUALIFIER);
     await open(page, 'programs/youthwide/');
     const tile = page.locator('#governments .mech-stat', { has: page.locator('[data-fact="GV-09"]') });
@@ -221,24 +224,14 @@ test.describe('YouthWIDE: the labs tile carries the registered qualifier (item 1
     await expect(page.locator('#governments .mech-stat')).toHaveCount(2);
     await expect(page.locator('main .status-tag', { hasText: 'Target' })).toHaveCount(1);
     await open(page, 'partner-with-us/local-partners/');
-    expect(compact(await page.locator('#guide .factstat[data-fact="GV-09"] .stat__note').textContent())).toBe(QUALIFIER);
+    // WP166-B (marketing review R3-38): Local Partners' track-record band shows SC-01 (130,000+ learners) in place of the government-lab count (GV-09), so the labs tile and its note are gone from that page.
+    await expect(page.locator('#guide .factstat[data-fact="GV-09"]')).toHaveCount(0);
   });
 });
 
 // WP163 (owner answers of 3 November 2026): the question is "What Does the JobReady Platform Offer?" (it asked "Is the JobReady Platform Live?"), and the answer names IN-04's capabilities with no live or pre-launch label.
 test.describe('"What Does the JobReady Platform Offer?" (item 5)', () => {
-  const Q = 'What Does the JobReady Platform Offer?';
-  const ANSWER = 'JobReady offers an AI Tutor, AI-driven personalized and adaptive learning paths, automated assessment and feedback, an AI career coach, partner portals, AI chat, the employer marketplace and the gig-work marketplace. Hiring runs through CodersTrust’s placement team.';
-
-  test('Employers and JobReady@Work give the short answer, without the internal tooling; the JSON-LD says what the page says', async ({ page }) => {
-    for (const route of ['partner-with-us/employers/', 'programs/jobready-work/']) {
-      await open(page, route);
-      const answer = await answerOf(page, Q);
-      expect(answer, route).toBe(ANSWER);
-      expect(answer, route).not.toMatch(/marketing automation|customer relationship management|Upwork|Fiverr|employer and gig-work/i);
-      expect((await faqJsonLd(page)).find((q) => q.name === Q)?.text, route).toBe(answer);
-    }
-  });
+  // WP166-B (marketing review R3-33, R2-21): the platform question is cut from Employers and JobReady@Work; the test of its short answer there is gone with it.
 
   test('the JobReady Platform page and the register keep the full list', async ({ page }) => {
     expect(fact('IN-04').text).toContain('partner portals, marketing automation, customer relationship management, AI chat, the employer marketplace and the gig-work marketplace.'); // WP163: no live or pre-launch label
@@ -268,10 +261,11 @@ test.describe('Governments: the contracts column and the glance heading (items 6
     expect(await mainText(page)).not.toContain('Training Figure');
   });
 
-  test('the glance is headed "Results and Contract Scope at a Glance" on Governments; the other pages keep "Results at a Glance"', async ({ page }) => {
+  // WP166-B (marketing review R3-04): Governments' glance is headed "Proof at a Glance", as on Home (it was "Results and Contract Scope at a Glance").
+  test('the glance is headed "Proof at a Glance" on Governments; the other pages keep "Results at a Glance"', async ({ page }) => {
     await open(page, 'partner-with-us/governments/');
-    await expect(page.locator('#glance h2.pg__title')).toHaveText('Results and Contract Scope at a Glance');
-    expect('Results and Contract Scope at a Glance').toBe(titleCase('Results and Contract Scope at a Glance'));
+    await expect(page.locator('#glance h2.pg__title')).toHaveText('Proof at a Glance');
+    expect('Proof at a Glance').toBe(titleCase('Proof at a Glance'));
     for (const route of ['partner-with-us/development-partners/', 'partner-with-us/foundations/']) {
       await open(page, route);
       await expect(page.locator('#glance h2.pg__title'), route).toHaveText('Results at a Glance');
@@ -307,14 +301,15 @@ test.describe('"Reporting and Review" (item 7)', () => {
 test.describe('WSDFM case study: the +41% tile says gain versus the control group (item 8)', () => {
   const LABEL = 'estimated monthly income gain versus the control group, for women in Dhaka offered a place (randomized trial of CodersTrust’s WSDFM program)';
 
-  test('the label comes from RC-01; the tile shows it, and only the case study and the component gallery print it', async ({ page }) => {
+  // WP166-B (marketing review R2-02): YouthWIDE's evidence band shows RC-01's +41% tile beside the +10.3 tile, so YouthWIDE prints the label too (it was the case study and the component gallery only).
+  test('the label comes from RC-01; the tile shows it, and only the case study, YouthWIDE and the component gallery print it', async ({ page }) => {
     expect(fact('RC-01').stat?.label).toBe(LABEL);
     await open(page, 'impact/case-studies/wsdfm-women-freelancers/');
     const tile = page.locator('.hero .cs__stat').nth(1); // WP166-C (R4-05): the second tile (the trial tiles lead)
     await expect(tile.locator('.stat__value')).toHaveText('+41%');
     expect(compact(await tile.locator('.stat__label').textContent())).toBe(LABEL);
     expect(builtPages().filter((p) => p.html.includes('estimated monthly income for women in Dhaka offered a place')).map((p) => p.route)).toEqual([]);
-    expect(builtPages().filter((p) => p.html.includes(LABEL)).map((p) => p.route)).toEqual(['/impact/case-studies/wsdfm-women-freelancers/', '/styleguide/']);
+    expect(builtPages().filter((p) => p.html.includes(LABEL)).map((p) => p.route).sort()).toEqual(['/impact/case-studies/wsdfm-women-freelancers/', '/programs/youthwide/', '/styleguide/']);
   });
 });
 
@@ -644,7 +639,8 @@ test.describe('The Home router’s investor card states the route (item 33)', ()
     await open(page, '');
     expect(compact(await page.locator('#router a.cat[href$="partner-with-us/investors/"] .cat__text').textContent())).toBe(BACK);
     await open(page, 'partner-with-us/');
-    expect(compact(await page.locator('main a.cat[href$="partner-with-us/investors/"] .cat__text').first().textContent())).toBe('For impact investors: JobReady, CodersTrust’s digital learning and earning platform.');
+    // WP166-B (marketing review R3-19): the hub's card says what the investor backs (it said "For impact investors: JobReady, CodersTrust’s digital learning and earning platform."); it still names its audience.
+    expect(compact(await page.locator('main a.cat[href$="partner-with-us/investors/"] .cat__text').first().textContent())).toBe('For impact investors: back the staged rollout of CodersTrust’s digital learning and earning platform.');
     // the old Home wording, without "Back", is gone from every page
     expect(builtPages().filter((p) => /cat__text[^>]*>JobReady, the platform we are building/.test(p.html)).map((p) => p.route)).toEqual([]);
   });

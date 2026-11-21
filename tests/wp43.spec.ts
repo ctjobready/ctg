@@ -151,7 +151,7 @@ test.describe('Investors: the mechanism heading and the platform band (items 8 a
     expect(await texts(page, '#mechanism h3')).toEqual(['Courses, Supported Cohorts and University Programs', 'Jobs, Freelance Work and Gigs', 'Career Paths and Continuing Development', 'A Digital Delivery Platform']);
   });
 
-  test('the one-sentence platform band is gone: the FAQ is followed by the offer; the platform-outcomes sentence closes the evidence block once; the first FAQ answer still links "What JobReady Does" (#features)', async ({ page }) => {
+  test('the one-sentence platform band is gone: the FAQ is followed by the offer; the platform-outcomes sentence closes the evidence block once; the "What JobReady Does" band (#features) keeps its id and heading', async ({ page }) => {
     await open(page, URL);
     await expect(page.locator('#platform')).toHaveCount(0);
     const text = await mainText(page);
@@ -161,10 +161,7 @@ test.describe('Investors: the mechanism heading and the platform band (items 8 a
     expect(compact(await page.locator('#proof-band').textContent())).toContain('Youth-program outcomes are not platform outcomes.');
     const ids = (await bands(page)).map((b) => b.id);
     expect(ids.indexOf('offer')).toBe(ids.indexOf('faq') + 1);
-    // the link target of the first FAQ answer (Q11-investor) is the "What JobReady Does" band, which keeps its id and its heading
-    const link = page.locator('#faq a[href="#features"]');
-    await expect(link).toHaveCount(1);
-    await expect(link).toHaveText('What JobReady Does');
+    // WP166-B (marketing review R3-33): the first FAQ answer (Q11-investor, "See What JobReady Does above ...") and its link to #features are gone with the platform question; the assertions on that link are gone with it.
     await expect(page.locator('section#features h2')).toHaveText('What JobReady Does');
   });
 
@@ -203,7 +200,8 @@ test.describe('Universities: one evidence strip, not two (item 3)', () => {
     expect(count(text, '78.2%'), 'the survey result is not restated').toBe(0);
     await expect(page.locator('main .eyebrow', { hasText: 'The Evidence' })).toHaveCount(0);
     // the first band ends in the strip that links the evidence
-    await expect(page.locator('#offer-evidence h2')).toHaveText('The National University Partnership');
+    // WP166-B (marketing review R3-13): the band's heading states the claim (it was "The National University Partnership").
+    await expect(page.locator('#offer-evidence h2')).toHaveText('Official Training Partner of the World’s Second-Largest University by Enrollment');
     expect(compact(await page.locator('#offer-evidence .pe__more-label').textContent())).toBe('Broader Evidence from Our Youth Programs');
     expect(await texts(page, '#offer-evidence nav a')).toEqual(['The Randomized Trial', 'Impact Survey 2026', 'Case Studies']);
     expect((await hrefs(page, '#offer-evidence nav a')).map(sitePath)).toEqual(['/impact/independent-evaluation/', '/impact/outcomes-2026/', '/impact/case-studies/']);

@@ -33,9 +33,13 @@ test('Polish 2: TalentLEAP Q14 states the inclusions once', () => {
   expect(main('our-model/talentleap/index.html')).not.toContain('supported CodersTrust cohorts add mentoring');
 });
 
-test('Polish 3: the trial sentence gives the income result and leaves +10.3 to the tile', () => {
+// WP166-B (marketing review R2-02, owner approval of 21 November 2026): the income result is a tile of its own now (RC-01's +41%, beside RC-02's +10.3), so the sentence names the trial and introduces the two results
+// (it said "..., women offered a place had an estimated 41% higher monthly income than the control group, alongside the employment effect below."); it still restates neither figure.
+test('Polish 3: the trial sentence introduces the two results and leaves +10.3 and +41% to their tiles', () => {
   const text = main('programs/youthwide/index.html');
-  expect(text).toContain('women offered a place had an estimated 41% higher monthly income than the control group, alongside the employment effect below.');
+  expect(text).toContain('A randomized trial of CodersTrust’s WSDFM program by the BRAC Institute of Governance and Development (BIGD). Two results for women offered a place: +10.3 percentage points');
+  expect(text).toContain('+41% estimated monthly income gain versus the control group');
+  expect(text).not.toContain('had an estimated 41% higher monthly income');
   expect(text).not.toContain('were 10.3 percentage points more likely to be employed and had an estimated 41%');
 });
 

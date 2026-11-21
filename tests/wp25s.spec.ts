@@ -31,7 +31,8 @@ test.describe('direct answers under the H1', () => {
     ['programs/jobready-campus/', 'Run mentored, certification-focused training in your campus labs alongside academic studies.'],
     ['programs/jobready-work/', 'JobReady@Work builds custom AI-ready training for your team'],
     ['programs/superkids/', 'SuperKids@School brings block coding, robotics and graphic design for kids into schools.'], // WP161 (WP160-B): the lead names SuperKids@School and the family courses
-    ['our-model/', 'One integrated path: assessment, certification-focused training'],
+    // WP166-B (marketing review R2-31): the lead no longer restates the H1 ("One integrated path: assessment, certification-focused training ..."); it opens with the path's steps.
+    ['our-model/', 'Assessment, certification-focused training, three months of milestone-based mentoring and placement support'],
   ] as const) {
     test(`${route} opens with a direct answer under the H1`, async ({ page }) => {
       await open(page, route);
@@ -41,7 +42,8 @@ test.describe('direct answers under the H1', () => {
 
   test('Our Model scopes the path to every supported cohort', async ({ page }) => {
     await open(page, 'our-model/');
-    expect(compact(await heroLead(page))).toContain('agreed for each supported cohort');
+    // WP166-B (marketing review R2-31): the lead ends "..., with monthly reports on progress toward paid work for every supported cohort." (it ended "..., agreed for each supported cohort.").
+    expect(compact(await heroLead(page))).toContain('with monthly reports on progress toward paid work for every supported cohort.');
   });
 });
 
@@ -133,9 +135,13 @@ test.describe('Programs', () => {
     const order = await page.evaluate(() => Array.from(document.querySelectorAll('main section[id]')).map((s) => s.id));
     expect(order.indexOf('guide'), 'guide band').toBeGreaterThan(-1);
     const titles = await page.locator('main h2').allInnerTexts();
-    expect(titles.findIndex((t) => /Universities Partner with CodersTrust/.test(t))).toBeLessThan(titles.findIndex((t) => /What a Campus Cohort Can Produce/.test(t)));
-    // WP39 (cycle-16 review): the features band is three short cards; the second says tracks are "built around the skills employers say they cannot find"
-    expect(text).toContain('built around the skills employers say they cannot find');
+    // WP166-B (marketing review R2-16): the Track Record heading is "Working with National University, UPEACE and CCNY" (it was "Universities Partner with CodersTrust"); both headings must be found, so the order is a real check.
+    const guideAt = titles.findIndex((t) => /Working with National University, UPEACE and CCNY/.test(t));
+    expect(guideAt, 'the Track Record heading').toBeGreaterThan(-1);
+    expect(guideAt).toBeLessThan(titles.findIndex((t) => /What a Campus Cohort Can Produce/.test(t)));
+    // WP39 (cycle-16 review): the features band was three short cards; the second said tracks are "built around the skills employers say they cannot find". WP166-B (marketing review R2-14): that band ("Built Around What Institutions
+    // Ask For") is gone, and the assertion on its card with it; its one new idea is in How It Works' "What" card, "on tracks set from employer demand".
+    expect(text).toContain('Preparation for industry-recognized certifications on tracks set from employer demand');
     expect(text).not.toContain('training matches what employers say');
   });
 
@@ -234,19 +240,22 @@ test.describe('Partner with Us', () => {
     await open(page, 'partner-with-us/employers/');
     const dd = page.locator('#due-diligence');
     const text = compact(await dd.innerText());
-    expect(text).toContain('Needs Assessment First');
-    expect(text).toContain('Progress Evaluation');
+    // WP166-B (marketing review R3-32): the "Needs Assessment First" and "Progress Evaluation" rows are gone (they repeated How It Works), and the assertions on them with them; the block is the
+    // Contracting Entities row and the "Ask About Due Diligence" link, and it still speaks of no funder or cohort.
+    expect(text).toContain('Contracting Entities');
+    expect(text).toContain('Ask About Due Diligence');
     expect(text).not.toMatch(/tracers|funder|Safeguarding Agreed per Program|enrollment/i);
-    // WP57 (cycle-29 review, GPT-6.1 Sol G7): three rows; the "Independent Evaluation Welcome" row is gone (tests/wp57.spec.ts)
-    await expect(dd.locator('.ddv__item')).toHaveCount(3);
+    // WP57 (cycle-29 review, GPT-6.1 Sol G7): the "Independent Evaluation Welcome" row is gone (tests/wp57.spec.ts). WP166-B: one row (it was three).
+    await expect(dd.locator('.ddv__item')).toHaveCount(1);
   });
 
   test('Universities and Local Partners do not speak of a funder in their due-diligence item (WP34: one sentence for every audience page, no funder or contracting-party wording)', async ({ page }) => {
     for (const route of ['partner-with-us/universities/', 'partner-with-us/local-partners/']) {
       await open(page, route);
       const text = compact(await page.locator('#due-diligence').innerText());
-      expect(text, route).toContain('The contracting entity, safeguarding arrangements and reporting plan are confirmed for your program.');
-      expect(text, route).not.toMatch(/funder/i);
+      // WP166-B (marketing review R3-21): the brief band's line names the contracting entities, then safeguarding and reporting (it was "The contracting entity, safeguarding arrangements and reporting plan are confirmed for your program.").
+      expect(text, route).toContain('CodersTrust contracts through CT USA, Inc. in the United States or CodersTrust Bangladesh Ltd. in Bangladesh, depending on the program’s country and your requirements. Safeguarding and reporting are specified for each program.');
+      expect(text, route).not.toMatch(/funder|contracting party/i);
     }
   });
 
@@ -292,7 +301,8 @@ test.describe('Partner with Us', () => {
     // WP30c: the "Reporting and Recognition" paragraph is gone (the features rows state reporting once); the monitoring row stays scope-aware
     expect(text).not.toContain('Funders receive job and income outcomes');
     // WP49 (cycle-24 review): the third card no longer lists the contracting entity and due-diligence documents; the Due Diligence band states them (tests/wp49.spec.ts)
-    expect(text).toContain('The contracting entity, safeguarding arrangements and reporting plan are confirmed for your program.');
+    // WP166-B (marketing review R3-21): the Due Diligence line names the contracting entities (it was "The contracting entity, safeguarding arrangements and reporting plan are confirmed for your program.").
+    expect(text).toContain('CodersTrust contracts through CT USA, Inc. in the United States or CodersTrust Bangladesh Ltd. in Bangladesh, depending on the program’s country and your requirements. Safeguarding and reporting are specified for each program.');
     // WP40 (cycle-17 review): the two links under the comparison are one for each route, named for what they open (tests/wp40.spec.ts)
     await expect(page.locator('#mechanism').getByRole('link', { name: 'Explore YouthWIDE Delivery' })).toHaveAttribute('href', /\/programs\/youthwide\/$/);
     await expect(page.locator('#mechanism').getByRole('link', { name: 'Explore JobReady’s Capabilities' })).toHaveAttribute('href', /\/our-model\/jobready-platform\/$/);
@@ -337,7 +347,7 @@ test.describe('Our Model and Investors', () => {
     // WP49 (cycle-24 review): the shared "What Happens When Funding Ends?" answer no longer carries that TalentLEAP clause (tests/wp49.spec.ts); the page's own worked example states the levels
     expect(text).not.toContain('TalentLEAP is designed to organize skills into career paths with progressive levels as further levels are published');
     expect(text).not.toContain('TalentLEAP organizes skills into career paths with progressive levels. In this example, Level 1 is Competent; Proficient and Expert are the planned next levels.'); // WP154: the example band has no lead; the opening says the planned levels once
-    expect(text).toContain('Its levels run from Competent to Proficient and Expert.'); // WP163: no level is labelled planned (it said "The first published TalentLEAP level is Competent; Proficient and Expert levels are planned.")
+    expect(text).toContain('Levels run from Competent to Proficient and Expert, and three months of milestone-based mentoring follow the course.'); // WP166-B (marketing review R2-34): the opening's level sentence (it was "Its levels run from Competent to Proficient and Expert."). WP163: no level is labelled planned (it said "The first published TalentLEAP level is Competent; Proficient and Expert levels are planned.")
     // WP80 (item 1): the FAQ answer now opens "Yes, for CodersTrust’s WSDFM program." and names the evaluator in its second sentence.
     expect(text).toContain('The BRAC Institute of Governance and Development (BIGD) at BRAC University ran a randomized controlled trial');
   });
@@ -352,7 +362,8 @@ test.describe('Our Model and Investors', () => {
     }
     await open(page, 'partner-with-us/governments/');
     const gov = compact(await everything(page));
-    expect(gov).toContain('Public procurement follows the agency’s own timeline, so the first step is a briefing for your ministry.');
+    // WP166-B (marketing review R3-26): the answer opens with the labs the agency already runs, then the procurement timeline (it was "Public procurement follows the agency’s own timeline, so the first step is a briefing for your ministry.").
+    expect(gov).toContain('Delivery uses government digital labs you already run. Timing follows your agency’s own procurement timeline, so the first step is a briefing for your ministry.');
     expect(gov).not.toMatch(/agreement typically takes about three weeks|typically in training 6–8 weeks after signing/);
   });
 

@@ -201,30 +201,21 @@ test.describe('G1: the Investors and JobReady Platform "Contracted Scope" tiles 
     expect(gap.noteTop - gap.labelBottom, 'and directly under it').toBeLessThanOrEqual(24);
   });
 
-  test('JobReady Platform: the third tile ("Contracted Scope") carries the note under its figure; the other two tiles carry no note', async ({ page }) => {
+  // WP166-B (marketing review R2-39, owner approval of 21 November 2026): the government contract-scope tile ("Contracted Scope", SC-06, with CONTRACT_TOTAL_NOTE_SHORT under it) is off this platform page (the Governments page keeps it),
+  // and the assertions on that tile and its note are gone with it; the two tiles left still carry no note.
+  test('JobReady Platform: the two record tiles carry no note, and the contract-scope tile is gone', async ({ page }) => {
     await open(page, JOBREADY);
     const tiles = page.locator('#why .jr__whystat');
-    await expect(tiles).toHaveCount(3);
-    expect(await texts(page, '#why .jr__whyh')).toEqual(['Delivered Since 2014', 'Being Onboarded', 'Contracted Scope']);
-    await expect(page.locator('#why .jr__whynote')).toHaveCount(1);
-    const third = tiles.nth(2);
-    expect(compact(await third.locator('.jr__whynote').textContent())).toBe(CONTRACT_TOTAL_NOTE_SHORT.text);
-    expect(await third.locator('.jr__whynote').getAttribute('data-fact')).toBe('GV-12 GV-01 GV-11');
-    await expect(third.locator('.factstat')).toHaveAttribute('data-fact', 'SC-06');
-    await expect(third.locator('.stat__value')).toHaveText('30,000+');
-    const gap = await page.evaluate(() => {
-      const third = document.querySelectorAll('#why .jr__whystat')[2];
-      const label = third.querySelector('.stat__label')!.getBoundingClientRect();
-      const note = third.querySelector('.jr__whynote')!.getBoundingClientRect();
-      return { noteTop: note.top, labelBottom: label.bottom };
-    });
-    expect(gap.noteTop).toBeGreaterThanOrEqual(gap.labelBottom);
-    expect(gap.noteTop - gap.labelBottom).toBeLessThanOrEqual(24);
+    await expect(tiles).toHaveCount(2);
+    expect(await texts(page, '#why .jr__whyh')).toEqual(['Delivered Since 2014', 'Being Onboarded']);
+    await expect(page.locator('#why .jr__whynote')).toHaveCount(0);
+    await expect(page.locator('#why [data-fact~="SC-06"]')).toHaveCount(0);
   });
 
   test('wherever a built page shows the six-contract total (a SC-06 or GV-12 tile), it also says it is contract scope, not a count of completers, and names Her Power’s 25,125 and the 2,400 trained directly', () => {
     const TOTAL_PAGES = sitePages().filter((p) => p.route !== '/styleguide/' && /data-fact="[^"]*\b(?:SC-06|GV-12)\b[^"]*"/.test(p.html));
-    expect(TOTAL_PAGES.map((p) => p.route)).toEqual(expect.arrayContaining(['/', '/impact/', '/partner-with-us/governments/', '/partner-with-us/investors/', '/our-model/jobready-platform/']));
+    // WP166-B (marketing review R2-39): the JobReady Platform no longer shows the six-contract total, so it left this list.
+    expect(TOTAL_PAGES.map((p) => p.route)).toEqual(expect.arrayContaining(['/', '/impact/', '/partner-with-us/governments/', '/partner-with-us/investors/']));
     for (const p of TOTAL_PAGES) {
       const text = mainOf(p.html);
       // WP60 (cycle-32 review, GPT-6.1 Sol G1): Home's slide 2 says the clause in plain words, "... work scoped for 30,000+ people, not a count of completers."; every other page keeps the register's "contract scope, not a count of completers"
@@ -234,13 +225,15 @@ test.describe('G1: the Investors and JobReady Platform "Contracted Scope" tiles 
     }
   });
 
-  test('the two tiles fit at 1280 and 390: the note stays inside its column and the page does not scroll sideways', async ({ page }) => {
+  // WP166-B (marketing review R2-39): the JobReady Platform's contract-scope tile and its note are gone, so only Investors' note is measured; the platform page is still checked for sideways scrolling.
+  test('the tiles fit at 1280 and 390: the Investors note stays inside its column and neither page scrolls sideways', async ({ page }) => {
     for (const vp of [DESKTOP, MOBILE]) {
       await page.setViewportSize(vp);
-      for (const [route, selector] of [[INVESTORS, '#reach .ir__note'], [JOBREADY, '#why .jr__whynote']] as const) {
+      for (const [route, selector] of [[INVESTORS, '#reach .ir__note'], [JOBREADY, null]] as const) {
         await open(page, route);
         await scrollThrough(page);
         expect(await noOverflow(page), `${route} at ${vp.width}px`).toBe(true);
+        if (!selector) continue;
         const right = await page.locator(selector).evaluate((el) => el.getBoundingClientRect().right);
         expect(right, `${route} note at ${vp.width}px`).toBeLessThanOrEqual(vp.width);
       }
@@ -350,9 +343,11 @@ test.describe('G6: the five audience pages end their FAQs without the standalone
       expect(compact(await page.locator('main').textContent())).not.toContain('Safeguarding, Governance and Due Diligence');
       const block = page.locator('#due-diligence');
       await expect(block).toHaveCount(1);
-      await expect(block.locator('a')).toHaveCount(1);
-      expect(compact(await block.locator('a').textContent())).toBe('Governance and Accountability');
-      expect(await block.locator('a').getAttribute('href')).toMatch(/\/about\/governance\/$/);
+      // WP166-B (marketing review R3-21): the band's governance link is followed by the "Ask About Due Diligence" inquiry link (it had the one link).
+      await expect(block.locator('a')).toHaveCount(2);
+      expect(compact(await block.locator('a').first().textContent())).toBe('Governance and Accountability');
+      expect(await block.locator('a').first().getAttribute('href')).toMatch(/\/about\/governance\/$/);
+      expect(compact(await block.locator('a').nth(1).textContent())).toBe('Ask About Due Diligence');
       // the band is still below the FAQs, as the review described it
       const order = await page.evaluate(() => Array.from(document.querySelectorAll('main section[id]')).map((s) => s.id));
       expect(order.indexOf('due-diligence'), `${route} bands: ${order.join(', ')}`).toBeGreaterThan(order.indexOf('faq'));

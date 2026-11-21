@@ -90,14 +90,18 @@ test.describe('Investors: the delivered figures lead the track-record band (item
     await expect(page.locator('section#reach')).toHaveCount(1);
     await expect(page.locator('#reach .eyebrow')).toHaveText('Beyond Delivered Reach');
     await expect(page.locator('#reach h2')).toHaveText('Contracts and Recognition');
-    for (const heading of ['Contracts and Recognition', 'Beyond Delivered Reach', 'Since 2014', 'Contracted Scope']) expect(heading, heading).toBe(titleCase(heading));
-    expect(await texts(page, '#reach h3')).toEqual(['Contracted Scope']);
+    for (const heading of ['Contracts and Recognition', 'Beyond Delivered Reach', 'Since 2014', 'Contracted Scope', 'The National University Partnership']) expect(heading, heading).toBe(titleCase(heading));
+    // WP166-B (marketing review R3-16): the National University partnership is the band's first group, under its own subheading (the band's subheadings were ['Contracted Scope']).
+    expect(await texts(page, '#reach h3')).toEqual(['The National University Partnership', 'Contracted Scope']);
     const tile = page.locator('#reach .ir__tile');
     await expect(tile).toHaveCount(1);
     await expect(tile).toContainText('30,000+');
     await expect(tile.locator('[data-evidence="Contract Scope"]')).toHaveCount(1);
     await expect(tile.locator('[data-status]')).toHaveCount(0);
-    expect(compact(await page.locator('#reach p[data-fact="SC-04"]').textContent())).toMatch(/^Not counted in the delivered reach: 1\.5M\+ National University learners/); // WP155 (Polish 2): was "Separately, and not counted in the delivered reach: ..."
+    // WP166-B (marketing review R3-16): the paragraph is in SC-04's own words under its subheading, and SC-04's bracketed qualifier says the learners are not CodersTrust-trained; it opened "Not counted in the delivered reach: 1.5M+ ..."
+    // (WP155, Polish 2: before that "Separately, and not counted in the delivered reach: ...").
+    expect(compact(await page.locator('#reach p[data-fact="SC-04"]').textContent())).toMatch(/^1\.5M\+ National University learners being onboarded \(the university’s own learners, not learners trained by CodersTrust\)\. /);
+    await expect(page.locator('#reach .ir__group', { has: page.locator('h3', { hasText: 'The National University Partnership' }) }).locator('p[data-fact="SC-04"]')).toHaveCount(1);
     await expect(page.locator('#reach .ir__badges li')).toHaveCount(1); // WP130: the AWS badge is gone (the partner paragraph states it); the HolonIQ item stays
     // the band no longer calls itself reach to date, and nothing links to a heading that is gone
     expect(await mainText(page)).not.toContain('Reach to Date');
@@ -220,7 +224,8 @@ test.describe('Development Partners, Governments and SuperKids: the approach in 
   test('Development Partners keeps the YouthWIDE explanation after the statement', async ({ page }) => {
     await open(page, 'partner-with-us/development-partners/');
     const lead = page.locator('#mechanism .sh__lead');
-    await expect(lead).toHaveText('YouthWIDE is the program through which funders deploy the CodersTrust model in a country; it builds on results from earlier programs in Bangladesh and Kosovo.');
+    // WP166-B (marketing review R3-24): the lead closes with the page's one delivery-model sentence (it was the YouthWIDE sentence alone; the delivery model led the first "What Your Portfolio Gets" card).
+    await expect(lead).toHaveText('YouthWIDE is the program through which funders deploy the CodersTrust model in a country; it builds on results from earlier programs in Bangladesh and Kosovo. Training follows an AI-supported flipped classroom: all lectures are pre-recorded and an AI Tutor supports every learner, so mentors’ time goes to Q&A and to handholding beyond what the AI Tutor can provide.');
     expect(await topOf(page, '#mechanism .pos')).toBeLessThan(await topOf(page, '#mechanism .sh__lead'));
   });
 

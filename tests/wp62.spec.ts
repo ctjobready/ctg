@@ -452,8 +452,9 @@ test.describe('Item 10 (Gemini): Governments’ "What Your Agency Gets"', () => 
   test('the first card ends "... mentoring and placement support toward local, remote and global work."; the earlier wording is on no built page', async ({ page }) => {
     await open(page, GOVERNMENTS);
     // WP163 (owner answers of 3 November 2026): the card then states the delivery model, the page's one statement of it (DELIVERY_MODEL), and carries IN-04 for the AI Tutor.
-    expect(await texts(page, '#features li.card:nth-child(1) p')).toEqual(['Certification tracks chosen from employer demand, then three months of mentoring and placement support toward local, remote and global work. Training follows an AI-supported flipped classroom: all lectures are pre-recorded and an AI Tutor supports every learner, so mentors’ time goes to Q&A and to handholding beyond what the AI Tutor can provide.']); // WP161-A (A-26): three months of mentoring
-    expect(await page.locator('#features li.card:nth-child(1)').getAttribute('data-fact')).toBe('PD-10 PD-01 IN-04');
+    // WP166-B (marketing review R3-05, R3-24): the card opens with the track menu (PD-10) and still ends "... toward local, remote and global work."; the delivery model is in How It Works (it read "Certification tracks chosen from employer demand, then three months of mentoring and placement support toward local, remote and global work. Training follows an AI-supported flipped classroom: ...", facts PD-10 PD-01 IN-04)
+    expect(await texts(page, '#features li.card:nth-child(1) p')).toEqual(['Tracks are set per country from employer demand, from a menu that includes digital marketing, graphic design, video editing, web design and development, digital accounting, Python programming and data analysis. Three months of mentoring and placement support follow, toward local, remote and global work.']); // WP161-A (A-26): three months of mentoring
+    expect(await page.locator('#features li.card:nth-child(1)').getAttribute('data-fact')).toBe('PD-10 PD-01');
     expect(pagesWith('point completers toward paid work')).toEqual([]);
   });
 });

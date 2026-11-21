@@ -86,15 +86,19 @@ test.describe('Investors: the definition band no longer calls JobReady "AI-nativ
   // WP53 (owner decision 2026-10-16): "a digital learning and earning platform" (it said "education and employment"; tests/wp53.spec.ts)
   test('the platform sentence reads "a digital learning and earning platform", and no page, JSON-LD block or llms.txt still says AI-native', async ({ page }) => {
     await open(page, 'partner-with-us/investors/');
-    expect(await texts(page, '#definition .def__text')).toContain('JobReady is CodersTrust’s digital learning and earning platform for emerging markets.'); // WP163: no "in development" wording (it said "CodersTrust is building JobReady, ...")
-    expect(await page.locator('#definition .def').getAttribute('data-fact')).toBe('ID-01 IN-04');
+    // WP166-B (marketing review R3-09): the platform sentence opens the hero now (it was the definition band's second paragraph), so the band is ID-01 alone (it was "ID-01 IN-04")
+    expect(compact(await page.locator('main .hero .hero__lead').first().textContent())).toContain('JobReady is CodersTrust’s digital learning and earning platform for emerging markets.'); // WP163: no "in development" wording (it said "CodersTrust is building JobReady, ...")
+    expect(await texts(page, '#definition .def__text')).not.toContain('JobReady is CodersTrust’s digital learning and earning platform for emerging markets.');
+    expect(await page.locator('#definition .def').getAttribute('data-fact')).toBe('ID-01');
     expect(await mainText(page)).not.toMatch(/AI-native/i);
     const stale = builtPages().filter((p) => /AI[- ]native/i.test(p.html)).map((p) => p.route);
     expect(stale, 'pages that still say "AI-native"').toEqual([]);
     // WP163 (owner answers of 3 November 2026): the live / pre-launch status lines this asserted were removed by this package (no capability carries a live or pre-launch label); the page names the capabilities instead.
     const text = await mainText(page);
     expect(text).not.toMatch(/Live today|are live|pre-launch/i);
-    expect(text).toContain('JobReady offers an AI Tutor');
+    // WP166-B (marketing review R3-09): the hero's second sentence, "JobReady offers an AI Tutor, ...", is gone (the hero names the platform and the ask); "What JobReady Does" names the capabilities
+    expect(text).not.toContain('JobReady offers an AI Tutor');
+    expect(compact(await page.locator('#features').textContent())).toContain('Partner portals give institutions a digital delivery platform, with automated assessment and feedback and AI chat across the platform.');
   });
 });
 
@@ -117,7 +121,7 @@ test.describe('Development Partners and Foundations: the final call to action do
 
   test('Governments states its procurement note in the steps band ("Briefing", not the grant timing) and the FAQ; WP52 (cycle-27 review) removed the call-to-action band’s own copy of it; the pages whose urgency line is not the grant timing are unaffected', async ({ page }) => {
     await open(page, 'partner-with-us/governments/');
-    expect(await texts(page, '#cta .cta-band__notes li')).toEqual([]);
+    expect(await texts(page, '#cta .cta-band__notes li')).toEqual(['A briefing is a conversation, not a commitment.']); // WP166-B (marketing review R3-39): the band's one note is the reassurance line (it had none), not the procurement note
     expect(compact(await page.locator('#cta').textContent())).not.toContain('Public procurement follows the agency’s own timeline');
     await open(page, 'partner-with-us/universities/');
     expect(await texts(page, '#cta .cta-band__notes li')).toContain('Timing follows your academic calendar.' /* WP134 */);
@@ -144,8 +148,9 @@ test.describe('NU diploma course pages: "What You Will Work On" is gone, "What Y
       const bands = await page.evaluate(() =>
         Array.from(document.querySelectorAll('main > section.band, main section.band')).map((s) => ({ id: s.id, tone: /band--(white|airy|ice|klein|deep-ink)/.exec(s.className)?.[1] ?? '' })),
       );
-      expect(bands.map((b) => b.id)).toEqual(['before-you-apply', 'who', 'curriculum', 'also-consider', 'faq', 'cta', '']);
-      expect(bands.map((b) => b.tone)).toEqual(['white', 'white', 'airy', 'white', 'ice', 'airy', 'white']);
+      // WP166-B (marketing review R2): "What You Study" comes before "Before You Apply" (the order was before-you-apply, who, curriculum, ...; the tones white, white, airy, ...)
+      expect(bands.map((b) => b.id)).toEqual(['who', 'curriculum', 'before-you-apply', 'also-consider', 'faq', 'cta', '']);
+      expect(bands.map((b) => b.tone)).toEqual(['white', 'airy', 'white', 'white', 'ice', 'airy', 'white']);
       for (let i = 1; i < bands.length; i++) expect(['klein', 'deep-ink'].includes(bands[i].tone) && ['klein', 'deep-ink'].includes(bands[i - 1].tone), `${bands[i - 1].id} then ${bands[i].id}`).toBe(false);
       // nothing links to the removed anchor
       expect(await page.locator('a[href$="#why"], a[href$="#why-h"]').count()).toBe(0);
@@ -201,16 +206,14 @@ test.describe('About: "On This Page" is back under the hero, one link for each o
 });
 
 test.describe('JobReady Platform: the record band is "The Record Behind JobReady" (item 8)', () => {
-  test('the H2 and the jump link carry the new heading, the jump link still opens #why, and the old heading is gone from the site', async ({ page }) => {
+  test('the H2 carries the new heading (WP166-B: no jump link, the page has no "On This Page" box), and the old heading is gone from the site', async ({ page }) => {
     await open(page, 'our-model/jobready-platform/');
     await expect(page.locator('#why h2')).toHaveText('The Record Behind JobReady');
     expect(titleCase('The Record Behind JobReady')).toBe('The Record Behind JobReady');
-    const toc = page.locator('.lf-toc nav a', { hasText: 'The Record Behind JobReady' });
-    await expect(toc).toHaveCount(1);
-    expect(await toc.getAttribute('href')).toMatch(/#why$/);
-    expect(await texts(page, '.lf-toc nav a')).toEqual(['Four Jobs, One Platform', 'Platform Capabilities', 'The Record Behind JobReady', 'Questions About the Platform', 'Talk to Us About JobReady']); // WP141: the list ends with the closing heading. WP163: "Rollout Status" is "Platform Capabilities" and "Planned Adaptive Learning" is gone
-    // the band still shows the three labelled groups (delivered, in the pipeline, contracted scope)
-    expect(await texts(page, '#why .jr__whyh')).toEqual(['Delivered Since 2014', 'Being Onboarded', 'Contracted Scope']);
+    // WP166-B (marketing review R2-06): the page has no "On This Page" box, so there is no jump link; the jump-link assertions are gone with it.
+    await expect(page.locator('.lf-toc')).toHaveCount(0);
+    // the band shows the labelled groups (delivered, in the pipeline); WP166-B (marketing review R2-39): the contracted-scope group is gone (it was the third)
+    expect(await texts(page, '#why .jr__whyh')).toEqual(['Delivered Since 2014', 'Being Onboarded']);
     expect(await mainText(page)).not.toContain('Why Institutions Choose JobReady');
     expect(builtPages().filter((p) => p.html.includes('Why Institutions Choose JobReady')).map((p) => p.route)).toEqual([]);
   });
@@ -223,7 +226,7 @@ test.describe('The contract-scope note says who trained whom, and Home’s slide
   // WP51 (cycle-26 review, Kimi m2): the Governments tile kept the note's first sentence and pointed to its contracts table; the Impact tile reads the register note.
   // WP57 (cycle-29 review, Grok R2 with Gemini GM1): R2 restores the note's WP35 wording on the Governments tile and Home slide 2 ("The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained; CodersTrust trained 2,500 directly)."), which WP46
   // had retired so the 25,125 is not read as CodersTrust's own count; the two pages that print it say "Her Power’s national program", and the Impact tile keeps the register's note, which adds that CodersTrust trained 2,500 women directly.
-  test('the register’s GV-12 note and the Impact tile read the same note; the Governments tile and Home slide 2 say the total includes Her Power’s national program, which trained 25,125 women (CodersTrust trained 2,400 directly), and (WP59, GPT-6.1 Sol G1) the Investors and JobReady Platform tiles say it too and no other page does', async ({ page }) => {
+  test('the register’s GV-12 note and the Impact tile read the same note; the Governments tile and Home slide 2 say the total includes Her Power’s national program, which trained 25,125 women (CodersTrust trained 2,400 directly), and (WP59, GPT-6.1 Sol G1) the Investors tile says it too (WP166-B: the JobReady Platform tile is gone) and no other page does', async ({ page }) => {
     expect(fact('GV-12').stat?.glance?.note).toBe(NOTE);
     // the figures in the note are the register’s own (GV-01 and GV-13), and the register’s GV-12 text keeps the National University sentence
     expect(fact('GV-01').text).toContain('a national program that trained 25,125 women');
@@ -241,7 +244,8 @@ test.describe('The contract-scope note says who trained whom, and Home’s slide
     expect(lead).toBe('Six government contracts with training and curriculum work scoped for 30,000+ people, not a count of completers. Her Power, one of the six, trained 25,125 women nationally, its full target; CodersTrust trained 2,400 directly. As the official training partner of Bangladesh’s National University for digital career skills and credentials, CodersTrust is onboarding 1.5M+ of the university’s own learners, who are not learners trained by CodersTrust.');
     expect(NOTE.startsWith('The figure is contract scope, not a count of completers.')).toBe(true);
     expect(await slide(page, 2).locator('.hs__lead').getAttribute('data-fact')).toBe('GV-12 GV-01 GV-11 SC-04');
-    expect(builtPages().filter((p) => p.html.includes('national program, which trained 25,125 women (CodersTrust trained 2,400 directly)')).map((p) => p.route).sort()).toEqual(['/impact/', '/our-model/jobready-platform/', '/partner-with-us/governments/', '/partner-with-us/investors/']);
+    // WP166-B (marketing review R2-39): the JobReady Platform no longer shows the contract-scope tile, so it is off the list (it was the second route)
+    expect(builtPages().filter((p) => p.html.includes('national program, which trained 25,125 women (CodersTrust trained 2,400 directly)')).map((p) => p.route).sort()).toEqual(['/impact/', '/partner-with-us/governments/', '/partner-with-us/investors/']);
   });
 });
 
@@ -282,7 +286,10 @@ test.describe('Foundations: "What Happens Next" has the four steps, and the part
   test('JobReady Platform: its closing line also says "discovery session" where it said "introductory call"', async ({ page }) => {
     await open(page, 'our-model/jobready-platform/');
     const aside = compact(await page.locator('.jr__next').textContent());
-    expect(aside).toContain('A discovery session covers how JobReady fits your program, and a platform grant supports JobReady’s platform infrastructure. In your inquiry, include two suitable times.'); // WP135 (was "...; details are shared in the discovery session."). WP163: no "remaining modules" (no capability is labelled pending)
+    // WP135 (was "...; details are shared in the discovery session."). WP163: no "remaining modules" (no capability is labelled pending)
+    // WP166-B (marketing review R2-40): the line no longer mixes the grant audience in (it read "A discovery session covers how JobReady fits your program, and a platform grant supports JobReady’s platform infrastructure. In your inquiry, include two suitable times."); the grant has its own link
+    expect(aside).toContain('A discovery session covers how JobReady fits your program. In your inquiry, include two suitable times.');
+    expect(aside).toContain('Funding the Platform? Discuss a Platform Grant');
     expect(aside).not.toContain('introductory call');
   });
 });
@@ -392,23 +399,25 @@ test.describe('The WSDFM card says its 71% is program records, not trial data (i
 });
 
 test.describe('Universities and Employers: no card restates the 72% tile (item 24)', () => {
-  test('Employers: the first card says only "AI skills are the hardest to find (ManpowerGroup, 2026)."; Universities: two pains remain, side by side, and the 72% tile and its footnote stay', async ({ page }) => {
+  test('Employers: the first card says only "AI skills are the hardest to find (ManpowerGroup, 2026)."; Universities: one pain remains beside the 19M+ tile (WP166-B; it was two pains, side by side), and the 72% tile and its footnote stay', async ({ page }) => {
     await open(page, 'partner-with-us/employers/');
     const first = page.locator('#problem .gp__pains li').first();
     expect(compact(await first.locator('.gp__q').textContent())).toBe('You Struggle to Find the Digital Talent You Need');
     expect(compact(await first.locator('.gp__a').textContent())).toBe('AI skills are the hardest to find (ManpowerGroup, 2026).');
     await expect(page.locator('#problem [data-fact="PX-05"]')).toContainText('72%');
     await open(page, 'partner-with-us/universities/');
-    expect(await texts(page, '#problem .gp__pains .gp__q')).toEqual(['Degree Holders Struggle to Find Work', 'Placement Results Are Hard to Publish']);
+    // WP166-B (marketing review R3-40): the degree-holders pain is the 19M+ tile (PX-02) now, so one pain remains (it was two: "Degree Holders Struggle to Find Work" and this one)
+    expect(await texts(page, '#problem .gp__pains .gp__q')).toEqual(['Placement Results Are Hard to Publish']);
+    await expect(page.locator('#problem [data-fact="PX-02"]')).toContainText('19M+');
     expect(await mainText(page)).not.toContain('Employers report difficulty finding the talent they need.');
     await expect(page.locator('#problem [data-fact="PX-05"]')).toContainText('72%');
-    // the two cards fill the row: no empty third column on a desktop, one column on a phone
+    // the card fills the row: no empty column on a desktop, one column on a phone (WP166-B: one card, it was two)
     await page.setViewportSize(DESKTOP);
     await open(page, 'partner-with-us/universities/');
     const boxes = await page.locator('#problem .gp__pains li').evaluateAll((els) => els.map((e) => e.getBoundingClientRect()));
     const list = await page.locator('#problem .gp__pains').evaluate((e) => e.getBoundingClientRect());
-    expect(boxes).toHaveLength(2);
-    expect(boxes[1].right, 'the second card ends at the right edge of the list').toBeGreaterThan(list.right - 4);
+    expect(boxes).toHaveLength(1);
+    expect(boxes[0].right, 'the card ends at the right edge of the list').toBeGreaterThan(list.right - 4);
     await page.setViewportSize(MOBILE);
     await open(page, 'partner-with-us/universities/');
     expect(await noOverflow(page)).toBe(true);
@@ -427,8 +436,10 @@ test.describe('Employers: "For Hiring" has two steps in the training route’s s
     expect(await hiring.locator('[data-fact]').first().getAttribute('data-fact')).toBe('IN-04');
     await expect(page.locator('#next-steps .route').first().locator('ol li')).toHaveCount(4);
     // both sentences are already on the page (the "Hire Talent" band), so no wording was added
+    // WP166-B (marketing review R3-07): the Hire Talent lead opens "Our placement team introduces job-ready candidates from tracks such as ..." now, so the step states its sentence once (the count was 2)
     const text = await mainText(page);
-    expect(count(text, 'Job-ready candidates are introduced through CodersTrust’s placement team.')).toBe(2);
+    expect(count(text, 'Job-ready candidates are introduced through CodersTrust’s placement team.')).toBe(1);
+    expect(text).toContain('Our placement team introduces job-ready candidates from tracks such as');
     await page.setViewportSize(MOBILE);
     await open(page, 'partner-with-us/employers/');
     expect(await noOverflow(page)).toBe(true);

@@ -174,18 +174,25 @@ test.describe('JobReady is "CodersTrust’s digital learning and earning platfor
     await open(page, HOME);
     expect(compact(await page.locator('#router a.cat[href$="partner-with-us/investors/"] .cat__text').textContent())).toBe('Back JobReady, CodersTrust’s digital learning and earning platform'); // WP166-A (marketing review R1-04): Home defines JobReady where it first names it (it was "Back JobReady’s staged rollout")
     await open(page, HUB);
-    expect(compact(await page.locator('main a.cat[href$="partner-with-us/investors/"] .cat__text').first().textContent())).toBe(`For impact investors: JobReady, ${DEFINITION}.`);
-    await expect(page.locator('main a.cat[href$="partner-with-us/investors/"] .cat__title').first()).toHaveText('Back JobReady’s Staged Rollout');
+    // WP166-B (marketing review R3-19): the card names the asset, "Invest in the JobReady Platform", over "For impact investors: back the staged rollout of CodersTrust’s digital learning and earning platform."
+    // (it was "Back JobReady’s Staged Rollout" over "For impact investors: JobReady, CodersTrust’s digital learning and earning platform."); the definition is still on the card.
+    expect(compact(await page.locator('main a.cat[href$="partner-with-us/investors/"] .cat__text').first().textContent())).toBe(`For impact investors: back the staged rollout of ${DEFINITION}.`);
+    await expect(page.locator('main a.cat[href$="partner-with-us/investors/"] .cat__title').first()).toHaveText('Invest in the JobReady Platform');
   });
 
   // WP163 (owner answers of 3 November 2026): the definition band says "JobReady is CodersTrust’s digital learning and earning platform for emerging markets." (no "is building"), and the hero's second sentence
   // says what JobReady offers (no live / pre-launch status).
-  test('Investors: the definition band says it, and the hero keeps the staged rollout and names what JobReady offers', async ({ page }) => {
+  // WP166-B (marketing review R3-09, owner approval of 21 November 2026): the hero opens with the definition, "JobReady is CodersTrust’s digital learning and earning platform for emerging markets. Back its staged rollout."
+  // (it was "Back JobReady’s staged rollout, ..." with "JobReady offers an AI Tutor, ..." after it), so the definition band is ID-01 alone and the sentence is said once on the page. The hero's feature list is gone ("What JobReady
+  // Does" below lists the capabilities), and the assertion on it with it.
+  test('Investors: the hero says it, once on the page, and keeps the staged rollout', async ({ page }) => {
     await open(page, INVEST);
-    expect(await texts(page, '#definition .def__text')).toContain('JobReady is CodersTrust’s digital learning and earning platform for emerging markets.');
+    const DEF = 'JobReady is CodersTrust’s digital learning and earning platform for emerging markets.';
     const hero = compact(await page.locator('#hero').textContent());
-    expect(hero).toContain('Back JobReady’s staged rollout');
-    expect(hero).toContain('JobReady offers an AI Tutor, adaptive learning paths, an AI career coach, partner portals, the employer marketplace and the gig-work marketplace.');
+    expect(hero).toContain(`${DEF} Back its staged rollout.`);
+    expect(await texts(page, '#definition .def__text')).not.toContain(DEF);
+    expect(compact(await page.locator('main').textContent()).split(DEF).length - 1).toBe(1);
+    expect(hero).not.toContain('JobReady offers an AI Tutor');
   });
 
   test('the JobReady Platform page: the lead and the meta description say it; the Our Model card says it', async ({ page }) => {
@@ -268,11 +275,13 @@ test.describe('The legal status of the two entities is a registered fact and the
 });
 
 test.describe('The WP52 follow-ups (items 6 to 9)', () => {
-  test('YouthWIDE: the Bangladesh band is headed "Delivery Base in Bangladesh and the 2030 Aim" (Title Case; WP99, owner answer 2026-10-28, Q1); "Reference Country" is on no built page', async ({ page }) => {
+  // WP166-B (marketing review R2-11, owner approval of 21 November 2026): the band is headed with its benefit, "Designed for the Digital Labs and Colleges Governments Already Have" (it was "Delivery Base in Bangladesh and the 2030 Aim").
+  test('YouthWIDE: the governments band is headed "Designed for the Digital Labs and Colleges Governments Already Have" (Title Case; WP166-B; WP99 had "Delivery Base in Bangladesh and the 2030 Aim"); "Reference Country" is on no built page', async ({ page }) => {
     await open(page, YOUTHWIDE);
     const heading = page.locator('section#governments').getByRole('heading', { level: 2 });
-    await expect(heading).toHaveText('Delivery Base in Bangladesh and the 2030 Aim');
-    expect('Delivery Base in Bangladesh and the 2030 Aim').toBe(titleCase('Delivery Base in Bangladesh and the 2030 Aim'));
+    const H = 'Designed for the Digital Labs and Colleges Governments Already Have';
+    await expect(heading).toHaveText(H);
+    expect(H).toBe(titleCase(H));
     expect(pagesMatching(/Reference Country/i)).toEqual([]);
   });
 

@@ -181,10 +181,14 @@ test.describe('A-35 JobReady.global is "a course for yourself" or "a shorter cou
     expect(faqAnswer(NU, 'Is the NU Post Graduate Diploma Right for Me?')).toBe(`Eligibility: ${ELIGIBILITY}. It is right for you if you meet that and want a digital career. Not right if you want a shorter course: see JobReady.global.`);
   });
   for (const rel of COURSES) {
-    test(`${rel}: the FAQ and the "Who It Is For" lead; the eligibility sentence is stated twice, not three times`, () => {
+    // WP166-B (marketing review R2-26, owner approval of 21 November 2026): the "Who It Is For" lead ("Right for you if you meet the eligibility above ... If you want a shorter course instead, see JobReady.global.") is gone;
+    // the FAQ "Is This the Right Course for Me?" states the fit and the JobReady.global pointer once, so the band is its heading and the role list.
+    test(`${rel}: the FAQ points to JobReady.global once and the "Who It Is For" band has no lead; the eligibility sentence is stated twice, not three times`, () => {
       expect(faqAnswer(rel, 'Is This the Right Course for Me?')).toMatch(new RegExp(`Not right if you want a shorter course: see JobReady\\.global\\.$`));
-      expect(section(rel, 'who')).toContain('For Learners Who Want a Digital Career Right for you if you meet the eligibility above and want to add practical digital skills. If you want a shorter course instead, see JobReady.global.');
+      expect(section(rel, 'who')).toMatch(/^Who It Is For For Learners Who Want a Digital Career Fields This Diploma Can Support /);
       const t = main(rel);
+      expect(t).not.toContain('Right for you if you meet the eligibility above');
+      expect(count(t, 'shorter course')).toBe(1);
       expect(t).not.toContain('self-paced');
       expect(count(t, ELIGIBILITY)).toBe(2);
     });
@@ -202,10 +206,15 @@ test.describe('A-35 JobReady.global is "a course for yourself" or "a shorter cou
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 test.describe('A-36 "cybersecurity" as a common noun; "Cyber Security" stays the course name', () => {
-  test('the Programs hub card and the NU "Choose Your Course" lead name "cybersecurity"', () => {
-    for (const rel of [HUB, NU]) {
+  // WP166-B (marketing review R2-04): the NU overview names the four fields in its hero lead ("Choose digital marketing, information and communication technology (ICT), cybersecurity or data analytics."), and the
+  // "Choose Your Course" lead no longer lists them (it read "Four courses, in digital marketing, information and communication technology (ICT), cybersecurity and data analytics, delivered by ...").
+  test('the Programs hub card and the NU hero lead name "cybersecurity"', () => {
+    for (const [rel, list] of [
+      [HUB, 'information and communication technology (ICT), cybersecurity and data analytics'],
+      [NU, 'Choose digital marketing, information and communication technology (ICT), cybersecurity or data analytics.'],
+    ]) {
       const t = main(rel);
-      expect(t, rel).toContain('information and communication technology (ICT), cybersecurity and data analytics');
+      expect(t, rel).toContain(list);
       expect(t, rel).not.toContain('cyber security');
     }
   });
@@ -243,8 +252,9 @@ test.describe('A-38 YouthWIDE: "Results from Earlier CodersTrust Programs"', () 
 });
 
 test.describe('A-39 JobReady@Campus: the university band says what it lists', () => {
-  test('eyebrow "Our University Partnerships" above "Universities Partner with CodersTrust"', () => {
-    expect(section(CAMPUS, 'guide')).toMatch(/^Our University Partnerships Universities Partner with CodersTrust\b/);
+  // WP166-B (marketing review R2-16): the heading names the three partners, "Working with National University, UPEACE and CCNY" (it was "Universities Partner with CodersTrust"); the eyebrow is unchanged.
+  test('eyebrow "Our University Partnerships" above "Working with National University, UPEACE and CCNY"', () => {
+    expect(section(CAMPUS, 'guide')).toMatch(/^Our University Partnerships Working with National University, UPEACE and CCNY\b/);
   });
 });
 
@@ -279,8 +289,11 @@ test.describe('B1 NU notices describe National University’s own intake, not ad
       expect(main(rel)).not.toContain('notices are published in Bangla');
     });
   }
-  test('the overview FAQ "Where Do I Find Eligibility, Schedule and Fees?" carries the same qualifier', () => {
-    expect(faqAnswer(NU, 'Where Do I Find Eligibility, Schedule and Fees?')).toContain(`${NOTICES_LEAD} National University PGD Admission Notices and National University PGD Recent Notices.`);
+  // WP166-B (marketing review R2-24): the overview FAQ "Where Do I Find Eligibility, Schedule and Fees?" is gone (its answer pointed to Before You Apply and repeated this qualifier); the assertion that it carried the qualifier is gone with it.
+  // The qualifier's intent still holds on the overview: it is stated once, in the Schedule and Intake row (checked above), and the removed question is on no NU page.
+  test('the overview states the qualifier once (the Schedule and Intake row), and the removed FAQ "Where Do I Find Eligibility, Schedule and Fees?" is on no NU page', () => {
+    expect(count(main(NU), NOTICES_LEAD)).toBe(1);
+    for (const rel of NU_PAGES) expect(main(rel), rel).not.toContain('Where Do I Find Eligibility, Schedule and Fees?');
   });
 });
 
@@ -319,9 +332,13 @@ test.describe('B3 SuperKids: SuperKids@School for schools, SuperKids courses for
     expect(t).toContain(FAMILY_CARD);
     expect(band).toMatch(/<a class="link" href="https:\/\/jobready\.global\/"[^>]*>Explore SuperKids Courses at JobReady\.global/);
   });
-  test('the storefront line names a parent’s own child', () => {
+  // WP166-B (marketing review R2-27, R2-28): the storefront line under "The Program" ("Looking for a SuperKids course for your own child, or courses for older learners? Explore Courses at JobReady.global") is gone;
+  // the hero gives parents the link, "Parents: Explore SuperKids Courses at JobReady.global", so the storefront route is still addressed to a parent.
+  test('the storefront link is addressed to parents (the hero)', () => {
     const t = main(SUPERKIDS);
-    expect(t).toContain('Looking for a SuperKids course for your own child, or courses for older learners? Explore Courses at JobReady.global');
+    const hero = visible(/<section class="hero[\s\S]*?<\/section>/.exec(mainRaw(SUPERKIDS))![0]);
+    expect(hero).toContain('Parents: Explore SuperKids Courses at JobReady.global');
+    expect(mainRaw(SUPERKIDS)).toMatch(/<a class="link" href="https:\/\/jobready\.global\/"[^>]*>Parents: Explore SuperKids Courses at JobReady\.global/);
     expect(t).not.toContain('Looking for courses for older learners?');
   });
   test('meta description (155 characters or fewer) mentions schools and families', () => {
@@ -335,7 +352,7 @@ test.describe('B3 SuperKids: SuperKids@School for schools, SuperKids courses for
     expect(section(SUPERKIDS, 'agreements')).toContain('These are agreement targets, not delivered reach.');
     expect(section(SUPERKIDS, 'agreements')).toContain('400+');
     expect(t).toContain('Bring SuperKids to Your School or Program');
-    expect(t).toContain('Options Are Shaped with You in a Discovery Session');
+    expect(t).toContain('Three Things to Bring to the Discovery Session'); // WP166-B (marketing review R2-30): the start band's heading (it was "Options Are Shaped with You in a Discovery Session")
     expect(t).toContain('Questions Schools and Partners Ask');
     expect(mainRaw(SUPERKIDS)).toMatch(/href="mailto:[^"]+"/);
   });

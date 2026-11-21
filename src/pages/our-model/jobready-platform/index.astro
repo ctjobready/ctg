@@ -6,12 +6,12 @@ import Icon from '../../../components/system/Icon.astro';
 import EmailFallback from '../../../components/ui/EmailFallback.astro';
 import FactStat from '../../../components/facts/FactStat.astro';
 import StatusTag from '../../../components/system/StatusTag.astro';
-import EvidenceTag from '../../../components/system/EvidenceTag.astro';
 import ReportSection from '../../../components/pages/impact/ReportSection.astro';
 import { articleNode, desc, title, platformGrantCta, discoveryCta } from '../../../components/pages/impact/page-utils';
-import { CONTRACT_TOTAL_NOTE_SHORT, DELIVERY_MODEL, MICRO_COMMITMENT, NU_NOT_TRAINED, withoutSince2014 } from '../../../data/copy';
+import { DELIVERY_MODEL, MICRO_COMMITMENT, NU_NOT_TRAINED, withoutSince2014 } from '../../../data/copy';
 import { fact } from '../../../data/facts';
 import { faqItems, faqJsonLd } from '../../../lib/faq';
+import { formatDate, isoDate } from '../../../lib/format';
 import { linkAttrs } from '../../../lib/url';
 
 // WP30d (owner direction 2026-10-14: less is more): shorter table notes, one live-today summary, a single roadmap sentence and a shorter "why" line.
@@ -26,10 +26,12 @@ const JOBREADY = 'https://jobready.global/';
 // WP37 (cycle-14 review): "CRM" is written out wherever the live list is printed (the table row, the Q11 answer); the meta description names the two live modules the menu names, since the full list does not fit its 155 characters.
 // WP163: the page names its AI capabilities rather than the label "AI-native" (WP46: an unexplained label; tests/wp46.spec.ts keeps it off every page).
 const description = desc('JobReady is CodersTrust’s digital learning and earning platform: an AI Tutor, adaptive learning paths, an AI career coach and work marketplaces.');
-// WP41 (cycle-18 review): the answer points to "Rollout Status" (#status) above it instead of listing the status a second time (the table says it).
-const faqIds = ['Q11-platform'];
+// WP41 (cycle-18 review): the answer pointed to "Rollout Status" (#status) above it instead of listing the status a second time. WP166-B (R2-40): the question is the connectivity one (Q15-connectivity).
+const faqIds = ['Q15-connectivity'];
+// WP166-B (marketing review R2-06): the page's date, printed at its foot (as on the program pages) and in its structured data.
+const UPDATED = '2026-11-21';
 const jsonLd = [
-  articleNode({ path, headline: 'JobReady: A Platform Built to Connect Learning to Work', description, datePublished: '2026-10-08', dateModified: '2026-11-03', author: 'CodersTrust', about: { '@type': 'Thing', name: 'JobReady Platform' } }),
+  articleNode({ path, headline: 'JobReady: A Platform Built to Connect Learning to Work', description, datePublished: '2026-10-08', dateModified: UPDATED, author: 'CodersTrust', about: { '@type': 'Thing', name: 'JobReady Platform' } }),
   faqJsonLd('foundations', path, faqIds),
 ];
 const faq = faqItems('foundations', faqIds);
@@ -48,13 +50,7 @@ const rows: { job: string; capability: string; note: string; facts: string }[] =
   // The register (IN-04) names these three without assigning them to one of the four jobs, so they share one row.
   { job: 'Across the Platform', capability: 'Marketing automation, customer relationship management and AI chat', note: 'AI chat supports learner queries and administrative tasks.', facts: 'IN-04' },
 ];
-const toc = [
-  { id: 'jobs', label: 'Four Jobs, One Platform' },
-  { id: 'status', label: 'Platform Capabilities' },
-  { id: 'why', label: 'The Record Behind JobReady' },
-  { id: 'faq', label: 'Questions About the Platform' },
-  { id: 'cta', label: 'Talk to Us About JobReady' },
-];
+// WP166-B (marketing review R2-06): no "On This Page" box on this short page; the first screen has the discovery-session button and the storefront link, and the date is at the foot.
 // WP60 (cycle-32 review, Grok R4): the tile says the 1.5M+ are not CodersTrust's learners: SC-04's label plus NU_NOT_TRAINED (src/data/copy.ts). WP102: headed "Being Onboarded"; the label reads "National University learners being onboarded, not learners trained by CodersTrust".
 const onboardBase = fact('SC-04').stat?.label;
 if (!onboardBase) throw new Error('jobready-platform: SC-04 no longer has a stat label');
@@ -72,13 +68,23 @@ const d = discoveryCta();
   lead="JobReady is CodersTrust’s digital learning and earning platform, from an AI Tutor to work marketplaces."
   description={description}
   path={path}
-  updated="2026-11-03"
-  toc={toc}
   breadcrumbs={[{ label: 'Our Model', href: '/our-model/' }, { label: 'JobReady Platform' }]}
   jsonLd={jsonLd}
 >
+  <Fragment slot="actions">
+    <Button href={d.href} iconEnd="arrow-right">{d.label}</Button>
+    <a class="link" href={JOBREADY} rel={linkAttrs(JOBREADY).rel}>Visit jobready.global<Icon name="arrow-up-right" size={16} /><span class="sr-only"> (opens JobReady.global)</span></a>
+  </Fragment>
+
+  <!-- WP166-B (marketing review R2-38): the four jobs are four bold-led lines (they were one 41-word sentence); "The table below lists its capabilities." is gone. -->
   <ReportSection id="jobs" title="Four Jobs, One Platform">
-    <p data-fact="IN-04">JobReady is designed to do four jobs: train youth through courses, including preparation for industry certification where a track offers one; connect learners to local, remote and global work; supply employers with job-ready talent; and give institutions a digital delivery platform. The table below lists its capabilities.</p>
+    <p data-fact="IN-04">JobReady is designed to do four jobs:</p>
+    <ul class="jr__jobs" data-fact="IN-04">
+      <li><strong>Train.</strong> Youth learn through courses, including preparation for industry certification where a track offers one.</li>
+      <li><strong>Connect to Work.</strong> Learners reach local, remote and global work.</li>
+      <li><strong>Supply Talent.</strong> Employers get job-ready talent.</li>
+      <li><strong>Equip Institutions.</strong> Institutions get a digital delivery platform.</li>
+    </ul>
     <p data-fact={DELIVERY_MODEL.facts.join(' ')}>{DELIVERY_MODEL.text}</p>
   </ReportSection>
 
@@ -87,29 +93,28 @@ const d = discoveryCta();
     <section class="jr__table" aria-label="Platform capabilities" tabindex="0" data-scroll data-stack>
       <table>
         <caption class="sr-only">Platform Capabilities by Job</caption>
-        <thead><tr><th scope="col">Job</th><th scope="col">Capability</th><th scope="col">Note</th></tr></thead>
+        <thead><tr><th scope="col">Job</th><th scope="col">Capability</th><th scope="col">What It Does</th></tr></thead>
         <tbody>
           {rows.map((r) => (
             <tr data-fact={r.facts}>
               <th scope="row">{r.job}</th>
               <td data-label="Capability">{r.capability}</td>
-              <td data-label="Note">{r.note}</td>
+              <td data-label="What It Does">{r.note}</td>
             </tr>
           ))}
         </tbody>
       </table>
     </section>
-    <p><a class="link" href={JOBREADY} rel={linkAttrs(JOBREADY).rel}>Visit jobready.global<Icon name="arrow-up-right" size={16} /><span class="sr-only"> (opens JobReady.global)</span></a></p>
   </ReportSection>
 
   <!-- WP46 (cycle-22 review): the band shows CodersTrust's record (delivered, being onboarded, contracted), not evidence that institutions adopt JobReady, so the heading says so. The id stays: tests and deep links use #why. -->
   <ReportSection id="why" title="The Record Behind JobReady">
-    <p data-fact="IN-04">JobReady builds on CodersTrust’s delivery record, its role with National University and its institutional reach.</p>
+    <!-- WP166-B (marketing review R2-39): the government contract-scope tile and its caveat are off this platform page (the Governments page keeps them), so the line names the two records the band shows. -->
+    <p data-fact="IN-04">JobReady builds on CodersTrust’s delivery record and its role with National University.</p>
     <!-- WP25s: three labelled groups, so the National University onboarding figure (not CodersTrust-trained learners) never reads as part of "Delivered". WP102: the middle group is "Being Onboarded". -->
     <div class="jr__why">
       <div class="jr__whystat"><h3 class="jr__whyh">Delivered Since 2014</h3><StatusTag status="Delivered" /><FactStat id="SC-01" label={learnersLabel} /></div>
       <div class="jr__whystat"><h3 class="jr__whyh">Being Onboarded</h3><FactStat id="SC-04" label={onboardLabel} /></div>
-      <div class="jr__whystat"><h3 class="jr__whyh">Contracted Scope</h3><EvidenceTag type="Contract Scope" /><FactStat id="SC-06" /><p class="jr__whynote" data-fact={CONTRACT_TOTAL_NOTE_SHORT.facts.join(' ')}>{CONTRACT_TOTAL_NOTE_SHORT.text}</p></div>
     </div>
     <p class="jr__links">
       <a class="link" href={linkAttrs('/our-model/').href}>How the Model Works<Icon name="arrow-right" size={16} /></a>
@@ -122,18 +127,21 @@ const d = discoveryCta();
     <Accordion items={faq} name="jr-faq" openFirst />
   </ReportSection>
 
-  <aside class="jr__next" id="cta" aria-label="Talk to us about JobReady">
-    <h2 class="jr__nexttitle">Talk to Us About JobReady</h2>
-    <p>A discovery session covers how JobReady fits your program, and a platform grant supports JobReady’s platform infrastructure. In your inquiry, include two suitable times.</p>
+  <!-- WP166-B (marketing review R2-40): the closing heading says what the session does for the reader (it said "Talk to Us About JobReady"), the line no longer mixes the grant audience into it, and each route link names its reader. -->
+  <aside class="jr__next" id="cta" aria-label="See how JobReady would fit your program">
+    <h2 class="jr__nexttitle">See How JobReady Would Fit Your Program</h2>
+    <p>A discovery session covers how JobReady fits your program. In your inquiry, include two suitable times.</p>
     <div class="jr__actions">
       <Button href={d.href} iconEnd="arrow-right">{d.label}</Button>
-      <a class="link" href={f.href}>Discuss a Platform Grant for JobReady’s Next Stage</a>
+      <a class="link" href={f.href}>Funding the Platform? Discuss a Platform Grant</a>
       <!-- WP27: the one route for impact investors, beside the other next steps -->
-      <a class="link" href={linkAttrs('/partner-with-us/investors/').href}>Backing the platform? See Investors</a>
+      <a class="link" href={linkAttrs('/partner-with-us/investors/').href}>Investing? See Investors</a>
     </div>
     <EmailFallback href={d.href} />
     <p class="jr__micro">{MICRO_COMMITMENT}</p>
   </aside>
+
+  <p class="jr__updated">Last updated <time datetime={isoDate(UPDATED)}>{formatDate(UPDATED)}</time></p>
 
 </LongformLayout>
 
@@ -173,10 +181,23 @@ const d = discoveryCta();
     line-height: var(--lh-heading-m);
     color: var(--secondary);
   }
+  /* WP166-B (R2-39): two record groups (the contract-scope group is gone) */
   @media (min-width: 768px) {
     .jr__why {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
+  }
+  .jr__jobs {
+    margin: 0;
+    padding-left: 1.3em;
+    display: grid;
+    gap: var(--space-xs);
+    max-width: var(--measure);
+  }
+  .jr__updated {
+    margin: var(--space-lg) 0 0;
+    font-size: var(--fs-body-xs);
+    color: var(--on-surface-variant);
   }
   .jr__table {
     overflow-x: auto;

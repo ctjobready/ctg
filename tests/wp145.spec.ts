@@ -91,7 +91,7 @@ test.describe('Polish 3: platform pages apply "where a track offers one"', () =>
   });
   test('JobReady Platform four-jobs sentence', () => {
     const text = main(PLATFORM);
-    expect(text).toContain('train youth through courses, including preparation for industry certification where a track offers one; connect learners to local, remote and global work; supply employers with job-ready talent; and give institutions a digital delivery platform.');
+    expect(text).toContain('Train. Youth learn through courses, including preparation for industry certification where a track offers one.'); // WP166-B (marketing review R2): the four jobs are four labelled items now (the sentence read "train youth through courses, including preparation for industry certification where a track offers one; connect learners ...")
     expect(text).not.toContain('courses that prepare for industry certification');
   });
 });

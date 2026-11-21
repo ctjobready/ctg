@@ -39,19 +39,23 @@ test.describe('Item 2: JobReady@Campus FAQ reads the bachelor’s share from OC-
     const share = /(\d+\.\d+)% hold a bachelor/.exec(fact('OC-09').text)?.[1];
     expect(share).toBe('85.0');
     await open(page, 'programs/jobready-campus/');
-    const answer = page.locator('#faq details', { hasText: 'Who Is JobReady@Campus For?' }).locator('p');
+    // WP166-B (marketing review R2): the question is "Has CodersTrust Worked with Degree Holders Before?" and the answer opens "Yes." (it was "Who Is JobReady@Campus For?", opening "Students and degree holders at universities and colleges.")
+    await expect(page.locator('#faq details', { hasText: 'Who Is JobReady@Campus For?' })).toHaveCount(0);
+    const answer = page.locator('#faq details', { hasText: 'Has CodersTrust Worked with Degree Holders Before?' }).locator('p');
     await expect(answer).toHaveCount(1);
-    expect(compact(await answer.textContent())).toBe('Students and degree holders at universities and colleges. Among alumni of CodersTrust’s programs who answered the October 2026 survey, 85.0% hold a bachelor’s degree or higher.');
+    expect(compact(await answer.textContent())).toBe('Yes. Among alumni of CodersTrust’s programs who answered the October 2026 survey, 85.0% hold a bachelor’s degree or higher.');
     await expect(answer).toHaveAttribute('data-fact', 'OC-09');
   });
 });
 
 test.describe('Item 3: TalentLEAP is dated October 21, 2026', () => {
-  test('the Last updated line and the JSON-LD dateModified both read November 3, 2026 (WP163; WP154 had November 2; WP141 had November 1; WP112 had October 31; WP104 had October 28, WP73 had October 21)', async ({ page }) => {
+  test('the Last updated line and the JSON-LD dateModified both read November 21, 2026 (WP166-B; WP163 had November 3; WP154 had November 2; WP141 had November 1; WP112 had October 31; WP104 had October 28, WP73 had October 21)', async ({ page }) => {
     await open(page, 'our-model/talentleap/');
-    await expect(page.locator('.lf-updated')).toHaveText(/Last updated November 3, 2026/); // WP112: stamps follow each page's latest content change (tests/wp104.spec.ts) (TalentLEAP: 29 October)
+    // WP166-B (marketing review R2-06): the line is at the foot of the page (.tl__updated; it was .lf-updated in the header) and reads November 21, 2026 (it was November 3)
+    await expect(page.locator('.lf-updated')).toHaveCount(0);
+    await expect(page.locator('.tl__updated')).toHaveText(/Last updated November 21, 2026/); // WP112: stamps follow each page's latest content change (tests/wp104.spec.ts) (TalentLEAP: 29 October)
     const ld = (await page.locator('script[type="application/ld+json"]').allTextContents()).join(' ');
-    expect(ld).toContain('"dateModified":"2026-11-03"');
+    expect(ld).toContain('"dateModified":"2026-11-21"');
     expect(ld).not.toContain('"dateModified":"2026-10-15"');
   });
 

@@ -7,7 +7,7 @@
 // the options band no longer repeats it under its two cards.
 import LandingLayout from '../../layouts/LandingLayout.astro';
 import Section from '../../components/ui/Section.astro';
-import CTABand from '../../components/ui/CTABand.astro';
+import EmailFallback from '../../components/ui/EmailFallback.astro';
 import HeroBand from '../../components/sections/HeroBand.astro';
 import RouteLink from '../../components/pages/partners/RouteLink.astro';
 import Fact from '../../components/facts/Fact.astro';
@@ -40,10 +40,8 @@ const description = 'JobReady@Work builds custom AI-ready training around your r
 const work = ctaFor('work');
 const talent = ctaFor('talent');
 
-const faqSources: FaqSource[] = [
-  { audience: 'variants', id: 'Q8-employer' },
-  { audience: 'employers', id: 'Q11' },
-];
+// WP166-B (marketing review R2-21, owner approval of 21 November 2026): the platform question (Q11, a feature list that answers no employer question) is cut from this page; the band answers the cost question, and How It Works links to the platform page.
+const faqSources: FaqSource[] = [{ audience: 'variants', id: 'Q8-employer' }];
 
 const jsonLd = [
   webPage({ path, name: 'JobReady@Work', description, dateModified: LAST_UPDATED, breadcrumb: [{ name: 'Home', path: '/' }, { name: 'Programs', path: '/programs/' }, { name: 'JobReady@Work', path }] }),
@@ -74,6 +72,7 @@ const approach = [
 
   <RouteLink kicker="The Partnership Route" label="Employer Partnership Overview" href="/partner-with-us/employers/" />
 
+  <!-- WP166-B (R2-19): the glance opens with why an employer should act now, the registered ManpowerGroup tile the Employers page shows (PX-05); no new band. -->
   <ProgramGlance
     title="JobReady@Work at a Glance"
     rows={[
@@ -82,7 +81,9 @@ const approach = [
       { label: 'Measuring Progress', text: 'Post-training support and a progress evaluation against the measures you set, for team capability in the digital and AI tasks defined in the needs assessment.', facts: ['IN-10'] },
     ]}
     scope={PROGRAM_SCOPE_INCLUSIONS_EXAMS}
-  />
+  >
+    <FactStat id="PX-05" />
+  </ProgramGlance>
 
   <!-- C5. WP61 (cycle-33 reviews, GPT-6.1 Sol G2 and Kimi K1): no empathy line ("You have roles to fill and teams that need AI skills for their daily work."); the band opens with the credentials list.
        WP161 (A-37): the method line is JobReady@Work's own path (IN-10: needs assessment first), with no TalentLEAP link: JobReady@Work is not on the TalentLEAP path (no three months of mentoring, no 12-month tracking; see Our Model). -->
@@ -100,7 +101,8 @@ const approach = [
   </GuideSection>
 
   <!-- C6 -->
-  <MechanismSection title="A Program Built Around Your Roles" positioning={POSITIONING.work} eyebrow="How It Works" blocks={approach} factIds={['IN-10']} />
+  <!-- WP166-B (R2-21): the platform link sits with the delivery cards (the FAQ's platform question is gone). -->
+  <MechanismSection title="A Program Built Around Your Roles" positioning={POSITIONING.work} eyebrow="How It Works" blocks={approach} factIds={['IN-10']} link={{ label: 'See the JobReady Platform', href: '/our-model/jobready-platform/' }} />
 
   <!-- Evidence links directly after the mechanism (WP18b, WP31, WP32): the employer credentials (AWS Authorized Training Partner, the Grameenphone Academy enrollments; WP104: AIvolve is an offering in the glance's Training row, not a list item) are stated once, in
        "Employers and Partners We Work With" above (cycle-9 review: they were repeated here). This strip is two links to the youth programs' evidence; no trial or survey figure is shown on this corporate offer page. -->
@@ -117,16 +119,7 @@ const approach = [
   <!-- C9: only the questions about the program itself; the audience page answers the rest -->
   <FaqSection sources={faqSources} title="Questions About the Program" />
 
-  <!-- C11 -->
-  <!-- WP50 (cycle-25 review): no pricing note under the two cards; the "What Does It Cost?" answer in the FAQ above says it once. -->
-  <OfferSection
-    title="A Training Program for Your Team, and Talent When You Need It"
-    lead="Pick one or both."
-    cards={[
-      { icon: 'presentation', title: 'Train Your Team', text: 'A training program scoped to your team: needs assessment, a customized curriculum and interactive workshops.' },
-      { icon: 'briefcase', title: 'Hire Job-Ready Talent', text: 'Access to job-ready candidates introduced through CodersTrust’s placement team.' },
-    ]}
-  />
+  <!-- C11 is merged into the closing band below since WP166-B (R2-20): its two cards now carry their own actions there, under the closing heading. -->
 
   <!-- C12 -->
   <RiskSection
@@ -135,12 +128,24 @@ const approach = [
       { icon: 'users', title: 'A Pilot Team Comes First', text: 'Start with one team before you widen the program.', factIds: ['IN-10'] },
       { icon: 'target', title: 'Success Measures Set Up Front', text: 'Completion, any certification the track offers and the skills you name are agreed before you start and checked in the progress evaluation.', factIds: ['IN-10'] },
       { icon: 'handshake', title: 'Scaling Up Is Your Decision', text: 'You choose whether and how far to scale.', factIds: ['IN-10'] },
-      { icon: 'shield', title: 'Independent Evaluation Welcome', text: 'We support third-party evaluation of outcomes.', factIds: ['PD-08'] },
+      // WP166-B (R2-21): the "Independent Evaluation Welcome" card is cut on this page (a funder concept on a team-training page).
     ]}
   />
 
-  <!-- C13: one solid primary; the talent action is outline -->
-  <CTABand id="cta" heading="Tell Us About Your Team and Your Roles" cta={{ label: 'Plan Your First Team Program', href: work.href }} micro={MICRO_COMMITMENT} secondary={{ label: talent.label, href: talent.href }} />
+  <!-- C11 + C13. WP166-B (marketing review R2-20, owner approval of 21 November 2026): the options band ("A Training Program for Your Team, and Talent When You Need It", "Pick one or both.") and the closing band are one band under the closing heading;
+       each card carries its own action: "Train Your Team" the band's one solid button, "Hire Job-Ready Talent" the hiring link. The email fallback and the micro-commitment line follow, as in the closing band. -->
+  <OfferSection
+    id="cta"
+    eyebrow="Get Started"
+    title="Tell Us About Your Team and Your Roles"
+    cards={[
+      { icon: 'presentation', title: 'Train Your Team', text: 'A training program scoped to your team: needs assessment, a customized curriculum and interactive workshops.', action: { label: 'Plan Your First Team Program', href: work.href, primary: true } },
+      { icon: 'briefcase', title: 'Hire Job-Ready Talent', text: 'Access to job-ready candidates introduced through CodersTrust’s placement team.', action: { label: talent.label, href: talent.href } },
+    ]}
+  >
+    {work.href.startsWith('mailto:') && <EmailFallback href={work.href} />}
+    <p>{MICRO_COMMITMENT}</p>
+  </OfferSection>
 
   <!-- C14. WP34 (cycle-11 review): the page offers training and hiring, so the steps are labeled "For Team Training" and hiring has its own short route; the "Hire JobReady Talent" link stays in the C13 band above (and, WP37, in the hero).
        WP47 (cycle-22 review): the hiring route is the Employers page's two steps (EMPLOYER_HIRING_STEPS), in the same step component as the training route (it was one sentence beside five steps). -->

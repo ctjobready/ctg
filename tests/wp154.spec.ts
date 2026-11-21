@@ -92,7 +92,7 @@ test.describe('1 Government-targeted actions use the briefing route', () => {
     const start = raw.indexOf('id="governments"');
     const band = raw.slice(start, raw.indexOf('</section>', start));
     const bandText = visible(band);
-    expect(bandText).toContain('For Governments and Ministries Delivery Base in Bangladesh and the 2030 Aim');
+    expect(bandText).toContain('For Governments and Ministries Designed for the Digital Labs and Colleges Governments Already Have'); // WP166-B (marketing review R2): the band is headed with its benefit (it was "Delivery Base in Bangladesh and the 2030 Aim")
     expect(bandText).toContain('Request a Briefing for Your Ministry');
     expect(bandText).not.toMatch(/co-funding|discovery/i);
     const link = linksOf(YOUTHWIDE).find((l) => l.context.startsWith('For Governments and Ministries') && l.href.startsWith('mailto:'));
@@ -248,7 +248,7 @@ test.describe('7 TalentLEAP: the planned levels are stated once', () => {
   // WP163 (owner answers of 3 November 2026): no level is labelled planned; the opening names the three levels once and the page says "planned" nowhere.
   test('the opening says it; the example has no lead; the Prosper step does not repeat it', () => {
     const text = main(TALENTLEAP);
-    expect(text).toContain('Its levels run from Competent to Proficient and Expert.');
+    expect(text).toContain('Levels run from Competent to Proficient and Expert, and three months of milestone-based mentoring follow the course.'); // WP166-B (marketing review R2): the new opening (it read "Its levels run from Competent to Proficient and Expert.")
     expect(count(text, /planned/gi)).toBe(0);
     expect(text).not.toContain('In this example, Level 1 is Competent; Proficient and Expert are the planned next levels.');
     expect(text).not.toContain('TalentLEAP organizes skills into career paths with progressive levels.');
