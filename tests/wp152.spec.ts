@@ -271,9 +271,10 @@ test.describe('2 Certification: every mention is preparation (A) or something th
     for (const [reason] of B_RULES) expect(tally[`B: ${reason}`] ?? 0, reason).toBeGreaterThan(0);
   });
 
-  test('"certification-focused" is on the hero sentences of at least seven pages (classified fine, unchanged)', () => {
+  test('"certification-focused" is on the hero sentences of at least six pages (classified fine, unchanged)', () => {
     const pages = realPages().filter(sweptCertification).filter((p) => blocks(p).some((b) => /certification-focused/.test(b)));
-    expect(pages.length).toBeGreaterThanOrEqual(7);
+    // WP166 merge (21 November 2026): Governments no longer carries the phrase (its hero says what a ministry buys, R3-03, and its meta description is the page's offer and next step, R7-22), so six pages remain.
+    expect(pages.length).toBeGreaterThanOrEqual(6);
   });
 
   test('Governments: the third card is "Certification Preparation and Placement Support" (the allowlist entry is gone)', () => {

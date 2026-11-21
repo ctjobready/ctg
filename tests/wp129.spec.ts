@@ -319,7 +319,7 @@ test.describe('WP129 item 6: every dated page whose visible text changed carries
     'programs/jobready-work/index.html',
     'partner-with-us/investors/index.html',
   ]);
-  // WP166-B (marketing review R2 and R3, owner approval of 21 November 2026): the program, model and partner pages whose visible text changed moved on to 2026-11-21 (their own "Last updated" line, or their own JSON-LD dateModified).
+  // WP166-A, WP166-B and WP166-C (marketing review, owner approval of 21 November 2026): the pages whose visible text changed moved on to 2026-11-21 (their own "Last updated" line, or their own JSON-LD dateModified).
   const MOVED_1121 = new Set([
     'our-model/talentleap/index.html',
     'our-model/jobready-platform/index.html',
@@ -340,7 +340,15 @@ test.describe('WP129 item 6: every dated page whose visible text changed carries
     'about/index.html',
     'about/recognition/index.html',
     'about/team/ferdinand-kjaerulff/index.html',
-  ]); // WP166-A: the last four
+    'impact/index.html',
+    'impact/stories/index.html',
+    'impact/global-reach/index.html',
+    'impact/in-the-field/index.html',
+    'impact/case-studies/kosovo-women-in-online-work/index.html',
+    'impact/case-studies/undp-yes-korail/index.html',
+    'impact/case-studies/digital-jobs-albania/index.html',
+    'impact/case-studies/wsdfm-women-freelancers/index.html',
+  ]);
   for (const [route, cls] of STAMPED) {
     const [day, long] = MOVED_1121.has(route) ? ['2026-11-21', 'November 21, 2026'] : MOVED_1103.has(route) ? ['2026-11-03', 'November 3, 2026'] : MOVED_1102.has(route) ? ['2026-11-02', 'November 2, 2026'] : MOVED_1101.has(route) ? ['2026-11-01', 'November 1, 2026'] : ['2026-10-31', 'October 31, 2026'];
     test(`${route} reads "Last updated ${long}" and its JSON-LD dateModified is ${day}`, () => {
@@ -372,18 +380,6 @@ test.describe('WP129 item 6: every dated page whose visible text changed carries
     'partner-with-us/investors/index.html',
     'programs/index.html',
   ];
-  // WP166-C (2026-11-21, the marketing-effectiveness review): Recognition (three forum headlines read from News), Impact, Stories, Global Reach, In the Field and the case studies moved on.
-  const MOVED_1121 = new Set([
-    'about/recognition/index.html',
-    'impact/index.html',
-    'impact/stories/index.html',
-    'impact/global-reach/index.html',
-    'impact/in-the-field/index.html',
-    'impact/case-studies/kosovo-women-in-online-work/index.html',
-    'impact/case-studies/undp-yes-korail/index.html',
-    'impact/case-studies/digital-jobs-albania/index.html',
-    'impact/case-studies/wsdfm-women-freelancers/index.html',
-  ]);
   for (const route of JSONLD_ONLY) {
     const day = MOVED_1121.has(route) ? '2026-11-21' : MOVED_1103.has(route) ? '2026-11-03' : MOVED_1102.has(route) ? '2026-11-02' : MOVED_1101.has(route) ? '2026-11-01' : '2026-10-31'; // WP166-B: MOVED_1121 first
     test(`${route} pins its own JSON-LD dateModified to ${day}`, () => {

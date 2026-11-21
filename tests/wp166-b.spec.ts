@@ -396,7 +396,7 @@ test.describe('WP166-B partners: hub, Development Partners, Governments and Foun
     expect(hero).toContain('Build a National Digital Workforce Through Graduates and Digital Labs'); // the owner's H1 (tests/wp30c.spec.ts): R3-03's H1 is not applied
     expect(HEADLINE.governments).toBe('Build a National Digital Workforce Through Graduates and Digital Labs');
     expect(hero).toContain('Curriculum, Training of Trainers and phased delivery in government digital labs, with spending reported against an agreed scorecard.');
-    expect(metaDescription(P)).toBe('We help governments prepare educated, unemployed and underemployed youth for paid digital work through mentored, certification-focused training.'); // package A's
+    expect(metaDescription(P)).toBe('Build a national digital workforce through graduates and existing digital labs: curriculum, trainer training and phased delivery. Request a briefing.'); // package A's (R7-22), merged
     const glance = byId(P, 'glance');
     expect(text(glance)).toContain('Proof at a Glance');
     const order = ['GV-12', 'PR-05', 'RC-02', 'PR-02'].map((id) => glance.search(new RegExp(`data-fact="${id}\\b`)));
