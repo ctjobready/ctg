@@ -1,9 +1,105 @@
 {
   "_about": "Whitelist of the number guard in scripts/check-facts.mjs: figures that carry a claim marker (%, pp, +, M, K, B, $, BDT, x, \"about\", \"over\") but are not claims about CodersTrust's results, reach or finances. One entry per page (or per section prefix ending in /*) and per exact text as printed, each with a one-line reason. Never add a figure that a fact could carry: render it with <Fact>/factPart instead. The check fails on an entry that matches nothing (stale), so keep the list as small as the site needs.",
   "allow": [
-    { "page": "/about/team/asad-zaman/", "text": "20+", "reason": "A team member's own career length in his biography (\"20+ years of experience\"), not an organizational result." },
-    { "page": "/about/team/rezaul-karim-khan/", "text": "20+", "reason": "A team member's own career length in his biography (\"20+ years in global ICT projects\"), not an organizational result." },
-    { "page": "/about/team/shafqat-ullah/", "text": "25+", "reason": "A team member's own career length in his biography (\"25+ years of experience\"), not an organizational result." },
-    { "page": "/news/", "text": "1,400+", "reason": "Excerpt of the archived post a-proud-milestone-for-coderstrust (a treasure-hunt registration count); archived /news/<post>/ pages are excluded from the guard (R8-m5) and the listing repeats their wording." }
+    {
+      "page": "/about/team/asad-zaman/",
+      "text": "20+",
+      "reason": "A team member's own career length in his biography (\"20+ years of experience\"), not an organizational result."
+    },
+    {
+      "page": "/about/team/rezaul-karim-khan/",
+      "text": "20+",
+      "reason": "A team member's own career length in his biography (\"20+ years in global ICT projects\"), not an organizational result."
+    },
+    {
+      "page": "/about/team/shafqat-ullah/",
+      "text": "25+",
+      "reason": "A team member's own career length in his biography (\"25+ years of experience\"), not an organizational result."
+    },
+    {
+      "page": "/news/",
+      "text": "1,400+",
+      "reason": "Excerpt of the archived post a-proud-milestone-for-coderstrust (a treasure-hunt registration count); archived /news/<post>/ pages are excluded from the guard (R8-m5) and the listing repeats their wording."
+    },
+    {
+      "page": "/blog/the-clock-is-running-bangladesh-demographic-dividend/",
+      "text": "about 0.4 percentage point",
+      "reason": "A figure from the World Bank report cited in this essay (Pradhan and others, Demographic Change in South Asia, 2026, doi 10.1596/978-1-4648-0959-0); a third-party statistic with its source named in the essay, not a CodersTrust result."
+    },
+    {
+      "page": "/blog/the-clock-is-running-bangladesh-demographic-dividend/",
+      "text": "about 0.1 percentage point",
+      "reason": "A figure from the World Bank report cited in this essay (Pradhan and others, Demographic Change in South Asia, 2026, doi 10.1596/978-1-4648-0959-0); a third-party statistic with its source named in the essay, not a CodersTrust result."
+    },
+    {
+      "page": "/blog/the-clock-is-running-bangladesh-demographic-dividend/",
+      "text": "about 15 percent",
+      "reason": "A figure from the World Bank report cited in this essay (Pradhan and others, Demographic Change in South Asia, 2026, doi 10.1596/978-1-4648-0959-0); a third-party statistic with its source named in the essay, not a CodersTrust result."
+    },
+    {
+      "page": "/blog/the-clock-is-running-bangladesh-demographic-dividend/",
+      "text": "0.94 percent",
+      "reason": "A figure from the World Bank report cited in this essay (Pradhan and others, Demographic Change in South Asia, 2026, doi 10.1596/978-1-4648-0959-0); a third-party statistic with its source named in the essay, not a CodersTrust result."
+    },
+    {
+      "page": "/blog/the-clock-is-running-bangladesh-demographic-dividend/",
+      "text": "60 percent",
+      "reason": "A figure from the World Bank report cited in this essay (Pradhan and others, Demographic Change in South Asia, 2026, doi 10.1596/978-1-4648-0959-0); a third-party statistic with its source named in the essay, not a CodersTrust result."
+    },
+    {
+      "page": "/blog/the-clock-is-running-bangladesh-demographic-dividend/",
+      "text": "34 percent",
+      "reason": "A figure from the World Bank report cited in this essay (Pradhan and others, Demographic Change in South Asia, 2026, doi 10.1596/978-1-4648-0959-0); a third-party statistic with its source named in the essay, not a CodersTrust result."
+    },
+    {
+      "page": "/blog/the-clock-is-running-bangladesh-demographic-dividend/",
+      "text": "51 percent",
+      "reason": "A figure from the World Bank report cited in this essay (Pradhan and others, Demographic Change in South Asia, 2026, doi 10.1596/978-1-4648-0959-0); a third-party statistic with its source named in the essay, not a CodersTrust result."
+    },
+    {
+      "page": "/blog/the-clock-is-running-bangladesh-demographic-dividend/",
+      "text": "88 percent",
+      "reason": "A figure from the World Bank report cited in this essay (Pradhan and others, Demographic Change in South Asia, 2026, doi 10.1596/978-1-4648-0959-0); a third-party statistic with its source named in the essay, not a CodersTrust result."
+    },
+    {
+      "page": "/blog/the-clock-is-running-bangladesh-demographic-dividend/",
+      "text": "2.7 percent",
+      "reason": "A figure from the World Bank report cited in this essay (Pradhan and others, Demographic Change in South Asia, 2026, doi 10.1596/978-1-4648-0959-0); a third-party statistic with its source named in the essay, not a CodersTrust result."
+    },
+    {
+      "page": "/blog/the-clock-is-running-bangladesh-demographic-dividend/",
+      "text": "5.4 percent",
+      "reason": "A figure from the World Bank report cited in this essay (Pradhan and others, Demographic Change in South Asia, 2026, doi 10.1596/978-1-4648-0959-0); a third-party statistic with its source named in the essay, not a CodersTrust result."
+    },
+    {
+      "page": "/blog/the-clock-is-running-bangladesh-demographic-dividend/",
+      "text": "About 80 percent",
+      "reason": "A figure from the World Bank report cited in this essay (Pradhan and others, Demographic Change in South Asia, 2026, doi 10.1596/978-1-4648-0959-0); a third-party statistic with its source named in the essay, not a CodersTrust result."
+    },
+    {
+      "page": "/blog/the-clock-is-running-bangladesh-demographic-dividend/",
+      "text": "84 percent",
+      "reason": "A figure from the World Bank report cited in this essay (Pradhan and others, Demographic Change in South Asia, 2026, doi 10.1596/978-1-4648-0959-0); a third-party statistic with its source named in the essay, not a CodersTrust result."
+    },
+    {
+      "page": "/blog/the-clock-is-running-bangladesh-demographic-dividend/",
+      "text": "more than 60 percent",
+      "reason": "A figure from the World Bank report cited in this essay (Pradhan and others, Demographic Change in South Asia, 2026, doi 10.1596/978-1-4648-0959-0); a third-party statistic with its source named in the essay, not a CodersTrust result."
+    },
+    {
+      "page": "/blog/the-clock-is-running-bangladesh-demographic-dividend/",
+      "text": "13 million",
+      "reason": "A figure from the World Bank report cited in this essay (Pradhan and others, Demographic Change in South Asia, 2026, doi 10.1596/978-1-4648-0959-0); a third-party statistic with its source named in the essay, not a CodersTrust result."
+    },
+    {
+      "page": "/blog/the-clock-is-running-bangladesh-demographic-dividend/",
+      "text": "35 percent",
+      "reason": "A figure from the World Bank report cited in this essay (Pradhan and others, Demographic Change in South Asia, 2026, doi 10.1596/978-1-4648-0959-0); a third-party statistic with its source named in the essay, not a CodersTrust result."
+    },
+    {
+      "page": "/blog/the-clock-is-running-bangladesh-demographic-dividend/",
+      "text": "4 percent",
+      "reason": "A figure from the World Bank report cited in this essay (Pradhan and others, Demographic Change in South Asia, 2026, doi 10.1596/978-1-4648-0959-0); a third-party statistic with its source named in the essay, not a CodersTrust result."
+    }
   ]
 }

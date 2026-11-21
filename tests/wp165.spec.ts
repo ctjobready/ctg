@@ -179,10 +179,10 @@ test.describe('Always: the draft filter, the nav gate and the exemption helper',
 });
 
 test.describe('Always: the three post files (owner decisions of 5 November 2026)', () => {
-  test('all three are drafts until Aziz approves them: none is built', () => {
+  test('all three are live (Aziz approved them on 21 November 2026): none carries draft: true', () => {
     const files = readdirSync(SRC).filter((f) => f.endsWith('.md')).sort();
     expect(files).toEqual(ALL.map((p) => `${p.slug}.md`).sort());
-    for (const f of files) expect(frontMatter(f.replace(/\.md$/, '')), f).toMatch(/^draft: true$/m);
+    for (const f of files) expect(frontMatter(f.replace(/\.md$/, '')), f).not.toMatch(/^draft: true$/m);
   });
   test('the two re-posts carry their Substack URL and figuresUpdated 2026-11-05; the new essay is not a re-post and names no Substack URL', () => {
     for (const p of [FATHER, BEYOND]) {

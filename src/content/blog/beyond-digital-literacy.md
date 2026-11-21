@@ -8,7 +8,6 @@ substackUrl: "https://tergadesidero178981.substack.com/p/beyond-digital-literacy
 seoTitle: "Beyond Digital Literacy in the Age of AI"
 tags: ["affordance literacy", "AI literacy", "economic opportunity"]
 figuresUpdated: 2026-11-05
-draft: true
 ---
 
 ## The Question That Stayed with Me

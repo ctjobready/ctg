@@ -8,7 +8,6 @@ substackUrl: "https://tergadesidero178981.substack.com/p/the-father-the-godfathe
 seoTitle: "Two AI Pioneers and the Jobs of Our Children"
 tags: ["artificial intelligence", "youth employment", "Bangladesh"]
 figuresUpdated: 2026-11-05
-draft: true
 ---
 
 The man who named artificial intelligence and the man who made it work have, between them, handed my generation a warning and a homework assignment. I want to talk about both, because the young people who will pay for our answer are the ones I have spent the last decade trying to put to work.
