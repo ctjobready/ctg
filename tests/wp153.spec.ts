@@ -192,14 +192,14 @@ test.describe('5 NU Post Graduate Diploma: "Ready to Apply?" has no lead repeati
 
 test('6 Home: the "Blended Training" card (Home’s first explanation of delivery) names who teaches, in the long form, once', () => {
   const text = main(HOME);
-  expect(text).toContain(`How We Reach Them AI-Supported Blended Training Training in existing labs and colleges, led by ${LONG}, with delivery designed to work where connectivity is limited.`); // WP154: reworded; tests/wp154.spec.ts holds the new text. WP163: the title is "AI-Supported Blended Training"
+  expect(text).toContain(`How We Reach Them An AI-Supported Flipped Classroom Training in existing labs and colleges, led by ${LONG}, with delivery designed to work where connectivity is limited.`); // WP154: reworded; tests/wp154.spec.ts holds the new text. WP163: the title is "AI-Supported Blended Training"
   expect(count(text, LONG)).toBe(1);
   expect(count(text, SHORT_FORM)).toBe(0);
   // It is Home’s first delivery explanation: no earlier block names labs, colleges or blended delivery.
   const first = text.search(/\bblended\b|\b(?:existing|government|campus|on-campus|local) labs?\b|\blabs?,? (?:and )?colleges\b/i);
   expect(first).toBeGreaterThan(-1);
   expect(first).toBeLessThan(text.indexOf(LONG));
-  expect(text.slice(0, text.indexOf('Blended Training'))).not.toMatch(/\bblended\b|\blabs?,? (?:and )?colleges\b/i);
+  expect(text.slice(0, text.indexOf('An AI-Supported Flipped Classroom'))).not.toMatch(/\bblended\b|\blabs?,? (?:and )?colleges\b/i);
   // No built Home file says "local" or "certified" facilitators.
   expect(text).not.toMatch(/\bcertified[ -]+(?:local )?facilitators?\b|\blocal[ ,-]+(?:\w+ )?facilitators?\b/i);
 });

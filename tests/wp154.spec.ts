@@ -155,7 +155,7 @@ test.describe('1 Government-targeted actions use the briefing route', () => {
 test('2 Home: the "Blended Training" card says facilitators lead training in existing labs and colleges, and that delivery is designed for limited connectivity', () => {
   const text = main(HOME);
   // WP163 (owner answers of 3 November 2026): the card is "AI-Supported Blended Training" and closes with the delivery model (DELIVERY_MODEL).
-  expect(text).toContain(`How We Reach Them AI-Supported Blended Training Training in existing labs and colleges, led by ${LONG}, with delivery designed to work where connectivity is limited. Training follows an AI-supported flipped classroom:`);
+  expect(text).toContain(`How We Reach Them An AI-Supported Flipped Classroom Training in existing labs and colleges, led by ${LONG}, with delivery designed to work where connectivity is limited. Training follows an AI-supported flipped classroom:`);
   expect(text).not.toContain('Labs, colleges and delivery that works');
   expect(count(text, LONG)).toBe(1);
   // The first delivery explanation still names who teaches, in the long form, before any short form (wp152, wp153).

@@ -156,7 +156,7 @@ test.describe('L4 (GLM) and K2 (Kimi): Home slides 1 and 4', () => {
   test('slide 1’s lead reads "women offered a place had an estimated 41% higher monthly income than the control group", from RC-01 and RC-04; nothing says "their monthly income was"', async ({ page }) => {
     await open(page, HOME);
     const lead = slide(page, 1).locator('.hs__lead');
-    expect(compact(await lead.textContent())).toBe('In CodersTrust’s WSDFM program, women offered a place had an estimated 41% higher monthly income than the control group, about $27 more a month.');
+    expect(compact(await lead.textContent())).toBe('In CodersTrust’s WSDFM program, women offered a place had an estimated 41% higher monthly income than the control group, about $27 more a month on a control-group mean of about $66.' /* WP167 (owner approval of 2026-11-23, R1-13): the lead gives the base */);
     expect(await lead.getAttribute('data-fact')).toBe('RC-01 RC-04');
     expect(fact('RC-01').stat?.numeric).toBe(41);
     expect(fact('RC-04').stat?.numeric).toBe(27);

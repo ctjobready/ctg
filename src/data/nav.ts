@@ -197,13 +197,17 @@ export const navGroups: NavGroup[] = [
 
 export const NEWS_LINK: NavLink = { label: 'News', href: '/news/' };
 export const BLOG_LINK: NavLink = { label: 'Blog', href: '/blog/' };
+/** WP167 (owner approval of 2026-11-23, marketing review R7-16): with a live Blog the header, drawer and no-JS nav carry one item, "News and Blog" (it opens News; the News page links the Blog), not two. */
+export const NEWS_AND_BLOG_LINK: NavLink = { label: 'News and Blog', href: '/news/' };
 /**
  * Plain top-level links after the groups. WP165 (owner request of 5 November 2026): Blog sits beside News, its sibling (News is a top-level link, not an
  * item of a menu); like News it is also in the mobile drawer, the no-JS nav and the footer's bottom row (footerBottomLinksFor). WP165 follow-up (owner,
  * 5 November 2026): the Blog link is there only while at least one Blog post is live (published, not a draft); with none, every page carries News alone,
  * as before WP165. `blogLive` is hasLiveBlogPosts() (src/components/pages/blog/blog.ts), read by SiteHeader and Footer.
  */
-export const topLinksFor = (blogLive: boolean): NavLink[] => (blogLive ? [NEWS_LINK, BLOG_LINK] : [NEWS_LINK]);
+export const topLinksFor = (blogLive: boolean): NavLink[] => (blogLive ? [NEWS_AND_BLOG_LINK] : [NEWS_LINK]);
+/** The footer's own list (WP167): News and Blog stay two links there, the sitemap. */
+const footerTopLinksFor = (blogLive: boolean): NavLink[] => (blogLive ? [NEWS_LINK, BLOG_LINK] : [NEWS_LINK]);
 
 /** Utility link: course catalogue lives on jobready.global. */
 export const utilityLink: NavLink = { label: 'Courses', href: COURSES_URL };
@@ -216,12 +220,12 @@ export const promo = {
   lead: 'Randomized trial of CodersTrust’s WSDFM program:',
   rest: `women offered a place were ${trial.numeric} percentage points more likely to be employed.`,
   /** The same statement for a phone (up to 575 px). */
-  short: `women offered a place: +${trial.numeric} percentage points employed.`,
+  short: `+${trial.numeric} percentage points in employment for women offered a place.`, // WP167 (owner approval of 2026-11-23, R7-P1): a sentence, not a fragment
   /** Bump to show a changed announcement to people who dismissed the previous one. */
   storageKey: 'ct-promo-v4',
   factId: 'RC-02',
   links: [
-    { label: 'Trial Results', href: '/impact/independent-evaluation/' },
+    // WP167 (owner answer of 2026-11-23): the bar keeps one link, "Impact Survey 2026" (it had two, "Trial Results" and this one); the trial stays one click away in the Impact menu and on Home.
     { label: 'Impact Survey 2026', href: '/impact/outcomes-2026/' },
   ],
   hideOnPath: '/impact/outcomes-2026/',
@@ -262,7 +266,7 @@ export const footerColumns = navGroups
 
 /** The footer's bottom row: the top-level links (Blog only while a Blog post is live, as in the header), then Privacy and Accessibility. */
 export const footerBottomLinksFor = (blogLive: boolean): NavLink[] => [
-  ...topLinksFor(blogLive),
+  ...footerTopLinksFor(blogLive),
   { label: 'Privacy', href: '/privacy-policy/' },
   { label: 'Accessibility', href: '/accessibility/' },
 ];

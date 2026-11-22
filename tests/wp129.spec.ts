@@ -320,6 +320,8 @@ test.describe('WP129 item 6: every dated page whose visible text changed carries
     'partner-with-us/investors/index.html',
   ]);
   // WP166-A, WP166-B and WP166-C (marketing review, owner approval of 21 November 2026): the pages whose visible text changed moved on to 2026-11-21 (their own "Last updated" line, or their own JSON-LD dateModified).
+  // WP167 (owner approval of 2026-11-23): About (the identity paragraph), Governance (the lead) and Recognition and Media (the two honors) moved on to 2026-11-23.
+  const MOVED_1123 = new Set(['about/index.html', 'about/governance/index.html', 'about/recognition/index.html']);
   const MOVED_1121 = new Set([
     'our-model/talentleap/index.html',
     'our-model/jobready-platform/index.html',
@@ -350,7 +352,7 @@ test.describe('WP129 item 6: every dated page whose visible text changed carries
     'impact/case-studies/wsdfm-women-freelancers/index.html',
   ]);
   for (const [route, cls] of STAMPED) {
-    const [day, long] = MOVED_1121.has(route) ? ['2026-11-21', 'November 21, 2026'] : MOVED_1103.has(route) ? ['2026-11-03', 'November 3, 2026'] : MOVED_1102.has(route) ? ['2026-11-02', 'November 2, 2026'] : MOVED_1101.has(route) ? ['2026-11-01', 'November 1, 2026'] : ['2026-10-31', 'October 31, 2026'];
+    const [day, long] = MOVED_1123.has(route) ? ['2026-11-23', 'November 23, 2026'] : MOVED_1121.has(route) ? ['2026-11-21', 'November 21, 2026'] : MOVED_1103.has(route) ? ['2026-11-03', 'November 3, 2026'] : MOVED_1102.has(route) ? ['2026-11-02', 'November 2, 2026'] : MOVED_1101.has(route) ? ['2026-11-01', 'November 1, 2026'] : ['2026-10-31', 'October 31, 2026'];
     test(`${route} reads "Last updated ${long}" and its JSON-LD dateModified is ${day}`, () => {
       const raw = html(route);
       const m = new RegExp(`<p class="${cls}[^"]*"[^>]*>([\\s\\S]*?)</p>`).exec(raw);
@@ -381,7 +383,7 @@ test.describe('WP129 item 6: every dated page whose visible text changed carries
     'programs/index.html',
   ];
   for (const route of JSONLD_ONLY) {
-    const day = MOVED_1121.has(route) ? '2026-11-21' : MOVED_1103.has(route) ? '2026-11-03' : MOVED_1102.has(route) ? '2026-11-02' : MOVED_1101.has(route) ? '2026-11-01' : '2026-10-31'; // WP166-B: MOVED_1121 first
+    const day = MOVED_1123.has(route) ? '2026-11-23' : MOVED_1121.has(route) ? '2026-11-21' : MOVED_1103.has(route) ? '2026-11-03' : MOVED_1102.has(route) ? '2026-11-02' : MOVED_1101.has(route) ? '2026-11-01' : '2026-10-31'; // WP166-B: MOVED_1121 first
     test(`${route} pins its own JSON-LD dateModified to ${day}`, () => {
       expect(dateModified(html(route))).toContain(day);
     });

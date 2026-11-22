@@ -92,7 +92,7 @@ test.describe('Home: the trial slide leads with income and keeps its scope (item
     const first = slide(page, 1);
     await expect(first.locator('h3')).toHaveText('Women Offered a Place Earned an Estimated 41% More per Month');
     expect(await first.locator('h3').getAttribute('data-fact')).toBe('RC-01');
-    expect(compact(await first.locator('.hs__lead').textContent())).toBe('In CodersTrust’s WSDFM program, women offered a place had an estimated 41% higher monthly income than the control group, about $27 more a month.'); // WP63 (cycle-35 review, GLM L4)
+    expect(compact(await first.locator('.hs__lead').textContent())).toBe('In CodersTrust’s WSDFM program, women offered a place had an estimated 41% higher monthly income than the control group, about $27 more a month on a control-group mean of about $66.' /* WP167 (owner approval of 2026-11-23, R1-13): the lead gives the base */); // WP63 (cycle-35 review, GLM L4)
     expect(await first.locator('.hs__lead').getAttribute('data-fact')).toBe('RC-01 RC-04');
     expect(fact('RC-01').stat?.value).toBe('+41%');
     expect(fact('RC-04').stat?.value).toBe('+$27');
@@ -423,7 +423,7 @@ test.describe('No bare "pp" and no "MENA" (item 25)', () => {
 
 test.describe('The SDG award has the register’s name everywhere (item 27)', () => {
   test('PA-11 says "SDG Life Achievement Award"; the Recognition page and the news post say it too; no page says "Lifetime Achievement"', async ({ page }) => {
-    expect(fact('PA-11').text).toContain('SDG Life Achievement Award (2025)');
+    expect(fact('PA-11').text).toContain('SDG Life Achievement Award, UNGSII Foundation (2025)'); // WP167 (owner approval of 2026-11-23): the issuer is named
     await open(page, 'about/recognition/');
     expect(await mainText(page)).toContain('SDG Life Achievement Award');
     await open(page, 'news/coderstrust-chairman-mr-aziz-ahmad-receives-sdg-life-achievement-award-from-the-unsgii/');

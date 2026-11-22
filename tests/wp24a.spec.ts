@@ -150,12 +150,12 @@ test.describe('menus', () => {
 });
 
 test.describe('announcement bar', () => {
-  test('two text links: Trial Results and Impact Survey 2026, no button', async ({ page }) => {
+  test('one text link, Impact Survey 2026 (WP167: it was Trial Results and Impact Survey 2026), no button', async ({ page }) => {
     await page.goto('');
     const bar = page.locator('[data-promo]');
     const links = bar.locator('a');
-    expect((await links.allInnerTexts()).map((t) => t.trim())).toEqual(['Trial Results', 'Impact Survey 2026']);
-    expect((await hrefs(page, '[data-promo] a')).map(rel)).toEqual(['impact/independent-evaluation/', 'impact/outcomes-2026/']);
+    expect((await links.allInnerTexts()).map((t) => t.trim())).toEqual(['Impact Survey 2026']);
+    expect((await hrefs(page, '[data-promo] a')).map(rel)).toEqual(['impact/outcomes-2026/']);
     await expect(bar.locator('.btn')).toHaveCount(0);
   });
 });

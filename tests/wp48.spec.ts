@@ -519,7 +519,7 @@ test.describe('Home: the low-risk band, the FAQ trial answer, the hero line, the
     expect(title).toBe(titleCase(title));
     expect(await first.locator('h3').getAttribute('data-fact')).toBe('RC-01');
     await expect(first.locator('.hs__eyebrow')).toHaveText('Randomized Trial of CodersTrust’s WSDFM Program');
-    expect(compact(await first.locator('.hs__lead').textContent())).toBe('In CodersTrust’s WSDFM program, women offered a place had an estimated 41% higher monthly income than the control group, about $27 more a month.'); // WP63 (cycle-35 review, GLM L4)
+    expect(compact(await first.locator('.hs__lead').textContent())).toBe('In CodersTrust’s WSDFM program, women offered a place had an estimated 41% higher monthly income than the control group, about $27 more a month on a control-group mean of about $66.' /* WP167 (owner approval of 2026-11-23, R1-13): the lead gives the base */); // WP63 (cycle-35 review, GLM L4)
     expect(compact(await first.locator('.hs__proof').textContent())).toContain('Published in a peer-reviewed journal');
     expect(compact(await first.locator('.hs__proof').textContent())).not.toContain('>4×');
   });

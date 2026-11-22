@@ -356,12 +356,12 @@ test.describe('About: the identity sentences sit directly under the lede (item 1
     expect(IDENTITY).toBe('CodersTrust is headquartered in New York, and its parent organization is CT USA, Inc. CodersTrust Bangladesh (CodersTrust Bangladesh Ltd.) is a country office. Additional country and regional offices are planned in the next few years.');
     expect(SHOWN).toBe('CodersTrust is headquartered in New York, and its parent organization is CT USA, Inc. CodersTrust Bangladesh (CodersTrust Bangladesh Ltd.) is a country office. Additional country and regional offices are planned.');
     await open(page, ABOUT);
-    await expect(page.locator('main [data-fact="ID-11"]')).toHaveCount(1);
+    await expect(page.locator('main [data-fact~="ID-11"]')).toHaveCount(1); // WP167: the hero paragraph carries ID-11 and SC-03
     await expect(page.locator('.hero__copy > .hero__lead + .about-identity')).toHaveCount(1);
-    expect(compact(await page.locator('.hero__copy > .about-identity').textContent())).toBe(SHOWN);
+    expect(compact(await page.locator('.hero__copy > .about-identity').textContent())).toBe('CodersTrust is headquartered in New York and has worked in 16 countries and territories.'); // WP167 (owner approval of 2026-11-23, R1-24): the short form; SHOWN is what llms.txt and the schema read
     await expect(page.locator('#glance [data-fact="ID-11"]')).toHaveCount(0);
     await expect(page.locator('#glance .lead')).toHaveCount(0);
-    expect(count(await everything(page), 'CT USA, Inc.')).toBe(1);
+    expect(count(await everything(page), 'CT USA, Inc.')).toBe(0); // WP167 (owner approval of 2026-11-23, R1-24): About's hero no longer names the parent; Governance does
     // the lede above it is ID-01, and the hero keeps its one text link and no primary button
     expect(compact(await page.locator('.hero__copy > .hero__lead').textContent())).toBe(fact('ID-01').text);
     await expect(page.locator('main .hero .btn--primary')).toHaveCount(0);

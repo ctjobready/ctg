@@ -90,14 +90,14 @@ test.describe('identity: headquartered in New York, parent organization CT USA, 
 
   test('About states the registered identity fact (ID-11) and the meta description leads with New York', async ({ page }) => {
     await open(page, 'about/');
-    const fact = page.locator('main [data-fact="ID-11"]');
+    const fact = page.locator('main [data-fact~="ID-11"]'); // WP167 (owner approval of 2026-11-23): the hero paragraph carries ID-11 and SC-03
     await expect(fact).toHaveCount(1);
     const t = compact(await fact.textContent());
     expect(t).toContain('headquartered in New York');
-    expect(t).toContain('parent organization is CT USA, Inc.');
-    expect(t).toContain('CodersTrust Bangladesh (CodersTrust Bangladesh Ltd.) is a country office');
-    // WP57b (cycle-29 review, GLM L8): the rendered sentence is "Additional country and regional offices are planned." (the register's ID-11 adds "in the next few years"; src/data/copy.ts IDENTITY)
-    expect(t).toContain('Additional country and regional offices are planned.');
+    // WP167 (owner approval of 2026-11-23, marketing review R1-24): the hero states New York and the reach in one sentence; the contracting entities and the offices are on Governance.
+    expect(t).toBe('CodersTrust is headquartered in New York and has worked in 16 countries and territories.');
+    // WP57b (cycle-29 review, GLM L8): llms.txt and the schema still read IDENTITY ("... are planned."); About's hero no longer prints the planned-offices sentence (WP167).
+    expect(t).not.toContain('Additional country and regional offices are planned.');
     expect(t).not.toContain('in the next few years');
     // WP52 (cycle-27 review, GLM m4): the description names New York as the headquarters: "New York-headquartered CodersTrust has trained ... in 16 countries and territories." (WP63, cycle-35 review, Grok R6: it opened "Since 2014," until "educated," came back into the group)
     await expect(page.locator('meta[name="description"]')).toHaveAttribute('content', /^New York-headquartered CodersTrust .*in 16 countries and territories\.$/);

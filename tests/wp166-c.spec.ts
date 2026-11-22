@@ -556,7 +556,7 @@ test.describe('Dates (constraint 12): every page whose visible text changed is d
     expect(nodes(TRIAL, 'Article')[0]?.dateModified).toBe(TODAY);
     expect(nodes(SURVEY, 'Article')[0]?.dateModified).toBe(TODAY);
     expect(nodes(PHOTOS, 'Article')[0]?.dateModified).toBe(TODAY);
-    expect(nodes('about/recognition/index.html', 'WebPage')[0]?.dateModified).toBe(TODAY);
+    expect(nodes('about/recognition/index.html', 'WebPage')[0]?.dateModified).toBe('2026-11-23'); // WP167 (2026-11-23): the two honors read from PA-11 moved it on
     expect(ld('about/team/aziz-ahmad/index.html').find((n) => [n['@type']].flat().includes('ProfilePage'))?.dateModified).toBe(TODAY);
   });
 });

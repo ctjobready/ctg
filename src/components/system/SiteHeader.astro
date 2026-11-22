@@ -108,7 +108,7 @@ const menus = navGroups.map((g) => ({ ...g, nodes: nestItems(g.items) }));
         {
           topLinks.map((l) => (
             <li class="site-nav__item">
-              <a class="site-nav__link" href={linkAttrs(l.href).href} aria-current={currentPath.startsWith(l.href) ? 'page' : undefined}>
+              <a class="site-nav__link" href={linkAttrs(l.href).href} aria-current={currentPath.startsWith(l.href) || (l.href === '/news/' && l.label === 'News and Blog' && currentPath.startsWith('/blog/')) ? 'page' : undefined}>
                 {l.label}
               </a>
             </li>

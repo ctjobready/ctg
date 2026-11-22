@@ -130,9 +130,9 @@ test.describe('Item 5: Careers scopes the outcome principle', () => {
 // ---- Item 6: Governance and Accessibility dates -----------------------------------------------------------------------------------
 
 test.describe('Item 6: legal page dates match their last content change', () => {
-  test('Governance reads "Last updated November 21, 2026" (WP141: November 1; WP155: November 2; WP166-A: November 21)', async ({ page }) => {
+  test('Governance reads "Last updated November 23, 2026" (WP141: November 1; WP155: November 2; WP166-A: November 21; WP167: November 23)', async ({ page }) => {
     await open(page, 'about/governance/');
-    expect(compact(await page.locator('.gov-updated').textContent())).toBe('Last updated November 21, 2026');
+    expect(compact(await page.locator('.gov-updated').textContent())).toBe('Last updated November 23, 2026');
     await expect(page.locator('body')).not.toContainText('Last updated October 10, 2026');
   });
 

@@ -134,7 +134,9 @@ const hours = /was (\d+) hours/.exec(fact('RC-07').text)?.[1];
 const incomeOffered = fact('RC-01').stat?.numeric;
 /** The same women's estimated gain in dollars a month (RC-04's tile, "+$27"), stated beside the percentage on the first slide. */
 const dollarsOffered = fact('RC-04').stat?.numeric;
-if (offeredPoints === undefined || !hours || incomeOffered === undefined || dollarsOffered === undefined) throw new Error('heroSlides: RC-01, RC-02, RC-04 or RC-07 no longer carries the figure a slide reads');
+// WP167 (owner approval of 2026-11-23, marketing review R1-13): the lead gives the base the dollar figure sits on, read from RC-04's own text ("on a control-group mean of about $66").
+const controlMean = /control-group mean of about \$(\d+)/.exec(fact('RC-04').text)?.[1];
+if (offeredPoints === undefined || !hours || incomeOffered === undefined || dollarsOffered === undefined || controlMean === undefined) throw new Error('heroSlides: RC-01, RC-02, RC-04 or RC-07 no longer carries the figure a slide reads');
 /**
  * The trial slide's ">4×" tile is RC-06a's value; its caption (WP50, cycle-25 review) said the multiple in words, "More than four times the average employment effect across nine vocational-training trials.", and stated neither the +10.3 nor
  * the 2.3 (the hero's trial card states the +10.3, the Independent Evaluation page the nine-trial comparison). The caption is the slide's own: RC-06a's tile label and glance label are unchanged. The build stops if the tile stops reading ">4×".
@@ -332,7 +334,7 @@ const SLIDES: HeroSlide[] = [
     // WP63 (cycle-35 review, GLM L4): "..., women offered a place had an estimated 41% higher monthly income than the control group, about +$27 a month." (it said "..., their monthly income was an estimated 41% higher than the control group’s, ...", and "their" had no noun
     // before it in the sentence); the figures are RC-01's and RC-04's, read above, and the heading and the data-facts are unchanged.
     // WP64 (cycle-36 review, GLM): "..., about $27 more a month." (it said "..., about +$27 a month.", a sign without a noun); the figure is still RC-04's (dollarsOffered), and RC-04's own text and tile ("+$27") are unchanged.
-    lead: `In CodersTrust’s WSDFM program, women offered a place had an estimated ${incomeOffered}% higher monthly income than the control group, about $${dollarsOffered} more a month.`,
+    lead: `In CodersTrust’s WSDFM program, women offered a place had an estimated ${incomeOffered}% higher monthly income than the control group, about $${dollarsOffered} more a month on a control-group mean of about $${controlMean}.`,
     leadFacts: ['RC-01', 'RC-04'],
     // WP50 (cycle-25 review): the caption no longer repeats the trial's employment result (+10.3 percentage points), which the hero's trial card states; it says the multiple the tile shows.
     // WP54 (cycle-28 review, Grok R2): "Employment effect: more than four times the 2.3-point average across nine vocational-training trials."; the tile (">4×") and its data-fact were unchanged.

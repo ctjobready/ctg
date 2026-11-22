@@ -76,7 +76,7 @@ const HUBS = ['partner-with-us/index.html', 'programs/index.html'];
 test.describe('1 Facilitators: each page that explains delivery names who teaches', () => {
   /** [page, the delivery card or sentence, in the page order the reader meets it]. The long form is once on the page. */
   const DELIVERY: [string, string][] = [
-    [HOME, `How We Reach Them AI-Supported Blended Training Training in existing labs and colleges, led by ${LONG}, with delivery designed to work where connectivity is limited.`], // WP163: the card is "AI-Supported Blended Training" and then states the delivery model. WP154: the card names where (existing labs and colleges) and who teaches. WP153: Home’s first delivery explanation names who teaches (it was the one exemption)
+    [HOME, `How We Reach Them An AI-Supported Flipped Classroom Training in existing labs and colleges, led by ${LONG}, with delivery designed to work where connectivity is limited.`], // WP163: the card is "AI-Supported Blended Training" and then states the delivery model. WP154: the card names where (existing labs and colleges) and who teaches. WP153: Home’s first delivery explanation names who teaches (it was the one exemption)
     [DEV, `How We Reach Them Existing Labs and Colleges Outreach and selection with local partners, then blended delivery by ${LONG}.`], // WP153: the body no longer repeats "in existing labs and colleges"
     [GOVERNMENTS, `How We Reach Them Government Digital Labs Blended learning in government labs you already run, led by ${BARE}; lab access and seats are confirmed per program.`],
     [UNIVERSITIES, `Set Up Campus Labs as Learning Centers On-campus labs become blended-learning centers with ${LONG}; faculty members act as coordinators.`],

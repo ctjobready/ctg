@@ -150,7 +150,7 @@ test.describe('WP114 item 5: the changed pages are dated 2026-10-29', () => {
     }
   });
 
-  test('the Governance date from item 1 of WP109 is unchanged (WP141 moved it to November 1, 2026; WP155 to November 2, 2026; WP166-A to November 21, 2026)', () => {
-    expect(distHtml('about/governance/index.html')).toMatch(/<time datetime="2026-11-21"[^>]*>November 21, 2026<\/time>/);
+  test('the Governance date from item 1 of WP109 is unchanged (WP141 moved it to November 1, 2026; WP155 to November 2, 2026; WP166-A to November 21, 2026; WP167 to November 23, 2026)', () => {
+    expect(distHtml('about/governance/index.html')).toMatch(/<time datetime="2026-11-23"[^>]*>November 23, 2026<\/time>/);
   });
 });

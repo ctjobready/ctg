@@ -277,10 +277,11 @@ test.describe('L5, Development Partners: the quarterly reviews carry the scope q
 test.describe('L8, About and llms.txt: "Additional country and regional offices are planned."', () => {
   const SHOWN = 'CodersTrust is headquartered in New York, and its parent organization is CT USA, Inc. CodersTrust Bangladesh (CodersTrust Bangladesh Ltd.) is a country office. Additional country and regional offices are planned.';
 
-  test('About prints the three identity sentences with the last one shortened, tied to ID-11, once', async ({ page }) => {
+  test('About prints the short identity sentence (WP167; it printed the three sentences with the last one shortened), tied to ID-11, once', async ({ page }) => {
     await open(page, ABOUT);
-    await expect(page.locator('main [data-fact="ID-11"]')).toHaveCount(1);
-    expect(compact(await page.locator('.hero__copy > .about-identity').textContent())).toBe(SHOWN);
+    await expect(page.locator('main [data-fact~="ID-11"]')).toHaveCount(1);
+    // WP167 (owner approval of 2026-11-23, R1-24): About's hero prints the short sentence; SHOWN (the three sentences) is what llms.txt reads
+    expect(compact(await page.locator('.hero__copy > .about-identity').textContent())).toBe('CodersTrust is headquartered in New York and has worked in 16 countries and territories.');
     expect(compact(await page.locator('main').textContent())).not.toContain('in the next few years');
   });
 
@@ -300,7 +301,7 @@ test.describe('L8, About and llms.txt: "Additional country and regional offices 
       await page.setViewportSize(vp);
       await open(page, ABOUT);
       expect(await noOverflow(page), `${vp.width}px`).toBe(true);
-      await expect(page.locator('.hero__copy > .about-identity > p.fact[data-fact="ID-11"]')).toHaveCount(1);
+      await expect(page.locator('.hero__copy > .about-identity > p.fact[data-fact~="ID-11"]')).toHaveCount(1);
     }
   });
 });

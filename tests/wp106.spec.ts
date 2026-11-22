@@ -120,7 +120,7 @@ test.describe('WP106 item 3: Recognition drops the NOVA Award; the bio keeps it'
   test('"Aziz Ahmad’s Appointments and Honors" lists the UPEACE appointment and the SDG Life Achievement Award only', async ({ page }) => {
     await open(page, 'about/recognition/');
     const titles = (await page.locator('#honors .rec-honor .card__title').allTextContents()).map(compact);
-    expect(titles).toEqual(['Global UPEACE Ambassador', 'SDG Life Achievement Award']);
+    expect(titles).toEqual(['Global Ambassador of the University for Peace (UPEACE), the UN-Mandated University', 'SDG Life Achievement Award, UNGSII Foundation']); // WP167 (owner approval of 2026-11-23, R1-41): PA-11's new wording
     const section = compact(await page.locator('#honors').textContent());
     expect(section).not.toContain('NOVA');
     expect(section).not.toContain('green technology');

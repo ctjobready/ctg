@@ -180,7 +180,7 @@ test.describe('5 Development Partners and Governments: the lead does not repeat 
 test.describe('6 Governance: the hero and the cards do not repeat each other', () => {
   test('the hero says what is confirmed in co-design; the Contracting Entities card names the entities once', () => {
     const t = main(GOVERNANCE);
-    expect(t).toContain('The contracting entity, legal status and due-diligence arrangements for each program are confirmed with the funder during co-design.');
+    expect(t).toContain('Two contracting entities, named leadership, safeguarding agreed before enrollment, an independent randomized trial and audited accounts on request. What is specific to your program is confirmed with you in co-design.');
     const entities = 'CT USA, Inc. in the United States or CodersTrust Bangladesh Ltd. in Bangladesh';
     expect(count(t, entities)).toBe(1);
     expect(t).toContain(`Contracting Entities ${entities}. The entity that contracts depends on the program’s country and the funder’s requirements.`);

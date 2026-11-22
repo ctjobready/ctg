@@ -53,7 +53,7 @@ test.describe('figures say what they measure', () => {
   test('Home slide 1 states the offered-place income result only; the program-results slide and the case card say the WSDFM 71% is program records, not trial results (WP42: it is the fourth slide)', async ({ page }) => {
     await open(page, '');
     const lead = compact(await page.locator('[data-hs-slide]').nth(0).locator('.hs__lead').textContent());
-    expect(lead).toBe('In CodersTrust’s WSDFM program, women offered a place had an estimated 41% higher monthly income than the control group, about $27 more a month.'); // WP63 (cycle-35 review, GLM L4)
+    expect(lead).toBe('In CodersTrust’s WSDFM program, women offered a place had an estimated 41% higher monthly income than the control group, about $27 more a month on a control-group mean of about $66.' /* WP167 (owner approval of 2026-11-23, R1-13): the lead gives the base */); // WP63 (cycle-35 review, GLM L4)
     // WP166-A (marketing review R1-11): the slides run evidence, survey outcomes, program results, government (old slide 2 is now 4, 3 is 2, 4 is 3)
     await expect(page.locator('[data-hs-slide]').nth(2)).toContainText('WSDFM: 711 of 1,000 enrolled in work (71%).');
     // WP51 (cycle-26 review): the Home card shows delivery context in place of the figure and its caption ("WSDFM program records (not trial results; the trial’s 425 women offered a place were among these 1,000): 71% of enrolled women in work"), which the pages that keep the figure still print (below; tests/wp51.spec.ts)
@@ -149,13 +149,13 @@ test.describe('figures say what they measure', () => {
     await expect(page.locator('#evidence a[href$="impact/independent-evaluation/"]')).toHaveCount(1);
   });
 
-  test('the announcement bar states the trial result once and keeps its two links', async ({ page }) => {
+  test('the announcement bar states the trial result once and keeps its one link (WP167: Impact Survey 2026)', async ({ page }) => {
     await open(page, '');
     const bar = page.locator('[data-promo]');
     const text = compact(await bar.locator('.promo-bar__long').textContent());
     expect(text).toBe('women offered a place were 10.3 percentage points more likely to be employed.');
     expect(compact(await bar.textContent())).not.toMatch(/Surveyed completers|78\.2%|48\.0%/);
-    expect(await texts(page, '[data-promo] a')).toEqual(['Trial Results', 'Impact Survey 2026']);
+    expect(await texts(page, '[data-promo] a')).toEqual(['Impact Survey 2026']); // WP167 (owner answer of 2026-11-23)
   });
 });
 

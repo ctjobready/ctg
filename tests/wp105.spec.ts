@@ -230,7 +230,8 @@ test.describe('WP105 item 9: stamps and dateModified of the pages this WP change
   // WP161-A: Governments moved on to 2026-11-03; WP161-B: Recognition moved on to 2026-11-02.
   // WP162 and WP163: About moved on to 2026-11-03 (the 2025–2026 timeline item's JobReady sentence).
   // WP166-A: About and Recognition and Media moved on to 2026-11-21; WP166-B: Governments did too (the marketing review R3; it was 2026-11-03).
-  for (const [route, day] of [['about/', '2026-11-21'], ['partner-with-us/governments/', '2026-11-21'], ['about/recognition/', '2026-11-21']]) {
+  // WP167 (owner approval of 2026-11-23): About (the hero's identity paragraph) and Recognition and Media (the two honors' headings) moved on to 2026-11-23.
+  for (const [route, day] of [['about/', '2026-11-23'], ['partner-with-us/governments/', '2026-11-21'], ['about/recognition/', '2026-11-23']]) {
     test(`${route} pins its JSON-LD dateModified to ${day} (the day it last changed: WP141, WP151, WP152, WP161, WP162, WP163), not the build date`, async ({ page }) => {
       await open(page, route);
       expect(await ldJson(page)).toMatch(new RegExp(`"dateModified"\\s*:\\s*"${day}"`));

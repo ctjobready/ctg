@@ -437,7 +437,7 @@ test.describe('Home: the trial slide (items 17 and 18)', () => {
     expect('Women Offered a Place Earned an Estimated 41% More per Month').toBe(titleCase('Women Offered a Place Earned an Estimated 41% More per Month'));
     await expect(first(page).locator('.hs__eyebrow')).toHaveText('Randomized Trial of CodersTrust’s WSDFM Program');
     expect('Randomized Trial of CodersTrust’s WSDFM Program').toBe(titleCase('Randomized Trial of CodersTrust’s WSDFM Program'));
-    expect(compact(await first(page).locator('.hs__lead').textContent())).toBe('In CodersTrust’s WSDFM program, women offered a place had an estimated 41% higher monthly income than the control group, about $27 more a month.'); // WP63 (cycle-35 review, GLM L4)
+    expect(compact(await first(page).locator('.hs__lead').textContent())).toBe('In CodersTrust’s WSDFM program, women offered a place had an estimated 41% higher monthly income than the control group, about $27 more a month on a control-group mean of about $66.' /* WP167 (owner approval of 2026-11-23, R1-13): the lead gives the base */); // WP63 (cycle-35 review, GLM L4)
     expect(await first(page).locator('h3').getAttribute('data-fact')).toBe('RC-01');
     expect(await first(page).getAttribute('aria-label')).toBe('1 of 4: Women Offered a Place Earned an Estimated 41% More per Month');
   });

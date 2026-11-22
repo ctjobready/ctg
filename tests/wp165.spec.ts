@@ -4,7 +4,7 @@ import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/test';
 import { titleCase } from '../src/lib/titleCase.mjs';
 import { blogHref, otherBlogPosts, publishedBlogPosts, type BlogPostLike } from '../src/lib/blogPosts';
-import { BLOG_LINK, NEWS_LINK, footerBottomLinksFor, topLinksFor } from '../src/data/nav';
+import { BLOG_LINK, NEWS_AND_BLOG_LINK, NEWS_LINK, footerBottomLinksFor, topLinksFor } from '../src/data/nav';
 import { BASE, DIST_DIR } from './support/env';
 import { MOBILE, VIEWPORTS, fontsReady, open, scrollThrough, settleAnimations, vpLabel } from './support/browser';
 import { listPages } from './support/pages';
@@ -148,9 +148,10 @@ test.describe('Always: the draft filter, the nav gate and the exemption helper',
     expect(publishedBlogPosts([entry('draft-no-url', '2026-10-20', true, false)])).toEqual([]);
     expect(publishedBlogPosts([{ id: 'own', data: { title: 'own', date: new Date('2026-11-05'), draft: false, repost: false } }]).map((e) => e.id)).toEqual(['own']);
   });
-  test('the nav gate: News alone with no live post; News then Blog with one (header, drawer, no-JS nav and footer all read it)', () => {
+  test('the nav gate: News alone with no live post; one "News and Blog" item with one (header, drawer and no-JS nav; the footer lists News and Blog; WP167, owner approval of 2026-11-23)', () => {
     expect(topLinksFor(false)).toEqual([NEWS_LINK]);
-    expect(topLinksFor(true)).toEqual([NEWS_LINK, BLOG_LINK]);
+    expect(topLinksFor(true)).toEqual([NEWS_AND_BLOG_LINK]);
+    expect(NEWS_AND_BLOG_LINK).toEqual({ label: 'News and Blog', href: '/news/' });
     expect(BLOG_LINK).toEqual({ label: 'Blog', href: '/blog/' });
     expect(footerBottomLinksFor(false).map((l) => l.label)).toEqual(['News', 'Privacy', 'Accessibility']);
     expect(footerBottomLinksFor(true).map((l) => l.label)).toEqual(['News', 'Blog', 'Privacy', 'Accessibility']);
@@ -409,21 +410,24 @@ test.describe('LIVE (a build with the drafts lifted: see the header of this file
     });
   }
 
-  test('Blog sits right after News in the header, the drawer, the no-JS nav and the footer, on every built page; it is the current page on /blog/ pages only', () => {
+  // WP167 (owner approval of 2026-11-23, marketing review R7-16): the header, drawer and no-JS nav carry one "News and Blog" item that opens News (the Blog is linked from the News page); the footer keeps News and Blog side by side.
+  test('one "News and Blog" item in the header, the drawer and the no-JS nav, and News then Blog in the footer, on every built page; the item is the current page on /news/ and /blog/ pages only', () => {
     const blog = `href="${BASE}blog/"`;
     const news = `href="${BASE}news/"`;
     for (const pg of listPages()) {
       const raw = readFileSync(pg.file, 'utf8');
       const header = /<header class="site-header"[\s\S]*?<\/header>/.exec(raw)?.[0] ?? '';
       const nav = /<nav class="site-nav"[\s\S]*?<\/nav>/.exec(header)?.[0] ?? '';
-      expect([...nav.matchAll(/<a class="site-nav__link" href="([^"]+)"[^>]*>([^<]*)<\/a>/g)].map((m) => `${m[2]} ${m[1]}`), pg.route).toEqual([`News ${BASE}news/`, `Blog ${BASE}blog/`]);
+      expect([...nav.matchAll(/<a class="site-nav__link" href="([^"]+)"[^>]*>([^<]*)<\/a>/g)].map((m) => `${m[2]} ${m[1]}`), pg.route).toEqual([`News and Blog ${BASE}news/`]);
       const drawer = [...header.matchAll(/<a class="drawer__top" href="([^"]+)"/g)].map((m) => m[1]);
-      expect(drawer.indexOf(`${BASE}blog/`), pg.route).toBe(drawer.indexOf(`${BASE}news/`) + 1);
+      expect(drawer.indexOf(`${BASE}news/`), pg.route).toBeGreaterThan(-1);
+      expect(drawer.indexOf(`${BASE}blog/`), pg.route).toBe(-1);
       const noscript = /<nav class="nav-noscript"[\s\S]*?<\/nav>/.exec(header)?.[0] ?? '';
-      expect(noscript.indexOf(blog), pg.route).toBeGreaterThan(noscript.indexOf(news));
+      expect(noscript.indexOf(news), pg.route).toBeGreaterThan(-1);
+      expect(noscript.indexOf(blog), pg.route).toBe(-1);
       const bottom = /<div class="footer__bottom"[\s\S]*?<\/div>/.exec(raw)?.[0] ?? '';
       expect([...bottom.matchAll(/<a href="[^"]+"[^>]*>([^<]*)<\/a>/g)].map((m) => m[1]), pg.route).toEqual(['News', 'Blog', 'Privacy', 'Accessibility']);
-      expect(/<a class="site-nav__link" href="[^"]*blog\/"[^>]*aria-current="page"/.test(raw), pg.route).toBe(pg.route.startsWith('/blog/'));
+      expect(/<a class="site-nav__link" href="[^"]*news\/"[^>]*aria-current="page"/.test(raw), pg.route).toBe(pg.route.startsWith('/blog/') || pg.route.startsWith('/news/'));
     }
   });
   test('llms.txt: Blog after News among the reference pages, and a "## Blog" section listing each live post with its meta description', () => {
@@ -442,7 +446,7 @@ test.describe('LIVE (a build with the drafts lifted: see the header of this file
   });
 
   for (const width of [1024, 1100, 1280]) {
-    test(`the desktop header keeps one row at ${width} px with Blog beside News`, async ({ page: pw }) => {
+    test(`the desktop header keeps one row at ${width} px with "News and Blog" as the last item`, async ({ page: pw }) => {
       await pw.setViewportSize({ width, height: 800 });
       await open(pw, 'blog/');
       await fontsReady(pw);
@@ -454,7 +458,7 @@ test.describe('LIVE (a build with the drafts lifted: see the header of this file
         const last = items[items.length - 1].getBoundingClientRect();
         return { rowOverflow: row.scrollWidth - row.clientWidth, rows: tops.size, gap: actions.left - last.right, docOverflow: document.documentElement.scrollWidth - window.innerWidth, lastLabel: items[items.length - 1].innerText.trim() };
       });
-      expect(fit.lastLabel).toBe('Blog');
+      expect(fit.lastLabel).toBe('News and Blog'); // WP167
       expect(fit.rows).toBe(1);
       expect(fit.rowOverflow).toBeLessThanOrEqual(0);
       expect(fit.gap).toBeGreaterThan(0);

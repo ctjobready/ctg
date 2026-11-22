@@ -10,6 +10,7 @@ import Icon from '../../components/system/Icon.astro';
 import NewsGrid from '../../components/pages/news/NewsGrid.astro';
 import NewsCard from '../../components/ui/NewsCard.astro';
 import CTABand from '../../components/ui/CTABand.astro';
+import { hasLiveBlogPosts } from '../../components/pages/blog/blog';
 import { allNews, coverAlt, featuredNews, newsHref, NEWS_CTA, TOPICS } from '../../components/pages/news/news';
 import { curlyApostrophes, formatDate, isoDate } from '../../lib/format';
 import { pageUrl, webPage } from '../../lib/schema';
@@ -19,6 +20,7 @@ import { ctaHref } from '../../lib/mailto';
 import { CTAS } from '../../data/ctas';
 
 const posts = await allNews();
+const blogLive = await hasLiveBlogPosts();
 const latest = posts[0];
 // D13: the featured cover carries the same asset ID as on its card and article (news-<slug>); staging swaps in the illustration when the gate says so.
 const latestAsset = `news-${latest.id}`;
@@ -47,7 +49,10 @@ const jsonLd = [
   breadcrumbs={[{ label: 'News' }]}
   jsonLd={jsonLd}
 >
-  <Hero eyebrow="Newsroom" title="Contracts, Partnerships and Recognition Since 2014" lead="Government contracts, partnerships and MOUs, recognition and program events, from the 2014 launch in Copenhagen to this year." art={false} />
+  <Hero eyebrow="Newsroom" title="Contracts, Partnerships and Recognition Since 2014" lead="Government contracts, partnerships and MOUs, recognition and program events, from the 2014 launch in Copenhagen to this year." art={false}>
+    {/* WP167 (owner approval of 2026-11-23, marketing review R7-16): the header carries one "News and Blog" item that opens here, so the Blog is one click from this page. */}
+    {blogLive && <Fragment slot="actions"><a class="link" href={url('/blog/')}>Read the Blog: Essays by Aziz Ahmad<Icon name="arrow-right" size={16} /></a></Fragment>}
+  </Hero>
 
   <Section id="featured" aria-labelledby="featured-h">
     <SectionHeader id="featured-h" title="Featured" />

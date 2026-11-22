@@ -430,7 +430,7 @@ test.describe('About, Governance, Mentors and Recognition (R1)', () => {
     const cta = visible(byId(ABOUT, 'section', 'about-cta'));
     expect(cta).toContain('See Partnership Routes');
     expect(cta).not.toContain('Read the Evidence');
-    expect(webPageModified(ABOUT)).toBe(TODAY);
+    expect(webPageModified(ABOUT)).toBe('2026-11-23'); // WP167 (owner approval of 2026-11-23): the hero's identity paragraph
   });
 
   test('Governance: the peer-reviewed line, the closing band and the page date (R1-06, R1-29)', () => {
@@ -439,8 +439,8 @@ test.describe('About, Governance, Mentors and Recognition (R1)', () => {
     expect(t).toContain('We will reply with the documents and answers we can share.');
     expect(t).not.toContain('what can be shared');
     expect(visible(byId(GOV, 'section', 'diligence-cta'))).toContain('Read the Evidence');
-    expect(t).toContain('Last updated November 21, 2026');
-    expect(webPageModified(GOV)).toBe(TODAY);
+    expect(t).toContain('Last updated November 23, 2026'); // WP167 (owner approval of 2026-11-23): the lead
+    expect(webPageModified(GOV)).toBe('2026-11-23');
   });
 
   test('Mentors: lead, count line, buttons, two credentials and the Title Case link (R1-37, R1-38, R1-56)', () => {
@@ -468,7 +468,7 @@ test.describe('About, Governance, Mentors and Recognition (R1)', () => {
     expect(count(t, 'Send a Media Inquiry')).toBeGreaterThanOrEqual(2);
     expect(t).not.toContain('Media Inquiries');
     expect(t).toContain('More Recognition News');
-    expect(webPageModified(RECOGNITION)).toBe(TODAY);
+    expect(webPageModified(RECOGNITION)).toBe('2026-11-23'); // WP167 (owner approval of 2026-11-23): the two honors
   });
 });
 

@@ -867,7 +867,8 @@ export const CONTRACTING_ENTITIES = 'CT USA, Inc. in the United States or Coders
 export const GOVERNANCE: CopyBlock = {
   // WP155 (Opus Max run 2, kit 122, Polish 6): the hero no longer names the entities or says the entity depends on the program's country and the funder's requirements; the Contracting Entities card (ContractingPanel) says both once.
   // The lead says what is confirmed with the funder in co-design (PD-13).
-  text: 'The contracting entity, legal status and due-diligence arrangements for each program are confirmed with the funder during co-design.',
+  // WP167 (owner approval of 2026-11-23, marketing review R1-09): the lead opens with what a due-diligence team can check now (each item is on this page); what is specific to the program is confirmed in co-design (PD-13).
+  text: 'Two contracting entities, named leadership, safeguarding agreed before enrollment, an independent randomized trial and audited accounts on request. What is specific to your program is confirmed with you in co-design.',
   facts: ['ID-07', 'PD-13'],
 };
 

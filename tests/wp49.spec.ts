@@ -468,7 +468,7 @@ test.describe('Investors: the due-diligence line and the eyebrow (items 20 and 3
     expect(fact('ID-07').text).toContain('CodersTrust Bangladesh Ltd.');
     expect(CONTRACTING_ENTITIES).toBe('CT USA, Inc. in the United States or CodersTrust Bangladesh Ltd. in Bangladesh');
     // WP155 (Polish 6): the hero no longer names the entities ("CodersTrust contracts through ...; ..."); the Contracting Entities card names them once, from the same constant.
-    expect(GOVERNANCE.text).toBe('The contracting entity, legal status and due-diligence arrangements for each program are confirmed with the funder during co-design.');
+    expect(GOVERNANCE.text).toBe('Two contracting entities, named leadership, safeguarding agreed before enrollment, an independent randomized trial and audited accounts on request. What is specific to your program is confirmed with you in co-design.');
     await open(page, 'about/governance/');
     expect(await mainText(page)).toContain(`${CONTRACTING_ENTITIES}.`);
   });

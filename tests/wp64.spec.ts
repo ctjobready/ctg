@@ -353,7 +353,7 @@ test.describe('Item 7 (GLM, Gemini, Claude): three polish fixes', () => {
     expect(fact('RC-04').text.startsWith('About +$27 a month')).toBe(true);
     await open(page, HOME);
     const lead = slide(page, 1).locator('.hs__lead');
-    await expect(lead).toHaveText('In CodersTrust’s WSDFM program, women offered a place had an estimated 41% higher monthly income than the control group, about $27 more a month.');
+    await expect(lead).toHaveText('In CodersTrust’s WSDFM program, women offered a place had an estimated 41% higher monthly income than the control group, about $27 more a month on a control-group mean of about $66.'); // WP167 (owner approval of 2026-11-23, R1-13): the lead gives the base
     expect(await lead.getAttribute('data-fact')).toBe('RC-01 RC-04');
     expect(compact(await page.locator('#results').textContent())).not.toContain('about +$27 a month');
     await open(page, 'impact/independent-evaluation/');
