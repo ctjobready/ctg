@@ -39,6 +39,19 @@ export function ctaHref(key: CtaKey): string {
   });
 }
 
+/** The placeholder in the `role` CTA's subject that the role title replaces. */
+export const ROLE_TITLE_SLOT = '[role title]';
+
+/**
+ * WP168-A: "Apply for This Role" for one open role (/careers/<slug>/): the `role` CTA with the role title in its subject ("Application: Chief Revenue
+ * Officer (CRO)") and the CTA's body fields. scripts/check-links.mjs matches such a subject to the CTA's template.
+ */
+export function roleApplyHref(roleTitle: string): string {
+  const c = CTAS.role;
+  if (!c.subject?.includes(ROLE_TITLE_SLOT)) throw new Error(`src/data/ctas.ts: the role CTA subject must contain ${ROLE_TITLE_SLOT}`);
+  return mailto({ to: c.to, subject: c.subject.replace(ROLE_TITLE_SLOT, roleTitle), body: c.body ? bodyTemplate(c.body) : undefined });
+}
+
 /** Everything a button needs: label + href (+ secondary). The href is '' for a withheld CTA, which renders as nothing. */
 export function cta(key: CtaKey): CtaDef & { href: string } {
   return { ...CTAS[key], href: ctaHref(key) };

@@ -127,7 +127,10 @@ function checkMailto(raw, ref, page) {
   const body = params.get('body');
   if (body !== undefined && /(^|[^\r])\n/.test(body)) fail('mailto-lf-linebreak', 'body uses bare LF line breaks; RFC 6068 expects CRLF (%0D%0A)', 'warning');
   if (subject !== undefined && data.ctas) {
-    const cta = Object.values(data.ctas).find((c) => c.subject === subject);
+    // WP168-A: a subject the site fills in (the `role` CTA, "Application: [role title]" -> "Application: <the role's title>") matches its template; every
+    // other subject must equal a CTA subject exactly, as before
+    const filled = (c) => c.key === 'role' && typeof c.subject === 'string' && c.subject.includes('[role title]') && subject.startsWith(c.subject.slice(0, c.subject.indexOf('[role title]'))) && subject.length > c.subject.indexOf('[role title]') && !subject.includes('[');
+    const cta = Object.values(data.ctas).find((c) => c.subject === subject) ?? Object.values(data.ctas).find(filled);
     if (!cta) fail('mailto-subject-not-in-library', `subject "${subject}" matches no CTA in src/data/ctas.ts`, 'warning');
     else if (body !== undefined && cta.body) {
       const labels = body.split(/\r?\n/).map((l) => /^(.+?):\s*$/.exec(l)?.[1]).filter(Boolean);

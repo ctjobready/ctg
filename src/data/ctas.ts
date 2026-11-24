@@ -26,6 +26,7 @@ export type CtaKey =
   | 'local'
   | 'diligence'
   | 'careers'
+  | 'role'
   | 'mentor'
   | 'superkids'
   | 'nu-pgd';
@@ -165,12 +166,33 @@ export const CTAS: Record<CtaKey, CtaDef> = {
   /** Careers page: applications go to the CodersTrust Bangladesh HR team (address from the legacy careers page). */
   careers: {
     key: 'careers',
-    // WP166-A (R7-25, R7-27): no roles are open, so the button asks for what the page asks for (a resume), in American usage ("speculative application" is British),
-    // and the email has no role line and takes an attached file or a link.
+    // WP166-A (R7-25, R7-27): the button asks for what the page asks for (a resume), in American usage ("speculative application" is British), and the email
+    // takes an attached file or a link. WP168-A: the open roles have their own button (`role`, below); this one stays for a resume sent without a listed role.
     label: 'Send Your Resume',
     to: 'career@coderstrustbd.com', // CAREERS_EMAIL (checked below)
     subject: 'Resume — [your name]',
     body: ['Name', 'Area of work you are interested in', 'Location', 'Resume attached (or link to your resume or portfolio)'],
+  },
+  /**
+   * WP168-A (owner decision of 24 November 2026): "Apply for This Role" on each /careers/<slug>/ page, to the same HR address. The subject names the role
+   * (roleApplyHref() in src/lib/mailto.ts puts the role title in place of "[role title]"), and the body asks for what the old job posts asked applicants to
+   * give in the email (availability for joining and interviews, minimum desired compensation, the location applied for, contact information), plus the resume.
+   */
+  role: {
+    key: 'role',
+    label: 'Apply for This Role',
+    to: 'career@coderstrustbd.com', // CAREERS_EMAIL (checked below)
+    subject: 'Application: [role title]',
+    body: [
+      'Name',
+      'Earliest availability for joining',
+      'Earliest availability for interviews',
+      'Interview availability time windows',
+      'Minimum desired compensation (monthly salary in BDT)',
+      'Job location applying for',
+      'Contact information',
+      'Resume attached (or link to your resume or portfolio)',
+    ],
   },
   /** Mentor applications (About / Mentors): same pattern as `media`, general address. */
   mentor: {
@@ -198,8 +220,8 @@ export const CTAS: Record<CtaKey, CtaDef> = {
 };
 
 // The two literal addresses above must equal the site contact data (the CTAS literal stays sandbox-evaluable).
-if (CTAS.local.to !== BANGLADESH_HQ.email || CTAS.careers.to !== CAREERS_EMAIL) {
-  throw new Error('src/data/ctas.ts: `local`/`careers` recipients are out of step with src/lib/site.ts');
+if (CTAS.local.to !== BANGLADESH_HQ.email || CTAS.careers.to !== CAREERS_EMAIL || CTAS.role.to !== CAREERS_EMAIL) {
+  throw new Error('src/data/ctas.ts: `local`/`careers`/`role` recipients are out of step with src/lib/site.ts');
 }
 
 export const CTA_KEYS = Object.keys(CTAS) as CtaKey[];

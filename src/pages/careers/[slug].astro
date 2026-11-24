@@ -1,0 +1,162 @@
+---
+import { render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Hero from '../../components/system/Hero.astro';
+import Button from '../../components/system/Button.astro';
+import Icon from '../../components/system/Icon.astro';
+import Section from '../../components/ui/Section.astro';
+import SectionHeader from '../../components/ui/SectionHeader.astro';
+import StepFlow from '../../components/ui/StepFlow.astro';
+import RoleCard from '../../components/pages/careers/RoleCard.astro';
+import { APPLY_STEPS, BENEFITS, CATEGORIES, allRoles, relatedRoles, roleHref } from '../../components/pages/careers/careers';
+import { desc } from '../../components/pages/impact/page-utils';
+import { CTAS } from '../../data/ctas';
+import { roleApplyHref } from '../../lib/mailto';
+import { CAREERS_EMAIL } from '../../lib/site';
+import { webPage } from '../../lib/schema';
+import { truncate } from '../../lib/format';
+import { url } from '../../lib/url';
+
+/**
+ * WP168-A (owner decision of 24 November 2026): one open role, from the previous site's job post (src/content/careers/<slug>.md). The H1 is the role title,
+ * the eyebrow its category; the key facts are the post's own (job type, location, salary as stated, never a figure); then the role text, the benefits every
+ * post listed, the application steps with "Apply for This Role" (a prefilled email to the HR address: src/data/ctas.ts `role`) and more open roles, the same
+ * category first. No posting date is printed (every role is open) and there is no JobPosting JSON-LD (no closing date or employer details to give it):
+ * a WebPage with its breadcrumb, dated by the day this page was written.
+ */
+export async function getStaticPaths() {
+  const roles = await allRoles();
+  return roles.map((role) => ({ params: { slug: role.id }, props: { role, all: roles } }));
+}
+const { role, all } = Astro.props;
+const { Content } = await render(role);
+const d = role.data;
+const path = roleHref(role);
+const SUFFIX = ' | CodersTrust';
+const metaTitle = d.seoTitle ?? d.title;
+if (metaTitle.length + SUFFIX.length > 60) throw new Error(`Role ${path}: the <title> would be ${metaTitle.length + SUFFIX.length} characters (limit 60). Add a seoTitle of at most ${60 - SUFFIX.length} characters.`);
+const description = desc(d.summary);
+const category = CATEGORIES[d.category];
+const apply = { label: CTAS.role.label, href: roleApplyHref(d.title) };
+const others = relatedRoles(all, role);
+const UPDATED = '2026-11-24'; // WP168-A: the day the role pages were published on this site
+const jsonLd = [webPage({ path, name: d.title, description, dateModified: UPDATED, breadcrumb: [{ name: 'Home', path: '/' }, { name: 'Careers', path: '/careers/' }, { name: d.title, path }] })];
+---
+
+<BaseLayout title={metaTitle} description={description} path={path} breadcrumbs={[{ label: 'Careers', href: '/careers/' }, { label: truncate(d.title, 48) }]} jsonLd={jsonLd}>
+  <Hero eyebrow={category} title={d.title} artSeed="careers">
+    <Fragment slot="actions">
+      <Button href={apply.href} icon="mail" data-role-apply>{apply.label}</Button>
+      <a class="link" href={url('/careers/#open-roles')} data-role-back>See All Open Roles<Icon name="arrow-right" size={16} /></a>
+    </Fragment>
+    <dl slot="stats" class="keyfacts">
+      <div><dt>Job Type</dt><dd>{d.type}</dd></div>
+      <div><dt>Location</dt><dd>{d.location}</dd></div>
+      {d.salary && <div><dt>Salary</dt><dd>{d.salary}</dd></div>}
+    </dl>
+  </Hero>
+
+  <Section id="role" aria-label="The role">
+    <div class="prose role__body"><Content /></div>
+  </Section>
+
+  <Section id="benefits" tone="airy" aria-labelledby="benefits-h">
+    <SectionHeader id="benefits-h" eyebrow="Working at CodersTrust" title="Benefits" lead={BENEFITS.lead} />
+    <ul class="role__perks" role="list">
+      {BENEFITS.items.map((b) => <li>{b}</li>)}
+    </ul>
+  </Section>
+
+  <Section id="apply" tone="ice" aria-labelledby="apply-h">
+    <SectionHeader id="apply-h" eyebrow="How to Apply" title="Apply for This Role" lead="Applications go to the CodersTrust Bangladesh HR team." />
+    <StepFlow steps={APPLY_STEPS} />
+    {d.applyNote && <p class="role__note" data-apply-note>{d.applyNote}</p>}
+    <p class="role__apply"><Button href={apply.href} icon="mail" data-role-apply>{apply.label}</Button></p>
+    <p class="role__mail">Or email your resume to <a href={apply.href}>{CAREERS_EMAIL}</a>, with the role title as the subject.</p>
+  </Section>
+
+  {
+    others.length > 0 && (
+      <Section id="more-roles" aria-labelledby="more-h">
+        <SectionHeader id="more-h" eyebrow="Careers" title="More Open Roles" />
+        <div class="grid-cards">
+          {others.map((r) => <RoleCard role={r} />)}
+        </div>
+        <p class="role__all"><a class="link" href={url('/careers/#open-roles')}>See All Open Roles<Icon name="arrow-right" size={16} /></a></p>
+      </Section>
+    )
+  }
+</BaseLayout>
+
+<style>
+  .keyfacts {
+    margin: 0;
+    display: grid;
+    gap: var(--space-sm) var(--space-lg);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: 100%;
+  }
+  .keyfacts div {
+    display: grid;
+    gap: var(--space-xs);
+  }
+  .keyfacts dt {
+    font-size: var(--fs-body-xs);
+    font-weight: var(--fw-bold);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--on-primary-container);
+  }
+  .keyfacts dd {
+    margin: 0;
+    color: var(--on-surface);
+    font-weight: var(--fw-medium);
+  }
+  @media (min-width: 768px) {
+    .keyfacts {
+      grid-template-columns: repeat(3, minmax(0, auto));
+    }
+  }
+  .role__body {
+    overflow-wrap: anywhere;
+  }
+  .role__body > :global(:first-child) {
+    margin-top: 0;
+  }
+  .role__perks {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+  }
+  .role__perks li {
+    padding: var(--space-sm) var(--space-md);
+    border-radius: var(--radius-pill);
+    background: var(--primary-fixed);
+    color: var(--on-primary-fixed);
+    font-weight: var(--fw-medium);
+    font-size: var(--fs-body-base);
+  }
+  .role__note {
+    margin: var(--space-lg) 0 0;
+    max-width: var(--measure);
+    color: var(--on-surface);
+  }
+  .role__apply {
+    margin: var(--space-lg) 0 0;
+  }
+  .role__mail {
+    margin: var(--space-md) 0 0;
+  }
+  .role__mail a {
+    color: var(--primary);
+    font-weight: var(--fw-medium);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .role__all {
+    margin: var(--space-lg) 0 0;
+  }
+</style>

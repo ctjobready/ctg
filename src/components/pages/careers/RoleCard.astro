@@ -1,0 +1,40 @@
+---
+import Icon from '../../system/Icon.astro';
+import Badge from '../../system/Badge.astro';
+import { url } from '../../../lib/url';
+import { CATEGORIES, roleHref, type RoleEntry } from './careers';
+
+/**
+ * WP168-A: one open role as a card (the site's text card, as NewsCard without its picture): category, job type, title linking to the role's page, and the
+ * one-line summary from the role's own text. No posting date: every role is open.
+ */
+interface Props {
+  role: RoleEntry;
+  /** Heading level of the title: 3 under the band's H2 (the default). */
+  level?: 3 | 4;
+}
+const { role, level = 3 } = Astro.props;
+const Tag = level === 4 ? 'h4' : 'h3';
+const d = role.data;
+---
+
+<article class="card card--link role-card" data-reveal>
+  <div class="card__body">
+    <p class="card__meta role-card__meta">
+      <Badge tone="brand">{CATEGORIES[d.category]}</Badge>
+      <span>{d.type}</span>
+    </p>
+    <Tag class="card__title"><a class="card__link" href={url(roleHref(role))}>{d.title}</a></Tag>
+    <p class="card__text">{d.summary}</p>
+    <span class="card__more" aria-hidden="true">View Role<span class="sr-only">: {d.title}</span><Icon name="arrow-right" size={16} /></span>
+  </div>
+</article>
+
+<style>
+  .role-card__meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-sm);
+  }
+</style>

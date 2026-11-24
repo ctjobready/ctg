@@ -272,7 +272,7 @@ test.describe('WP104 item 8: meta descriptions name the full target group', () =
     {
       route: 'careers/',
       name: 'Careers',
-      text: 'Join CodersTrust and help prepare educated, unemployed and underemployed young people for paid digital work. Send your resume for when a role opens.', // WP135: the second sentence is whole (was "How to apply, and speculative applications."); WP166-A (R7-39): American usage, the page's own ask
+      text: 'Join CodersTrust and help prepare educated, unemployed and underemployed young people for paid digital work. See our open roles and apply.', // WP135: the second sentence is whole (was "How to apply, and speculative applications."); WP166-A (R7-39): American usage, the page's own ask; WP168-A: the roles are open (it was "Send your resume for when a role opens.")
     },
   ];
   for (const c of CASES) {

@@ -83,7 +83,8 @@ const sitePages = () => realPages().filter((p) => p !== 'styleguide/index.html')
 // 1 Governments and ministries: the briefing route, never a discovery session
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-const targetsGovernments = (l: Link) => /government|ministr/i.test(l.context) || /government|ministr/i.test(l.label);
+// WP168-A: "ministr" starts a word (ministry, ministries, minister), so the Systems Administrator role page (/careers/systems-administrator/) is not read as a ministry section
+const targetsGovernments = (l: Link) => /government|\bministr/i.test(l.context) || /government|\bministr/i.test(l.label);
 const governmentActions = () => sitePages().flatMap(linksOf).filter((l) => l.href.startsWith('mailto:') && targetsGovernments(l));
 
 test.describe('1 Government-targeted actions use the briefing route', () => {
@@ -128,7 +129,7 @@ test.describe('1 Government-targeted actions use the briefing route', () => {
   test('site-wide: no link or button whose label names a ministry or government says "discovery session" or "co-funding"', () => {
     const offenders = sitePages()
       .flatMap(linksOf)
-      .filter((l) => /ministr|government/i.test(l.label) && /discovery|co-funding/i.test(l.label))
+      .filter((l) => /\bministr|government/i.test(l.label) && /discovery|co-funding/i.test(l.label)) // WP168-A: "ministr" starts a word (not "Administrator")
       .map((l) => `${l.page}: "${l.label}"`);
     expect(offenders).toEqual([]);
   });

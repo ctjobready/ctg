@@ -207,7 +207,8 @@ test.describe('American English: "resume", not "CV" (item 7)', () => {
     expect(card).not.toContain('CV');
     await open(page, 'careers/');
     const apply = compact(await page.locator('#apply').textContent());
-    expect(apply).toContain('Send your resume. We keep it on file for when a role opens.');
+    // WP168-A (owner decision of 24 November 2026): the roles are open, so the first step names both routes (it read "Send your resume. We keep it on file for when a role opens.")
+    expect(apply).toContain('Apply for an open role from its page, or send your resume and we keep it on file.');
     // WP166-A (marketing review R7-26, R7-27): the step list ends with the button and "Or email your resume to ..." (it said "The button opens a prefilled email to ...; you can also send your resume to that address yourself."), and the email asks for the resume itself
     expect(apply).toContain('Or email your resume to career@coderstrustbd.com.');
     const mailto = decodeURIComponent((await page.locator('main a[href^="mailto:"]').first().getAttribute('href')) ?? '');

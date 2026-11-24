@@ -10,6 +10,8 @@ import { galleryPhotos } from '../../data/photos';
 import StepFlow from '../../components/ui/StepFlow.astro';
 import Img from '../../components/ui/Img.astro';
 import FactStat from '../../components/facts/FactStat.astro';
+import RoleGrid from '../../components/pages/careers/RoleGrid.astro';
+import { allRoles } from '../../components/pages/careers/careers';
 import { cta } from '../../lib/mailto';
 import { CAREERS_EMAIL } from '../../lib/site';
 import { webPage } from '../../lib/schema';
@@ -17,16 +19,24 @@ import falgun from '../../assets/images/pages/about/careers-team-falgun-celebrat
 import picnic from '../../assets/images/pages/about/careers-team-picnic.jpg';
 
 const apply = cta('careers');
+const roles = await allRoles();
 // WP104 (Sonnet High run 1): the description names the full group ("educated, unemployed and underemployed young people"), in 152 characters: "How we work" and "a ... route" went to make room (WP63 had kept the short group, 172 characters with the full one).
 // WP166-A (marketing review R7-39): the last sentence says what to do in American usage ("speculative applications" is British), as the page now asks for a resume.
-const description = 'Join CodersTrust and help prepare educated, unemployed and underemployed young people for paid digital work. Send your resume for when a role opens.';
-const jsonLd = [webPage({ path: '/careers/', name: 'Careers at CodersTrust', description, breadcrumb: [{ name: 'Home', path: '/' }, { name: 'Careers', path: '/careers/' }] })];
+// WP168-A (owner decision of 24 November 2026): the roles of the previous site are open, so the last sentence points to them (it read "Send your resume for when a role opens.").
+const description = 'Join CodersTrust and help prepare educated, unemployed and underemployed young people for paid digital work. See our open roles and apply.';
+// WP168-A: the page's text changed on 24 November 2026 (the Open Roles band, the hero's second button, the application steps), so it pins its own dateModified.
+const UPDATED = '2026-11-24';
+const jsonLd = [webPage({ path: '/careers/', name: 'Careers at CodersTrust', description, dateModified: UPDATED, breadcrumb: [{ name: 'Home', path: '/' }, { name: 'Careers', path: '/careers/' }] })];
 /*
  * WP166-A (marketing review of 21 November 2026, R7):
  *   R7-19  the <title> is the page's H1 ("Careers: Help Put Young People into Paid Work | CodersTrust"), not the label "Careers".
  *   R7-25  the hero leads with the page's one distinctive line, moved verbatim from the "Work That Is Measured" card (which is gone), and the second line is a plain "no" followed by the next step; the button is
  *          "Send Your Resume" (src/data/ctas.ts).
  *   R7-26  the button is repeated directly after the three steps, where a reader who has read them looks for it, and the closing line gives the address in one short sentence.
+ * WP168-A (owner decision of 24 November 2026: preserve the old site's job posts, all considered open, the redundant re-posts left out):
+ *   the hero's "No open roles right now ..." line is gone; "See Open Roles" (to the band below) leads the hero's actions, with "Send Your Resume" beside it;
+ *   the Open Roles band follows the hero (each role a card linking to /careers/<slug>/, filtered by the old site's job categories with a count each);
+ *   the first two application steps no longer say a role has to open first.
  */
 const expect = [
   { icon: 'users', title: 'Inclusive and Flexible', text: 'A diverse, inclusive and flexible workplace. We are active, socially responsible and open to new thinking.' },
@@ -36,11 +46,16 @@ const expect = [
 
 <BaseLayout title="Careers: Help Put Young People into Paid Work" description={description} breadcrumbs={[{ label: 'Careers' }]} jsonLd={jsonLd}>
   <Hero eyebrow="Careers" title="Help Put Young People into Paid Digital Work" lead="We judge youth-employment programs by whether young people end up working and earning, not by how many attended." artSeed="careers">
-    <p class="cr-note">No open roles right now. Send your resume and we will keep it on file for when one opens.</p>
     <Fragment slot="actions">
-      <Button href={apply.href} icon="mail">{apply.label}</Button>
+      <Button href="#open-roles" iconEnd="arrow-down" data-see-roles>See Open Roles</Button>
+      <Button href={apply.href} variant="secondary" icon="mail">{apply.label}</Button>
     </Fragment>
   </Hero>
+
+  <Section id="open-roles" tone="airy" aria-labelledby="open-roles-h">
+    <SectionHeader id="open-roles-h" eyebrow="Join Our Team" title="Open Roles" lead="Filter by category, then open a role to read it in full and apply." />
+    <RoleGrid roles={roles} />
+  </Section>
 
   <Section id="why" aria-labelledby="why-h">
     <SectionHeader id="why-h" eyebrow="Our Work" title="Why Join CodersTrust" />
@@ -82,8 +97,8 @@ const expect = [
   <Section id="apply" tone="ice" aria-labelledby="apply-h">
     <SectionHeader id="apply-h" eyebrow="How to Apply" title="How Applications Work" lead="Applications go to the CodersTrust Bangladesh HR team." />
     <StepFlow steps={[
-      { title: 'Your Application', text: 'Send your resume. We keep it on file for when a role opens.' },
-      { title: 'Application Review', text: 'When a role opens, we review the applications on file and invite shortlisted candidates to interview.' },
+      { title: 'Your Application', text: 'Apply for an open role from its page, or send your resume and we keep it on file.' },
+      { title: 'Application Review', text: 'We review the applications and invite shortlisted candidates to interview.' },
       { title: 'Employment Offer', text: 'The selected candidate receives an offer letter and package details.' },
     ]} />
     <p class="cr-apply"><Button href={apply.href} icon="mail">{apply.label}</Button></p>
@@ -107,13 +122,6 @@ const expect = [
     .cr-stats {
       grid-template-columns: repeat(3, minmax(0, 1fr));
     }
-  }
-  .cr-note {
-    margin: 0;
-    max-width: var(--measure);
-    font-size: var(--fs-body-l);
-    line-height: var(--lh-body-l);
-    color: var(--on-surface);
   }
   .cr-icon {
     display: inline-flex;

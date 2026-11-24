@@ -184,8 +184,11 @@ function blocks(rel: string): string[] {
   return [...new Set([title, desc, ...out].filter(Boolean))];
 }
 
-/** News posts and the team and mentor bios are out of the sweep (they report events and careers; none claims CodersTrust certifies). */
-const sweptCertification = (p: string) => !/^news\//.test(p) && !/^about\/(?:team|mentors)\/./.test(p);
+/**
+ * News posts and the team and mentor bios are out of the sweep (they report events and careers; none claims CodersTrust certifies).
+ * WP168-A: so are the open-role pages (/careers/<role>/): they list the certifications an applicant holds (CISSP, CompTIA Security+, CA/ACCA), as the bios do; none is a CodersTrust deliverable.
+ */
+const sweptCertification = (p: string) => !/^news\//.test(p) && !/^about\/(?:team|mentors)\/./.test(p) && !/^careers\/[^/]+\//.test(p);
 
 const CERTIFICATION = /certification|certified|certifying|certify/i;
 const PREPARATION = /\bprepar(?:e|es|ed|ing|ation)\b/i;

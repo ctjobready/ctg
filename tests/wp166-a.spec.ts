@@ -386,10 +386,11 @@ test.describe('Contact (R7-02, R7-05, R7-06, R7-19, R7-23)', () => {
 test.describe('Careers (R7-19, R7-25, R7-26, R7-27, R7-39)', () => {
   test('title, description, hero and the two resume buttons', () => {
     expect(titleOf(CAREERS)).toBe('Careers: Help Put Young People into Paid Work | CodersTrust');
-    expect(meta(CAREERS, 'name', 'description')).toBe('Join CodersTrust and help prepare educated, unemployed and underemployed young people for paid digital work. Send your resume for when a role opens.');
+    // WP168-A (owner decision of 24 November 2026): the old site's roles are open, so the description points to them and the hero's "No open roles right now ..." line is gone (a "See Open Roles" button leads the hero's actions: tests/wp168-a.spec.ts)
+    expect(meta(CAREERS, 'name', 'description')).toBe('Join CodersTrust and help prepare educated, unemployed and underemployed young people for paid digital work. See our open roles and apply.');
     const t = mainText(CAREERS);
     expect(t).toContain('Help Put Young People into Paid Digital Work We judge youth-employment programs by whether young people end up working and earning, not by how many attended.');
-    expect(t).toContain('No open roles right now. Send your resume and we will keep it on file for when one opens.');
+    expect(t).not.toContain('No open roles right now');
     expect(count(t, 'We judge youth-employment programs')).toBe(1);
     expect(t).not.toContain('Work That Is Measured');
     expect(t).not.toMatch(/speculative/i);

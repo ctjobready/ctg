@@ -59,6 +59,7 @@ const newsByLegacy = byLegacy(content.news);
 const teamByLegacy = byLegacy(content.team);
 const mentorsByLegacy = byLegacy(content.mentors);
 const storiesByLegacy = byLegacy(content.stories);
+const careersByLegacy = byLegacy(content.careers.filter((c) => !c.draft)); // WP168-A: a held role (draft: true) has no page, so its post folds into /careers/
 const teamIds = new Set(content.team.map((t) => t.id));
 
 // ---------------------------------------------------------------------------------------------
@@ -261,9 +262,13 @@ for (const rec of inventory) {
       if (!storiesByLegacy.has(p)) notes.push(`story ${p} has no entry of its own in src/content/stories (folded into the stories page regardless)`);
       r = { class: 'custom-post-type', disposition: 'MERGE', destination: '/impact/stories/' };
       break;
-    case 'jobs':
-      r = { class: 'custom-post-type', disposition: 'MERGE', destination: '/careers/' };
+    case 'jobs': {
+      // WP168-A (owner decision of 24 November 2026): a kept job post has its own page, /careers/<slug>/ (src/content/careers, matched by legacyUrl);
+      // a redundant re-post that was left out (an earlier post of the same role), or a held role, folds into /careers/
+      const role = careersByLegacy.get(p);
+      r = role ? { class: 'custom-post-type', disposition: 'MOVE', destination: `/careers/${role.id}/` } : { class: 'custom-post-type', disposition: 'MERGE', destination: '/careers/' };
       break;
+    }
     case 'project':
       if (p !== '/project/yes-project/') fail(`unexpected project ${p}`);
       r = { class: 'custom-post-type', disposition: 'MOVE', destination: '/impact/case-studies/undp-yes-korail/' };

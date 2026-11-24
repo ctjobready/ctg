@@ -225,7 +225,9 @@ test.describe('About, Governance, Recognition, Careers and Contact', () => {
   test('Careers: the hiring status sits in the hero above the button, and the equal-opportunity heading is "We Judge People on Merit"', async ({ page }) => {
     await open(page, 'careers/');
     // WP166-A (marketing review R7-25): "No open roles right now." (it was "We’re not hiring for specific roles right now, ...")
-    await expect(page.locator('main .hero')).toContainText('No open roles right now.');
+    // WP168-A (owner decision of 24 November 2026): the old site's roles are open, so the hero's hiring status is a button to them ("See Open Roles"), and the "No open roles" line is gone
+    await expect(page.locator('main .hero')).not.toContainText('No open roles');
+    await expect(page.locator('main .hero .btn', { hasText: 'See Open Roles' })).toHaveAttribute('href', '#open-roles');
     await expect(page.getByRole('heading', { level: 2, name: 'We Judge People on Merit' })).toBeVisible();
     await expect(page.locator('#eoe .cr-eoe')).toContainText('we judge people on their work and merit');
   });

@@ -1,0 +1,152 @@
+---
+import RoleCard from './RoleCard.astro';
+import { CATEGORIES, CATEGORY_KEYS, type RoleEntry } from './careers';
+
+/**
+ * WP168-A: the open roles with a category filter, the pattern of the News topic filter (src/components/pages/news/NewsGrid.astro): radio buttons styled as
+ * chips, each with its count of roles, and the grid filtered with CSS :has(), so it works with no JavaScript. A small script only adds a live result count
+ * for screen readers and lets /careers/#rf-mentors (the chip's own id, a real anchor) or /careers/#mentors preselect a category.
+ */
+interface Props {
+  /** Every open role, in list order (newest post first). */
+  roles: RoleEntry[];
+}
+const { roles } = Astro.props;
+const counts = Object.fromEntries(CATEGORY_KEYS.map((k) => [k, roles.filter((r) => r.data.category === k).length]));
+const visibleKeys = CATEGORY_KEYS.filter((k) => counts[k] > 0);
+// The filter rules in <style> below are written out per category (a <style> element cannot be generated from the data). A new category in
+// src/components/pages/careers/careers.ts therefore needs one more selector there; the build fails until it has one.
+const FILTER_RULES = ['accounting-finance', 'creative-media', 'digital-marketing', 'management', 'marketing-sales', 'mentors', 'operations', 'software-engineering', 'training-development'];
+const unfiltered = CATEGORY_KEYS.filter((k) => !FILTER_RULES.includes(k));
+if (unfiltered.length) throw new Error(`RoleGrid: add a filter rule in <style> for the new category(ies): ${unfiltered.join(', ')}`);
+---
+
+<div class="rf" data-role-filter>
+  <fieldset class="rf__chips">
+    <legend class="rf__legend">Filter by Category</legend>
+    <div class="rf__row">
+      <input class="rf__radio" type="radio" name="role-category" id="rf-all" value="all" checked />
+      <label class="rf__chip" for="rf-all">All Roles <span class="rf__n">{roles.length}</span></label>
+      {
+        visibleKeys.map((k) => (
+          <>
+            <input class="rf__radio" type="radio" name="role-category" id={`rf-${k}`} value={k} />
+            <label class="rf__chip" for={`rf-${k}`}>
+              {CATEGORIES[k]} <span class="rf__n">{counts[k]}</span>
+            </label>
+          </>
+        ))
+      }
+    </div>
+  </fieldset>
+  <p class="rf__status" role="status" aria-live="polite" data-role-status></p>
+  <div class="grid-cards rf__grid">
+    {
+      roles.map((r) => (
+        <div class="rf__item" data-category={r.data.category}>
+          <RoleCard role={r} />
+        </div>
+      ))
+    }
+  </div>
+</div>
+
+<script>
+  const root = document.querySelector<HTMLElement>('[data-role-filter]');
+  if (root) {
+    const status = root.querySelector<HTMLElement>('[data-role-status]')!;
+    const radios = [...root.querySelectorAll<HTMLInputElement>('input[name="role-category"]')];
+    const items = [...root.querySelectorAll<HTMLElement>('.rf__item')];
+    const update = (announce: boolean) => {
+      const sel = radios.find((r) => r.checked)!;
+      const shown = items.filter((i) => sel.value === 'all' || i.dataset.category === sel.value).length;
+      const label = root.querySelector(`label[for="${sel.id}"]`)?.firstChild?.textContent?.trim() ?? '';
+      status.textContent = announce ? `Showing ${shown} ${shown === 1 ? 'role' : 'roles'}${sel.value === 'all' ? '' : ` in ${label}`}.` : '';
+    };
+    const hash = decodeURIComponent(location.hash.slice(1));
+    const preset = radios.find((r) => r.value === hash || r.id === hash);
+    if (preset) preset.checked = true;
+    radios.forEach((r) => r.addEventListener('change', () => update(true)));
+    update(false);
+  }
+</script>
+
+<style>
+  /* Category filter: hide the cards of every other category while a chip is checked (one selector per category, see FILTER_RULES). */
+  .rf:has(#rf-accounting-finance:checked) .rf__item:not([data-category='accounting-finance']),
+  .rf:has(#rf-creative-media:checked) .rf__item:not([data-category='creative-media']),
+  .rf:has(#rf-digital-marketing:checked) .rf__item:not([data-category='digital-marketing']),
+  .rf:has(#rf-management:checked) .rf__item:not([data-category='management']),
+  .rf:has(#rf-marketing-sales:checked) .rf__item:not([data-category='marketing-sales']),
+  .rf:has(#rf-mentors:checked) .rf__item:not([data-category='mentors']),
+  .rf:has(#rf-operations:checked) .rf__item:not([data-category='operations']),
+  .rf:has(#rf-software-engineering:checked) .rf__item:not([data-category='software-engineering']),
+  .rf:has(#rf-training-development:checked) .rf__item:not([data-category='training-development']) {
+    display: none;
+  }
+  /* the chips, the legend and the status line are the News filter's (NewsGrid.astro) */
+  .rf__chips {
+    border: 0;
+    margin: 0 0 var(--space-md);
+    padding: 0;
+    min-width: 0;
+  }
+  .rf__legend {
+    padding: 0;
+    margin-bottom: var(--space-sm);
+    font-weight: var(--fw-bold);
+    color: var(--on-surface);
+  }
+  .rf__row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+  }
+  .rf__radio {
+    position: absolute;
+    opacity: 0;
+    width: 1px;
+    height: 1px;
+    pointer-events: none;
+  }
+  .rf__chip {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+    min-height: 44px;
+    padding: 0 var(--space-md);
+    border: 1px solid var(--primary-fixed);
+    border-radius: var(--radius-full);
+    background: var(--surface);
+    color: var(--on-surface);
+    font-weight: var(--fw-medium);
+    cursor: pointer;
+    transition: background-color var(--dur-base) var(--ease-standard), border-color var(--dur-base) var(--ease-standard);
+  }
+  .rf__chip:hover {
+    border-color: var(--primary);
+  }
+  .rf__n {
+    font-size: var(--fs-body-xs);
+    color: var(--on-surface-variant);
+  }
+  .rf__radio:checked + .rf__chip {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: var(--on-primary);
+  }
+  .rf__radio:checked + .rf__chip .rf__n {
+    color: var(--on-primary);
+  }
+  .rf__radio:focus-visible + .rf__chip {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 6px var(--powder-blue);
+  }
+  .rf__status {
+    margin: 0 0 var(--space-md);
+    min-height: 1.5em;
+    font-size: var(--fs-body-xs);
+    color: var(--on-surface-variant);
+  }
+</style>

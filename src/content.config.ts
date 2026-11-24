@@ -190,4 +190,42 @@ const nuPgd = defineCollection({
   }),
 });
 
-export const collections = { news, blog, stories, team, mentors, nuPgd };
+/**
+ * WP168-A (owner decision of 24 November 2026): the open roles on /careers/ and /careers/<slug>/, the job posts of the previous site (its `jobs` post type) with the
+ * redundant re-posts left out (the latest post of each group is kept). The body is the role text as published there, converted to Markdown with the site's
+ * mechanical conventions (Title Case headings, American spelling, no serial comma); the boilerplate the old pages shared (About CodersTrust, About SuperKids, the
+ * application instructions, job code, deadline) is not carried: the role page renders the application steps, the benefits and the Apply button itself.
+ * Every role is treated as open, so `posted` (the old post date) orders the list and is never printed. The file name is the old slug, so
+ * /jobs/<slug>/ redirects to /careers/<slug>/ (scripts/build-manifest.mjs, by `legacyUrl`).
+ */
+const careers = defineCollection({
+  loader: glob({ pattern: '*.md', base: './src/content/careers' }),
+  schema: z.object({
+    title: z.string(),
+    /** Optional page title for a role title too long for "<title> | CodersTrust" in 60 characters, cut from the role's own title or text (the H1 keeps `title`). */
+    seoTitle: z.string().max(46).optional(),
+    /** The old site's job category (its `job-category` taxonomy, labels in src/components/pages/careers/careers.ts). */
+    category: z.enum(['accounting-finance', 'creative-media', 'digital-marketing', 'management', 'marketing-sales', 'mentors', 'operations', 'software-engineering', 'training-development']),
+    type: z.enum(['Full-Time', 'Internship']),
+    /** As the old post states it. */
+    location: z.string(),
+    /** As the old post states it ("Negotiable"); a figure is never published (the schema refuses a digit). */
+    salary: z.string().regex(/^\D+$/, 'no salary figures on the site').optional(),
+    /** One line from the role's own text: the card on /careers/ and the meta description (155 characters at most). */
+    summary: z.string().max(155),
+    /** The old post's publication and last-modified dates: list order only, never printed (every role is open). */
+    posted: z.coerce.date(),
+    modified: z.coerce.date(),
+    legacyUrl: z.string().url().startsWith('https://coderstrust.global/jobs/'),
+    /** A role-specific application instruction from the old post (shown in its How to Apply band). */
+    applyNote: z.string().optional(),
+    /**
+     * true keeps a role off the site (no page, no card, no sitemap entry; its /jobs/<slug>/ URL redirects to /careers/), exactly as a draft news post.
+     * WP168-A: the Chief Revenue Officer post is held, because its title and most of its text name terms the content rules keep off every page; it
+     * stays here, faithful to the old post, until the owner decides.
+     */
+    draft: z.boolean().default(false),
+  }),
+});
+
+export const collections = { news, blog, stories, team, mentors, nuPgd, careers };

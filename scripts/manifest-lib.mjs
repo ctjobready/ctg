@@ -311,7 +311,7 @@ export const ADDED_NEWS = [
 /** Content entries with their legacyUrl, keyed by collection. */
 export function contentEntries() {
   const root = path.join(REPO_ROOT, 'src', 'content');
-  const out = { news: [], blog: [], team: [], stories: [], nuPgd: [], mentors: [] };
+  const out = { news: [], blog: [], team: [], stories: [], nuPgd: [], mentors: [], careers: [] };
   const read = (dir, key, extra) => {
     const d = path.join(root, dir);
     if (!fs.existsSync(d)) return;
@@ -325,6 +325,7 @@ export function contentEntries() {
   read('team', 'team');
   read('stories', 'stories');
   read('nu-pgd', 'nuPgd');
+  read('careers', 'careers'); // WP168-A: the open roles, one per kept job post of the old site (legacyUrl /jobs/<slug>/)
   const mentorsFile = path.join(root, 'mentors.json');
   if (fs.existsSync(mentorsFile)) {
     for (const m of JSON.parse(fs.readFileSync(mentorsFile, 'utf8'))) out.mentors.push({ id: m.id, legacyUrl: m.legacyUrl });
@@ -363,6 +364,7 @@ export function siteRoutes() {
         // WP165 follow-up: the Blog index is a rest route built only while a Blog post is live (no live post, no /blog/ page)
         else if (key === '/blog/[...listing]') slugs = content.blog.some((n) => !n.draft) ? [''] : [];
         else if (key === '/about/team/[slug]') slugs = content.team.map((t) => t.id);
+        else if (key === '/careers/[slug]') slugs = content.careers.filter((c) => !c.draft).map((c) => c.id); // WP168-A (a held role, draft: true, is not a route)
         else if (key === '/programs/nu-postgraduate-diploma/[slug]') slugs = content.nuPgd.filter((n) => n.kind === 'course').map((n) => n.slug ?? n.id);
         else throw new Error(`siteRoutes(): unknown dynamic route ${key}; teach scripts/manifest-lib.mjs how to expand it`);
         for (const s of slugs) routes.add(s === '' ? base : `${base}${s}/`);
