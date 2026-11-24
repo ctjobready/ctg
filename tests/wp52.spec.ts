@@ -2,7 +2,7 @@ import { readFileSync } from 'node:fs';
 import { expect, test, type Page } from '@playwright/test';
 import { fact } from '../src/data/facts';
 import { faqs } from '../src/data/faqs';
-import { C14, EMPATHY, PROGRAM_SIZES_NOTE, VALUE_PROPOSITION, defineNewEarners } from '../src/data/copy';
+import { C14, EMPATHY, PROGRAM_SIZES_NOTE, VALUE_PROPOSITION } from '../src/data/copy'; // WP168-B: defineNewEarners is gone (the Impact tile's note defines the term)
 import { timeline } from '../src/data/timeline';
 import { DESKTOP, MOBILE, open } from './support/browser';
 import { listPages } from './support/pages';
@@ -214,7 +214,9 @@ test.describe('"Surveyed new earners" is defined where the 58.7% appears: the Im
   const DEFINITION = '(completers who first earned during or after training)';
   // WP53 (owner decision 2026-10-16): the speed slide's tile caption became the survey slide's body line; WP54 (cycle-28 reviews, Claude S23 and GLM L1): the line leads with its base, in the words of OC-05's text
   const SLIDE_LINE = 'Of the 172 surveyed completers who first earned during or after training, 58.7% had started earning by six months after finishing the course.';
-  const TILE_LABEL = `of the 172 surveyed new earners ${DEFINITION} had started earning by six months after finishing the course, including 23.3% who first earned during the course`;
+  // WP168-B (marketing review R4-18, owner approval of 24 November 2026): the Impact tile splits its label and note; the definition is in the note (it was inserted into the label by defineNewEarners)
+  const TILE_LABEL = 'of the 172 surveyed new earners had started earning by six months after finishing the course';
+  const TILE_NOTE = 'New earners are completers who first earned during or after training; 23.3% first earned during the course.';
 
   test('the survey slide’s body line names the subgroup in OC-05’s own words, so it needs no definition of the term', async ({ page }) => {
     expect(fact('OC-05').text.startsWith('Among the 172 surveyed completers who first earned during or after training: ')).toBe(true);
@@ -227,27 +229,28 @@ test.describe('"Surveyed new earners" is defined where the 58.7% appears: the Im
     await expect(s.locator('.hs__stat')).toHaveCount(1);
   });
 
-  test('the Impact tile defines it too, from the register’s glance label', async ({ page }) => {
-    expect(defineNewEarners(fact('OC-05').stat!.glance!.label)).toBe(TILE_LABEL);
+  test('the Impact tile defines it too, in the register’s glance note (WP168-B)', async ({ page }) => {
+    expect(fact('OC-05').stat!.glance!.label).toBe(TILE_LABEL);
+    expect(fact('OC-05').stat!.glance!.note).toBe(TILE_NOTE);
+    expect(TILE_NOTE).toContain(DEFINITION.slice(1, -1));
     await open(page, IMPACT);
     const tile = page.locator('#glance a[data-fact~="OC-05"]');
     await expect(tile).toHaveCount(1);
-    expect(compact(await tile.textContent())).toContain(TILE_LABEL);
+    expect(compact(await tile.locator('.glance__desc').textContent())).toBe(TILE_LABEL);
+    expect(compact(await tile.locator('.glance__note').textContent())).toBe(TILE_NOTE);
   });
 
   test('the definition is the words of OC-05’s own text, the register’s labels are unchanged, and the Outcomes page keeps its short label beside its one definition', async ({ page }) => {
     const oc05 = fact('OC-05');
     expect(oc05.text).toContain('surveyed completers who first earned during or after training');
     expect(oc05.stat?.label).toBe('of the 172 surveyed new earners had started earning by six months after finishing the course (October 2026 survey)');
-    expect(oc05.stat?.glance?.label).toBe('of the 172 surveyed new earners had started earning by six months after finishing the course, including 23.3% who first earned during the course');
+    expect(oc05.stat?.glance?.label).toBe('of the 172 surveyed new earners had started earning by six months after finishing the course'); // WP168-B (R4-18): the 23.3% is in the glance note
     await open(page, 'impact/outcomes-2026/');
     expect(compact(await page.locator('#summary [data-fact="OC-05"]').textContent())).toContain(oc05.stat!.label.replace('surveyed new earners', 'surveyed completers who first earned during or after training')); // WP147: the tile (which comes before the one definition) says the group in plain words; the register's label is unchanged
     expect(count(await everything(page), 'Surveyed new earners are the completers who first earned during or after training.')).toBe(1);
   });
 
-  test('the helper stops the build when its inputs change shape', () => {
-    expect(() => defineNewEarners('of the 170 completers had started earning')).toThrow(/no longer says/);
-  });
+  // WP168-B: the test of defineNewEarners' build guard is removed with the helper (the tile reads its label and note from the register; tests/wp168-b.spec.ts pins both).
 
   // WP53 (owner decision 2026-10-16): the slide that states the 58.7% is the survey slide (slide 3)
   test('the survey slide (slide 3) still fits the carousel at 1280 and 390 (the unused-space budget is held by tests/hero-slider.spec.ts)', async ({ page }) => {

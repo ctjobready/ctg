@@ -146,7 +146,9 @@ test.describe('G2 (GPT-6.1 Sol; Kimi K1): the Employers and JobReady@Work track-
     await expect(page.locator('#guide p.lead')).toHaveCount(0);
     const kids = await page.locator('#guide .guide__copy').evaluate((el) => Array.from(el.children).map((c) => c.className));
     expect(kids).toEqual(['guide__auth', 'guide__method']);
+    // WP168-B (owner decision 2026-11-24: Akij Group may be named as a client): the Akij Group line (PA-12) leads the credentials, with its link to the 2023 post
     expect(await texts(page, '#guide .guide-list li')).toEqual([
+      'Corporate training for Akij Group, a conglomerate based in Bangladesh (2021–2024: workplace productivity, advanced Excel, corporate communications). Read About the 2023 Training',
       'AWS Authorized Training Partner.',
       'Contract scope: ICT, networking and cybersecurity for 120+ professionals, for the Ministry of Power, Energy and Mineral Resources (via Bangladesh Petroleum Institute).',
     ]);

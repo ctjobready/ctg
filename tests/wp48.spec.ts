@@ -569,9 +569,11 @@ test.describe('OC-05: "had started earning by six months after finishing" (item 
   const TEXT = 'Among the 172 surveyed completers who first earned during or after training: 23.3% first earned during the course; 58.7% had started earning by six months after finishing it; 77.3% by a year; 90.7% by two years (cumulative)';
   // WP49 (cycle-24 review): the labels say "surveyed new earners" (the register's term; the text field keeps the full definition and the Outcomes page defines the term once: tests/wp49.spec.ts)
   const LABEL = 'of the 172 surveyed new earners had started earning by six months after finishing the course (October 2026 survey)';
-  const GLANCE = 'of the 172 surveyed new earners had started earning by six months after finishing the course, including 23.3% who first earned during the course';
+  // WP168-B (marketing review R4-18, owner approval of 24 November 2026): the glance tile splits a short label from a note that carries the definition and the 23.3% (the label ended ", including 23.3% who first earned during the course")
+  const GLANCE = 'of the 172 surveyed new earners had started earning by six months after finishing the course';
+  const GLANCE_NOTE = 'New earners are completers who first earned during or after training; 23.3% first earned during the course.';
   // WP52 (cycle-27 review): Home's slide and the Impact tile define the term in place (OC-05's label with "(completers who first earned during or after training)" after it); the register's labels are unchanged (tests/wp52.spec.ts)
-  const define = (s: string) => s.replace('surveyed new earners', 'surveyed new earners (completers who first earned during or after training)');
+  // WP168-B: the Impact tile no longer inserts the definition into its label (its note states it), so the define() helper of this block is gone.
   const HEADING = 'Most Surveyed New Earners Were Earning by Six Months After the Course';
   const NOTE = 'Months are counted from the end of the course; the shares are cumulative and include earnings during the course.';
   const MEASURE = 'Cumulative share of completers who first earned during or after training and had started earning by each point, with months counted from the end of the course and including earnings during the course (timing only)';
@@ -582,9 +584,10 @@ test.describe('OC-05: "had started earning by six months after finishing" (item 
     expect(oc05.stat?.value).toBe('58.7%');
     expect(oc05.stat?.label).toBe(LABEL);
     expect(oc05.stat?.glance?.label).toBe(GLANCE);
+    expect(oc05.stat?.glance?.note).toBe(GLANCE_NOTE);
     // the cumulative figures include the 23.3% who first earned during the course, who cannot have started "within six months of" the course ending
     expect(oc05.text).toContain('23.3% first earned during the course');
-    expect(`${oc05.text} ${oc05.stat?.label} ${oc05.stat?.glance?.label}`).not.toMatch(/within (?:six months|a year|two years)|of finishing the course/);
+    expect(`${oc05.text} ${oc05.stat?.label} ${oc05.stat?.glance?.label} ${oc05.stat?.glance?.note}`).not.toMatch(/within (?:six months|a year|two years)|of finishing the course/);
   });
 
   // WP53 (owner decision 2026-10-16): the speed slide (headed HEADING) is gone; the survey slide's one body line is OC-05's value and label with the term defined (WP52), without the label's "(October 2026 survey)", and it fits the carousel at 1280 and 390
@@ -604,7 +607,9 @@ test.describe('OC-05: "had started earning by six months after finishing" (item 
 
   test('Impact’s tile, Outcomes 2026 (summary tile, paragraph, chart note) and the data file all say it the same way; the values are unchanged', async ({ page }) => {
     await open(page, 'impact/');
-    expect(compact(await page.locator('#glance a[data-fact~="OC-05"]').textContent())).toContain(define(GLANCE));
+    const tile = compact(await page.locator('#glance a[data-fact~="OC-05"]').textContent()); // WP168-B: the label, then the note with the definition (it was the label with the definition inserted)
+    expect(tile).toContain(GLANCE);
+    expect(tile).toContain(GLANCE_NOTE);
     await open(page, 'impact/outcomes-2026/');
     expect(compact(await page.locator('#summary [data-fact="OC-05"]').textContent())).toContain(LABEL.replace('surveyed new earners', 'surveyed completers who first earned during or after training')); // WP147: Results in Brief precedes the one definition, so the tile says the group in plain words
     expect(compact(await page.locator('#speed p[data-fact="OC-05"]').textContent())).toContain(`${TEXT.replace('surveyed completers who first earned during or after training', 'surveyed new earners')}.`); // WP136: the sentence uses the term the line above defines

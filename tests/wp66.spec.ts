@@ -69,7 +69,7 @@ const AUDIENCE = [
   { route: UNIVERSITIES, heading: BAND_HEADING, id: 'SC-11b', sentence: `${LEAD} 20 universities and colleges.`, list: ['SC-11b'] },
   { route: DEV_PARTNERS, heading: BAND_HEADING, id: 'SC-11c', sentence: `${LEAD} 13 development partners and NGOs.`, list: ['SC-11c'] },
   { route: FOUNDATIONS, heading: BAND_HEADING, id: 'SC-11c', sentence: `${LEAD} 13 development partners and NGOs.`, list: ['PR-01 RC-01', 'SC-11c'] },
-  { route: EMPLOYERS, heading: 'Employers and Partners We Work With', id: 'SC-11d', sentence: `${LEAD} 27 companies and industry bodies since 2014.`, list: ['PA-06', 'GV-06', 'SC-11d'] },
+  { route: EMPLOYERS, heading: 'Employers and Partners We Work With', id: 'SC-11d', sentence: `${LEAD} 27 companies and industry bodies since 2014.`, list: ['PA-12', 'PA-06', 'GV-06', 'SC-11d'] }, // WP168-B: the Akij Group line (PA-12) leads the list
 ] as const;
 const HUB_LINE = `${LEAD} 70+ organizations since 2014: 13 government bodies; 20 universities and colleges; 13 development partners and NGOs; and 27 companies and industry bodies.`;
 
@@ -332,7 +332,9 @@ test.describe('Audience pages: the Track Record band closes with the sentence fo
     await open(page, EMPLOYERS);
     // WP166-B (marketing review R3-06): the AWS credential is the list's first line, "AWS Authorized Training Partner." (it was the caption sentence "CodersTrust is an AWS Authorized Training Partner."), and the sentence ends
     // "since 2014" because the band's heading, "Employers and Partners We Work With", does not say it.
+    // WP168-B (owner decision 2026-11-24: Akij Group may be named as a client): the Akij Group line (PA-12) is first; the lines the page had keep their order after it, and the new sentence is still last.
     expect(await texts(page, '#guide .pg__list li')).toEqual([
+      'Corporate training for Akij Group, a conglomerate based in Bangladesh (2021–2024: workplace productivity, advanced Excel, corporate communications). Read About the 2023 Training',
       'AWS Authorized Training Partner.',
       'Contract scope: ICT, networking and cybersecurity for 120+ professionals, for the Ministry of Power, Energy and Mineral Resources (via Bangladesh Petroleum Institute).',
       `${LEAD} 27 companies and industry bodies since 2014.`,

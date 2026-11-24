@@ -38,6 +38,10 @@ interface Statement {
   text?: string;
   /** Facts whose footnote markers follow the sentence; defaults to all of facts. */
   markers?: string[];
+  /** WP168-B: a text link after the sentence (Employers: the Akij Group line links its 2023 news post). */
+  link?: { label: string; href: string };
+  /** WP168-B: the permissions row (D13) of a name the sentence publishes (a corporate client), set as data-asset so the permission gate reads it. */
+  asset?: string;
 }
 interface Props {
   title?: string;
@@ -95,9 +99,17 @@ const origin = originShortUnder(title, { tile: stats.includes('SC-03') }); // WP
             listed.length > 0 && (
               <ul class="pg__list" role="list">
                 {listed.map((s) => (
-                  <li data-fact={s.facts.join(' ')}>
+                  <li data-fact={s.facts.join(' ')} data-asset={s.asset}>
                     <Icon name="circle-check" size={20} />
-                    <span>{endSentence(s.text ?? fact(s.facts[0]).text)}</span>
+                    <span>
+                      {endSentence(s.text ?? fact(s.facts[0]).text)}
+                      {s.link && (
+                        <>
+                          {' '}
+                          <a class="link" href={linkAttrs(s.link.href).href}>{s.link.label}<Icon name="arrow-right" size={16} /></a>
+                        </>
+                      )}
+                    </span>
                   </li>
                 ))}
               </ul>
@@ -169,7 +181,8 @@ const origin = originShortUnder(title, { tile: stats.includes('SC-03') }); // WP
     align-items: flex-start;
     color: var(--on-surface);
   }
-  .pg__list :global(.icon) {
+  /* the check mark only (WP168-B: a statement's link keeps its own arrow icon) */
+  .pg__list li > :global(.icon) {
     color: var(--success);
     margin-top: var(--space-xs);
     flex: none;

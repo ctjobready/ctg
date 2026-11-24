@@ -485,15 +485,18 @@ test.describe('OC-05: the six months are counted from the end of the course (ite
   const TEXT = 'Among the 172 surveyed completers who first earned during or after training: 23.3% first earned during the course; 58.7% had started earning by six months after finishing it; 77.3% by a year; 90.7% by two years (cumulative)';
   // WP49 (cycle-24 review): the labels say "surveyed new earners" (the register's term; the text field keeps the full definition; tests/wp49.spec.ts)
   const LABEL = 'of the 172 surveyed new earners had started earning by six months after finishing the course (October 2026 survey)';
-  const GLANCE = 'of the 172 surveyed new earners had started earning by six months after finishing the course, including 23.3% who first earned during the course';
+  // WP168-B (marketing review R4-18, owner approval of 24 November 2026): the glance tile splits a short label from a note that carries the definition and the 23.3% (the label ended ", including 23.3% who first earned during the course")
+  const GLANCE = 'of the 172 surveyed new earners had started earning by six months after finishing the course';
+  const GLANCE_NOTE = 'New earners are completers who first earned during or after training; 23.3% first earned during the course.';
   // WP52 (cycle-27 review): Home's slide and the Impact tile define the term in place (OC-05's label with "(completers who first earned during or after training)" after it); the register's labels are unchanged (tests/wp52.spec.ts)
-  const define = (s: string) => s.replace('surveyed new earners', 'surveyed new earners (completers who first earned during or after training)');
+  // WP168-B: the Impact tile no longer inserts the definition into its label (its note states it), so the define() helper of this block is gone.
 
   test('the register states the reference point in its text, stat label and glance label', () => {
     const oc05 = fact('OC-05');
     expect(oc05.text).toBe(TEXT);
     expect(oc05.stat?.label).toBe(LABEL);
     expect(oc05.stat?.glance?.label).toBe(GLANCE);
+    expect(oc05.stat?.glance?.note).toBe(GLANCE_NOTE);
     expect(oc05.stat?.value).toBe('58.7%');
   });
 
@@ -510,7 +513,9 @@ test.describe('OC-05: the six months are counted from the end of the course (ite
 
   test('Impact’s tile and Outcomes 2026 (summary tile, paragraph, chart note, data file) all read the reference point from the fact', async ({ page }) => {
     await open(page, 'impact/');
-    expect(compact(await page.locator('#glance a[data-fact~="OC-05"]').textContent())).toContain(define(GLANCE));
+    const tile = compact(await page.locator('#glance a[data-fact~="OC-05"]').textContent()); // WP168-B: the label, then the note with the definition (it was the label with the definition inserted)
+    expect(tile).toContain(GLANCE);
+    expect(tile).toContain(GLANCE_NOTE);
     await open(page, 'impact/outcomes-2026/');
     expect(compact(await page.locator('#summary [data-fact="OC-05"]').textContent())).toContain(LABEL.replace('surveyed new earners', 'surveyed completers who first earned during or after training')); // WP147: Results in Brief precedes the one definition, so the tile says the group in plain words
     expect(compact(await page.locator('#speed p[data-fact="OC-05"]').textContent())).toContain(`${TEXT.replace('surveyed completers who first earned during or after training', 'surveyed new earners')}.`); // WP136: the sentence uses the term the line above defines

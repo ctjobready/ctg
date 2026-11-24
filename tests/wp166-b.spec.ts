@@ -20,6 +20,9 @@ import { DIST_DIR } from './support/env';
 
 const TODAY = '2026-11-21';
 const TODAY_SHOWN = 'November 21, 2026';
+// WP168-B (owner decisions of 24 November 2026): JobReady@Work and Employers (the Akij Group line) and the five NU pages (campus, next intake, installments) changed again and are dated 2026-11-24.
+const WP168B_DAY = '2026-11-24';
+const WP168B_SHOWN = 'November 24, 2026';
 
 const html = (rel: string) => readFileSync(join(DIST_DIR, rel, 'index.html'), 'utf8');
 const decode = (s: string) =>
@@ -214,9 +217,9 @@ test.describe('WP166-B programs: JobReady@Work', () => {
     expect(bandText(P, 'mechanism')).toContain('See the JobReady Platform');
     expect(bandText(P, 'faq')).toContain('What Does It Cost?');
   });
-  test('dated 2026-11-21', () => {
-    expect(mainText(P)).toContain(`Last updated ${TODAY_SHOWN}`);
-    expect(dateModified(P)).toContain(TODAY);
+  test('dated 2026-11-24 (WP168-B; WP166-B dated it 2026-11-21)', () => {
+    expect(mainText(P)).toContain(`Last updated ${WP168B_SHOWN}`);
+    expect(dateModified(P)).toContain(WP168B_DAY);
   });
 });
 
@@ -238,11 +241,11 @@ test.describe('WP166-B programs: NU Post Graduate Diploma', () => {
     expect(bandText(NU, 'problem')).toContain('72%');
   });
   for (const rel of [NU, ...COURSES.map((c) => `${NU}/${c}`)]) {
-    test(`${rel}: the short-form line under the hero button; dated 2026-11-21`, () => {
+    test(`${rel}: the short-form line under the hero button; dated 2026-11-24 (WP168-B; WP166-B dated it 2026-11-21)`, () => {
       const hero = heroRaw(rel);
       expect(text(hero)).toContain(SHORT_FORM);
-      expect(mainText(rel)).toContain(`Last updated ${TODAY_SHOWN}`);
-      expect(dateModified(rel)).toContain(TODAY);
+      expect(mainText(rel)).toContain(`Last updated ${WP168B_SHOWN}`);
+      expect(dateModified(rel)).toContain(WP168B_DAY);
     });
   }
   for (const c of COURSES) {
@@ -501,7 +504,7 @@ test.describe('WP166-B partners: Universities, Employers, Investors and Local Pa
     expect(dd).not.toContain('Needs Assessment First');
     expect(dd).not.toContain('Progress Evaluation A progress evaluation checks results');
     expect(bandText(P, 'risk')).not.toContain('Independent Evaluation Welcome');
-    expect(dateModified(P)).toContain(TODAY);
+    expect(dateModified(P)).toContain(WP168B_DAY); // WP168-B: the Akij Group line (it was TODAY, 2026-11-21)
   });
   test('Investors', () => {
     const P = 'partner-with-us/investors';

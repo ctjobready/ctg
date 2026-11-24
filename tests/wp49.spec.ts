@@ -534,7 +534,8 @@ test.describe('The OC-05 and RC-06a labels (items 24 and 26)', () => {
   test('OC-05 says "surveyed new earners" in its stat and glance labels, keeps the full definition in its text, and the Outcomes page defines the term once', async ({ page }) => {
     const oc05 = fact('OC-05');
     expect(oc05.stat?.label).toBe('of the 172 surveyed new earners had started earning by six months after finishing the course (October 2026 survey)');
-    expect(oc05.stat?.glance?.label).toBe('of the 172 surveyed new earners had started earning by six months after finishing the course, including 23.3% who first earned during the course');
+    expect(oc05.stat?.glance?.label).toBe('of the 172 surveyed new earners had started earning by six months after finishing the course'); // WP168-B (R4-18): the 23.3% and the definition are in the glance note
+    expect(oc05.stat?.glance?.note).toBe('New earners are completers who first earned during or after training; 23.3% first earned during the course.');
     expect(oc05.text).toBe('Among the 172 surveyed completers who first earned during or after training: 23.3% first earned during the course; 58.7% had started earning by six months after finishing it; 77.3% by a year; 90.7% by two years (cumulative)');
     expect(oc05.stat?.value).toBe('58.7%');
     await open(page, 'impact/outcomes-2026/');

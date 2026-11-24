@@ -70,9 +70,9 @@ test.describe('WP79 item 3: Kosovo case study scope', () => {
 test.describe('WP79 item 4: Independent Evaluation last-updated date', () => {
   test('the page reads "Last updated October 29, 2026" and its JSON-LD dateModified is 2026-10-29 (WP104; WP99 had October 28)', async ({ page }) => {
     await open(page, 'impact/independent-evaluation/');
-    await expect(page.locator('body')).toContainText('Last updated November 21, 2026'); // WP134: WP133 changed its text; WP141 changed it again; WP166-C (the marketing-effectiveness review)
+    await expect(page.locator('body')).toContainText('Last updated November 24, 2026'); // WP134: WP133 changed its text; WP141 changed it again; WP166-C (the marketing-effectiveness review); WP168-B (R4-09, the journal heading)
     await expect(page.locator('body')).not.toContainText('Last updated October 23, 2026');
     const ld = await page.locator('script[type="application/ld+json"]').evaluateAll((els) => els.map((e) => e.textContent ?? '').join('\n'));
-    expect(ld).toMatch(/"dateModified"\s*:\s*"2026-11-21"/); // WP157: re-dated 2026-11-02; WP166-C: 2026-11-21
+    expect(ld).toMatch(/"dateModified"\s*:\s*"2026-11-24"/); // WP157: re-dated 2026-11-02; WP166-C: 2026-11-21; WP168-B: 2026-11-24
   });
 });

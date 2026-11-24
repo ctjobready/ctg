@@ -325,7 +325,7 @@ test.describe('NU Post Graduate Diploma: a link to the wider programs, not their
   test('the page shows today as its last-updated date', async ({ page }) => {
     await open(page, 'programs/nu-postgraduate-diploma/');
     // WP76 (2026-10-22): the page's wording changed that day (four courses), so PAGE_UPDATED.nu moved from 2026-10-15
-    await expect(page.locator('.updated time')).toHaveAttribute('datetime', '2026-11-21'); // WP166-B (marketing review R2: the hero lead, the short-form line, the skills card and the eligibility FAQ; it read 2026-11-02). WP151 (the FAQ "How Do I Apply?" is gone); WP148: "Post Graduate Diploma" capitalised (it read 2026-10-31); WP104: the page's wording last changed on 29 October (WP102; the Context heading, WP104)
+    await expect(page.locator('.updated time')).toHaveAttribute('datetime', '2026-11-24'); // WP168-B (owner statement of 24 November 2026: campus, next intake, installments). Earlier: WP166-B (marketing review R2: the hero lead, the short-form line, the skills card and the eligibility FAQ; it read 2026-11-02). WP151 (the FAQ "How Do I Apply?" is gone); WP148: "Post Graduate Diploma" capitalised (it read 2026-10-31); WP104: the page's wording last changed on 29 October (WP102; the Context heading, WP104)
   });
 });
 

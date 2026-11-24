@@ -279,19 +279,20 @@ const NOTICES_LEAD = 'National University publishes notices for its own intake a
 
 test.describe('B1 NU notices describe National University’s own intake, not admission through CodersTrust', () => {
   for (const rel of NU_PAGES) {
-    test(`${rel}: the Schedule and Intake row qualifies the notices and keeps both links; fee and eligibility unchanged`, () => {
-      expect(row(rel, 'Schedule and Intake')).toBe(`Admissions confirms intake dates and schedule with each applicant. ${NOTICES_LEAD} National University PGD Admission Notices and National University PGD Recent Notices.`);
+    // WP168-B (owner statement of 24 November 2026): the row is "Intake" and opens with the next intake (NU-15); the qualifier and both links follow unchanged; the fee is payable in installments (NU-16)
+    test(`${rel}: the Intake row qualifies the notices and keeps both links; eligibility unchanged, the fee in installments`, () => {
+      expect(row(rel, 'Intake')).toBe(`The next intake is by December 10, 2026. ${NOTICES_LEAD} National University PGD Admission Notices and National University PGD Recent Notices.`);
       const raw = sectionRaw(rel, 'before-you-apply');
       expect(raw).toContain('href="https://pgd.nu.ac.bd/admission-notices-pgd.php"');
       expect(raw).toContain('href="https://pgd.nu.ac.bd/all-recent-notices-pgd.php"');
-      expect(row(rel, 'Program Fee')).toBe('BDT 50,000.');
+      expect(row(rel, 'Program Fee')).toBe('BDT 50,000, payable in installments.');
       expect(row(rel, 'Eligibility')).toBe(`${ELIGIBILITY}.`);
       expect(main(rel)).not.toContain('notices are published in Bangla');
     });
   }
   // WP166-B (marketing review R2-24): the overview FAQ "Where Do I Find Eligibility, Schedule and Fees?" is gone (its answer pointed to Before You Apply and repeated this qualifier); the assertion that it carried the qualifier is gone with it.
-  // The qualifier's intent still holds on the overview: it is stated once, in the Schedule and Intake row (checked above), and the removed question is on no NU page.
-  test('the overview states the qualifier once (the Schedule and Intake row), and the removed FAQ "Where Do I Find Eligibility, Schedule and Fees?" is on no NU page', () => {
+  // The qualifier's intent still holds on the overview: it is stated once, in the Intake row (checked above; WP168-B: it was "Schedule and Intake"), and the removed question is on no NU page.
+  test('the overview states the qualifier once (the Intake row), and the removed FAQ "Where Do I Find Eligibility, Schedule and Fees?" is on no NU page', () => {
     expect(count(main(NU), NOTICES_LEAD)).toBe(1);
     for (const rel of NU_PAGES) expect(main(rel), rel).not.toContain('Where Do I Find Eligibility, Schedule and Fees?');
   });

@@ -403,23 +403,24 @@ test.describe('WP76 item 1: the two new course pages follow the course template'
       const mine = await rowsOf();
       expect(mine.labels).toEqual(ict.labels);
       expect(mine.values).toEqual(ict.values);
-      expect(mine.heroLabels).toEqual(['Duration', 'Program Fee']);
+      expect(mine.heroLabels).toEqual(['Duration', 'Program Fee', 'Campus', 'Next Intake']); // WP168-B (owner statement of 24 November 2026): campus and next intake join the key facts
       expect(mine.heroValues[0]).toContain('1 Year (2 Semesters)');
-      expect(mine.heroValues[1]).toContain('BDT 50,000');
+      expect(mine.heroValues[1]).toContain('BDT 50,000, payable in installments');
       expect(mine.heroLabels).toEqual(ict.heroLabels);
       expect(mine.heroValues).toEqual(ict.heroValues);
       expect(mine.actions.some((a) => a.startsWith('Apply Now') && a.includes('docs.google.com/forms'))).toBe(true);
       expect(mine.actions).toEqual(ict.actions);
-      expect(mine.labels).toEqual(['Eligibility', 'Duration', 'Credit Hours and Subjects', 'Schedule and Intake', 'Delivery', 'Teaching Location', 'Program Fee', 'Payment', 'Recognition', 'How to Apply']);
-      // WP102: the schedule value now also links National University's notices, so it starts with the admissions sentence
-      expect(mine.values.some((v) => v.startsWith('Admissions confirms intake dates and schedule with each applicant.'))).toBe(true);
-      expect(mine.values).toContain('Admissions confirms the teaching location with each applicant.');
+      // WP168-B (owner statement of 24 November 2026): "Schedule and Intake" is "Intake" (the next intake; no class schedule is set) and "Teaching Location" is "Campus" (where classes are held)
+      expect(mine.labels).toEqual(['Eligibility', 'Duration', 'Credit Hours and Subjects', 'Intake', 'Delivery', 'Campus', 'Program Fee', 'Payment', 'Recognition', 'How to Apply']);
+      // WP102: the intake value also links National University's notices, so it starts with the intake sentence
+      expect(mine.values.some((v) => v.startsWith('The next intake is by December 10, 2026.'))).toBe(true);
+      expect(mine.values).toContain('Classes are held at CodersTrust Mirpur Campus.');
       // a register fact ends with its full stop in the table ("<Fact>" adds it)
       expect(mine.values).toContain(`${ELIGIBILITY}.`);
       expect(mine.values).toContain('40 Credit Hours and 10 Subjects.');
-      const link = page.locator('.hero a.link', { hasText: 'Confirm Intake, Schedule and Location' });
+      const link = page.locator('.hero a.link', { hasText: 'See All Admissions Details' }); // WP168-B: it was "Confirm Intake, Schedule and Location" (#admissions-contact)
       await expect(link).toHaveCount(1);
-      expect(await link.getAttribute('href')).toBe('#admissions-contact');
+      expect(await link.getAttribute('href')).toBe('#before-you-apply');
       await expect(page.locator('#admissions-contact a[href^="tel:"]')).toHaveCount(1);
       await expect(page.locator('#admissions-contact a[href^="mailto:"]')).toHaveCount(1);
       // one primary button in the hero and one in the closing band, as on the other course pages
@@ -475,7 +476,7 @@ test.describe('WP76 item 1: the two new course pages follow the course template'
       expect(JSON.stringify(course?.provider)).toContain('National University, Bangladesh');
       const crumbs = nodes.find((n) => n['@type'] === 'BreadcrumbList');
       expect(((crumbs?.itemListElement as { name: string }[]) ?? []).map((i) => i.name)).toEqual(['Home', 'Programs', 'NU Post Graduate Diploma', c.title]);
-      expect(nodes.filter((n) => n['@type'] === 'WebPage').some((n) => n.dateModified === '2026-11-21')).toBe(true); // WP166-B (marketing review R2): the order, the short-form line and the single fit and caveat (2026-11-21; it was 2026-11-02). WP152: the "Ready to Apply?" lead is "Submit the application form." (2026-11-02). WP148: "Post Graduate Diploma" capitalised in the lead and the meta (it read 2026-10-31)
+      expect(nodes.filter((n) => n['@type'] === 'WebPage').some((n) => n.dateModified === '2026-11-24')).toBe(true); // WP168-B (owner statement of 24 November 2026: campus, next intake, installments). Earlier: WP166-B (marketing review R2): the order, the short-form line and the single fit and caveat (2026-11-21; it was 2026-11-02). WP152: the "Ready to Apply?" lead is "Submit the application form." (2026-11-02). WP148: "Post Graduate Diploma" capitalised in the lead and the meta (it read 2026-10-31)
     });
 
     test(`${route}: the page is shorter than the 750-word cap the other course pages keep, shows its last-updated date, and does not scroll sideways at 1280 or 390`, async ({ page }) => {
@@ -486,7 +487,7 @@ test.describe('WP76 item 1: the two new course pages follow the course template'
         expect(await noOverflow(page), `${vp.width}px`).toBe(true);
       }
       expect(await wordsIn(page)).toBeLessThan(750);
-      expect(compact(await page.locator('.updated').textContent())).toBe('Last updated November 21, 2026'); // WP166-B: it was November 2, 2026. WP152 (moved with the lead). WP148: it read October 31, 2026; WP104: the course pages' wording last changed on 29 October (WP102)
+      expect(compact(await page.locator('.updated').textContent())).toBe('Last updated November 24, 2026'); // WP168-B: it was November 21, 2026. WP166-B: it was November 2, 2026. WP152 (moved with the lead). WP148: it read October 31, 2026; WP104: the course pages' wording last changed on 29 October (WP102)
     });
   }
 });

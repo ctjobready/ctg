@@ -393,19 +393,8 @@ export const withSourceNote = (id: string, text: string): string => {
 };
 // WP51 (cycle-26 reviews, Kimi P2 and Grok m1): ORIGIN_LAUNCH ("Launched in Copenhagen in 2014.", the line for a band that shows SC-03's tile) is gone: Development Partners and Investors print ORIGIN_SHORT like Governments and Foundations.
 
-/**
- * WP52 (cycle-27 review): OC-05's labels call the 172 "surveyed new earners", a term the Outcomes 2026 page defines once (WP49), so the 58.7% read away from that definition (Home's speed slide, the Impact tile) could be taken for a
- * share of all completers. Those two surfaces define the term in place: "... of the 172 surveyed new earners (completers who first earned during or after training) had started earning by six months after finishing the course ...".
- * The definition is the words of OC-05's own text ("Among the 172 surveyed completers who first earned during or after training"); the label is the register's, with the definition inserted after the term, never retyped. The build
- * stops if the register's text or the label stops reading that way. The register's labels (OC-05's stat and glance) are unchanged, so the Outcomes page keeps its short labels beside its one definition.
- */
-const NEW_EARNERS_TERM = 'surveyed new earners';
-const NEW_EARNERS_DEFINITION = 'completers who first earned during or after training';
-export function defineNewEarners(label: string): string {
-  if (!fact('OC-05').text.includes(NEW_EARNERS_DEFINITION)) throw new Error(`defineNewEarners: OC-05's text no longer says "${NEW_EARNERS_DEFINITION}"`);
-  if (!label.includes(NEW_EARNERS_TERM)) throw new Error(`defineNewEarners: the label "${label}" no longer says "${NEW_EARNERS_TERM}"`);
-  return label.replace(NEW_EARNERS_TERM, `${NEW_EARNERS_TERM} (${NEW_EARNERS_DEFINITION})`);
-}
+// WP52 (cycle-27 review) defined "surveyed new earners" inside the Impact tile's label (defineNewEarners). WP168-B (marketing review R4-18, owner approval of 24 November 2026): the definition is OC-05's glance note now
+// ("New earners are completers who first earned during or after training; 23.3% first earned during the course."), so the helper, whose one reader was that tile, is gone.
 
 /**
  * WP64 (cycle-36 review, Grok; the WP62 treatment of Home's reach card and the hub's "Why Partner" tile, now shared): a tile that sits under a heading or beside a label that already says "since 2014" ("Reach Since 2014" on the Programs hub, "Since 2014" on Investors,
@@ -789,6 +778,13 @@ export const DELIVERY_MODEL_WORK: CopyBlock = {
 /** The hiring route in the closing steps of Employers and JobReady@Work (WP34, cycle-11 review): the steps there are team training, so hiring gets its own short route ("For Hiring"). */
 // WP91 (triage A8): the hiring step says what the conversation covers; the hedge stays in the hire band and the FAQ, which need it. JobReady@Work mirrors these steps (WP47), so it reads the same sentence.
 export const EMPLOYER_HIRING_ROUTE = 'A conversation about the roles you want to fill, to scope your talent request.';
+
+/**
+ * WP168-B (owner decision 2026-11-24: Akij Group may be named as a client; marketing review R6, the Akij item): the corporate-training line (PA-12) is the first item of the track record on Employers and JobReady@Work,
+ * with a link to the 2023 news post about the digital marketing and soft-skills training. AKIJ_ASSET is the name's permissions row (D13), set on the line as data-asset.
+ */
+export const AKIJ_STORY = { label: 'Read About the 2023 Training', href: '/news/coderstrust-provides-corporate-training-to-akij-group-one-of-the-largest-conglomerates-of-south-asia/' } as const;
+export const AKIJ_ASSET = 'client-akij-group';
 
 /**
  * The hiring route's two steps, in the same step component as the training route's (WP46, cycle-22 review: Employers; WP47: JobReady@Work mirrors them, with the same wording and component). Both sentences are wording the pages

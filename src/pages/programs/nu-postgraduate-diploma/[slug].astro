@@ -20,7 +20,7 @@ import CTABand from '../../../components/ui/CTABand.astro';
 import FaqSection from '../../../components/pages/programs/FaqSection.astro';
 import { anchor, faqNode, type FaqSource } from '../../../components/pages/programs/faq';
 import { PAGE_UPDATED } from '../../../components/pages/programs/meta';
-import { NU_APPLY, NU_CALL, NU_CALL_NUMBER, NU_CALL_TEXT, NU_COURSE_COPY, NU_LOCATION_NOTE, NU_NAME, NU_PATH, NU_SCHEDULE_NOTE, nuCourses, nuFitSentence, nuModuleFaqs, nuOverview } from '../../../components/pages/programs/nuPgd';
+import { NU_APPLY, NU_CALL, NU_CALL_NUMBER, NU_CALL_TEXT, NU_CAMPUS_DROP, NU_COURSE_COPY, NU_INSTALLMENTS_DROP, NU_INTAKE_SWAP, NU_NAME, NU_PATH, nuCourses, nuFitSentence, nuModuleFaqs, nuOverview } from '../../../components/pages/programs/nuPgd';
 import { NU_ELIGIBILITY } from '../../../data/copy';
 import { COURSES_URL } from '../../../lib/site';
 import { formatDate, isoDate } from '../../../lib/format';
@@ -69,14 +69,17 @@ const jsonLd = [
     <Fragment slot="actions">
       <Button href={apply.href} iconEnd="arrow-right">{apply.label}</Button>
       <a class="link" href={NU_CALL.href}>{NU_CALL_TEXT}</a>
-      <!-- WP27: intake, schedule and location are not published; the link goes to the admissions contact block, where they are confirmed with each applicant -->
-      <a class="link" href="#admissions-contact">Confirm Intake, Schedule and Location</a>
+      <!-- WP168-B (owner statement of 24 November 2026): the campus and the next intake are in the key facts below, so the link that offered to confirm them ("Confirm Intake, Schedule and Location", WP27) goes to the full admissions table -->
+      <a class="link" href="#before-you-apply">See All Admissions Details</a>
       <!-- WP166-B (marketing review R2-23): what "Apply Now" opens, under the button (the closing band keeps its two steps). -->
       <p class="hero-note">A short form: your name, contact details and course. Admissions then shares the application steps.</p>
     </Fragment>
+    <!-- WP168-B (owner statement of 24 November 2026): the key facts add the fee in installments (NU-16), the campus (NU-14) and the next intake (NU-15), as on the overview -->
     <dl slot="stats" class="keyfacts">
       <div><dt>Duration</dt><dd><Fact id="NU-02" /></dd></div>
-      <div><dt>Program Fee</dt><dd><Fact id="NU-03" /></dd></div>
+      <div><dt>Program Fee</dt><dd><Fact id="NU-03" />, <Fact id="NU-16" drop={NU_INSTALLMENTS_DROP} /></dd></div>
+      <div><dt>Campus</dt><dd><Fact id="NU-14" drop={NU_CAMPUS_DROP} /></dd></div>
+      <div><dt>Next Intake</dt><dd><Fact id="NU-15" swap={NU_INTAKE_SWAP} /></dd></div>
     </dl>
   </Hero>
 
@@ -119,10 +122,11 @@ const jsonLd = [
       <div class="ba__row"><dt>Eligibility</dt><dd><Fact id={eligibilityId} /></dd></div>
       <div class="ba__row"><dt>Duration</dt><dd><Fact id="NU-02" /></dd></div>
       <div class="ba__row"><dt>Credit Hours and Subjects</dt><dd><Fact id="NU-09" /></dd></div>
-      <div class="ba__row"><dt>Schedule and Intake</dt><dd>{NU_SCHEDULE_NOTE} <NuNoticeLinks /></dd></div>
+      <!-- WP168-B (owner statement of 24 November 2026): Intake (NU-15), Campus (NU-14) and the fee in installments (NU-16), as on the overview; no class schedule is stated (none is set) -->
+      <div class="ba__row"><dt>Intake</dt><dd><Fact id="NU-15" /> <NuNoticeLinks /></dd></div>
       <div class="ba__row"><dt>Delivery</dt><dd><Fact id="NU-10" /></dd></div>
-      <div class="ba__row"><dt>Teaching Location</dt><dd>{NU_LOCATION_NOTE}</dd></div>
-      <div class="ba__row"><dt>Program Fee</dt><dd><Fact id="NU-03" /></dd></div>
+      <div class="ba__row"><dt>Campus</dt><dd><Fact id="NU-14" /></dd></div>
+      <div class="ba__row"><dt>Program Fee</dt><dd><Fact id="NU-03" />, <Fact id="NU-16" drop={NU_INSTALLMENTS_DROP} /></dd></div>
       <div class="ba__row"><dt>Payment</dt><dd><Fact id="NU-05" /></dd></div>
       <div class="ba__row"><dt>Recognition</dt><dd><Fact id="NU-04" /></dd></div>
       <!-- WP161 (A-34): the linked Google Form registers interest (name, contact details and course); admissions then shares the application steps -->

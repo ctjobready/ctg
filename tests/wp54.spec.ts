@@ -354,13 +354,15 @@ test.describe('Employers: the closing band, the AWS credential and the first-ste
 
   // WP166-B (marketing review R3-06, owner approval of 21 November 2026): the credential is the Track Record list's first bullet, "AWS Authorized Training Partner.", tied to PA-06 (it was the caption's third sentence, "CodersTrust is an
   // AWS Authorized Training Partner."), so the caption is its two sentences; it is still not a lone paragraph under the logos, and it is stated once.
-  test('"AWS Authorized Training Partner." is the Track Record list’s first bullet, tied to PA-06, not a caption sentence or a lone paragraph under the logos', async ({ page }) => {
+  // WP168-B (owner decision 2026-11-24): the Akij Group line (PA-12) is the first bullet, so the AWS credential is the second.
+  test('"AWS Authorized Training Partner." is a Track Record bullet (the second, after Akij Group), tied to PA-06, not a caption sentence or a lone paragraph under the logos', async ({ page }) => {
     await open(page, EMP);
     const caption = page.locator('#guide section.partners .partners__title');
     await expect(caption).toHaveCount(1);
     expect(compact(await caption.textContent())).toBe('Organizations we have worked with, 2014–2026. These are working relationships, not endorsements.');
     await expect(caption.locator('[data-fact]')).toHaveCount(0);
-    const bullet = page.locator('#guide .pg__list li').first();
+    const bullet = page.locator('#guide .pg__list li').nth(1);
+    expect(await page.locator('#guide .pg__list li').first().getAttribute('data-fact')).toBe('PA-12');
     expect(compact(await bullet.textContent())).toBe('AWS Authorized Training Partner.');
     expect(await bullet.getAttribute('data-fact')).toBe('PA-06');
     expect(fact('PA-06').text).toBe('AWS Authorized Training Partner');

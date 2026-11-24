@@ -105,7 +105,8 @@ test.describe('WP125 items 3 to 5 and 7, News post wording', () => {
     expect(t).not.toContain('the institute’s dedication');
   });
   test('each changed post carries a dateModified of its own, at or after 2026-10-29', () => {
-    for (const slug of [WSIS, AKIJ, FREELANCING, OSTITTO]) expect(dateModified(html(post(slug))), slug).toMatch(/^2026-(10-(29|30)|11-(03|21))$/); // WP127 re-dated three of the four (serial-comma sweep); WP161-B re-dated WSIS, Akij and Ostitto to 2026-11-03 (the owner answers of 2 November); WP166-C re-dated every post to 2026-11-21
+    for (const slug of [WSIS, AKIJ, FREELANCING, OSTITTO]) expect(dateModified(html(post(slug))), slug).toMatch(/^2026-(10-(29|30)|11-(03|21|24))$/); // WP168-B: the Akij post's deck is cut (2026-11-24)
+    // WP127 re-dated three of the four (serial-comma sweep); WP161-B re-dated WSIS, Akij and Ostitto to 2026-11-03 (the owner answers of 2 November); WP166-C re-dated every post to 2026-11-21
   });
 });
 

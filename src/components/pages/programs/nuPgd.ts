@@ -19,13 +19,20 @@ export interface NuCourse {
 }
 
 export const NU_PATH = '/programs/nu-postgraduate-diploma/';
-/** Schedule, intake and location are not in the published admissions facts; one wording on all three NU pages states who confirms them. */
-export const NU_SCHEDULE_NOTE = 'Admissions confirms intake dates and schedule with each applicant.';
-export const NU_LOCATION_NOTE = 'Admissions confirms the teaching location with each applicant.';
-/** WP44 (cycle-21 review): the FAQ answer states the schedule and the location in one sentence (the rows keep NU_SCHEDULE_NOTE and NU_LOCATION_NOTE). */
-export const NU_ADMISSIONS_NOTE = 'Admissions confirms intake dates, schedule and teaching location with each applicant.';
+/**
+ * WP168-B (owner statement of 24 November 2026; confirm list #16 in part): where classes are held (NU-14), the next intake (NU-15) and installment payment of the fee (NU-16) are published on all five NU pages: the hero's key facts,
+ * the Before You Apply rows ("Intake", "Campus", "Program Fee") and, on the overview, three FAQ answers (nuAdmissionsFaqs). They replace "Admissions confirms intake dates and schedule with each applicant." and "Admissions confirms the teaching
+ * location with each applicant." (and NU_ADMISSIONS_NOTE, the FAQ form of both). The class schedule is not set, so no page states one. The short forms are the register's sentences shortened by <Fact>'s `drop` and `swap`, which stop the build
+ * if a sentence stops holding the phrase.
+ */
+/** "Classes are held at CodersTrust Mirpur Campus" → "CodersTrust Mirpur Campus" (the hero's Campus key fact). */
+export const NU_CAMPUS_DROP = 'Classes are held at ';
+/** "The next intake is by December 10, 2026" → "By December 10, 2026" (the hero's Next Intake key fact). */
+export const NU_INTAKE_SWAP: [string, string] = ['The next intake is by', 'By'];
+/** "The program fee is payable in installments" → "payable in installments", after NU-03's "BDT 50,000" (the hero's and Before You Apply's Program Fee). */
+export const NU_INSTALLMENTS_DROP = 'The program fee is ';
 export const NU_NAME = 'National University Post Graduate Diploma';
-/** WP102 (owner answer 2026-10-28): National University's own notices for the diploma, published in Bangla. Linked where the pages say intake and schedule are confirmed with each applicant. */
+/** WP102 (owner answer 2026-10-28): National University's own notices for the diploma, published in Bangla. Linked from the Intake row (WP168-B: after the next intake, NU-15). */
 export const NU_NOTICES: { label: string; href: string }[] = [
   { label: 'National University PGD Admission Notices', href: 'https://pgd.nu.ac.bd/admission-notices-pgd.php' },
   { label: 'National University PGD Recent Notices', href: 'https://pgd.nu.ac.bd/all-recent-notices-pgd.php' },
@@ -42,6 +49,21 @@ const nuAffiliation = (): string => {
   return `${t}.`;
 };
 export const NU_AFFILIATION: string = nuAffiliation();
+/**
+ * WP168-B: the overview's admissions questions, answered from the register (NU-15, NU-14 with NU-10's online clause, NU-03 with NU-16 and NU-05's payment routes). Each answer carries its facts on data-fact.
+ * WP166-B (R2-24) cut the question that pointed to Before You Apply; these answer in place.
+ */
+export function nuAdmissionsFaqs(): { q: string; html: string; evidence: string[] }[] {
+  const noOnline = 'online delivery is not available';
+  if (!fact('NU-10').text.endsWith(noOnline)) throw new Error(`nuAdmissionsFaqs: NU-10 no longer ends "${noOnline}"`);
+  const installments = fact('NU-16').text;
+  if (!installments.startsWith(NU_INSTALLMENTS_DROP)) throw new Error(`nuAdmissionsFaqs: NU-16 no longer starts "${NU_INSTALLMENTS_DROP}"`);
+  return [
+    { q: 'When Is the Next Intake?', html: esc(`${fact('NU-15').text}.`), evidence: ['NU-15'] },
+    { q: 'Where Are Classes Held?', html: esc(`${fact('NU-14').text}; ${noOnline}.`), evidence: ['NU-14', 'NU-10'] },
+    { q: 'Can I Pay the Program Fee in Installments?', html: esc(`Yes. ${NU_INSTALLMENTS_DROP}${fact('NU-03').text}, ${installments.slice(NU_INSTALLMENTS_DROP.length)}. ${fact('NU-05').text}.`), evidence: ['NU-03', 'NU-16', 'NU-05'] },
+  ];
+}
 /** WP21: one name for each NU track on every surface (menu, footer, <title>, H1, cards, breadcrumbs). Official module titles are untouched. */
 export const NU_COURSE_NAME: Record<string, string> = {
   'digital-marketing': 'NU Post Graduate Diploma in Digital Marketing',

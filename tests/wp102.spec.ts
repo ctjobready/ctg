@@ -72,10 +72,11 @@ test.describe('WP102 1: SC-04 says the NU learners are being onboarded, not in a
 
 test.describe('WP102 2: NU schedule notices are linked where intake and schedule are confirmed', () => {
   for (const route of NU_PAGES) {
-    test(`${route} links the two National University PGD notice pages from the Schedule and Intake row`, () => {
+    // WP168-B (owner statement of 24 November 2026): the row is "Intake" and states the next intake before the notices (it was "Schedule and Intake": "Admissions confirms intake dates and schedule with each applicant.")
+    test(`${route} links the two National University PGD notice pages from the Intake row`, () => {
       const html = htmlOf(route);
-      const row = /<dt[^>]*>Schedule and Intake<\/dt>\s*<dd[^>]*>([\s\S]*?)<\/dd>/.exec(html)?.[1] ?? '';
-      expect(row, 'the Schedule and Intake row').toContain('Admissions confirms intake dates and schedule with each applicant.');
+      const row = /<dt[^>]*>Intake<\/dt>\s*<dd[^>]*>([\s\S]*?)<\/dd>/.exec(html)?.[1] ?? '';
+      expect(visible(row), 'the Intake row').toMatch(/The next intake is by December 10, 2026\s*\./);
       expect(row).toContain('href="https://pgd.nu.ac.bd/admission-notices-pgd.php"');
       expect(row).toContain('href="https://pgd.nu.ac.bd/all-recent-notices-pgd.php"');
       expect(visible(row)).toContain('National University PGD Admission Notices');

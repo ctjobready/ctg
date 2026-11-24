@@ -319,19 +319,23 @@ test.describe(`5. every page whose visible text changed says ${TODAY}`, () => {
     [CAMPUS, 'updated'],
     [WORK, 'updated'],
   ];
+  // WP168-B (owner decision of 24 November 2026: the Akij Group line): JobReady@Work and Employers moved on to 2026-11-24.
+  const WP168B_DAY = '2026-11-24';
+  const dayOf = (rel: string) => (rel === WORK || rel === EMPLOYERS ? WP168B_DAY : WP166B_DAY);
+  const longOf = (rel: string) => (dayOf(rel) === WP168B_DAY ? 'November 24, 2026' : 'November 21, 2026');
   for (const [rel, cls] of STAMPED) {
-    test(`${rel}: "Last updated November 21, 2026" and JSON-LD dateModified ${WP166B_DAY}`, () => {
+    test(`${rel}: "Last updated ${longOf(rel)}" and JSON-LD dateModified ${dayOf(rel)}`, () => {
       const raw = html(rel);
       const m = new RegExp(`<p class="${cls}[^"]*"[^>]*>([\\s\\S]*?)</p>`).exec(raw);
-      expect(visible(m?.[1] ?? '')).toBe('Last updated November 21, 2026');
-      expect(raw).toMatch(new RegExp(`<time datetime="${WP166B_DAY}"`));
-      expect(dateModified(rel)).toContain(WP166B_DAY);
-      expect(dateModified(rel).filter((d) => d < WP166B_DAY)).toEqual([]);
+      expect(visible(m?.[1] ?? '')).toBe(`Last updated ${longOf(rel)}`);
+      expect(raw).toMatch(new RegExp(`<time datetime="${dayOf(rel)}"`));
+      expect(dateModified(rel)).toContain(dayOf(rel));
+      expect(dateModified(rel).filter((d) => d < dayOf(rel))).toEqual([]);
     });
   }
   for (const rel of [DEV, UNIVERSITIES, LOCAL, INVESTORS, GOVERNMENTS, FOUNDATIONS, EMPLOYERS]) {
-    test(`${rel}: WebPage.dateModified is ${WP166B_DAY}`, () => {
-      expect(nodeOf(rel, 'WebPage').dateModified).toBe(WP166B_DAY);
+    test(`${rel}: WebPage.dateModified is ${dayOf(rel)}`, () => {
+      expect(nodeOf(rel, 'WebPage').dateModified).toBe(dayOf(rel));
     });
   }
   test(`About (the 2025–2026 timeline item now says what JobReady is, with no rollout status): AboutPage.dateModified is ${TODAY}`, () => {

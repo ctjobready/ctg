@@ -176,13 +176,15 @@ test.describe('Item 3: the Trial page and FAQ Q4 cite the peer-reviewed article;
     expect(sources.EDCC26?.url).toBe(DOI);
   });
 
-  test('the Trial page has its own band "Published in a Peer-Reviewed Journal" with the full citation, a DOI link and the 3.01 sourced to the article', async ({ page }) => {
+  // WP168-B (marketing review R4-09, owner approval of 24 November 2026): the band's heading states the article's estimate, attributed to the article (RC-16's rule); it was "Published in a Peer-Reviewed Journal". The body is unchanged.
+  const JOURNAL_HEADING = 'Peer-Reviewed: The Article Estimates a Benefit/Cost Ratio of 3.01';
+  test('the Trial page has its own band "Peer-Reviewed: The Article Estimates a Benefit/Cost Ratio of 3.01" with the full citation, a DOI link and the 3.01 sourced to the article', async ({ page }) => {
     await open(page, TRIAL);
     const band = page.locator('section#journal');
     await expect(band).toHaveCount(1);
-    await expect(band.getByRole('heading', { level: 2 })).toHaveText('Published in a Peer-Reviewed Journal');
-    expect('Published in a Peer-Reviewed Journal').toBe(titleCase('Published in a Peer-Reviewed Journal'));
-    await expect(page.locator('.lf-toc a[href="#journal"]')).toHaveText('Published in a Peer-Reviewed Journal');
+    await expect(band.getByRole('heading', { level: 2 })).toHaveText(JOURNAL_HEADING);
+    expect(JOURNAL_HEADING).toBe(titleCase(JOURNAL_HEADING));
+    await expect(page.locator('.lf-toc a[href="#journal"]')).toHaveText(JOURNAL_HEADING);
     const citation = band.locator('p[data-fact="RC-15"]');
     await expect(citation).toHaveCount(1);
     expect(compact(await citation.textContent())).toContain(`The trial is also published in a peer-reviewed journal: ${CITATION} (October 2026).`);

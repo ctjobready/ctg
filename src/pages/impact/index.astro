@@ -16,14 +16,14 @@ import { wsdfmFigureLabel } from '../../components/pages/impact/evidence';
 import { articleNode, desc, title, discoveryCta } from '../../components/pages/impact/page-utils';
 import { CASE_STUDIES } from '../../components/pages/impact/case-studies';
 import PageNav from '../../components/pages/about/PageNav.astro';
-import { AIM_DEPENDENCY, AIM_SCOPE, CONTRACT_TOTAL_NOTE, DISCOVERY_SESSION_ASK, IMPACT_ANSWER, MICRO_COMMITMENT, WB_KOSOVO, WSDFM_NOT_TRIAL_NOTE, defineNewEarners } from '../../data/copy';
+import { AIM_DEPENDENCY, AIM_SCOPE, CONTRACT_TOTAL_NOTE, DISCOVERY_SESSION_ASK, IMPACT_ANSWER, MICRO_COMMITMENT, WB_KOSOVO, WSDFM_NOT_TRIAL_NOTE } from '../../data/copy';
 import { fact } from '../../data/facts';
 import { linkAttrs } from '../../lib/url';
 
 const path = '/impact/';
 // WP166-A (marketing review R7-21): the page's own lead, not the trial sentence Home, the Trial page and two route pages also used as their description.
 const description = desc('Program records from Kosovo and Bangladesh, an independent trial in Dhaka and a 2026 survey of completers. Each figure names its kind of evidence.');
-const jsonLd = [articleNode({ path, headline: 'Impact You Can Verify', description, datePublished: '2026-10-08', dateModified: '2026-11-21', author: 'CodersTrust' })]; // WP166-C (2026-11-21: the marketing-effectiveness review: hero lead and actions, the benchmark note, the tile order, the case cards, the story and the closing heading). Earlier: WP164 (2026-11-03: the Albania case card says 2021–2022 again). Earlier: WP162 (2026-11-03: the Albania case card says 2021 and no longer quotes the World Bank's enrollment figure). Earlier: WP157 (2026-11-02: the SDG introduction names the three core goals). Earlier: WP147 (2026-11-01): the 30,000+ tile reads as the register's label everywhere
+const jsonLd = [articleNode({ path, headline: 'Impact You Can Verify', description, datePublished: '2026-10-08', dateModified: '2026-11-24', author: 'CodersTrust' })]; // WP168-B (2026-11-24: the 58.7% tile's label and note, marketing review R4-18). Earlier: WP166-C (2026-11-21: the marketing-effectiveness review: hero lead and actions, the benchmark note, the tile order, the case cards, the story and the closing heading). Earlier: WP164 (2026-11-03: the Albania case card says 2021–2022 again). Earlier: WP162 (2026-11-03: the Albania case card says 2021 and no longer quotes the World Bank's enrollment figure). Earlier: WP157 (2026-11-02: the SDG introduction names the three core goals). Earlier: WP147 (2026-11-01): the 30,000+ tile reads as the register's label everywhere
 const sdgs = [
   { n: 4, label: 'Quality Education', core: true },
   { n: 5, label: 'Gender Equality', core: true },
@@ -67,9 +67,9 @@ const onThisPage = [
 // One formulation of the WSDFM program-record result, read from PR-01 (WP24b); the tile label adds only the measure.
 const wsdfmLabel = wsdfmFigureLabel();
 // WP52 (cycle-27 review, Grok m5): the page title is "Impact You Can Verify | CodersTrust", the H1's words (it was "Impact and Evidence You Can Verify | CodersTrust").
-// WP52 (cycle-27 review): the 58.7% tile defines "surveyed new earners" where the figure appears ("... of the 172 surveyed new earners (completers who first earned during or after training) had started earning by six months after finishing the course,
-// including 23.3% who first earned during the course"), so it is not read as a share of all completers. It is OC-05's glance label with the definition inserted (defineNewEarners); the register's labels are unchanged.
-const oc05Label = defineNewEarners(fact('OC-05').stat?.glance?.label ?? '');
+// WP52 (cycle-27 review): the 58.7% tile defines "surveyed new earners" where the figure appears, so it is not read as a share of all completers. WP168-B (marketing review R4-18, owner approval of 24 November 2026): the definition and the 23.3%
+// moved from the label into the tile's note, as the neighboring tiles split label and note: OC-05's glance label "of the 172 surveyed new earners had started earning by six months after finishing the course" and its note "New earners are completers
+// who first earned during or after training; 23.3% first earned during the course." (the tile reads both from the register; it no longer overrides the label).
 // WP60 (cycle-32 review, Claude S3): the "Where We Are Heading" tile for the 2030 aim carries the dependency clause the Programs hub card had (AIM_DEPENDENCY, src/data/copy.ts), in its note: "YouthWIDE in Bangladesh and similar countries in South Asia and the Middle East and North Africa, depending on government and donor commitments. An ambition, not a result." (WP99: the scope is IN-01's, AIM_SCOPE)
 // (the register's glance note, "YouthWIDE in Bangladesh and similar countries in South Asia and the Middle East and North Africa. An ambition, not a result.", is unchanged; the tile overrides its note for this page, as the Her Power and Kosovo tiles do).
 const aimNote = `YouthWIDE ${AIM_SCOPE}, ${AIM_DEPENDENCY}. An ambition, not a result.`;
@@ -99,7 +99,7 @@ const aimNote = `YouthWIDE ${AIM_SCOPE}, ${AIM_DEPENDENCY}. An ambition, not a r
       { title: 'Survey Results, Among Surveyed Completers', cols: 4, items: [
         { id: 'OC-03', href: '/impact/outcomes-2026/' },
         { id: 'OC-01', href: '/impact/outcomes-2026/' },
-        { id: 'OC-05', href: '/impact/outcomes-2026/', label: oc05Label },
+        { id: 'OC-05', href: '/impact/outcomes-2026/' },
         { id: 'OC-04', href: '/impact/outcomes-2026/' },
       ] },
       // WP166-C (R4-17): the program results follow the trial and the survey, so the three kinds of outcome read in one run; reach and contract scope come after them.

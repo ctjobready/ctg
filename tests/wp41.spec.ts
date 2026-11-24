@@ -326,12 +326,14 @@ test.describe('Employers: "Our Track Record" leads with its delivered figure; "A
     // WP66 (owner request 2026-10-20): the list closes with the signed-agreement sentence for companies and industry bodies (SC-11d); the two lines before it are as they were (tests/wp66.spec.ts)
     // WP166-B (marketing review R3-06): the AWS credential (PA-06) is the list's first bullet (it was a sentence of the logo caption), and the band is headed "Employers and Partners We Work With", which does not say the year,
     // so the signed-agreement sentence ends "since 2014" (the WP66 rule; it ended "... industry bodies."). The contract line still follows the 23,000+ headline stat.
+    // WP168-B (owner decision 2026-11-24: Akij Group may be named as a client): the Akij Group line (PA-12) leads the list, with its link to the 2023 post; the AWS credential follows it
     expect(await texts(page, '#guide .pg__list li')).toEqual([
+      'Corporate training for Akij Group, a conglomerate based in Bangladesh (2021–2024: workplace productivity, advanced Excel, corporate communications). Read About the 2023 Training',
       'AWS Authorized Training Partner.',
       'Contract scope: ICT, networking and cybersecurity for 120+ professionals, for the Ministry of Power, Energy and Mineral Resources (via Bangladesh Petroleum Institute).',
       'CodersTrust has signed MOUs, agreements or contracts with 27 companies and industry bodies since 2014.',
     ]);
-    expect(await page.locator('#guide .pg__list li').evaluateAll((els) => els.map((e) => e.getAttribute('data-fact')))).toEqual(['PA-06', 'GV-06', 'SC-11d']);
+    expect(await page.locator('#guide .pg__list li').evaluateAll((els) => els.map((e) => e.getAttribute('data-fact')))).toEqual(['PA-12', 'PA-06', 'GV-06', 'SC-11d']);
     // a scope of work is never worded as delivered training (register presentation rule for GV-02 to GV-06)
     expect(compact(await page.locator('#guide').textContent())).not.toMatch(/Also delivered/);
   });
@@ -339,11 +341,13 @@ test.describe('Employers: "Our Track Record" leads with its delivered figure; "A
   // WP54 (cycle-28 review, Kimi K3): the credential was a lone line under the logo strip ("AWS Authorized Training Partner."); it is a sentence of the strip's caption now ("... not endorsements. CodersTrust is an AWS Authorized Training Partner."; tests/wp54.spec.ts)
   // WP166-B (marketing review R3-06, owner approval of 21 November 2026): the credential is the Track Record list's first bullet, "AWS Authorized Training Partner." (it was the caption sentence "CodersTrust is an AWS Authorized
   // Training Partner." in the logo strip, and the list held no AWS line); it is still tied to PA-06, above the AWS logo and stated once on the page, and the caption no longer carries it.
-  test('"AWS Authorized Training Partner" is the Track Record list’s first bullet, above the AWS logo, tied to PA-06, and is stated once', async ({ page }) => {
+  // WP168-B (owner decision 2026-11-24): the Akij Group line (PA-12) is the first bullet now, so the AWS credential is the second, directly after it.
+  test('"AWS Authorized Training Partner" is the Track Record list’s second bullet (after Akij Group), above the AWS logo, tied to PA-06, and is stated once', async ({ page }) => {
     await open(page, 'partner-with-us/employers/');
     const note = page.locator('#guide .pg__list li[data-fact="PA-06"]');
     await expect(note).toHaveText('AWS Authorized Training Partner.');
-    await expect(page.locator('#guide .pg__list li').first()).toHaveAttribute('data-fact', 'PA-06');
+    await expect(page.locator('#guide .pg__list li').first()).toHaveAttribute('data-fact', 'PA-12');
+    await expect(page.locator('#guide .pg__list li').nth(1)).toHaveAttribute('data-fact', 'PA-06');
     await expect(page.locator('#guide section.partners .partners__title [data-fact="PA-06"]')).toHaveCount(0);
     await expect(page.locator('#guide section.partners .partners__title')).not.toContainText('AWS');
     await expect(page.locator('#guide .pg__logonote')).toHaveCount(0);

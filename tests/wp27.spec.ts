@@ -49,13 +49,16 @@ test.describe('one NU eligibility sentence', () => {
     });
   }
 
-  test('the NU hero text link "Confirm Intake, Schedule and Location" goes to the admissions contact block', async ({ page }) => {
+  // WP168-B (owner statement of 24 November 2026): the campus and the next intake are published in the hero's key facts, so the link that offered to confirm them reads "See All Admissions Details" and goes to Before You Apply,
+  // which holds the admissions contact block (tests/wp168-b.spec.ts pins the new facts).
+  test('the NU hero text link "See All Admissions Details" goes to Before You Apply, which holds the admissions contact block', async ({ page }) => {
     for (const route of [NU, `${NU}ict/`]) {
       await open(page, route);
-      const link = page.locator('.hero a.link', { hasText: 'Confirm Intake, Schedule and Location' });
+      await expect(page.locator('.hero a.link', { hasText: 'Confirm Intake, Schedule and Location' })).toHaveCount(0);
+      const link = page.locator('.hero a.link', { hasText: 'See All Admissions Details' });
       await expect(link).toHaveCount(1);
-      expect(await link.getAttribute('href')).toBe('#admissions-contact');
-      const block = page.locator('#admissions-contact');
+      expect(await link.getAttribute('href')).toBe('#before-you-apply');
+      const block = page.locator('#before-you-apply #admissions-contact');
       await expect(block).toHaveCount(1);
       await expect(block.locator('a[href^="tel:"]')).toHaveCount(1);
       await expect(block.locator('a[href^="mailto:"]')).toHaveCount(1);

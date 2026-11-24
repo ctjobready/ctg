@@ -170,8 +170,8 @@ test.describe('WP108 item 6: the pages changed here carry a date modified of 202
     });
   }
 
-  test('JobReady@Work shows “Last updated November 21, 2026” (WP141)', async ({ page }) => { // WP157: re-dated 2026-11-02; WP163: re-dated 2026-11-03; WP166-B: re-dated 2026-11-21
+  test('JobReady@Work shows “Last updated November 24, 2026” (WP141)', async ({ page }) => { // WP157: re-dated 2026-11-02; WP163: re-dated 2026-11-03; WP166-B: re-dated 2026-11-21; WP168-B: re-dated 2026-11-24 (the Akij Group line)
     await open(page, 'programs/jobready-work/');
-    await expect(page.locator('p.updated')).toHaveText(/Last updated\s+November 21, 2026/); // WP163: one exam fee per trainee, the delivery model and the platform question changed; WP166-B (marketing review R2): the ManpowerGroup glance tile and one closing band (it was November 3, 2026)
+    await expect(page.locator('p.updated')).toHaveText(/Last updated\s+November 24, 2026/); // WP163: one exam fee per trainee, the delivery model and the platform question changed; WP166-B (marketing review R2): the ManpowerGroup glance tile and one closing band (it was November 3, 2026)
   });
 });

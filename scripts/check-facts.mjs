@@ -814,7 +814,8 @@ const SURVEY_FACTS = {
   'OC-03b': { want: { text: ['72.0%', '22.0%', '5.9%'], 'stat.value': ['72.0%'] }, numeric: 72, stale: ['72.2%', '5.8%'] },
   'OC-03c': { want: { text: ['+$82'], 'stat.value': ['+$82'] }, numeric: 82, stale: [] },
   'OC-04': { want: { text: ['39.0%', '54.4%', '6.0%', '13.6%', '(2.3×)', '3.0%', '10.3%', '(3.4×)'], 'stat.value': ['13.6%'], 'stat.from': ['6.0%'], 'stat.label': ['6.0%'], 'stat.glance.label': ['6.0%'], 'stat.glance.note': ['3.0%', '10.3%'] }, numeric: 13.6, stale: ['38.3%', '53.3%', '6.2%', '14.0%', '2.8%', '10.6%', '3.8×'] },
-  'OC-05': { want: { text: ['172', '23.3%', '58.7%', '77.3%', '90.7%'], 'stat.value': ['58.7%'], 'stat.label': ['172'], 'stat.glance.label': ['172', '23.3%'] }, numeric: 58.7, stale: ['170', '23.5%', '58.8%', '77.1%', '90.6%'] },
+  // WP168-B (marketing review R4-18, owner approval of 24 November 2026): OC-05's glance tile splits its label and note, so the 23.3% is held in the note.
+  'OC-05': { want: { text: ['172', '23.3%', '58.7%', '77.3%', '90.7%'], 'stat.value': ['58.7%'], 'stat.label': ['172'], 'stat.glance.label': ['172'], 'stat.glance.note': ['23.3%'] }, numeric: 58.7, stale: ['170', '23.5%', '58.8%', '77.1%', '90.6%'] },
   'OC-06': { want: { text: ['92.6%', '87.0%', '71.1%'], 'stat.value': ['92.6%'] }, numeric: 92.6, stale: ['92.7%', '86.9%', '71.6%'] },
   'OC-07': { want: { text: ['About 12%', '78.0%'], 'stat.value': ['About 12%'] }, numeric: 12, stale: [] },
   'OC-08': { want: { text: ['58.9%', '36.9%'], 'stat.value': ['58.9%'] }, numeric: 58.9, stale: ['59.5%', '37.4%'] },

@@ -19,6 +19,10 @@ import { open } from './support/browser';
  */
 
 const TODAY = '2026-11-21';
+// WP168-B (owner decisions of 24 November 2026): the pages it changed again are dated 2026-11-24: the Akij Group post (its deck cut, R6-33), the Impact hub (the 58.7% tile, R4-18), the Trial page (the journal heading, R4-09) and the UNDP YES case study (R4-30).
+const WP168B_DAY = '2026-11-24';
+const AKIJ_SLUG = 'coderstrust-provides-corporate-training-to-akij-group-one-of-the-largest-conglomerates-of-south-asia';
+const updatedLine = (slug: string) => (slug === AKIJ_SLUG ? 'November 24, 2026' : 'November 21, 2026');
 // src/components/pages/news/news.ts imports astro:content, which a spec cannot load, so its constants are restated here (CURRENT_NEWS_FROM_YEAR, FEATURED_NEWS, NEWS_CTA.general).
 const CURRENT_NEWS_FROM_YEAR = 2026;
 const GENERAL_BAND = { heading: 'Working on Youth Employment?', text: 'Tell us your goals, priority groups and two suitable times. A discovery session is a conversation, not a commitment.' };
@@ -227,11 +231,11 @@ test.describe('The archive note, narrowed and shortened (owner approval 2, R5-05
       const year = Number(/^date: (\d{4})/m.exec(fm)?.[1]);
       if (year >= CURRENT_NEWS_FROM_YEAR) {
         current++;
-        expect(banner, slug).toMatch(/^Published [A-Z][a-z]+ \d{1,2}, 2026; updated November 21, 2026\.$/);
+        expect(banner, slug).toMatch(new RegExp(`^Published [A-Z][a-z]+ \\d{1,2}, 2026; updated ${updatedLine(slug)}\\.$`));
       } else {
         older++;
         const country = /^countToday: true$/m.test(fm) ? ' The country count is today’s.' : '';
-        expect(banner, slug).toMatch(new RegExp(`^Published [A-Z][a-z]+ \\d{1,2}, \\d{4}; updated November 21, 2026\\. ${SHORT.replace(/[.]/g, '\\.')}${country.replace(/[.]/g, '\\.')}$`));
+        expect(banner, slug).toMatch(new RegExp(`^Published [A-Z][a-z]+ \\d{1,2}, \\d{4}; updated ${updatedLine(slug)}\\. ${SHORT.replace(/[.]/g, '\\.')}${country.replace(/[.]/g, '\\.')}$`));
       }
     }
     expect(current, 'posts dated 2026').toBe(13);
@@ -398,14 +402,15 @@ test.describe('Independent Evaluation (R4-02, R4-03, R4-08, R4-10, R4-14, R4-32)
     expect(head).toContain('In a randomized trial of CodersTrust’s WSDFM program by the BRAC Institute of Governance and Development (BIGD), women offered a place were 10.3 percentage points more likely to be employed than the control group: over four times the 2.3-point average across nine randomized trials of vocational training.'); // no journal sentence beside the report figures (WP99, owner Q2 option C)
     expect(head).not.toMatch(/peer-reviewed/i);
     expect(head).toContain('Talk to Us About a First Cohort');
-    expect(head).toContain('Last updated November 21, 2026');
+    expect(head).toContain('Last updated November 24, 2026'); // WP168-B (R4-09): the journal heading moved the date on
     expect(text(TRIAL)).toContain('What was evaluated. CodersTrust’s 200-hour WSDFM program; today’s tracks are 100 hours.');
   });
   test('the sections run result, benchmark, journal, income, freelancing, funders, tracking, close', () => {
     expect(ids(main(TRIAL), 'section')).toEqual(['summary', 'context', 'journal', 'results', 'freelancing', 'funders', 'outcomes']);
     expect(main(TRIAL).indexOf('id="cta"')).toBeGreaterThan(main(TRIAL).indexOf('id="outcomes"'));
     const toc = visible(/<nav aria-label="On this page"[^>]*>[\s\S]*?<\/nav>/.exec(html(TRIAL))?.[0] ?? '');
-    expect(toc).toBe('The Result Over Four Times the Average of Nine Training Trials Published in a Peer-Reviewed Journal Income, Freelancing and Household Effects Freelancing: Women Offered a Place vs. the Control Group What It Means for Funders How We Track Outcomes Talk to Us About a First Cohort');
+    // WP168-B (R4-09): the journal band's heading, and so its On This Page entry, is "Peer-Reviewed: The Article Estimates a Benefit/Cost Ratio of 3.01" (it was "Published in a Peer-Reviewed Journal")
+    expect(toc).toBe('The Result Over Four Times the Average of Nine Training Trials Peer-Reviewed: The Article Estimates a Benefit/Cost Ratio of 3.01 Income, Freelancing and Household Effects Freelancing: Women Offered a Place vs. the Control Group What It Means for Funders How We Track Outcomes Talk to Us About a First Cohort');
   });
   test('the freelancing exhibit is the randomized comparison (RC-09); the classes chart (RC-08) is cut; the household line is RC-14', () => {
     const fr = byId(TRIAL, 'section', 'freelancing');
@@ -463,7 +468,7 @@ test.describe('Case studies (R4-05, R4-11, R4-12, R4-27 to R4-29, R4-33) and the
       expect(t, c.slug).not.toContain('Individual stories, not typical or promised outcomes.');
       expect(t.split('two suitable times').length - 1, c.slug).toBe(1);
       const article = nodes(rel, 'Article')[0];
-      expect(article?.dateModified, c.slug).toBe(TODAY);
+      expect(article?.dateModified, c.slug).toBe(c.slug === 'undp-yes-korail' ? WP168B_DAY : TODAY); // WP168-B (R4-30): the UNDP YES hero's 97.5% tile
     }
     expect(visible(byId(CASE('wsdfm-women-freelancers'), 'section', 'cta'))).toContain('Read the Randomized Trial Results');
   });
@@ -547,13 +552,14 @@ test.describe('Stories, Global Reach, In the Field and News Photographs (R4-22 t
 test.describe('Dates (constraint 12): every page whose visible text changed is dated 2026-11-21', () => {
   test('every news post', () => {
     for (const slug of NEWS_SLUGS) {
-      expect(frontMatter(slug), slug).toMatch(/^updated: 2026-11-21$/m);
-      expect(nodes(post(slug), 'NewsArticle')[0]?.dateModified, slug).toBe(TODAY);
+      const day = slug === AKIJ_SLUG ? WP168B_DAY : TODAY; // WP168-B (R6-33): the Akij post's deck is cut
+      expect(frontMatter(slug), slug).toMatch(new RegExp(`^updated: ${day}$`, 'm'));
+      expect(nodes(post(slug), 'NewsArticle')[0]?.dateModified, slug).toBe(day);
     }
   });
   test('the Impact pages and the pages that print the changed news headlines', () => {
-    expect(nodes(IMPACT, 'Article')[0]?.dateModified).toBe(TODAY);
-    expect(nodes(TRIAL, 'Article')[0]?.dateModified).toBe(TODAY);
+    expect(nodes(IMPACT, 'Article')[0]?.dateModified).toBe(WP168B_DAY); // WP168-B (R4-18)
+    expect(nodes(TRIAL, 'Article')[0]?.dateModified).toBe(WP168B_DAY); // WP168-B (R4-09)
     expect(nodes(SURVEY, 'Article')[0]?.dateModified).toBe(TODAY);
     expect(nodes(PHOTOS, 'Article')[0]?.dateModified).toBe(TODAY);
     expect(nodes('about/recognition/index.html', 'WebPage')[0]?.dateModified).toBe('2026-11-23'); // WP167 (2026-11-23): the two honors read from PA-11 moved it on

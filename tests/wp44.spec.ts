@@ -87,8 +87,10 @@ test.describe('NU Post Graduate Diploma: one admissions sentence in the FAQ (ite
     expect(text).not.toContain('Where Do I Find Eligibility, Schedule and Fees?');
     expect(text).not.toContain('Admissions confirms intake dates, schedule and teaching location with each applicant.');
     expect(text).not.toContain('Admissions confirms intake dates and schedule with each applicant. Admissions confirms the teaching location');
-    await expect(page.locator('.ba__row', { hasText: 'Schedule and Intake' })).toContainText('Admissions confirms intake dates and schedule with each applicant.');
-    await expect(page.locator('.ba__row', { hasText: 'Teaching Location' })).toContainText('Admissions confirms the teaching location with each applicant.');
+    // WP168-B (owner statement of 24 November 2026): the rows state the next intake and the campus (they said "Admissions confirms ... with each applicant."); each is still stated once in the Admissions rows
+    expect(text).not.toContain('Admissions confirms');
+    await expect(page.locator('.ba__row', { has: page.locator('dt', { hasText: /^Intake$/ }) })).toContainText('The next intake is by December 10, 2026.');
+    await expect(page.locator('.ba__row', { has: page.locator('dt', { hasText: /^Campus$/ }) })).toContainText('Classes are held at CodersTrust Mirpur Campus.');
   });
 });
 

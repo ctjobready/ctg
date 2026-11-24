@@ -94,7 +94,7 @@ test.describe('A-01 case studies and Stories declare the day their visible text 
   });
   test('the other three keep their own dates, and all five keep datePublished 2026-10-08', () => {
     expect(article('kosovo-women-in-online-work').dateModified).toBe('2026-11-21');
-    expect(article('undp-yes-korail').dateModified).toBe('2026-11-21');
+    expect(article('undp-yes-korail').dateModified).toBe('2026-11-24'); // WP168-B (R4-30): the hero's 97.5% tile moved it on
     expect(article('her-power').dateModified).toBe('2026-11-21');
     for (const s of ['kosovo-women-in-online-work', 'digital-jobs-albania', 'wsdfm-women-freelancers', 'undp-yes-korail', 'her-power']) expect(article(s).datePublished, s).toBe('2026-10-08');
   });
@@ -113,7 +113,7 @@ test.describe('A-02 partner route pages declare their own dateModified', () => {
   }
   test(`Employers, Governments and Foundations change visible text in this package, so they say ${TODAY}; Investors does too since WP163 (WP166-B: all four say ${WP166B_DAY})`, () => {
     // WP166-B: the four pages changed visible text again, so each is WP166B_DAY (they were TODAY, 2026-11-03).
-    expect(nodeOf(EMPLOYERS, 'WebPage').dateModified).toBe(WP166B_DAY);
+    expect(nodeOf(EMPLOYERS, 'WebPage').dateModified).toBe('2026-11-24'); // WP168-B (owner decision 2026-11-24): the Akij Group line moved Employers on
     expect(nodeOf(GOVERNMENTS, 'WebPage').dateModified).toBe(WP166B_DAY);
     expect(nodeOf(FOUNDATIONS, 'WebPage').dateModified).toBe(WP166B_DAY);
     expect(nodeOf('partner-with-us/investors/index.html', 'WebPage').dateModified).toBe(WP166B_DAY);

@@ -37,6 +37,10 @@ const bigdStudy = sources.BIGDSTUDY;
 // WP99 (owner answer 2026-10-28, Q2 option C): the peer-reviewed article that publishes the trial (RC-15, source EDCC26) has its own band below ("Published in a Peer-Reviewed Journal"), apart from the report figures above it, which are not labeled peer-reviewed.
 // The band also shows the article's benefit/cost ratio (RC-16: an explicit owner exception to the no-ROI rule, for this page only). The five authors are named in the structured data as Crossref lists them (checked 2026-10-28); the visible citation uses surnames, as the register does.
 const journal = sources.EDCC26;
+// WP168-B (marketing review R4-09, owner approval of 24 November 2026): the band's heading states the figure the band attributes to the article (RC-16: on this page only, attributed to the article, beside the citation); it was "Published in a Peer-Reviewed Journal".
+// The body is unchanged. The On This Page entry is the heading, word for word.
+const JOURNAL_HEADING = 'Peer-Reviewed: The Article Estimates a Benefit/Cost Ratio of 3.01';
+if (!fact('RC-16').text.includes('estimates a benefit/cost ratio of 3.01')) throw new Error('Trial page: RC-16 no longer says "estimates a benefit/cost ratio of 3.01"; update the journal band heading');
 const journalAuthors = ['Mohammad Raied Arman', 'Anindita Bhattacharjee', 'Narayan Das', 'Mohima Gomes', 'Sakib Mahmood'];
 const jsonLd = [
   articleNode({
@@ -44,7 +48,7 @@ const jsonLd = [
     headline: h1,
     description,
     datePublished: '2026-10-08',
-    dateModified: '2026-11-21', // WP166-C (2026-11-21: the lead, the section order, the freelancing exhibit, the household line, the funders paragraph and the hero link). Earlier: WP157 (2026-11-02: the nine-trials sentence no longer repeats its heading). Earlier: WP141 (2026-11-01: the program-scope qualifier is stated once per page). Earlier: WP134: WP133 changed the page text (owner rule 2026-10-31)
+    dateModified: '2026-11-24', // WP168-B (2026-11-24: the journal band's heading states the article's benefit/cost ratio, marketing review R4-09). Earlier: WP166-C (2026-11-21: the lead, the section order, the freelancing exhibit, the household line, the funders paragraph and the hero link). Earlier: WP157 (2026-11-02: the nine-trials sentence no longer repeats its heading). Earlier: WP141 (2026-11-01: the program-scope qualifier is stated once per page). Earlier: WP134: WP133 changed the page text (owner rule 2026-10-31)
     author: 'CodersTrust',
     citation: [
       {
@@ -77,7 +81,7 @@ const FREELANCING_HEADING = 'Freelancing: Women Offered a Place vs. the Control 
 const toc = [
   { id: 'summary', label: 'The Result' },
   { id: 'context', label: 'Over Four Times the Average of Nine Training Trials' },
-  { id: 'journal', label: 'Published in a Peer-Reviewed Journal' },
+  { id: 'journal', label: JOURNAL_HEADING },
   { id: 'results', label: 'Income, Freelancing and Household Effects' },
   { id: 'freelancing', label: FREELANCING_HEADING },
   { id: 'funders', label: 'What It Means for Funders' },
@@ -119,7 +123,7 @@ if (!/^Their monthly income/.test(incomeLine)) throw new Error('Independent eval
   path={path}
   heading={h1}
   eyebrow="Independent Evaluation"
-  updated="2026-11-21"
+  updated="2026-11-24"
   toc={toc}
   breadcrumbs={[{ label: 'Impact', href: '/impact/' }, { label: 'Independent Evaluation' }]}
   jsonLd={jsonLd}
@@ -140,7 +144,7 @@ if (!/^Their monthly income/.test(incomeLine)) throw new Error('Independent eval
     <p data-fact="RC-06a"><Fact id="RC-06a" field="headline" /></p>
   </ReportSection>
 
-  <ReportSection id="journal" title="Published in a Peer-Reviewed Journal">
+  <ReportSection id="journal" title={JOURNAL_HEADING}>
     <p data-fact="RC-15">The trial is also published in a peer-reviewed journal: Arman, Bhattacharjee, Das, Gomes and Mahmood (2026), “Tackling Women’s Unemployment: Evidence from an Online Jobs Experiment in Bangladesh,” <em>Economic Development and Cultural Change</em> 75(1): 367–399 (October 2026).{' '}
       <a href={journal.url} rel={linkAttrs(journal.url!).rel}>{journal.url}<span class="sr-only"> (opens {hostOf(journal.url!)})</span></a>
     </p>

@@ -52,7 +52,7 @@ import StepFlow from '../../../components/ui/StepFlow.astro';
 import Reinforcement from '../../../components/pages/partners/Reinforcement.astro';
 import PageEnhancements from '../../../components/pages/partners/PageEnhancements.astro';
 import { LINKS, meta } from '../../../components/pages/partners/partners';
-import { C14, DELIVERY_MODEL_WORK, EMPLOYER_HIRING_STEPS, HEADLINE, MICRO_COMMITMENT, POSITIONING, PROGRAM_SCOPE_INCLUSIONS, TRACK_MENU_LIST, VALUE_PROPOSITION, originShortUnder, withSourceNote } from '../../../data/copy';
+import { AKIJ_ASSET, AKIJ_STORY, C14, DELIVERY_MODEL_WORK, EMPLOYER_HIRING_STEPS, HEADLINE, MICRO_COMMITMENT, POSITIONING, PROGRAM_SCOPE_INCLUSIONS, TRACK_MENU_LIST, VALUE_PROPOSITION, originShortUnder, withSourceNote } from '../../../data/copy';
 import DefinitionPlus from '../../../components/pages/about/DefinitionPlus.astro';
 import { contractScope } from '../../../components/sections/copyText';
 import { fact } from '../../../data/facts';
@@ -62,7 +62,7 @@ import { webPage } from '../../../lib/schema';
 import { linkAttrs } from '../../../lib/url';
 
 const PATH = '/partner-with-us/employers/';
-// WP161-A (adversarial review A-02, A-28): the WebPage carries the page's own dateModified (it fell back to the build date); the Hire Talent lead gains register SC-03's "Most delivery has been in Bangladesh." (2026-11-03). WP166-B: 2026-11-21 (the marketing review R3 changes).
+// WP161-A (adversarial review A-02, A-28): the WebPage carries the page's own dateModified (it fell back to the build date); the Hire Talent lead gains register SC-03's "Most delivery has been in Bangladesh." (2026-11-03). WP166-B: 2026-11-21 (the marketing review R3 changes). WP168-B: 2026-11-24 (the Akij Group line leads the track record).
 const primary = cta('work');
 const talent = cta('talent');
 
@@ -91,7 +91,7 @@ if (aws !== 'AWS Authorized Training Partner') throw new Error('Employers: PA-06
   description={description}
   path={PATH}
   breadcrumbs={[{ label: 'Partner with Us', href: LINKS.hub }, { label: 'Employers' }]}
-  jsonLd={[webPage({ path: PATH, name: title, description, dateModified: '2026-11-21' }), faqJsonLd('employers', PATH, FAQ_IDS)]}
+  jsonLd={[webPage({ path: PATH, name: title, description, dateModified: '2026-11-24' }), faqJsonLd('employers', PATH, FAQ_IDS)]}
   stickyCta={{ label: primary.label, href: primary.href }}
 >
   <!-- C1 · Identity hook -->
@@ -149,13 +149,14 @@ if (aws !== 'AWS Authorized Training Partner') throw new Error('Employers: PA-06
 
   <!-- C5 · Guide. WP61 (cycle-33 reviews, GPT-6.1 Sol G2 and Kimi K1): no empathy line ("You have roles to fill and teams that need AI skills for their daily work."); the band opens with the origin line, as on Governments, Foundations and Development Partners. -->
   <!-- WP166-B (marketing review R3-06, R3-29): headed "Employers and Partners We Work With" (the JobReady@Work heading; "We’ve Built This Path Since 2014" is the youth-program heading), the AWS credential (PA-06) is the first bullet, not the third sentence
-       of the logo caption, and the TalentLEAP method line is at the end of How It Works. -->
+       of the logo caption, and the TalentLEAP method line is at the end of How It Works.
+       WP168-B (owner decision 2026-11-24: Akij Group may be named as a client; marketing review R6, the Akij item): the corporate training for Akij Group (PA-12) is the first item, with a link to the 2023 news post. -->
   <PartnerGuideBand
     title="Employers and Partners We Work With"
     opening={{ facts: employersOrigin.facts, text: employersOrigin.text }}
     stats={['SC-15']}
     statSize="lg"
-    statements={[{ facts: ['PA-06'], text: `${aws}.` }, { facts: ['GV-06'], text: contractScope('GV-06') }]}
+    statements={[{ facts: ['PA-12'], link: AKIJ_STORY, asset: AKIJ_ASSET }, { facts: ['PA-06'], text: `${aws}.` }, { facts: ['GV-06'], text: contractScope('GV-06') }]}
     signed="SC-11d"
     partnerGroup="private"
   />
