@@ -484,7 +484,7 @@ test.describe('dating lines', () => {
   // WP41 (cycle-18 review): the survey page's heading changed on October 15 (the survey's name moved to the eyebrow); its "Last updated" moved to October 20, 2026 with the refresh of its data (Impact Report 261014B); the source snapshot stays October 2026
   test('Impact Survey 2026 reads "Source snapshot: October 2026 · Last updated October 21, 2026"; no page says "Page last reviewed"', async ({ page }) => {
     await open(page, 'impact/outcomes-2026/');
-    expect(compact(await page.locator('.lf-updated').textContent())).toBe('Source snapshot: October 2026 · Last updated November 21, 2026'); // WP104; WP135: October 31; WP147: November 1 (the closing line and "On This Page" changed); WP161-A: November 3 (the rounding sentence); WP166-C: November 21
+    expect(compact(await page.locator('.lf-updated').textContent())).toBe('Source snapshot: October 2026 · Last updated November 26, 2026'); // WP104; WP135: October 31; WP147: November 1 (the closing line and "On This Page" changed); WP161-A: November 3 (the rounding sentence); WP166-C: November 21
     for (const route of ['impact/independent-evaluation/', 'our-model/talentleap/', 'programs/youthwide/', 'programs/superkids/']) {
       await open(page, route);
       // WP166-B (marketing review R2-06): TalentLEAP's line is at the foot of the page (.tl__updated; it was .lf-updated in the header).

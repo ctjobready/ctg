@@ -188,9 +188,9 @@ test.describe('A-05 and A-06 Outcomes 2026: the Dataset description and the Down
   });
   // WP166-C moved the page on to 2026-11-21 (its lead, the speed heading and the respondents band).
   test(`the page's own date moves on when its visible text changes (${TODAY}; WP166-C: 2026-11-21)`, () => {
-    expect(lastUpdated(OUTCOMES)).toBe('2026-11-21');
-    expect(nodeOf(OUTCOMES, 'Dataset').dateModified).toBe('2026-11-21');
-    expect(nodeOf(OUTCOMES, 'WebPage').dateModified).toBe('2026-11-21');
+    expect(lastUpdated(OUTCOMES)).toBe('2026-11-26'); // WP170: 2026-11-26
+    expect(nodeOf(OUTCOMES, 'Dataset').dateModified).toBe('2026-11-26'); // WP170: 2026-11-26
+    expect(nodeOf(OUTCOMES, 'WebPage').dateModified).toBe('2026-11-26'); // WP170: 2026-11-26
   });
 });
 

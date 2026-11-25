@@ -39,7 +39,7 @@ const description = desc(d.summary);
 const category = CATEGORIES[d.category];
 const apply = { label: CTAS.role.label, href: roleApplyHref(d.title) };
 const others = relatedRoles(all, role);
-const UPDATED = '2026-11-25'; // WP169 (owner answers of 2026-11-25): role texts changed and the CRO role was added. Earlier: WP168-A (2026-11-24, the day the role pages were published on this site)
+const UPDATED = '2026-11-26'; // WP169 (owner answers of 2026-11-25): role texts changed and the CRO role was added. Earlier: WP168-A (2026-11-24, the day the role pages were published on this site)
 const jsonLd = [webPage({ path, name: d.title, description, dateModified: UPDATED, breadcrumb: [{ name: 'Home', path: '/' }, { name: 'Careers', path: '/careers/' }, { name: d.title, path }] })];
 ---
 

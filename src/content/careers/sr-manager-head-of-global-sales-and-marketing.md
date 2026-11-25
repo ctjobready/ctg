@@ -95,7 +95,7 @@ To qualify to enter the selection process for this job, you must meet the follow
 - Bachelor’s degree in Marketing, Business Administration or related field; MBA preferred.
 - At least 15 years of experience in related fields.
 - Proven track record of success in marketing and sales leadership roles, preferably in technology or education.
-- strong analytical and strategic thinking abilities, with the capacity to convert information and ideas into workable plans and projects.
+- Strong analytical and strategic thinking abilities, with the capacity to convert information and ideas into workable plans and projects.
 - Outstanding interpersonal, communication and presentation abilities, with the capacity to collaborate and influence various stakeholders.
 - Proven track record of generating high-performing teams and demonstrating leadership.
 

@@ -323,6 +323,14 @@ test.describe('WP129 item 6: every dated page whose visible text changed carries
   // WP167 (owner approval of 2026-11-23): About (the identity paragraph), Governance (the lead) and Recognition and Media (the two honors) moved on to 2026-11-23.
   const MOVED_1123 = new Set(['about/index.html', 'about/governance/index.html', 'about/recognition/index.html']);
   // WP168-B (owner decisions of 2026-11-24): the NU overview and course pages (campus, next intake, installments), JobReady@Work (the Akij Group line), the Impact hub (the 58.7% tile) and the UNDP YES case study (the 97.5% tile) moved on to 2026-11-24.
+  // WP170 (owner answers of 2026-11-26): the five NU pages (the Application Deadline key fact) moved on to 2026-11-26.
+  const MOVED_1126 = new Set([
+    'programs/nu-postgraduate-diploma/index.html',
+    'programs/nu-postgraduate-diploma/cyber-security/index.html',
+    'programs/nu-postgraduate-diploma/data-analytics/index.html',
+    'programs/nu-postgraduate-diploma/digital-marketing/index.html',
+    'programs/nu-postgraduate-diploma/ict/index.html',
+  ]);
   const MOVED_1124 = new Set([
     'programs/nu-postgraduate-diploma/index.html',
     'programs/nu-postgraduate-diploma/cyber-security/index.html',
@@ -363,7 +371,7 @@ test.describe('WP129 item 6: every dated page whose visible text changed carries
     'impact/case-studies/wsdfm-women-freelancers/index.html',
   ]);
   for (const [route, cls] of STAMPED) {
-    const [day, long] = MOVED_1124.has(route) ? ['2026-11-24', 'November 24, 2026'] : MOVED_1123.has(route) ? ['2026-11-23', 'November 23, 2026'] : MOVED_1121.has(route) ? ['2026-11-21', 'November 21, 2026'] : MOVED_1103.has(route) ? ['2026-11-03', 'November 3, 2026'] : MOVED_1102.has(route) ? ['2026-11-02', 'November 2, 2026'] : MOVED_1101.has(route) ? ['2026-11-01', 'November 1, 2026'] : ['2026-10-31', 'October 31, 2026'];
+    const [day, long] = MOVED_1126.has(route) ? ['2026-11-26', 'November 26, 2026'] : MOVED_1124.has(route) ? ['2026-11-24', 'November 24, 2026'] : MOVED_1123.has(route) ? ['2026-11-23', 'November 23, 2026'] : MOVED_1121.has(route) ? ['2026-11-21', 'November 21, 2026'] : MOVED_1103.has(route) ? ['2026-11-03', 'November 3, 2026'] : MOVED_1102.has(route) ? ['2026-11-02', 'November 2, 2026'] : MOVED_1101.has(route) ? ['2026-11-01', 'November 1, 2026'] : ['2026-10-31', 'October 31, 2026'];
     test(`${route} reads "Last updated ${long}" and its JSON-LD dateModified is ${day}`, () => {
       const raw = html(route);
       const m = new RegExp(`<p class="${cls}[^"]*"[^>]*>([\\s\\S]*?)</p>`).exec(raw);

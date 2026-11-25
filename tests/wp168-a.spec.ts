@@ -18,7 +18,7 @@ import { open } from './support/browser';
  *   Redirects  every /jobs/<slug>/ of the old site: a kept role to its own page, a dropped or held one to /careers/ (stub, src/data/redirects.ts and the Bulk Redirects list).
  */
 
-const DAY = '2026-11-25'; // WP169: the careers pages moved on (role texts, the CRO role)
+const DAY = '2026-11-26'; // WP170: the garbled lines in seven role texts were cleaned // WP169: the careers pages moved on (role texts, the CRO role)
 const SITE = 'https://coderstrust.global';
 
 /** The 29 published roles (the old slugs). WP169 (owner answers of 2026-11-25): the Chief Revenue Officer post was published (28 before). */

@@ -20,6 +20,7 @@ import { open } from './support/browser';
  */
 
 const TODAY = '2026-11-24';
+const NU_DAY = '2026-11-26'; // WP170 (owner answer of 2026-11-26): the NU pages' Application Deadline key fact
 const html = (rel: string) => readFileSync(join(DIST_DIR, rel), 'utf8');
 const decode = (s: string) =>
   s.replace(/&#x([0-9a-f]+);/gi, (_, h: string) => String.fromCodePoint(parseInt(h, 16))).replace(/&#(\d+);/g, (_, n: string) => String.fromCodePoint(Number(n))).replace(/&quot;/g, '"').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&');
@@ -82,14 +83,14 @@ const OUTCOMES = 'impact/outcomes-2026/index.html';
 test.describe('The register mirror (src/data/facts.ts) for the owner decisions of 24 November 2026', () => {
   test('NU-14 to NU-16: campus, next intake and installments, from the owner statement (OWNERNU26); NU-03 is unchanged', () => {
     expect(fact('NU-14').text).toBe('Classes are held at CodersTrust Mirpur Campus');
-    expect(fact('NU-15').text).toBe('The next intake is by December 10, 2026');
+    expect(fact('NU-15').text).toBe('The application deadline for the next intake is December 10, 2026');
     expect(fact('NU-16').text).toBe('The program fee is payable in installments');
     for (const id of ['NU-14', 'NU-15', 'NU-16']) {
       expect(fact(id).status, id).toBe('V');
       expect(fact(id).group, id).toBe('admissions');
       expect(fact(id).sourceIds, id).toEqual(['OWNERNU26']);
     }
-    expect(sources.OWNERNU26.citation).toContain('24 November 2026');
+    expect(sources.OWNERNU26.citation).toContain('24 and 26 November 2026'); // WP170: the 26 November answer made December 10 the application deadline
     expect(fact('NU-03').text).toBe('BDT 50,000');
   });
 
@@ -129,12 +130,12 @@ test.describe('The register mirror (src/data/facts.ts) for the owner decisions o
 
 test.describe('NU Post Graduate Diploma: campus, next intake and installments (owner statement of 24 November 2026)', () => {
   for (const rel of NU_PAGES) {
-    test(`${rel}: the hero's key facts are Duration, Program Fee (in installments), Campus and Next Intake`, () => {
+    test(`${rel}: the hero's key facts are Duration, Program Fee (in installments), Campus and Application Deadline`, () => {
       expect(rows(rel, 'keyfacts')).toEqual([
         ['Duration', '1 Year (2 Semesters).'],
         ['Program Fee', 'BDT 50,000, payable in installments.'],
         ['Campus', 'CodersTrust Mirpur Campus.'],
-        ['Next Intake', 'By December 10, 2026.'],
+        ['Application Deadline', 'December 10, 2026.'], // WP170 (owner answer of 2026-11-26): December 10 is the application deadline
       ]);
       const dl = /<dl\b[^>]*class="keyfacts"[\s\S]*?<\/dl>/.exec(html(rel))?.[0] ?? '';
       for (const id of ['NU-02', 'NU-03', 'NU-16', 'NU-14', 'NU-15']) expect(dl, id).toContain(`data-fact="${id}"`);
@@ -144,7 +145,7 @@ test.describe('NU Post Graduate Diploma: campus, next intake and installments (o
       const r = rows(rel, 'ba');
       expect(r.map(([k]) => k)).toEqual(['Eligibility', 'Duration', rel === NU ? 'Credit Hours and Subjects (Each Course)' : 'Credit Hours and Subjects', 'Intake', 'Delivery', 'Campus', 'Program Fee', 'Payment', 'Recognition', 'How to Apply']);
       const get = (k: string) => r.find(([x]) => x === k)?.[1];
-      expect(get('Intake')).toBe('The next intake is by December 10, 2026. National University publishes notices for its own intake at its Gazipur campus in Bangla; the fee, eligibility and admission test in those notices apply to that intake, not to admission through CodersTrust: National University PGD Admission Notices and National University PGD Recent Notices.');
+      expect(get('Intake')).toBe('The application deadline for the next intake is December 10, 2026. National University publishes notices for its own intake at its Gazipur campus in Bangla; the fee, eligibility and admission test in those notices apply to that intake, not to admission through CodersTrust: National University PGD Admission Notices and National University PGD Recent Notices.');
       expect(get('Campus')).toBe('Classes are held at CodersTrust Mirpur Campus.');
       expect(get('Program Fee')).toBe('BDT 50,000, payable in installments.');
       expect(get('Payment')).toBe('Pay instantly online; transfer via mobile merchant accounts; visit a CodersTrust Bangladesh (CTBD) campus for cash or POS payments; or make a bank deposit.');
@@ -158,20 +159,21 @@ test.describe('NU Post Graduate Diploma: campus, next intake and installments (o
       const link = /<a class="link" href="([^"]+)"[^>]*>See All Admissions Details<\/a>/.exec(hero);
       expect(link?.[1]).toBe('#before-you-apply');
       expect(html(rel)).toContain('id="before-you-apply"');
-      expect(lastUpdated(rel)).toBe(TODAY);
-      expect(nodes(rel, 'WebPage')[0]?.dateModified).toBe(TODAY);
+      expect(lastUpdated(rel)).toBe(NU_DAY);
+      expect(nodes(rel, 'WebPage')[0]?.dateModified).toBe(NU_DAY);
     });
   }
 
   // PAGE_UPDATED (src/components/pages/programs/meta.ts) cannot be imported in a spec (it reaches import.meta.env through src/lib/url.ts); its source is read instead.
   test('PAGE_UPDATED: the NU overview, the NU course pages and JobReady@Work are dated 2026-11-24', () => {
     const meta = readFileSync('src/components/pages/programs/meta.ts', 'utf8');
-    for (const key of ['work', 'nu', 'nuCourse']) expect(new RegExp(`\\n  ${key}: '${TODAY}',`).test(meta), key).toBe(true);
+    for (const key of ['work']) expect(new RegExp(`\\n  ${key}: '${TODAY}',`).test(meta), key).toBe(true);
+    for (const key of ['nu', 'nuCourse']) expect(new RegExp(`\\n  ${key}: '${NU_DAY}',`).test(meta), key).toBe(true); // WP170
   });
 
   test('the overview answers the next intake, where classes are held and the installments in place (visible FAQ and FAQPage JSON-LD)', () => {
     const want = [
-      ['When Is the Next Intake?', 'The next intake is by December 10, 2026.', 'NU-15'],
+      ['When Is the Next Intake?', 'The application deadline for the next intake is December 10, 2026.', 'NU-15'],
       ['Where Are Classes Held?', 'Classes are held at CodersTrust Mirpur Campus; online delivery is not available.', 'NU-14 NU-10'],
       ['Can I Pay the Program Fee in Installments?', 'Yes. The program fee is BDT 50,000, payable in installments. Pay instantly online; transfer via mobile merchant accounts; visit a CodersTrust Bangladesh (CTBD) campus for cash or POS payments; or make a bank deposit.', 'NU-03 NU-16 NU-05'],
     ];
@@ -200,7 +202,7 @@ test.describe('NU Post Graduate Diploma: campus, next intake and installments (o
     await page.setViewportSize({ width: 390, height: 844 });
     await open(page, 'programs/nu-postgraduate-diploma/');
     const keyfacts = page.locator('.hero .keyfacts');
-    await expect(keyfacts.locator('dt')).toHaveText(['Duration', 'Program Fee', 'Campus', 'Next Intake']);
+    await expect(keyfacts.locator('dt')).toHaveText(['Duration', 'Program Fee', 'Campus', 'Application Deadline']);
     await expect(keyfacts.locator('dd').nth(1)).toHaveText('BDT 50,000, payable in installments', { useInnerText: true }); // the key facts hide <Fact>'s full stop
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
     expect(overflow).toBeLessThanOrEqual(0);
@@ -299,12 +301,12 @@ test.describe('Impact pages: R4-30, R4-18 and R4-09 (owner approval of 24 Novemb
     expect(modified(TRIAL)).toEqual([TODAY]);
   });
 
-  // R4-21 ("How Fast Earnings Started" → "Most Surveyed New Earners Started Earning Within Six Months") is not applied: "within six months" is retired on the site by WP48 (item 32; tests/wp46.spec.ts and tests/wp48.spec.ts),
-  // because OC-05 is cumulative and includes the 23.3% who first earned during the course. The heading and the page date stay; the owner is asked about it.
-  test('Outcomes 2026 keeps "How Fast Earnings Started" and its date (R4-21 not applied)', () => {
+  // R4-21 was not applied in WP168-B ("within six months" is retired by WP48 item 32). WP170 (owner answer of 2026-11-26): the heading is "Most Surveyed New Earners Started Earning in Six Months or Less" ("or Less", not "within").
+  test('Outcomes 2026: the speed heading is "Most Surveyed New Earners Started Earning in Six Months or Less" and the page is dated 2026-11-26 (R4-21, WP170)', () => {
     const raw = html(OUTCOMES);
-    expect(visible(/<h2[^>]*id="speed-h"[^>]*>([\s\S]*?)<\/h2>/.exec(raw)?.[1] ?? '')).toBe('How Fast Earnings Started');
+    expect(visible(/<h2[^>]*id="speed-h"[^>]*>([\s\S]*?)<\/h2>/.exec(raw)?.[1] ?? '')).toBe('Most Surveyed New Earners Started Earning in Six Months or Less');
     expect(visible(raw)).not.toMatch(/within six months/i);
-    expect(lastUpdated(OUTCOMES) ?? /Last updated <time datetime="([^"]+)"/.exec(raw)?.[1]).not.toBe(TODAY);
+    expect(visible(raw)).not.toContain('How Fast Earnings Started');
+    expect(lastUpdated(OUTCOMES) ?? /Last updated <time datetime="([^"]+)"/.exec(raw)?.[1]).toBe('2026-11-26');
   });
 });

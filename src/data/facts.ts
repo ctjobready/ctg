@@ -77,7 +77,7 @@ export const sources: Record<string, Source> = {
   UNDPIF15: { id: 'UNDPIF15', label: 'UNDP Innovation Facility, 2015 Year in Review', citation: `UNDP Innovation Facility, 2015 Year in Review.` },
   NUPGD26: { id: 'NUPGD26', label: 'National University Post Graduate Diploma pages (current CodersTrust site)', citation: `CodersTrust, National University Post Graduate Diploma pages on coderstrust.global (overview, Digital Marketing and ICT course pages), checked October 2026.` },
   // WP168-B (owner statement of 24 November 2026): the National University Post Graduate Diploma's campus, next intake and fee installments (NU-14 to NU-16).
-  OWNERNU26: { id: 'OWNERNU26', label: 'CodersTrust (owner statement, 24 November 2026)', citation: `CodersTrust, owner statement on the National University Post Graduate Diploma: classes at CodersTrust Mirpur Campus, the next intake by December 10, 2026, and the program fee payable in installments (24 November 2026).` },
+  OWNERNU26: { id: 'OWNERNU26', label: 'CodersTrust (owner statement, 24 November 2026)', citation: `CodersTrust, owner statement on the National University Post Graduate Diploma: classes at CodersTrust Mirpur Campus, the application deadline for the next intake of December 10, 2026, and the program fee payable in installments (24 and 26 November 2026).` },
   // WP76 (owner answer 2026-10-22: the NU Post Graduate Diploma has four courses): CodersTrust's own course pages for the two courses added to the diploma, read on 2026-10-22. Each lists 40 credit hours, 12 months, 10 subjects, instructor-led and on-campus delivery (online not available), and the ten subjects of its learning path.
   NUCYBER26: { id: 'NUCYBER26', label: 'CodersTrust, Post-Graduate Diploma in Cybersecurity course page', citation: `CodersTrust, “Post-Graduate Diploma in Cybersecurity”, course page on coderstrust.global (fetched 2026-10-22).`, url: 'https://coderstrust.global/course/post-graduate-diploma-in-cybersecurity/' },
   NUDATA26: { id: 'NUDATA26', label: 'CodersTrust, Post-Graduate Diploma in Data Analytics course page', citation: `CodersTrust, “Post-Graduate Diploma in Data Analytics”, course page on coderstrust.global (fetched 2026-10-22).`, url: 'https://coderstrust.global/course/post-graduate-diploma-in-data-analytics/' },
@@ -342,7 +342,7 @@ const rows: [string, Fact['group'], Row][] = [
   ['NU-13', 'admissions', { text: `The NU Post Graduate Diploma has four courses: Digital Marketing, Information and Communication Technology (ICT), Cyber Security and Data Analytics`, sourceIds: ['NUPGD26', 'NUCYBER26', 'NUDATA26'] }],
   // WP168-B (owner statement of 24 November 2026, confirm list #16 in part): where classes are held, the next intake and installment payment of the fee (NU-03). The class schedule is not set, and the other admissions items of #16 stay unpublished.
   ['NU-14', 'admissions', { text: `Classes are held at CodersTrust Mirpur Campus`, sourceIds: ['OWNERNU26'] }],
-  ['NU-15', 'admissions', { text: `The next intake is by December 10, 2026`, sourceIds: ['OWNERNU26'] }],
+  ['NU-15', 'admissions', { text: `The application deadline for the next intake is December 10, 2026`, sourceIds: ['OWNERNU26'] }],
   ['NU-16', 'admissions', { text: `The program fee is payable in installments`, sourceIds: ['OWNERNU26'] }],
 ];
 

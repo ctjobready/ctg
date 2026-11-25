@@ -90,7 +90,7 @@ The following list of key responsibility areas (KRAs) and responsibilities you w
 
 ### Corporate Training Solutions
 
-- Understand their training needs and objectives of the Corporates.
+- Understand the training needs and objectives of corporate clients.
 - Build strong relationships with key stakeholders within client organizations.
 - Conduct needs assessments to identify skill gaps and tailor training solutions accordingly.
 - Develop detailed training proposals that outline program objectives, methodologies and deliverables.

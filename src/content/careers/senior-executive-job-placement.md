@@ -15,12 +15,12 @@ legacyUrl: "https://coderstrust.global/jobs/senior-executive-job-placement/"
 CodersTrust Bangladesh is seeking a dynamic and motivated individual to join our team as a Job Placement Lead. The Job Placement Lead will play a pivotal role in connecting our talented pool of tech graduates with exciting job opportunities in the IT industry. This role requires a combination of strong communication skills, industry knowledge and a passion for empowering others to achieve their career goals.
 
 - Develop and maintain strong relationships with industry partners, including local relevant companies, startups and tech recruiters, to understand their hiring needs and preferences.
-- Have good contact with the HR personnels of Bangladesh or relevant recruiters.
+- Have good contact with the HR personnel of Bangladesh or relevant recruiters.
 - Actively source and identify job opportunities for CodersTrust graduates, using both traditional and innovative recruitment channels.
 - Collaborate with the Career Development team to provide personalized career guidance and support to students and alumni, including resume writing, interview preparation and job search strategies.
 - Good idea on using Artificial Intelligence.
 - Organize and facilitate recruitment events, job fairs and networking sessions to connect students with potential employers and facilitate meaningful interactions.
-- keep generating new ideas to ensure constant upgradation of work process.
+- Keep generating new ideas to ensure constant improvement of the work process.
 - Track and analyze placement data to measure the effectiveness of job placement efforts and identify areas for improvement.
 - Stay updated on industry trends, job market dynamics and emerging technologies to inform job placement strategies and curriculum development initiatives.
 

@@ -76,7 +76,7 @@ test.describe('WP102 2: NU schedule notices are linked where intake and schedule
     test(`${route} links the two National University PGD notice pages from the Intake row`, () => {
       const html = htmlOf(route);
       const row = /<dt[^>]*>Intake<\/dt>\s*<dd[^>]*>([\s\S]*?)<\/dd>/.exec(html)?.[1] ?? '';
-      expect(visible(row), 'the Intake row').toMatch(/The next intake is by December 10, 2026\s*\./);
+      expect(visible(row), 'the Intake row').toMatch(/The application deadline for the next intake is December 10, 2026\s*\./);
       expect(row).toContain('href="https://pgd.nu.ac.bd/admission-notices-pgd.php"');
       expect(row).toContain('href="https://pgd.nu.ac.bd/all-recent-notices-pgd.php"');
       expect(visible(row)).toContain('National University PGD Admission Notices');

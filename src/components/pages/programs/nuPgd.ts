@@ -27,8 +27,8 @@ export const NU_PATH = '/programs/nu-postgraduate-diploma/';
  */
 /** "Classes are held at CodersTrust Mirpur Campus" → "CodersTrust Mirpur Campus" (the hero's Campus key fact). */
 export const NU_CAMPUS_DROP = 'Classes are held at ';
-/** "The next intake is by December 10, 2026" → "By December 10, 2026" (the hero's Next Intake key fact). */
-export const NU_INTAKE_SWAP: [string, string] = ['The next intake is by', 'By'];
+/** "The application deadline for the next intake is December 10, 2026" → "December 10, 2026" (the hero's Application Deadline key fact; owner answer of 2026-11-26: December 10 is the application deadline). */
+export const NU_INTAKE_SWAP: [string, string] = ['The application deadline for the next intake is ', ''];
 /** "The program fee is payable in installments" → "payable in installments", after NU-03's "BDT 50,000" (the hero's and Before You Apply's Program Fee). */
 export const NU_INSTALLMENTS_DROP = 'The program fee is ';
 export const NU_NAME = 'National University Post Graduate Diploma';

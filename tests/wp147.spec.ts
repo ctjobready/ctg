@@ -180,7 +180,11 @@ test.describe('3 XHigh Polish', () => {
     const text = main(OUTCOMES);
     const definition = text.indexOf('Surveyed new earners are the completers who first earned during or after training.');
     expect(definition).toBeGreaterThan(0);
-    expect(text.toLowerCase().indexOf('surveyed new earners')).toBe(definition);
+    // WP170 (owner answer of 2026-11-26): the speed heading itself says "Most Surveyed New Earners Started Earning in Six Months or Less", so the term is first used there (the On This Page entry and the heading); the section's first sentence defines it directly under that heading, before any other use.
+    const first = text.toLowerCase().indexOf('surveyed new earners');
+    expect(first).toBeLessThan(definition);
+    expect(text.slice(first, definition)).toMatch(/^Surveyed New Earners Started Earning in Six Months or Less/i);
+    expect(text.toLowerCase().indexOf('surveyed new earners', first + 1)).toBeGreaterThan(0);
     expect(text).toContain('of the 172 surveyed completers who first earned during or after training had started earning by six months after finishing the course (October 2026 survey)');
   });
 

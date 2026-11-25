@@ -122,6 +122,6 @@ test.describe('WP109 item 9: dates on the changed pages', () => {
   test('Recognition (2026-11-02 since WP161-B; 2026-11-01 since WP141), Fahim Sheikh and the outcomes page are dated', () => {
     expect(distHtml('about/recognition/index.html')).toMatch(/"dateModified":"2026-11-23"/); // WP167 (2026-11-23): the two honors read from PA-11. // WP161-B: the Morten Lund note and the World Bank pages heading changed; WP166-A (2026-11-21): the lead, the section order and the press band WP166-C: three forum headlines read from News (2026-11-21)
     expect(distHtml('about/team/fahim-sheikh/index.html')).toMatch(/"dateModified":"2026-10-31"/);
-    expect(distHtml('impact/outcomes-2026/index.html')).toContain('2026-11-21'); // WP166-C: 2026-11-21. WP161-A: 2026-11-03 (the rounding sentence, A-06). WP135: re-dated from 2026-10-29 (the closing line and "On This Page" changed); WP147: 2026-11-01 (the method line and the Speed to Earning tile changed)
+    expect(distHtml('impact/outcomes-2026/index.html')).toContain('2026-11-26'); // WP166-C: 2026-11-21. WP161-A: 2026-11-03 (the rounding sentence, A-06). WP135: re-dated from 2026-10-29 (the closing line and "On This Page" changed); WP147: 2026-11-01 (the method line and the Speed to Earning tile changed)
   });
 });

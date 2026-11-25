@@ -23,6 +23,9 @@ const TODAY_SHOWN = 'November 21, 2026';
 // WP168-B (owner decisions of 24 November 2026): JobReady@Work and Employers (the Akij Group line) and the five NU pages (campus, next intake, installments) changed again and are dated 2026-11-24.
 const WP168B_DAY = '2026-11-24';
 const WP168B_SHOWN = 'November 24, 2026';
+// WP170 (owner answers of 2026-11-26): the five NU pages changed again (the Application Deadline key fact) and are dated 2026-11-26.
+const NU_DAY = '2026-11-26';
+const NU_SHOWN = 'November 26, 2026';
 
 const html = (rel: string) => readFileSync(join(DIST_DIR, rel, 'index.html'), 'utf8');
 const decode = (s: string) =>
@@ -241,11 +244,11 @@ test.describe('WP166-B programs: NU Post Graduate Diploma', () => {
     expect(bandText(NU, 'problem')).toContain('72%');
   });
   for (const rel of [NU, ...COURSES.map((c) => `${NU}/${c}`)]) {
-    test(`${rel}: the short-form line under the hero button; dated 2026-11-24 (WP168-B; WP166-B dated it 2026-11-21)`, () => {
+    test(`${rel}: the short-form line under the hero button; dated 2026-11-26 (WP170; WP168-B dated it 2026-11-24, WP166-B 2026-11-21)`, () => {
       const hero = heroRaw(rel);
       expect(text(hero)).toContain(SHORT_FORM);
-      expect(mainText(rel)).toContain(`Last updated ${WP168B_SHOWN}`);
-      expect(dateModified(rel)).toContain(WP168B_DAY);
+      expect(mainText(rel)).toContain(`Last updated ${NU_SHOWN}`);
+      expect(dateModified(rel)).toContain(NU_DAY);
     });
   }
   for (const c of COURSES) {

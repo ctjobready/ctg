@@ -435,7 +435,7 @@ test.describe('Impact Survey 2026 (R4-13, R4-14, R4-19, R4-20, R4-21)', () => {
     const head = visible(/<header class="lf-head"[\s\S]*?<\/header>/.exec(html(SURVEY))?.[0] ?? '');
     expect(head).toContain('Among surveyed completers, employment rose from 48.0% before training to 78.2% at the October 2026 survey, and median monthly income rose from $98 to $245. Respondents report these outcomes, and the survey does not show that training caused the change.');
     expect(head).toContain('Talk to Us About a First Cohort');
-    expect(head).toContain('Source snapshot: October 2026 · Last updated November 21, 2026');
+    expect(head).toContain('Source snapshot: October 2026 · Last updated November 26, 2026');
   });
   test('Who Responded follows the results, directly above How to Read This Survey; the duplicate profile lines are cut', () => {
     const order = ids(main(SURVEY), 'section').filter((id) => ['summary', 'employment', 'speed', 'experience', 'respondents', 'methodology', 'cta'].includes(id));
@@ -444,8 +444,9 @@ test.describe('Impact Survey 2026 (R4-13, R4-14, R4-19, R4-20, R4-21)', () => {
     expect(t).not.toContain('Nearly half of surveyed completers were employed before training');
     expect(t).not.toContain('Who the respondents are.');
     expect(byId(SURVEY, 'section', 'respondents')).toContain('data-fact="OC-09"');
-    // R4-21 not applied: the reviewer's heading conflicts with the settled OC-05 wording (WP48 item 32) and the definition-before-use rule (WP147), so the heading stays
-    expect(t).toContain('How Fast Earnings Started');
+    // R4-21 applied in WP170 (owner answer of 2026-11-26): the heading is "Most Surveyed New Earners Started Earning in Six Months or Less" ("or Less", not "within": WP48 item 32)
+    expect(t).toContain('Most Surveyed New Earners Started Earning in Six Months or Less');
+    expect(t).not.toContain('How Fast Earnings Started');
     expect(visible(byId(SURVEY, 'section', 'cta'))).toContain('Talk to Us About a First Cohort');
     expect(t).not.toContain('Discuss the Evidence for Your Program');
   });
@@ -560,7 +561,7 @@ test.describe('Dates (constraint 12): every page whose visible text changed is d
   test('the Impact pages and the pages that print the changed news headlines', () => {
     expect(nodes(IMPACT, 'Article')[0]?.dateModified).toBe(WP168B_DAY); // WP168-B (R4-18)
     expect(nodes(TRIAL, 'Article')[0]?.dateModified).toBe(WP168B_DAY); // WP168-B (R4-09)
-    expect(nodes(SURVEY, 'Article')[0]?.dateModified).toBe(TODAY);
+    expect(nodes(SURVEY, 'Article')[0]?.dateModified).toBe('2026-11-26'); // WP170 (the speed heading)
     expect(nodes(PHOTOS, 'Article')[0]?.dateModified).toBe(TODAY);
     expect(nodes('about/recognition/index.html', 'WebPage')[0]?.dateModified).toBe('2026-11-23'); // WP167 (2026-11-23): the two honors read from PA-11 moved it on
     expect(ld('about/team/aziz-ahmad/index.html').find((n) => [n['@type']].flat().includes('ProfilePage'))?.dateModified).toBe(TODAY);

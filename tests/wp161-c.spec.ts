@@ -281,7 +281,7 @@ test.describe('B1 NU notices describe National University’s own intake, not ad
   for (const rel of NU_PAGES) {
     // WP168-B (owner statement of 24 November 2026): the row is "Intake" and opens with the next intake (NU-15); the qualifier and both links follow unchanged; the fee is payable in installments (NU-16)
     test(`${rel}: the Intake row qualifies the notices and keeps both links; eligibility unchanged, the fee in installments`, () => {
-      expect(row(rel, 'Intake')).toBe(`The next intake is by December 10, 2026. ${NOTICES_LEAD} National University PGD Admission Notices and National University PGD Recent Notices.`);
+      expect(row(rel, 'Intake')).toBe(`The application deadline for the next intake is December 10, 2026. ${NOTICES_LEAD} National University PGD Admission Notices and National University PGD Recent Notices.`);
       const raw = sectionRaw(rel, 'before-you-apply');
       expect(raw).toContain('href="https://pgd.nu.ac.bd/admission-notices-pgd.php"');
       expect(raw).toContain('href="https://pgd.nu.ac.bd/all-recent-notices-pgd.php"');

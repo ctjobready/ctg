@@ -79,7 +79,7 @@ As a Senior Manager in the Accounts and Finance department, you will play a cruc
 To qualify to enter the selection process for this job, you must meet the following minimum criteria. Please DO NOT apply if you do not meet these criteria:
 
 - Master’s degree in Accounting, Finance or a related field.
-- certifications (e.g. CA, ACCA) are advantageous and professional level pass.
+- Professional certifications (e.g., CA, ACCA) are advantageous, as is a pass at professional level.
 - Experience: Minimum of 20 years of relevant experience in finance and accounting roles.
 
 ### Preferred

@@ -213,7 +213,7 @@ test.describe('WP105 item 9: stamps and dateModified of the pages this WP change
     { route: 'impact/independent-evaluation/', selector: '.lf-updated', day: 'November 24, 2026', iso: '2026-11-24' }, // WP168-B (R4-09). Earlier: WP166-C (the marketing-effectiveness review). Earlier: WP134: WP133 changed its text
     // WP166-B: the three program pages below changed again on 21 November 2026 (the marketing review R2); they read November 3, November 2 and November 3, 2026.
     { route: 'programs/youthwide/', selector: '.updated', day: 'November 21, 2026', iso: '2026-11-21' }, // WP166-B. Earlier: WP163 (one exam fee per trainee; the delivery model). Earlier: WP151
-    { route: 'programs/nu-postgraduate-diploma/', selector: '.updated', day: 'November 24, 2026', iso: '2026-11-24' }, // WP168-B (campus, next intake, installments). Earlier: WP166-B. Earlier: WP151 (WP148: as Privacy)
+    { route: 'programs/nu-postgraduate-diploma/', selector: '.updated', day: 'November 26, 2026', iso: '2026-11-26' }, // WP168-B (campus, next intake, installments). Earlier: WP166-B. Earlier: WP151 (WP148: as Privacy)
     { route: 'programs/jobready-campus/', selector: '.updated', day: 'November 21, 2026', iso: '2026-11-21' }, // WP166-B. Earlier: WP163 (as YouthWIDE). Earlier: WP151
 
   ];
