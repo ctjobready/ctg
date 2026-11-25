@@ -8,7 +8,6 @@ summary: "The CRO will unify all revenue-generating departments, including globa
 posted: "2024-12-19"
 modified: "2024-12-19"
 legacyUrl: "https://coderstrust.global/jobs/chief-revenue-officer-cro/"
-draft: true
 ---
 
 ## Your Role and Responsibilities
@@ -55,7 +54,7 @@ The ideal candidate combines a visionary mindset with practical execution skills
 - Global Branding: Position CodersTrust as a premier EdTech brand, driving awareness and trust among learners, institutions and partners.
 - Performance Marketing: Develop and execute ROI-focused marketing campaigns to generate high-quality leads and convert them effectively.
 - Product Positioning: Craft compelling value propositions and messaging that resonate with target audiences across regions.
-- Digital Strategy: Leverage digital marketing platforms, data analytics and CRM tools to optimize engagement and conversion rates.
+- Digital Strategy: Leverage digital marketing platforms, data analytics and customer relationship management tools to optimize engagement and conversion rates.
 
 ### Customer Success and Retention
 
@@ -129,6 +128,6 @@ To qualify to enter the selection process for this job, you must meet the follow
 If you have the following skills/competence, you’ll have a competitive advantage in our selection process compared to others:
 
 - Experience managing multicultural and cross-functional teams.
-- Familiarity with advanced CRM tools, digital marketing platforms and analytics.
+- Familiarity with advanced customer relationship management tools, digital marketing platforms and analytics.
 - Prior experience in emerging markets or mission-driven organizations.
 - Strong entrepreneurial mindset and adaptability to a fast-paced environment.

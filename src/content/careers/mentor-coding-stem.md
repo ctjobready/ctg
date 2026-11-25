@@ -12,14 +12,14 @@ legacyUrl: "https://coderstrust.global/jobs/mentor-coding-stem/"
 
 ## Your Role and Responsibilities
 
-We’re searching for a STEM (Science, Technology, Engineering and Mathematics) Coding Mentor who will play an important role in guiding and helping students on their scientific learning journey. In conjunction with Discovery Education and Thimble.io, you will provide mentorship, academic support and advice to K-12 kids to help them build a strong foundation for STEM courses. This position demands a solid understanding of block coding in both Scratch and Python, as well as excellent communication skills, passion and the ability to inspire and motivate students or children to pursue STEM careers.
+We’re searching for a STEM (Science, Technology, Engineering and Mathematics) Coding Mentor who will play an important role in guiding and helping students on their scientific learning journey. You will provide mentorship, academic support and advice to K-12 kids to help them build a strong foundation for STEM courses. This position demands a solid understanding of block coding in both Scratch and Python, as well as excellent communication skills, passion and the ability to inspire and motivate students or children to pursue STEM careers.
 
 The following list of typical responsibilities you will take on is indicative, not exhaustive. You’ll have a reasonable workload that can assure high-quality results.
 
 - Provide one-on-one or group mentorship to K-12 students, offering guidance, encouragement and support in their STEM studies.
 - Demonstrate a strong understanding of science concepts across various STEM disciplines and effectively communicate them to students.
 - Assist students in grasping challenging scientific concepts, problem-solving techniques and critical thinking skills.
-- Collaborate with the Discovery Education and Thimble.io team to develop lesson plans, and educational resources to enhance students’ learning experience.
+- Develop lesson plans and educational resources to enhance students’ learning experience.
 - Assess students’ strengths and weaknesses and tailor instruction to meet their needs, ensuring a personalized learning experience
 - Demonstrate and guide students in conducting hands-on experiments and projects to deepen their understanding of coding language principles.
 - Provide insight and information about potential STEM career paths, higher education opportunities and the importance of STEM in various industries.

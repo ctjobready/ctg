@@ -394,7 +394,7 @@ test.describe('WP129 item 6: every dated page whose visible text changed carries
     'programs/index.html',
   ];
   for (const route of JSONLD_ONLY) {
-    const day = MOVED_1124.has(route) ? '2026-11-24' : MOVED_1123.has(route) ? '2026-11-23' : MOVED_1121.has(route) ? '2026-11-21' : MOVED_1103.has(route) ? '2026-11-03' : MOVED_1102.has(route) ? '2026-11-02' : MOVED_1101.has(route) ? '2026-11-01' : '2026-10-31'; // WP166-B: MOVED_1121 first
+    const day = route === 'impact/case-studies/undp-yes-korail/index.html' ? '2026-11-25' /* WP169: the 97.5% tile lost its base note */ : MOVED_1124.has(route) ? '2026-11-24' : MOVED_1123.has(route) ? '2026-11-23' : MOVED_1121.has(route) ? '2026-11-21' : MOVED_1103.has(route) ? '2026-11-03' : MOVED_1102.has(route) ? '2026-11-02' : MOVED_1101.has(route) ? '2026-11-01' : '2026-10-31'; // WP166-B: MOVED_1121 first
     test(`${route} pins its own JSON-LD dateModified to ${day}`, () => {
       expect(dateModified(html(route))).toContain(day);
     });

@@ -468,7 +468,7 @@ test.describe('Case studies (R4-05, R4-11, R4-12, R4-27 to R4-29, R4-33) and the
       expect(t, c.slug).not.toContain('Individual stories, not typical or promised outcomes.');
       expect(t.split('two suitable times').length - 1, c.slug).toBe(1);
       const article = nodes(rel, 'Article')[0];
-      expect(article?.dateModified, c.slug).toBe(c.slug === 'undp-yes-korail' ? WP168B_DAY : TODAY); // WP168-B (R4-30): the UNDP YES hero's 97.5% tile
+      expect(article?.dateModified, c.slug).toBe(c.slug === 'undp-yes-korail' ? '2026-11-25' : TODAY); // WP169 (2026-11-25): the 97.5% tile lost its base note. WP168-B (R4-30): the UNDP YES hero's 97.5% tile
     }
     expect(visible(byId(CASE('wsdfm-women-freelancers'), 'section', 'cta'))).toContain('Read the Randomized Trial Results');
   });

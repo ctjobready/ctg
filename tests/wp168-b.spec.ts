@@ -107,7 +107,8 @@ test.describe('The register mirror (src/data/facts.ts) for the owner decisions o
     expect(fact('PR-03').text).toContain('350 enrolled; 97.5% completed the program; 67% of the 350 enrolled');
     const c = fact('PR-03c');
     expect(c.text).toBe('UNDP YES, Korail settlement, Dhaka, 2017: 97.5% completed the program');
-    expect(c.stat).toMatchObject({ value: '97.5%', numeric: 97.5, decimals: 1, suffix: '%', label: 'completed the program', detail: 'The base of the completion rate is not stated.' });
+    expect(c.stat).toMatchObject({ value: '97.5%', numeric: 97.5, decimals: 1, suffix: '%', label: 'completed the program' });
+    expect(c.stat?.detail).toBeUndefined(); // WP169 (owner answer of 2026-11-25): the tile carries no base note
     expect(c.sourceIds).toEqual(fact('PR-03').sourceIds);
     // 97.5% of 350 is not a whole number of people, so the site never puts the 97.5% "of the 350 enrolled"
     expect(Number.isInteger(0.975 * 350)).toBe(false);
@@ -260,11 +261,11 @@ test.describe('Impact pages: R4-30, R4-18 and R4-09 (owner approval of 24 Novemb
     });
     expect(tiles.map(read)).toEqual([
       { fact: 'PR-03', evidence: 'Program Record', value: '67%', label: 'of the 350 enrolled found their first job within three months', note: '' },
-      { fact: 'PR-03c', evidence: 'Program Record', value: '97.5%', label: 'completed the program', note: 'The base of the completion rate is not stated.' },
+      { fact: 'PR-03c', evidence: 'Program Record', value: '97.5%', label: 'completed the program', note: '' }, // WP169 (owner answer of 2026-11-25): no base note
     ]);
     expect(sitePages().filter((p) => /97\.5% of the 350/.test(visible(html(p))))).toEqual([]);
-    expect(CASE_STUDIES.find((c) => c.slug === 'undp-yes-korail')?.dateModified).toBe(TODAY);
-    expect(modified(KORAIL)).toEqual([TODAY]);
+    expect(CASE_STUDIES.find((c) => c.slug === 'undp-yes-korail')?.dateModified).toBe('2026-11-25'); // WP169
+    expect(modified(KORAIL)).toEqual(['2026-11-25']); // WP169: the base note came off the tile on 2026-11-25
   });
 
   test('Impact hub: the 58.7% tile reads the register’s short label and its note, as its neighbors do', () => {

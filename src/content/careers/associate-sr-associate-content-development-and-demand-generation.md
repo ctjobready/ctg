@@ -92,6 +92,7 @@ The following list of typical responsibilities you will take on is indicative, n
 
 To qualify to enter the selection process for this job, you must meet the following minimum criteria. Please DO NOT apply if you do not meet these criteria:
 
+- 7+ years of experience in demand generation and content developing field.
 - Graduate in Marketing, Communications or any related field.
 - Must be from an English medium background with O/A level qualifications/ Fluency in English language is a must.
 - Proficient in marketing content writing and graphics design software such as Adobe Photoshop, and Illustrator.

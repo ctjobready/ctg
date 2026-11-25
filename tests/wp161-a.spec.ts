@@ -94,7 +94,7 @@ test.describe('A-01 case studies and Stories declare the day their visible text 
   });
   test('the other three keep their own dates, and all five keep datePublished 2026-10-08', () => {
     expect(article('kosovo-women-in-online-work').dateModified).toBe('2026-11-21');
-    expect(article('undp-yes-korail').dateModified).toBe('2026-11-24'); // WP168-B (R4-30): the hero's 97.5% tile moved it on
+    expect(article('undp-yes-korail').dateModified).toBe('2026-11-25'); // WP168-B (R4-30): the hero's 97.5% tile moved it on; WP169 (2026-11-25): the tile lost its base note
     expect(article('her-power').dateModified).toBe('2026-11-21');
     for (const s of ['kosovo-women-in-online-work', 'digital-jobs-albania', 'wsdfm-women-freelancers', 'undp-yes-korail', 'her-power']) expect(article(s).datePublished, s).toBe('2026-10-08');
   });

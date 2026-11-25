@@ -50,6 +50,7 @@ The following list of key responsibility areas (KRAs) and responsibilities you w
 
 To qualify to enter the selection process for this job, you must meet the following minimum criteria. Please DO NOT apply if you do not meet these criteria:
 
+- 5+ years of experience in front-end web development.
 - Bachelor’s in computer science, software engineering or a related field.
 - Proficiency in HTML, CSS and JavaScript, with a strong emphasis on frontend development.
 - Strong knowledge of React or any similar mature framework, and PHP

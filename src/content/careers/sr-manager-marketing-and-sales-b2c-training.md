@@ -33,6 +33,7 @@ The following list of typical responsibilities you will take on is indicative, n
 
 To qualify to enter the selection process for this job, you must meet the following minimum criteria. Please DO NOT apply if you do not meet these criteria:
 
+- 15+ years of experience in marketing and sales, preferably in a leadership role.
 - Bachelor’s or Master’s degree in Marketing or a related field
 - Proven track record of developing and executing successful marketing and sales strategies that drive sales growth.
 

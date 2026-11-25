@@ -99,6 +99,5 @@ To qualify to enter the selection process for this job, you must meet the follow
 
 If you have the following skills/competence, you’ll have a competitive advantage in our selection process compared to others:
 
-- Male and female both can apply.
 - Proficiency in MS Office and customer relationship management software.
 - Willing to visit the outdoor plan for meeting with Right TG. Frequent travel to different locations and cities of the country is a strong requirement for this position.

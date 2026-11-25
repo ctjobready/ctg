@@ -94,7 +94,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     path: `${base}undp-yes-korail/`,
     name: 'UNDP YES, Korail',
     heading: 'UNDP YES: Korail Youth Finding First Jobs, 2017',
-    dateModified: '2026-11-24', // WP168-B (2026-11-24): the hero's second tile, 97.5% completed the program (PR-03c, marketing review R4-30). Earlier: WP166-C (2026-11-21): the story band and the closing band. Earlier: WP144: "Two Learners in Their Own Words"
+    dateModified: '2026-11-25', // WP169 (2026-11-25): the 97.5% tile lost its base note. Earlier: WP168-B (2026-11-24): the hero's second tile, 97.5% completed the program (PR-03c, marketing review R4-30). Earlier: WP166-C (2026-11-21): the story band and the closing band. Earlier: WP144: "Two Learners in Their Own Words"
     program: 'UNDP, Government of Bangladesh, Swanirvar Bangladesh',
     partner: '2017',
     factId: 'PR-03',

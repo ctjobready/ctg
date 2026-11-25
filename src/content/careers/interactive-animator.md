@@ -43,6 +43,7 @@ As an Interactive Animator at CodersTrust, you will be responsible for creating 
 
 To qualify to enter the selection process for this job, you must meet the following minimum criteria. Please DO NOT apply if you do not meet these criteria:
 
+- 5+ years of experience in animation, with a strong portfolio showcasing interactive and motion graphics work.
 - Bachelor’s degree in Animation, Graphic Design, Multimedia Arts or a related field. Equivalent professional experience will also be considered.
 - Proficiency in animation software such as Adobe Animate, Adobe After Effects, Spline or similar tools.
 - Experience with 3D animation software like Blender, Maya or Cinema 4D.

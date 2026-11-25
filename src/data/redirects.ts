@@ -337,7 +337,7 @@ export const REDIRECTS: { from: string; to: string; kind: 'internal' | 'external
   { from: '/jobs/', to: '/careers/', kind: 'internal' },
   { from: '/jobs/associate-manager-pr-communications/', to: '/careers/associate-manager-pr-communications/', kind: 'internal' },
   { from: '/jobs/associate-sr-associate-content-development-and-demand-generation/', to: '/careers/associate-sr-associate-content-development-and-demand-generation/', kind: 'internal' },
-  { from: '/jobs/chief-revenue-officer-cro/', to: '/careers/', kind: 'internal' },
+  { from: '/jobs/chief-revenue-officer-cro/', to: '/careers/chief-revenue-officer-cro/', kind: 'internal' },
   { from: '/jobs/cinematographer-videographer-editor/', to: '/careers/cinematographer-videographer-editor/', kind: 'internal' },
   { from: '/jobs/executive-student-affairs/', to: '/careers/executive-student-affairs/', kind: 'internal' },
   { from: '/jobs/frontend-developer-wordpress-woocommerce-shopify/', to: '/careers/frontend-developer-wordpress-woocommerce-shopify/', kind: 'internal' },

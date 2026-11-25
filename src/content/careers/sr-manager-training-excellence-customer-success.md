@@ -134,6 +134,7 @@ The following list of key responsibility areas (KRAs) and responsibilities you w
 
 To qualify to enter the selection process for this job, you must meet the following minimum criteria. Please DO NOT apply if you do not meet these criteria:
 
+- Minimum 12+ years experience in the relevant field.
 - Bachelor’s degree in Education, Human Resources or a related field.
 - Proven experience in designing and implementing CBT&A based training programs.
 - Strong analytical skills and a data-driven approach to training optimization.

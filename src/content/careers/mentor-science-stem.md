@@ -12,14 +12,14 @@ legacyUrl: "https://coderstrust.global/jobs/mentor-science-stem/"
 
 ## Your Role and Responsibilities
 
-We are searching for a STEM (Science, Technology, Engineering and Mathematics) Science Mentor who will guide and encourage students on their scientific learning journey. In conjunction with Discovery Education and Thimble.io, you will provide mentorship, academic support and advice to K-12 students to help them create a solid foundation for STEM courses. This position requires a strong interest in science, outstanding communication skills and the ability to inspire and motivate kids to pursue careers in STEM fields.
+We are searching for a STEM (Science, Technology, Engineering and Mathematics) Science Mentor who will guide and encourage students on their scientific learning journey. You will provide mentorship, academic support and advice to K-12 students to help them create a solid foundation for STEM courses. This position requires a strong interest in science, outstanding communication skills and the ability to inspire and motivate kids to pursue careers in STEM fields.
 
 The following list of typical responsibilities you will take on is indicative, not exhaustive. You’ll have a reasonable workload that can assure high-quality results.
 
 - Provide one-on-one or group mentorship to K-12 students, offering guidance, encouragement and support in their STEM studies.
 - Demonstrate a strong understanding of science concepts across various STEM disciplines and effectively communicate them to students.
 - Assist students in grasping challenging scientific concepts, problem-solving techniques and critical thinking skills.
-- Collaborate with the Discovery Education and Thimble.io team to develop lesson plans, and educational resources to enhance students’ learning experience.
+- Develop lesson plans and educational resources to enhance students’ learning experience.
 - Assess students’ strengths and weaknesses and tailor instruction to meet their individual needs, ensuring a personalized learning experience.
 - Facilitate and guide students in conducting hands-on experiments and science projects to deepen their understanding of scientific principles.
 - Provide insight and information about potential STEM career paths, higher education opportunities and the importance of STEM in various industries.

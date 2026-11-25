@@ -18,11 +18,12 @@ import { open } from './support/browser';
  *   Redirects  every /jobs/<slug>/ of the old site: a kept role to its own page, a dropped or held one to /careers/ (stub, src/data/redirects.ts and the Bulk Redirects list).
  */
 
-const DAY = '2026-11-24';
+const DAY = '2026-11-25'; // WP169: the careers pages moved on (role texts, the CRO role)
 const SITE = 'https://coderstrust.global';
 
-/** The 28 published roles (the old slugs). */
+/** The 29 published roles (the old slugs). WP169 (owner answers of 2026-11-25): the Chief Revenue Officer post was published (28 before). */
 const KEPT = [
+  'chief-revenue-officer-cro',
   'associate-manager-pr-communications',
   'associate-sr-associate-content-development-and-demand-generation',
   'cinematographer-videographer-editor',
@@ -60,13 +61,13 @@ const DROPPED: Record<string, string> = {
   'job-sr-manager-marketing-and-sales-corporate-training-and-employment': 'head-of-business-development-and-sales-workforce-development-and-corporate-training-solutions',
 };
 /** Held back (draft: true): in the collection, faithful to the old post, but not published. */
-const HELD = ['chief-revenue-officer-cro'];
+const HELD: string[] = []; // WP169: the Chief Revenue Officer post was held until 2026-11-25; nothing is held now
 /** Roles per category on /careers/ (the old site's job categories). */
 const COUNTS: [string, string, number][] = [
   ['accounting-finance', 'Accounting and Finance', 1],
   ['creative-media', 'Creative Media', 5],
   ['digital-marketing', 'Digital Marketing', 2],
-  ['management', 'Management', 3],
+  ['management', 'Management', 4], // WP169: the CRO role joined this category
   ['marketing-sales', 'Marketing and Sales', 6],
   ['mentors', 'Mentors', 6],
   ['operations', 'Operations', 2],
@@ -116,7 +117,7 @@ const refresh = (rel: string) => /http-equiv="refresh" content="0;url=([^"]+)"/.
 const ROLE_HREF = (slug: string) => `${BASE}careers/${slug}/`;
 
 /* ============================================================================================== */
-test.describe('The old site’s 33 job posts: 28 published, 1 held, 4 redundant re-posts left out', () => {
+test.describe('The old site’s 33 job posts: 29 published, 4 redundant re-posts left out (the CRO post was held until WP169)', () => {
   test('the migration manifest lists 33 job posts, and every one is accounted for exactly once', () => {
     const rows = readFileSync(join(process.cwd(), 'migration', 'migration-manifest.csv'), 'utf8')
       .split('\n')
@@ -124,11 +125,11 @@ test.describe('The old site’s 33 job posts: 28 published, 1 held, 4 redundant 
     expect(rows).toHaveLength(33);
     const slugs = rows.map((r) => /^\/jobs\/([^/]+)\//.exec(r)![1]).sort();
     expect(slugs).toEqual([...KEPT, ...Object.keys(DROPPED), ...HELD].sort());
-    expect(KEPT).toHaveLength(28);
+    expect(KEPT).toHaveLength(29);
     expect(Object.keys(DROPPED)).toHaveLength(4);
   });
 
-  test('src/content/careers holds the 28 kept roles and the held one, each with its old URL; no dropped re-post is there', () => {
+  test('src/content/careers holds the 29 kept roles, each with its old URL; no dropped re-post is there', () => {
     const files = readdirSync(CONTENT).filter((f) => f.endsWith('.md')).map((f) => f.replace(/\.md$/, '')).sort();
     expect(files).toEqual([...KEPT, ...HELD].sort());
     for (const slug of files) expect(fm(slug).legacyUrl, slug).toBe(`${SITE}/jobs/${slug}/`);
@@ -186,10 +187,10 @@ test.describe('/careers/: the Open Roles band, browsable by category', () => {
     expect(band).toContain('Join Our Team Open Roles Filter by category, then open a role to read it in full and apply.');
   });
 
-  test('the filter: "All Roles 28" and one chip per category of the old site, each with its count of roles', () => {
+  test('the filter: "All Roles 29" and one chip per category of the old site, each with its count of roles', () => {
     const raw = mainRaw(CAREERS);
     const chips = [...raw.matchAll(/<label class="rf__chip"[^>]*for="(rf-[^"]+)"[^>]*>([\s\S]*?)<\/label>/g)].map((m) => [m[1], text(m[2])]);
-    expect(chips).toEqual([['rf-all', 'All Roles 28'], ...COUNTS.map(([k, l, n]) => [`rf-${k}`, `${l} ${n}`])]);
+    expect(chips).toEqual([['rf-all', 'All Roles 29'], ...COUNTS.map(([k, l, n]) => [`rf-${k}`, `${l} ${n}`])]);
     expect(raw).toContain('<legend class="rf__legend"');
     expect(text(raw)).toContain('Filter by Category');
   });
@@ -207,7 +208,6 @@ test.describe('/careers/: the Open Roles band, browsable by category', () => {
       expect(text(card), slug).toBe(`${LABEL[d.category]} ${d.type} ${d.title} ${d.summary} View Role`);
     }
     for (const [k, , n] of COUNTS) expect(items.filter((m) => m[1] === k), k).toHaveLength(n);
-    expect(raw).not.toContain('chief-revenue-officer-cro');
     expect(raw).not.toMatch(/<time\b/);
     expect(mainText(CAREERS)).not.toMatch(/\b(?:19|20|21|23|30)\/\d{2}\/20\d{2}\b|\b(?:January|February|March|April|May|June|July|August|September|October|November|December) \d{1,2}, 202[3-5]\b/);
   });
@@ -232,7 +232,7 @@ test.describe('/careers/: the Open Roles band, browsable by category', () => {
 
 /* ============================================================================================== */
 test.describe('/careers/<slug>/: one page per published role', () => {
-  test('dist/careers holds the 28 role pages and nothing for the held or dropped posts', () => {
+  test('dist/careers holds the 29 role pages and nothing for the dropped posts', () => {
     const dirs = readdirSync(join(DIST_DIR, 'careers'), { withFileTypes: true }).filter((d) => d.isDirectory()).map((d) => d.name).sort();
     expect(dirs).toEqual([...KEPT].sort());
   });
@@ -315,17 +315,31 @@ test.describe('/careers/<slug>/: one page per published role', () => {
     ]);
   });
 
-  test('the cuts the gates required are on no role page: the experience lines the number guard rejects and the content-rules terms', () => {
-    const CUT = ['7+ years', '5+ years', '10+ years', '12+ years', '15+ years', '25+ years'];
-    for (const slug of KEPT) {
+  test('the experience lines are on the seven role pages that had them cut (WP169), and the cuts the content rules still require are on every role page but the CRO post', () => {
+    const RESTORED: [string, string][] = [
+      ['associate-sr-associate-content-development-and-demand-generation', '7+ years of experience in demand generation and content developing field.'],
+      ['frontend-developer-wordpress-woocommerce-shopify', '5+ years of experience in front-end web development.'],
+      ['interactive-animator', '5+ years of experience in animation, with a strong portfolio showcasing interactive and motion graphics work.'],
+      ['sr-creative-video-editor', '10+ years of proven experience as a video editor, preferably in a digital media or agency environment.'],
+      ['sr-manager-marketing-and-sales-b2c-training', '15+ years of experience in marketing and sales, preferably in a leadership role.'],
+      ['sr-manager-training-excellence-customer-success', 'Minimum 12+ years experience in the relevant field.'],
+      ['tech-lead-php-wordpress-woocommerce-shopify', '10+ years of relevant experience in Shopify, WooCommerce and WordPress advanced development, High-Availability WordPress deployment in AWS and Disaster Recovery.'],
+    ];
+    for (const [slug, line] of RESTORED) expect(mainText(`careers/${slug}`), slug).toContain(line);
+    expect(mainText('careers/chief-revenue-officer-cro')).toContain('25+ years of progressive experience in sales, marketing or revenue leadership roles, with 15+ years in the EdTech or technology sector.');
+    for (const slug of KEPT.filter((s) => s !== 'chief-revenue-officer-cro')) {
       const t = mainText(`careers/${slug}`);
-      for (const c of CUT) expect(t, `${slug}: ${c}`).not.toContain(c);
-      expect(t, slug).not.toMatch(/\brevenue\b|\bROI\b|\blifetime value\b|\bP&L\b|\bprofit and loss\b|\bleverag|\bworld-class\b/i);
+      expect(t, slug).not.toMatch(/\bROI\b|\blifetime value\b|\bP&L\b|\bprofit and loss\b|\bleverag|\bworld-class\b/i);
       // the site-wide wording rules: "CRM" is written out (tests/wp37.spec.ts), Google Ads not AdWords (tests/wp89.spec.ts), no "bootcamp" (tests/wp154.spec.ts)
       expect(t, slug).not.toMatch(/\bCRM\b|AdWords|bootcamp/i);
     }
-    // the held post keeps its full text in the repository
-    expect(readFileSync(join(CONTENT, 'chief-revenue-officer-cro.md'), 'utf8')).toContain('25+ years of progressive experience in sales, marketing or revenue leadership roles, with 15+ years in the EdTech or technology sector.');
+  });
+
+  test('the gender and age preference lines and the partner mention are on no role page (owner answers of 2026-11-25)', () => {
+    for (const slug of KEPT) {
+      const t = mainText(`careers/${slug}`);
+      expect(t, slug).not.toMatch(/Females are preferred|female candidates|Male and female both can apply|Age at least 30|Thimble|Discovery Education/);
+    }
   });
 });
 
@@ -334,7 +348,7 @@ test.describe('Redirects: every /jobs/<slug>/ of the old site', () => {
   const ALL = [...KEPT, ...Object.keys(DROPPED), ...HELD];
   const dest = (slug: string) => (KEPT.includes(slug) ? `/careers/${slug}/` : '/careers/');
 
-  test('the stub at each old URL forwards to the role’s page (kept) or to /careers/ (dropped or held)', () => {
+  test('the stub at each old URL forwards to the role’s page (kept) or to /careers/ (dropped)', () => {
     for (const slug of ALL) expect(refresh(`jobs/${slug}`), slug).toBe(`${BASE}${dest(slug).slice(1)}`);
     expect(refresh('jobs')).toBe(`${BASE}careers/`);
   });
@@ -348,7 +362,7 @@ test.describe('Redirects: every /jobs/<slug>/ of the old site', () => {
     }
   });
 
-  test('the sitemap lists /careers/ and the 28 role pages, and no held or dropped post; llms.txt names /careers/ (the roles, like news posts, are not listed one by one)', () => {
+  test('the sitemap lists /careers/ and the 29 role pages, and no dropped post; llms.txt names /careers/ (the roles, like news posts, are not listed one by one)', () => {
     const sm = readdirSync(DIST_DIR).filter((f) => /^sitemap-\d+\.xml$/.test(f)).map((f) => readFileSync(join(DIST_DIR, f), 'utf8')).join('\n');
     const locs = [...sm.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1]).filter((u) => u.startsWith(`${SITE}/careers/`));
     expect(locs.sort()).toEqual([`${SITE}/careers/`, ...KEPT.map((s) => `${SITE}/careers/${s}/`)].sort());

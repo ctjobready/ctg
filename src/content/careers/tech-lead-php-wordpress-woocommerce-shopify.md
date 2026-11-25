@@ -32,6 +32,7 @@ The following list of typical responsibilities you will take on is indicative, n
 
 To qualify to enter the selection process for this job, you must meet the following minimum criteria. Please DO NOT apply if you do not meet these criteria:
 
+- 10+ years of relevant experience in Shopify, WooCommerce and WordPress advanced development, High-Availability WordPress deployment in AWS and Disaster Recovery.
 - Bachelor’s degree in Computer Science, Information Technology or a related field
 - Proficient in written and verbal communication skills in both Bangla and English
 - Expertise and in-depth understanding of Payment Gateway Integration

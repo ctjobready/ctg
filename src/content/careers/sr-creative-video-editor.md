@@ -31,6 +31,7 @@ We are seeking a Senior Video Editor to join our creative team and produce engag
 
 To qualify to enter the selection process for this job, you must meet the following minimum criteria. Please DO NOT apply if you do not meet these criteria:
 
+- 10+ years of proven experience as a video editor, preferably in a digital media or agency environment.
 - Bachelor’s degree in film, video production or a related field preferred.
 - Proficient in using video editing software, such as Adobe Premiere Pro, After Effects, Final Cut Pro or DaVinci Resolve.
 - Extensive knowledge of color grading, sound design, motion graphics, Adobe Audition, Premiere Pro audio processing tools and plugins, Audacity, OBS, Steelseries Sonar.

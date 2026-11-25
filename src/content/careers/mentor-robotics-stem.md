@@ -19,7 +19,7 @@ The following list of typical responsibilities you will take on is indicative, n
 - Provide one-on-one or group mentorship to K-12 students, offering guidance, encouragement and support in their STEM studies.
 - Demonstrate a strong understanding of science concepts across various STEM disciplines and effectively communicate them to students.
 - Assist students in grasping challenging technical concepts, problem-solving techniques and critical thinking skills.
-- Collaborate with the Discovery Education and Thimble.io team to develop lesson plans, and educational resources to enhance students’ learning experience.
+- Develop lesson plans and educational resources to enhance students’ learning experience.
 - Assess students’ strengths and weaknesses and tailor instruction to meet their needs, ensuring a personalized learning experience
 - Instruct and train students with hands-on demonstrations of robotic concepts and principles. This may include theoretical explanations and practical demonstrations with assembly and programming languages.
 - Provide insight and information about potential STEM career paths, higher education opportunities and the importance of STEM in various industries.

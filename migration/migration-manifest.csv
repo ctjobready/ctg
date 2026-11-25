@@ -133,7 +133,7 @@ legacy_url,content_id,class,disposition,destination,query_handling,publication_h
 /header/header-2/,none,custom-post-type,DROP,/,none,none,stub+edge
 /jobs/associate-manager-pr-communications/,24990,custom-post-type,MOVE,/careers/associate-manager-pr-communications/,none,none,stub+edge
 /jobs/associate-sr-associate-content-development-and-demand-generation/,25466,custom-post-type,MOVE,/careers/associate-sr-associate-content-development-and-demand-generation/,none,none,stub+edge
-/jobs/chief-revenue-officer-cro/,31268,custom-post-type,MERGE,/careers/,none,none,stub+edge
+/jobs/chief-revenue-officer-cro/,31268,custom-post-type,MOVE,/careers/chief-revenue-officer-cro/,none,none,stub+edge
 /jobs/cinematographer-videographer-editor/,24342,custom-post-type,MOVE,/careers/cinematographer-videographer-editor/,none,none,stub+edge
 /jobs/executive-student-affairs/,24339,custom-post-type,MOVE,/careers/executive-student-affairs/,none,none,stub+edge
 /jobs/frontend-developer-wordpress-woocommerce-shopify/,25757,custom-post-type,MOVE,/careers/frontend-developer-wordpress-woocommerce-shopify/,none,none,stub+edge

@@ -75,4 +75,3 @@ To qualify to enter the selection process for this job, you must meet the follow
 
 If you have the following skills/competence, you’ll have a competitive advantage in our selection process compared to others:
 
-- Females are preferred to apply.

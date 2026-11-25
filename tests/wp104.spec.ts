@@ -348,9 +348,9 @@ test.describe('WP104 item 10: "Last updated" stamps match each page’s latest c
   // WP144: the Korail learner band heading changed again on 2026-11-01, so its JSON-LD dateModified is 2026-11-01 (it was 2026-10-31)
   // WP166-C (2026-11-21): every case study changed visible text again (closing band, story band), so both read 2026-11-21
   // WP168-B (R4-30, 2026-11-24): the UNDP YES hero adds the 97.5% tile, so its date moves on again; WSDFM keeps 2026-11-21
-  test('the UNDP YES case study’s JSON-LD dateModified is its own (2026-11-01, then 2026-11-21, then 2026-11-24); the other case studies keep theirs', async ({ page }) => {
+  test('the UNDP YES case study’s JSON-LD dateModified is its own (2026-11-01, then 2026-11-21, then 2026-11-24, then 2026-11-25 (WP169)); the other case studies keep theirs', async ({ page }) => {
     await open(page, 'impact/case-studies/undp-yes-korail/');
-    expect(await ldJson(page)).toMatch(/"dateModified"\s*:\s*"2026-11-24"/);
+    expect(await ldJson(page)).toMatch(/"dateModified"\s*:\s*"2026-11-25"/);
     await open(page, 'impact/case-studies/wsdfm-women-freelancers/'); // WP137 re-dated Her Power (its text changed); WP161-A (A-01): WSDFM declares its own last visible change (it fell back to the shared 2026-10-10)
     expect(await ldJson(page)).toMatch(/"dateModified"\s*:\s*"2026-11-21"/);
   });
