@@ -22,7 +22,8 @@ const TODAY = '2026-11-21';
 // WP168-B (owner decisions of 24 November 2026): the pages it changed again are dated 2026-11-24: the Akij Group post (its deck cut, R6-33), the Impact hub (the 58.7% tile, R4-18), the Trial page (the journal heading, R4-09) and the UNDP YES case study (R4-30).
 const WP168B_DAY = '2026-11-24';
 const AKIJ_SLUG = 'coderstrust-provides-corporate-training-to-akij-group-one-of-the-largest-conglomerates-of-south-asia';
-const updatedLine = (slug: string) => (slug === AKIJ_SLUG ? 'November 24, 2026' : 'November 21, 2026');
+const EDGE_SLUG = '1000-trainees-enhancing-digital-government-economy-edge'; // WP171 (owner answers of 2026-11-27): the archive note states the 100 trained
+const updatedLine = (slug: string) => (slug === AKIJ_SLUG ? 'November 24, 2026' : slug === EDGE_SLUG ? 'November 27, 2026' : 'November 21, 2026');
 // src/components/pages/news/news.ts imports astro:content, which a spec cannot load, so its constants are restated here (CURRENT_NEWS_FROM_YEAR, FEATURED_NEWS, NEWS_CTA.general).
 const CURRENT_NEWS_FROM_YEAR = 2026;
 const GENERAL_BAND = { heading: 'Working on Youth Employment?', text: 'Tell us your goals, priority groups and two suitable times. A discovery session is a conversation, not a commitment.' };
@@ -248,8 +249,8 @@ test.describe('The archive note, narrowed and shortened (owner approval 2, R5-05
     expect(hp).toContain('data-fact="GV-01"');
     expect(visible(hp)).toContain('Delivered: the national program trained 25,125 women, its full target. See the Her Power case study.');
     expect(visible(/<p class="archive-banner"[\s\S]*?<\/p>/.exec(html(post(S.hp)))?.[0] ?? '')).not.toContain('Delivered');
-    expect(visible(head(S.edge))).toContain('Contract scope: 1,000 youth. We confirm each contract’s delivery status in a briefing.');
-    expect(head(S.edge)).toContain('data-fact="GV-02 GV-10"');
+    expect(visible(head(S.edge))).toContain('Contract scope: 1,000 youth. CodersTrust trained 100 on campus (2023–2025); employers now train on the job.'); // WP171 (owner answers of 2026-11-27)
+    expect(head(S.edge)).toContain('data-fact="GV-02 GV-14"');
     expect(visible(head(S.skit))).toContain('Contract scope: 1,000 people. We confirm each contract’s delivery status in a briefing.');
     expect(head(S.skit)).toContain('data-fact="GV-03 GV-10"');
   });
@@ -553,7 +554,7 @@ test.describe('Stories, Global Reach, In the Field and News Photographs (R4-22 t
 test.describe('Dates (constraint 12): every page whose visible text changed is dated 2026-11-21', () => {
   test('every news post', () => {
     for (const slug of NEWS_SLUGS) {
-      const day = slug === AKIJ_SLUG ? WP168B_DAY : TODAY; // WP168-B (R6-33): the Akij post's deck is cut
+      const day = slug === AKIJ_SLUG ? WP168B_DAY : slug === EDGE_SLUG ? '2026-11-27' : TODAY; // WP168-B (R6-33): the Akij post's deck is cut
       expect(frontMatter(slug), slug).toMatch(new RegExp(`^updated: ${day}$`, 'm'));
       expect(nodes(post(slug), 'NewsArticle')[0]?.dateModified, slug).toBe(day);
     }
