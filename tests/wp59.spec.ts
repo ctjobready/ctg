@@ -92,7 +92,7 @@ const FIVE_AUDIENCE_PAGES = ['partner-with-us/development-partners/', 'partner-w
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 test.describe('S3: the Home FAQ says "Results for other programs ..."', () => {
   const ANSWER =
-    'The randomized trial evaluated CodersTrust’s 200-hour WSDFM program for women in Dhaka, not today’s 100-hour tracks. Results for other programs come from the October 2026 survey of completers and from program records, which are descriptive.';
+    'The randomized trial evaluated CodersTrust’s 200-hour WSDFM program for women in Bangladesh, not today’s 100-hour tracks. Results for other programs come from the October 2026 survey of completers and from program records, which are descriptive.';
 
   test('the register holds the two-sentence answer with "other programs" (the Kosovo pilot of 2016–2017 predates the trial follow-up, so "later" was untrue of it)', () => {
     const q15 = faqs.find((f) => f.id === 'Q15');
@@ -362,12 +362,12 @@ test.describe('G6: the five audience pages end their FAQs without the standalone
 });
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-test.describe('K3: Home slide 1’s ">4×" callout states the +10.3 it compares', () => {
-  const CAPTION = 'Employment effect, not income: +10.3 percentage points, more than four times the 2.3-point average across nine vocational-training trials.';
+test.describe('K3: Home slide 1’s ">4×" callout states the +10 it compares', () => {
+  const CAPTION = 'Employment effect, not income: +10 percentage points, more than four times the 2.3-point average across nine vocational-training trials.';
 
-  test('the +10.3 is RC-02’s figure and RC-06a’s own text states it; the callout is an average of nine trials, never "typical"', async ({ page }) => {
-    expect(fact('RC-02').stat?.numeric).toBe(10.3);
-    expect(fact('RC-06a').text).toContain('10.3 percentage points more likely to be employed, more than four times the average of the nine randomized trials');
+  test('the +10 is RC-02’s figure and RC-06a’s own text states it; the callout is an average of nine trials, never "typical"', async ({ page }) => {
+    expect(fact('RC-02').stat?.numeric).toBe(10);
+    expect(fact('RC-06a').text).toContain('10 percentage points more likely to be employed, more than four times the average of the nine randomized trials');
     expect(fact('RC-06a').stat?.value).toBe('>4×');
     await open(page, HOME);
     // WP166-A (marketing review R1-02): the comparison is the second sentence of the hero's trial card, directly under the +10.3 it compares (the slide's callout is now the peer-reviewed publication)
@@ -376,7 +376,7 @@ test.describe('K3: Home slide 1’s ">4×" callout states the +10.3 it compares'
     expect(compact(await proof.textContent())).not.toMatch(/typical/i);
     expect(compact(await slide(page, 1).locator('.hs__proof').textContent())).not.toContain(CAPTION);
     // the hero’s trial card states the same figure
-    await expect(page.locator('.hh__card[data-fact="RC-02"] .hh__num')).toHaveText('+10.3');
+    await expect(page.locator('.hh__card[data-fact="RC-02"] .hh__num')).toHaveText('+10');
   });
 
   test('no slide leaves more than 48 px of unused space at 1280 and 390 (the budget of tests/hero-slider.spec.ts), and the callout card stays inside the slide’s visual column', async ({ page }) => {

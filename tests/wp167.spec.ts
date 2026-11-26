@@ -36,16 +36,17 @@ const dateModified = (raw: string) => /"dateModified":"([^"]+)"/.exec(raw)?.[1];
 test.describe('WP167: the register-wording changes', () => {
   test('Home slide 1 gives the base under the dollar figure (RC-01, RC-04)', () => {
     const home = visible(html('index.html'));
-    expect(home).toContain('about $27 more a month on a control-group mean of about $66.');
-    expect(fact('RC-04').text).toContain('on a control-group mean of about $66');
+    // WP172 (owner decision 2026-11-27): the published study's figures (about $25 on about $68; it was the 2022 report's $27 on $66)
+    expect(home).toContain('about $25 more a month on a control-group mean of about $68.');
+    expect(fact('RC-04').text).toContain('on a control-group mean of about $68');
   });
 
   test('the announcement bar: the phone short form is a sentence and the bar keeps the one link "Impact Survey 2026" (RC-02)', () => {
-    expect(promo.short).toBe('+10.3 percentage points in employment for women offered a place.');
+    expect(promo.short).toBe('+10 percentage points in employment for women offered a place.'); // WP172 (owner decision 2026-11-27): the published study's figures (it was +10.3)
     expect(promo.links.map((l) => l.label)).toEqual(['Impact Survey 2026']);
     const home = html('index.html');
     expect(home).toContain('promo-bar__short');
-    expect(visible(home)).toContain('+10.3 percentage points in employment for women offered a place.');
+    expect(visible(home)).toContain('+10 percentage points in employment for women offered a place.');
     expect(visible(home)).not.toContain('percentage points employed.');
   });
 
@@ -54,7 +55,7 @@ test.describe('WP167: the register-wording changes', () => {
     expect(visible(about)).toContain('CodersTrust is headquartered in New York and has worked in 16 countries and territories.');
     expect(visible(about)).not.toContain('Additional country and regional offices are planned.');
     expect(visible(html('about/governance/index.html'))).toContain('CT USA, Inc.');
-    expect(dateModified(about)).toBe('2026-11-23');
+    expect(dateModified(about)).toBe('2026-11-27'); // WP172 (owner decision 2026-11-27: the published study's trial figures) moved it to 2026-11-27
   });
 
   test('PA-11 names the UPEACE appointment in full and the SDG award’s issuer; Recognition and Media prints both', () => {
@@ -86,15 +87,16 @@ test.describe('WP167: the structural changes', () => {
     expect(news).toMatch(/href="[^"]*\/blog\/"/);
   });
 
-  test('the trial page’s title is "Randomized Trial: +10.3 Percentage Points | CodersTrust"', () => {
-    expect(/<title>([^<]*)<\/title>/.exec(html('impact/independent-evaluation/index.html'))?.[1]).toBe('Randomized Trial: +10.3 Percentage Points | CodersTrust');
+  // WP172 (owner decision 2026-11-27): the published study's figures (+10; it was +10.3)
+  test('the trial page’s title is "Randomized Trial: +10 Percentage Points | CodersTrust"', () => {
+    expect(/<title>([^<]*)<\/title>/.exec(html('impact/independent-evaluation/index.html'))?.[1]).toBe('Randomized Trial: +10 Percentage Points | CodersTrust');
   });
 
   test('the Governance lead opens with what can be checked now (R1-09)', () => {
     const gov = visible(html('about/governance/index.html'));
     expect(gov).toContain('Two contracting entities, named leadership, safeguarding agreed before enrollment, an independent randomized trial and audited accounts on request. What is specific to your program is confirmed with you in co-design.');
     expect(gov).not.toContain('are confirmed with the funder during co-design.');
-    expect(dateModified(html('about/governance/index.html'))).toBe('2026-11-23');
+    expect(dateModified(html('about/governance/index.html'))).toBe('2026-11-27'); // WP172 (owner decision 2026-11-27: the published study's trial figures) moved it to 2026-11-27
   });
 
   test('the Home Mechanism card is headed "An AI-Supported Flipped Classroom" and keeps the owner’s delivery-model sentence (R1-16)', () => {

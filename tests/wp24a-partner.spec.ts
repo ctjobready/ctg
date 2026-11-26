@@ -36,10 +36,11 @@ test.describe('Partner with Us hub', () => {
     await expect(dd).toContainText('Consent, protected records and grievance handling are specified for each program.');
   });
 
-  test('the trial tile spells the unit out once: "+10.3" with "percentage points" under it (WP45: no bare "pp")', async ({ page }) => {
+  // WP172 (owner decision 2026-11-27): the published study's figures (+10; it was +10.3)
+  test('the trial tile spells the unit out once: "+10" with "percentage points" under it (WP45: no bare "pp")', async ({ page }) => {
     await page.goto(URL);
     const tile = (await texts(page, '#why-partner li'))[0];
-    expect(tile).toContain('+10.3 percentage points');
+    expect(tile).toContain('+10 percentage points');
     expect(tile.match(/percentage points/g) ?? []).toHaveLength(1);
     expect(tile).not.toMatch(/\bpp\b|in percentage points/);
   });

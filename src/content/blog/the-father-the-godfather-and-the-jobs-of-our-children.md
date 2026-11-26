@@ -7,7 +7,7 @@ author: "Aziz Ahmad"
 substackUrl: "https://tergadesidero178981.substack.com/p/the-father-the-godfather-and-the"
 seoTitle: "Two AI Pioneers and the Jobs of Our Children"
 tags: ["artificial intelligence", "youth employment", "Bangladesh"]
-figuresUpdated: 2026-11-05
+figuresUpdated: 2026-11-27
 ---
 
 The man who named artificial intelligence and the man who made it work have, between them, handed my generation a warning and a homework assignment. I want to talk about both, because the young people who will pay for our answer are the ones I have spent the last decade trying to put to work.
@@ -58,7 +58,7 @@ A decade of that work has taught me three things that matter more now than ever.
 
 ## The Evidence: When Training Ends in Earning
 
-Skeptics are right to ask whether skills training actually changes lives, because most of the time it does not. A 2017 World Bank review of nine randomized vocational training trials found employment rose by an average of just 2.3 percentage points, and only three of the nine raised employment significantly at all. When BRAC University's Institute of Governance and Development (BIGD) ran a randomized controlled trial of CodersTrust's program for women, employment rose 10.3 points among those offered a place, more than four times that benchmark. Women who attended earned 54% more, were 26% more likely to be employed and 2.8 times as likely to freelance. Their households spent 43% more and fewer took out loans.
+Skeptics are right to ask whether skills training actually changes lives, because most of the time it does not. A 2017 World Bank review of nine randomized vocational training trials found employment rose by an average of just 2.3 percentage points, and only three of the nine raised employment significantly at all. When BRAC University's Institute of Governance and Development (BIGD) ran a randomized controlled trial of CodersTrust's program for women, employment rose 10 points among those offered a place, more than four times that benchmark. Women who attended earned 50% more, were 24% more likely to be employed and 2.7 times as likely to freelance. Their households spent 39% more on food and fewer took out loans.
 
 Our October 2026 survey of course completers tells the same story at scale. Employment rose from 48.0% before training to 78.2% at the October 2026 survey, and median monthly income rose from $98 to $245. Of 2014–2023 completers who had no income before the course, 70.8% (34 of 48) were earning at the survey, and about one in eight surveyed completers named freelancing for foreign clients or a job abroad as their main income source. Responses came from 58 of Bangladesh's 64 districts, from Panchagarh in the north to Cox's Bazar in the south. At national scale, the cost falls from about $500 to $300 per trainee. That is the model the AI era demands: fast, affordable, measured by earnings and built to scale. It is why we are now onboarding more than 1.5 million National University learners as the university's official training partner, and why our YouthWIDE program aims to train 1 million educated youth for digital employment by 2030, in Bangladesh and similar countries in South Asia and the Middle East and North Africa, depending on government and donor commitments.
 
@@ -86,6 +86,6 @@ And to young people in Bangladesh and across the Global South: do not compete wi
 - IMF, Finance & Development (September 2026), via Dhaka Tribune.
 - LightCastle Partners, freelance economy and automation analyses (2026).
 - Centre for Policy Dialogue, report on automation, AI and the labor market (2026), via The Daily Observer and The Financial Express.
-- BIGD (BRAC University), randomized controlled trial of CodersTrust's WSDFM program, May 2022 (n = 599).
+- BIGD (BRAC University), randomized controlled trial of CodersTrust's WSDFM program, published in Economic Development and Cultural Change, 2026 (n = 574).
 - CodersTrust Impact Survey, October 2026 (responding alumni, self-reported).
 - McKenzie, D. (2017), "How Effective Are Active Labor Market Policies in Developing Countries?", World Bank.

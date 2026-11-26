@@ -324,6 +324,23 @@ test.describe('WP129 item 6: every dated page whose visible text changed carries
   const MOVED_1123 = new Set(['about/index.html', 'about/governance/index.html', 'about/recognition/index.html']);
   // WP168-B (owner decisions of 2026-11-24): the NU overview and course pages (campus, next intake, installments), JobReady@Work (the Akij Group line), the Impact hub (the 58.7% tile) and the UNDP YES case study (the 97.5% tile) moved on to 2026-11-24.
   // WP170 (owner answers of 2026-11-26): the five NU pages (the Application Deadline key fact) moved on to 2026-11-26.
+  // WP172 (owner decision 2026-11-27: the trial figures are the published study's, Arman et al. 2026): the pages whose visible text changed moved on to 2026-11-27.
+  const MOVED_1127 = new Set([
+    'about/index.html',
+    'about/governance/index.html',
+    'impact/index.html',
+    'impact/independent-evaluation/index.html',
+    'impact/case-studies/index.html',
+    'impact/case-studies/wsdfm-women-freelancers/index.html',
+    'our-model/talentleap/index.html',
+    'partner-with-us/development-partners/index.html',
+    'partner-with-us/foundations/index.html',
+    'partner-with-us/governments/index.html',
+    'partner-with-us/investors/index.html',
+    'partner-with-us/local-partners/index.html',
+    'programs/index.html',
+    'programs/youthwide/index.html',
+  ]);
   const MOVED_1126 = new Set([
     'programs/nu-postgraduate-diploma/index.html',
     'programs/nu-postgraduate-diploma/cyber-security/index.html',
@@ -371,7 +388,7 @@ test.describe('WP129 item 6: every dated page whose visible text changed carries
     'impact/case-studies/wsdfm-women-freelancers/index.html',
   ]);
   for (const [route, cls] of STAMPED) {
-    const [day, long] = MOVED_1126.has(route) ? ['2026-11-26', 'November 26, 2026'] : MOVED_1124.has(route) ? ['2026-11-24', 'November 24, 2026'] : MOVED_1123.has(route) ? ['2026-11-23', 'November 23, 2026'] : MOVED_1121.has(route) ? ['2026-11-21', 'November 21, 2026'] : MOVED_1103.has(route) ? ['2026-11-03', 'November 3, 2026'] : MOVED_1102.has(route) ? ['2026-11-02', 'November 2, 2026'] : MOVED_1101.has(route) ? ['2026-11-01', 'November 1, 2026'] : ['2026-10-31', 'October 31, 2026'];
+    const [day, long] = MOVED_1127.has(route) ? ['2026-11-27', 'November 27, 2026'] : MOVED_1126.has(route) ? ['2026-11-26', 'November 26, 2026'] : MOVED_1124.has(route) ? ['2026-11-24', 'November 24, 2026'] : MOVED_1123.has(route) ? ['2026-11-23', 'November 23, 2026'] : MOVED_1121.has(route) ? ['2026-11-21', 'November 21, 2026'] : MOVED_1103.has(route) ? ['2026-11-03', 'November 3, 2026'] : MOVED_1102.has(route) ? ['2026-11-02', 'November 2, 2026'] : MOVED_1101.has(route) ? ['2026-11-01', 'November 1, 2026'] : ['2026-10-31', 'October 31, 2026'];
     test(`${route} reads "Last updated ${long}" and its JSON-LD dateModified is ${day}`, () => {
       const raw = html(route);
       const m = new RegExp(`<p class="${cls}[^"]*"[^>]*>([\\s\\S]*?)</p>`).exec(raw);
@@ -402,7 +419,7 @@ test.describe('WP129 item 6: every dated page whose visible text changed carries
     'programs/index.html',
   ];
   for (const route of JSONLD_ONLY) {
-    const day = route === 'impact/case-studies/undp-yes-korail/index.html' ? '2026-11-25' /* WP169: the 97.5% tile lost its base note */ : MOVED_1124.has(route) ? '2026-11-24' : MOVED_1123.has(route) ? '2026-11-23' : MOVED_1121.has(route) ? '2026-11-21' : MOVED_1103.has(route) ? '2026-11-03' : MOVED_1102.has(route) ? '2026-11-02' : MOVED_1101.has(route) ? '2026-11-01' : '2026-10-31'; // WP166-B: MOVED_1121 first
+    const day = route === 'impact/case-studies/undp-yes-korail/index.html' ? '2026-11-25' /* WP169: the 97.5% tile lost its base note */ : MOVED_1127.has(route) ? '2026-11-27' : MOVED_1124.has(route) ? '2026-11-24' : MOVED_1123.has(route) ? '2026-11-23' : MOVED_1121.has(route) ? '2026-11-21' : MOVED_1103.has(route) ? '2026-11-03' : MOVED_1102.has(route) ? '2026-11-02' : MOVED_1101.has(route) ? '2026-11-01' : '2026-10-31'; // WP166-B: MOVED_1121 first
     test(`${route} pins its own JSON-LD dateModified to ${day}`, () => {
       expect(dateModified(html(route))).toContain(day);
     });
@@ -437,8 +454,10 @@ test.describe('WP129 item 6: every dated page whose visible text changed carries
 // 7. YouthWIDE trial chart caption
 // ---------------------------------------------------------------------------------------------------------------------------------
 test.describe('WP129 item 7: the trial chart caption spells the months out', () => {
-  test('YouthWIDE: "Employment at Follow-Up (November–December 2021), Randomized Trial"; no built page abbreviates the range', () => {
-    expect(text('programs/youthwide/index.html')).toContain('Employment at Follow-Up (November–December 2021), Randomized Trial');
+  // WP172 (owner decision 2026-11-27): YouthWIDE's trial comparison chart is gone (the published study gives the control group's employment, not the rate for women offered a place), so its caption is too; the range rule still holds everywhere
+  test('YouthWIDE draws no trial comparison chart; no built page abbreviates the range', () => {
+    expect(text('programs/youthwide/index.html')).not.toContain('Employment at Follow-Up (November–December 2021), Randomized Trial');
+    expect(text('programs/youthwide/index.html')).not.toMatch(/63\.1%|52\.8%/);
     const offenders: string[] = [];
     for (const p of listPages()) for (const s of everything(read(p))) if (/Nov(?:\.|ember)?\s?[–-]\s?Dec\.? 2021/.test(s) && !/November–December 2021/.test(s)) offenders.push(p.route);
     expect([...new Set(offenders)]).toEqual([]);

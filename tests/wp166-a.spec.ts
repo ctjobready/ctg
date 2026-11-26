@@ -183,7 +183,7 @@ test.describe('Home: twelve bands, the offer at band 9 (R1-08, owner approval it
     expect(visible(/<h2 class="hs__heading" id="results-h">([\s\S]*?)<\/h2>/.exec(html(HOME))![1])).toBe('Results You Can Check');
     const labels = [...html(HOME).matchAll(/aria-roledescription="slide" aria-label="([^"]+)"/g)].map((m) => decode(m[1]));
     expect(labels).toEqual([
-      '1 of 4: Women Offered a Place Earned an Estimated 41% More per Month',
+      '1 of 4: Women Offered a Place Earned an Estimated 38% More per Month', // WP172 (owner decision 2026-11-27): the published study's figures (it was the 2022 report's 41%)
       '2 of 4: Surveyed Completers Report Higher Income',
       '3 of 4: Results by Program',
       '4 of 4: Six Government Contracts and a National University Partnership',
@@ -431,7 +431,7 @@ test.describe('About, Governance, Mentors and Recognition (R1)', () => {
     const cta = visible(byId(ABOUT, 'section', 'about-cta'));
     expect(cta).toContain('See Partnership Routes');
     expect(cta).not.toContain('Read the Evidence');
-    expect(webPageModified(ABOUT)).toBe('2026-11-23'); // WP167 (owner approval of 2026-11-23): the hero's identity paragraph
+    expect(webPageModified(ABOUT)).toBe('2026-11-27'); // WP172 (2026-11-27): the trial sentence. WP167 (owner approval of 2026-11-23): the hero's identity paragraph
   });
 
   test('Governance: the peer-reviewed line, the closing band and the page date (R1-06, R1-29)', () => {
@@ -440,8 +440,8 @@ test.describe('About, Governance, Mentors and Recognition (R1)', () => {
     expect(t).toContain('We will reply with the documents and answers we can share.');
     expect(t).not.toContain('what can be shared');
     expect(visible(byId(GOV, 'section', 'diligence-cta'))).toContain('Read the Evidence');
-    expect(t).toContain('Last updated November 23, 2026'); // WP167 (owner approval of 2026-11-23): the lead
-    expect(webPageModified(GOV)).toBe('2026-11-23');
+    expect(t).toContain('Last updated November 27, 2026'); // WP172 (2026-11-27): the trial sentence. WP167 (owner approval of 2026-11-23): the lead
+    expect(webPageModified(GOV)).toBe('2026-11-27');
   });
 
   test('Mentors: lead, count line, buttons, two credentials and the Title Case link (R1-37, R1-38, R1-56)', () => {
@@ -536,7 +536,7 @@ test.describe('Titles, descriptions and share cards of the other pages (R7-04, R
   test('the Impact, Trial and Governments descriptions are their own (R7-21, R7-22)', () => {
     expect(meta('impact/index.html', 'name', 'description')).toBe('Program records from Kosovo and Bangladesh, an independent trial in Dhaka and a 2026 survey of completers. Each figure names its kind of evidence.');
     expect(meta('impact/independent-evaluation/index.html', 'name', 'description')).toBe(
-      'A BRAC University (BIGD) randomized trial of CodersTrust’s WSDFM program: women offered a place were 10.3 percentage points more likely to be employed.',
+      'A BRAC University (BIGD) randomized trial of CodersTrust’s WSDFM program: women offered a place were 10 percentage points more likely to be employed.', // WP172 (owner decision 2026-11-27): the published study's figures (it was the 2022 report's 10.3)
     );
     expect(meta('partner-with-us/governments/index.html', 'name', 'description')).toBe(
       'Build a national digital workforce through graduates and existing digital labs: curriculum, trainer training and phased delivery. Request a briefing.',

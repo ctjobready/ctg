@@ -18,8 +18,8 @@
 //   - copy conventions (doc 06 global rules): no straight apostrophe inside a word and no bare "pp" before "percentage points" is spelled out,
 //     outside the archived /news/ posts and the styleguide; negative self-tests below
 //   - [PLAIN-LINE] (plan v1.10, v1.13): /impact/independent-evaluation/ (and, until WP42, the WSDFM case study, whose header led with it)
-//     must carry "For every 100 women offered a place, about 10 more were in work at follow-up than among 100 comparable women in the control group (+10.3 percentage points)." rendered by
-//     <PlainLine> carrying data-fact="RC-02"; its numbers are re-derived here from RC-02 (+10.3 pp, rounded 10) and must match wherever the
+//     must carry "For every 100 women offered a place, about 10 more were in work at follow-up than among 100 comparable women in the control group (+10 percentage points)." rendered by
+//     <PlainLine> carrying data-fact="RC-02"; its numbers are re-derived here from RC-02 (+10 pp, rounded 10; WP172: the published study's figure, where the 2022 report's was +10.3) and must match wherever the
 //     sentence appears; negative self-tests below. WP35 (cycle-12 review): Home and /partner-with-us/development-partners/ no longer restate the trial in an evidence band, so they are not required
 //     to carry the sentence; Home's plain-language reading lives on its hero's Randomized Trial proof card and is held to RC-02 and RC-07 there ([PROOF-CARD], below). WP42 (cycle-19 review): the WSDFM case study's hero no longer
 //     prints the sentence (it repeated, in prose, the result its RC-02 tile shows beside it), so that one page is listed as exempt (PLAIN_LINE_EXEMPT_PAGES); the numbers of the sentence stay held on any page that carries it
@@ -47,7 +47,7 @@
 //     each (<li data-relieves="P1">.. since WP38/WP39; a <tr> row is still read), in the same order; rows without data-relieves are gain creators; WP57: YouthWIDE may carry no C8 band
 //     (PAIN_C8_OPTIONAL: its three-card band was removed in cycle 29; its C2 pains are still checked, and a C8 band it shows is held to the same rule); negative self-tests below
 //   - trial relevance line (round 14, m2): /partner-with-us/employers/, /programs/jobready-work/ (JobReady@Work) and /programs/nu-postgraduate-diploma/ (the NU
-//     Post Graduate Diploma) carry "This trial evaluated WSDFM training for women in Dhaka, not <offering>." directly under the trial headline of
+//     Post Graduate Diploma) carry "This trial evaluated WSDFM training for women in Bangladesh, not <offering>." (WP172: it said "women in Dhaka") directly under the trial headline of
 //     the C7 proof band (WP31: the two employer pages show no proof band today, which is allowed; any band they show needs the line; WP34: the same for the NU diploma overview, which
 //     shows a one-link strip to the Impact page instead); negative self-tests below
 //   - number guard (doc 10 §1 "Facts guard", WP1l): every claim-marked figure (%, pp, a leading + or ~, a trailing +, M/K/B/million, $ or BDT, ×,
@@ -255,8 +255,8 @@ function archiveWordingProblems(path, rawHtml) {
 const visibleText = (markup) => decode(markup.replace(/<head\b[\s\S]*?<\/head>/i, '').replace(/<!--[\s\S]*?-->/g, ''));
 
 /* ---- [PLAIN-LINE] (RC-02 in plain language, plan v1.10) ---- */
-// "For every 100 women offered a place, about 10 more were in work at follow-up than among 100 comparable women in the control group (+10.3 percentage points)."
-// is built in src/data/copy.ts from RC-02's stat; it is required on the independent-evaluation page (and was, until WP42, on the
+// "For every 100 women offered a place, about 10 more were in work at follow-up than among 100 comparable women in the control group (+10 percentage points)."
+// (WP172, owner decision 2026-11-27: the published study's +10 pp; the 2022 report's +10.3 gave the same "about 10") is built in src/data/copy.ts from RC-02's stat; it is required on the independent-evaluation page (and was, until WP42, on the
 // WSDFM case study, whose header led with the randomized trial's plain-language line, the program result second),
 // WP35 (cycle-12 review: the trial was restated on every audience page): Home's evidence band and the Development Partners proof band that carried it are gone, and Home's reading moved to the hero card ([PROOF-CARD] below),
 // and wherever it appears its numbers must be RC-02's: "+10.3 percentage points" is the stat value with "pp" spelled out, "about 10" its rounding.
@@ -529,12 +529,12 @@ function painMapProblems(markup, { c8Optional = false } = {}) {
 
 /* ---- relevance line beside the randomized-trial proof (review round 14, m2) ---- */
 // Where the offering on the page is not the program the trial evaluated, one line sits directly under the trial headline in the C7 proof band:
-// "This trial evaluated WSDFM training for women in Dhaka, not <the offering>." The sentences are declared here on their own (src/data/copy.ts
+// "This trial evaluated WSDFM training for women in Bangladesh, not <the offering>." (WP172: the published study's sample is 84% from Dhaka, so it no longer says "women in Dhaka"). The sentences are declared here on their own (src/data/copy.ts
 // builds them from TRIAL_SCOPE), so a change has to be made in both places on purpose. Both employer pages sell JobReady@Work.
 const TRIAL_SCOPE_BY_PAGE = {
-  '/partner-with-us/employers/': 'This trial evaluated WSDFM training for women in Dhaka, not JobReady@Work.',
-  '/programs/jobready-work/': 'This trial evaluated WSDFM training for women in Dhaka, not JobReady@Work.',
-  '/programs/nu-postgraduate-diploma/': 'This trial evaluated WSDFM training for women in Dhaka, not the NU Post Graduate Diploma.',
+  '/partner-with-us/employers/': 'This trial evaluated WSDFM training for women in Bangladesh, not JobReady@Work.',
+  '/programs/jobready-work/': 'This trial evaluated WSDFM training for women in Bangladesh, not JobReady@Work.',
+  '/programs/nu-postgraduate-diploma/': 'This trial evaluated WSDFM training for women in Bangladesh, not the NU Post Graduate Diploma.',
 };
 const TRIAL_SCOPE_PAGES = Object.keys(TRIAL_SCOPE_BY_PAGE);
 // WP31: the two employer pages show no trial band (they link to the evidence pages), so a missing #proof-band is fine there; the sentence stays required on any band they grow.
@@ -718,7 +718,7 @@ const isRegistered = (t) => {
   // Numbers derived in code from a fact, never typed: each one is named here with the fact it comes from and the sentence that carries it.
   // This list is the only way to allow a derived value; the matcher is never loosened for it.
   const DERIVED = [
-    // [PLAIN-LINE] (src/data/copy.ts, re-derived in plainLineWanted below): "about 10 more were in work" is RC-02's +10.3 pp rounded to a whole number
+    // [PLAIN-LINE] (src/data/copy.ts, re-derived in plainLineWanted below): "about 10 more were in work" is RC-02's stat rounded to a whole number (WP172: +10 pp, the published study's; it was the 2022 report's +10.3)
     ['RC-02 rounded (the [PLAIN-LINE])', () => (typeof facts['RC-02']?.stat?.numeric === 'number' ? `about ${Math.round(facts['RC-02'].stat.numeric)} more` : '')],
   ];
   for (const [source, make] of DERIVED) add(make(), source);
@@ -970,19 +970,19 @@ function surveyEditionProblems(factsById, rows, pins = { facts: SURVEY_FACTS, ro
   const plainPage = (sentence, block = plainBlock(sentence)) => ({ markup: `<main><h2>x</h2>${block}</main>`, text: decode(`<main><h2>x</h2>${block}</main>`) });
   const plainOk = plainPage(want.text);
   if (plainLineProblems(plainOk.markup, plainOk.text, rc02, true).length) problems.push(`self-test: the [PLAIN-LINE] check rejected the register-derived sentence: ${plainLineProblems(plainOk.markup, plainOk.text, rc02, true).join('; ')}`);
-  if (want.text !== 'For every 100 women offered a place, about 10 more were in work at follow-up than among 100 comparable women in the control group (+10.3 percentage points).') problems.push(`self-test: RC-02 no longer yields the plan's [PLAIN-LINE] sentence (derived: "${want.text}"); the plan wording needs a decision`);
+  if (want.text !== 'For every 100 women offered a place, about 10 more were in work at follow-up than among 100 comparable women in the control group (+10 percentage points).') problems.push(`self-test: RC-02 no longer yields the plan's [PLAIN-LINE] sentence (derived: "${want.text}"); the plan wording needs a decision`);
   const plainBad = (why, sentence, ...rest) => {
     const pg = plainPage(sentence, ...rest);
     if (!plainLineProblems(pg.markup, pg.text, rc02, true).length) problems.push(`self-test: the [PLAIN-LINE] check accepted ${why}`);
   };
   plainBad('a page without the sentence', 'Women offered a place did better.');
-  plainBad('"+10.4 percentage points" (a number that differs from RC-02)', want.text.replace('+10.3', '+10.4'));
+  plainBad('"+11 percentage points" (a number that differs from RC-02)', want.text.replace('(+10 ', '(+11 '));
   plainBad('"about 11 more" (RC-02 rounds to 10)', want.text.replace('about 10', 'about 11'));
-  plainBad('"(+10.3 pp)" instead of "percentage points"', want.text.replace('percentage points', 'pp'));
+  plainBad('"(+10 pp)" instead of "percentage points"', want.text.replace('percentage points', 'pp'));
   plainBad('a sentence typed by hand with no <PlainLine> block', want.text, `<p>${want.text}</p>`);
   plainBad('the sentence without its data-fact (RC-02)', want.text, `<p class="plainline" data-plain-line>${want.text}</p>`);
-  if (plainLineProblems(plainOk.markup, plainOk.text, { ...rc02, numeric: 10.6 }, true).length !== 2) problems.push('self-test: the [PLAIN-LINE] check did not notice that RC-02 changed (10.6 would give "about 11" and "+10.6 percentage points")');
-  const stray = plainPage(want.text.replace('+10.3', '+10.4'));
+  if (plainLineProblems(plainOk.markup, plainOk.text, { ...rc02, numeric: 10.6 }, true).length !== 2) problems.push('self-test: the [PLAIN-LINE] check did not notice that RC-02 changed (10.6 would give "about 11" and "+11 percentage points")');
+  const stray = plainPage(want.text.replace('(+10 ', '(+11 '));
   if (!plainLineProblems(stray.markup, stray.text, rc02, false).length) problems.push('self-test: a page that does not need the [PLAIN-LINE] but carries it with a wrong number was accepted');
   if (plainLineProblems('<main><p>No plain line here.</p></main>', 'No plain line here.', rc02, false).length) problems.push('self-test: a page that does not need the [PLAIN-LINE] was flagged for lacking it');
   // [PROOF-CARD]: Home's hero trial card carries RC-02's figure and the plain-language caption derived from RC-02 and RC-07 (WP35)
@@ -1000,7 +1000,7 @@ function surveyEditionProblems(factsById, rows, pins = { facts: SURVEY_FACTS, ro
   };
   cardBad('a page with no hero trial card', '<main><p>For every 100 women offered a place, about 10 more were in work.</p></main>');
   cardBad('a card for another fact (the survey card is not the trial card)', heroCard({ fact: 'OC-01' }));
-  cardBad('"+10.4" (a figure that differs from RC-02)', heroCard({ value: '+10.4' }));
+  cardBad('"+11" (a figure that differs from RC-02)', heroCard({ value: '+11' }));
   cardBad('"pp" instead of "percentage points"', heroCard({ unit: 'pp' }));
   cardBad('"about 11 more" (RC-02 rounds to 10)', heroCard({ caption: cardWant.caption.replace('about 10 more', 'about 11 more') }));
   cardBad('"10.3 more ... than in the control group" (the card reads the Trial page’s rounded wording since WP109)', heroCard({ caption: cardWant.caption.replace('about 10 more were in work than among 100 comparable women in the control group', '10.3 more were in work than in the control group') }));
@@ -1011,7 +1011,7 @@ function surveyEditionProblems(factsById, rows, pins = { facts: SURVEY_FACTS, ro
   cardBad('a caption without the nine-trial benchmark (RC-06a)', heroCard({ caption: cardWant.caption.slice(0, benchmarkAt) }));
   cardBad('the benchmark sentence without its RC-06a tag', heroCard({ caption: cardWant.caption }));
   cardBad('a benchmark that is not RC-06a’s ("three times")', heroCard({ caption: taggedCaption.replace('four times', 'three times') }));
-  if (proofCardProblems(heroCard(), { ...rc02, numeric: 10.6, value: '+10.6 pp' }, rc07).length !== 2) problems.push('self-test: the [PROOF-CARD] check did not notice that RC-02 changed (10.6 would give "+10.6" and "10.6 more")');
+  if (proofCardProblems(heroCard(), { ...rc02, numeric: 10.6, value: '+10.6 pp' }, rc07).length !== 2) problems.push('self-test: the [PROOF-CARD] check did not notice that RC-02 changed (10.6 would give "+11" and "about 11 more")');
   // copy conventions: curly apostrophes, "pp" spelled out before it is used
   if (conventionProblems('CodersTrust’s WSDFM training; +10.3 pp percentage points more employment; In percentage points, employment rose +10.3 pp.').length) problems.push('self-test: the copy-convention check rejected correct copy');
   if (!conventionProblems('CodersTrust\'s WSDFM training raised women’s income.').length) problems.push('self-test: the copy-convention check accepted a straight apostrophe');
@@ -1283,7 +1283,7 @@ function surveyEditionProblems(factsById, rows, pins = { facts: SURVEY_FACTS, ro
   // the trial relevance line (m2): directly under the trial headline, in the plan's words for the page's own offering
   const scopeWork = TRIAL_SCOPE_BY_PAGE['/programs/jobready-work/'];
   const scopeNu = TRIAL_SCOPE_BY_PAGE['/programs/nu-postgraduate-diploma/'];
-  if (scopeWork !== 'This trial evaluated WSDFM training for women in Dhaka, not JobReady@Work.' || scopeNu !== 'This trial evaluated WSDFM training for women in Dhaka, not the NU Post Graduate Diploma.') problems.push('self-test: the trial relevance lines are no longer the plan wording');
+  if (scopeWork !== 'This trial evaluated WSDFM training for women in Bangladesh, not JobReady@Work.' || scopeNu !== 'This trial evaluated WSDFM training for women in Bangladesh, not the NU Post Graduate Diploma.') problems.push('self-test: the trial relevance lines are no longer the plan wording');
   const proofPage = (headInner, after = '') => `<main><section class="band band--klein band--pad-md" id="proof-band" aria-labelledby="proof-band-h"><div class="container"><header class="proofband__head" data-reveal data-fact="RC-01"><p class="eyebrow">The evidence</p>${headInner}</header><div class="proofband"><div class="proofband__stats"></div></div>${after}</div></section></main>`;
   const trialH2 = '<h2 class="proofband__title" id="proof-band-h">A randomized trial found…</h2>';
   const trialLine = (text) => `<p class="proofband__scope" data-trial-scope data-astro-cid-x>${text}</p>`;
@@ -1299,8 +1299,8 @@ function surveyEditionProblems(factsById, rows, pins = { facts: SURVEY_FACTS, ro
   trialBad('a proof band with no relevance line', proofPage(trialH2), scopeWork);
   trialBad('the NU diploma line on an employer page', proofPage(`${trialH2}${trialLine(scopeNu)}`), scopeWork);
   trialBad('the employer line on the NU diploma page', proofPage(`${trialH2}${trialLine(scopeWork)}`), scopeNu);
-  trialBad('a reworded line', proofPage(`${trialH2}${trialLine('This trial evaluated training for women in Dhaka, not JobReady@Work.')}`), scopeWork);
-  trialBad('a line without the Dhaka scope', proofPage(`${trialH2}${trialLine('This trial did not evaluate JobReady@Work.')}`), scopeWork);
+  trialBad('a reworded line', proofPage(`${trialH2}${trialLine('This trial evaluated training for women in Bangladesh, not JobReady@Work.')}`), scopeWork);
+  trialBad('a line without the trial’s scope', proofPage(`${trialH2}${trialLine('This trial did not evaluate JobReady@Work.')}`), scopeWork);
   trialBad('a line above the headline', proofPage(`${trialLine(scopeWork)}${trialH2}`), scopeWork);
   trialBad('a line outside the header (after the stats, away from the proof)', proofPage(trialH2, trialLine(scopeWork)), scopeWork);
   trialBad('a page with no proof band', '<main><p>nothing</p></main>', scopeWork);
@@ -1348,10 +1348,10 @@ function surveyEditionProblems(factsById, rows, pins = { facts: SURVEY_FACTS, ro
   // numbers that are not claims carry no marker and are not read: years, dates, list counts, steps, durations, ages, bases
   const unmarked = guardRun('/our-model/', '<p>Founded in 2014; the October 2026 survey; Nov–Dec 2021; steps 1, 2 and 3; 100 training hours; ages 18–35; 6–8 weeks; tracers at 3/6/12 months; n = 331; over 4 months; 1 of 3; Her Power 2.0.</p><p>Call +1 212 344 4111 or +880 1958\u{2011}220802. WSIS+20 Forum.</p>');
   if (unmarked.problems.length || unmarked.tokens) problems.push(`self-test: the number guard read figures that carry no marker (${unmarked.tokens} token(s)): ${unmarked.problems.join('; ')}`);
-  // a registered figure in another format passes (value-level matching): RC-02 is "+10.3 pp"
-  for (const fig of ['+10.3 pp', '10.3 percentage points', '10.3 percentage-point', '+10.3 percentage points', '10.3pp', '+10.3 pp']) guardPasses(`RC-02 written as "${fig}"`, '/our-model/', `<p>Employment rose ${fig} for women offered a place.</p>`);
-  guardFails('"10.4 percentage points" (RC-02 is 10.3)', '/our-model/', '<p>Employment rose 10.4 percentage points.</p>');
-  for (const fig of ['62 million', '62M', '3M+', '3 million', '1.5M+', '1.5 million', '61–78 million', '~15,000', '+$27', '$27', '2.50×', '2.5×', '2.80×', '2.30×', '3.40×', '68–71%', '71–68%', '68% to 71%', '130,000+']) guardPasses(`the registered "${fig}"`, '/our-model/', `<p>Figure: ${fig}.</p>`);
+  // a registered figure in another format passes (value-level matching): RC-02 is "+10 pp" (WP172: the published study's figure; it was the 2022 report's "+10.3 pp")
+  for (const fig of ['+10 pp', '10 percentage points', '10 percentage-point', '+10 percentage points', '10pp', '+10 pp']) guardPasses(`RC-02 written as "${fig}"`, '/our-model/', `<p>Employment rose ${fig} for women offered a place.</p>`);
+  guardFails('"10.4 percentage points" (RC-02 is 10)', '/our-model/', '<p>Employment rose 10.4 percentage points.</p>');
+  for (const fig of ['62 million', '62M', '3M+', '3 million', '1.5M+', '1.5 million', '61–78 million', '~15,000', '+$25', '$25', '2.50×', '2.5×', '2.70×', '2.30×', '3.40×', '68–71%', '71–68%', '68% to 71%', '130,000+']) guardPasses(`the registered "${fig}"`, '/our-model/', `<p>Figure: ${fig}.</p>`);
   // $5M+ impact investment (SC-13) was removed on the owner's decision (2026-10-12): the figure is no longer a registered value and must not render anywhere
   // D1 (owner decision, 2026-10-13): the online gig-work range (154M–435M, PX-09), the 257M youth figure (PX-10) and the 10M+ labor-market figure (PX-15) are withdrawn from the public dataset and must not render
   for (const fig of ['68–73%', '$5M+', '$5 million', '$5.5M', '3.5×', 'BDT 2,355', '1.6M+', '61–79 million', '~16,000', '435M', '257M', '10M+']) guardFails(`"${fig}" (a range or figure with one unregistered value)`, '/our-model/', `<p>Figure: ${fig}.</p>`);
@@ -1364,9 +1364,9 @@ function surveyEditionProblems(factsById, rows, pins = { facts: SURVEY_FACTS, ro
   // numbers derived from a fact in code: only the listed derivation passes ("about 10 more" is RC-02 rounded)
   guardPasses('"about 10 more" (RC-02 rounded)', '/our-model/', '<p>About 10 more were in work.</p>');
   guardFails('"about 11 more" (RC-02 rounds to 10)', '/our-model/', '<p>about 11 more were in work.</p>');
-  // counts below 1,000 are tied to the word after them: "25+ classes" is RC-08, "25+ years" is not a fact
-  guardPasses('"25+ classes" (RC-08)', '/our-model/', '<p>42% (25+ classes) freelanced.</p>');
-  guardFails('"25+ years" (a number that only matches RC-08 by value)', '/our-model/', '<p>An architect with 25+ years of experience.</p>');
+  // counts below 1,000 are tied to the word after them: "at least 10 classes" is RC-17, "at least 10 workshops" is not a fact (WP172: RC-08's "25+ classes" is withdrawn; "at least 10 years" is a duration, which the guard does not read)
+  guardPasses('"at least 10 classes" (RC-17)', '/our-model/', '<p>Employment was 28% higher for women who attended at least 10 classes.</p>');
+  guardFails('"at least 10 workshops" (a number that only matches RC-17 by value)', '/our-model/', '<p>Women who attended at least 10 workshops.</p>');
   guardPasses('"up to 10 cohorts" (PD-06: "Up to 10 certification cohorts")', '/our-model/', '<p>Run up to 10 cohorts in parallel.</p>');
   guardFails('"over 100 young" (a count, not a duration)', '/our-model/', '<p>Over 100 young Bhutanese took part.</p>');
   // the whitelist is per page and per exact text, and an entry that nothing uses is stale
@@ -1378,8 +1378,8 @@ function surveyEditionProblems(factsById, rows, pins = { facts: SURVEY_FACTS, ro
   guardFails('a different figure than the whitelisted text', '/our-model/', '<p>Employment rose 47.6%.</p>', [{ ...allowEntry }]);
   guardPasses('a whitelisted figure on a page under a prefix entry', '/section/page/', '<p>47.5%</p>', [{ ...allowEntry, page: '/section/*' }]);
   guardFails('a whitelisted figure outside its prefix', '/other/page/', '<p>47.5%</p>', [{ ...allowEntry, page: '/section/*' }]);
-  const staleEntry = { page: '/our-model/', text: '+10.3 pp', reason: 'a self-test entry that says why this is not a claim' };
-  guardRun('/our-model/', '<p>+10.3 pp</p>', [staleEntry]);
+  const staleEntry = { page: '/our-model/', text: '+10 pp', reason: 'a self-test entry that says why this is not a claim' };
+  guardRun('/our-model/', '<p>+10 pp</p>', [staleEntry]);
   if (staleEntry.used) problems.push('self-test: a whitelist entry for a registered figure was marked used (the register applies first, so the entry is stale and must be reported)');
   if (allowlistProblems([allowEntry, { ...allowEntry, page: '/about/' }]).length) problems.push('self-test: the whitelist validator rejected valid entries');
   for (const [why, entry] of [['a wildcard page', { ...allowEntry, page: '*' }], ['the whole site as a prefix', { ...allowEntry, page: '/*' }], ['an entry with no reason', { ...allowEntry, reason: '' }], ['a one-word reason', { ...allowEntry, reason: 'year' }], ['an entry whose text holds no number', { ...allowEntry, text: 'ten percent' }], ['an entry with no page', { text: '47.5%', reason: allowEntry.reason }]]) {

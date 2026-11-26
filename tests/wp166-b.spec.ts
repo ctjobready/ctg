@@ -20,6 +20,9 @@ import { DIST_DIR } from './support/env';
 
 const TODAY = '2026-11-21';
 const TODAY_SHOWN = 'November 21, 2026';
+// WP172 (owner decision 2026-11-27: the trial figures are the published study's): YouthWIDE, the Programs hub, TalentLEAP and five partner pages changed visible text again
+const WP172_DAY = '2026-11-27';
+const WP172_SHOWN = 'November 27, 2026';
 // WP168-B (owner decisions of 24 November 2026): JobReady@Work and Employers (the Akij Group line) and the five NU pages (campus, next intake, installments) changed again and are dated 2026-11-24.
 const WP168B_DAY = '2026-11-24';
 const WP168B_SHOWN = 'November 24, 2026';
@@ -115,7 +118,8 @@ test.describe('WP166-B programs: YouthWIDE', () => {
     expect(band).not.toContain('alongside the employment effect below');
     expect(byId(P, 'proof-band')).toMatch(/data-fact="RC-02"/);
     expect(byId(P, 'proof-band')).toMatch(/data-fact="RC-01"/);
-    expect(band).toContain('+41%');
+    expect(band).toContain('+38%'); // WP172 (owner decision 2026-11-27): the published study's figures (it was the 2022 report's +41%)
+    expect(band).not.toContain('+41%');
     expect(band).toContain(fact('RC-01').stat!.label);
     expect(band).toContain('median monthly income among surveyed completers at the October 2026 survey');
   });
@@ -143,9 +147,9 @@ test.describe('WP166-B programs: YouthWIDE', () => {
     const faq = bandText(P, 'faq');
     expect(faq).toContain('What About Safeguarding and Data Protection? Safeguarding and data protection are specified for each program and agreed before enrollment. See how we handle them.');
   });
-  test('dated 2026-11-21', () => {
-    expect(mainText(P)).toContain(`Last updated ${TODAY_SHOWN}`);
-    expect(dateModified(P)).toContain(TODAY);
+  test('dated 2026-11-27 (WP172; it was 2026-11-21)', () => {
+    expect(mainText(P)).toContain(`Last updated ${WP172_SHOWN}`);
+    expect(dateModified(P)).toContain(WP172_DAY); // WP172 (owner decision 2026-11-27): the trial figures moved it on
   });
 });
 
@@ -300,7 +304,7 @@ test.describe('WP166-B programs: SuperKids and the Programs hub', () => {
     expect(grid).toContain('Prepares educated, unemployed and underemployed youth for paid digital work through training, mentoring and placement support, in co-funded country cohorts.');
     expect(grid).not.toContain('The youth digital-employment program, designed as co-funded country cohorts.');
     for (const l of ['Explore YouthWIDE', 'Explore JobReady@Campus', 'Explore JobReady@Work']) expect(grid).toContain(l);
-    expect(dateModified('programs')).toContain(TODAY);
+    expect(dateModified('programs')).toContain(WP172_DAY); // WP172 (owner decision 2026-11-27): the trial figures moved it on
   });
 });
 
@@ -337,8 +341,8 @@ test.describe('WP166-B model: Our Model, TalentLEAP and the JobReady Platform', 
     expect(bandIds(P).slice(0, 2)).toEqual(['different', 'glance']);
     expect(m).not.toContain('Evidence for Today’s Tracks');
     expect(bandText(P, 'glance')).toContain('These results are from CodersTrust programs, not TalentLEAP’s features on their own. Today’s 100-hour tracks have not yet been independently evaluated; a pilot scorecard tracks agreed outcomes and independent evaluation is welcome.');
-    expect(m.trim().endsWith(`Last updated ${TODAY_SHOWN}`)).toBe(true);
-    expect(dateModified(P)).toContain(TODAY);
+    expect(m.trim().endsWith(`Last updated ${WP172_SHOWN}`)).toBe(true);
+    expect(dateModified(P)).toContain(WP172_DAY); // WP172 (owner decision 2026-11-27): the trial figures moved it on
   });
   test('JobReady Platform: first-screen actions, four jobs, "What It Does", no contract scope, the connectivity question and the new closing', () => {
     const P = 'our-model/jobready-platform';
@@ -394,7 +398,7 @@ test.describe('WP166-B partners: hub, Development Partners, Governments and Foun
     expect(features).toContain(`Outreach, accessible selection and tracks chosen from employer demand, with safeguarding agreed for each program. ${TRACK_MENU.text}`);
     expect(bandText(P, 'faq')).toContain('What Does It Cost? Pricing is set per program; we share an indicative budget in the discovery session. Every pilot is judged against its scorecard, including cost per completer and per verified outcome, with thresholds agreed with you before the first cohort starts. See what a partnership includes.');
     expect(count(mainText(P), 'Every pilot is judged against its scorecard')).toBe(1);
-    expect(dateModified(P)).toContain(TODAY);
+    expect(dateModified(P)).toContain(WP172_DAY); // WP172 (owner decision 2026-11-27): the trial figures moved it on
   });
   test('Governments', () => {
     const P = 'partner-with-us/governments';
@@ -422,7 +426,7 @@ test.describe('WP166-B partners: hub, Development Partners, Governments and Foun
     expect(offer).toContain('Curriculum development, manuals and Training of Trainers, as provided for Her Power.');
     expect(offer).toContain('Training for staff on the learning platform and lab operations, as contracted for the Digital Lab Establishment Project (Phase II).');
     expect(bandText(P, 'cta')).toContain('A briefing is a conversation, not a commitment.');
-    expect(dateModified(P)).toContain(TODAY);
+    expect(dateModified(P)).toContain(WP172_DAY); // WP172 (owner decision 2026-11-27): the trial figures moved it on
   });
   test('Foundations', () => {
     const P = 'partner-with-us/foundations';
@@ -443,7 +447,7 @@ test.describe('WP166-B partners: hub, Development Partners, Governments and Foun
     expect(bandText(P, 'features')).not.toContain(DELIVERY_MODEL.text);
     expect(bandText(P, 'cta')).toContain('A discovery session is a conversation, not a commitment.');
     expect(bandIds(P)).not.toContain('proof-band');
-    expect(dateModified(P)).toContain(TODAY);
+    expect(dateModified(P)).toContain(WP172_DAY); // WP172 (owner decision 2026-11-27): the trial figures moved it on
   });
 });
 
@@ -526,7 +530,7 @@ test.describe('WP166-B partners: Universities, Employers, Investors and Local Pa
     expect(bandText(P, 'offer')).toContain('Due diligence: CT USA, Inc., a for-profit company incorporated in New York, is CodersTrust’s parent company; CodersTrust Bangladesh Ltd. is its country office.');
     expect(bandText(P, 'mechanism')).toContain(DELIVERY_MODEL.text);
     expect(bandText(P, 'features')).not.toContain(DELIVERY_MODEL.text);
-    expect(dateModified(P)).toContain(TODAY);
+    expect(dateModified(P)).toContain(WP172_DAY); // WP172 (owner decision 2026-11-27): the trial figures moved it on
   });
   test('Local Partners', () => {
     const P = 'partner-with-us/local-partners';
@@ -541,7 +545,7 @@ test.describe('WP166-B partners: Universities, Employers, Investors and Local Pa
     expect(bandText(P, 'mechanism')).toContain(DELIVERY_MODEL.text);
     expect(bandText(P, 'features')).toContain(`You do not have to build the curriculum or certification route yourself. ${TRACK_MENU.text}`);
     expect(bandText(P, 'features')).not.toContain(DELIVERY_MODEL.text);
-    expect(dateModified(P)).toContain(TODAY);
+    expect(dateModified(P)).toContain(WP172_DAY); // WP172 (owner decision 2026-11-27): the trial figures moved it on
   });
 });
 

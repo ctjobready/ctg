@@ -67,7 +67,7 @@ test.describe('home hero slider', () => {
     await expect(page.locator('#results [data-hs-slide] h3')).toHaveCount(4);
     // WP45 (cycle-21 review): the trial slide leads with the income result (the employment result is the hero card's, the bar's and the >4× tile's)
     // WP48 (cycle-23 review): the heading named CodersTrust’s WSDFM program; WP50 (cycle-25 review): the heading is short again and the slide's eyebrow carries the qualifier ("Randomized Trial of CodersTrust’s WSDFM Program"; tests/wp50.spec.ts)
-    await expect(slides.nth(0)).toHaveAttribute('aria-label', '1 of 4: Women Offered a Place Earned an Estimated 41% More per Month');
+    await expect(slides.nth(0)).toHaveAttribute('aria-label', '1 of 4: Women Offered a Place Earned an Estimated 38% More per Month');
     // WP23, WP25h and WP30c gave the band one framing sentence ("Evidence first, then our programs."). WP53 (owner decision 2026-10-16): the programs slide is gone, so the band is headed "Results" and has no framing sentence.
     // No slide heading ends with a period.
     await expect(page.locator('.hs__intro')).toHaveCount(0);
@@ -85,7 +85,9 @@ test.describe('home hero slider', () => {
     // WP31: the first slide states the offered-place results only; the attenders' income is on the trial page it links. WP45 (cycle-21 review): the income result (the employment result is the hero card's), still the offered-place women's
     const lead = (await slides.nth(0).locator('.hs__lead').textContent()) ?? '';
     expect(lead.indexOf('CodersTrust’s WSDFM program'), 'the scope comes first').toBeGreaterThan(-1);
-    expect(lead.indexOf('41% higher')).toBeGreaterThan(lead.indexOf('CodersTrust’s WSDFM program'));
+    // WP172 (owner decision 2026-11-27): the published study's figures, 38% for women offered a place (it was the 2022 report's 41%) and 50% for attenders (it was 54%)
+    expect(lead.indexOf('38% higher')).toBeGreaterThan(lead.indexOf('CodersTrust’s WSDFM program'));
+    expect(lead).not.toContain('50%');
     expect(lead).not.toContain('54%');
     expect(lead).not.toContain('who attended');
     // the placement slide lists four programs (WP35 had taken the WSDFM 71% off it, because it is program records, read beside the trial's 63.1%; WP50, cycle-25 review: it is back as the second program, with the qualifier "program records, not trial data")

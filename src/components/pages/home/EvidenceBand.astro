@@ -5,7 +5,7 @@ import Stat from '../../system/Stat.astro';
 import BeforeAfter from '../../ui/BeforeAfter.astro';
 import Icon from '../../system/Icon.astro';
 import { fact } from '../../../data/facts';
-import { RCT_COMPARISON, TRIAL_BAND_HEADING, TRIAL_LINE, TRIAL_SENTENCE } from '../../../data/copy';
+import { TRIAL_BAND_HEADING, TRIAL_LINE, TRIAL_SENTENCE } from '../../../data/copy';
 import { linkAttrs } from '../../../lib/url';
 import { endSentence } from '../../sections/copyText';
 
@@ -29,12 +29,12 @@ interface Props {
    * `trial`: the randomized trial's comparison, employment at follow-up for the control group beside women offered a place
    * (RC-02; figures read from its text by RCT_COMPARISON). Home used `trial` (review round 13, enhancement 2); the survey chart
    * stays on /impact/ and /impact/outcomes-2026/. `none` (WP41, cycle-18 review): no chart, and the band is one column; the Programs hub states the trial result as one line instead.
+   * WP172 (owner decision 2026-11-27): `trial` is gone. The published study (EDCC26) gives the control group's employment at follow-up (54%) and the effect (+10 percentage points), not the treated group's rate,
+   * so the chart's "Offered a Place" bar (the control rate plus RC-02's stat, which read 63.1% from the 2022 report) would print a figure the study does not state. YouthWIDE, its one user, draws no chart.
    */
-  chart?: 'survey' | 'trial' | 'none';
+  chart?: 'survey' | 'none';
   chartId?: string;
   chartTitle?: string;
-  /** `trial` chart only: draw the "+10.3 percentage points" chip on the chart. Off when a tile beside it already states the difference. */
-  chip?: boolean;
   headlineFact?: string;
   /**
    * WP32 (YouthWIDE): state the trial result once, as the single sentence TRIAL_SENTENCE, in place of the RC-01 headline, which said it twice in a row.
@@ -58,14 +58,13 @@ interface Props {
   trialHeading?: string;
   id?: string;
 }
-const { title, lead, statIds, surveyStatIds = [], chart = 'survey', chartId = 'OC-01', chartTitle, headlineFact, trialSentence = false, trialLine = false, chip = true, links = [], surveyNotes = true, bandHeading, trialHeading, id = 'proof-band' } = Astro.props;
+const { title, lead, statIds, surveyStatIds = [], chart = 'survey', chartId = 'OC-01', chartTitle, headlineFact, trialSentence = false, trialLine = false, links = [], surveyNotes = true, bandHeading, trialHeading, id = 'proof-band' } = Astro.props;
 const split = !!trialHeading;
-const trial = chart === 'trial';
 const showChart = chart !== 'none';
 // Same structure as ProofBand: a short H2 when the randomized trial heads the band.
 const heading = bandHeading ?? (headlineFact ? TRIAL_BAND_HEADING : titleCase(title));
 const headlineText = headlineFact ? (fact(headlineFact).headline ?? fact(headlineFact).text) : undefined;
-const employmentLine: string | undefined = undefined; // RC-01's headline now leads with the +10.3 pp employment result (WP7).
+const employmentLine: string | undefined = undefined; // RC-01's headline now leads with the employment result in percentage points (WP7).
 // The one statement of the trial result, by option: the single sentence (YouthWIDE), the one-line employment result (the Programs hub) or the register's RC-01 headline.
 const statement: { text: string; facts: string } | undefined = trialSentence
   ? { text: TRIAL_SENTENCE.text, facts: TRIAL_SENTENCE.facts.join(' ') }
@@ -84,23 +83,14 @@ const tile = (sid: string) => {
 const stats = statIds.map(tile);
 const surveyStats = surveyStatIds.map(tile);
 
-// Survey chart: OC-01's before → after. Trial chart: RC-02's control group and women offered a place (a comparison of two groups at follow-up).
-const cf = fact(trial ? 'RC-02' : chartId);
-let after: number | undefined;
-let before: number | undefined;
-let delta: string;
-if (trial) {
-  before = RCT_COMPARISON.control;
-  after = RCT_COMPARISON.offered;
-  delta = RCT_COMPARISON.delta;
-} else {
-  after = cf.stat?.numeric;
-  before = cf.stat?.from ? parseFloat(cf.stat.from.replace(/[^0-9.]/g, '')) : undefined;
-  if (after === undefined || before === undefined) throw new Error(`EvidenceBand: fact ${chartId} needs stat.numeric and stat.from`);
-  delta = `+${(after - before).toFixed(cf.stat?.decimals ?? 1)} pp`;
-}
-const unit = trial ? '%' : (cf.stat?.suffix ?? '%');
-const chartHeading = chartTitle ?? (trial ? 'Employment at Follow-Up (November–December 2021), Randomized Trial' : 'Self-Reported Employment Among Surveyed Completers');
+// Survey chart: OC-01's before → after (WP172: the trial comparison chart is gone, see `chart` above).
+const cf = fact(chartId);
+const after = cf.stat?.numeric;
+const before = cf.stat?.from ? parseFloat(cf.stat.from.replace(/[^0-9.]/g, '')) : undefined;
+if (after === undefined || before === undefined) throw new Error(`EvidenceBand: fact ${chartId} needs stat.numeric and stat.from`);
+const delta = `+${(after - before).toFixed(cf.stat?.decimals ?? 1)} pp`;
+const unit = cf.stat?.suffix ?? '%';
+const chartHeading = chartTitle ?? 'Self-Reported Employment Among Surveyed Completers';
 ---
 
 <Section id={id} tone="klein" aria-labelledby={`${id}-h`}>
@@ -132,33 +122,15 @@ const chartHeading = chartTitle ?? (trial ? 'Employment at Follow-Up (November�
     {
       showChart && (
         <div class="eb__chart">
-          {trial ? (
-            <>
-              <BeforeAfter
-                mode="comparison"
-                title={chartHeading}
-                before={{ label: 'Control Group', value: before }}
-                after={{ label: 'Offered a Place', value: after }}
-                delta={delta}
-                chip={chip}
-                unit={unit}
-                tone="dark"
-              />
-              <p class="eb__fn" data-fact="RC-02">Chart data: employment at follow-up, women offered a place and the control group.</p>
-            </>
-          ) : (
-            <>
-              <BeforeAfter
-                title={chartHeading}
-                before={{ label: 'Before', value: before, caption: 'Before Training' }}
-                after={{ label: 'October 2026 Survey', value: after, caption: 'Surveyed Completers' }}
-                delta={delta}
-                unit={unit}
-                tone="dark"
-              />
-              <p class="eb__fn">Chart data: {endSentence(cf.stat?.label ?? '')}</p>
-            </>
-          )}
+          <BeforeAfter
+            title={chartHeading}
+            before={{ label: 'Before', value: before, caption: 'Before Training' }}
+            after={{ label: 'October 2026 Survey', value: after, caption: 'Surveyed Completers' }}
+            delta={delta}
+            unit={unit}
+            tone="dark"
+          />
+          <p class="eb__fn">Chart data: {endSentence(cf.stat?.label ?? '')}</p>
         </div>
       )
     }

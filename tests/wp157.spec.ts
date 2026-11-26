@@ -127,7 +127,8 @@ test.describe('F3 The public CSV: "published; base not available"', () => {
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 test.describe('F4 Independent Evaluation: the nine-trials sentence does not repeat its heading', () => {
-  const NEW = 'The employment effect, +10.3 percentage points for women offered a place, is over four times the 2.3-point average across nine randomized trials of vocational training reviewed by World Bank economist David McKenzie (2017), only three of which found a significant employment effect.';
+  // WP172 (owner decision 2026-11-27): the published study's +10 percentage points (it was the 2022 report's +10.3)
+  const NEW = 'The employment effect, +10 percentage points for women offered a place, is over four times the 2.3-point average across nine randomized trials of vocational training reviewed by World Bank economist David McKenzie (2017), only three of which found a significant employment effect.';
 
   test('the sentence under "Over Four Times the Average of Nine Training Trials" is the new one, once', () => {
     const t = main(EVALUATION);

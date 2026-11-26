@@ -145,12 +145,12 @@ test.describe('Investors: the delivered figures lead the track-record band (item
 
 test.describe('Local Partners: the evidence is a two-line strip (item 2)', () => {
   const URL = 'partner-with-us/local-partners/';
-  const TRIAL = 'A randomized trial of CodersTrust’s WSDFM program found women offered a place were 10.3 percentage points more likely to be employed.';
+  const TRIAL = 'A randomized trial of CodersTrust’s WSDFM program found women offered a place were 10 percentage points more likely to be employed.';
   const SURVEY = 'Among surveyed completers, employment was 78.2% at the October 2026 survey, up from 48.0% before training.';
 
   test('the strip keeps the band’s anchor, says the trial and the survey in one line each, and links the two evidence pages', async ({ page }) => {
     await open(page, URL);
-    expect(fact('RC-02').stat?.value).toBe('+10.3 pp');
+    expect(fact('RC-02').stat?.value).toBe('+10 pp');
     expect(fact('OC-01').stat?.value).toBe('78.2%');
     expect(fact('OC-01').stat?.from).toBe('48.0%');
     const band = page.locator('section#proof');
@@ -169,7 +169,7 @@ test.describe('Local Partners: the evidence is a two-line strip (item 2)', () =>
   test('the full band is gone: no income results, no 52.8% / 63.1% employment table, no median income, no evaluator named; the program-result cards stay', async ({ page }) => {
     await open(page, URL);
     const text = await mainText(page);
-    expect(text).not.toMatch(/41% higher|54% higher|\+41%|\$245|\$98|\$82|63\.1%|View Chart Data|An Independent Randomized Trial|Chart data:/);
+    expect(text).not.toMatch(/41% higher|54% higher|\+41%|38% higher|50% higher|\+38%|\$245|\$98|\$82|63\.1%|54% in the control group|View Chart Data|An Independent Randomized Trial|Chart data:/); // WP172: the published study's figures too
     expect(text).not.toMatch(/BIGD|BRAC Institute/);
     await expect(page.locator('#proof [data-fact="RC-01"]')).toHaveCount(0);
     const cards = page.locator('#cases article');
@@ -258,7 +258,7 @@ test.describe('the WSDFM case study: one line above the tiles instead of two par
     await expect(hero.locator('[data-plain-line]')).toHaveCount(0);
     await expect(page.locator('[data-plain-line]'), 'the plain-language line is not on this page at all (the evaluation page keeps it)').toHaveCount(0);
     await expect(hero.locator('.cs__stat')).toHaveCount(3);
-    expect(await texts(page, '.hero .cs__stat .stat__value')).toEqual(['+10.3 percentage points', '+41%', '711 of 1,000']); // WP166-C (R4-05): the trial tiles lead, the program record follows
+    expect(await texts(page, '.hero .cs__stat .stat__value')).toEqual(['+10 percentage points', '+38%', '711 of 1,000']); // WP172 (owner decision 2026-11-27): the published study's figures (+10 pp and +38%; it was +10.3 pp and +41%). WP166-C (R4-05): the trial tiles lead, the program record follows
   });
 
   // WP166-C (R4-05): the claim comes before its caveat: the note follows the tiles, directly under the program-record tile it qualifies; the first tile now spells the evaluator out (WP54 G8), so the note says "BIGD"
@@ -287,11 +287,13 @@ test.describe('the WSDFM case study: one line above the tiles instead of two par
     await expect(results.getByRole('heading', { level: 3, name: 'What the Randomized Trial Found' })).toHaveCount(1);
     // WP76 (owner answer 2026-10-22: the 1,000 are the women enrolled): the program-results sentence (PR-01) names the base, "711 of the 1,000 women enrolled were in work (71%)"
     expect(compact(await results.textContent())).toContain('711 of the 1,000 women enrolled were in work (71%)');
-    await expect(results.locator('[data-fact="RC-09"]')).toContainText('Employment Status at Follow-Up');
+    // WP172 (owner decision 2026-11-27): the published study's figures: the employment-status chart (RC-09) is not in the published study and is gone from the results band
+    await expect(results.locator('[data-fact="RC-09"]')).toHaveCount(0);
+    await expect(results).not.toContainText('Employment Status at Follow-Up');
     await expect(results.getByRole('link', { name: 'Read the Randomized Trial Results' })).toHaveCount(1);
     await open(page, 'impact/independent-evaluation/');
     await expect(page.locator('[data-plain-line]')).toHaveCount(1);
-    expect(compact(await page.locator('[data-plain-line]').textContent())).toBe('For every 100 women offered a place, about 10 more were in work at follow-up than among 100 comparable women in the control group (+10.3 percentage points).');
+    expect(compact(await page.locator('[data-plain-line]').textContent())).toBe('For every 100 women offered a place, about 10 more were in work at follow-up than among 100 comparable women in the control group (+10 percentage points).');
   });
 });
 
@@ -349,7 +351,7 @@ test.describe('Home: the government slide is second (item 10; last since WP166-A
     await open(page, '');
     expect(await texts(page, '#results [data-hs-slide] h3')).toEqual([
       // WP48 (cycle-23 review): the heading named CodersTrust’s WSDFM program; WP50 (cycle-25 review): the eyebrow does ("Randomized Trial of CodersTrust’s WSDFM Program"), and the heading is short again
-      'Women Offered a Place Earned an Estimated 41% More per Month',
+      'Women Offered a Place Earned an Estimated 38% More per Month',
       'Surveyed Completers Report Higher Income',
       'Results by Program',
       'Six Government Contracts and a National University Partnership',
@@ -388,8 +390,9 @@ test.describe('Home: the government slide is second (item 10; last since WP166-A
 });
 
 // WP52 (cycle-27 review, Kimi M2): the ">4×" tile is gone from the glance; its comparison is the +10.3 tile's note, "More than four times the 2.3-point average across nine vocational-training trials." (tests/wp52.spec.ts)
-test.describe('Development Partners: the >4x comparison is the +10.3 tile’s note, not a second tile (item 11)', () => {
-  test('there is no ">4×" tile; the +10.3 tile carries the nine-trial average as its note and the 10.3 is stated once', async ({ page }) => {
+// WP172 (owner decision 2026-11-27): the published study's figures (+10; it was +10.3)
+test.describe('Development Partners: the >4x comparison is the +10 tile’s note, not a second tile (item 11)', () => {
+  test('there is no ">4×" tile; the +10 tile carries the nine-trial average as its note and the 10 is stated once', async ({ page }) => {
     await open(page, 'partner-with-us/development-partners/');
     await expect(page.locator('#glance .pg__lead a[data-fact="RC-06a"]')).toHaveCount(0);
     expect(compact(await page.locator('#glance').textContent())).not.toContain('>4×');
@@ -398,8 +401,9 @@ test.describe('Development Partners: the >4x comparison is the +10.3 tile’s no
     await expect(lead.locator('.pg__note')).toHaveText('More than four times the 2.3-point average across nine vocational-training trials.');
     // the +10.3 is stated once in the glance: the lead tile
     const glance = compact(await page.locator('#glance').textContent());
-    expect(count(glance, '10.3'), 'the 10.3 is the lead tile’s alone').toBe(1);
-    await expect(lead).toContainText('+10.3 percentage points');
+    expect(count(glance, '+10 percentage points'), 'the +10 is the lead tile’s alone').toBe(1);
+    expect(glance).not.toContain('10.3');
+    await expect(lead).toContainText('+10 percentage points');
   });
 
   test('the register’s wording (RC-06a): the average is 2.3 percentage points across nine trials, and the glance label says so without a repeating note', () => {

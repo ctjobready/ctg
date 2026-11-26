@@ -298,15 +298,16 @@ test.describe('"Reporting and Review" (item 7)', () => {
   });
 });
 
-test.describe('WSDFM case study: the +41% tile says gain versus the control group (item 8)', () => {
-  const LABEL = 'estimated monthly income gain versus the control group, for women in Dhaka offered a place (randomized trial of CodersTrust’s WSDFM program)';
+// WP172 (owner decision 2026-11-27): the tile is the published study's +38% (it was the 2022 report's +41%), and its label no longer says "women in Dhaka"
+test.describe('WSDFM case study: the +38% tile says gain versus the control group (item 8)', () => {
+  const LABEL = 'estimated monthly income gain versus the control group, for women offered a place (randomized trial of CodersTrust’s WSDFM program)';
 
   // WP166-B (marketing review R2-02): YouthWIDE's evidence band shows RC-01's +41% tile beside the +10.3 tile, so YouthWIDE prints the label too (it was the case study and the component gallery only).
   test('the label comes from RC-01; the tile shows it, and only the case study, YouthWIDE and the component gallery print it', async ({ page }) => {
     expect(fact('RC-01').stat?.label).toBe(LABEL);
     await open(page, 'impact/case-studies/wsdfm-women-freelancers/');
     const tile = page.locator('.hero .cs__stat').nth(1); // WP166-C (R4-05): the second tile (the trial tiles lead)
-    await expect(tile.locator('.stat__value')).toHaveText('+41%');
+    await expect(tile.locator('.stat__value')).toHaveText('+38%');
     expect(compact(await tile.locator('.stat__label').textContent())).toBe(LABEL);
     expect(builtPages().filter((p) => p.html.includes('estimated monthly income for women in Dhaka offered a place')).map((p) => p.route)).toEqual([]);
     expect(builtPages().filter((p) => p.html.includes(LABEL)).map((p) => p.route).sort()).toEqual(['/impact/case-studies/wsdfm-women-freelancers/', '/programs/youthwide/', '/styleguide/']);
@@ -376,7 +377,7 @@ test.describe('Development Partners, Foundations and Governments: sector general
     await open(page, 'partner-with-us/development-partners/');
     const answer = await answerOf(page, 'Can You Reach Women and Other Priority Groups?');
     expect(answer).toBe(
-      'Our women-focused programs report work outcomes; see Proof in Practice above. For other priority groups, we measure outcomes in each pilot. The randomized trial studied women in Dhaka with at least a Secondary School Certificate (SSC), most of them aged 18–35, so it does not speak to other groups.',
+      'Our women-focused programs report work outcomes; see Proof in Practice above. For other priority groups, we measure outcomes in each pilot. The randomized trial studied women in Bangladesh with at least a Secondary School Certificate (SSC), most of them aged 18–35, so it does not speak to other groups.',
     );
     expect((await faqJsonLd(page)).find((q) => q.name === 'Can You Reach Women and Other Priority Groups?')?.text).toBe(answer);
     expect(faqs.find((f) => f.id === 'Q6')!.a).toContain('For other priority groups, we measure outcomes in each pilot.');
@@ -496,7 +497,7 @@ test.describe('Home: the low-risk band, the FAQ trial answer, the hero line, the
     await open(page, '');
     const answer = await answerOf(page, 'Does the Trial Apply to Your Program?');
     expect(answer).toBe(
-      'The randomized trial evaluated CodersTrust’s 200-hour WSDFM program for women in Dhaka, not today’s 100-hour tracks. Results for other programs come from the October 2026 survey of completers and from program records, which are descriptive.',
+      'The randomized trial evaluated CodersTrust’s 200-hour WSDFM program for women in Bangladesh, not today’s 100-hour tracks. Results for other programs come from the October 2026 survey of completers and from program records, which are descriptive.',
     );
     expect((await faqJsonLd(page)).find((q) => q.name === 'Does the Trial Apply to Your Program?')?.text).toBe(answer);
   });
@@ -514,12 +515,12 @@ test.describe('Home: the low-risk band, the FAQ trial answer, the hero line, the
   test('slide 1 names CodersTrust’s WSDFM program, in the eyebrow above its heading and in its lead; its callout is the peer-reviewed publication (the >4× tile until WP166-A)', async ({ page }) => {
     await open(page, '');
     const first = slide(page, 1);
-    const title = 'Women Offered a Place Earned an Estimated 41% More per Month';
+    const title = 'Women Offered a Place Earned an Estimated 38% More per Month';
     await expect(first.locator('h3')).toHaveText(title);
     expect(title).toBe(titleCase(title));
     expect(await first.locator('h3').getAttribute('data-fact')).toBe('RC-01');
     await expect(first.locator('.hs__eyebrow')).toHaveText('Randomized Trial of CodersTrust’s WSDFM Program');
-    expect(compact(await first.locator('.hs__lead').textContent())).toBe('In CodersTrust’s WSDFM program, women offered a place had an estimated 41% higher monthly income than the control group, about $27 more a month on a control-group mean of about $66.' /* WP167 (owner approval of 2026-11-23, R1-13): the lead gives the base */); // WP63 (cycle-35 review, GLM L4)
+    expect(compact(await first.locator('.hs__lead').textContent())).toBe('In CodersTrust’s WSDFM program, women offered a place had an estimated 38% higher monthly income than the control group, about $25 more a month on a control-group mean of about $68.' /* WP167 (owner approval of 2026-11-23, R1-13): the lead gives the base */); // WP63 (cycle-35 review, GLM L4)
     expect(compact(await first.locator('.hs__proof').textContent())).toContain('Published in a peer-reviewed journal');
     expect(compact(await first.locator('.hs__proof').textContent())).not.toContain('>4×');
   });
@@ -665,7 +666,7 @@ test.describe('The evidence ladder’s first rung is "Independent Evaluation (BI
     expect(((await link.getAttribute('href')) ?? '').replace(/^\/ctg/, '')).toBe('/impact/independent-evaluation/');
     expect(await first.locator('th [data-evidence]').getAttribute('data-evidence')).toBe('Randomized Trial');
     const shows = compact(await first.locator('td[data-label="What It Shows"]').textContent());
-    expect(shows).toBe(`The effect of CodersTrust’s WSDFM program on women in Dhaka, evaluated by the ${INSTITUTE} against a randomly chosen control group.`);
+    expect(shows).toBe(`The effect of CodersTrust’s WSDFM program on women in Bangladesh, evaluated by the ${INSTITUTE} against a randomly chosen control group.`);
     const text = await mainText(page);
     expect(count(text, INSTITUTE), 'the institute is spelled out once on Impact').toBe(1);
     expect(count(text, 'BIGD'), 'the abbreviation appears once, in the rung name').toBe(1);

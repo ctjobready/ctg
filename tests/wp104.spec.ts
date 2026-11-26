@@ -105,15 +105,16 @@ test.describe('WP104 item 1: AIvolve is an offering under JobReady@Work, and the
 
 // --------------------------------------------------------------------------------------------------------------------------------
 test.describe('WP104 item 2: the trial sample is not "all aged 18–35"', () => {
-  test('How to Read This Trial: "Who took part" says women in Dhaka with an SSC or above, most of them aged 18–35', async ({ page }) => {
+  // WP172 (owner decision 2026-11-27): "women in Bangladesh" (the published study's sample is 84% from Dhaka, the rest from other districts); "most of them aged 18–35" stays
+  test('How to Read This Trial: "Who took part" says women in Bangladesh with an SSC or above, most of them aged 18–35', async ({ page }) => {
     await open(page, 'impact/independent-evaluation/');
     const item = page.locator('li[data-fact="RC-01"]', { hasText: 'Who took part.' });
-    expect(compact(await item.first().textContent())).toBe('Who took part. Women in Dhaka with a Secondary School Certificate (SSC) or above, most of them aged 18–35.');
+    expect(compact(await item.first().textContent())).toBe('Who took part. Women in Bangladesh with a Secondary School Certificate (SSC) or above, most of them aged 18–35.');
   });
 
-  test('the Development Partners FAQ (text and JSON-LD) says the trial studied women in Dhaka with at least an SSC, most of them aged 18–35', async ({ page }) => {
+  test('the Development Partners FAQ (text and JSON-LD) says the trial studied women in Bangladesh with at least an SSC, most of them aged 18–35', async ({ page }) => {
     await open(page, 'partner-with-us/development-partners/');
-    const NEW = 'The randomized trial studied women in Dhaka with at least a Secondary School Certificate (SSC), most of them aged 18–35, so it does not speak to other groups.';
+    const NEW = 'The randomized trial studied women in Bangladesh with at least a Secondary School Certificate (SSC), most of them aged 18–35, so it does not speak to other groups.';
     expect(compact(await page.locator('main').textContent())).toContain(NEW);
     expect(await ldJson(page)).toContain(NEW);
   });
@@ -126,8 +127,10 @@ test.describe('WP104 item 2: the trial sample is not "all aged 18–35"', () => 
   test('the two evidence-and-fit briefs (components not on a page today) carry the same wording', () => {
     const impact = readFileSync(new URL('../src/components/pages/impact/FitBrief.astro', import.meta.url), 'utf8');
     const partners = readFileSync(new URL('../src/components/pages/partners/FitBrief.astro', import.meta.url), 'utf8');
-    expect(impact).toContain('<dd>Women in Dhaka with a Secondary School Certificate (SSC) or above, most of them aged 18–35.</dd>');
-    expect(partners).toContain("const population = 'women in Dhaka with a Secondary School Certificate (SSC) or above, most of them aged 18–35';");
+    expect(impact).toContain('<dd>Women in Bangladesh with a Secondary School Certificate (SSC) or above, most of them aged 18–35.</dd>');
+    expect(partners).toContain("const population = 'women in Bangladesh with a Secondary School Certificate (SSC) or above, most of them aged 18–35';");
+    expect(impact + partners).not.toContain('women in Dhaka');
+    expect(impact + partners).not.toContain('Women in Dhaka');
   });
 });
 
@@ -322,7 +325,7 @@ test.describe('WP104 item 10: "Last updated" stamps match each page’s latest c
   const STAMPED = [
     // WP166-B (marketing review R2, owner approval of 21 November 2026): every page in this block whose text changed reads November 21, 2026; TalentLEAP and the JobReady Platform print the line at the foot of the page
     // (.tl__updated, .jr__updated; it was .lf-updated in the header). Before WP166-B: TalentLEAP, JobReady Platform, JobReady@Campus, YouthWIDE and JobReady@Work were November 3, 2026; the NU pages and SuperKids November 2, 2026.
-    { route: 'our-model/talentleap/', selector: '.tl__updated', text: 'Last updated November 21, 2026', iso: '2026-11-21' }, // WP166-B: the opening, the section order, At a Glance's note. WP163: the opening names the three levels, step 3 and Q14 changed. WP154: the example lead and the Prosper step's planned-levels sentence are gone
+    { route: 'our-model/talentleap/', selector: '.tl__updated', text: 'Last updated November 27, 2026', iso: '2026-11-27' }, // WP172 (owner decision 2026-11-27: the published study's trial figures) moved it to 2026-11-27. Earlier: WP166-B: the opening, the section order, At a Glance's note. WP163: the opening names the three levels, step 3 and Q14 changed. WP154: the example lead and the Prosper step's planned-levels sentence are gone
     { route: 'our-model/jobready-platform/', selector: '.jr__updated', text: 'Last updated November 21, 2026', iso: '2026-11-21' }, // WP166-B: the four jobs, the record band, the FAQ and the closing band. WP163: Platform Capabilities (no status labels). WP157: re-dated 2026-11-02
     { route: 'programs/nu-postgraduate-diploma/', selector: '.updated', text: 'Last updated November 26, 2026', iso: '2026-11-26' }, // WP168-B (owner decisions of 24 November 2026). Earlier: WP166-B: the hero lead, the short-form line, the skills card and the eligibility FAQ. WP151: the FAQ "How Do I Apply?" is gone
     { route: 'programs/nu-postgraduate-diploma/cyber-security/', selector: '.updated', text: 'Last updated November 26, 2026', iso: '2026-11-26' }, // WP168-B (owner decisions of 24 November 2026). Earlier: WP166-B: section order, the fit and outcome lines. WP152: the "Ready to Apply?" lead
@@ -330,12 +333,12 @@ test.describe('WP104 item 10: "Last updated" stamps match each page’s latest c
     { route: 'programs/nu-postgraduate-diploma/digital-marketing/', selector: '.updated', text: 'Last updated November 26, 2026', iso: '2026-11-26' }, // WP168-B (owner decisions of 24 November 2026). Earlier: WP166-B: as cyber-security. WP152: the "Ready to Apply?" lead
     { route: 'programs/nu-postgraduate-diploma/ict/', selector: '.updated', text: 'Last updated November 26, 2026', iso: '2026-11-26' }, // WP168-B (owner decisions of 24 November 2026). Earlier: WP166-B: as cyber-security. WP152: the "Ready to Apply?" lead
     { route: 'programs/jobready-campus/', selector: '.updated', text: 'Last updated November 21, 2026', iso: '2026-11-21' }, // WP166-B: the problem band, the university band, the cut bands and the FAQ. WP163: one exam fee per trainee; the delivery model. WP151: the How It Works card names the facilitators
-    { route: 'programs/youthwide/', selector: '.updated', text: 'Last updated November 21, 2026', iso: '2026-11-21' }, // WP166-B: the evidence band, the delivery-model card, the governments heading, the safeguarding answer. WP163: one exam fee per trainee; the delivery model. WP151: "Choose Your Entry Point" has no lead
+    { route: 'programs/youthwide/', selector: '.updated', text: 'Last updated November 27, 2026', iso: '2026-11-27' }, // WP172 (owner decision 2026-11-27: the published study's trial figures) moved it to 2026-11-27. Earlier: WP166-B: the evidence band, the delivery-model card, the governments heading, the safeguarding answer. WP163: one exam fee per trainee; the delivery model. WP151: "Choose Your Entry Point" has no lead
     { route: 'programs/jobready-work/', selector: '.updated', text: 'Last updated November 24, 2026', iso: '2026-11-24' }, // WP168-B (owner decisions of 24 November 2026). Earlier: WP166-B: the PX-05 tile, the closing band and the cut platform question. WP163: one exam fee per trainee; the delivery model; the platform question. WP157: re-dated 2026-11-02
     { route: 'programs/superkids/', selector: '.updated', text: 'Last updated November 21, 2026', iso: '2026-11-21' }, // WP166-B: the parents' link, the glance rows, the agreements, the FAQ. WP143
 
     { route: 'impact/outcomes-2026/', selector: '.lf-updated', text: 'Source snapshot: October 2026 · Last updated November 26, 2026', iso: '2026-11-26' }, // WP166-C (the marketing-effectiveness review). WP161-A: the rounding sentence under "Download the Data" (A-06). WP147: the method line and the Speed to Earning tile changed (was October 31 since WP135; October 29 before)
-    { route: 'impact/independent-evaluation/', selector: '.lf-updated', text: 'Last updated November 24, 2026', iso: '2026-11-24' }, // WP168-B (R4-09: the journal heading). Earlier: WP166-C. Earlier: WP134: WP133 changed its text
+    { route: 'impact/independent-evaluation/', selector: '.lf-updated', text: 'Last updated November 27, 2026', iso: '2026-11-27' }, // WP172 (owner decision 2026-11-27: the published study's trial figures) moved it to 2026-11-27. Earlier: WP168-B (R4-09: the journal heading). Earlier: WP166-C. Earlier: WP134: WP133 changed its text
   ];
   for (const s of STAMPED) {
     test(`${s.route} reads "${s.text}" and its JSON-LD dateModified is ${s.iso}`, async ({ page }) => {
@@ -352,6 +355,6 @@ test.describe('WP104 item 10: "Last updated" stamps match each page’s latest c
     await open(page, 'impact/case-studies/undp-yes-korail/');
     expect(await ldJson(page)).toMatch(/"dateModified"\s*:\s*"2026-11-25"/);
     await open(page, 'impact/case-studies/wsdfm-women-freelancers/'); // WP137 re-dated Her Power (its text changed); WP161-A (A-01): WSDFM declares its own last visible change (it fell back to the shared 2026-10-10)
-    expect(await ldJson(page)).toMatch(/"dateModified"\s*:\s*"2026-11-21"/);
+    expect(await ldJson(page)).toMatch(/"dateModified"\s*:\s*"2026-11-27"/); // WP172 (owner decision 2026-11-27: the published study's trial figures) moved it to 2026-11-27
   });
 });

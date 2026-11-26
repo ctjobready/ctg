@@ -16,11 +16,13 @@ const texts = (page: Page, selector: string) => page.locator(selector).evaluateA
 const AUDIENCE = ['development-partners', 'governments', 'foundations', 'universities', 'employers', 'local-partners'];
 
 test.describe('figures say what they measure', () => {
-  test('the 2.8× figure never reads as employment: Foundations no longer shows its tile (WP35), and the Independent Evaluation page words it as freelancing', async ({ page }) => {
+  // WP172 (owner decision 2026-11-27): the published study's figures (2.7×; it was the 2022 report's 2.8×)
+  test('the 2.7× figure never reads as employment: Foundations no longer shows its tile (WP35), and the Independent Evaluation page words it as freelancing', async ({ page }) => {
     await open(page, 'partner-with-us/foundations/');
-    expect(await mainText(page)).not.toMatch(/2\.8×|\(employment, women who attended\)/);
+    expect(await mainText(page)).not.toMatch(/2\.[78]×|\(employment, women who attended\)/);
     await open(page, 'impact/independent-evaluation/');
-    expect(await mainText(page)).toContain('freelancing 2.8× the control group');
+    expect(await mainText(page)).toContain('freelancing 2.7× the control group');
+    expect(await mainText(page)).not.toContain('2.8×');
   });
 
   test('the Impact survey tiles state shares, not growth multiples: 13.6% freelance (up from 6.0%), no "2.5×" beside the median', async ({ page }) => {
@@ -53,7 +55,7 @@ test.describe('figures say what they measure', () => {
   test('Home slide 1 states the offered-place income result only; the program-results slide and the case card say the WSDFM 71% is program records, not trial results (WP42: it is the fourth slide)', async ({ page }) => {
     await open(page, '');
     const lead = compact(await page.locator('[data-hs-slide]').nth(0).locator('.hs__lead').textContent());
-    expect(lead).toBe('In CodersTrust’s WSDFM program, women offered a place had an estimated 41% higher monthly income than the control group, about $27 more a month on a control-group mean of about $66.' /* WP167 (owner approval of 2026-11-23, R1-13): the lead gives the base */); // WP63 (cycle-35 review, GLM L4)
+    expect(lead).toBe('In CodersTrust’s WSDFM program, women offered a place had an estimated 38% higher monthly income than the control group, about $25 more a month on a control-group mean of about $68.' /* WP172 (owner decision 2026-11-27): the published study's figures (it was 41%, $27 and $66). WP167 (owner approval of 2026-11-23, R1-13): the lead gives the base */); // WP63 (cycle-35 review, GLM L4)
     // WP166-A (marketing review R1-11): the slides run evidence, survey outcomes, program results, government (old slide 2 is now 4, 3 is 2, 4 is 3)
     await expect(page.locator('[data-hs-slide]').nth(2)).toContainText('WSDFM: 711 of 1,000 enrolled in work (71%).');
     // WP51 (cycle-26 review): the Home card shows delivery context in place of the figure and its caption ("WSDFM program records (not trial results; the trial’s 425 women offered a place were among these 1,000): 71% of enrolled women in work"), which the pages that keep the figure still print (below; tests/wp51.spec.ts)
@@ -106,12 +108,12 @@ test.describe('figures say what they measure', () => {
     expect(await mainText(page)).not.toContain('200 trainees initially');
   });
 
-  test('the Impact hub’s trial group is the one employment tile for women offered a place (WP35: the +41% and +54% income results and the >4× comparison are on the Independent Evaluation page)', async ({ page }) => {
+  test('the Impact hub’s trial group is the one employment tile for women offered a place (WP35: the +38% and +50% income results and the >4× comparison are on the Independent Evaluation page)', async ({ page }) => {
     await open(page, 'impact/');
     const group = page.locator('#glance .glance__group', { has: page.getByRole('heading', { level: 3, name: 'Trial Results, CodersTrust’s WSDFM Program' }) });
     const facts = await group.locator('li a').evaluateAll((els) => els.map((e) => (e.getAttribute('data-fact') ?? '').split(' ')[0]));
     expect(facts).toEqual(['RC-02']);
-    await expect(group.locator('li').first()).toContainText('+10.3 percentage points');
+    await expect(group.locator('li').first()).toContainText('+10 percentage points'); // WP172 (owner decision 2026-11-27): the published study's figures (it was +10.3)
   });
 
   test('the Impact "On This Page" labels are the headings they jump to (a short form only where the heading is long), and every heading has one', async ({ page }) => {
@@ -134,9 +136,9 @@ test.describe('figures say what they measure', () => {
     await open(page, 'programs/');
     const band = page.locator('#proof-band');
     const text = compact(await band.textContent());
-    expect(text).toContain('Women offered a place in CodersTrust’s WSDFM program were 10.3 percentage points more likely to be employed than the control group.');
+    expect(text).toContain('Women offered a place in CodersTrust’s WSDFM program were 10 percentage points more likely to be employed than the control group.'); // WP172 (owner decision 2026-11-27): the published study's figures (it was 10.3)
     expect(text).toContain('78.2%');
-    expect(text).not.toMatch(/For every 100 women|41% higher|54% higher|5\.7%|View Chart Data as a Table/);
+    expect(text).not.toMatch(/For every 100 women|38% higher|50% higher|41% higher|54% higher|5\.7%|View Chart Data as a Table/);
     await expect(band.locator('svg[role="img"]')).toHaveCount(0);
     await expect(band.locator('.ba__data')).toHaveCount(0);
   });
@@ -144,8 +146,8 @@ test.describe('figures say what they measure', () => {
   test('Our Model ends its evidence paragraph after the employment result and carries no survey sentence', async ({ page }) => {
     await open(page, 'our-model/');
     const evidence = compact(await page.locator('#evidence .om__text').textContent());
-    expect(evidence).toMatch(/10\.3 percentage points more likely to be employed\.$/);
-    expect(evidence).not.toMatch(/41%|54%|78\.2%|surveyed completers/i);
+    expect(evidence).toMatch(/ 10 percentage points more likely to be employed\.$/); // WP172 (owner decision 2026-11-27): the published study's figure (it was 10.3)
+    expect(evidence).not.toMatch(/38%|50%|41%|54%|78\.2%|surveyed completers/i);
     await expect(page.locator('#evidence a[href$="impact/independent-evaluation/"]')).toHaveCount(1);
   });
 
@@ -153,7 +155,7 @@ test.describe('figures say what they measure', () => {
     await open(page, '');
     const bar = page.locator('[data-promo]');
     const text = compact(await bar.locator('.promo-bar__long').textContent());
-    expect(text).toBe('women offered a place were 10.3 percentage points more likely to be employed.');
+    expect(text).toBe('women offered a place were 10 percentage points more likely to be employed.'); // WP172 (owner decision 2026-11-27): the published study's figures (it was 10.3)
     expect(compact(await bar.textContent())).not.toMatch(/Surveyed completers|78\.2%|48\.0%/);
     expect(await texts(page, '[data-promo] a')).toEqual(['Impact Survey 2026']); // WP167 (owner answer of 2026-11-23)
   });

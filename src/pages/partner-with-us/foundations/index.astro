@@ -97,7 +97,7 @@ const report = { label: reportCta.label, href: reportCta.href };
 
 const { title, description } = meta(
   'Fund Youth Employment: Foundations and CSR',
-  `Fund paths to earnings. In a randomized trial of CodersTrust’s WSDFM program, women offered a place were ${factPart('RC-02', /(\d+\.\d) percentage points/)} percentage points more likely to be employed.`,
+  `Fund paths to earnings. In a randomized trial of CodersTrust’s WSDFM program, women offered a place were ${factPart('RC-02', /(\d+(?:\.\d)?) percentage points/)} percentage points more likely to be employed.`,
 );
 
 // WP166-B (marketing review R3-15): the +10.3 tile carries the benchmark that makes it meaningful, read from RC-06a's glance label as on Development Partners (never retyped).
@@ -115,7 +115,7 @@ const FAQ_IDS = ['Q3', 'Q8-route', 'Q9-route', 'Q10'];
   description={description}
   path={PATH}
   breadcrumbs={[{ label: 'Partner with Us', href: LINKS.hub }, { label: 'Foundations and CSR' }]}
-  jsonLd={[webPage({ path: PATH, name: title, description, dateModified: '2026-11-21' }), faqJsonLd('foundations', PATH, FAQ_IDS)]}
+  jsonLd={[webPage({ path: PATH, name: title, description, dateModified: '2026-11-27' }), faqJsonLd('foundations', PATH, FAQ_IDS)]}
   stickyCta={{ label: primary.label, href: primary.href }}
 >
   <!-- C1 · Identity hook -->

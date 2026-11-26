@@ -44,9 +44,10 @@ test.describe('WP78 item 2: Case Studies index wording', () => {
 test.describe('WP78 item 3: taka amounts on the trial page', () => {
   test('RC-04a carries the three taka figures and the control-group mean, with no source code shown', () => {
     const text = fact('RC-04a').text;
-    expect(text).toContain('BDT 2,354 a month for women offered a place');
-    expect(text).toContain('BDT 3,118 for attenders');
-    expect(text).toContain('a control-group mean of BDT 5,715 (Table 4)');
+    // WP172 (owner decision 2026-11-27): the published study's figures (Table 3; it was the 2022 report's Table 4: BDT 2,354, 3,118 and 5,715)
+    expect(text).toContain('BDT 2,191 a month for women offered a place');
+    expect(text).toContain('BDT 2,905 for attenders');
+    expect(text).toContain('a control-group mean of BDT 5,824 (Table 3)');
   });
 
   test('the income results section states the taka amounts and says the dollar figures are approximate conversions', async ({ page }) => {
@@ -55,7 +56,7 @@ test.describe('WP78 item 3: taka amounts on the trial page', () => {
     await expect(note).toHaveCount(1);
     const text = compact(await note.textContent());
     // WP80 (item 2): the rate sits in RC-04a's text, beside the dollar figures it converts.
-    expect(text).toBe('The report gives these amounts in taka: BDT 2,354 a month for women offered a place, BDT 3,118 for attenders, on a control-group mean of BDT 5,715 (Table 4); the dollar figures are approximate conversions at about BDT 86 to the dollar, the rate in November–December 2021, when the follow-up survey ran.');
+    expect(text).toBe('The published study gives these amounts in taka: BDT 2,191 a month for women offered a place, BDT 2,905 for attenders, on a control-group mean of BDT 5,824 (Table 3); the dollar figures are approximate conversions at about BDT 86 to the dollar, the rate in November–December 2021, when the follow-up survey ran.');
     await expect(page.locator('#results')).not.toContainText('BIGD22');
   });
 });

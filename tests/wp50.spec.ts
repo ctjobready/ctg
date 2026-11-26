@@ -282,9 +282,9 @@ test.describe('Independent Evaluation: the evaluator is spelled out where the pa
     expect(BIGD_FULL).toBe('the BRAC Institute of Governance and Development (BIGD)');
     await open(page, 'impact/independent-evaluation/');
     const lead = compact(await page.locator('main .lf-head .lead').textContent());
-    // WP61 (cycle-33 review, GPT-6.1 Sol G5): the result comes first, with the evaluator ("In a randomized trial by the BRAC Institute of Governance and Development (BIGD), women offered a place were 10.3 percentage points more likely to be employed ...")
+    // WP61 (cycle-33 review, GPT-6.1 Sol G5): the result comes first, with the evaluator ("In a randomized trial by the BRAC Institute of Governance and Development (BIGD), women offered a place were 10 percentage points more likely to be employed ...")
     // WP166-C (R4-03): the lead names the program the trial evaluated before the evaluator ("In a randomized trial of CodersTrust’s WSDFM program by …"); the evaluator is still spelled out at its first mention
-    expect(lead.startsWith(`In a randomized trial of CodersTrust’s WSDFM program by ${BIGD_FULL}, women offered a place were 10.3 percentage points more likely to be employed`)).toBe(true);
+    expect(lead.startsWith(`In a randomized trial of CodersTrust’s WSDFM program by ${BIGD_FULL}, women offered a place were 10 percentage points more likely to be employed`)).toBe(true);
     const words = lead.split(/\s+/).length;
     expect(words, 'the direct answer is 40 to 60 words').toBeGreaterThanOrEqual(40);
     expect(words).toBeLessThanOrEqual(60);
@@ -292,7 +292,9 @@ test.describe('Independent Evaluation: the evaluator is spelled out where the pa
     const spelled = 'BRAC Institute of Governance and Development (BIGD)';
     expect(count(text, spelled)).toBe(1);
     expect(text.indexOf('BIGD')).toBe(text.indexOf(spelled) + spelled.length - 'BIGD)'.length);
-    await expect(page.getByRole('link', { name: /Read the BIGD Report \(2022\)/ })).toHaveCount(1);
+    // WP172 (owner decision 2026-11-27): the published study's figures: the page links the published study, not the 2022 report
+    await expect(page.getByRole('link', { name: /Read the Published Study/ })).toHaveCount(1);
+    await expect(page.getByRole('link', { name: /Read the BIGD Report/ })).toHaveCount(0);
   });
 });
 
@@ -431,15 +433,15 @@ test.describe('Development Partners and Governments: no closing line repeats the
 test.describe('Home: the trial slide (items 17 and 18)', () => {
   const first = (page: Page) => page.locator('[data-hs-slide]').nth(0);
 
-  test('the heading is "Women Offered a Place Earned an Estimated 41% More per Month"; the eyebrow is "Randomized Trial of CodersTrust’s WSDFM Program"; the lead still names CodersTrust’s WSDFM program', async ({ page }) => {
+  test('the heading is "Women Offered a Place Earned an Estimated 38% More per Month"; the eyebrow is "Randomized Trial of CodersTrust’s WSDFM Program"; the lead still names CodersTrust’s WSDFM program', async ({ page }) => {
     await open(page, '');
-    await expect(first(page).locator('h3')).toHaveText('Women Offered a Place Earned an Estimated 41% More per Month');
-    expect('Women Offered a Place Earned an Estimated 41% More per Month').toBe(titleCase('Women Offered a Place Earned an Estimated 41% More per Month'));
+    await expect(first(page).locator('h3')).toHaveText('Women Offered a Place Earned an Estimated 38% More per Month');
+    expect('Women Offered a Place Earned an Estimated 38% More per Month').toBe(titleCase('Women Offered a Place Earned an Estimated 38% More per Month'));
     await expect(first(page).locator('.hs__eyebrow')).toHaveText('Randomized Trial of CodersTrust’s WSDFM Program');
     expect('Randomized Trial of CodersTrust’s WSDFM Program').toBe(titleCase('Randomized Trial of CodersTrust’s WSDFM Program'));
-    expect(compact(await first(page).locator('.hs__lead').textContent())).toBe('In CodersTrust’s WSDFM program, women offered a place had an estimated 41% higher monthly income than the control group, about $27 more a month on a control-group mean of about $66.' /* WP167 (owner approval of 2026-11-23, R1-13): the lead gives the base */); // WP63 (cycle-35 review, GLM L4)
+    expect(compact(await first(page).locator('.hs__lead').textContent())).toBe('In CodersTrust’s WSDFM program, women offered a place had an estimated 38% higher monthly income than the control group, about $25 more a month on a control-group mean of about $68.' /* WP167 (owner approval of 2026-11-23, R1-13): the lead gives the base */); // WP63 (cycle-35 review, GLM L4)
     expect(await first(page).locator('h3').getAttribute('data-fact')).toBe('RC-01');
-    expect(await first(page).getAttribute('aria-label')).toBe('1 of 4: Women Offered a Place Earned an Estimated 41% More per Month');
+    expect(await first(page).getAttribute('aria-label')).toBe('1 of 4: Women Offered a Place Earned an Estimated 38% More per Month');
   });
 
   test('the eyebrow is this slide’s own text: the menu’s trial card and the partner hub keep their wording, and the other slides keep their eyebrows', async ({ page }) => {
@@ -453,7 +455,7 @@ test.describe('Home: the trial slide (items 17 and 18)', () => {
   // WP54 (cycle-28 review, Grok R2): the support line is "Employment effect: more than four times the 2.3-point average across nine vocational-training trials." (it said "More than four times the average employment effect across nine
   // vocational-training trials." and stated no 2.3); WP59 (cycle-31 review, Kimi K3, reversing WP50 on this point): it states the +10.3 it compares, "Employment effect: +10.3 percentage points, more than four times the 2.3-point ..." (tests/wp54.spec.ts, tests/wp59.spec.ts)
   // WP166-A (marketing review R1-02, R1-06): the benchmark is the second sentence of the hero's trial card, directly under the +10.3 it compares, in RC-06a's words; the slide's callout is the peer-reviewed publication (RC-15)
-  test('the benchmark says the multiple in words under the +10.3 on the hero’s trial card (WP166-A; it was the slide’s ">4×" tile); the slide’s callout is the publication; RC-06a keeps its value', async ({ page }) => {
+  test('the benchmark says the multiple in words under the +10 on the hero’s trial card (WP166-A; it was the slide’s ">4×" tile); the slide’s callout is the publication; RC-06a keeps its value', async ({ page }) => {
     expect(fact('RC-06a').stat?.value).toBe('>4×');
     await open(page, '');
     const proof = first(page).locator('.hs__proof');
@@ -462,7 +464,7 @@ test.describe('Home: the trial slide (items 17 and 18)', () => {
     expect(compact(await proof.locator('.stat__label').textContent())).toBe('Published in a peer-reviewed journal: Economic Development and Cultural Change (October 2026).');
     await expect(page.locator('.hh__card[data-fact="RC-02"] [data-fact="RC-06a"]')).toHaveText('That is more than four times the 2.3-point average across nine vocational-training trials.');
     // the register is unchanged: RC-06a keeps its tile label and its glance label
-    expect(fact('RC-06a').stat?.label).toContain('+10.3 percentage points for women offered a place, against 2.3 on average');
+    expect(fact('RC-06a').stat?.label).toContain('+10 percentage points for women offered a place, against 2.3 on average');
   });
 
   test('the slide fits the carousel: no slide leaves more than 48 px unused at 1280, and nothing overflows at 390', async ({ page }) => {
@@ -595,7 +597,7 @@ test.describe('Programs: no "Last updated" line on the overview (item 24)', () =
     await expect(page.locator('main .updated, main .lf-updated')).toHaveCount(0);
     expect(await everything(page)).not.toMatch(/Last updated/);
     const ld = (await page.locator('script[type="application/ld+json"]').allTextContents()).join(' ');
-    expect(ld).toContain('"dateModified":"2026-11-21"'); // WP166-B (marketing review R2-41) moved it to 2026-11-21 (the YouthWIDE card, the "Explore ..." links); WP161 moved it to 2026-11-02 (the learner line, the SuperKids card, "cybersecurity"); WP141 moved it to 2026-11-01; WP106: the YouthWIDE card changed on 2026-10-29 (it was 2026-10-15)
+    expect(ld).toContain('"dateModified":"2026-11-27"'); // WP172 (2026-11-27): the trial line. WP166-B (marketing review R2-41) moved it to 2026-11-21 (the YouthWIDE card, the "Explore ..." links); WP161 moved it to 2026-11-02 (the learner line, the SuperKids card, "cybersecurity"); WP141 moved it to 2026-11-01; WP106: the YouthWIDE card changed on 2026-10-29 (it was 2026-10-15)
     for (const route of ['programs/youthwide/', 'programs/superkids/', 'programs/jobready-work/', 'programs/nu-postgraduate-diploma/', 'impact/independent-evaluation/', 'privacy-policy/']) {
       await open(page, route);
       expect(await page.locator('.updated, .lf-updated').count(), route).toBeGreaterThan(0);
@@ -655,17 +657,17 @@ test.describe('TalentLEAP stage pipeline: the Prosper step (item 27; WP154: it n
   });
 });
 
-test.describe('Home: the hero trial card says "10.3 more" (item 28)', () => {
-  test('the caption states RC-02’s own figure beside the "+10.3" above it; the Independent Evaluation plain-language line keeps its rounded "about 10"', async ({ page }) => {
-    expect(fact('RC-02').stat?.numeric).toBe(10.3);
+test.describe('Home: the hero trial card says "about 10 more" (item 28)', () => {
+  test('the caption states RC-02’s own figure beside the "+10" above it; the Independent Evaluation plain-language line keeps its rounded "about 10"', async ({ page }) => {
+    expect(fact('RC-02').stat?.numeric).toBe(10);
     await open(page, '');
     const card = page.locator('.hh__card[data-fact="RC-02"]');
-    await expect(card.locator('.hh__num')).toHaveText('+10.3');
+    await expect(card.locator('.hh__num')).toHaveText('+10');
     await expect(card.locator('.hh__unit')).toHaveText('percentage points');
     // WP166-A (marketing review R1-02): the caption's second sentence states the nine-trial benchmark (RC-06a; tests/wp166-a.spec.ts)
     await expect(card.locator('.hh__figlabel')).toHaveText('For every 100 women offered a place in CodersTrust’s 200-hour WSDFM program, about 10 more were in work than among 100 comparable women in the control group. That is more than four times the 2.3-point average across nine vocational-training trials.');
     await open(page, 'impact/independent-evaluation/');
-    expect(compact(await page.locator('[data-plain-line]').textContent())).toBe('For every 100 women offered a place, about 10 more were in work at follow-up than among 100 comparable women in the control group (+10.3 percentage points).');
+    expect(compact(await page.locator('[data-plain-line]').textContent())).toBe('For every 100 women offered a place, about 10 more were in work at follow-up than among 100 comparable women in the control group (+10 percentage points).');
     expect(sitePages().filter((p) => visible(p.html).includes('about 10 more were in work than in the control group')).map((p) => p.route)).toEqual([]);
   });
 });

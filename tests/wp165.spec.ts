@@ -68,8 +68,9 @@ const ORIGIN = 'https://coderstrust.global';
 const SUBSTACK_HOST = 'tergadesidero178981.substack.com';
 const BYLINE = 'By Aziz Ahmad, Co-Founder and Chairman of CodersTrust';
 const PROFILE = '/about/team/aziz-ahmad/';
-const UPDATED = '2026-11-05';
-const UPDATED_SHOWN = 'November 5, 2026';
+// WP172 (owner answer 2026-11-27): the re-posts' figures were aligned again, to the published study's trial figures, on 2026-11-27 (they were aligned on 2026-11-05)
+const UPDATED = '2026-11-27';
+const UPDATED_SHOWN = 'November 27, 2026';
 
 interface Post {
   slug: string;
@@ -83,6 +84,8 @@ interface Post {
   last: string;
   words: number;
   headings: number;
+  /** WP172: a post written for the site whose own `updated` date is set (its dateModified) */
+  updated?: string;
 }
 const FATHER: Post = {
   slug: 'the-father-the-godfather-and-the-jobs-of-our-children',
@@ -122,6 +125,7 @@ const CLOCK: Post = {
   last: 'The CodersTrust figures are from our learner records, our October 2026 completer survey and the BIGD randomized trial. The interpretation and the opinions are my own.',
   words: 1500,
   headings: 6,
+  updated: '2026-11-27', // WP172 (owner answer 2026-11-27): the trial figures were updated to the published study's
 };
 const ALL = [CLOCK, BEYOND, FATHER]; // newest first
 const page = (slug: string) => `blog/${slug}/index.html`;
@@ -203,8 +207,10 @@ test.describe('Always: the three post files (owner decisions of 5 November 2026)
     for (const want of [
       'Since 2014, we have trained more than 130,000 learners.', // SC-01
       'A 2017 World Bank review of nine randomized vocational training trials found employment rose by an average of just 2.3 percentage points, and only three of the nine raised employment significantly at all.', // RC-06, RC-06a
-      'Women who attended earned 54% more, were 26% more likely to be employed and 2.8 times as likely to freelance.', // RC-13, RC-03
-      'Their households spent 43% more and fewer took out loans.', // RC-14, RC-05
+      'employment rose 10 points among those offered a place, more than four times that benchmark.', // RC-02, RC-06a (WP172: the published study's 10; CodersTrust's own comparison with McKenzie 2017)
+      'Women who attended earned 50% more, were 24% more likely to be employed and 2.7 times as likely to freelance.', // RC-13, RC-03 (WP172)
+      'Their households spent 39% more on food and fewer took out loans.', // RC-14, RC-05 (WP172: the study reports food spending, not total household spending)
+      'randomized controlled trial of CodersTrust\'s WSDFM program, published in Economic Development and Cultural Change, 2026 (n = 574).', // RC-15, RC-07 (WP172)
       'Employment rose from 48.0% before training to 78.2% at the October 2026 survey, and median monthly income rose from $98 to $245.', // OC-01, OC-03
       'Of 2014–2023 completers who had no income before the course, 70.8% (34 of 48) were earning at the survey', // OC-02
       'about one in eight surveyed completers named freelancing for foreign clients or a job abroad as their main income source.', // OC-07
@@ -215,7 +221,7 @@ test.describe('Always: the three post files (owner decisions of 5 November 2026)
       'At national scale, the cost falls from about $500 to $300 per trainee.', // kept: owner decision 1
     ])
       expect(s, want).toContain(want);
-    for (const gone of ['Global Chairman', 'CEO of UTC', '47.4%', '77.9%', 'tripled', '$82', '72.3%', '55 of', 'two million', 'skills partner', '53% more', '28% more', '3.6 times', '41% more', '39% less', 'about a third', '130,000 young people'])
+    for (const gone of ['Global Chairman', 'CEO of UTC', '47.4%', '77.9%', 'tripled', '$82', '72.3%', '55 of', 'two million', 'skills partner', '53% more', '28% more', '3.6 times', '41% more', '39% less', 'about a third', '130,000 young people', '10.3 points', '54% more', '26% more', '2.8 times', '43% more', 'n = 599', 'May 2022'])
       expect(s, gone).not.toContain(gone);
   });
   test('the Beyond essay states the register’s figures and wording', () => {
@@ -224,14 +230,15 @@ test.describe('Always: the three post files (owner decisions of 5 November 2026)
       'an essay titled “The Father, the Godfather, and the Jobs of Our Children,” reflecting', // the earlier essay's published title
       'my work over the past twelve years, since 2014, helping young people', // ID-08: "12 years" with the year visible
       'CodersTrust has trained more than 130,000 learners and has worked in 16 countries and territories.', // SC-01, SC-03 ("has worked", never "programs in": tests/wp58.spec.ts)
-      'treatment-on-treated estimates of approximately 26% higher employment and 54% higher monthly income', // RC-13
-      'the evaluation estimated approximately 54% higher monthly income and 26% higher employment relative to the control group.', // RC-13
+      'The evaluation’s Table 3 reports treatment-on-treated estimates of approximately 24% higher employment and 50% higher monthly income', // RC-13 (WP172: the published study's Table 3)
+      'the evaluation estimated approximately 50% higher monthly income and 24% higher employment relative to the control group.', // RC-13 (WP172)
+      'Economic Development and Cultural Change 75(1): 367–399, Table 3 (treatment-on-treated estimates). https://doi.org/10.1086/741450', // RC-15 (WP172: the reference is the published study)
       'reported employment increased from 48.0% before training to 78.2% at the October 2026 survey. Median monthly income rose from approximately $98 to $245.', // OC-01, OC-03
       '70.8% (34 of 48) were earning at the October 2026 survey.', // OC-02
       'Aziz Ahmad is Co-Founder and Chairman of CodersTrust, leads UTC Associates and is the recently appointed Global Ambassador', // ID-03, ID-13
     ])
       expect(s, want).toContain(want);
-    for (const gone of ['Global Chairman', 'CEO of UTC', 'and Youth,”', '15 countries', 'programs in 16', '25.75%', '54.56%', '53% higher', '28% higher', '47.4%', '77.9%', '$82', '72.3%', '130,000 young people'])
+    for (const gone of ['Global Chairman', 'CEO of UTC', 'and Youth,”', '15 countries', 'programs in 16', '25.75%', '54.56%', '53% higher', '28% higher', '47.4%', '77.9%', '$82', '72.3%', '130,000 young people', '26% higher', '54% higher', 'Table 4', 'Impact Evaluation Report'])
       expect(s, gone).not.toContain(gone);
   });
 });
@@ -253,12 +260,12 @@ test.describe('Always: the new essay meets the site’s own gates (it is not a r
     const s = source(CLOCK.slug);
     for (const want of [
       'run by the BRAC Institute of Governance and Development (BIGD):', // BIGD spelled out at first mention (tests/wp54.spec.ts)
-      'and had an estimated 41 percent higher monthly income.', // RC-01 wording (tests/wp63.spec.ts)
+      'women offered a place were 10 percentage points more likely to be employed than the control group, and had an estimated 38 percent higher monthly income.', // RC-02 and RC-01 wording (tests/wp63.spec.ts; WP172: the published study's figures)
       'Median monthly income was $245; the median before training was $98.', // OC-03 wording, never "up from $98" (tests/wp67.spec.ts)
       'CodersTrust has trained more than 130,000 learners since 2014.', // SC-01
     ])
       expect(s, want).toContain(want);
-    for (const gone of ['up from $98', 'their monthly income was', 'alive, and the choices', 'economies, and only 34', 'employed, and informal', 'doors, and the aging', 'earning, or with one']) expect(s, gone).not.toContain(gone);
+    for (const gone of ['10.3 percentage points', '41 percent', 'up from $98', 'their monthly income was', 'alive, and the choices', 'economies, and only 34', 'employed, and informal', 'doors, and the aging', 'earning, or with one']) expect(s, gone).not.toContain(gone);
   });
 });
 
@@ -380,7 +387,7 @@ test.describe('LIVE (a build with the drafts lifted: see the header of this file
         const post = nodeOf(page(p.slug), 'BlogPosting');
         expect(post.headline).toBe(p.title);
         expect(post.datePublished).toBe(p.iso);
-        expect(post.dateModified).toBe(p.substack ? UPDATED : p.iso);
+        expect(post.dateModified).toBe(p.substack ? UPDATED : (p.updated ?? p.iso));
         expect(post.author).toEqual({ '@type': 'Person', '@id': `${ORIGIN}${PROFILE}#person`, name: 'Aziz Ahmad', url: `${ORIGIN}${PROFILE}` });
         expect(post.publisher).toEqual({ '@id': `${ORIGIN}/#organization` });
         expect(post.isBasedOn).toBe(p.substack);

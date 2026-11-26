@@ -69,8 +69,9 @@ export const COURSES_URL = 'https://jobready.global/';
 /**
  * OWNER SWITCH — the "Request the Impact Report 2026 (partner edition)" call to action (`report` in src/data/ctas.ts).
  *
- * Leave it `false` until the owner has confirmed that the corrected partner edition exists: its slides 15–16 must show the public
- * BIGD report values the site follows (attenders +54% income and +26% employment; household effects as in RC-05), see confirm-list
+ * Leave it `false` until the owner has confirmed that the corrected partner edition exists: its slides 15–16 must show the trial
+ * values the site follows, the published study's since WP172 (owner decision 2026-11-27; EDCC26: attenders +50% income and +24%
+ * employment; household effects as in RC-05; before WP172, the May 2022 BIGD report's +54% and +26%), see confirm-list
  * item #28 and doc 06 R9-M3. While it is `false` no `report` button, link or contact route is rendered anywhere on the site: the CTA
  * library (src/lib/mailto.ts) hands out an empty href for that key, and every component that draws a CTA (Button, CTABand, NextStep,
  * the Contact routes) draws nothing for an empty href, so a band or route that exists only for the report disappears with it.

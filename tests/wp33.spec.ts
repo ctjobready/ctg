@@ -30,10 +30,11 @@ test.describe('Home evidence band (#proof-band): gone (WP48); the trial and surv
     await expect(page.locator('#cases a[href$="/impact/independent-evaluation/"]'), 'one link to the trial results in the row').toHaveCount(1);
   });
 
-  test('the trial figure is the hero card’s (+10.3 percentage points); the Proof in Practice band does not restate it', async ({ page }) => {
+  // WP172 (owner decision 2026-11-27): the published study's figures (+10; it was +10.3)
+  test('the trial figure is the hero card’s (+10 percentage points); the Proof in Practice band does not restate it', async ({ page }) => {
     await open(page, '');
-    expect(compact(await page.locator('.hh__card[data-fact="RC-02"]').textContent())).toContain('+10.3 percentage points');
-    expect(compact(await page.locator('#cases').textContent())).not.toContain('10.3 percentage points');
+    expect(compact(await page.locator('.hh__card[data-fact="RC-02"]').textContent())).toContain('+10 percentage points');
+    expect(compact(await page.locator('#cases').textContent())).not.toContain('10 percentage points');
   });
 
   for (const vp of [DESKTOP, MOBILE]) {

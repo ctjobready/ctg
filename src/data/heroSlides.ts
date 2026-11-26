@@ -132,7 +132,7 @@ const offeredPoints = fact('RC-02').stat?.numeric;
 const hours = /was (\d+) hours/.exec(fact('RC-07').text)?.[1];
 /** The trial's estimated income difference for all women offered a place (RC-01's tile), stated before the attenders' figure. */
 const incomeOffered = fact('RC-01').stat?.numeric;
-/** The same women's estimated gain in dollars a month (RC-04's tile, "+$27"), stated beside the percentage on the first slide. */
+/** The same women's estimated gain in dollars a month (RC-04's tile, "+$25" since WP172: the published study's figure; it was the 2022 report's "+$27"), stated beside the percentage on the first slide. */
 const dollarsOffered = fact('RC-04').stat?.numeric;
 // WP167 (owner approval of 2026-11-23, marketing review R1-13): the lead gives the base the dollar figure sits on, read from RC-04's own text ("on a control-group mean of about $66").
 const controlMean = /control-group mean of about \$(\d+)/.exec(fact('RC-04').text)?.[1];

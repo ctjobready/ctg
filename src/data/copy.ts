@@ -456,14 +456,14 @@ export const RCT_HEADLINE: CopyBlock = {
 /**
  * Relevance line (review round 14, m2), set directly under the randomized-trial headline on the pages whose offering the trial did not
  * evaluate: /programs/nu-postgraduate-diploma/ (the NU Post Graduate Diploma) and, should a trial band return to them, /partner-with-us/employers/ and
- * /programs/jobready-work/ (JobReady@Work). It restates RC-01's scope (the WSDFM program, women in Dhaka) and adds no figure. The trial stays organizational
+ * /programs/jobready-work/ (JobReady@Work). It restates RC-01's scope (the WSDFM program, women in Bangladesh; WP172: the published study's sample is 84% from Dhaka, the rest from other districts, so it no longer says "women in Dhaka") and adds no figure. The trial stays organizational
  * evidence, not evidence for the offering on the page. scripts/check-facts.mjs pins the sentence on these pages.
  * WP31 (cycle-8 review): the two JobReady@Work pages no longer carry a trial band (they link to the evidence pages), so `work` is not rendered today;
  * the gate still requires the sentence on any proof band either page grows.
  * WP34 (cycle-11 review): the NU Post Graduate Diploma overview no longer carries a trial band either (a one-link strip stands in), so `nuPgd` is not rendered today
  * and the gate treats that page the same way.
  */
-export const trialScope = (offering: string): CopyBlock => ({ text: `This trial evaluated WSDFM training for women in Dhaka, not ${offering}.`, facts: ['RC-01'] });
+export const trialScope = (offering: string): CopyBlock => ({ text: `This trial evaluated WSDFM training for women in Bangladesh, not ${offering}.`, facts: ['RC-01'] });
 export const TRIAL_SCOPE = {
   work: trialScope('JobReady@Work'),
   nuPgd: trialScope('the NU Post Graduate Diploma'),
@@ -638,8 +638,8 @@ export const painForRow = (pains: Pain[], id: PainId) => {
 /**
  * [PLAIN-LINE] (plan v1.10 enhancement; RC-02): the plain-language reading of the employment effect in percentage points (not the relative
  * +20% of RC-01), used directly after the randomized-trial lead on Home C7 and the development-partners C7, and in the independent-evaluation BLUF.
- * Both numbers are derived from RC-02's stat, so the sentence cannot drift from the register: "+10.3 percentage points" is the stat value with
- * its "pp" spelled out, and "about 10" is that value rounded to a whole number of women per 100.
+ * Both numbers are derived from RC-02's stat, so the sentence cannot drift from the register: "+10 percentage points" is the stat value with
+ * its "pp" spelled out, and "about 10" is that value rounded to a whole number of women per 100 (WP172: the published study's 10; the 2022 report's 10.3 rounded to the same 10).
  */
 function plainLine(): CopyBlock {
   const s = fact('RC-02').stat;
@@ -705,27 +705,11 @@ function trialLine(): CopyBlock {
 }
 export const TRIAL_LINE: CopyBlock = trialLine();
 
-/**
- * Employment at follow-up in the randomized trial, read from RC-02's text ("than the control group (52.8%)"), so the Home C7
- * comparison chart never retypes a figure. The women offered a place are the control rate plus RC-02's stat (+10.3 pp). It throws
- * if the text stops reading that way.
+/*
+ * WP172 (owner decision 2026-11-27): RCT_COMPARISON is gone. It read the control group's employment at follow-up from RC-02's text and added RC-02's stat to give the rate for women
+ * offered a place (63.1% from the 2022 report). The published study (EDCC26) states the control mean (54%) and the effect, not the treated group's rate, so no page draws that bar
+ * (EvidenceBand's `trial` chart, YouthWIDE's only user, is gone with it).
  */
-export interface RctComparison {
-  control: number;
-  offered: number;
-  /** RC-02's stat value, e.g. "+10.3 pp". */
-  delta: string;
-}
-function rctComparison(): RctComparison {
-  const rc02 = fact('RC-02');
-  const m = rc02.text.match(/than the control group \((\d+(?:\.\d+)?)%\)/);
-  if (!m || !rc02.stat || rc02.stat.numeric === undefined) {
-    throw new Error(`RCT_COMPARISON: RC-02's text no longer states "than the control group (X%)": "${rc02.text}"`);
-  }
-  const control = Number(m[1]);
-  return { control, offered: Math.round((control + rc02.stat.numeric) * 10) / 10, delta: rc02.stat.value };
-}
-export const RCT_COMPARISON: RctComparison = rctComparison();
 
 /**
  * SC-01 and SC-03 stated apart (review round 13, M3): the 130,000+ trained is mostly in Bangladesh, and the international programs are

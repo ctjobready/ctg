@@ -9,7 +9,7 @@ import { listPages } from './support/pages';
 /**
  * WP62 behaviors (cycle-34 whole-site reviews, Perplexity models; triage items 1 to 10). Retrospective coverage (the owner exempted this project from test-first work);
  * each test states one observable behavior of the built site (run `npm run build` first, then `PORT=<port> npx playwright test tests/wp62.spec.ts --project=chromium`):
- *   - 1: Home slide 1 is "Women Offered a Place Earned an Estimated 41% More per Month" (RC-01's 41% is a monthly income difference), within the carousel’s height budget;
+ *   - 1: Home slide 1 is "Women Offered a Place Earned an Estimated 38% More per Month" (RC-01's 41% is a monthly income difference), within the carousel’s height budget;
  *   - 2: Home’s press line is one pointer sentence to Recognition and Media that names Kosovo and Albania (no outlet, no link of its own); Recognition and Media prints the full line, with its ten links, in the coverage band (rework R1, R2);
  *   - 3: Foundations’ fourth glance tile is a program record, not the +$27 tile (WP62: the WSDFM record, 711 of 1,000, with the note the Impact tile has, rework R3; WP65: the UNDP YES, Korail record, 67%, in its place);
  *   - 4: the partner hub’s steps band is "From First Conversation to First Cohort", and its lead no longer opens with the sentence the heading now says;
@@ -85,13 +85,13 @@ const YOUTHWIDE = 'programs/youthwide/';
 const RECOGNITION = 'about/recognition/';
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-test.describe('Item 1 (GPT-6.1 Sol, Kimi): Home slide 1 says the 41% is monthly', () => {
-  const TITLE = 'Women Offered a Place Earned an Estimated 41% More per Month';
+test.describe('Item 1 (GPT-6.1 Sol, Kimi): Home slide 1 says the 38% is monthly', () => {
+  const TITLE = 'Women Offered a Place Earned an Estimated 38% More per Month';
 
-  test('the register says the 41% is a monthly income difference (RC-01), which is what the heading now says', () => {
-    expect(fact('RC-01').text).toContain('Their monthly income was an estimated 41% higher');
+  test('the register says the 38% is a monthly income difference (RC-01), which is what the heading now says', () => {
+    expect(fact('RC-01').text).toContain('Their monthly income was an estimated 38% higher');
     expect(fact('RC-01').stat?.label).toContain('estimated monthly income gain');
-    expect(fact('RC-01').stat?.value).toBe('+41%');
+    expect(fact('RC-01').stat?.value).toBe('+38%');
   });
 
   test('the heading, its slide label and its Title Case; the eyebrow and facts are unchanged (the lead is WP63’s: "women offered a place had ..."); no built page keeps the heading without "per Month"', async ({ page }) => {
@@ -102,8 +102,9 @@ test.describe('Item 1 (GPT-6.1 Sol, Kimi): Home slide 1 says the 41% is monthly'
     expect(await first.locator('h3').getAttribute('data-fact')).toBe('RC-01');
     await expect(first).toHaveAttribute('aria-label', `1 of 4: ${TITLE}`);
     await expect(first.locator('.hs__eyebrow')).toHaveText('Randomized Trial of CodersTrust’s WSDFM Program');
-    expect(compact(await first.locator('.hs__lead').textContent())).toBe('In CodersTrust’s WSDFM program, women offered a place had an estimated 41% higher monthly income than the control group, about $27 more a month on a control-group mean of about $66.' /* WP167 (owner approval of 2026-11-23, R1-13): the lead gives the base */); // WP63 (cycle-35 review, GLM L4)
-    expect(sitePages().filter((p) => /Earned an Estimated 41% More(?! per Month)/.test(visible(p.html))).map((p) => p.route)).toEqual([]);
+    expect(compact(await first.locator('.hs__lead').textContent())).toBe('In CodersTrust’s WSDFM program, women offered a place had an estimated 38% higher monthly income than the control group, about $25 more a month on a control-group mean of about $68.' /* WP167 (owner approval of 2026-11-23, R1-13): the lead gives the base */); // WP63 (cycle-35 review, GLM L4)
+    expect(sitePages().filter((p) => /Earned an Estimated 38% More(?! per Month)/.test(visible(p.html))).map((p) => p.route)).toEqual([]); // WP172 (owner decision 2026-11-27): the published study's figures (38%; it was 41%)
+    expect(sitePages().filter((p) => /Earned an Estimated 41% More/.test(visible(p.html))).map((p) => p.route)).toEqual([]);
   });
 
   test('the longer heading keeps the carousel’s height budget: no slide leaves more than 48 px unused at 1280 and 390, and nothing scrolls sideways', async ({ page }) => {
@@ -214,7 +215,7 @@ test.describe('Item 2 (Kimi, GPT-6.1 Sol, Gemini; rework R1 and R2): Home’s pr
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // WP65 (cycle-37 review, GPT-6.1 Sol, Gemini) supersedes this item's tile: "711 of 1,000" and its not-the-trial note stood in the glance and again on the Proof in Practice WSDFM card, so the fourth glance tile is the UNDP YES, Korail record (PR-03)
 // and the WSDFM program records are stated once, on the card (tests/wp65.spec.ts).
-test.describe('Item 3 (Grok, GPT-6.1 Sol, Gemini; superseded by WP65): Foundations’ fourth glance tile is a program record, not the +$27 tile', () => {
+test.describe('Item 3 (Grok, GPT-6.1 Sol, Gemini; superseded by WP65): Foundations’ fourth glance tile is a program record, not the +$25 tile', () => {
   test('the glance runs trial, survey, Kosovo, UNDP YES; the fourth tile is "67%" with the label "... in UNDP YES, Korail (2017), found their first job within three months", tagged Program Record, linking the UNDP YES case study', async ({ page }) => {
     await open(page, FOUNDATIONS);
     expect(await page.locator('#glance .pg__lead a').evaluateAll((els) => els.map((e) => (e.getAttribute('data-fact') ?? '').split(' ')[0]))).toEqual(['RC-02', 'OC-03', 'PR-02', 'PR-03']);
@@ -250,17 +251,18 @@ test.describe('Item 3 (Grok, GPT-6.1 Sol, Gemini; superseded by WP65): Foundatio
     }
   });
 
-  test('the figure and the share are the register’s (PR-01), and the +$27 is not stated anywhere in the page body (WP108: nor in the meta description, which leads with the +10.3 employment result)', async ({ page }) => {
+  test('the figure and the share are the register’s (PR-01), and the +$25 is not stated anywhere in the page body (WP108: nor in the meta description, which leads with the +10 employment result)', async ({ page }) => {
     expect(fact('PR-01').stat?.value).toBe('711 of 1,000');
     expect(fact('PR-01').stat?.label).toBe('WSDFM: 71% of enrolled women in work');
     await open(page, FOUNDATIONS);
+    expect(compact(await page.locator('main').textContent())).not.toContain('+$25'); // WP172 (owner decision 2026-11-27): the published study's figures (+$25; it was +$27)
     expect(compact(await page.locator('main').textContent())).not.toContain('+$27');
     await expect(page.locator('#glance a[data-fact~="RC-04"]')).toHaveCount(0);
-    expect(await page.locator('meta[name="description"]').getAttribute('content')).toContain('women offered a place were 10.3 percentage points more likely to be employed');
-    expect(await page.locator('meta[name="description"]').getAttribute('content')).not.toContain('$27');
+    expect(await page.locator('meta[name="description"]').getAttribute('content')).toContain('women offered a place were 10 percentage points more likely to be employed');
+    expect(await page.locator('meta[name="description"]').getAttribute('content')).not.toMatch(/\$2[57]/);
   });
 
-  test('the trial fills one of four tiles now (the +10.3), and the four tiles sit in one row at 1280 with no sideways scroll at 390', async ({ page }) => {
+  test('the trial fills one of four tiles now (the +10), and the four tiles sit in one row at 1280 with no sideways scroll at 390', async ({ page }) => {
     await page.setViewportSize(DESKTOP);
     await open(page, FOUNDATIONS);
     expect(await page.locator('#glance .pg__lead a [data-evidence="Randomized Trial"]').count()).toBe(1);

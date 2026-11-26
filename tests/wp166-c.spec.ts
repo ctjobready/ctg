@@ -355,7 +355,8 @@ test.describe('Impact hub (R4-01, R4-04, R4-13 to R4-17)', () => {
   test('the lead is the register answer with its fact markers, then one line on evidence kinds; no In Short band, no inventory lead', () => {
     const hero = /<section class="hero[\s\S]*?<\/section>/.exec(html(IMPACT))?.[0] ?? '';
     expect(hero).toMatch(/<p class="hero__lead"[^>]*data-fact="RC-02 OC-01"/);
-    expect(visible(hero)).toContain('A randomized trial of CodersTrust’s WSDFM program found that women offered a place were 10.3 percentage points more likely to be employed. Among surveyed completers, employment was 48.0% before training and 78.2% at the October 2026 survey. Each figure names its kind of evidence.');
+    // WP172 (owner decision 2026-11-27): the published study's figures (it was the 2022 report's 10.3)
+    expect(visible(hero)).toContain('A randomized trial of CodersTrust’s WSDFM program found that women offered a place were 10 percentage points more likely to be employed. Among surveyed completers, employment was 48.0% before training and 78.2% at the October 2026 survey. Each figure names its kind of evidence.');
     const t = text(IMPACT);
     expect(t).not.toContain('In Short');
     expect(t).not.toContain('Program records from Kosovo and Bangladesh, an independent trial in Dhaka and a 2026 survey of completers.');
@@ -367,7 +368,7 @@ test.describe('Impact hub (R4-01, R4-04, R4-13 to R4-17)', () => {
     expect(hero).toContain('href="/ctg/impact/independent-evaluation/"');
     expect(visible(hero)).toContain('Read the Trial Results');
   });
-  test('the +10.3 tile carries the benchmark note; program results come before reach and contract scope; the scope note is one sentence', () => {
+  test('the +10 tile carries the benchmark note; program results come before reach and contract scope; the scope note is one sentence', () => {
     const glance = byId(IMPACT, 'section', 'glance');
     const g = visible(glance);
     expect(g).toContain('More than four times the 2.3-point average across nine vocational-training trials.');
@@ -400,29 +401,36 @@ test.describe('Impact hub (R4-01, R4-04, R4-13 to R4-17)', () => {
 test.describe('Independent Evaluation (R4-02, R4-03, R4-08, R4-10, R4-14, R4-32)', () => {
   test('the lead says why the result matters; the scope caveat stays in How to Read This Trial', () => {
     const head = visible(/<header class="lf-head"[\s\S]*?<\/header>/.exec(html(TRIAL))?.[0] ?? '');
-    expect(head).toContain('In a randomized trial of CodersTrust’s WSDFM program by the BRAC Institute of Governance and Development (BIGD), women offered a place were 10.3 percentage points more likely to be employed than the control group: over four times the 2.3-point average across nine randomized trials of vocational training.'); // no journal sentence beside the report figures (WP99, owner Q2 option C)
+    expect(head).toContain('In a randomized trial of CodersTrust’s WSDFM program by the BRAC Institute of Governance and Development (BIGD), women offered a place were 10 percentage points more likely to be employed than the control group: over four times the 2.3-point average across nine randomized trials of vocational training.'); // no journal sentence beside the report figures (WP99, owner Q2 option C)
     expect(head).not.toMatch(/peer-reviewed/i);
     expect(head).toContain('Talk to Us About a First Cohort');
-    expect(head).toContain('Last updated November 24, 2026'); // WP168-B (R4-09): the journal heading moved the date on
+    expect(head).toContain('Last updated November 27, 2026'); // WP172 (2026-11-27): the published study's figures moved the date on. Earlier: WP168-B (R4-09), the journal heading
     expect(text(TRIAL)).toContain('What was evaluated. CodersTrust’s 200-hour WSDFM program; today’s tracks are 100 hours.');
   });
-  test('the sections run result, benchmark, journal, income, freelancing, funders, tracking, close', () => {
-    expect(ids(main(TRIAL), 'section')).toEqual(['summary', 'context', 'journal', 'results', 'freelancing', 'funders', 'outcomes']);
+  // WP172 (owner decision 2026-11-27): the exhibit after the results is the published study's employment effect by classes attended (#classes, RC-17); the employment-status exhibit (#freelancing, RC-09) is withdrawn
+  test('the sections run result, benchmark, journal, income, classes attended, funders, tracking, close', () => {
+    expect(ids(main(TRIAL), 'section')).toEqual(['summary', 'context', 'journal', 'results', 'classes', 'funders', 'outcomes']);
     expect(main(TRIAL).indexOf('id="cta"')).toBeGreaterThan(main(TRIAL).indexOf('id="outcomes"'));
     const toc = visible(/<nav aria-label="On this page"[^>]*>[\s\S]*?<\/nav>/.exec(html(TRIAL))?.[0] ?? '');
     // WP168-B (R4-09): the journal band's heading, and so its On This Page entry, is "Peer-Reviewed: The Article Estimates a Benefit/Cost Ratio of 3.01" (it was "Published in a Peer-Reviewed Journal")
-    expect(toc).toBe('The Result Over Four Times the Average of Nine Training Trials Peer-Reviewed: The Article Estimates a Benefit/Cost Ratio of 3.01 Income, Freelancing and Household Effects Freelancing: Women Offered a Place vs. the Control Group What It Means for Funders How We Track Outcomes Talk to Us About a First Cohort');
+    expect(toc).toBe('The Result Over Four Times the Average of Nine Training Trials Peer-Reviewed: The Article Estimates a Benefit/Cost Ratio of 3.01 Income, Freelancing and Household Effects Employment Effect by Classes Attended What It Means for Funders How We Track Outcomes Talk to Us About a First Cohort');
   });
-  test('the freelancing exhibit is the randomized comparison (RC-09); the classes chart (RC-08) is cut; the household line is RC-14', () => {
-    const fr = byId(TRIAL, 'section', 'freelancing');
-    expect(fr).toContain('data-fact="RC-09"');
-    expect(visible(fr)).toContain('Employment Status at Follow-Up: Women Offered a Place vs. the Control Group');
+  // WP172 (owner decision 2026-11-27): RC-08 and RC-09 are not in the published study and are withdrawn; the exhibit is RC-17 (Table A6), the household line is RC-14 in the study's figures, and the page's results are the article's
+  test('the exhibit is the employment effect by classes attended (RC-17); RC-08 and RC-09 are gone; the household line is RC-14', () => {
+    const cl = byId(TRIAL, 'section', 'classes');
+    expect(cl).toContain('data-fact="RC-17"');
+    expect(visible(cl)).toContain('Employment Against the Control Group, Women Who Attended');
+    for (const s of ['Attended at Least One Class', 'Attended at Least 10 Classes', 'Attended All Classes', '+24%', '+28%', '+71%']) expect(visible(cl)).toContain(s);
+    expect(visible(cl)).toContain('how many classes a woman attended was not randomly assigned');
     expect(main(TRIAL)).not.toContain('RC-08');
+    expect(main(TRIAL)).not.toContain('RC-09');
+    expect(text(TRIAL)).not.toContain('Employment Status at Follow-Up');
     expect(text(TRIAL)).not.toContain('Freelancing Share by Classes Attended');
     const results = byId(TRIAL, 'section', 'results');
     expect(results).toContain('data-fact="RC-14"');
-    expect(visible(results)).toContain('Household spending was 43% higher for women who attended, against the control group (food spending 48% higher), and fewer took out loans.');
-    expect(text(TRIAL)).toContain('The other results on this page come from BIGD’s report. The article is a separate publication.');
+    expect(visible(results)).toContain('Food spending was 39% higher for women who attended, against the control group; the share with savings was 38% higher and fewer took out loans.');
+    expect(text(TRIAL)).toContain('The trial results on this page come from this article.');
+    expect(text(TRIAL)).not.toContain('BIGD’s report');
   });
   test('What It Means for Funders leads with the offer, in bold', () => {
     const f = byId(TRIAL, 'section', 'funders');
@@ -470,7 +478,7 @@ test.describe('Case studies (R4-05, R4-11, R4-12, R4-27 to R4-29, R4-33) and the
       expect(t, c.slug).not.toContain('Individual stories, not typical or promised outcomes.');
       expect(t.split('two suitable times').length - 1, c.slug).toBe(1);
       const article = nodes(rel, 'Article')[0];
-      expect(article?.dateModified, c.slug).toBe(c.slug === 'undp-yes-korail' ? '2026-11-25' : TODAY); // WP169 (2026-11-25): the 97.5% tile lost its base note. WP168-B (R4-30): the UNDP YES hero's 97.5% tile
+      expect(article?.dateModified, c.slug).toBe(c.slug === 'undp-yes-korail' ? '2026-11-25' : c.slug === 'wsdfm-women-freelancers' ? '2026-11-27' : TODAY); // WP172 (2026-11-27): WSDFM's trial tiles and headline. // WP169 (2026-11-25): the 97.5% tile lost its base note. WP168-B (R4-30): the UNDP YES hero's 97.5% tile
     }
     expect(visible(byId(CASE('wsdfm-women-freelancers'), 'section', 'cta'))).toContain('Read the Randomized Trial Results');
   });
@@ -478,10 +486,12 @@ test.describe('Case studies (R4-05, R4-11, R4-12, R4-27 to R4-29, R4-33) and the
     const rel = CASE('wsdfm-women-freelancers');
     expect(h1Of(rel)).toBe('WSDFM: Freelancing Skills for Women, Evaluated by a Randomized Trial');
     const stats = /<div class="hero__stats"[\s\S]*?<\/section>/.exec(html(rel))?.[0] ?? '';
-    const order = ['+10.3', '+41%', '711 of 1,000', 'Program records, not trial results'].map((s) => visible(stats).indexOf(s));
+    // WP172 (owner decision 2026-11-27): the published study's figures (+10 and +38%; it was the 2022 report's +10.3 and +41%), cited as the journal article (it said "May 2022")
+    const order = ['+10', '+38%', '711 of 1,000', 'Program records, not trial results'].map((s) => visible(stats).indexOf(s));
     expect(order.every((x) => x >= 0)).toBe(true);
     expect([...order].sort((a, b) => a - b)).toEqual(order);
-    expect(visible(stats)).toContain('Randomized trial by the BRAC Institute of Governance and Development (BIGD), May 2022');
+    expect(visible(stats)).toContain('Randomized trial by the BRAC Institute of Governance and Development (BIGD), published in Economic Development and Cultural Change (2026)');
+    expect(visible(stats)).not.toContain('May 2022');
     expect(visible(stats)).toContain('Program records, not trial results; the 425 women offered a place in the randomized trial by BIGD were among the 1,000 women enrolled.');
   });
   test('Kosovo and Albania: the sublines and the trimmed repeats', () => {
@@ -507,10 +517,10 @@ test.describe('Case studies (R4-05, R4-11, R4-12, R4-27 to R4-29, R4-33) and the
     expect(text(HUB)).toContain('With the World Bank, UNDP, Porticus and the Government of Bangladesh. Each program shows its figure and its base.');
     const card = /<article class="card card--link case"[^>]*>(?:(?!<\/article>)[\s\S])*wsdfm-women-freelancers[\s\S]*?<\/article>/.exec(html(HUB))?.[0] ?? '';
     const v = visible(card);
-    expect(v).toContain('+10.3 percentage points more employment for women offered a place (randomized trial of CodersTrust’s WSDFM program)');
-    expect(v.indexOf('+10.3')).toBeLessThan(v.indexOf('711 of 1,000'));
+    expect(v).toContain('+10 percentage points more employment for women offered a place (randomized trial of CodersTrust’s WSDFM program)'); // WP172 (owner decision 2026-11-27): the published study's figures
+    expect(v.indexOf('+10 percentage points')).toBeLessThan(v.indexOf('711 of 1,000'));
     expect(html(HUB)).toMatch(/data-fact="[^"]*\bRC-02\b/);
-    expect(nodes(HUB, 'Article')[0]?.dateModified).toBe(TODAY);
+    expect(nodes(HUB, 'Article')[0]?.dateModified).toBe('2026-11-27'); // WP172 (owner decision 2026-11-27: the published study's trial figures) moved it to 2026-11-27
   });
 });
 
@@ -560,8 +570,8 @@ test.describe('Dates (constraint 12): every page whose visible text changed is d
     }
   });
   test('the Impact pages and the pages that print the changed news headlines', () => {
-    expect(nodes(IMPACT, 'Article')[0]?.dateModified).toBe(WP168B_DAY); // WP168-B (R4-18)
-    expect(nodes(TRIAL, 'Article')[0]?.dateModified).toBe(WP168B_DAY); // WP168-B (R4-09)
+    expect(nodes(IMPACT, 'Article')[0]?.dateModified).toBe('2026-11-27'); // WP172 (2026-11-27): the trial figures. Earlier: WP168-B (R4-18)
+    expect(nodes(TRIAL, 'Article')[0]?.dateModified).toBe('2026-11-27'); // WP172 (2026-11-27): the trial figures. Earlier: WP168-B (R4-09)
     expect(nodes(SURVEY, 'Article')[0]?.dateModified).toBe('2026-11-26'); // WP170 (the speed heading)
     expect(nodes(PHOTOS, 'Article')[0]?.dateModified).toBe(TODAY);
     expect(nodes('about/recognition/index.html', 'WebPage')[0]?.dateModified).toBe('2026-11-23'); // WP167 (2026-11-23): the two honors read from PA-11 moved it on

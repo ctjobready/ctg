@@ -87,15 +87,15 @@ test.describe('The Bangladesh initiative is an aim, not an existing national pro
 test.describe('Home: the trial slide leads with income and keeps its scope (item 11)', () => {
   // WP48 (cycle-23 review): the heading itself named the predecessor program ("Women Offered a Place in a Predecessor Program Earned an Estimated 41% More")
   // WP50 (cycle-25 review): the heading is "Women Offered a Place Earned an Estimated 41% More" and the slide's eyebrow is "Randomized Trial of CodersTrust’s WSDFM Program"; the >4× tile's caption says the multiple in words (tests/wp50.spec.ts)
-  test('slide 1 is "Women Offered a Place Earned an Estimated 41% More per Month": RC-01 and RC-04, CodersTrust’s WSDFM program named in the eyebrow and the lead, the >4× tile kept', async ({ page }) => {
+  test('slide 1 is "Women Offered a Place Earned an Estimated 38% More per Month": RC-01 and RC-04, CodersTrust’s WSDFM program named in the eyebrow and the lead, the >4× tile kept', async ({ page }) => {
     await open(page, '');
     const first = slide(page, 1);
-    await expect(first.locator('h3')).toHaveText('Women Offered a Place Earned an Estimated 41% More per Month');
+    await expect(first.locator('h3')).toHaveText('Women Offered a Place Earned an Estimated 38% More per Month');
     expect(await first.locator('h3').getAttribute('data-fact')).toBe('RC-01');
-    expect(compact(await first.locator('.hs__lead').textContent())).toBe('In CodersTrust’s WSDFM program, women offered a place had an estimated 41% higher monthly income than the control group, about $27 more a month on a control-group mean of about $66.' /* WP167 (owner approval of 2026-11-23, R1-13): the lead gives the base */); // WP63 (cycle-35 review, GLM L4)
+    expect(compact(await first.locator('.hs__lead').textContent())).toBe('In CodersTrust’s WSDFM program, women offered a place had an estimated 38% higher monthly income than the control group, about $25 more a month on a control-group mean of about $68.' /* WP167 (owner approval of 2026-11-23, R1-13): the lead gives the base */); // WP63 (cycle-35 review, GLM L4)
     expect(await first.locator('.hs__lead').getAttribute('data-fact')).toBe('RC-01 RC-04');
-    expect(fact('RC-01').stat?.value).toBe('+41%');
-    expect(fact('RC-04').stat?.value).toBe('+$27');
+    expect(fact('RC-01').stat?.value).toBe('+38%');
+    expect(fact('RC-04').stat?.value).toBe('+$25');
     await expect(first.locator('.hs__eyebrow')).toHaveText('Randomized Trial of CodersTrust’s WSDFM Program');
     // WP54 (cycle-28 review, Grok R2): the callout named the comparison and its average (tests/wp54.spec.ts); WP59 (cycle-31 review, Kimi K3): and stated the +10.3 it compares
     // WP166-A (marketing review R1-02, R1-06): the benchmark is the second sentence of the hero's trial card, right under the +10.3; the slide's callout is the peer-reviewed publication (RC-15)
@@ -389,7 +389,8 @@ test.describe('No bare "pp" and no "MENA" (item 25)', () => {
     expect(mena.map((p) => p.route)).toEqual([]);
   });
 
-  test('the trial tile reads "+10.3" with "percentage points" under it: Impact, Governments, Foundations, the partner hub and YouthWIDE', async ({ page }) => {
+  // WP172 (owner decision 2026-11-27): the published study's figures (+10; it was +10.3)
+  test('the trial tile reads "+10" with "percentage points" under it: Impact, Governments, Foundations, the partner hub and YouthWIDE', async ({ page }) => {
     const cases: [string, string][] = [
       ['impact/', '#glance a[data-fact~="RC-02"] .glance__value'],
       ['partner-with-us/governments/', '#glance a[data-fact~="RC-02"] .pg__value'],
@@ -400,7 +401,7 @@ test.describe('No bare "pp" and no "MENA" (item 25)', () => {
     for (const [route, selector] of cases) {
       await open(page, route);
       const value = page.locator(selector).first();
-      expect(compact(await value.textContent()), route).toBe('+10.3 percentage points');
+      expect(compact(await value.textContent()), route).toBe('+10 percentage points');
       await expect(value.locator('.fig-unit'), route).toHaveText('percentage points');
       expect(await value.locator('.fig-unit').evaluate((el) => getComputedStyle(el).display), route).toBe('block');
     }

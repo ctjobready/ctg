@@ -110,7 +110,7 @@ test.describe('Programs hub: the trial is one line (item 4)', () => {
   const points = fact('RC-02').stat!.value.replace(/^\+/, '').replace(/ pp$/, ' percentage points');
   const LINE = `Women offered a place in CodersTrust’s WSDFM program were ${points} more likely to be employed than the control group.`;
 
-  test('under "An Independent Randomized Trial" there is the one line, read from RC-02 and RC-01, and nothing else of the trial: no prose paragraph, no +10.3 pp tile, no chart', async ({ page }) => {
+  test('under "An Independent Randomized Trial" there is the one line, read from RC-02 and RC-01, and nothing else of the trial: no prose paragraph, no +10 pp tile, no chart', async ({ page }) => {
     await open(page, 'programs/');
     const band = page.locator('#proof-band');
     // WP60 (cycle-32 review, Gemini GM1): the band is "Evidence from Youth-Employment Programs" and opens "These results are from youth-employment programs, not evidence for every program listed above." (it was "Trial and Survey Evidence")
@@ -120,11 +120,11 @@ test.describe('Programs hub: the trial is one line (item 4)', () => {
     await expect(band.locator('.eb__headline')).toHaveCount(1);
     await expect(band.locator('.eb__headline')).toHaveText(LINE);
     expect(await band.locator('.eb__headline').getAttribute('data-fact')).toBe('RC-01 RC-02');
-    expect(points).toBe('10.3 percentage points');
+    expect(points).toBe('10 percentage points'); // WP172 (owner decision 2026-11-27): the published study's figures (it was 10.3)
     await expect(band.locator('svg[role="img"], .ba, [data-plain-line]')).toHaveCount(0);
     const text = compact(await band.textContent());
-    expect(count(text, '10.3'), 'the effect is stated once').toBe(1);
-    expect(text).not.toMatch(/\+10\.3|For every 100 women|Trial figures are for a predecessor program|Chart data/);
+    expect(count(text, '10 percentage points'), 'the effect is stated once').toBe(1);
+    expect(text).not.toMatch(/\+10\.3|\+10 percentage|For every 100 women|Trial figures are for a predecessor program|Chart data/);
   });
 
   test('the survey tile stays (78.2%, without its detail line) and the two links stay; the band is one column', async ({ page }) => {
@@ -142,13 +142,14 @@ test.describe('Programs hub: the trial is one line (item 4)', () => {
   });
 
   // WP166-B (marketing review R2-02): the band shows RC-01's +41% income tile beside RC-02's +10.3 tile, so it has three tiles with the survey tile (it had two: RC-02 and OC-03); still one trial sentence and the chart.
-  test('YouthWIDE’s evidence band keeps its shape: the single trial sentence, the tiles and the chart', async ({ page }) => {
+  // WP172 (owner decision 2026-11-27): the trial comparison chart is gone (the published study gives no employment rate for women offered a place), so the band is one column
+  test('YouthWIDE’s evidence band keeps its shape: the single trial sentence and the tiles; no chart since WP172', async ({ page }) => {
     await open(page, 'programs/youthwide/');
     await expect(page.locator('#proof-band .eb__headline')).toHaveCount(1);
     await expect(page.locator('#proof-band .eb__stat')).toHaveCount(3);
     expect(await page.locator('#proof-band .eb__stat').evaluateAll((els) => els.map((e) => e.getAttribute('data-fact')))).toEqual(['RC-02', 'RC-01', 'OC-03']);
-    await expect(page.locator('#proof-band svg[role="img"]').first()).toBeVisible();
-    await expect(page.locator('#proof-band .eb--single')).toHaveCount(0);
+    await expect(page.locator('#proof-band svg[role="img"]')).toHaveCount(0);
+    await expect(page.locator('#proof-band .eb--single')).toHaveCount(1);
   });
 });
 

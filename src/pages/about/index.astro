@@ -45,7 +45,8 @@ const sc02Label = withoutSince2014(sc02Stat.label);
 // WP30e: the employment result in one sentence; the income detail is on the Independent Evaluation page.
 // WP54 (cycle-28 review, GPT-6.1 Sol G8): this sentence is the page's one mention of the evaluator, so it is spelled out ("by the BRAC Institute of Governance and Development (BIGD)"); the register's headline says "by BIGD".
 const trial = spellOutBigd(RCT_HEADLINE.text.split(/(?<=\.)\s+(?=[A-Z])/)[0]);
-if (!/10\.3 percentage points more likely to be employed\.$/.test(trial)) throw new Error('About: RC-01 headline wording changed; update the trial line');
+// WP172 (owner decision 2026-11-27): the published study's figure, 10 percentage points (it was the 2022 report's 10.3).
+if (!/ 10 percentage points more likely to be employed\.$/.test(trial)) throw new Error('About: RC-01 headline wording changed; update the trial line');
 if (!trial.includes(BIGD_FULL)) throw new Error('About: the RC-01 headline no longer says "by BIGD"; update the expansion');
 // WP166-A (marketing review R1-06, owner approval of 21 November 2026, item 5): the trial's peer-reviewed publication (RC-15), in the Trial page's own words ("The trial is also published in a peer-reviewed journal"), directly after the
 // trial sentence; the citation stays on the Trial page, one link below.
@@ -89,7 +90,7 @@ const jsonLd = [
     name: 'About CodersTrust',
     description,
     type: 'AboutPage',
-    dateModified: '2026-11-23', // WP167 (owner approval of 2026-11-23: the hero's identity paragraph, R1-24). Earlier: WP166-A (marketing review, owner approval of 21 November 2026: the <title>, the peer-reviewed line, the founders' line, the YouthWIDE aim under "Where We Are Going" and the closing band's second link). Earlier: '2026-11-03', WP164 (the Albania tile reads "Albania, 2021–2022." again). Earlier: WP163 (the 2025–2026 timeline item's JobReady sentence is IN-04's definition, with no rollout status). Earlier: WP162 (the Albania tile reads "Albania, 2021."). Earlier: WP152 (the 2025–2026 timeline item is two sentences). Earlier: WP141 (2026-11-01: the program-scope qualifier is stated once per page). Earlier: WP129 (owner rule 2026-10-31: any change to visible text moves the date, copy edits included): the serial-comma, semicolon and copy edits of WP126 to WP128 and the WP129 edits. Earlier: WP106: the contracts-and-partnerships timeline band reads 2023–2025. WP105: EDGE is expanded in the timeline entry
+    dateModified: '2026-11-27', // WP172 (owner decision 2026-11-27: the trial figures are the published study's, Arman et al. 2026): the trial sentence says 10 percentage points. Earlier: WP167 (owner approval of 2026-11-23: the hero's identity paragraph, R1-24). Earlier: WP166-A (marketing review, owner approval of 21 November 2026: the <title>, the peer-reviewed line, the founders' line, the YouthWIDE aim under "Where We Are Going" and the closing band's second link). Earlier: '2026-11-03', WP164 (the Albania tile reads "Albania, 2021–2022." again). Earlier: WP163 (the 2025–2026 timeline item's JobReady sentence is IN-04's definition, with no rollout status). Earlier: WP162 (the Albania tile reads "Albania, 2021."). Earlier: WP152 (the 2025–2026 timeline item is two sentences). Earlier: WP141 (2026-11-01: the program-scope qualifier is stated once per page). Earlier: WP129 (owner rule 2026-10-31: any change to visible text moves the date, copy edits included): the serial-comma, semicolon and copy edits of WP126 to WP128 and the WP129 edits. Earlier: WP106: the contracts-and-partnerships timeline band reads 2023–2025. WP105: EDGE is expanded in the timeline entry
     breadcrumb: [{ name: 'Home', path: '/' }, { name: 'About', path: '/about/' }],
   }),
 ];

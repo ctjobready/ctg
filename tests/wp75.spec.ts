@@ -178,7 +178,7 @@ test.describe('WP75 item 1: the longer word keeps the carousel’s rows and its 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // WP166-A (marketing review R1-11, owner approval of 21 November 2026): the outcomes first, strongest first; the government contracts close the carousel
 const TITLES = [
-  'Women Offered a Place Earned an Estimated 41% More per Month',
+  'Women Offered a Place Earned an Estimated 38% More per Month',
   'Surveyed Completers Report Higher Income',
   'Results by Program',
   'Six Government Contracts and a National University Partnership',

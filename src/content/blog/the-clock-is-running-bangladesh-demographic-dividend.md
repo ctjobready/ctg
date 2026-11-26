@@ -7,6 +7,7 @@ author: "Aziz Ahmad"
 seoTitle: "The Clock Is Running on Bangladesh’s Dividend"
 tags: ["demographic dividend", "Bangladesh", "jobs", "youth", "AI"]
 repost: false
+updated: 2026-11-27
 ---
 
 For years, I have heard Bangladesh described as a country blessed by its young. It is true, and it is also a countdown that most of us have never bothered to read. The clock is running, and the World Bank has just told us how much time is left.
@@ -51,7 +52,7 @@ These are the same entry-level jobs we have encouraged a generation of Banglades
 
 I am not a demographer. I have spent four decades in technology, and for the past twelve years I have led CodersTrust, which trains and mentors educated but unemployed and underemployed young people for digital work and connects them to local, remote and global work. So I read the report as a practitioner. Here is what the work has shown so far, and why I do not think we can wait.
 
-CodersTrust has trained more than 130,000 learners since 2014. Among completers we surveyed in October 2026, 78.2 percent were employed, up from 48.0 percent before training. Median monthly income was $245; the median before training was $98. Those are before-and-after figures from survey respondents with no comparison group, so I do not offer them as proof. The evidence I trust more is a randomized controlled trial of our Women's Skill Development for Freelancing Marketplace program, run by the BRAC Institute of Governance and Development (BIGD): women offered a place were 10.3 percentage points more likely to be employed than the control group, and had an estimated 41 percent higher monthly income.
+CodersTrust has trained more than 130,000 learners since 2014. Among completers we surveyed in October 2026, 78.2 percent were employed, up from 48.0 percent before training. Median monthly income was $245; the median before training was $98. Those are before-and-after figures from survey respondents with no comparison group, so I do not offer them as proof. The evidence I trust more is a randomized controlled trial of our Women's Skill Development for Freelancing Marketplace program, run by the BRAC Institute of Governance and Development (BIGD): women offered a place were 10 percentage points more likely to be employed than the control group, and had an estimated 38 percent higher monthly income.
 
 Three things follow, and none of them can wait for the next budget cycle.
 

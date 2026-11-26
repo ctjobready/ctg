@@ -86,7 +86,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     place: 'Commissioned by Porticus; Bangladesh',
     who: 'Women in Bangladesh',
     scope: 'ICT skills for freelancing marketplaces and local jobs, with one-to-one mentoring',
-    dateModified: '2026-11-21', // WP166-C (2026-11-21): the H1, the hero order, the story band and the closing band. Earlier: WP161-A (adversarial review A-01): the page's last visible change was the funder and outreach roles (2026-10-28); it fell back to the shared 2026-10-10
+    dateModified: '2026-11-27', // WP172 (owner decision 2026-11-27: the trial figures are the published study's, Arman et al. 2026): the trial tiles, their evidence lines, the trial headline and the meta description; the employment-status chart is gone. Earlier: WP166-C (2026-11-21): the H1, the hero order, the story band and the closing band. Earlier: WP161-A (adversarial review A-01): the page's last visible change was the funder and outreach roles (2026-10-28); it fell back to the shared 2026-10-10
     related: { label: 'See How YouthWIDE Deploys the Model', href: '/programs/youthwide/' },
   },
   {

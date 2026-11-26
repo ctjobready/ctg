@@ -171,7 +171,7 @@ test.describe('BIGD is spelled out at its first mention on every page that names
     for (const route of [ABOUT, GOVERNANCE]) {
       await open(page, route);
       const text = await everything(page);
-      expect(text, route).toContain('A randomized trial by the BRAC Institute of Governance and Development (BIGD) found that women offered a place in CodersTrust’s WSDFM program were 10.3 percentage points more likely to be employed.');
+      expect(text, route).toContain('A randomized trial by the BRAC Institute of Governance and Development (BIGD) found that women offered a place in CodersTrust’s WSDFM program were 10 percentage points more likely to be employed.');
       expect(count(text, 'BIGD'), route).toBe(1);
       expect(await page.locator('[data-fact="RC-01"]').count(), route).toBeGreaterThan(0);
     }
@@ -190,14 +190,14 @@ test.describe('BIGD is spelled out at its first mention on every page that names
   });
 
   // WP166-C (R4-05): the trial tiles lead the hero, so the first tile's evidence line is the first mention and spells the evaluator out; the note (now under the tiles) uses the abbreviation
-  test('the WSDFM case study: the first trial tile names the evaluator in full, and the note, the second tile, the trial sub-heading and the chart note use the abbreviation it introduces', async ({ page }) => {
+  test('the WSDFM case study: the first trial tile names the evaluator in full, and the note, the second tile and the trial sub-heading use the abbreviation it introduces (WP172: the chart and its note are gone)', async ({ page }) => {
     await open(page, WSDFM);
-    await expect(page.locator('.hero .cs__stat').first()).toContainText('Randomized trial by the BRAC Institute of Governance and Development (BIGD), May 2022');
+    await expect(page.locator('.hero .cs__stat').first()).toContainText('Randomized trial by the BRAC Institute of Governance and Development (BIGD), published in Economic Development and Cultural Change (2026)');
     await expect(page.locator('[data-hero-note]')).toHaveText('Program records, not trial results; the 425 women offered a place in the randomized trial by BIGD were among the 1,000 women enrolled.');
     const text = await everything(page);
     expect(count(text, SPELLED)).toBe(1);
     expect(text.indexOf(SPELLED)).toBeLessThan(text.indexOf('BIGD randomized trial'));
-    expect(count(text, 'BIGD randomized trial'), 'the second tile, the trial sub-heading and the chart note keep the abbreviation').toBeGreaterThanOrEqual(3);
+    expect(count(text, 'BIGD randomized trial'), 'the second tile and the trial sub-heading keep the abbreviation').toBeGreaterThanOrEqual(2); // WP172: the employment-status chart (RC-09) and its note are gone
   });
 });
 
@@ -269,11 +269,11 @@ test.describe('Home slide 3: the income tile comes first, then a sentence that l
 test.describe('Home slide 1: the ">4×" callout names the comparison and its average (item R2)', () => {
   // WP59 (cycle-31 review, Kimi K3): the callout states the +10.3 it compares (RC-02's figure, which RC-06a's text states too): "Employment effect, not income: +10.3 percentage points, more than four times the 2.3-point average across nine vocational-training trials." (tests/wp59.spec.ts)
   // WP166-A (marketing review R1-02): the comparison moved to the hero's trial card, directly under the +10.3 it compares, so it needs no "not income" disclaimer; it still names the comparison and its average
-  test('the hero’s trial card says "That is more than four times the 2.3-point average across nine vocational-training trials." under the +10.3, tied to RC-06a (WP166-A; it was the slide’s ">4×" callout); an average, never "typical"', async ({ page }) => {
+  test('the hero’s trial card says "That is more than four times the 2.3-point average across nine vocational-training trials." under the +10, tied to RC-06a (WP166-A; it was the slide’s ">4×" callout); an average, never "typical"', async ({ page }) => {
     await open(page, HOME);
     const proof = page.locator('.hh__card[data-fact="RC-02"] [data-fact="RC-06a"]');
     await expect(proof).toHaveText('That is more than four times the 2.3-point average across nine vocational-training trials.');
-    await expect(page.locator('.hh__card[data-fact="RC-02"] .hh__num')).toHaveText('+10.3');
+    await expect(page.locator('.hh__card[data-fact="RC-02"] .hh__num')).toHaveText('+10');
     expect(compact(await slide(page, 1).locator('.hs__proof').textContent())).not.toContain('>4×');
     expect(fact('RC-06a').stat?.value).toBe('>4×');
     expect(fact('RC-06a').stat?.glance?.label).toMatch(/more than four times the 2\.3-point average across nine vocational-training trials$/);

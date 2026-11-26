@@ -153,13 +153,13 @@ test.describe('GP3 (GPT-6.1 Sol): the JobReady Platform roadmap sentence', () =>
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 test.describe('L4 (GLM) and K2 (Kimi): Home slides 1 and 4', () => {
-  test('slide 1’s lead reads "women offered a place had an estimated 41% higher monthly income than the control group", from RC-01 and RC-04; nothing says "their monthly income was"', async ({ page }) => {
+  test('slide 1’s lead reads "women offered a place had an estimated 38% higher monthly income than the control group", from RC-01 and RC-04; nothing says "their monthly income was"', async ({ page }) => {
     await open(page, HOME);
     const lead = slide(page, 1).locator('.hs__lead');
-    expect(compact(await lead.textContent())).toBe('In CodersTrust’s WSDFM program, women offered a place had an estimated 41% higher monthly income than the control group, about $27 more a month on a control-group mean of about $66.' /* WP167 (owner approval of 2026-11-23, R1-13): the lead gives the base */);
+    expect(compact(await lead.textContent())).toBe('In CodersTrust’s WSDFM program, women offered a place had an estimated 38% higher monthly income than the control group, about $25 more a month on a control-group mean of about $68.' /* WP167 (owner approval of 2026-11-23, R1-13): the lead gives the base */);
     expect(await lead.getAttribute('data-fact')).toBe('RC-01 RC-04');
-    expect(fact('RC-01').stat?.numeric).toBe(41);
-    expect(fact('RC-04').stat?.numeric).toBe(27);
+    expect(fact('RC-01').stat?.numeric).toBe(38); // WP172 (owner decision 2026-11-27): the published study's figure (it was 41)
+    expect(fact('RC-04').stat?.numeric).toBe(25);
     expect(pagesWith('their monthly income was an estimated')).toEqual([]);
   });
 
@@ -359,7 +359,7 @@ test.describe('R9 (Grok, not done): YouthWIDE keeps its "Last updated" line', ()
     expect(withLine).toContain('/programs/youthwide/');
     expect(withLine.length, `pages with a "Last updated" line: ${withLine.join(', ')}`).toBeGreaterThan(5);
     await open(page, YOUTHWIDE);
-    await expect(page.locator('.updated')).toHaveText('Last updated November 21, 2026'); // WP104; WP141 moved it to November 1; WP151 to November 2; WP163 to November 3; WP166-B (marketing review R2) to November 21
+    await expect(page.locator('.updated')).toHaveText('Last updated November 27, 2026'); // WP172 (2026-11-27): the trial tiles; WP104; WP141 moved it to November 1; WP151 to November 2; WP163 to November 3; WP166-B (marketing review R2) to November 21
   });
 });
 

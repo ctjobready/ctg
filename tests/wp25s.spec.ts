@@ -335,7 +335,7 @@ test.describe('Our Model and Investors', () => {
     expect(text).toContain('A randomized trial by the BRAC Institute of Governance and Development (BIGD) found');
     await open(page, 'partner-with-us/investors/');
     await expect(page.locator('#in-short')).toHaveCount(0);
-    expect(compact(await page.locator('#proof-band').innerText())).toContain('A randomized trial of CodersTrust’s WSDFM program found women offered a place were 10.3 percentage points more likely to be employed.');
+    expect(compact(await page.locator('#proof-band').innerText())).toContain('A randomized trial of CodersTrust’s WSDFM program found women offered a place were 10 percentage points more likely to be employed.'); // WP172 (owner decision 2026-11-27): the published study's figures (it was 10.3)
     expect(compact(await main(page))).not.toMatch(/BIGD|BRAC Institute of Governance and Development/);
   });
 

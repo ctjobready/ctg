@@ -380,8 +380,8 @@ test.describe('K1, Impact: "On This Page" ends on the closing band', () => {
 });
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-test.describe('K2, Foundations: the meta description is one complete sentence pair within the SEO limit (WP57: "$27 more a month"; WP108: it now leads with the employment result)', () => {
-  const DESCRIPTION = 'Fund paths to earnings. In a randomized trial of CodersTrust’s WSDFM program, women offered a place were 10.3 percentage points more likely to be employed.';
+test.describe('K2, Foundations: the meta description is one complete sentence pair within the SEO limit (WP57: "$25 more a month"; WP108: it now leads with the employment result)', () => {
+  const DESCRIPTION = 'Fund paths to earnings. In a randomized trial of CodersTrust’s WSDFM program, women offered a place were 10 percentage points more likely to be employed.';
 
   test('the description, its Open Graph copy and the page’s structured data say it, within the length limit, with the figure read from RC-02', async ({ page }) => {
     await open(page, FOUNDATIONS);
@@ -390,8 +390,8 @@ test.describe('K2, Foundations: the meta description is one complete sentence pa
     expect(description!.length).toBeLessThanOrEqual(155);
     expect(description).not.toContain('higher monthly income');
     expect(await page.locator('meta[property="og:description"]').getAttribute('content')).toBe(DESCRIPTION);
-    expect(fact('RC-02').stat?.value, 'the figure is RC-02’s "+10.3 pp"').toBe('+10.3 pp');
-    expect(fact('RC-02').text).toContain('10.3 percentage points');
+    expect(fact('RC-02').stat?.value, 'the figure is RC-02’s "+10 pp"').toBe('+10 pp');
+    expect(fact('RC-02').text).toContain(' 10 percentage points');
     const blobs = await page.locator('script[type="application/ld+json"]').allTextContents();
     expect(blobs.some((b) => b.includes(DESCRIPTION)), 'the WebPage node carries the same description').toBe(true);
   });
@@ -629,22 +629,23 @@ test.describe('R5, Universities: "Choose Where to Start" is one line, with no si
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // WP62 (cycle-34 review, Grok, GPT-6.1 Sol and Gemini): Foundations’ glance no longer has the +$27 tile (the WSDFM program record is its fourth tile; tests/wp62.spec.ts), so the "about" qualifier of PartnerGlance (WP57) is gone with its one user;
 // Home and the trial page still say it ("about +$27 a month"), and the register’s RC-04 is unchanged. WP64 (cycle-36 review, GLM): Home’s slide 1 now says "about $27 more a month"; the trial page’s RC-04 line still opens "About +$27 a month"
-test.describe('R6, "about +$27": Home and the trial page say it; Foundations’ glance no longer carries the tile', () => {
-  test('RC-04 still opens "About +$27 a month"; Foundations’ glance has no RC-04 tile, no qualifier and no "+$27"', async ({ page }) => {
-    expect(fact('RC-04').text.startsWith('About +$27 a month')).toBe(true);
-    expect(fact('RC-04').stat?.value).toBe('+$27');
+test.describe('R6, "about +$25": Home and the trial page say it; Foundations’ glance no longer carries the tile', () => {
+  test('RC-04 still opens "About +$25 a month"; Foundations’ glance has no RC-04 tile, no qualifier and no "+$25"', async ({ page }) => {
+    expect(fact('RC-04').text.startsWith('About +$25 a month')).toBe(true);
+    expect(fact('RC-04').stat?.value).toBe('+$25');
     await open(page, FOUNDATIONS);
     await expect(page.locator('#glance a[data-fact~="RC-04"]')).toHaveCount(0);
     await expect(page.locator('#glance .pg__qual')).toHaveCount(0);
+    expect(compact(await page.locator('#glance').textContent())).not.toContain('+$25'); // WP172 (owner decision 2026-11-27): the published study's figures (+$25; it was +$27)
     expect(compact(await page.locator('#glance').textContent())).not.toContain('+$27');
   });
 
   // WP64 (cycle-36 review, GLM): Home's slide 1 says "about $27 more a month" (it said "about +$27 a month"); the trial page's RC-04 line still opens "About +$27 a month" (tests/wp64.spec.ts)
-  test('Home says "about $27 more a month" and the trial page "About +$27 a month", each in its own sentence', async ({ page }) => {
+  test('Home says "about $25 more a month" and the trial page "About +$25 a month", each in its own sentence', async ({ page }) => {
     await open(page, HOME);
-    expect(compact(await page.locator('#results').textContent())).toContain('about $27 more a month');
+    expect(compact(await page.locator('#results').textContent())).toContain('about $25 more a month');
     await open(page, 'impact/independent-evaluation/');
-    expect(compact(await page.locator('li[data-fact="RC-04"]').first().textContent())).toMatch(/^About \+\$27 a month/);
+    expect(compact(await page.locator('li[data-fact="RC-04"]').first().textContent())).toMatch(/^About \+\$25 a month/);
   });
 });
 

@@ -321,8 +321,11 @@ test.describe(`5. every page whose visible text changed says ${TODAY}`, () => {
   ];
   // WP168-B (owner decision of 24 November 2026: the Akij Group line): JobReady@Work and Employers moved on to 2026-11-24.
   const WP168B_DAY = '2026-11-24';
-  const dayOf = (rel: string) => (rel === WORK || rel === EMPLOYERS ? WP168B_DAY : WP166B_DAY);
-  const longOf = (rel: string) => (dayOf(rel) === WP168B_DAY ? 'November 24, 2026' : 'November 21, 2026');
+  // WP172 (owner decision 2026-11-27: the trial figures are the published study's): TalentLEAP, YouthWIDE and five partner pages moved on to 2026-11-27.
+  const WP172_DAY = '2026-11-27';
+  const WP172 = new Set([TALENTLEAP, YOUTHWIDE, DEV, LOCAL, INVESTORS, GOVERNMENTS, FOUNDATIONS]);
+  const dayOf = (rel: string) => (WP172.has(rel) ? WP172_DAY : rel === WORK || rel === EMPLOYERS ? WP168B_DAY : WP166B_DAY);
+  const longOf = (rel: string) => (dayOf(rel) === WP172_DAY ? 'November 27, 2026' : dayOf(rel) === WP168B_DAY ? 'November 24, 2026' : 'November 21, 2026');
   for (const [rel, cls] of STAMPED) {
     test(`${rel}: "Last updated ${longOf(rel)}" and JSON-LD dateModified ${dayOf(rel)}`, () => {
       const raw = html(rel);

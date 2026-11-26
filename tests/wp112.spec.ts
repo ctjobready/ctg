@@ -86,15 +86,15 @@ test.describe('WP112 Polish 6: Universities campus FAQ says "students"', () => {
 // --------------------------------------------------------------------------------------------------------------------------------
 test.describe('WP112 Polish 7: dates', () => {
   // WP166-B (marketing review R2, owner approval of 21 November 2026): TalentLEAP's text changed again, so 2026-11-21 (it was 2026-11-03, WP163).
-  test('TalentLEAP, whose text changed, carries 2026-11-21 in JSON-LD and reads "Last updated November 21, 2026" (WP166-B; WP163 had 2026-11-03, WP154 2026-11-02, WP141 2026-11-01)', () => {
+  test('TalentLEAP, whose text changed, carries 2026-11-27 in JSON-LD and reads "Last updated November 27, 2026" (WP172: the trial figures; WP166-B: 2026-11-21; WP163 had 2026-11-03, WP154 2026-11-02, WP141 2026-11-01)', () => {
     const html = distHtml('our-model/talentleap/index.html');
-    expect(html).toMatch(/"dateModified":"2026-11-21"/);
+    expect(html).toMatch(/"dateModified":"2026-11-27"/);
     expect(html).not.toMatch(/"dateModified":"2026-10-28"/);
-    expect(visibleText(html)).toContain('Last updated November 21, 2026');
+    expect(visibleText(html)).toContain('Last updated November 27, 2026');
   });
 
-  test('Governance reads "Last updated November 23, 2026" (WP127 and WP128 changed its text on 30 October, WP129 applied the owner rule that any visible text change moves the date; WP141 changed it again; WP155 on 2 November; WP166-A on 21 November; WP167 on 23 November)', () => {
-    expect(visibleText(distHtml('about/governance/index.html'))).toContain('Last updated November 23, 2026');
+  test('Governance reads "Last updated November 27, 2026" (WP172: the trial sentence; WP127 and WP128 changed its text on 30 October, WP129 applied the owner rule that any visible text change moves the date; WP141 changed it again; WP155 on 2 November; WP166-A on 21 November; WP167 on 23 November)', () => {
+    expect(visibleText(distHtml('about/governance/index.html'))).toContain('Last updated November 27, 2026');
   });
 });
 

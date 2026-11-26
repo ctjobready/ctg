@@ -196,7 +196,8 @@ test.describe('Universities: one evidence strip, not two (item 3)', () => {
     await expect(page.locator('#proof-band')).toHaveCount(0);
     const text = await mainText(page);
     expect(text).not.toMatch(/Evidence from Our Wider Youth Programs|A randomized trial of the predecessor WSDFM program/);
-    expect(count(text, '10.3 percentage points'), 'the trial result is not restated').toBe(0);
+    expect(count(text, '10 percentage points'), 'the trial result is not restated').toBe(0); // WP172 (owner decision 2026-11-27): the published study's figures (10; it was 10.3)
+    expect(count(text, '10.3 percentage points')).toBe(0);
     expect(count(text, '78.2%'), 'the survey result is not restated').toBe(0);
     await expect(page.locator('main .eyebrow', { hasText: 'The Evidence' })).toHaveCount(0);
     // the first band ends in the strip that links the evidence

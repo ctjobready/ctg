@@ -99,7 +99,7 @@ test.describe('/impact/ At a Glance', () => {
     await expect(reach.locator('.status-tag[data-status="Delivered"]')).toHaveCount(1);
   });
 
-  test('the trial tile (WP35: the one trial group tile) names CodersTrust’s WSDFM program and the +10.3 label does not repeat itself', async ({ page }) => {
+  test('the trial tile (WP35: the one trial group tile) names CodersTrust’s WSDFM program and the +10 label does not repeat itself', async ({ page }) => {
     await open(page, 'impact/');
     await expect(page.locator('#glance')).toContainText(/more employment for women offered a place \(randomized trial of CodersTrust’s WSDFM program\)/);
     // WP45 (cycle-21 review): the figure is "+10.3" with "percentage points" under it, and the label does not say the unit a second time
@@ -183,7 +183,9 @@ test.describe('Independent Evaluation', () => {
   test('the result leads, the method is a closed disclosure and the last band says how outcomes are tracked', async ({ page }) => {
     await open(page, 'impact/independent-evaluation/');
     await expect(page.getByRole('heading', { level: 1 })).toHaveText('Randomized Trial: Women Offered a Place Were More Likely to Work');
-    await expect(page.getByRole('link', { name: /Read the BIGD Report \(2022\)/ })).toHaveCount(1);
+    // WP172 (owner decision 2026-11-27): the link is to the published study, which replaces the 2022 report
+    await expect(page.getByRole('link', { name: /Read the Published Study/ })).toHaveCount(1);
+    await expect(page.getByRole('link', { name: /Read the BIGD Report/ })).toHaveCount(0);
     // "How to Read This Trial" holds what was evaluated, who took part and the design; it starts closed.
     const method = page.locator('#summary details', { hasText: 'How to Read This Trial' });
     await expect(method).toHaveCount(1);
@@ -193,9 +195,12 @@ test.describe('Independent Evaluation', () => {
     await expect(page.locator('#funders')).not.toContainText(/five-year/i);
     await expect(page.locator('#funders')).toContainText('See How Partnerships Work');
     await expect(page.locator('#outcomes')).toContainText('follow-up surveys at 3, 6 and 12 months'); // WP107: the single-question FAQ became the "How We Track Outcomes" band
-    // WP166-C (R4-10, owner approval of 21 November 2026): the classes-attended chart (RC-08) is cut; the freelancing band is the randomized comparison (RC-09)
-    await expect(page.locator('#classes')).toHaveCount(0);
-    await expect(page.locator('#freelancing h2')).toHaveText('Freelancing: Women Offered a Place vs. the Control Group');
+    // WP166-C (R4-10, owner approval of 21 November 2026): the classes-attended chart (RC-08) was cut and the freelancing band was the randomized comparison (RC-09).
+    // WP172 (owner decision 2026-11-27): RC-08 and RC-09 are not in the published study and are withdrawn; the exhibit is the study's employment effect by classes attended (RC-17)
+    await expect(page.locator('#freelancing')).toHaveCount(0);
+    await expect(page.locator('#classes h2')).toHaveText('Employment Effect by Classes Attended');
+    await expect(page.locator('#classes [data-fact="RC-17"]').first()).toBeVisible();
+    await expect(page.locator('main [data-fact~="RC-08"], main [data-fact~="RC-09"]')).toHaveCount(0);
   });
 });
 
@@ -220,8 +225,10 @@ test.describe('case studies', () => {
     const tiles = page.locator('.hero .cs__stat');
     await expect(tiles).toHaveCount(3);
     await expect(tiles.nth(0).locator('[data-evidence="Randomized Trial"]')).toHaveCount(1);
-    await expect(tiles.nth(0)).toContainText('+10.3 percentage points');
-    await expect(tiles.nth(0)).toContainText('Randomized trial by the BRAC Institute of Governance and Development (BIGD), May 2022');
+    // WP172 (owner decision 2026-11-27): the published study's +10 percentage points, cited as the journal article (it was the May 2022 report's +10.3)
+    await expect(tiles.nth(0)).toContainText('+10 percentage points');
+    await expect(tiles.nth(0)).toContainText('Randomized trial by the BRAC Institute of Governance and Development (BIGD), published in Economic Development and Cultural Change (2026)');
+    await expect(tiles.nth(0)).not.toContainText('May 2022');
     await expect(tiles.nth(1).locator('[data-evidence="Randomized Trial"]')).toHaveCount(1);
     await expect(tiles.nth(2).locator('[data-evidence="Program Record"]')).toHaveCount(1);
     await expect(tiles.nth(2)).toContainText('711 of 1,000');

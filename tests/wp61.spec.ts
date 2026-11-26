@@ -244,13 +244,13 @@ test.describe('G4 (GPT-6.1 Sol): Local Partners’ first pain says what CodersTr
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 test.describe('G5 (GPT-6.1 Sol): Independent Evaluation’s lead opens with the result', () => {
   // WP166-C (R4-03, owner approval of 21 November 2026, item 5): the result still leads, now with why it matters (the nine-trial benchmark, RC-06a); the scope caveat (200 hours, today's 100) moved to
-  // "How to Read This Trial" (it was "… than the control group. The trial evaluated CodersTrust’s 200-hour WSDFM program for women in Dhaka, not today’s 100-hour tracks.")
+  // "How to Read This Trial" (it was "… than the control group. The trial evaluated CodersTrust’s 200-hour WSDFM program for women in Bangladesh, not today’s 100-hour tracks.")
   const LEAD =
-    'In a randomized trial of CodersTrust’s WSDFM program by the BRAC Institute of Governance and Development (BIGD), women offered a place were 10.3 percentage points more likely to be employed than the control group: over four times the 2.3-point average across nine randomized trials of vocational training.';
+    'In a randomized trial of CodersTrust’s WSDFM program by the BRAC Institute of Governance and Development (BIGD), women offered a place were 10 percentage points more likely to be employed than the control group: over four times the 2.3-point average across nine randomized trials of vocational training.';
 
   test('the lead reads as above (47 words, inside the 40 to 60 of the direct answer; WP99 had 45), names the evaluator in full once, and the register still backs its figures', async ({ page }) => {
     expect(BIGD_FULL).toBe('the BRAC Institute of Governance and Development (BIGD)');
-    expect(fact('RC-01').text).toContain('10.3 percentage points');
+    expect(fact('RC-01').text).toContain(' 10 percentage points');
     expect(fact('RC-07').text).toContain('200 hours');
     expect(fact('PD-01').stat?.value).toBe('100');
     await open(page, EVALUATION);
@@ -265,7 +265,7 @@ test.describe('G5 (GPT-6.1 Sol): Independent Evaluation’s lead opens with the 
   });
 
   test('the earlier lead is on no built page', () => {
-    expect(pagesWith('a 200-hour program for women in Dhaka, were 10.3', 'It is evidence about that predecessor program, not a measurement of today’s 100-hour tracks')).toEqual([]);
+    expect(pagesWith('a 200-hour program for women in Dhaka, were 10.3', 'women in Dhaka, were 10 percentage points', 'It is evidence about that predecessor program, not a measurement of today’s 100-hour tracks')).toEqual([]);
   });
 });
 
@@ -405,7 +405,7 @@ test.describe('L5 (GLM): Governments’ glance runs trial, Her Power, Kosovo, th
     await open(page, GOVERNMENTS);
     expect(await page.locator('#glance .pg__lead a').evaluateAll((els) => els.map((e) => (e.getAttribute('data-fact') ?? '').split(' ')[0]))).toEqual(ORDER);
     expect(await page.locator('#glance .pg__lead a [data-evidence]').evaluateAll((els) => els.map((e) => e.getAttribute('data-evidence')))).toEqual(['Contract Scope', 'Program Record', 'Randomized Trial', 'Program Record']);
-    expect(await texts(page, '#glance .pg__value')).toEqual(['30,000+', '372 of 800', '+10.3 percentage points', '102 of 150']);
+    expect(await texts(page, '#glance .pg__value')).toEqual(['30,000+', '372 of 800', '+10 percentage points', '102 of 150']);
     await expect(page.locator('#glance h3')).toHaveCount(0);
     await expect(page.locator('#glance h2')).toHaveText('Proof at a Glance');
     // the contract-scope tile keeps its label, note and facts

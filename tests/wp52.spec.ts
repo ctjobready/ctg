@@ -523,8 +523,8 @@ test.describe('Our Model: the readiness assessment promises no quantity (item 19
   });
 });
 
-test.describe('Development Partners: the glance is three tiles and the +10.3 tile carries the benchmark (item 21); the "Where They Work" card uses the usual wording (item 29); the offer eyebrow is "Options" (item 32)', () => {
-  test('the ">4×" tile is gone; the +10.3 tile’s note is RC-06a’s comparison, its data-fact lists both facts, and the 10.3 is stated once', async ({ page }) => {
+test.describe('Development Partners: the glance is three tiles and the +10 tile carries the benchmark (item 21); the "Where They Work" card uses the usual wording (item 29); the offer eyebrow is "Options" (item 32)', () => {
+  test('the ">4×" tile is gone; the +10 tile’s note is RC-06a’s comparison, its data-fact lists both facts, and the 10 is stated once', async ({ page }) => {
     await open(page, DP);
     const tiles = page.locator('#glance .pg__lead > li');
     await expect(tiles).toHaveCount(3);
@@ -534,7 +534,8 @@ test.describe('Development Partners: the glance is three tiles and the +10.3 til
     expect(await first.getAttribute('data-fact')).toBe('RC-02 RC-06a');
     expect(compact(await first.locator('.pg__note').textContent())).toBe('More than four times the 2.3-point average across nine vocational-training trials.');
     expect(fact('RC-06a').stat?.glance?.label).toMatch(/more than four times the 2\.3-point average across nine vocational-training trials$/);
-    expect(count(compact(await page.locator('#glance').textContent()), '10.3')).toBe(1);
+    expect(count(compact(await page.locator('#glance').textContent()), '+10 percentage points')).toBe(1); // WP172 (owner decision 2026-11-27): the published study's figures (+10; it was +10.3)
+    expect(compact(await page.locator('#glance').textContent())).not.toContain('10.3');
     expect(compact(await page.locator('#glance').textContent())).not.toContain('>4×');
   });
 
@@ -637,10 +638,10 @@ test.describe('The Programs hub lines (items 28 and 30)', () => {
 });
 
 test.describe('Impact: the evidence ladder’s first row and the page title (items 31 and 38)', () => {
-  test('row 1 "What It Shows": "The effect of CodersTrust’s WSDFM program on women in Dhaka, evaluated by the BRAC Institute ..." (the institute’s name stays)', async ({ page }) => {
+  test('row 1 "What It Shows": "The effect of CodersTrust’s WSDFM program on women in Bangladesh, evaluated by the BRAC Institute ..." (the institute’s name stays)', async ({ page }) => {
     await open(page, IMPACT);
     const shows = compact(await page.locator('#evidence-ladder tbody tr').first().locator('td[data-label="What It Shows"]').textContent());
-    expect(shows).toBe('The effect of CodersTrust’s WSDFM program on women in Dhaka, evaluated by the BRAC Institute of Governance and Development against a randomly chosen control group.');
+    expect(shows).toBe('The effect of CodersTrust’s WSDFM program on women in Bangladesh, evaluated by the BRAC Institute of Governance and Development against a randomly chosen control group.');
     expect(pagesWith('The effect of one CodersTrust program (WSDFM)')).toEqual([]);
   });
 

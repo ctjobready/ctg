@@ -311,7 +311,7 @@ test.describe('NU Post Graduate Diploma: a link to the wider programs, not their
     await expect(page.locator('#proof-band')).toHaveCount(0);
     await expect(page.locator('[data-trial-scope]')).toHaveCount(0);
     const text = await mainText(page);
-    expect(text).not.toMatch(/10\.3|78\.2%|48\.0%|\+41%|Not This Diploma|not from the National University Post Graduate Diploma|This trial evaluated/);
+    expect(text).not.toMatch(/10\.3|\b10 percentage points|78\.2%|48\.0%|\+41%|\+38%|Not This Diploma|not from the National University Post Graduate Diploma|This trial evaluated/);
   });
 
   test('the strip sits between "An Affiliated College of National University" (WP104; it was "Delivered with National University") and the questions, and the closing call to action keeps its one primary button', async ({ page }) => {

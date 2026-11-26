@@ -174,7 +174,7 @@ test.describe('Partner with Us hub', () => {
 
 test.describe('Investors', () => {
   const EVIDENCE =
-    'A randomized trial of CodersTrust’s WSDFM program found women offered a place were 10.3 percentage points more likely to be employed. Among surveyed completers, employment was 78.2% at the October 2026 survey, up from 48.0% before training. Youth-program outcomes are not platform outcomes.';
+    'A randomized trial of CodersTrust’s WSDFM program found women offered a place were 10 percentage points more likely to be employed. Among surveyed completers, employment was 78.2% at the October 2026 survey, up from 48.0% before training. Youth-program outcomes are not platform outcomes.';
 
   test('Independent Evidence is three sentences tied to RC-02 and OC-01, then three links; no chart, tile, table or case-study card', async ({ page }) => {
     await open(page, 'partner-with-us/investors/');
@@ -197,7 +197,7 @@ test.describe('Investors', () => {
     await open(page, 'partner-with-us/investors/');
     const text = await mainText(page);
     expect(count(text, 'Youth-program outcomes are not platform outcomes.')).toBe(1);
-    expect(count(text, '10.3 percentage points')).toBe(1);
+    expect(count(text, '10 percentage points')).toBe(1); // WP172 (owner decision 2026-11-27): the published study's figures (it was 10.3)
     expect(count(text, '78.2%')).toBe(1);
     expect(count(text, '48.0%')).toBe(1);
     expect(text).not.toMatch(/BIGD|For every 100 women|Chart data|Control Group/);
@@ -404,7 +404,7 @@ test.describe('cost and safeguarding: full on the hub, one line and a link on th
     const answer = await answerOf(page, 'Can You Reach Women and Other Priority Groups?');
     expect(answer).toBe(
       // WP48 (cycle-23 review): "we have early delivery experience and" is gone (tests/wp48.spec.ts)
-      'Our women-focused programs report work outcomes; see Proof in Practice above. For other priority groups, we measure outcomes in each pilot. The randomized trial studied women in Dhaka with at least a Secondary School Certificate (SSC), most of them aged 18–35, so it does not speak to other groups.',
+      'Our women-focused programs report work outcomes; see Proof in Practice above. For other priority groups, we measure outcomes in each pilot. The randomized trial studied women in Bangladesh with at least a Secondary School Certificate (SSC), most of them aged 18–35, so it does not speak to other groups.',
     );
     expect(sentences(answer)).toHaveLength(3);
     expect((await faqJsonLd(page)).find((q) => q.name === 'Can You Reach Women and Other Priority Groups?')?.text).toBe(answer);
@@ -496,7 +496,7 @@ test.describe('dating lines', () => {
   test('TalentLEAP and SuperKids carry today’s date, the day their wording changed', async ({ page }) => {
     await open(page, 'our-model/talentleap/');
     // WP166-B (marketing review R2-06, R2-34): November 21 (it was November 3), and the line is at the foot of the page (.tl__updated; it was .lf-updated in the header).
-    expect(compact(await page.locator('.tl__updated').textContent())).toBe('Last updated November 21, 2026'); // WP112: TalentLEAP's wording last changed on 29 October (was 28 October, WP104); WP141 changed it on 1 November; WP154 on 2 November; WP163 on 3 November; WP166-B on 21 November
+    expect(compact(await page.locator('.tl__updated').textContent())).toBe('Last updated November 27, 2026'); // WP172 (2026-11-27): the trial tile and the FAQ's trial answer. WP112: TalentLEAP's wording last changed on 29 October (was 28 October, WP104); WP141 changed it on 1 November; WP154 on 2 November; WP163 on 3 November; WP166-B on 21 November
     await open(page, 'programs/superkids/');
     expect(compact(await page.locator('.updated').textContent())).toBe('Last updated November 21, 2026'); // WP166-B (marketing review R2, 21 November; it was November 2). WP143 moved it; WP104: SuperKids gained its consent line on 29 October
   });

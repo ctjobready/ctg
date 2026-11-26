@@ -62,20 +62,24 @@ test.describe('WP110 item 3: Trial page attenders income and the RC-04 wording',
 
   test('"Women Offered a Place" prints RC-04 without the attenders parenthetical', () => {
     const offered = section(html(), '>Women Offered a Place</h3>', '>Women Who Attended</h3>');
-    expect(offered).toContain('About +$27 a month for all women offered a place, on a control-group mean of about $66.');
+    // WP172 (owner decision 2026-11-27): the published study's figures, about +$25 on about $68 (it was the 2022 report's +$27 on $66; the attenders' $36 is now $34)
+    expect(offered).toContain('About +$25 a month for all women offered a place, on a control-group mean of about $68.');
+    expect(offered).not.toContain('(+$34 for attenders)');
     expect(offered).not.toContain('(+$36 for attenders)');
   });
 
-  test('"Women Who Attended" prints "Income about +$36 a month." once, and $36 appears nowhere else on the page', () => {
+  test('"Women Who Attended" prints "Income about +$34 a month." once, and $34 appears nowhere else on the page', () => {
     const attended = section(html(), '>Women Who Attended</h3>', 'data-fact="RC-04a"');
-    expect(attended).toContain('Income about +$36 a month.');
+    expect(attended).toContain('Income about +$34 a month.');
     const page = visibleText(html());
-    expect(page.match(/\$36\b/g) ?? []).toHaveLength(1);
+    expect(page.match(/\$34\b/g) ?? []).toHaveLength(1);
+    expect(page).not.toMatch(/\$36\b/);
   });
 
-  test('the register’s RC-04 text drops the parenthetical and keeps the $66 control mean', () => {
+  test('the register’s RC-04 text drops the parenthetical and keeps the control mean (about $68 since WP172)', () => {
     const facts = readFileSync('src/data/facts.ts', 'utf8');
-    expect(facts).toContain('About +$27 a month for all women offered a place, on a control-group mean of about $66`');
+    expect(facts).toContain('About +$25 a month for all women offered a place, on a control-group mean of about $68`');
+    expect(facts).not.toContain('(+$34 for attenders)');
     expect(facts).not.toContain('(+$36 for attenders)');
   });
 });

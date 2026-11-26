@@ -29,18 +29,19 @@ test.describe('Impact overview: Results at a Glance and the jump list', () => {
     await expect(group.locator('li')).toHaveCount(1);
     const tile = group.locator('li a');
     expect(await tile.getAttribute('data-fact')).toBe('RC-02 RC-06a'); // WP166-C (R4-04): the tile's note is RC-06a's benchmark ("More than four times the 2.3-point average …"), as on Development Partners
-    await expect(tile).toContainText('+10.3 percentage points');
+    await expect(tile).toContainText('+10 percentage points'); // WP172 (owner decision 2026-11-27): the published study's figures (it was +10.3)
     await expect(tile).toContainText('more employment for women offered a place (randomized trial of CodersTrust’s WSDFM program)');
     await expect(tile.locator('[data-evidence="Randomized Trial"]')).toHaveCount(1);
     expect(await tile.getAttribute('href')).toMatch(/\/impact\/independent-evaluation\/$/);
-    expect(compact(await page.locator('#glance').textContent())).not.toMatch(/\+41%|\+54%|>4×|in percentage points/);
+    expect(compact(await page.locator('#glance').textContent())).not.toMatch(/\+38%|\+50%|\+41%|\+54%|>4×|in percentage points/);
   });
 
-  test('the income results (+41%, +54%) and the comparison with nine trials (>4×) are on the Independent Evaluation page the tile links', async ({ page }) => {
+  // WP172 (owner decision 2026-11-27): the published study's figures (+38% and +50%; it was the 2022 report's +41% and +54%)
+  test('the income results (+38%, +50%) and the comparison with nine trials (>4×) are on the Independent Evaluation page the tile links', async ({ page }) => {
     await open(page, 'impact/independent-evaluation/');
     const text = await mainText(page);
-    expect(text).toContain('estimated 41% higher');
-    expect(text).toContain('income was 54% higher');
+    expect(text).toContain('estimated 38% higher');
+    expect(text).toContain('income was 50% higher');
     expect(text).toContain('Over Four Times the Average of Nine Training Trials');
   });
 
@@ -142,12 +143,12 @@ test.describe('the trial and the survey are shown once per page', () => {
     const card = page.locator('.hh__card[data-fact="RC-02"]');
     // WP166-A (marketing review R1-02): "Independent Randomized Trial", and the caption's second sentence states the nine-trial benchmark (it was on the first slide's callout)
     await expect(card.locator('.hh__eyebrow')).toHaveText('Independent Randomized Trial');
-    await expect(card.locator('.hh__num')).toHaveText('+10.3');
+    await expect(card.locator('.hh__num')).toHaveText('+10'); // WP172 (owner decision 2026-11-27): the published study's figures (it was +10.3)
     await expect(card.locator('.hh__unit')).toHaveText('percentage points');
     // WP50 (cycle-25 review, item 28): "10.3 more", RC-02's own figure (it read "about 10 more"); tests/wp50.spec.ts
     await expect(card.locator('.hh__figlabel')).toHaveText('For every 100 women offered a place in CodersTrust’s 200-hour WSDFM program, about 10 more were in work than among 100 comparable women in the control group. That is more than four times the 2.3-point average across nine vocational-training trials.');
     const first = page.locator('[data-hs-slide]').nth(0);
-    expect(compact(await first.locator('.hs__lead').textContent())).toContain('women offered a place had an estimated 41% higher monthly income than the control group'); // WP63 (cycle-35 review, GLM L4)
+    expect(compact(await first.locator('.hs__lead').textContent())).toContain('women offered a place had an estimated 38% higher monthly income than the control group'); // WP172 (owner decision 2026-11-27): the published study's figures (it was 41%). WP63 (cycle-35 review, GLM L4)
     // WP50 (cycle-25 review, item 18): the slide's >4× tile said the multiple in words and no longer repeated the +10.3 percentage points, which this card states
     // WP54 (cycle-28 review, Grok R2): "Employment effect: more than four times the 2.3-point average across nine vocational-training trials." (tests/wp54.spec.ts)
     // WP59 (cycle-31 review, Kimi K3, reversing WP50 on this point): the tile reads apart from its base, so the caption states it: "Employment effect, not income: +10.3 percentage points, more than four times the 2.3-point average ..."
@@ -445,7 +446,7 @@ test.describe('plain words and plain claims', () => {
     await open(page, 'partner-with-us/foundations/');
     const description = await page.locator('meta[name="description"]').getAttribute('content');
     // WP57 (cycle-29 review, Kimi K3, item K2): "earned an estimated $27 more a month" (it said "had an estimated $27 higher monthly income")
-    expect(description).toBe('Fund paths to earnings. In a randomized trial of CodersTrust’s WSDFM program, women offered a place were 10.3 percentage points more likely to be employed.');
+    expect(description).toBe('Fund paths to earnings. In a randomized trial of CodersTrust’s WSDFM program, women offered a place were 10 percentage points more likely to be employed.'); // WP172 (owner decision 2026-11-27): the published study's figures (it was 10.3)
     expect(description!.length).toBeLessThanOrEqual(155);
   });
 });

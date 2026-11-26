@@ -7,7 +7,7 @@ author: "Aziz Ahmad"
 substackUrl: "https://tergadesidero178981.substack.com/p/beyond-digital-literacy-teaching"
 seoTitle: "Beyond Digital Literacy in the Age of AI"
 tags: ["affordance literacy", "AI literacy", "economic opportunity"]
-figuresUpdated: 2026-11-05
+figuresUpdated: 2026-11-27
 ---
 
 ## The Question That Stayed with Me
@@ -72,9 +72,9 @@ When my late friend Ferdinand Kjærulff and I co-founded CodersTrust in 2014, we
 
 Over the past twelve years, CodersTrust has trained more than 130,000 learners and has worked in 16 countries and territories. Training has real value only when it improves people’s ability to participate in economic life.
 
-The evaluation’s Table 4 reports treatment-on-treated estimates of approximately 26% higher employment and 54% higher monthly income for participants who received training, relative to the relevant comparison estimates. These figures describe the evaluated women’s program, not all CodersTrust learners or all settings; they should not be confused with intention-to-treat estimates.
+The evaluation’s Table 3 reports treatment-on-treated estimates of approximately 24% higher employment and 50% higher monthly income for participants who received training, relative to the relevant comparison estimates. These figures describe the evaluated women’s program, not all CodersTrust learners or all settings; they should not be confused with intention-to-treat estimates.
 
-Among women who attended training, the evaluation estimated approximately 54% higher monthly income and 26% higher employment relative to the control group. The study also identified improvements in household expenditure, savings, and other measures of well-being.
+Among women who attended training, the evaluation estimated approximately 50% higher monthly income and 24% higher employment relative to the control group. The study also identified improvements in household expenditure, savings, and other measures of well-being.
 
 Our October 2026 Impact Report offers additional evidence, while reminding us why rigorous measurement is essential. Among responding course completers, reported employment increased from 48.0% before training to 78.2% at the October 2026 survey. Median monthly income rose from approximately $98 to $245. Among respondents from the 2014–2023 completion cohorts who reported no income before training, 70.8% (34 of 48) were earning at the October 2026 survey.
 
@@ -188,7 +188,7 @@ Bangladesh has extraordinary young talent, as do communities around the world. T
 
 The future will not belong simply to those who have access to artificial intelligence. It will belong to those who recognize what it makes possible, turn those possibilities into human value, and ensure others can participate. That is the homework of our generation—and an assignment we cannot afford to fail.
 
-BRAC Institute of Governance and Development (2022). Impact Evaluation Report of the Women’s Skill Development for Freelancing Marketplaces (WSDFM) Program, Table 4, p. 40 (treatment-on-treated estimates). https://bigd.bracu.ac.bd/wp-content/uploads/2022/05/Impact-Evaluation-Report-of-the-Womens-Skill-Development-for-Freelancing-Marketplaces-WSDFM-Program-2.pdf
+Arman, Mohammad Raied, Anindita Bhattacharjee, Narayan Das, Mohima Gomes and Sakib Mahmood (2026). Tackling Women’s Unemployment: Evidence from an Online Jobs Experiment in Bangladesh. Economic Development and Cultural Change 75(1): 367–399, Table 3 (treatment-on-treated estimates). https://doi.org/10.1086/741450
 
 1\. Bangladesh Bureau of Statistics (2024). Labour Force Survey 2024. The exact table citation for the youth-unemployment figures has not been confirmed.
 

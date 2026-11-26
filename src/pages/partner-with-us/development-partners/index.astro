@@ -77,7 +77,8 @@ const primary = cta('discovery');
 
 const { title, description } = meta(
   'Youth Employment for Development Partners',
-  'A randomized trial of CodersTrust’s WSDFM program: women offered a place were 10.3 percentage points more likely to be employed. Results you can report.',
+  // WP172 (owner decision 2026-11-27): the published study's 10 percentage points (it was the 2022 report's 10.3).
+  'A randomized trial of CodersTrust’s WSDFM program: women offered a place were 10 percentage points more likely to be employed. Results you can report.',
 );
 
 // WP52 (cycle-27 review, Kimi M2): the ">4×" tile (RC-06a) showed the trial result a second time beside the "+10.3 percentage points" tile (the third reviewer in three cycles to say so), so it is gone and its comparison is the +10.3 tile's note.
@@ -98,7 +99,7 @@ const FAQ_IDS = ['Q1-development-partners', 'Q6-development-partners', 'Q3', 'Q1
   description={description}
   path={PATH}
   breadcrumbs={[{ label: 'Partner with Us', href: LINKS.hub }, { label: 'Development Partners and NGOs' }]}
-  jsonLd={[webPage({ path: PATH, name: title, description, dateModified: '2026-11-21' }), faqJsonLd('development-partners', PATH, FAQ_IDS)]}
+  jsonLd={[webPage({ path: PATH, name: title, description, dateModified: '2026-11-27' }), faqJsonLd('development-partners', PATH, FAQ_IDS)]}
   stickyCta={{ label: primary.label, href: primary.href }}
 >
   <!-- C1 · Identity hook -->

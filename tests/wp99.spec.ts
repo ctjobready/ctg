@@ -139,19 +139,21 @@ test.describe('Item 1: the YouthWIDE aim is 1 million educated youth (Higher Sec
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 test.describe('Item 2: the trial’s exchange rate is BDT 86 to the dollar', () => {
   test('RC-04a states BDT 86 and the November–December 2021 rate, and the dollar figures in RC-04 follow from it', () => {
-    expect(fact('RC-04a').text).toBe('BDT 2,354 a month for women offered a place, BDT 3,118 for attenders, on a control-group mean of BDT 5,715 (Table 4); the dollar figures are approximate conversions at about BDT 86 to the dollar, the rate in November–December 2021, when the follow-up survey ran');
-    // 2,354.3 / 86 = 27.4; 3,118.2 / 86 = 36.3; 5,714.6 / 86 = 66.4 (the report prints BDT 2,354.311, 3,118.155 and 5,714.605)
-    expect(Math.round(2354.311 / 86)).toBe(27);
-    expect(Math.round(3118.155 / 86)).toBe(36);
-    expect(Math.round(5714.605 / 86)).toBe(66);
-    expect(fact('RC-04').text).toBe('About +$27 a month for all women offered a place, on a control-group mean of about $66');
-    expect(Math.round(3118.155 / 86), 'BDT 3,118 is about $36').toBe(36);
+    // WP172 (owner decision 2026-11-27): the published study's figures (EDCC26 Table 3; it was the 2022 report's Table 4: BDT 2,354, 3,118 and 5,715, so $27, $36 and $66)
+    expect(fact('RC-04a').text).toBe('BDT 2,191 a month for women offered a place, BDT 2,905 for attenders, on a control-group mean of BDT 5,824 (Table 3); the dollar figures are approximate conversions at about BDT 86 to the dollar, the rate in November–December 2021, when the follow-up survey ran');
+    // 2,191 / 86 = 25.5; 2,905 / 86 = 33.8; 5,824.19 / 86 = 67.7 (the article prints BDT 2,191, 2,905 and 5,824.19)
+    expect(Math.round(2191 / 86)).toBe(25);
+    expect(Math.round(2905 / 86)).toBe(34);
+    expect(Math.round(5824.19 / 86)).toBe(68);
+    expect(fact('RC-04').text).toBe('About +$25 a month for all women offered a place, on a control-group mean of about $68');
+    expect(Math.round(2905 / 86), 'BDT 2,905 is about $34').toBe(34);
+    expect(fact('RC-13').stat?.label).toContain('about $34 a month');
   });
 
   test('the Trial page prints the rate in its taka line, and no built page or source still says BDT 87', async ({ page }) => {
     await open(page, 'impact/independent-evaluation/');
     expect(compact(await page.locator('#results p[data-fact="RC-04a"]').textContent())).toBe(
-      'The report gives these amounts in taka: BDT 2,354 a month for women offered a place, BDT 3,118 for attenders, on a control-group mean of BDT 5,715 (Table 4); the dollar figures are approximate conversions at about BDT 86 to the dollar, the rate in November–December 2021, when the follow-up survey ran.',
+      'The published study gives these amounts in taka: BDT 2,191 a month for women offered a place, BDT 2,905 for attenders, on a control-group mean of BDT 5,824 (Table 3); the dollar figures are approximate conversions at about BDT 86 to the dollar, the rate in November–December 2021, when the follow-up survey ran.',
     );
     expect(routesWith(/BDT 87|87 to the dollar|87 taka/, pages())).toEqual([]);
     expect(source('src/data/facts.ts')).not.toMatch(/BDT 87|≈ 87/);
@@ -195,7 +197,9 @@ test.describe('Item 3: the Trial page and FAQ Q4 cite the peer-reviewed article;
     const ratio = band.locator('p[data-fact="RC-16"]');
     await expect(ratio).toHaveCount(1);
     expect(compact(await ratio.textContent())).toBe('The journal article estimates a benefit/cost ratio of 3.01 for CodersTrust’s 200-hour WSDFM program.');
-    expect(compact(await band.textContent())).toContain('The other results on this page come from BIGD’s report. The article is a separate publication.'); // WP166-C (R4-02): the band now precedes the report's results, so it no longer says "above"
+    // WP172 (owner decision 2026-11-27): the published study's figures: the page's results are the article's (it said "The other results on this page come from BIGD’s report. The article is a separate publication.")
+    expect(compact(await band.textContent())).toContain('The trial results on this page come from this article.');
+    expect(compact(await band.textContent())).not.toContain('BIGD’s report'); // WP166-C (R4-02): the band now precedes the report's results, so it no longer says "above"
   });
 
   test('the report figures are never labelled peer-reviewed: the result band does not say it, and no paragraph that says it carries a percentage or a dollar figure', async ({ page }) => {
@@ -213,22 +217,26 @@ test.describe('Item 3: the Trial page and FAQ Q4 cite the peer-reviewed article;
     }
   });
 
-  test('3.01 and the benefit/cost wording are on the Trial page only; the article’s abstract percentages are on no page', () => {
+  // WP172 (owner decision 2026-11-27): the article's figures are now the site's (the RC tiles show its +10 percentage points and +38%), so the check is that the superseded 2022 report figures are on no page;
+  // the abstract's own phrasings ("10 percentage points (18%)", the hours effect) are still not restated
+  test('3.01 and the benefit/cost wording are on the Trial page only; the superseded report figures are on no page', () => {
     expect(routesWith(/\b3\.01\b/)).toEqual(['/impact/independent-evaluation/']);
     expect(routesWith(/benefit\/cost/i)).toEqual(['/impact/independent-evaluation/']);
     expect(sitePages().filter((p) => /data-fact="[^"]*\bRC-16\b/.test(p.html)).map((p) => p.route)).toEqual(['/impact/independent-evaluation/']);
-    expect(routesWith(/10 percentage points \(18%\)|\+38%|38% (?:higher )?income|27% (?:more )?hours/i)).toEqual([]);
+    expect(routesWith(/10 percentage points \(18%\)|27% (?:more )?hours/i)).toEqual([]);
+    expect(routesWith(/10\.3 percentage points|\+10\.3\b|\+41%|41% higher|\+\$27\b|\$27 more|\b599 surveyed|13\.6 (?:percentage )?points|63\.1%|52\.8%/)).toEqual([]);
   });
 
-  test('the Trial page JSON-LD cites the article beside the BIGD report', async ({ page }) => {
+  // WP172 (owner decision 2026-11-27): the published study's figures: the page cites the article alone (the 2022 report's entry is gone)
+  test('the Trial page JSON-LD cites the article (WP172: no longer beside the BIGD report)', async ({ page }) => {
     await open(page, TRIAL);
     const blobs = await page.locator('script[type="application/ld+json"]').allTextContents();
     const nodes: any[] = [];
     const walk = (n: any) => { if (Array.isArray(n)) n.forEach(walk); else if (n && typeof n === 'object') { nodes.push(n); Object.values(n).forEach(walk); } };
     for (const b of blobs) walk(JSON.parse(b));
     const articles = nodes.filter((n) => n['@type'] === 'ScholarlyArticle');
-    expect(articles.map((a) => a.name)).toEqual(['Impact Evaluation Report of the WSDFM Program', 'Tackling Women’s Unemployment: Evidence from an Online Jobs Experiment in Bangladesh']);
-    const journal = articles[1];
+    expect(articles.map((a) => a.name)).toEqual(['Tackling Women’s Unemployment: Evidence from an Online Jobs Experiment in Bangladesh']);
+    const journal = articles[0];
     expect(journal?.url).toBe(DOI);
     expect(journal?.datePublished).toBe('2026-10');
     expect(journal?.isPartOf?.name).toBe('Economic Development and Cultural Change');
@@ -239,7 +247,7 @@ test.describe('Item 3: the Trial page and FAQ Q4 cite the peer-reviewed article;
   test('FAQ Q4 cites the article with its DOI link; the answer, its structured data and every page that prints it agree', async ({ page }) => {
     const q4 = faqs.find((f) => f.id === 'Q4');
     expect(q4?.a).toBe(
-      `Yes, for CodersTrust’s WSDFM program. The BRAC Institute of Governance and Development (BIGD) at BRAC University ran a randomized controlled trial of that 200-hour program, longer than today’s 100-hour tracks, with women in Dhaka trained in 2020. Women offered a place were more likely to be employed than the control group. The trial is also published in a peer-reviewed journal: ${CITATION} (October 2026). ${DOI}`,
+      `Yes, for CodersTrust’s WSDFM program. The BRAC Institute of Governance and Development (BIGD) at BRAC University ran a randomized controlled trial of that 200-hour program, longer than today’s 100-hour tracks, with women in Bangladesh trained in 2019 and 2020. Women offered a place were more likely to be employed than the control group. The trial is also published in a peer-reviewed journal: ${CITATION} (October 2026). ${DOI}`,
     );
     expect(q4?.inlineLink).toEqual({ text: DOI, href: DOI });
     expect(q4?.evidence).toEqual(['RC-01', 'RC-02', 'RC-07', 'RC-15']);
@@ -307,32 +315,33 @@ test.describe('Item 5: CodersTrust’s WSDFM program, not "predecessor program"'
 
   test('the register-mirroring RC strings name CodersTrust’s WSDFM program', () => {
     expect(fact('RC-01').text.startsWith('A randomized controlled trial of CodersTrust’s WSDFM program found that women offered a place')).toBe(true);
-    expect(fact('RC-01').headline).toContain('women offered a place in CodersTrust’s WSDFM program were 10.3 percentage points');
-    expect(fact('RC-01').stat?.label).toBe('estimated monthly income gain versus the control group, for women in Dhaka offered a place (randomized trial of CodersTrust’s WSDFM program)');
+    expect(fact('RC-01').headline).toContain('women offered a place in CodersTrust’s WSDFM program were 10 percentage points'); // WP172 (owner decision 2026-11-27): the published study's figures
+    expect(fact('RC-01').stat?.label).toBe('estimated monthly income gain versus the control group, for women offered a place (randomized trial of CodersTrust’s WSDFM program)');
     expect(fact('RC-02').stat?.label).toBe('more employment, in percentage points, for women offered a place (randomized trial of CodersTrust’s WSDFM program)');
     expect(fact('RC-04').stat?.label).toBe('estimated monthly income gain for women offered a place in CodersTrust’s WSDFM program, compared with the control group');
-    expect(fact('RC-07').text).toBe('Trial design: 833 women at baseline (425 treatment, 408 control) and 599 surveyed at follow-up; CodersTrust’s WSDFM program was 200 hours over 4 months, plus 3 months of mentoring');
-    expect(fact('RC-11').text.startsWith('In CodersTrust’s WSDFM program, 39% of trainees')).toBe(true);
+    expect(fact('RC-07').text).toBe('Trial design: 833 women at baseline (425 treatment, 408 control) and 574 surveyed at follow-up (293 treatment, 281 control); CodersTrust’s WSDFM program was 200 hours over 4 months, plus 2 months of optional weekly advising');
+    expect(fact('RC-11').text.startsWith('In CodersTrust’s WSDFM program, 52.5% of the women who attended training')).toBe(true); // WP172 (owner answer 2026-11-27): the published study's figure (it was 39% of trainees)
     expect(fact('RC-13').text).toContain('of CodersTrust’s WSDFM program found that, for women who attended');
-    expect(fact('RC-13').stat?.label).toBe('income for women who attended, against the control group (randomized trial of CodersTrust’s WSDFM program; about $36 a month)');
+    expect(fact('RC-13').stat?.label).toBe('income for women who attended, against the control group (randomized trial of CodersTrust’s WSDFM program; about $34 a month)');
     expect(fact('RC-13').stat?.glance?.label).toBe('higher monthly income for women who attended CodersTrust’s WSDFM program (randomized trial)');
-    expect(fact('RC-14').stat?.label).toBe('household spending for women who attended, against the control group (randomized trial of CodersTrust’s WSDFM program)');
-    expect(fact('RC-14').stat?.glance?.label).toBe('household spending, women who attended (randomized trial of CodersTrust’s WSDFM program)');
+    // WP172 (owner decision 2026-11-27): the published study's figures: RC-14 is food spending (the study reports no total household spending)
+    expect(fact('RC-14').stat?.label).toBe('food spending for women who attended, against the control group (randomized trial of CodersTrust’s WSDFM program)');
+    expect(fact('RC-14').stat?.glance?.label).toBe('food spending, women who attended (randomized trial of CodersTrust’s WSDFM program)');
     expect(fact('PR-01').text).toContain('BIGD evaluated CodersTrust’s WSDFM program in a randomized trial');
   });
 
   test('where "predecessor" signalled that today’s tracks differ (200 against 100 hours), the caveat is kept in other words', async ({ page }) => {
     await open(page, TRIAL);
     expect(compact(await page.locator('li[data-fact="RC-07 PD-01"]').textContent())).toBe('What was evaluated. CodersTrust’s 200-hour WSDFM program; today’s tracks are 100 hours.'); // WP133: plural
-    expect(compact(await page.locator('.ie__type').textContent())).toContain('CodersTrust’s WSDFM program, women in Dhaka');
+    expect(compact(await page.locator('.ie__type').textContent())).toContain('CodersTrust’s WSDFM program, women in Bangladesh'); // WP172 (owner decision 2026-11-27): the published study's figures: "women in Bangladesh" (84% of the sample is from Dhaka)
     // WP166-C (R4-03): the lead's caveat sentence moved out of the hero; the caveat stays on the page in "How to Read This Trial" (above) and in FAQ Q15 (below)
     expect(compact(await page.locator('main').textContent())).not.toContain('The trial evaluated CodersTrust’s 200-hour WSDFM program for women in Dhaka, not today’s 100-hour tracks.');
-    expect(faqs.find((f) => f.id === 'Q15')?.a).toContain('evaluated CodersTrust’s 200-hour WSDFM program for women in Dhaka, not today’s 100-hour tracks');
+    expect(faqs.find((f) => f.id === 'Q15')?.a).toContain('evaluated CodersTrust’s 200-hour WSDFM program for women in Bangladesh, not today’s 100-hour tracks');
     // WP166-A (marketing review R7-21): BRAC, the name funders know, in the description; the program stays named
-    expect(compact(await page.locator('meta[name="description"]').getAttribute('content'))).toBe('A BRAC University (BIGD) randomized trial of CodersTrust’s WSDFM program: women offered a place were 10.3 percentage points more likely to be employed.');
+    expect(compact(await page.locator('meta[name="description"]').getAttribute('content'))).toBe('A BRAC University (BIGD) randomized trial of CodersTrust’s WSDFM program: women offered a place were 10 percentage points more likely to be employed.');
     await open(page, 'impact/case-studies/wsdfm-women-freelancers/');
     await expect(page.getByRole('heading', { level: 1 })).toHaveText('WSDFM: Freelancing Skills for Women, Evaluated by a Randomized Trial'); // WP166-C (R4-29); it still names the WSDFM program, not a "predecessor"
-    expect(await page.locator('meta[name="description"]').getAttribute('content')).toBe('WSDFM (Porticus): a randomized trial of the program found women offered a place had an estimated 41% higher monthly income than the control group.');
+    expect(await page.locator('meta[name="description"]').getAttribute('content')).toBe('WSDFM (Porticus): a randomized trial of the program found women offered a place had an estimated 38% higher monthly income than the control group.');
   });
 
   test('the two FitBrief components (not on a page today) carry the same caveat and the survey wording of item 6', () => {
@@ -419,7 +428,10 @@ test.describe('Item 8: no superseded value remains, and the things the owner kep
   test('no built page shows a superseded value: 5M+ madrasah students, the Impact Report’s Korail populations, the November 2022 trial figures, or "certified" graduates', () => {
     expect(routesWith(/5M\+ students|5 million students/i)).toEqual([]);
     expect(routesWith(/Korail.{0,160}(200,000|170,000)|(200,000|170,000).{0,160}Korail/i)).toEqual([]);
-    expect(routesWith(/\+53%|\+28%|\b14\.7\b|3\.6×|\b3,031\b/)).toEqual([]);
+    expect(routesWith(/\+53%|\b14\.7\b|3\.6×|\b3,031\b/)).toEqual([]);
+    // WP172 (owner decision 2026-11-27): "+28%" is now RC-17's figure (the published study's employment effect for women who attended at least 10 classes, Table A6), on the Trial page's exhibit only; the superseded file's +28% employment is on no page
+    expect(routesWith(/\+28%/)).toEqual(['/impact/independent-evaluation/']);
+    expect(routesWith(/\+28% (?:higher )?employment|employment \+28%|28% more likely/)).toEqual([]);
     expect(routesWith(/certified (graduates?|completers?|alumni|learners?|youth|young people|candidates?|hires?|students?)/i)).toEqual([]);
   });
 

@@ -29,13 +29,17 @@ function visibleTextOfHtml(html: string): string {
     .replace(/&#39;|&#x27;|&apos;/gi, "'");
 }
 
-test.describe('Item 1: the trial page links the 2022 BIGD report', () => {
-  test('"Read the BIGD Report (2022)" points at the BIGD22 evaluation and the follow-up study link is gone', async ({ page }) => {
-    expect(sources.BIGD22.url).toBe('https://bigd.bracu.ac.bd/publications/impact-evaluation-report-of-the-womens-skill-development-for-freelancing-marketplaces-wsdfm-program/');
+// WP172 (owner decision 2026-11-27): the published study replaces the 2022 BIGD report everywhere on the site, so the trial page links the article (EDCC26) and the report's source (BIGD22) is gone from the dataset
+test.describe('Item 1: the trial page links the published study (WP172; it linked the 2022 BIGD report)', () => {
+  test('"Read the Published Study" points at the article’s DOI; no report link; the follow-up study link is gone', async ({ page }) => {
+    expect((sources as Record<string, unknown>).BIGD22).toBeUndefined();
+    expect(sources.EDCC26.url).toBe('https://doi.org/10.1086/741450');
     await open(page, TRIAL);
-    const link = page.getByRole('link', { name: /Read the BIGD Report \(2022\)/ });
+    const link = page.getByRole('link', { name: /Read the Published Study/ });
     await expect(link).toHaveCount(1);
-    await expect(link).toHaveAttribute('href', sources.BIGD22.url!);
+    await expect(link).toHaveAttribute('href', sources.EDCC26.url!);
+    await expect(page.getByRole('link', { name: /Read the BIGD Report/ })).toHaveCount(0);
+    await expect(page.locator('a[href*="impact-evaluation-report-of-the-womens-skill-development"]')).toHaveCount(0);
     await expect(page.getByRole('link', { name: /Read the BIGD Study/ })).toHaveCount(0);
   });
 });

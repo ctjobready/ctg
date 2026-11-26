@@ -204,13 +204,15 @@ test.describe('R5 (Grok): YouthWIDE’s country answer does not read as all 16 s
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 test.describe('R6 (Grok): Independent Evaluation does not read the classes result as a dose effect', () => {
   // WP166-C (R4-10, owner approval of 21 November 2026, item 5): the classes-attended band (RC-08) this item worded is cut; the page's freelancing exhibit is the randomized comparison (RC-09), so no dose effect can be read into it
-  test('the classes band is gone and the freelancing band is the randomized comparison; nothing reads as a dose effect', async ({ page }) => {
+  // WP172 (owner decision 2026-11-27): RC-08 and RC-09 are not in the published study and are withdrawn. The exhibit is the study's own employment effect by classes attended (RC-17, Table A6: treatment-on-the-treated estimates
+  // for women who attended at least one class, at least 10 classes and all classes), and it says that how many classes a woman attended was not randomly assigned
+  test('the RC-08 classes band and the RC-09 freelancing band are gone; the classes exhibit is the study’s RC-17 and says attendance was not randomly assigned', async ({ page }) => {
     await open(page, EVALUATION);
-    await expect(page.locator('#classes')).toHaveCount(0);
-    await expect(page.locator('a[href="#classes"]')).toHaveCount(0);
-    await expect(page.locator('[data-fact="RC-08"]')).toHaveCount(0);
-    await expect(page.locator('#freelancing h2')).toHaveText('Freelancing: Women Offered a Place vs. the Control Group');
-    await expect(page.locator('#freelancing [data-fact="RC-09"]')).toHaveCount(1);
+    await expect(page.locator('#freelancing')).toHaveCount(0);
+    await expect(page.locator('[data-fact="RC-08"], [data-fact="RC-09"]')).toHaveCount(0);
+    await expect(page.locator('#classes h2')).toHaveText('Employment Effect by Classes Attended');
+    await expect(page.locator('a[href="#classes"]')).toHaveCount(1);
+    await expect(page.locator('#classes p[data-fact="RC-17"]')).toContainText('how many classes a woman attended was not randomly assigned');
     const html = readFileSync(listPages().find((p) => p.route === '/impact/independent-evaluation/')!.file, 'utf8');
     expect(visible(html)).not.toMatch(/More Classes, More Freelancing|more likely to be freelancing at follow-up/);
   });

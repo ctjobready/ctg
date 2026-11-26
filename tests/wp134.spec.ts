@@ -33,8 +33,8 @@ test('Minor 1: the five closing lines ask for two suitable times', () => {
 
 test('Minor 2: the Trial page is dated November 2, 2026 (visible stamp and JSON-LD; October 31 until WP141 changed its text)', () => { // WP157: re-dated 2026-11-02
   const raw = html('impact/independent-evaluation/index.html');
-  expect(visible(raw)).toContain('Last updated November 24, 2026'); // WP157: re-dated 2026-11-02; WP166-C: 2026-11-21; WP168-B (R4-09): 2026-11-24
-  expect(raw).toMatch(/"dateModified":"2026-11-24"/); // WP157: re-dated 2026-11-02; WP166-C: 2026-11-21; WP168-B: 2026-11-24
+  expect(visible(raw)).toContain('Last updated November 27, 2026'); // WP172: 2026-11-27 (the published study's figures). WP157: re-dated 2026-11-02; WP166-C: 2026-11-21; WP168-B (R4-09): 2026-11-24
+  expect(raw).toMatch(/"dateModified":"2026-11-27"/); // WP172: 2026-11-27. WP157: re-dated 2026-11-02; WP166-C: 2026-11-21; WP168-B: 2026-11-24
   expect(raw).not.toMatch(/"dateModified":"2026-10-29"/);
 });
 

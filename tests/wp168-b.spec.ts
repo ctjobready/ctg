@@ -282,7 +282,7 @@ test.describe('Impact pages: R4-30, R4-18 and R4-09 (owner approval of 24 Novemb
       expect(visible(/<span class="glance__note"[^>]*>[\s\S]*?<\/span>/.exec(t)?.[0] ?? ''), id).toBe(fact(id).stat!.glance!.note);
     }
     expect(text(IMPACT)).not.toContain('(completers who first earned during or after training)');
-    expect(modified(IMPACT)).toEqual([TODAY]);
+    expect(modified(IMPACT)).toEqual(['2026-11-27']); // WP172 (owner decision 2026-11-27: the published study's trial figures) moved it to 2026-11-27
   });
 
   test('Trial page: the journal band is headed with the article’s estimate; the On This Page entry is the heading; the body and the RC-16 rule are unchanged', () => {
@@ -297,8 +297,8 @@ test.describe('Impact pages: R4-30, R4-18 and R4-09 (owner approval of 24 Novemb
     expect(band).toContain('data-fact="RC-15"');
     // RC-16: the ratio is on the Trial page only
     expect(sitePages().filter((p) => /\b3\.01\b/.test(visible(main(p))))).toEqual([TRIAL]);
-    expect(lastUpdated(TRIAL)).toBe(TODAY);
-    expect(modified(TRIAL)).toEqual([TODAY]);
+    expect(lastUpdated(TRIAL)).toBe('2026-11-27'); // WP172 (owner decision 2026-11-27: the published study's trial figures) moved it to 2026-11-27
+    expect(modified(TRIAL)).toEqual(['2026-11-27']);
   });
 
   // R4-21 was not applied in WP168-B ("within six months" is retired by WP48 item 32). WP170 (owner answer of 2026-11-26): the heading is "Most Surveyed New Earners Started Earning in Six Months or Less" ("or Less", not "within").

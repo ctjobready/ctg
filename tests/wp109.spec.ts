@@ -33,11 +33,11 @@ function walkSrc(dir: string, out: string[] = []): string[] {
 
 // --------------------------------------------------------------------------------------------------------------------------------
 test.describe('WP109 item 1: Governance is dated by its last content change (2026-10-24 until WP127 and WP128; 2026-10-31 since WP129; 2026-11-01 since WP141; 2026-11-02 since WP155; 2026-11-21 since WP166-A)', () => {
-  test('the visible "Last updated" date and the JSON-LD dateModified are November 23, 2026 (WP167: the Governance lead; it was November 21, 2026 since WP166-A)', () => {
+  test('the visible "Last updated" date and the JSON-LD dateModified are November 27, 2026 (WP172: the trial sentence; WP167: November 23, the Governance lead; it was November 21, 2026 since WP166-A)', () => {
     const html = distHtml('about/governance/index.html');
-    expect(html).toMatch(/<time datetime="2026-11-23"[^>]*>November 23, 2026<\/time>/);
+    expect(html).toMatch(/<time datetime="2026-11-27"[^>]*>November 27, 2026<\/time>/);
     expect(html).not.toContain('October 17, 2026');
-    expect(html).toMatch(/"dateModified":"2026-11-23"/);
+    expect(html).toMatch(/"dateModified":"2026-11-27"/);
   });
 });
 

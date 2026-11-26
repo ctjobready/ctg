@@ -75,7 +75,8 @@ test.describe('WP105 item 1: the YouthWIDE 1 million aim is stated in full once'
 // --------------------------------------------------------------------------------------------------------------------------------
 // WP166-C (R4-32, owner approval of 21 November 2026, item 5): the RC-05 plain-words line this item pinned is replaced by RC-14, the register's verified household figure; RC-05's six figures still never render.
 test.describe('WP105 item 2: the Trial page household line (WP166-C: RC-14)', () => {
-  const LINE = 'Household spending was 43% higher for women who attended, against the control group (food spending 48% higher), and fewer took out loans.';
+  // WP172 (owner decision 2026-11-27): RC-14 is the published study's food-spending figure (the study reports no total household spending; it was the 2022 report's 43% and 48%)
+  const LINE = 'Food spending was 39% higher for women who attended, against the control group; the share with savings was 38% higher and fewer took out loans.';
 
   test('"Women Who Attended" lists the household line (data-fact RC-14), and none of RC-05\'s six figures', async ({ page }) => {
     await open(page, 'impact/independent-evaluation/');
@@ -83,7 +84,7 @@ test.describe('WP105 item 2: the Trial page household line (WP166-C: RC-14)', ()
     const li = page.locator('#results li[data-fact="RC-14"]');
     await expect(li).toHaveCount(1);
     expect(compact(await li.textContent())).toBe(LINE);
-    expect(compact(await page.locator('#results').textContent())).not.toMatch(/\+48|\+41|\+83|never felt stressed/);
+    expect(compact(await page.locator('#results').textContent())).not.toMatch(/\+48|\+41|\+83|never felt stressed|43% higher|48% higher/);
   });
 });
 
@@ -210,9 +211,9 @@ test.describe('WP105 item 9: stamps and dateModified of the pages this WP change
   // WP129: every page here except Independent Evaluation changed again on 30 October (WP126 to WP128) and moved on to 2026-10-31.
   const STAMPED = [
     { route: 'privacy-policy/', selector: '.lf-updated', day: 'November 3, 2026', iso: '2026-11-03' }, // WP148: "Post Graduate Diploma" capitalised; WP161-A: the Video section and the legal-basis line
-    { route: 'impact/independent-evaluation/', selector: '.lf-updated', day: 'November 24, 2026', iso: '2026-11-24' }, // WP168-B (R4-09). Earlier: WP166-C (the marketing-effectiveness review). Earlier: WP134: WP133 changed its text
+    { route: 'impact/independent-evaluation/', selector: '.lf-updated', day: 'November 27, 2026', iso: '2026-11-27' }, // WP172 (owner decision 2026-11-27: the published study's trial figures) moved it to 2026-11-27. Earlier: WP168-B (R4-09). Earlier: WP166-C (the marketing-effectiveness review). Earlier: WP134: WP133 changed its text
     // WP166-B: the three program pages below changed again on 21 November 2026 (the marketing review R2); they read November 3, November 2 and November 3, 2026.
-    { route: 'programs/youthwide/', selector: '.updated', day: 'November 21, 2026', iso: '2026-11-21' }, // WP166-B. Earlier: WP163 (one exam fee per trainee; the delivery model). Earlier: WP151
+    { route: 'programs/youthwide/', selector: '.updated', day: 'November 27, 2026', iso: '2026-11-27' }, // WP172 (owner decision 2026-11-27: the published study's trial figures) moved it to 2026-11-27. Earlier: WP166-B. Earlier: WP163 (one exam fee per trainee; the delivery model). Earlier: WP151
     { route: 'programs/nu-postgraduate-diploma/', selector: '.updated', day: 'November 26, 2026', iso: '2026-11-26' }, // WP168-B (campus, next intake, installments). Earlier: WP166-B. Earlier: WP151 (WP148: as Privacy)
     { route: 'programs/jobready-campus/', selector: '.updated', day: 'November 21, 2026', iso: '2026-11-21' }, // WP166-B. Earlier: WP163 (as YouthWIDE). Earlier: WP151
 
@@ -231,7 +232,8 @@ test.describe('WP105 item 9: stamps and dateModified of the pages this WP change
   // WP162 and WP163: About moved on to 2026-11-03 (the 2025–2026 timeline item's JobReady sentence).
   // WP166-A: About and Recognition and Media moved on to 2026-11-21; WP166-B: Governments did too (the marketing review R3; it was 2026-11-03).
   // WP167 (owner approval of 2026-11-23): About (the hero's identity paragraph) and Recognition and Media (the two honors' headings) moved on to 2026-11-23.
-  for (const [route, day] of [['about/', '2026-11-23'], ['partner-with-us/governments/', '2026-11-21'], ['about/recognition/', '2026-11-23']]) {
+  for (const [route, day] of [['about/', '2026-11-27'], ['partner-with-us/governments/', '2026-11-27'], // WP172 (2026-11-27): the trial figures moved both on
+     ['about/recognition/', '2026-11-23']]) {
     test(`${route} pins its JSON-LD dateModified to ${day} (the day it last changed: WP141, WP151, WP152, WP161, WP162, WP163), not the build date`, async ({ page }) => {
       await open(page, route);
       expect(await ldJson(page)).toMatch(new RegExp(`"dateModified"\\s*:\\s*"${day}"`));

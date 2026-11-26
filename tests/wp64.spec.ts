@@ -94,7 +94,7 @@ test.describe('Item 1 (GLM, GPT-6.1 Sol, Grok, Kimi): Home slide 2 is "Six Gover
     );
     // WP166-A (marketing review R1-11): the three results slides come first and the government slide closes the carousel
     expect(await texts(page, '#results [data-hs-slide] h3')).toEqual([
-      'Women Offered a Place Earned an Estimated 41% More per Month',
+      'Women Offered a Place Earned an Estimated 38% More per Month',
       'Surveyed Completers Report Higher Income',
       'Results by Program',
       HEADING,
@@ -347,17 +347,17 @@ test.describe('Item 6 (Grok): "since 2014" is said once where a heading or a nei
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 test.describe('Item 7 (GLM, Gemini, Claude): three polish fixes', () => {
-  test('Home slide 1’s lead says "about $27 more a month" (RC-04’s figure); the register’s RC-04 and the trial page keep "+$27"', async ({ page }) => {
-    expect(fact('RC-04').stat?.numeric).toBe(27);
-    expect(fact('RC-04').stat?.value).toBe('+$27');
-    expect(fact('RC-04').text.startsWith('About +$27 a month')).toBe(true);
+  test('Home slide 1’s lead says "about $25 more a month" (RC-04’s figure); the register’s RC-04 and the trial page keep "+$25"', async ({ page }) => {
+    expect(fact('RC-04').stat?.numeric).toBe(25);
+    expect(fact('RC-04').stat?.value).toBe('+$25');
+    expect(fact('RC-04').text.startsWith('About +$25 a month')).toBe(true);
     await open(page, HOME);
     const lead = slide(page, 1).locator('.hs__lead');
-    await expect(lead).toHaveText('In CodersTrust’s WSDFM program, women offered a place had an estimated 41% higher monthly income than the control group, about $27 more a month on a control-group mean of about $66.'); // WP167 (owner approval of 2026-11-23, R1-13): the lead gives the base
+    await expect(lead).toHaveText('In CodersTrust’s WSDFM program, women offered a place had an estimated 38% higher monthly income than the control group, about $25 more a month on a control-group mean of about $68.'); // WP167 (owner approval of 2026-11-23, R1-13): the lead gives the base
     expect(await lead.getAttribute('data-fact')).toBe('RC-01 RC-04');
-    expect(compact(await page.locator('#results').textContent())).not.toContain('about +$27 a month');
+    expect(compact(await page.locator('#results').textContent())).not.toContain('about +$25 a month'); // WP172 (owner decision 2026-11-27): the published study's figures (+$25; it was +$27)
     await open(page, 'impact/independent-evaluation/');
-    expect(compact(await page.locator('li[data-fact="RC-04"]').first().textContent())).toMatch(/^About \+\$27 a month/);
+    expect(compact(await page.locator('li[data-fact="RC-04"]').first().textContent())).toMatch(/^About \+\$25 a month/);
   });
 
   test('Impact’s Learner Stories row ends "...; one story is an outlier, and its card says so." in the matrix (WP129: one story card carries the label), and the story card does say so', async ({ page }) => {

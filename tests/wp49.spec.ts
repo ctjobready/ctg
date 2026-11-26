@@ -553,14 +553,15 @@ test.describe('The OC-05 and RC-06a labels (items 24 and 26)', () => {
   });
 
   // WP52 (cycle-27 review, Kimi M2): Development Partners no longer shows a ">4×" tile; the register's glance label is the source of the +10.3 tile's note ("More than four times the 2.3-point average across nine vocational-training trials."; tests/wp52.spec.ts)
-  test('RC-06a’s glance label states the ratio ("was more than four times the 2.3-point average"); the ">4×" value is unchanged; Development Partners’ +10.3 tile quotes it as its note', async ({ page }) => {
+  test('RC-06a’s glance label states the ratio ("was more than four times the 2.3-point average"); the ">4×" value is unchanged; Development Partners’ +10 tile quotes it as its note', async ({ page }) => {
     const rc06a = fact('RC-06a');
     expect(rc06a.stat?.glance?.label).toBe('The employment effect for women offered a place was more than four times the 2.3-point average across nine vocational-training trials');
     expect(rc06a.stat?.value).toBe('>4×');
     await open(page, DP);
     await expect(page.locator('#glance a[data-fact="RC-06a"]')).toHaveCount(0);
     const tile = page.locator('#glance a[data-fact~="RC-06a"]');
-    await expect(tile.locator('.pg__value')).toContainText('+10.3');
+    await expect(tile.locator('.pg__value')).toContainText('+10'); // WP172 (owner decision 2026-11-27): the published study's figures (it was +10.3)
+    await expect(tile.locator('.pg__value')).not.toContainText('10.3');
     await expect(tile.locator('.pg__note')).toHaveText('More than four times the 2.3-point average across nine vocational-training trials.');
   });
 });
