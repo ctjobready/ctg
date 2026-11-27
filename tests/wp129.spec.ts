@@ -331,6 +331,7 @@ test.describe('WP129 item 6: every dated page whose visible text changed carries
     'partner-with-us/employers/index.html', 'partner-with-us/local-partners/index.html', 'programs/youthwide/index.html', 'programs/jobready-campus/index.html', 'programs/jobready-work/index.html',
     'programs/superkids/index.html',
     'partner-with-us/investors/index.html', // WP175 (owner decisions of 2026-11-28: CMF v3 on Investors, its statement, empathy and transition lines and the restored bands) moved it to 2026-11-28
+    'programs/nu-postgraduate-diploma/index.html', // WP175 (owner decisions of 2026-11-28, package C: the NU overview's CMF v3 order and coverage; its course pages stay at 2026-11-26)
   ]);
   const MOVED_1127 = new Set([
     'about/index.html',

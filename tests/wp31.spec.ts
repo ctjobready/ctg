@@ -365,7 +365,9 @@ test.describe('smaller wording fixes', () => {
     expect(compact(await page.locator('#faq').textContent())).toContain('follow-up survey results at 3, 6 and 12 months'); // WP147: it read "follow-up surveys"
     await open(page, 'programs/youthwide/');
     // WP39 (cycle-16 review): YouthWIDE's features band was three short cards; the second said "follow-up surveys". WP57 (cycle-29 review, GPT-6.1 Sol G2): the band is gone, and the glance's Reporting row says them
-    await expect(page.locator('#features')).toHaveCount(0);
+    // WP175 (owner decision Q1 (a) of 2026-11-28): the band is back; its second card says "follow-up surveys" again (never "tracer surveys"), and the glance's Reporting row still says them
+    await expect(page.locator('#features')).toHaveCount(1);
+    expect(compact(await page.locator('#features').textContent())).toContain('A baseline, monthly reports and follow-up surveys.');
     const reporting = page.locator('.pg__row', { has: page.locator('dt', { hasText: 'Reporting' }) });
     expect(compact(await reporting.locator('dd').textContent())).toContain('Monthly reports and follow-up surveys');
   });

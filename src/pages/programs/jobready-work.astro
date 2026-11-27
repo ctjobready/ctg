@@ -5,14 +5,26 @@
 // WP37 (cycle-14 review): the hero serves training and hiring ("Pick one or both"), so "Hire JobReady Talent" (the same prefilled inquiry as the call-to-action band) is a text link right under the one primary button.
 // WP50 (cycle-25 review): the pricing sentence ("Pricing is set per program; we share an indicative budget in the discovery session and confirm it after the needs assessment.") is said once, in the FAQ answer "What Does It Cost?" (Q8-employer);
 // the options band no longer repeats it under its two cards.
+// WP175 (owner decisions of 28 November 2026: every conversion page follows CMF v3, C1 to C14, in order and coverage; scratchpad wp175-decisions.md): every band sits in a Tone wrapper that carries its
+// CMF component (data-cmf; tests/wp175-jobready-work.spec.ts reads the order). The page runs C1 → GEO (restored, with the Employers bridge sentence) → the route link and the glance (recorded non-CMF rows)
+// → C2–C4 compressed (Q7 (a): the problem band is back, with the Employers pains and the C3 transition line) → C5 (the empathy line, the one-line origin, the credentials, the method line last) → C6 → C7
+// (restored: the trial lead, the TRIAL-SCOPE line and the survey line) → C8 (restored: the Employers cards and "How It Works in Three Steps") → C9 → C10 (restored short) → C11 (the options band again)
+// → C12 → C13 (the closing band again) → C14.
 import LandingLayout from '../../layouts/LandingLayout.astro';
 import Section from '../../components/ui/Section.astro';
-import EmailFallback from '../../components/ui/EmailFallback.astro';
+import CTABand from '../../components/ui/CTABand.astro';
+import Tone from '../../components/pages/home/Tone.astro';
 import HeroBand from '../../components/sections/HeroBand.astro';
+import ProofBand from '../../components/sections/ProofBand.astro';
+import IncludesBand from '../../components/sections/IncludesBand.astro';
+import DifferenceBand from '../../components/sections/DifferenceBand.astro';
+import DefinitionPlus from '../../components/pages/about/DefinitionPlus.astro';
+import GainsPains from '../../components/pages/partners/GainsPains.astro';
+import HowItWorks from '../../components/pages/partners/HowItWorks.astro';
+import ProblemSection from '../../components/pages/programs/ProblemSection.astro';
 import RouteLink from '../../components/pages/partners/RouteLink.astro';
 import Fact from '../../components/facts/Fact.astro';
 import ProgramGlance from '../../components/pages/programs/ProgramGlance.astro';
-import PairedEvidence from '../../components/pages/partners/PairedEvidence.astro';
 import GuideSection from '../../components/pages/programs/GuideSection.astro';
 import FactStat from '../../components/facts/FactStat.astro';
 import MechanismSection from '../../components/pages/programs/MechanismSection.astro';
@@ -24,7 +36,7 @@ import RouteBlock from '../../components/ui/RouteBlock.astro';
 import StepFlow from '../../components/ui/StepFlow.astro';
 import { faqNode, type FaqSource } from '../../components/pages/programs/faq';
 import { PAGE_UPDATED, ctaFor, serviceNode } from '../../components/pages/programs/meta';
-import { AKIJ_ASSET, AKIJ_STORY, C14, DELIVERY_MODEL_WORK, EMPLOYER_HIRING_STEPS, MICRO_COMMITMENT, POSITIONING, PROGRAM_SCOPE_INCLUSIONS_EXAMS, statLabelUnder } from '../../data/copy';
+import { AKIJ_ASSET, AKIJ_STORY, C14, C3_TRANSITION, DELIVERY_MODEL_WORK, EMPATHY, EMPLOYER_HIRING_STEPS, EMPLOYER_INCLUDES, EMPLOYER_PAINS, EMPLOYER_STEPS, METHOD, MICRO_COMMITMENT, ORIGIN_SHORT, POSITIONING, PROGRAM_SCOPE_INCLUSIONS_EXAMS, TRIAL_LEAD, TRIAL_SCOPE, WORK_BRIDGE, painForList, statLabelUnder } from '../../data/copy';
 import { fact } from '../../data/facts';
 import { contractScope } from '../../components/sections/copyText';
 import { formatDate, isoDate } from '../../lib/format';
@@ -53,6 +65,15 @@ const jsonLd = [
 
 // IN-10: needs assessment → customized solution → comprehensive curriculum → interactive workshops → progress evaluation → post-training support → measurable outcomes.
 // WP25s: "checked against the measures you set" belongs to the progress evaluation; the measurable outcome is the team capability named in the needs assessment.
+// WP175: "How It Works in Three Steps" is the Employers steps (EMPLOYER_STEPS), with step 2 stopping before its exam-terms clause: the glance's Training row states it, and the qualifier is said once per page
+// (WP145, tests/wp163.spec.ts).
+const WORK_STEPS = EMPLOYER_STEPS.map((s, i) => (i === 1 ? { ...s, text: s.text.replace(/; exam eligibility and any further attempts are set per program\.$/, '.') } : s));
+if (WORK_STEPS[1].text === EMPLOYER_STEPS[1].text) throw new Error('JobReady@Work: EMPLOYER_STEPS step 2 no longer ends with its exam-terms clause; update WORK_STEPS');
+// WP175: the C8 cards are the Employers cards (EMPLOYER_INCLUDES), with the AI card leaving the AIvolve offering to the glance's Training row, where this page names it once (WP104; tests/wp32.spec.ts),
+// so the card rests on PD-02 and IN-10 without PA-07.
+const AIVOLVE_CLAUSE = ', plus AI leadership and AI-transformation programs with AIvolve.';
+const WORK_INCLUDES = EMPLOYER_INCLUDES.map((c) => (c.painId === 'P3' ? { ...c, text: c.text.replace(AIVOLVE_CLAUSE, '.'), facts: c.facts?.filter((f) => f !== 'PA-07') } : c));
+if (WORK_INCLUDES[2].text === EMPLOYER_INCLUDES[2].text || /AIvolve/.test(WORK_INCLUDES.map((c) => c.text).join(' '))) throw new Error('JobReady@Work: the AI card of EMPLOYER_INCLUDES no longer reads "…, plus AI leadership and AI-transformation programs with AIvolve."; update WORK_INCLUDES');
 const approach = [
   { label: 'Scope', title: 'Needs Assessment, Then a Customized Solution', text: 'Scopes the skills and team size, then shapes a program around your roles.', icon: 'clipboard-check' },
   { label: 'Deliver', title: 'Custom Curriculum and Interactive Workshops', text: 'Your team learns on tasks from your own roles.', icon: 'presentation' },
@@ -63,115 +84,163 @@ const approach = [
 
 <LandingLayout title={title} description={description} path={path} breadcrumbs={[{ label: 'Programs', href: '/programs/' }, { label: 'JobReady@Work' }]} jsonLd={jsonLd} stickyCta={work}>
   <!-- C1 -->
-  <HeroBand
-    audience="JobReady@Work · For Employers"
-    title="Build AI-Ready Teams Around Your Own Roles"
-    lead="JobReady@Work builds custom AI-ready training for your team, from a needs assessment to interactive workshops, and sources job-ready talent through CodersTrust’s placement team. Pick one or both."
-    cta={work}
-    routeLinks={[{ label: talent.label, href: talent.href }]}
-    artSeed="jobready-work"
-  />
+  <Tone cmf="C1">
+    <HeroBand
+      audience="JobReady@Work · For Employers"
+      title="Build AI-Ready Teams Around Your Own Roles"
+      lead="JobReady@Work builds custom AI-ready training for your team, from a needs assessment to interactive workshops, and sources job-ready talent through CodersTrust’s placement team. Pick one or both."
+      cta={work}
+      routeLinks={[{ label: talent.label, href: talent.href }]}
+      artSeed="jobready-work"
+    />
+  </Tone>
 
-  <RouteLink kicker="The Partnership Route" label="Employer Partnership Overview" href="/partner-with-us/employers/" />
+  <!-- GEO · What is CodersTrust? (ID-01 verbatim, directly under the hero), then the bridge to this reader, as on Employers (WORK_BRIDGE, WP166-B R3-34). WP175 (owner decision of 2026-11-28): restored; WP30d had cut it. -->
+  <Tone cmf="GEO">
+    <DefinitionPlus id="definition">
+      <p data-fact={WORK_BRIDGE.facts.join(' ')}>{WORK_BRIDGE.text}</p>
+    </DefinitionPlus>
+  </Tone>
 
-  <!-- WP166-B (R2-19): the glance opens with why an employer should act now, the registered ManpowerGroup tile the Employers page shows (PX-05); no new band. -->
-  <ProgramGlance
-    title="JobReady@Work at a Glance"
-    rows={[
-      { label: 'Who It Is For', text: 'Employers who want their teams upskilled for AI workflows, and job-ready digital talent for open roles, introduced through CodersTrust’s placement team and scoped against the experience and credentials available.', facts: ['IN-10', 'IN-04'] },
-      { label: 'Training', text: `Soft-skills and hard-skills tracks, built around the tasks in your own roles; AI leadership and AI-transformation programs with AIvolve. Certification preparation and one exam fee per trainee can be added where a track offers one; exam eligibility and any further attempts are set per program. ${DELIVERY_MODEL_WORK.text}`, facts: ['IN-10', 'PA-07', 'PD-03', 'PD-02a', 'PD-01', 'IN-04'] },
-      { label: 'Measuring Progress', text: 'Post-training support and a progress evaluation against the measures you set, for team capability in the digital and AI tasks defined in the needs assessment.', facts: ['IN-10'] },
-    ]}
-    scope={PROGRAM_SCOPE_INCLUSIONS_EXAMS}
-  >
-    <FactStat id="PX-05" />
-  </ProgramGlance>
+  <!-- The partnership route link and the glance: recorded non-CMF rows between GEO and C2 (doc 06 P13, WP175). WP175: the ManpowerGroup tile (PX-05) that WP166-B R2-19 put in the glance is back in the problem band. -->
+  <Tone cmf="GLANCE"><RouteLink kicker="The Partnership Route" label="Employer Partnership Overview" href="/partner-with-us/employers/" /></Tone>
 
-  <!-- C5. WP61 (cycle-33 reviews, GPT-6.1 Sol G2 and Kimi K1): no empathy line ("You have roles to fill and teams that need AI skills for their daily work."); the band opens with the credentials list.
-       WP161 (A-37): the method line is JobReady@Work's own path (IN-10: needs assessment first), with no TalentLEAP link: JobReady@Work is not on the TalentLEAP path (no three months of mentoring, no 12-month tracking; see Our Model). -->
-  <GuideSection
-    title="Employers and Partners We Work With"
-    partnerGroup="private"
-    method={{ text: 'JobReady@Work builds each program around a needs assessment.', factId: 'IN-10' }}
-  >
-    {/* WP90 (triage A3): the 23,000+ tile leads the band, above the credential bullets (it was a side tile after them). Wording unchanged. */}
-    <FactStat id="SC-15" label={statLabelUnder('Employers and Partners We Work With', fact('SC-15').stat?.label)} />
-    {/* WP168-B (owner decision 2026-11-24: Akij Group may be named as a client; marketing review R6, the Akij item): the corporate training for Akij Group (PA-12) is the first credential, with a link to the 2023 news post (as on Employers). */}
-    <ul class="guide-list" role="list">
-      <li data-fact="PA-12" data-asset={AKIJ_ASSET}><Fact id="PA-12" />. <a class="link" href={linkAttrs(AKIJ_STORY.href).href}>{AKIJ_STORY.label}<Icon name="arrow-right" size={16} /></a></li>
-      <li data-fact="PA-06"><Fact id="PA-06" />.</li>
-      <li data-fact="GV-06">{contractScope('GV-06')}</li>
-    </ul>
-  </GuideSection>
+  <Tone cmf="GLANCE">
+    <ProgramGlance
+      title="JobReady@Work at a Glance"
+      rows={[
+        { label: 'Who It Is For', text: 'Employers who want their teams upskilled for AI workflows, and job-ready digital talent for open roles, introduced through CodersTrust’s placement team and scoped against the experience and credentials available.', facts: ['IN-10', 'IN-04'] },
+        { label: 'Training', text: `Soft-skills and hard-skills tracks, built around the tasks in your own roles; AI leadership and AI-transformation programs with AIvolve. Certification preparation and one exam fee per trainee can be added where a track offers one; exam eligibility and any further attempts are set per program. ${DELIVERY_MODEL_WORK.text}`, facts: ['IN-10', 'PA-07', 'PD-03', 'PD-02a', 'PD-01', 'IN-04'] },
+        { label: 'Measuring Progress', text: 'Post-training support and a progress evaluation against the measures you set, for team capability in the digital and AI tasks defined in the needs assessment.', facts: ['IN-10'] },
+      ]}
+      scope={PROGRAM_SCOPE_INCLUSIONS_EXAMS}
+    />
+  </Tone>
+
+  <!-- C2–C4, compressed (WP175, owner decision Q7 (a) of 2026-11-28; doc 04 4.6 and doc 06 P13 record it): the C2 band is back (e90f9629, WP20b, had removed it; a compression merges C2 to C4 into
+       the C2 band, it does not remove C2), with the Employers page's three ranked pains (EMPLOYER_PAINS, shared with P7) and the ManpowerGroup tile (PX-05), then the C3 transition line as its last line.
+       The heading is the Employers page's, which carries the same pains. C3 and C4 are not rendered. -->
+  <Tone cmf="C2-C4 (compressed)">
+    <ProblemSection title="The Talent You Need Is Hard to Find" factIds={['PX-05']} transition={C3_TRANSITION}>
+      <GainsPains slot="lead" pains={EMPLOYER_PAINS.map(painForList)} />
+    </ProblemSection>
+  </Tone>
+
+  <!-- C5. WP175 (Q2 (a)): the empathy line (a fresh one; the doc 04 line that WP61 retired is not restored) and the one-line origin open the band, then the authority (the 23,000+ tile, the credentials,
+       the logo strip), and the method line closes it. WP161 (A-37): the method line is JobReady@Work's own path (IN-10: needs assessment first), with no TalentLEAP link: JobReady@Work is not on the TalentLEAP
+       path (no three months of mentoring, no 12-month tracking; see Our Model). -->
+  <Tone cmf="C5">
+    <GuideSection
+      title="Employers and Partners We Work With"
+      empathy={EMPATHY.work}
+      origin={ORIGIN_SHORT}
+      partnerGroup="private"
+      method={METHOD.work}
+    >
+      {/* WP90 (triage A3): the 23,000+ tile leads the band, above the credential bullets (it was a side tile after them). Wording unchanged. */}
+      <FactStat id="SC-15" label={statLabelUnder('Employers and Partners We Work With', fact('SC-15').stat?.label)} />
+      {/* WP168-B (owner decision 2026-11-24: Akij Group may be named as a client; marketing review R6, the Akij item): the corporate training for Akij Group (PA-12) is the first credential, with a link to the 2023 news post (as on Employers). */}
+      <ul class="guide-list" role="list">
+        <li data-fact="PA-12" data-asset={AKIJ_ASSET}><Fact id="PA-12" />. <a class="link" href={linkAttrs(AKIJ_STORY.href).href}>{AKIJ_STORY.label}<Icon name="arrow-right" size={16} /></a></li>
+        <li data-fact="PA-06"><Fact id="PA-06" />.</li>
+        <li data-fact="GV-06">{contractScope('GV-06')}</li>
+      </ul>
+    </GuideSection>
+  </Tone>
 
   <!-- C6 -->
   <!-- WP166-B (R2-21): the platform link sits with the delivery cards (the FAQ's platform question is gone). -->
-  <MechanismSection title="A Program Built Around Your Roles" positioning={POSITIONING.work} eyebrow="How It Works" blocks={approach} factIds={['IN-10']} link={{ label: 'See the JobReady Platform', href: '/our-model/jobready-platform/' }} />
+  <Tone cmf="C6"><MechanismSection title="A Program Built Around Your Roles" positioning={POSITIONING.work} eyebrow="How It Works" blocks={approach} factIds={['IN-10']} link={{ label: 'See the JobReady Platform', href: '/our-model/jobready-platform/' }} /></Tone>
 
-  <!-- Evidence links directly after the mechanism (WP18b, WP31, WP32): the employer credentials (AWS Authorized Training Partner, the Grameenphone Academy enrollments; WP104: AIvolve is an offering in the glance's Training row, not a list item) are stated once, in
-       "Employers and Partners We Work With" above (cycle-9 review: they were repeated here). This strip is two links to the youth programs' evidence; no trial or survey figure is shown on this corporate offer page. -->
-  <PairedEvidence
-    title="Broader Evidence from Our Youth Programs"
-    eyebrow=""
-    items={[]}
-    broader={[
-      { label: 'The Randomized Trial', href: '/impact/independent-evaluation/' },
-      { label: 'Impact Survey 2026', href: '/impact/outcomes-2026/' },
-    ]}
-  />
+  <!-- C7. WP175 (owner decisions Q1 (a) and Q3 (a) of 2026-11-28): the compact proof band is back (WP31 had replaced it with a two-link strip): the one-line trial lead, the TRIAL-SCOPE line directly under it
+       (scripts/check-facts.mjs pins the words), and the survey line, labelled as the youth programs' (doc 04 4.6 C7, S4-M5), then the two evidence links. The employer credentials stay in C5. -->
+  <Tone cmf="C7">
+    <ProofBand
+      title="The Evidence"
+      headlineFact="RC-01"
+      trialLead={TRIAL_LEAD}
+      trialScope={TRIAL_SCOPE.work.text}
+      statIds={[]}
+      compact
+      surveyLeadIn="From CodersTrust’s youth programs:"
+      links={[
+        { label: 'The Randomized Trial', href: '/impact/independent-evaluation/' },
+        { label: 'Impact Survey 2026', href: '/impact/outcomes-2026/' },
+      ]}
+    />
+  </Tone>
+
+  <!-- C8. WP175 (Q1 (a)): restored (the page has had none since WP20b/WP30d): the Employers page's three cards (EMPLOYER_INCLUDES; WORK_INCLUDES above), one per pain in the problem band's order, under the Employers page's
+       heading, then "How It Works in Three Steps" (Assess, Train, Support and Measure, as on Employers; WORK_STEPS above). Doc 04 matrix 4.6 names no gain creator. -->
+  <Tone cmf="C8">
+    <IncludesBand title="What Your Business Gets" cards={WORK_INCLUDES} />
+    <HowItWorks steps={WORK_STEPS} />
+  </Tone>
 
   <!-- C9: only the questions about the program itself; the audience page answers the rest -->
-  <FaqSection sources={faqSources} title="Questions About the Program" />
+  <Tone cmf="C9"><FaqSection sources={faqSources} title="Questions About the Program" /></Tone>
 
-  <!-- C11 is merged into the closing band below since WP166-B (R2-20): its two cards now carry their own actions there, under the closing heading. -->
+  <!-- C10. WP175 (owner decision of 2026-11-28): the short differentiation band. Doc 04 4.6 C10 names USPs 3 and 4; USP 3 is the employer pages' credential line (USPS.credentialWork), and USP 4 (labs and
+       colleges already in place) describes the youth programs' delivery, not training built around an employer's roles, so the second line is USP 1, the independent evidence (the C7 relevance line
+       says the trial evaluated WSDFM, not JobReady@Work). -->
+  <Tone cmf="C10"><DifferenceBand usps={['credentialWork', 'evidence']} /></Tone>
+
+  <!-- C11. WP175 (Q1 (a): out-of-order bands move; it supersedes WP166-B R2-20, which had merged the options into the closing band): the options band is its own band again, before the pilot band, with
+       the heading and the two cards it carried until WP166-B (fec0dce2^). It has no lead: the hero says "Pick one or both." once. -->
+  <Tone cmf="C11">
+    <OfferSection
+      eyebrow="Options"
+      title="A Training Program for Your Team, and Talent When You Need It"
+      cards={[
+        { icon: 'presentation', title: 'Train Your Team', text: 'A training program scoped to your team: needs assessment, a customized curriculum and interactive workshops.' },
+        { icon: 'briefcase', title: 'Hire Job-Ready Talent', text: 'Access to job-ready candidates introduced through CodersTrust’s placement team.' },
+      ]}
+    />
+  </Tone>
 
   <!-- C12 -->
-  <RiskSection
-    title="Start with a Pilot Team, Then Decide on Evidence"
-    points={[
-      { icon: 'users', title: 'A Pilot Team Comes First', text: 'Start with one team before you widen the program.', factIds: ['IN-10'] },
-      { icon: 'target', title: 'Success Measures Set Up Front', text: 'Completion, any certification the track offers and the skills you name are agreed before you start and checked in the progress evaluation.', factIds: ['IN-10'] },
-      { icon: 'handshake', title: 'Scaling Up Is Your Decision', text: 'You choose whether and how far to scale.', factIds: ['IN-10'] },
-      // WP166-B (R2-21): the "Independent Evaluation Welcome" card is cut on this page (a funder concept on a team-training page).
-    ]}
-  />
+  <Tone cmf="C12">
+    <RiskSection
+      title="Start with a Pilot Team, Then Decide on Evidence"
+      points={[
+        { icon: 'users', title: 'A Pilot Team Comes First', text: 'Start with one team before you widen the program.', factIds: ['IN-10'] },
+        { icon: 'target', title: 'Success Measures Set Up Front', text: 'Completion, any certification the track offers and the skills you name are agreed before you start and checked in the progress evaluation.', factIds: ['IN-10'] },
+        { icon: 'handshake', title: 'Scaling Up Is Your Decision', text: 'You choose whether and how far to scale.', factIds: ['IN-10'] },
+        // WP166-B (R2-21): the "Independent Evaluation Welcome" card is cut on this page (a funder concept on a team-training page).
+      ]}
+    />
+  </Tone>
 
-  <!-- C11 + C13. WP166-B (marketing review R2-20, owner approval of 21 November 2026): the options band ("A Training Program for Your Team, and Talent When You Need It", "Pick one or both.") and the closing band are one band under the closing heading;
-       each card carries its own action: "Train Your Team" the band's one solid button, "Hire Job-Ready Talent" the hiring link. The email fallback and the micro-commitment line follow, as in the closing band. -->
-  <OfferSection
-    id="cta"
-    eyebrow="Get Started"
-    title="Tell Us About Your Team and Your Roles"
-    cards={[
-      { icon: 'presentation', title: 'Train Your Team', text: 'A training program scoped to your team: needs assessment, a customized curriculum and interactive workshops.', action: { label: 'Plan Your First Team Program', href: work.href, primary: true } },
-      { icon: 'briefcase', title: 'Hire Job-Ready Talent', text: 'Access to job-ready candidates introduced through CodersTrust’s placement team.', action: { label: talent.label, href: talent.href } },
-    ]}
-  >
-    {work.href.startsWith('mailto:') && <EmailFallback href={work.href} />}
-    <p>{MICRO_COMMITMENT}</p>
-  </OfferSection>
+  <!-- C13. WP175 (Q1 (a)): the closing band again (as before WP166-B R2-20): one solid primary, "Plan Your First Team Program", and the hiring route as the secondary text link; the band's own email fallback
+       and the micro-commitment line follow the button. -->
+  <Tone cmf="C13"><CTABand id="cta" heading="Tell Us About Your Team and Your Roles" cta={{ label: 'Plan Your First Team Program', href: work.href }} micro={MICRO_COMMITMENT} secondary={{ label: talent.label, href: talent.href }} /></Tone>
 
   <!-- C14. WP34 (cycle-11 review): the page offers training and hiring, so the steps are labeled "For Team Training" and hiring has its own short route; the "Hire JobReady Talent" link stays in the C13 band above (and, WP37, in the hero).
        WP47 (cycle-22 review): the hiring route is the Employers page's two steps (EMPLOYER_HIRING_STEPS), in the same step component as the training route (it was one sentence beside five steps). -->
-  <NextSteps
-    route="For Team Training"
-    steps={[
-      { title: 'Discovery Session', text: 'A conversation about your roles and goals.' },
-      { title: 'Needs Assessment', text: 'We scope the skills and team size.' },
-      { title: 'Agreement', text: 'Scope, schedule and success measures are agreed.' },
-      { title: 'First Workshop or Cohort', text: 'Training starts on tasks from your roles.' },
-      { title: 'Progress Evaluation', text: 'Results are checked against your measures.' },
-    ]}
-    closingAction={C14.variants.employers}
-  >
-    <RouteBlock label="For Hiring">
-      <div data-fact="IN-04"><StepFlow level={4} steps={EMPLOYER_HIRING_STEPS} /></div>
-    </RouteBlock>
-  </NextSteps>
+  <Tone cmf="C14">
+    <NextSteps
+      route="For Team Training"
+      steps={[
+        { title: 'Discovery Session', text: 'A conversation about your roles and goals.' },
+        { title: 'Needs Assessment', text: 'We scope the skills and team size.' },
+        { title: 'Agreement', text: 'Scope, schedule and success measures are agreed.' },
+        { title: 'First Workshop or Cohort', text: 'Training starts on tasks from your roles.' },
+        { title: 'Progress Evaluation', text: 'Results are checked against your measures.' },
+      ]}
+      closingAction={C14.variants.employers}
+    >
+      <RouteBlock label="For Hiring">
+        <div data-fact="IN-04"><StepFlow level={4} steps={EMPLOYER_HIRING_STEPS} /></div>
+      </RouteBlock>
+    </NextSteps>
+  </Tone>
 
-  <Section pad="sm" aria-label="Last updated">
-    <p class="updated">Last updated <time datetime={isoDate(LAST_UPDATED)}>{formatDate(LAST_UPDATED)}</time></p>
-  </Section>
+  <!-- WP175: not a CMF band; the wrapper keeps the 32px join to a band on the same ground above it (Tone's join rule reads wrappers, not bare bands). -->
+  <Tone>
+    <Section pad="sm" aria-label="Last updated">
+      <p class="updated">Last updated <time datetime={isoDate(LAST_UPDATED)}>{formatDate(LAST_UPDATED)}</time></p>
+    </Section>
+  </Tone>
 </LandingLayout>
 
 <style>

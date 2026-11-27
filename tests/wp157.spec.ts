@@ -191,10 +191,13 @@ test.describe('F8 JobReady@Work meta: the ManpowerGroup statistic is not adverti
   });
   // WP166-B (marketing review R2-19, owner approval of 21 November 2026): the glance opens with the registered PX-05 tile, so the body now states the statistic once, with its source; the meta description above still
   // carries neither (descriptions are unchanged in WP166-B). It checked that the body never stated "72%" or "ManpowerGroup".
-  test('the page body states the statistic once, in the glance’s PX-05 tile with its source (the meta still does not advertise it)', () => {
+  // WP175 (owner decision Q7 (a) of 2026-11-28): the problem band is back with the Employers page's three pains, so the PX-05 tile moved from the glance into it, and the first pain names the same source
+  // ("AI skills are the hardest to find (ManpowerGroup, 2026).", as on Employers): the figure is still stated once, the source twice (it was once). The meta description still carries neither.
+  test('the page body states the statistic once, in the problem band’s PX-05 tile with its source (the meta still does not advertise it)', () => {
     const body = main(WORK);
     expect(body.match(/72%/g) ?? []).toHaveLength(1);
-    expect(body.match(/ManpowerGroup/g) ?? []).toHaveLength(1);
+    expect(body.match(/ManpowerGroup/g) ?? []).toHaveLength(2); // WP175: the PX-05 tile and the first pain's source note (it was 1, the tile alone)
+    expect(body).toContain('AI skills are the hardest to find (ManpowerGroup, 2026).');
     expect(body).toMatch(/72% ?of employers globally reported difficulty finding talent in 2026 \(ManpowerGroup, 2026\)/);
   });
 });

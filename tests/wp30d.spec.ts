@@ -96,7 +96,9 @@ test.describe('less is more: the report-like bands are gone', () => {
   test('YouthWIDE drops the delivery grid, the work-entry plans, the roadmap, the reporting timeline, the RACI, the comparison table and the offer notes', async ({ page }) => {
     await open(page, 'programs/youthwide/');
     const ids = await sectionIds(page);
-    for (const gone of ['delivery-reporting', 'compare', 'definition', 'in-short']) expect(ids, gone).not.toContain(gone);
+    // WP175 (owner decision of 2026-11-28: every conversion page follows CMF v3): the definition band ("What Is CodersTrust?", GEO) is back directly under the hero; the comparison table stays off (C10 is the short #difference band)
+    for (const gone of ['delivery-reporting', 'compare', 'in-short']) expect(ids, gone).not.toContain(gone);
+    expect(ids, 'definition (GEO, WP175)').toContain('definition');
     const text = compact(await page.locator('main').evaluate((el) => el.textContent ?? ''));
     for (const gone of ['Who Does What', 'Compare the Approaches', 'The Delivery Model in Detail', 'Five Phases from Agreement to Parallel Cohorts', 'What Your Reports Show over Time', 'Services Behind a Phase']) {
       expect(text, gone).not.toContain(gone);
@@ -121,22 +123,27 @@ test.describe('less is more: the report-like bands are gone', () => {
     }
   });
 
-  test('the diploma overview drops five bands and keeps Before You Apply, the wider-programs evidence link and one closing call to action', async ({ page }) => {
+  // WP175 (owner decisions of 2026-11-28, Q7 (a), Q10 (a)): the overview follows CMF v3, so the definition band (GEO), "How It Works in Three Steps" (#steps, C8) and "Talk to Admissions Before You Decide"
+  // (#risk, C12) are back, and the one-link strip is a compact proof band again (#proof-band, with the TRIAL-SCOPE line); the cost and vision bands stay cut (C2–C4 compressed) and so does the start band
+  // (#offer; Before You Apply is C11).
+  test('the diploma overview keeps three bands cut (cost, vision, start), restores the definition, three steps, talk-to-admissions and proof bands, and keeps one closing call to action', async ({ page }) => {
     await open(page, 'programs/nu-postgraduate-diploma/');
     const ids = await sectionIds(page);
-    for (const gone of ['definition', 'cost', 'future', 'steps', 'offer', 'risk']) expect(ids, gone).not.toContain(gone);
-    // WP34 (cycle-11 review): the trial and survey band (and its scope line) became a one-link strip, #offer-evidence (tests/wp34.spec.ts)
-    for (const kept of ['courses', 'problem', 'before-you-apply', 'offer-evidence', 'faq', 'cta']) expect(ids, kept).toContain(kept);
-    await expect(page.locator('#proof-band')).toHaveCount(0);
-    await expect(page.locator('[data-trial-scope]')).toHaveCount(0);
+    for (const gone of ['cost', 'future', 'offer', 'offer-evidence']) expect(ids, gone).not.toContain(gone);
+    for (const kept of ['definition', 'courses', 'problem', 'proof-band', 'steps', 'before-you-apply', 'risk', 'faq', 'cta']) expect(ids, kept).toContain(kept);
+    await expect(page.locator('#proof-band')).toHaveCount(1);
+    await expect(page.locator('[data-trial-scope]')).toHaveCount(1);
     await expect(page.locator('main .hero .btn--primary')).toHaveCount(1);
     await expect(page.locator('#cta .btn--primary')).toHaveCount(1);
   });
 
-  test('SuperKids drops the problem, partner and "what your school receives" bands', async ({ page }) => {
+  // WP175 (owner decisions Q7 (a) and Q9 (a) of 2026-11-28): the definition (GEO), the C2–C3 problem band and the track-record band (#guide) are back, and "What Your School Receives" returns as the C8 band
+  // (#features, two cards); the old #school-receives band id stays gone.
+  test('SuperKids restores the definition, problem and track-record bands; the "what your school receives" cards are the C8 band', async ({ page }) => {
     await open(page, 'programs/superkids/');
     const ids = await sectionIds(page);
-    for (const gone of ['problem', 'guide', 'school-receives', 'definition']) expect(ids, gone).not.toContain(gone);
+    for (const gone of ['school-receives']) expect(ids, gone).not.toContain(gone);
+    for (const back of ['definition', 'problem', 'guide', 'features']) expect(ids, back).toContain(back);
     await expect(page.locator('#agreements')).toContainText('not delivered reach');
   });
 

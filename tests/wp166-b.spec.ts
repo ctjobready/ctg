@@ -103,13 +103,15 @@ const dateModified = (rel: string) => ld(rel).map((n) => n.dateModified).filter(
 
 test.describe('WP166-B programs: YouthWIDE', () => {
   const P = 'programs/youthwide';
-  test('the evidence follows The Challenge, before the track record, How It Works and the governments band', () => {
+  // WP175 (owner decision Q1 (a) of 2026-11-28: the CMF order supersedes R2-01's place for the evidence): the evidence band follows the governments band (C5 and C6 come before C7), before the case studies;
+  // the track record still follows The Challenge (it was problem, proof-band, guide, mechanism, governments, cases).
+  test('the evidence follows the governments band (CMF C7 after C5 and C6), before the case studies; the track record follows The Challenge', () => {
     const ids = bandIds(P);
-    expect(ids.indexOf('proof-band')).toBe(ids.indexOf('problem') + 1);
-    expect(ids.indexOf('proof-band')).toBeLessThan(ids.indexOf('guide'));
+    expect(ids.indexOf('guide')).toBe(ids.indexOf('problem') + 1);
     expect(ids.indexOf('guide')).toBeLessThan(ids.indexOf('mechanism'));
     expect(ids.indexOf('mechanism')).toBeLessThan(ids.indexOf('governments'));
-    expect(ids.indexOf('governments')).toBeLessThan(ids.indexOf('cases'));
+    expect(ids.indexOf('proof-band')).toBe(ids.indexOf('governments') + 1);
+    expect(ids.indexOf('proof-band')).toBeLessThan(ids.indexOf('cases'));
   });
   test('the evidence band states the result, shows both trial tiles and has no qualifier lead', () => {
     const band = bandText(P, 'proof-band');
@@ -168,19 +170,25 @@ test.describe('WP166-B programs: JobReady@Campus', () => {
     expect(t).not.toContain('Skills Employers Cannot See');
     expect(t).not.toContain('Placement Evidence Is Missing');
   });
-  test('the university band names the three partners and carries the NU figures, their note and the three evidence links', () => {
+  // WP175 (owner decisions Q1 (a) and Q3 (a) of 2026-11-28): the three evidence links are C7's again (the proof band after How It Works), not the university band's (R2-16 had folded C7 into it)
+  test('the university band names the three partners and carries the NU figures and their note; the three evidence links are in the proof band', () => {
     const t = bandText(P, 'guide');
     expect(t).toContain('Working with National University, UPEACE and CCNY');
     expect(t).not.toContain('Universities Partner with CodersTrust');
     expect(t).toContain('1.5M+');
     expect(t).toContain('3M+');
     expect(t).toContain('These figures describe National University’s size and the learners being onboarded; they are not learners trained by CodersTrust.');
-    for (const l of ['The Randomized Trial', 'Impact Survey 2026', 'Case Studies']) expect(t).toContain(l);
+    for (const l of ['The Randomized Trial', 'Impact Survey 2026', 'Case Studies']) expect(t).not.toContain(l);
+    const proof = bandText(P, 'proof-band');
+    for (const l of ['The Randomized Trial', 'Impact Survey 2026', 'Case Studies']) expect(proof).toContain(l);
   });
-  test('the "Delivery Context" and "What You Get" bands are gone; the "What" card carries the tracks and the delivery model', () => {
+  // WP175 (owner decision Q1 (a) of 2026-11-28): the "What You Get" band ("Built Around What Institutions Ask For", #features) is back, with the campus cards (CAMPUS_INCLUDES) and the three steps; its cards
+  // still do not restate the delivery-model sentence, which stays the "What" card's alone. "Delivery Context: National University" stays gone.
+  test('the "Delivery Context" band is gone and the "What You Get" band is back without the delivery model; the "What" card carries the tracks and the delivery model', () => {
     const t = mainText(P);
     expect(t).not.toContain('Delivery Context: National University');
-    expect(t).not.toContain('Built Around What Institutions Ask For');
+    expect(count(t, 'Built Around What Institutions Ask For')).toBe(1); // WP175 (it was absent)
+    expect(bandText(P, 'features')).not.toContain(DELIVERY_MODEL.text);
     expect(bandText(P, 'mechanism')).toContain(`Preparation for industry-recognized certifications on tracks set from employer demand, plus professional internships where employer placements are available. ${DELIVERY_MODEL.text}`);
     expect(count(t, DELIVERY_MODEL.text)).toBe(1);
     expect(bandText(P, 'program-glance')).not.toContain(DELIVERY_MODEL.text);
@@ -202,23 +210,32 @@ test.describe('WP166-B programs: JobReady@Campus', () => {
 
 test.describe('WP166-B programs: JobReady@Work', () => {
   const P = 'programs/jobready-work';
-  test('the glance opens with the ManpowerGroup tile (PX-05)', () => {
+  // WP175 (owner decision Q7 (a) of 2026-11-28): the problem band is back (C2, compressed with C3 and C4), so the ManpowerGroup tile (PX-05) is in it, not in the glance (R2-19 had put it there)
+  test('the ManpowerGroup tile (PX-05) is in the problem band, not the glance', () => {
     const g = byId(P, 'program-glance');
-    expect(g).toMatch(/data-fact="PX-05"/);
-    expect(text(g)).toContain('of employers globally reported difficulty finding talent in 2026 (ManpowerGroup, 2026)');
-    expect(g.indexOf('data-fact="PX-05"')).toBeLessThan(g.indexOf('<dl'));
+    expect(g).not.toMatch(/data-fact="PX-05"/);
+    const p = byId(P, 'problem');
+    expect(p).toMatch(/data-fact="PX-05"/);
+    expect(text(p)).toContain('of employers globally reported difficulty finding talent in 2026 (ManpowerGroup, 2026)');
   });
-  test('one closing band: the closing heading, the two cards, each with its action', () => {
+  // WP175 (owner decision Q1 (a) of 2026-11-28: out-of-order bands move; it supersedes R2-20's merge): the options band (#offer, C11) is its own band again, before the pilot band, and the closing band (#cta, C13)
+  // has the one solid button and the hiring route as a text link (as before WP166-B). The options band still has no "Pick one or both." lead.
+  test('the options band and the closing band are apart again: the two cards in #offer, the one solid button and the hiring link in #cta', () => {
+    const offer = byId(P, 'offer');
+    const o = text(offer);
+    expect(o).toContain('A Training Program for Your Team, and Talent When You Need It');
+    expect(o).toMatch(/Train Your Team A training program scoped to your team: needs assessment, a customized curriculum and interactive workshops\./);
+    expect(o).toMatch(/Hire Job-Ready Talent Access to job-ready candidates introduced through CodersTrust’s placement team\./);
+    expect(offer).not.toMatch(/class="btn\b/);
     const cta = byId(P, 'cta');
     const t = text(cta);
     expect(t).toContain('Tell Us About Your Team and Your Roles');
-    expect(t).toMatch(/Train Your Team A training program scoped to your team: needs assessment, a customized curriculum and interactive workshops\. Plan Your First Team Program/);
-    expect(t).toMatch(/Hire Job-Ready Talent Access to job-ready candidates introduced through CodersTrust’s placement team\. Hire JobReady Talent/);
+    expect(t).toContain('Plan Your First Team Program');
+    expect(t).toContain('Hire JobReady Talent');
     expect(t).toContain('A discovery session is a conversation, not a commitment.');
     expect(cta.match(/class="btn btn--/g)?.length).toBe(1);
     const m = mainText(P);
-    expect(m).not.toContain('A Training Program for Your Team, and Talent When You Need It');
-    expect(count(m, 'Pick one or both.')).toBe(1); // the hero lead keeps it ("... placement team. Pick one or both."); the options band's lead is gone
+    expect(count(m, 'Pick one or both.')).toBe(1); // the hero lead keeps it ("... placement team. Pick one or both."); the options band has no lead
   });
   test('no platform question, no "Independent Evaluation Welcome" card; How It Works links the platform page', () => {
     const m = mainText(P);
@@ -251,11 +268,13 @@ test.describe('WP166-B programs: NU Post Graduate Diploma', () => {
     expect(bandText(NU, 'problem')).toContain('72%');
   });
   for (const rel of [NU, ...COURSES.map((c) => `${NU}/${c}`)]) {
-    test(`${rel}: the short-form line under the hero button; dated 2026-11-26 (WP170; WP168-B dated it 2026-11-24, WP166-B 2026-11-21)`, () => {
+    // WP175 (owner decisions of 2026-11-28): the overview's CMF v3 order and coverage moved it to 2026-11-28; the course pages did not change and stay at 2026-11-26
+    const [day, shown] = rel === NU ? [WP175_DAY, WP175_SHOWN] : [NU_DAY, NU_SHOWN];
+    test(`${rel}: the short-form line under the hero button; dated ${day} (WP175 for the overview; WP170; WP168-B dated it 2026-11-24, WP166-B 2026-11-21)`, () => {
       const hero = heroRaw(rel);
       expect(text(hero)).toContain(SHORT_FORM);
-      expect(mainText(rel)).toContain(`Last updated ${NU_SHOWN}`);
-      expect(dateModified(rel)).toContain(NU_DAY);
+      expect(mainText(rel)).toContain(`Last updated ${shown}`);
+      expect(dateModified(rel)).toContain(day);
     });
   }
   for (const c of COURSES) {
@@ -279,7 +298,7 @@ test.describe('WP166-B programs: SuperKids and the Programs hub', () => {
     expect(g).toContain('Who It Is For Schools and education partners that want young learners to build digital skills early.');
     expect(g).toContain('Agreements Department of ICT (DoICT) and National Curriculum and Textbook Board (NCTB).');
     expect(g).not.toContain('details below');
-    expect(count(mainText(SK), '400+')).toBe(1); // WP143: the 400+ figure once (Delivery and Agreements)
+    expect(count(mainText(SK), '400+')).toBe(1); // WP143: the 400+ figure once (WP175: in the track-record band; it was Delivery and Agreements)
   });
   test('SuperKids: "Agreement Targets", one line per agreement, the caveat once, no agreement cards', () => {
     const a = bandText(SK, 'agreements');
@@ -291,11 +310,15 @@ test.describe('WP166-B programs: SuperKids and the Programs hub', () => {
     expect(byId(SK, 'agreements')).not.toContain('status="Agreement"');
     expect(a).not.toMatch(/Agreement DoICT Primary-school STEM and robotics\./);
   });
-  test('SuperKids: the C6 band is the statement alone; the cost question is in the FAQ; the gallery comes before the start band', () => {
+  // WP175 (owner decision Q1 (a) of 2026-11-28): the gallery is a C7 sub-block, so it follows the agreements band (R2-28 had put it right before the start band, after the FAQ); the start band still comes
+  // after the FAQ and the short C10 band
+  test('SuperKids: the C6 band is the statement alone; the cost question is in the FAQ; the gallery follows the agreements', () => {
     expect(mainText(SK)).not.toContain('Looking for a SuperKids course for your own child');
     expect(bandText(SK, 'faq')).toContain('What Does It Cost? Pricing is set per program, and we share an indicative budget in the discovery session.');
     const ids = bandIds(SK);
-    expect(ids.indexOf('in-the-field')).toBe(ids.indexOf('offer') - 1);
+    expect(ids.indexOf('in-the-field')).toBe(ids.indexOf('agreements') + 1);
+    expect(ids.indexOf('faq')).toBeLessThan(ids.indexOf('offer'));
+    expect(text(byId(SK, 'mechanism'))).not.toContain('Looking for');
     const offer = bandText(SK, 'offer');
     expect(offer).toContain('Three Things to Bring to the Discovery Session');
     expect(offer).not.toContain('Options Are Shaped with You in a Discovery Session');

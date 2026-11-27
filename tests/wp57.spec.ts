@@ -70,22 +70,19 @@ const AUDIENCE_STRIP_PAGES = [
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 test.describe('G2, YouthWIDE: "Built Around What Funders and Agencies Ask" is gone; its verification detail is in the glance', () => {
-  test('the page has no C8 band: no #features, no data-relieves, none of the old cards’ headings or sentences, and the heading is nowhere in the build', async ({ page }) => {
+  // WP175 (owner decision Q1 (a) of 2026-11-28: the missing C5–C14 components are restored in their shortest form): the C8 band is back under its heading, one card per ranked pain (data-relieves P1 to P3,
+  // in the challenge band's order), a gain creator and "How It Works in Three Steps"; each card is one sentence, so the earlier card's evaluator sentence stays off (the glance's Reporting row says it, below).
+  test('the C8 band is back: #features under its heading, one card per pain P1 to P3, the evaluator sentence still only in the glance; the heading is on this page alone', async ({ page }) => {
     await open(page, YOUTHWIDE);
-    await expect(page.locator('#features')).toHaveCount(0);
-    await expect(page.locator('[data-relieves]')).toHaveCount(0);
+    await expect(page.locator('#features')).toHaveCount(1);
+    expect(await page.locator('#features [data-relieves]').evaluateAll((els) => els.map((e) => e.getAttribute('data-relieves')))).toEqual(['P1', 'P2', 'P3']);
     const main = compact(await page.locator('main').textContent());
-    for (const gone of [
-      'Built Around What Funders and Agencies Ask',
-      'Progress Your Evaluators Can Check',
-      'Tracks That Follow Employer Demand',
-      'Success is measured against agreed outcomes, including paid work, not attendance alone',
-      'Your evaluators can check results against payslips',
-    ]) {
-      expect(main, gone).not.toContain(gone);
+    for (const back of ['Built Around What Funders and Agencies Ask', 'Progress Your Evaluators Can Check', 'Tracks That Follow Employer Demand', 'Success is measured against agreed outcomes, including paid work, not attendance alone']) {
+      expect(main.split(back).length - 1, back).toBe(1);
     }
+    expect(main).not.toContain('Your evaluators can check results against payslips');
     const stillThere = sitePages().filter((p) => p.html.includes('Built Around What Funders and Agencies Ask')).map((p) => p.route);
-    expect(stillThere, 'no page carries the old heading').toEqual([]);
+    expect(stillThere, 'only YouthWIDE carries the heading').toEqual(['/programs/youthwide/']);
   });
 
   test('the three ranked pains still stand in the challenge band, P1 to P3 in order', async ({ page }) => {
@@ -117,22 +114,29 @@ test.describe('G2, YouthWIDE: "Built Around What Funders and Agencies Ask" is go
 
   // WP166-B (marketing review R2-01): the proof band (klein) moved up, right after The Challenge (it sat right before the carousel), so the run is checked from the carousel: carousel (airy),
   // photographs (white), questions (ice); the proof band stays on the page, after the problem band.
-  test('the band rhythm holds after the removal: carousel (airy), photographs (white), questions (ice); no two dark bands meet', async ({ page }) => {
+  // WP175 (owner decision Q1 (a) of 2026-11-28): the proof band follows the governments band (CMF C7 after C6), and the restored C8 band (airy, its "How It Works in Three Steps" sub-band on the same ground
+  // through its Tone wrapper) sits between the photographs and the questions: carousel (airy), photographs (white), C8 (airy), questions (ice).
+  test('the band rhythm holds: governments (airy) then the proof band (klein); carousel (airy), photographs (white), C8 (airy), questions (ice); no two dark bands meet', async ({ page }) => {
     await open(page, YOUTHWIDE);
     const order = await bandsOf(page);
     const ids = order.map((b) => b.id);
     const at = ids.indexOf('proof-band');
     expect(at, 'the proof band is on the page').toBeGreaterThanOrEqual(0);
     expect(order.slice(at - 1, at + 1)).toEqual([
-      { id: 'problem', tone: 'white' },
+      { id: 'governments', tone: 'airy' },
       { id: 'proof-band', tone: 'klein' },
     ]);
     const cases = ids.indexOf('cases');
     expect(order.slice(cases, cases + 3)).toEqual([
       { id: 'cases', tone: 'airy' },
       { id: 'in-the-field', tone: 'white' },
-      { id: 'faq', tone: 'ice' },
+      { id: 'features', tone: 'airy' },
     ]);
+    expect(ids.slice(ids.indexOf('features'), ids.indexOf('features') + 3)).toEqual(['features', 'how-it-works', 'faq']);
+    const bg = await page.evaluate(() => ['features', 'how-it-works', 'faq'].map((id) => getComputedStyle(document.getElementById(id)!).backgroundColor));
+    expect(bg[1], 'How It Works sits on the C8 band’s ground').toBe(bg[0]);
+    expect(bg[2], 'the questions band has its own ground').not.toBe(bg[1]);
+    expect(order[ids.indexOf('faq')].tone).toBe('ice');
     const dark = order.map((b) => b.tone === 'klein' || b.tone === 'deep-ink');
     for (let i = 1; i < order.length; i++) expect(dark[i] && dark[i - 1], `${order[i - 1].id} then ${order[i].id}`).toBe(false);
   });
