@@ -96,8 +96,11 @@ test.describe('Home: the carousel is four slides (item 1)', () => {
     await expect(card).toContainText('16 countries and territories');
     expect(count(compact(await page.locator('main').textContent()), '130,000+'), 'the 130,000+ is stated once on Home').toBe(1);
     // WP55 (owner decisions 2026-10-17/18): SC-03 is on Home once, as the "CodersTrust Around the World" strip's Bangladesh tile ("Most delivery has been in Bangladesh"); the carousel never carries it
+    // WP175 (owner decision Q2 (a) of 2026-11-28): the track record's one-line origin is back; it names SC-03's regions, not its count, so the count is still the hero card's alone
     await expect(page.locator('#results [data-fact~="SC-03"]')).toHaveCount(0);
-    await expect(page.locator('main [data-fact~="SC-03"]')).toHaveCount(1);
+    await expect(page.locator('main [data-fact~="SC-03"]')).toHaveCount(2);
+    await expect(page.locator('#guide p.guide__from[data-fact="ID-02 SC-03"]')).not.toContainText('16');
+    expect(count(compact(await page.locator('main').textContent()), '16 countries and territories'), 'the count is stated once on Home').toBe(1);
     await expect(page.locator('main [data-world-strip] [data-tile="bangladesh"][data-fact~="SC-03"]')).toHaveCount(1);
   });
 

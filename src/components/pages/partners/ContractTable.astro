@@ -4,6 +4,7 @@ import SectionHeader from '../../ui/SectionHeader.astro';
 import Icon from '../../system/Icon.astro';
 import { linkAttrs } from '../../../lib/url';
 import { factPart } from './partners';
+import type { CopyBlock } from '../../../data/copy';
 
 /**
  * P3 per-contract table (R2-M5; C7), built only from GV-01 to GV-06 and GV-11.
@@ -97,12 +98,19 @@ interface Props {
   id?: string;
   /** A text link under the table's note (WP37: "Read the Her Power Case Study", the first row's program). */
   more?: { label: string; href: string };
+  /**
+   * WP175 (owner decision Q3 (a) of 2026-11-28: every C7 opens with a one-line trial lead): the trial in one line (TRIAL_LEAD in src/data/copy.ts), the first line under the heading, before `lead`,
+   * with its facts in data-fact. The table is the Governments page's C7 band. Left out, the header reads as before.
+   */
+  trialLead?: CopyBlock;
 }
-const { title, lead, id = 'contracts', more } = Astro.props;
+const { title, lead, id = 'contracts', more, trialLead } = Astro.props;
 ---
 
 <Section id={id} aria-labelledby={`${id}-h`}>
-  <SectionHeader id={`${id}-h`} eyebrow="Government Contracts" title={title} lead={lead} />
+  <SectionHeader id={`${id}-h`} eyebrow="Government Contracts" title={title} lead={lead} leadLast={!!trialLead}>
+    {trialLead && <p class="sh__lead lead ct__trial" data-fact={trialLead.facts.join(' ')}>{trialLead.text}</p>}
+  </SectionHeader>
   <section class="ct" aria-label="Government contracts: CodersTrust scope and training scope" tabindex="0" data-scroll data-stack data-reveal>
     <table>
       <caption class="sr-only">Six government contracts: what CodersTrust does under each and the training scope. Apart from CodersTrust’s own Her Power figures, counts are contract training scopes, not delivered scale.</caption>

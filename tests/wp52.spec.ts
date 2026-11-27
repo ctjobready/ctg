@@ -485,9 +485,11 @@ test.describe('Home: slide 2 is plain sentences (items 17 and 25; four since WP6
 
 test.describe('Home: "Progress You Can Check" promises reports (item 36) and the recognition band gives the AWS item its line (item 24)', () => {
   // WP166-A (marketing review R1-03, R1-17): the Includes band and its "Progress You Can Check" card are gone; the hero lead promises the monthly reports
-  test('"Monthly reports show progress toward paid work." is gone with its card (WP166-A); the hero lead promises the reports', async ({ page }) => {
+  // WP175 (owner decision of 2026-11-28, Q1 (a)): the Includes band and the card are back (C8), the line in this item's words ("show", not "will show")
+  test('"Monthly reports show progress toward paid work." is back with its card (WP175); the hero lead promises the reports', async ({ page }) => {
     await open(page, HOME);
-    await expect(page.locator('#features')).toHaveCount(0);
+    const card = page.locator('#features li.card', { has: page.locator('h3', { hasText: 'Progress You Can Check' }) });
+    await expect(card.locator('.card__text')).toHaveText('Monthly reports show progress toward paid work.');
     await expect(page.locator('.hh__lead')).toContainText('with monthly reports on their progress');
     expect(pagesWith('Monthly reports will show progress toward paid work')).toEqual([]);
   });
@@ -593,12 +595,14 @@ test.describe('Development Partners: the glance is three tiles and the +10 tile 
 });
 
 test.describe('The Track Record bands of Governments and Investors start with their record (items 34 and 35)', () => {
-  test('Governments: the band opens with the origin line and has no empathy line yet; the retired line is not its WP175 line', async ({ page }) => {
+  test('Governments: the band opens with its WP175 empathy line, then the origin line; the retired line is not its WP175 line', async ({ page }) => {
     // WP175 (owner decision Q2 (a) of 2026-11-28): every C5 opens with an empathy line again, each page its own fresh line (EMPATHY has a key for every conversion page); the retired line is not one of them
     expect(EMPATHY.governments).not.toMatch(/must (?:show up as|produce) young people in work/);
     await open(page, GOV);
-    await expect(page.locator('#guide p.lead')).toHaveCount(0);
-    expect(compact(await page.locator('#guide .pg__copy > :first-child').textContent())).toBe('From a Copenhagen launch to work in 16 countries and territories.'); // WP64 rework RW2 (coordinator): the heading says "Since 2014", so the line does not
+    // WP175 (package A): the band prints the line, then the origin line, which still opens the band's record
+    await expect(page.locator('#guide p.lead')).toHaveCount(1);
+    expect(compact(await page.locator('#guide .pg__copy > :first-child').textContent())).toBe(EMPATHY.governments);
+    expect(compact(await page.locator('#guide .pg__copy > :nth-child(2)').textContent())).toBe('From a Copenhagen launch to work in 16 countries and territories.'); // WP64 rework RW2 (coordinator): the heading says "Since 2014", so the line does not
     await expect(page.locator('#guide h2')).toHaveText('We’ve Built This Path Since 2014');
   });
 

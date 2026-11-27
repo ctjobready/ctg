@@ -181,11 +181,11 @@ test.describe('Governments speaks to any ministry', () => {
     expect(await mainText(page)).not.toContain('9,000+');
   });
 
-  test('both onward links read "How YouthWIDE Works" and open the top of the YouthWIDE page', async ({ page }) => {
+  // WP175 (owner decision of 2026-11-28: CMF v3, GEO directly after C1): the route link between the hero and "What Is CodersTrust?" is gone; the delivery band's "See How YouthWIDE Works" is the page's onward link
+  test('the onward link reads "See How YouthWIDE Works" and opens the top of the YouthWIDE page; no route link sits between the hero and GEO (WP175)', async ({ page }) => {
     await open(page, 'partner-with-us/governments/');
-    const route = page.locator('#route-link a');
-    await expect(route).toHaveText(/How YouthWIDE Works/);
-    expect(await route.getAttribute('href')).toMatch(/\/programs\/youthwide\/$/);
+    await expect(page.locator('#route-link')).toHaveCount(0);
+    await expect(page.locator('main a', { hasText: 'YouthWIDE Works' })).toHaveCount(1);
     const mech = page.locator('#mechanism a', { hasText: 'See How YouthWIDE Works' });
     await expect(mech).toHaveCount(1);
     expect(await mech.getAttribute('href')).toMatch(/\/programs\/youthwide\/$/);
@@ -358,7 +358,10 @@ test.describe('smaller wording fixes', () => {
     }
     await open(page, '');
     // WP166-A (marketing review R1-07, R1-17): Home's cost band ("Training and Evidence Fall Behind While You Wait") is folded into the pains it proves, and the Includes band, whose reporting card read "Monthly reports show progress toward paid work.", is gone
-    await expect(page.locator('#cost, #features')).toHaveCount(0);
+    // WP175 (owner decision of 2026-11-28, Q1 (a)): the Includes band is back (C8), with the same reporting card; its steps say "follow-up surveys", and no tracer wording comes back (checked above)
+    await expect(page.locator('#cost')).toHaveCount(0);
+    expect(compact(await page.locator('#features').textContent())).toContain('Monthly reports show progress toward paid work.');
+    expect(compact(await page.locator('#how-it-works').textContent())).toContain('follow-up surveys at 3, 6 and 12 months');
     expect(compact(await page.locator('#faq').textContent())).toContain('follow-up survey results at 3, 6 and 12 months'); // WP147: it read "follow-up surveys"
     await open(page, 'programs/youthwide/');
     // WP39 (cycle-16 review): YouthWIDE's features band was three short cards; the second said "follow-up surveys". WP57 (cycle-29 review, GPT-6.1 Sol G2): the band is gone, and the glance's Reporting row says them

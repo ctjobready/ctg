@@ -166,8 +166,11 @@ test('Minor 1: the Case Studies index and the JobReady Platform closing lines as
 
 test('Minor 1 (WP136): Home asks once, in the "First Step" line; its closing band leaves the ask to that line', () => {
   const t = main('index.html');
-  expect(t).toContain('Start with a multi-cohort pilot, agree the scorecard up front and decide on expansion from the evidence.');
+  // WP175 (owner decision of 2026-11-28: CMF v3; Q1 (a)): the closing band's own line is gone (Home's risk-reversal band, C12, is back and says it), so the band carries no ask of its own either way
+  expect(t).not.toContain('Start with a multi-cohort pilot, agree the scorecard up front and decide on expansion from the evidence.');
+  expect(t).toContain('Start with a Multi-Cohort Pilot, Then Decide on Evidence');
   expect(t).not.toContain(`decide on expansion from the evidence. ${ASK}`);
+  expect(t).not.toContain(`Decide on Evidence ${ASK}`);
   expect(t).toContain(`First Step A discovery session. ${ASK}`);
 });
 

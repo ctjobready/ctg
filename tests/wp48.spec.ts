@@ -278,7 +278,7 @@ test.describe('"Reporting and Review" (item 7)', () => {
   const SENTENCE = 'For supported cohorts, monthly reports track progress; quarterly reviews guide corrective action and any expansion.';
   const callout = (page: Page) => page.locator('.callout', { has: page.locator('.eyebrow', { hasText: 'Reporting and Review' }) });
 
-  test('Foundations has no "Reporting and Review" callout; its "Progress You Can See Every Month" card already says monthly reports and a quarterly steering review; the due-diligence band is followed by the call to action', async ({ page }) => {
+  test('Foundations has no "Reporting and Review" callout; its "Progress You Can See Every Month" card already says monthly reports and a quarterly steering review; the restored risk band is followed by the call to action (WP175)', async ({ page }) => {
     await open(page, 'partner-with-us/foundations/');
     await expect(callout(page)).toHaveCount(0);
     const text = await mainText(page);
@@ -287,7 +287,9 @@ test.describe('"Reporting and Review" (item 7)', () => {
     // WP49 (cycle-24 review): the card is two sentences: "Monthly reports and quarterly reviews keep progress visible. Where agreed, SDG-mapped reporting follows your CSR framework, with co-branded certificates and events." (tests/wp49.spec.ts)
     expect(text).toContain('Monthly reports and quarterly reviews keep progress visible');
     const ids = await sectionIds(page);
-    expect(ids.indexOf('cta')).toBe(ids.indexOf('due-diligence') + 1);
+    // WP175 (owner decision of 2026-11-28: CMF v3): the due-diligence view sits with the questions (C9) and the restored risk-reversal band (C12) comes directly before the call to action (C13)
+    expect(ids.indexOf('due-diligence')).toBe(ids.indexOf('faq') + 1);
+    expect(ids.indexOf('cta')).toBe(ids.indexOf('risk') + 1);
   });
 
   test('Development Partners keeps the callout: it is the one place the page names the quarterly reviews', async ({ page }) => {
@@ -335,7 +337,11 @@ test.describe('Home: the proof strip and the evidence band (items 9 and 13)', ()
     const order = await page.evaluate(() => Array.from(document.querySelectorAll('[data-cmf]')).map((el) => el.getAttribute('data-cmf')));
     expect(order.filter((c) => c === 'C7'), 'one C7 proof position').toHaveLength(1);
     expect(order[order.indexOf('C6') + 1], 'the proof band follows the mechanism band').toBe('C7');
-    expect(order[order.indexOf('C7') + 1]).toBe('C5'); // WP166-A (marketing review R1-08, R1-19): the track record and the recognition are one band (C5), which follows the proof band; it was a separate RECOGNITION band
+    // WP166-A (marketing review R1-08, R1-19): the track record and the recognition are one band (C5), which followed the proof band; it was a separate RECOGNITION band
+    // WP175 (owner decision of 2026-11-28: CMF v3, C1 to C14 in order): that one band (C5) comes before the mechanism band again, and the restored Includes band (C8) follows the proof band
+    expect(order.filter((c) => c === 'C5'), 'one track-record band').toHaveLength(1);
+    expect(order[order.indexOf('C5') + 1]).toBe('C6');
+    expect(order[order.indexOf('C7') + 1]).toBe('C8');
   });
 
   test('the Impact Survey 2026 page keeps the pathways and the 70.8%', async ({ page }) => {
@@ -469,18 +475,24 @@ test.describe('Programs: the H1 (item 21)', () => {
 });
 
 test.describe('Home: the low-risk band, the FAQ trial answer, the hero line, the first slide, the Imagine card and the track record (items 23, 24, 26, 28, 30 and 31)', () => {
-  test('the "Low Risk" band is gone from Home and its line leads the closing band, which keeps one primary button and two text routes; the audience pages keep their own risk bands; no two dark bands meet', async ({ page }) => {
+  // WP175 (owner decision of 2026-11-28: CMF v3, C12 directly before C13; Q1 (a) supersedes WP48's cut): the risk band is back on Home, headed as before, with the band's default points; the closing band's stand-in line
+  // is gone with it, and the band still keeps one primary button and two text routes
+  test('the risk band is back on Home (WP175) and the closing band has no line of its own; the closing band keeps one primary button and two text routes; the audience pages keep their own risk bands; no two dark bands meet', async ({ page }) => {
     await open(page, '');
-    await expect(page.locator('#risk')).toHaveCount(0);
-    expect(await mainText(page)).not.toContain('Start with a Multi-Cohort Pilot, Then Decide on Evidence');
+    await expect(page.locator('#risk')).toHaveCount(1);
+    await expect(page.locator('#risk h2')).toHaveText('Start with a Multi-Cohort Pilot, Then Decide on Evidence');
+    await expect(page.locator('#risk .eyebrow')).toHaveText('Managed Rollout');
+    expect(await mainText(page)).not.toContain('Low Risk');
     const cta = page.locator('#cta');
-    expect(compact(await cta.locator('.cta-band__text').textContent())).toBe('Start with a multi-cohort pilot, agree the scorecard up front and decide on expansion from the evidence.'); // WP136 (owner answer 2026-10-31: the "two suitable times" request appears once per page, in Home's "First Step" line; WP135 had added it here too)
+    await expect(cta.locator('.cta-band__text')).toHaveCount(0);
+    expect(await mainText(page)).not.toContain('Start with a multi-cohort pilot, agree the scorecard up front and decide on expansion from the evidence.'); // WP136 (owner answer 2026-10-31: the "two suitable times" request appears once per page, in Home's "First Step" line; WP135 had added it here too)
     await expect(cta.locator('h2')).toHaveText('Let’s Design Your First Cohort');
     await expect(cta.locator('.btn--primary, .btn--inverse')).toHaveCount(1);
     expect(await texts(page, '#cta .cta-band__route')).toHaveLength(2);
     const order = await page.evaluate(() => Array.from(document.querySelectorAll('[data-cmf]')).map((el) => el.getAttribute('data-cmf')));
     // WP166-A (marketing review R1-08): the questions (C9) follow the offer they defend, then the closing call to action and the next steps
-    expect(order.slice(order.indexOf('C11')), 'the offer, the questions, the closing call to action, the next steps').toEqual(['C11', 'C9', 'C13', 'C14']);
+    // WP175 (owner decision of 2026-11-28: CMF v3): the questions come before the difference band and the offer again, and the risk reversal sits between the offer and the call to action
+    expect(order.slice(order.indexOf('C9')), 'the questions, the difference, the offer, the risk reversal, the closing call to action, the next steps').toEqual(['C9', 'C10', 'C11', 'C12', 'C13', 'C14']);
     const adjacent = await page.evaluate(() => {
       const bands = Array.from(document.querySelectorAll('main section.band')).filter((b) => !b.parentElement?.closest('section.band'));
       const dark = bands.map((b) => /\bband--(klein|deep-ink)\b/.test(b.className));

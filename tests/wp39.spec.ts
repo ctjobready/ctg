@@ -363,9 +363,10 @@ test.describe('Investors: the platform-status question points to "What JobReady 
   });
 
   // WP166-A (marketing review R1-03): Home's "Our Approach" repeated its hero lead and definition and is gone, so Home has none either; the other pages keep theirs
-  test('every other page keeps its "Our Approach" statement (WP166-A: Home no longer has one)', async ({ page }) => {
+  // WP175 (owner decision Q5 of 2026-11-28: Home and Investors get a statement too): Home's C6 opens with its crafted statement again (POSITIONING.home)
+  test('every other page keeps its "Our Approach" statement (WP175: Home has one again)', async ({ page }) => {
     await open(page, '');
-    await expect(page.locator('#mechanism .pos__text'), 'home').toHaveCount(0);
+    await expect(page.locator('#mechanism .pos__text'), 'home').toHaveCount(1);
     for (const route of ['partner-with-us/governments/', 'partner-with-us/development-partners/', 'partner-with-us/foundations/', 'partner-with-us/universities/', 'partner-with-us/employers/', 'partner-with-us/local-partners/', 'programs/youthwide/', 'programs/jobready-campus/', 'programs/jobready-work/', 'programs/superkids/']) {
       await open(page, route);
       await expect(page.locator('#mechanism .pos__text'), route || 'home').toHaveCount(1);

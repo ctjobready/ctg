@@ -145,14 +145,19 @@ test.describe('Foundations: the first and third "What Your Cohort Grant Gets" ca
     expect(await mainText(page)).not.toContain('using the agreed scorecard');
   });
 
-  test('the third card is two sentences on PD-08 and PD-18; the scorecard and the due-diligence confirmation are still stated elsewhere on the page', async ({ page }) => {
+  // WP175 (owner decision of 2026-11-28: CMF C8 relieves each pain 1:1, then names the gain creators): the third card relieves P3 with its first sentence (PD-08); its second sentence, the SDG-mapped reporting with
+  // co-branded certificates and events (PD-18), is the gain-creator card after it, word for word; the scorecard is stated by the first card and the restored risk band (the second card relieves P2 now)
+  test('the third card is the monthly reports and quarterly reviews (PD-08), and the SDG-reporting sentence is the gain creator after it (PD-18, WP175); the scorecard and the due-diligence confirmation are still stated elsewhere on the page', async ({ page }) => {
     await open(page, FOUND);
     const card = page.locator('#features li.card').nth(2);
     await expect(card.locator('h3')).toHaveText('Progress You Can See Every Month');
-    expect(await texts(page, '#features li.card:nth-child(3) p')).toEqual(['Monthly reports and quarterly reviews keep progress visible. Where agreed, SDG-mapped reporting follows your CSR framework, with co-branded certificates and events.']);
-    expect(((await card.getAttribute('data-fact')) ?? '').split(' ').sort()).toEqual(['PD-08', 'PD-18']);
-    // the scorecard: the second card (the Accountability callout was removed in WP90, triage A2); the due-diligence confirmation: the Due Diligence band
-    await expect(page.locator('#features li.card:nth-child(2) h3')).toHaveText('A Pilot Scorecard Agreed with You');
+    expect(await texts(page, '#features li.card:nth-child(3) p')).toEqual(['Monthly reports and quarterly reviews keep progress visible.']);
+    expect(((await card.getAttribute('data-fact')) ?? '').split(' ').sort()).toEqual(['PD-08']);
+    expect(await texts(page, '#features li.card:nth-child(4) p')).toEqual(['Where agreed, SDG-mapped reporting follows your CSR framework, with co-branded certificates and events.']);
+    expect(await page.locator('#features li.card').nth(3).getAttribute('data-fact')).toBe('PD-18');
+    // the scorecard: the first card ("Results are measured against the agreed scorecard") and the risk band's "Scorecard Thresholds" (the Accountability callout was removed in WP90, triage A2); the due-diligence confirmation: the Due Diligence band
+    await expect(page.locator('#features li.card:nth-child(1)')).toContainText('Results are measured against the agreed scorecard');
+    await expect(page.locator('#risk')).toContainText('Scorecard Thresholds');
     // WP166-B (marketing review R3-21): the brief band's line names the contracting entities, then safeguarding and reporting (it said "The contracting entity, safeguarding arrangements and reporting plan are confirmed for your program.").
     expect(compact(await page.locator('#due-diligence .lead').textContent())).toBe('CodersTrust contracts through CT USA, Inc. in the United States or CodersTrust Bangladesh Ltd. in Bangladesh, depending on the program’s country and your requirements. Safeguarding and reporting are specified for each program.');
     const text = await mainText(page);
@@ -269,9 +274,10 @@ test.describe('The risk-reversal bands: "Managed Rollout" (item 11)', () => {
       await expect(page.locator('#risk .eyebrow'), route).toHaveText('Managed Rollout');
     }
     // Development Partners and Foundations have no risk band, so they never carried the eyebrow
+    // WP175 (owner decision of 2026-11-28: CMF v3, C12 before C13): Development Partners, Foundations and Home have their risk bands back, with the same one eyebrow
     for (const route of [DP, FOUND, '']) {
       await open(page, route);
-      await expect(page.locator('#risk'), route || 'home').toHaveCount(0);
+      await expect(page.locator('#risk .eyebrow'), route || 'home').toHaveText('Managed Rollout');
     }
     expect(sitePages().filter((p) => /Low Risk/.test(visible(p.html))).map((p) => p.route)).toEqual([]);
   });
@@ -520,8 +526,9 @@ test.describe('Home: the curriculum line (item 23)', () => {
   test('"Tracks Chosen from Employer Demand" says "A curriculum designed to follow the skills employers ask for as entry-level tasks change."; no page keeps "An AI-ready curriculum is designed to follow"; the AI-ready positioning stays where it is explained', async ({ page }) => {
     await open(page, '');
     // WP166-A (marketing review R1-17): the Includes band and its "Tracks Chosen from Employer Demand" card are gone; the earlier wording stays off every page (below)
-    await expect(page.locator('#features')).toHaveCount(0);
-    expect(await mainText(page)).not.toContain('Tracks Chosen from Employer Demand');
+    // WP175 (owner decision of 2026-11-28, Q1 (a)): the band and the card are back, with this item's line word for word
+    const card = page.locator('#features li.card', { has: page.locator('h3', { hasText: 'Tracks Chosen from Employer Demand' }) });
+    await expect(card.locator('.card__text')).toHaveText('A curriculum designed to follow the skills employers ask for as entry-level tasks change.');
     expect(sitePages().filter((p) => visible(p.html).includes('An AI-ready curriculum is designed to follow')).map((p) => p.route)).toEqual([]);
     await open(page, 'partner-with-us/employers/');
     // WP166-B (marketing review R3-08): the card goes on to the AIvolve programs (PA-07, an offering) after the same clause (it ended "... to work with AI tools.").

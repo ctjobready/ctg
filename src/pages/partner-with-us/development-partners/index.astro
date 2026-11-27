@@ -39,6 +39,13 @@
  * WP66 (owner request 2026-10-20): the Track Record band's list is the signed-agreement sentence for development partners and NGOs (SC-11c, `signed` on PartnerGuideBand: "CodersTrust has signed MOUs, agreements or contracts with ... development partners and NGOs."), under the two tiles;
  * the band's heading says "Since 2014", so the sentence leaves the year to it.
  * WP67 (cycle-38 review, Sonnet): the "Where They Work" card closes "..., as agreed in the program scope." (WHERE_THEY_WORK_TEXT, partners.ts, the same text Home, the shared mechanism band and YouthWIDE print).
+ * WP175 (owner decisions of 28 November 2026: every conversion page follows CMF v3, C1 to C14, in order and coverage; each band is tagged with its component through the Tone wrapper):
+ *   C1 hero · GEO (the route link under the hero is a second link of the delivery band) · GLANCE Results at a Glance (a recorded row, doc 06 P4 v1.23)
+ *   C2–C4 the problem band, declared compressed (owner decision 2026-10-15, recast 2026-11-28), with its three ranked pains and the C3 transition line last
+ *   C5 the track record: the empathy line, the one-line origin, the tiles and the signed agreements, the strips, the method line last · C6 the delivery model, the positioning statement first
+ *   C7 Proof in Practice, led by the one-line trial lead (Q3 (a)), then Adrian Afraham's story (it sat before the problem band) · C8 one card per pain in rank order, a gain creator (the recognized credential)
+ *   and How It Works in Three Steps · C9 the questions and the due-diligence view · C10 What Makes CodersTrust Different · C11 the offer · C12 "Start with a Pilot, Then Decide on Evidence" (restored), with
+ *   the "Reporting and Review" callout under it · C13 · C14 the steps and the first-step line.
  */
 import PartnerGlance from '../../../components/pages/partners/PartnerGlance.astro';
 import Icon from '../../../components/system/Icon.astro';
@@ -60,11 +67,30 @@ import PartnerGuideBand from '../../../components/pages/partners/PartnerGuideBan
 import SubBand from '../../../components/pages/partners/SubBand.astro';
 import Callout from '../../../components/pages/partners/Callout.astro';
 import OfferCards from '../../../components/pages/partners/OfferCards.astro';
-import RouteLink from '../../../components/pages/partners/RouteLink.astro';
+import HowItWorks from '../../../components/pages/partners/HowItWorks.astro';
 import Reinforcement from '../../../components/pages/partners/Reinforcement.astro';
 import PageEnhancements from '../../../components/pages/partners/PageEnhancements.astro';
+import DifferenceBand from '../../../components/sections/DifferenceBand.astro';
+import RiskReversalBand from '../../../components/sections/RiskReversalBand.astro';
+import Tone from '../../../components/pages/home/Tone.astro';
 import { HOURS, KOSOVO_WOW_TILE_LABEL, LINKS, UNDP_YES_TILE_LABEL, WHERE_THEY_WORK_TEXT, funderOptionCards, meta } from '../../../components/pages/partners/partners';
-import { DELIVERY_MODEL, HEADLINE, MICRO_COMMITMENT, POSITIONING, PROGRAM_SCOPE_STATEMENT_EXAMS, PROGRAM_SIZES_NOTE, READ_THE_EVIDENCE, TRACK_MENU, VALUE_PROPOSITION, WB_KOSOVO } from '../../../data/copy';
+import {
+  C3_TRANSITION,
+  DELIVERY_MODEL,
+  EMPATHY,
+  HEADLINE,
+  METHOD,
+  MICRO_COMMITMENT,
+  POSITIONING,
+  PROGRAM_SCOPE_STATEMENT_EXAMS,
+  PROGRAM_SIZES_NOTE,
+  READ_THE_EVIDENCE,
+  STEPS,
+  TRACK_MENU,
+  TRIAL_LEAD,
+  VALUE_PROPOSITION,
+  WB_KOSOVO,
+} from '../../../data/copy';
 import { fact } from '../../../data/facts';
 import { faqJsonLd } from '../../../lib/faq';
 import { cta } from '../../../lib/mailto';
@@ -92,6 +118,15 @@ const benchmarkNote = `${benchmark[0].toUpperCase()}${benchmark.slice(1)}.`;
 // WP152 (Opus XHigh run 6): the "How We Reach Them" card is the delivery explanation and names the facilitators trained by CodersTrust (Training of Trainers); the funding-ends answer is Q10-later ("CodersTrust-trained facilitators").
 // WP166-B (marketing review R3-22): the cost answer is this page's own (Q8-development-partners: Q8-route plus the accountability commitment, ACCOUNTABILITY, which was an orphan callout).
 const FAQ_IDS = ['Q1-development-partners', 'Q6-development-partners', 'Q3', 'Q10-later', 'Q8-development-partners'];
+
+/**
+ * WP175 (C8d): How It Works in Three Steps, the shared STEPS (restored from e90f9629^). The delivery model's "What We Deliver" card states the 100 hours per certification, once on the page (WP49), so step 2 leaves the
+ * figure to it and opens "Training, then ..."; the build stops if STEPS[1] stops opening with the hours clause.
+ */
+const HOURS_CLAUSE = /^\d+ training hours per certification, including exam preparation, then /;
+if (!HOURS_CLAUSE.test(STEPS[1].text)) throw new Error('Development Partners: STEPS[1] no longer opens "<hours> training hours per certification, including exam preparation, then"; update the steps');
+// WP175 DRAFT: owner approval pending (step 2 without its hours clause).
+const steps = [STEPS[0], { title: STEPS[1].title, text: STEPS[1].text.replace(HOURS_CLAUSE, 'Training, then ') }, STEPS[2]];
 ---
 
 <LandingLayout
@@ -103,134 +138,171 @@ const FAQ_IDS = ['Q1-development-partners', 'Q6-development-partners', 'Q3', 'Q1
   stickyCta={{ label: primary.label, href: primary.href }}
 >
   <!-- C1 · Identity hook -->
-  <HeroBand
-    audience="For Development Partners and NGOs"
-    title={HEADLINE.developmentPartners}
-    lead={VALUE_PROPOSITION.developmentPartners}
-    cta={{ label: primary.label, href: primary.href }}
-    artSeed="partners-development"
-  />
-  <RouteLink kicker="See the Program" label="How YouthWIDE Works" href={LINKS.youthwide} />
-  <!-- GEO · What is CodersTrust? -->
-  <DefinitionBand />
-  <PartnerGlance
-    lead={[{ id: 'RC-02', href: '/impact/independent-evaluation/', note: benchmarkNote, also: ['RC-06a'] }, { id: 'OC-01', href: '/impact/outcomes-2026/' }, { id: 'PR-03', href: LINKS.caseUndp, label: UNDP_YES_TILE_LABEL }]}
-    more={[]}
-  >
-    <!-- WP166-B (marketing review R3-23): the "See the Evidence Behind the Results" band was one qualifying sentence and two links the tiles above already carry; they are this note under the tiles. -->
-    <p>The trial evaluated CodersTrust’s WSDFM program; the survey describes what completers who responded report about work and income.</p>
-    <p class="cluster"><a class="link" href={linkAttrs(LINKS.trial).href}>Read the Trial Results<Icon name="arrow-right" size={16} /></a><a class="link" href={linkAttrs(LINKS.outcomes).href}>Impact Survey 2026<Icon name="arrow-right" size={16} /></a></p>
-  </PartnerGlance>
-  <LearnerVoice story="adrian-afraham" excerpt="Following my completion of the course, I successfully secured my very first freelance job, which was followed by an enticing job offer." program="Graphic Designing course, CodersTrust Bangladesh" tone="white" summary={false} />
+  <Tone cmf="C1">
+    <HeroBand
+      audience="For Development Partners and NGOs"
+      title={HEADLINE.developmentPartners}
+      lead={VALUE_PROPOSITION.developmentPartners}
+      cta={{ label: primary.label, href: primary.href }}
+      artSeed="partners-development"
+    />
+  </Tone>
+  <!-- GEO · What is CodersTrust? WP175: directly under the hero; the "How YouthWIDE Works" route link that sat between them is one of the delivery band's links now. -->
+  <Tone cmf="GEO"><DefinitionBand /></Tone>
+  <!-- WP175: Results at a Glance is a recorded row (doc 06 P4 v1.23), between GEO and C2. -->
+  <Tone cmf="GLANCE">
+    <PartnerGlance
+      lead={[{ id: 'RC-02', href: '/impact/independent-evaluation/', note: benchmarkNote, also: ['RC-06a'] }, { id: 'OC-01', href: '/impact/outcomes-2026/' }, { id: 'PR-03', href: LINKS.caseUndp, label: UNDP_YES_TILE_LABEL }]}
+      more={[]}
+    >
+      <!-- WP166-B (marketing review R3-23): the "See the Evidence Behind the Results" band was one qualifying sentence and two links the tiles above already carry; they are this note under the tiles. -->
+      <p>The trial evaluated CodersTrust’s WSDFM program; the survey describes what completers who responded report about work and income.</p>
+      <p class="cluster"><a class="link" href={linkAttrs(LINKS.trial).href}>Read the Trial Results<Icon name="arrow-right" size={16} /></a><a class="link" href={linkAttrs(LINKS.outcomes).href}>Impact Survey 2026<Icon name="arrow-right" size={16} /></a></p>
+    </PartnerGlance>
+  </Tone>
 
-  <!-- C2 · Problem -->
-  <ProblemBand
-    title="Show Who Reaches Paid Work"
-    bluf="You can count who enrolled. Showing who is earning, and keeping hard-to-reach groups engaged, is the hard part."
-    factIds={['PX-01']}
-  >
-    <GainsPains
-      slot="lead"
-      pains={[
-        // WP48 (cycle-23 review): "Enrollment targets are often met, while employment results lag behind." was a claim about the whole sector; the card says only what the page can stand behind.
-        // WP49 (cycle-24 review): the two card titles were broad sector conclusions too ("Skills Programs Miss Their Employment Targets", "The Hardest-to-Reach Groups Drop Out"), as was the band heading; they say what the partner needs, and the bodies stay.
-        // WP60 (cycle-32 review, Gemini GM6): the card's body is the need, "Connect training to a first job, freelance client or business." (it said "Enrollment is easy to count. Paid work is not.", which repeated the band's lead above it).
-        // WP114 (Opus Low run 6): the body states the reader's obstacle, not an instruction (the card band describes obstacles).
-        { q: 'Training must connect to paid work', text: 'Training often ends before a first job, freelance client or business.' },
-        { q: 'Barriers can interrupt training', text: 'Computer skills, devices, connectivity and social barriers can keep learners from joining or staying.' },
-        { q: 'Outcomes are hard to audit', text: 'Without a baseline and documentary evidence, evaluators have little to check.' },
+  <!-- C2–C4 · Problem, declared compressed (WP47, owner decision 2026-10-15; recast 2026-11-28): no Cost of Waiting (C3) or Imagine (C4) band; the band keeps pains P1 to P3 (data-pain, WP175) and ends with the C3
+       transition line. -->
+  <Tone cmf="C2-C4 (compressed)">
+    <ProblemBand
+      title="Show Who Reaches Paid Work"
+      bluf="You can count who enrolled. Showing who is earning, and keeping hard-to-reach groups engaged, is the hard part."
+      factIds={['PX-01']}
+      transition={C3_TRANSITION}
+    >
+      <GainsPains
+        slot="lead"
+        pains={[
+          // WP48 (cycle-23 review): "Enrollment targets are often met, while employment results lag behind." was a claim about the whole sector; the card says only what the page can stand behind.
+          // WP49 (cycle-24 review): the two card titles were broad sector conclusions too ("Skills Programs Miss Their Employment Targets", "The Hardest-to-Reach Groups Drop Out"), as was the band heading; they say what the partner needs, and the bodies stay.
+          // WP60 (cycle-32 review, Gemini GM6): the card's body is the need, "Connect training to a first job, freelance client or business." (it said "Enrollment is easy to count. Paid work is not.", which repeated the band's lead above it).
+          // WP114 (Opus Low run 6): the body states the reader's obstacle, not an instruction (the card band describes obstacles).
+          { id: 'P1', q: 'Training must connect to paid work', text: 'Training often ends before a first job, freelance client or business.' },
+          { id: 'P2', q: 'Barriers can interrupt training', text: 'Computer skills, devices, connectivity and social barriers can keep learners from joining or staying.' },
+          { id: 'P3', q: 'Outcomes are hard to audit', text: 'Without a baseline and documentary evidence, evaluators have little to check.' },
+        ]}
+      />
+    </ProblemBand>
+  </Tone>
+
+  <!-- C5 · Guide. WP175 (Q2 (a)): empathy (EMPATHY.developmentPartners, a fresh line: WP44 had removed the doc 04 line) → the one-line origin (the SC-03 tile carries the count, so the line names the regions, WP150) →
+       authority (the SC-01 and SC-03 tiles, the signed agreements, the world strip, the logo strip) → the method line (METHOD.developmentPartners, which WP166-B R3-29 had taken out) as the band's last line. -->
+  <Tone cmf="C5">
+    <PartnerGuideBand
+      empathy={EMPATHY.developmentPartners}
+      stats={['SC-01', 'SC-03']}
+      signed="SC-11c"
+      partnerGroup="development"
+      strip
+      method={METHOD.developmentPartners}
+      methodLast
+    />
+  </Tone>
+
+  <!-- C6 · Mechanism (YouthWIDE), the positioning statement first. WP166-B (marketing review R3-24): the approach lead closes with the page's one delivery-model sentence (DELIVERY_MODEL; it led the first "What Your Portfolio Gets" card).
+       WP175: "How YouthWIDE Works" (the route link that sat under the hero) is a second link beside "How Our Model Works". -->
+  <Tone cmf="C6">
+    <MechanismBand
+      title="An Integrated Path from Training to Earnings"
+      positioning={POSITIONING.developmentPartners}
+      lead={`YouthWIDE is the program through which funders deploy the CodersTrust model in a country; it builds on results from earlier programs in Bangladesh and Kosovo. ${DELIVERY_MODEL.text}`}
+      blocks={[
+        { label: 'Who We Reach', title: 'Priority Groups', text: 'Priority groups are agreed with you in co-design; women are a priority in every program.', icon: 'users' },
+        { label: 'How We Reach Them', title: 'Existing Labs and Colleges', text: 'Outreach and selection with local partners, then blended delivery by facilitators trained by CodersTrust (Training of Trainers).', icon: 'graduation-cap' },
+        { label: 'What We Deliver', title: 'Certification Preparation and Mentoring', text: `${HOURS} training hours per certification, including exam preparation, then three months of milestone-based mentoring and placement support.`, icon: 'award' },
+        { label: 'Where They Work', title: 'Local, Remote and Global Work', text: WHERE_THEY_WORK_TEXT, icon: 'globe' },
+      ]}
+      link={{ label: 'How Our Model Works', href: LINKS.model }}
+      moreLinks={[{ label: 'How YouthWIDE Works', href: LINKS.youthwide }]}
+    />
+  </Tone>
+
+  <!-- C7 · Proof. WP175 (Q3 (a)): the case-study carousel leads with the one-line trial lead (TRIAL_LEAD); the trial and survey tiles stay in the glance above (WP166-B, R3-23). Adrian Afraham's story follows the carousel,
+       inside C7 (it sat between the glance and the problem band). -->
+  <Tone cmf="C7">
+    <CaseStudyCarousel
+      title="Proof in Practice"
+      lead={TRIAL_LEAD.text}
+      items={[
+        { title: 'Women’s Skill Development for Freelancing Marketplace (WSDFM)', program: 'Commissioned by Porticus', factId: 'PR-01', href: LINKS.caseWsdfm },
+        { title: 'Women in Online Work, Kosovo', program: 'World Bank Group', factId: 'PR-02', statLabel: KOSOVO_WOW_TILE_LABEL, note: WB_KOSOVO, href: LINKS.caseWow },
+        { title: 'Her Power', program: 'ICT Division / Department of ICT (DoICT)', factId: 'PR-05', href: LINKS.caseHerPower },
       ]}
     />
-  </ProblemBand>
-
-  <!-- C3 (Cost of Waiting) and C4 (Imagine) are left to Home since WP47 (owner decision 2026-10-15). -->
-
-  <!-- C5 · Guide. WP44 (cycle-21 review): no empathy line; the band opens with the origin line. WP51 (cycle-26 review): that line is the one Governments and Foundations print, "Since 2014, from a Copenhagen launch to programs in 15 countries and territories." (ORIGIN_SHORT), in place of the launch alone. -->
-  <!-- WP166-B (marketing review R3-29): no TalentLEAP method line in the track record (it supported no claim there; How Our Model Works links the model). -->
-  <PartnerGuideBand
-    stats={['SC-01', 'SC-03']}
-    signed="SC-11c"
-    partnerGroup="development"
-    strip
-  />
-
-  <!-- C6 · Mechanism (YouthWIDE). WP166-B (marketing review R3-24): the approach lead closes with the page's one delivery-model sentence (DELIVERY_MODEL; it led the first "What Your Portfolio Gets" card). -->
-  <MechanismBand
-    title="An Integrated Path from Training to Earnings"
-    positioning={POSITIONING.developmentPartners}
-    lead={`YouthWIDE is the program through which funders deploy the CodersTrust model in a country; it builds on results from earlier programs in Bangladesh and Kosovo. ${DELIVERY_MODEL.text}`}
-    blocks={[
-      { label: 'Who We Reach', title: 'Priority Groups', text: 'Priority groups are agreed with you in co-design; women are a priority in every program.', icon: 'users' },
-      { label: 'How We Reach Them', title: 'Existing Labs and Colleges', text: 'Outreach and selection with local partners, then blended delivery by facilitators trained by CodersTrust (Training of Trainers).', icon: 'graduation-cap' },
-      { label: 'What We Deliver', title: 'Certification Preparation and Mentoring', text: `${HOURS} training hours per certification, including exam preparation, then three months of milestone-based mentoring and placement support.`, icon: 'award' },
-      { label: 'Where They Work', title: 'Local, Remote and Global Work', text: WHERE_THEY_WORK_TEXT, icon: 'globe' },
-    ]}
-    link={{ label: 'How Our Model Works', href: LINKS.model }}
-  />
-
-  <!-- C7 · Proof: the trial and survey results are the tiles above, with their note and links (WP166-B, R3-23: the evidence strip is folded into the glance) -->
-  <CaseStudyCarousel
-    title="Proof in Practice"
-    items={[
-      { title: 'Women’s Skill Development for Freelancing Marketplace (WSDFM)', program: 'Commissioned by Porticus', factId: 'PR-01', href: LINKS.caseWsdfm },
-      { title: 'Women in Online Work, Kosovo', program: 'World Bank Group', factId: 'PR-02', statLabel: KOSOVO_WOW_TILE_LABEL, note: WB_KOSOVO, href: LINKS.caseWow },
-      { title: 'Her Power', program: 'ICT Division / Department of ICT (DoICT)', factId: 'PR-05', href: LINKS.caseHerPower },
-    ]}
-  />
+    <LearnerVoice story="adrian-afraham" excerpt="Following my completion of the course, I successfully secured my very first freelance job, which was followed by an enticing job offer." program="Graphic Designing course, CodersTrust Bangladesh" tone="white" summary={false} />
+  </Tone>
 
   <!-- C8 · Features to benefits. WP39 (cycle-16 review): three short cards in place of the concern / inclusion / benefit matrix, in the order of the three pains in C2 (training must connect to paid work; barriers can interrupt training;
        outcomes are hard to audit). Each sentence rests on the register: PD-01 (mentoring and placement support alongside the training; WP49, cycle-24 review: the first card says only that CodersTrust connects them in one program (WP65 wording), because the 100 hours
        per certification are in the delivery model above), PD-02 and PD-10 (outreach and selection, tracks from employer demand), PD-12 (safeguarding specified per program), PD-08 and PD-09 (monthly reports, baseline, follow-up surveys,
-       documentary evidence where available). -->
-  <IncludesBand
-    title="What Your Portfolio Gets"
-    cards={[
-      // WP163 (owner answers of 3 November 2026): one exam fee per trainee is included, any further attempts set per program, and the card states the delivery model once on this page (DELIVERY_MODEL).
-      // WP166-B (marketing review R3-24, R3-05): the delivery-model sentence is in How It Works; the delivery card names the track menu once (TRACK_MENU, PD-10).
-      { icon: 'route', title: 'Training, Mentoring and Placement Support', text: 'Certification exam preparation and one exam fee per trainee (any further attempts set per program), three months of mentoring and placement support in one program.', facts: ['PD-01', 'PD-02a'] },
-      { icon: 'map-pin', title: 'Accessible Local Delivery', text: `Outreach, accessible selection and tracks chosen from employer demand, with safeguarding agreed for each program. ${TRACK_MENU.text}`, facts: ['PD-02', 'PD-10', 'PD-12'] },
-      { icon: 'clipboard-check', title: 'Progress Your Evaluators Can Check', text: 'Baseline data, follow-up surveys and monthly reports, with documentary evidence where available.', facts: ['PD-08', 'PD-09'] },
-    ]}
-    scope={PROGRAM_SCOPE_STATEMENT_EXAMS}
-  />
+       documentary evidence where available). WP175: each card carries the pain it relieves (data-relieves); the gain creator is doc 04 4.1's first (certification exam preparation → a supported route to a recognized credential);
+       How It Works in Three Steps follows the cards (restored from e90f9629^). -->
+  <Tone cmf="C8">
+    <IncludesBand
+      title="What Your Portfolio Gets"
+      cards={[
+        // WP163 (owner answers of 3 November 2026): one exam fee per trainee is included, any further attempts set per program, and the card states the delivery model once on this page (DELIVERY_MODEL).
+        // WP166-B (marketing review R3-24, R3-05): the delivery-model sentence is in How It Works; the delivery card names the track menu once (TRACK_MENU, PD-10).
+        { icon: 'route', title: 'Training, Mentoring and Placement Support', text: 'Certification exam preparation and one exam fee per trainee (any further attempts set per program), three months of mentoring and placement support in one program.', painId: 'P1', facts: ['PD-01', 'PD-02a'] },
+        { icon: 'map-pin', title: 'Accessible Local Delivery', text: `Outreach, accessible selection and tracks chosen from employer demand, with safeguarding agreed for each program. ${TRACK_MENU.text}`, painId: 'P2', facts: ['PD-02', 'PD-10', 'PD-12'] },
+        { icon: 'clipboard-check', title: 'Progress Your Evaluators Can Check', text: 'Baseline data, follow-up surveys and monthly reports, with documentary evidence where available.', painId: 'P3', facts: ['PD-08', 'PD-09'] },
+        // doc 04 4.1 gain creator, in doc 06's words for it ("each track prepares learners for an industry certification → A supported route to a recognized credential"); it names no vendor, so no CertNote
+        { icon: 'badge-check', title: 'A Supported Route to a Recognized Credential', text: 'Each track prepares learners for an industry certification exam.', facts: ['PD-02', 'PD-03'] },
+      ]}
+      scope={PROGRAM_SCOPE_STATEMENT_EXAMS}
+    />
+    <HowItWorks steps={steps} />
+  </Tone>
 
-  <!-- C9 · Objections -->
-  <FAQBand
-    audience="development-partners"
-    ids={FAQ_IDS}
-    title="Questions Partners Ask"
-  />
+  <!-- C9 · Objections, with the due-diligence view (governance; WP34, cycle-11 review: one item and a link stand in for the four diligence cards). WP175: it sat between the offer and the call to action. -->
+  <Tone cmf="C9">
+    <FAQBand
+      audience="development-partners"
+      ids={FAQ_IDS}
+      title="Questions Partners Ask"
+    />
+    <DueDiligenceView brief id="due-diligence" />
+  </Tone>
 
-  <!-- C10 · Differentiation: the positioning statement opens C6; the comparison table is on Home and Investors only (WP30c). -->
+  <!-- C10 · Differentiation (WP175, owner decision of 2026-11-28): the short band, doc 04 4.1's USPs 1, 2 and 4 (USP 3, the credential, is the C8 gain creator above); no comparison table (WP47). -->
+  <Tone cmf="C10"><DifferenceBand usps={['evidence', 'earners', 'infrastructure']} /></Tone>
 
-  <!-- C11 · Offer -->
-  <OfferCards eyebrow="Options" title="Choose Where to Start" lead={PROGRAM_SIZES_NOTE} cards={funderOptionCards()} recommended={0} />
-  <!-- WP166-B (marketing review R3-22): the "Accountability" callout is the cost answer's second sentence in the FAQ above (Q8-development-partners). -->
+  <!-- C11 · Offer. WP166-B (marketing review R3-22): the "Accountability" callout is the cost answer's second sentence in the FAQ above (Q8-development-partners). -->
+  <Tone cmf="C11">
+    <OfferCards eyebrow="Options" title="Choose Where to Start" lead={PROGRAM_SIZES_NOTE} cards={funderOptionCards()} recommended={0} />
+  </Tone>
 
-  <!-- C12 · Risk reversal (immediately before C13): WP34 (cycle-11 review): the four diligence cards repeated what this page's bands state, so one item and a link stand in. WP45 (cycle-21 review): the hub's reporting band (#review-cycle) is gone,
-       so the callout below states the reporting and review once and has no link to it (the due-diligence item above links to Governance and Accountability). -->
-  <DueDiligenceView brief id="due-diligence" />
-  <SubBand>
-    <Callout eyebrow="Reporting and Review">
-      <p data-fact="PD-08 PD-11">For supported cohorts, monthly reports track progress; quarterly reviews guide corrective action and any expansion.</p>
-    </Callout>
-  </SubBand>
+  <!-- C12 · Risk reversal, immediately before C13 (WP175: restored; RiskReversalBand had been removed in WP17, 948453bd). Doc 04 4.1 C12 "Start with a pilot. Decide on evidence.", in the Title Case form Universities and YouthWIDE
+       print, with the band's default points (pilot review, scorecard thresholds, the funder's decision, independent evaluation). The "Reporting and Review" callout (WP45, WP40: the one place the page names the quarterly
+       reviews, tied to PD-08 and PD-11) that stood in for the band stays, tucked under it. -->
+  <Tone cmf="C12">
+    <RiskReversalBand title="Start with a Pilot, Then Decide on Evidence" />
+    <SubBand pull>
+      <Callout eyebrow="Reporting and Review">
+        <p data-fact="PD-08 PD-11">For supported cohorts, monthly reports track progress; quarterly reviews guide corrective action and any expansion.</p>
+      </Callout>
+    </SubBand>
+  </Tone>
 
   <!-- C13 · Call to action -->
-  <CTABand
-    id="cta"
-    heading="Let’s Design Your First Cohort"
-    cta={{ label: primary.label, href: primary.href }}
-    secondary={{ label: READ_THE_EVIDENCE, href: LINKS.evidence }}
-    micro={MICRO_COMMITMENT}
-  >
-    <SessionAgenda />
-  </CTABand>
+  <Tone cmf="C13">
+    <CTABand
+      id="cta"
+      heading="Let’s Design Your First Cohort"
+      cta={{ label: primary.label, href: primary.href }}
+      secondary={{ label: READ_THE_EVIDENCE, href: LINKS.evidence }}
+      micro={MICRO_COMMITMENT}
+    >
+      <SessionAgenda />
+    </CTABand>
+  </Tone>
 
   <!-- C14 · Next steps -->
   <!-- WP46 (cycle-22 review): the grant-funded timing (training starts 6–8 weeks after signing, procurement on the agency's own timeline; WP100: nothing is said about the time before signing) is stated once on this page, in the steps and lead below; the C13 urgency line that repeated it is gone (as on Foundations, whose steps band is the same). -->
-  <NextStepsBand timing={false} />
-  <Reinforcement logos={false} reminder={false} />
+  <Tone cmf="C14">
+    <NextStepsBand timing={false} />
+    <Reinforcement logos={false} reminder={false} />
+  </Tone>
 
   <PageEnhancements />
 </LandingLayout>

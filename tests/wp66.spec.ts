@@ -325,7 +325,8 @@ test.describe('Audience pages: the Track Record band closes with the sentence fo
     expect(compact(await page.locator('#guide .pg__list li').first().textContent())).toBe('CodersTrust has been National University’s official training partner for digital career skills and credentials since 2023.');
     await open(page, FOUNDATIONS);
     // WP166-B (marketing review R3-28): the names line opens the band (in place of the origin line), so the list is the BIGD line and the new sentence (it was three items, the names line second).
-    await expect(page.locator('#guide .pg__copy > .pg__origin')).toHaveText('Organizations that have worked with CodersTrust include the Rockefeller Foundation, DANIDA and Porticus.');
+    // WP175 (owner decision Q2 (a) of 2026-11-28): the origin line is back before the names line, so the names line is the band's second record line (.pg__origin)
+    await expect(page.locator('#guide .pg__copy > .pg__origin').nth(1)).toHaveText('Organizations that have worked with CodersTrust include the Rockefeller Foundation, DANIDA and Porticus.');
     const items = page.locator('#guide .pg__list li');
     await expect(items).toHaveCount(2);
     expect(compact(await items.nth(0).textContent())).toContain('evaluated CodersTrust’s WSDFM program');

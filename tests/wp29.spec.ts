@@ -114,7 +114,9 @@ test.describe('Governments: Her Power is a row of the contracts table and a link
     await open(page, 'partner-with-us/governments/');
     expect(await page.locator('#contracts a', { hasText: 'Read the Her Power Case Study' }).getAttribute('href')).toMatch(/\/impact\/case-studies\/her-power\/$/);
     const ids = await page.evaluate(() => Array.from(document.querySelectorAll('main section[id]')).map((s) => s.id));
-    expect(ids.indexOf('features')).toBe(ids.indexOf('contracts') + 1);
+    // WP175 (owner decision of 2026-11-28: CMF v3): the learner story moved into C7, directly after the contracts table, so "What Your Agency Gets" (C8) follows it
+    expect(ids.indexOf('learner-voice')).toBe(ids.indexOf('contracts') + 1);
+    expect(ids.indexOf('features')).toBe(ids.indexOf('learner-voice') + 1);
   });
 
   for (const vp of [DESKTOP, MOBILE]) {

@@ -247,19 +247,23 @@ test.describe('benefit lines start with a capital letter', () => {
   });
 
   // WP166-A (marketing review R1-17): Home's three "Includes" cards are gone; the mechanism band's four card sentences carry the rule there
-  test('Home’s mechanism card sentences open with a capital letter or a figure (the three "Includes" cards are gone since WP166-A)', async ({ page }) => {
+  // WP175 (owner decision of 2026-11-28, Q1 (a)): the "Includes" band is back (C8: one card per funder pain and a gain creator), so its four card sentences carry the rule too
+  test('Home’s mechanism and "Includes" card sentences open with a capital letter or a figure (the "Includes" cards are back since WP175)', async ({ page }) => {
     await open(page, '');
-    await expect(page.locator('#features')).toHaveCount(0);
+    const cards = await texts(page, '#features .card__text');
+    expect(cards.length, 'home has four "Includes" card sentences').toBe(4);
+    for (const l of cards) expect(l, `home: "${l.slice(0, 40)}…"`).toMatch(/^[A-Z0-9]/);
     const lines = await texts(page, '#mechanism .model__text');
     expect(lines.length, 'home has four mechanism card sentences').toBe(4);
     for (const l of lines) expect(l, `home: "${l.slice(0, 40)}…"`).toMatch(/^[A-Z0-9]/);
   });
 
   // WP39 (cycle-16 review): "What Your Portfolio Gets" is three short cards (tests/wp39.spec.ts holds their words); the sentence is its own paragraph below the card heading
-  test('Development Partners "What Your Portfolio Gets": three cards, each a heading with its sentence below it', async ({ page }) => {
+  // WP175 (owner decision of 2026-11-28: CMF C8 is one card per pain, then the gain creators): a fourth card, the gain creator "A Supported Route to a Recognized Credential" (doc 04 4.1), follows the three
+  test('Development Partners "What Your Portfolio Gets": three cards and a gain creator, each a heading with its sentence below it', async ({ page }) => {
     await open(page, 'partner-with-us/development-partners/');
     await expect(page.locator('#features h2')).toHaveText('What Your Portfolio Gets');
-    expect(await texts(page, '#features .card__title')).toEqual(['Training, Mentoring and Placement Support', 'Accessible Local Delivery', 'Progress Your Evaluators Can Check']);
+    expect(await texts(page, '#features .card__title')).toEqual(['Training, Mentoring and Placement Support', 'Accessible Local Delivery', 'Progress Your Evaluators Can Check', 'A Supported Route to a Recognized Credential']);
     const sameLine = await page.locator('#features li.card').first().evaluate((card) => {
       const title = card.querySelector('.card__title')!.getBoundingClientRect();
       const text = card.querySelector('.card__text')!.getBoundingClientRect();
@@ -284,9 +288,11 @@ test.describe('Home', () => {
   });
 
   // WP48 (cycle-23 review): Home's low-risk band is gone (the audience pages keep theirs); its one line, "Start with a multi-cohort pilot, agree the scorecard up front and decide on expansion from the evidence.", leads the closing band (tests/wp48.spec.ts)
-  test('the low-risk band is gone from Home; no heading is split into "Start with a Multi-Cohort Pilot. Decide on Evidence"', async ({ page }) => {
+  // WP175 (owner decision of 2026-11-28: CMF v3, C12 before C13; Q1 (a)): the band is back on Home, headed as before WP48 ("Start with a Multi-Cohort Pilot, Then Decide on Evidence")
+  test('the low-risk band is back on Home (WP175); no heading is split into "Start with a Multi-Cohort Pilot. Decide on Evidence"', async ({ page }) => {
     await open(page, '');
-    await expect(page.locator('#risk')).toHaveCount(0);
+    await expect(page.locator('#risk')).toHaveCount(1);
+    await expect(page.locator('#risk h2')).toHaveText('Start with a Multi-Cohort Pilot, Then Decide on Evidence');
     expect(await mainText(page)).not.toContain('Start with a Multi-Cohort Pilot. Decide on Evidence');
     await open(page, 'partner-with-us/local-partners/');
     await expect(page.locator('#risk h2')).toHaveText('Start with a Pilot Cohort, Then Decide on Evidence');

@@ -414,8 +414,9 @@ test.describe('RW2 (coordinator): "Since 2014" is said once in the bands whose h
 
   // WP166-B: two bands changed. Foundations (marketing review R3-28) opens with the funders who have worked with CodersTrust in place of the origin line, so it has no origin line; Employers (R3-06) is headed
   // "Employers and Partners We Work With", so its origin line keeps the year (ORIGIN_SHORT; it read the LINE under the heading HEADING). The rule this test holds is unchanged: "since 2014" is said once in the band.
+  // WP175 (owner decision Q2 (a) of 2026-11-28: every C5 carries ORIGIN in one line): Foundations prints the origin line again, before the funders sentence, so it has the line under the heading HEADING (no year)
   const BAND_STATE: Record<string, { heading: string; line: string | null }> = {
-    [FOUNDATIONS]: { heading: HEADING, line: null },
+    [FOUNDATIONS]: { heading: HEADING, line: LINE },
     [EMPLOYERS]: { heading: 'Employers and Partners We Work With', line: LINE }, // WP166-B (marketing review R3-06): Employers' band is headed "Employers and Partners We Work With"; its signed-agreement sentence carries "since 2014" (WP66), so the origin line is the year-less one it printed before ("since 2014" once in the band, WP64)
   };
   for (const route of BANDS) {

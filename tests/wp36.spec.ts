@@ -306,7 +306,8 @@ test.describe('TalentLEAP and YouthWIDE', () => {
 test.describe('the ranked pains are statements, not questions', () => {
   const PAGES: [string, string[]][] = [
     // WP166-B (marketing review R3-40): "Graduates Struggle to Find Work" is gone from Governments (the 19M+ tile, PX-02, states the graduates' pain), so two pains are left (it was three).
-    ['partner-with-us/governments/', ['Training Budgets Do Not Show Up as Earnings', 'Trainer and Curriculum Capacity Takes Time to Build']],
+    // WP175 (owner decision Q4 (a) of 2026-11-28): it is P1 again, so the page states three ranked pains (CMF C2b, matched 1:1 by C8)
+    ['partner-with-us/governments/', ['Graduates Struggle to Find Work', 'Training Budgets Do Not Show Up as Earnings', 'Trainer and Curriculum Capacity Takes Time to Build']],
     // WP49 (cycle-24 review): the first two Development Partners pains were broad sector conclusions; they say what the partner needs (tests/wp49.spec.ts)
     ['partner-with-us/development-partners/', ['Training Must Connect to Paid Work', 'Barriers Can Interrupt Training', 'Outcomes Are Hard to Audit']],
     // WP50 (cycle-25 review): the first Foundations pain is "Earnings Must Be Tracked, Not Only Training Hours" (it was "Grants Buy Training Hours, but Rarely Earnings"; tests/wp50.spec.ts)

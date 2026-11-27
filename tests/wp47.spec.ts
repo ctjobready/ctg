@@ -109,16 +109,18 @@ test.describe('Audience pages: no Cost of Waiting, Imagine or Compare band (item
 });
 
 test.describe('Home: the router is the band after the carousel; Cost of Waiting, Imagine and Compare stay, with less padding (items 5-8)', () => {
-  test('the role router sits directly after "Results and Programs", before the problem band; one router; the hero keeps its audience links; the offer band is directly before the closing call to action (WP48: the risk band is gone from Home)', async ({ page }) => {
+  test('the role router sits directly after "Results and Programs", before the problem band; one router; the hero keeps its audience links; the offer and the risk band come directly before the closing call to action (WP175)', async ({ page }) => {
     await open(page, '');
     const order = await page.evaluate(() => Array.from(document.querySelectorAll('[data-cmf]')).map((el) => el.getAttribute('data-cmf')));
     expect(order.filter((c) => c === 'ROUTER'), 'one router').toHaveLength(1);
     await expect(page.locator('#router')).toHaveCount(1);
     expect(order.indexOf('ROUTER'), `router after the carousel (order: ${order.join(' > ')})`).toBe(order.indexOf('RESULTS') + 1);
-    expect(order[order.indexOf('ROUTER') + 1], 'problem band after the router').toBe('C2');
+    // WP175 (owner decision of 2026-11-28: CMF v3, C2 to C4 declared compressed into the problem band on Home): the problem band is tagged "C2-C4 (compressed)"
+    expect(order[order.indexOf('ROUTER') + 1], 'problem band after the router').toBe('C2-C4 (compressed)');
     // WP48 (cycle-23 review): the risk band (C12) is gone from Home; its one line leads the closing band (tests/wp48.spec.ts), so the offer (C11) is directly before the call to action
     // WP166-A (marketing review R1-08, owner approval of 21 November 2026): the FAQ (C9) follows the offer it defends, so the page ends offer, FAQ, closing call to action, next steps
-    expect(order.slice(order.indexOf('C11')), 'offer, FAQ, closing call to action, next steps').toEqual(['C11', 'C9', 'C13', 'C14']);
+    // WP175 (Q1 (a): the 2026-11-28 rules supersede both): the risk band is back, directly before the call to action, and the FAQ is before the offer again, so the page ends offer, risk reversal, call to action, next steps
+    expect(order.slice(order.indexOf('C11')), 'offer, risk reversal, closing call to action, next steps').toEqual(['C11', 'C12', 'C13', 'C14']);
     // WP49 (cycle-24 review): the investor card is "Investors", as in the menu, the footer and the hub (it was "Impact Investors")
     expect(await texts(page, '#router .cat__title')).toEqual(['Development Partners and NGOs', 'Governments', 'Foundations and CSR', 'Investors']);
     expect(await texts(page, 'nav[aria-label="Choose your audience"] a')).toEqual(['Development Partners', 'Governments', 'Foundations', 'Investors']);
@@ -134,11 +136,15 @@ test.describe('Home: the router is the band after the carousel; Cost of Waiting,
 
   // WP166-A (marketing review R1-07, R1-14, R1-15, R1-17; owner approval of 21 November 2026, item 1: "Home restructure: YES"): Cost of Waiting, Imagine, Compare and "What a Supported Youth Cohort Includes" are gone from Home
   // (the two research findings close pains 2 and 3 of the problem band; the training sentence is the mechanism band's "What We Deliver" card), which reverses this test's WP47 decision; the FAQ still does not ask the cost question
-  test('Cost of Waiting (C3), Imagine (C4), Compare (C10) and "What a Supported Youth Cohort Includes" are gone (WP166-A); the FAQ still does not ask what a supported cohort includes (Q8)', async ({ page }) => {
+  // WP175 (owner decision of 2026-11-28: CMF v3, Q1 (a)): "What a Supported Youth Cohort Includes" is back as C8; Cost of Waiting and Imagine stay gone (C2–C4 is declared compressed into the problem band) and so does
+  // the Compare table (C10 is the short #difference band)
+  test('Cost of Waiting (C3), Imagine (C4) and Compare (the C10 table) stay gone; "What a Supported Youth Cohort Includes" is back (WP175); the FAQ still does not ask what a supported cohort includes (Q8)', async ({ page }) => {
     await open(page, '');
     const ids = await sectionIds(page);
-    for (const id of ['cost', 'future', 'compare', 'features']) expect(ids, `#${id}`).not.toContain(id);
-    expect(await mainText(page)).not.toContain('What a Supported Youth Cohort Includes');
+    for (const id of ['cost', 'future', 'compare']) expect(ids, `#${id}`).not.toContain(id);
+    expect(ids).toContain('features');
+    expect(ids).toContain('difference');
+    await expect(page.locator('#features h2')).toHaveText('What a Supported Youth Cohort Includes');
     expect(await texts(page, '#faq summary')).toEqual(['Will This Work in Our Country?', 'Does the Trial Apply to Your Program?', 'How Do You Prove Outcomes?']);
     expect(await texts(page, '#faq summary')).not.toContain('What Does It Cost?');
   });
@@ -149,15 +155,23 @@ test.describe('Home: the router is the band after the carousel; Cost of Waiting,
     expect(await mainText(page)).not.toContain('A first cohort can show who is earning');
   });
 
-  test('the Track Record band opens with its eyebrow and its heading; the "You need more than enrollment numbers" line is gone, and its content stays', async ({ page }) => {
+  // WP175 (owner decision Q2 (a) of 2026-11-28: every C5 opens with an empathy line): the band opens with its eyebrow and heading, then a fresh empathy line (EMPATHY.home) and the one-line origin; the doc 04 line this
+  // item removed ("You need more than enrollment numbers ...", YouthWIDE's) stays off Home, and the TalentLEAP line closes the band (it is no longer in the mechanism band)
+  test('the Track Record band opens with its eyebrow and its heading, then its empathy line (WP175); the "You need more than enrollment numbers" line stays gone, and its content stays', async ({ page }) => {
     await open(page, '');
-    expect(await page.locator('#guide .guide__copy > *').evaluateAll((els) => els.slice(0, 2).map((e) => `${e.tagName} ${(e.textContent ?? '').trim()}`))).toEqual(['P Our Track Record', 'H2 We’ve Built This Path Since 2014']);
+    expect(await page.locator('#guide .guide__copy > *').evaluateAll((els) => els.slice(0, 4).map((e) => `${e.tagName} ${(e.textContent ?? '').trim()}`))).toEqual([
+      'P Our Track Record',
+      'H2 We’ve Built This Path Since 2014',
+      'P You want the training you fund to end in paid work, with evidence you can stand behind.',
+      'P From a Copenhagen launch to work across Asia, Africa, Europe and the Americas.',
+    ]);
     expect(await mainText(page)).not.toContain('You need more than enrollment numbers');
     const guide = compact(await page.locator('#guide').textContent());
     // WP166-A (marketing review R1-05, R1-18): the band opens with the signed-agreement sentence (SC-11; the launch story is About's) and the TalentLEAP line is in the mechanism band
     expect(guide).toContain('CodersTrust has signed MOUs, agreements or contracts with 70+ organizations');
     expect(guide).not.toContain('CodersTrust launched in 2014 in Copenhagen');
-    expect(compact(await page.locator('#mechanism').textContent())).toContain('How TalentLEAP Works');
+    expect(compact(await page.locator('#mechanism').textContent())).not.toContain('How TalentLEAP Works');
+    expect(guide).toContain('How TalentLEAP Works');
     expect(guide).toContain('Meet the Leadership Team');
     await expect(page.locator('#guide .guide__origin')).toHaveCount(1);
     // the heading, now directly under the eyebrow, is set in the same section-heading color as the other Home bands' titles

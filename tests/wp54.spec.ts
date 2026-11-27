@@ -70,7 +70,8 @@ test.describe('Governments: the third pain says capacity takes time to build; th
     await open(page, GOV);
     expect(HEADING).toBe(titleCase(HEADING));
     // WP166-B (marketing review R3-40): the "Graduates Struggle to Find Work" card is gone (the band's PX-02 tile states the graduates' problem), so this pain is the second of two (it was the third of three).
-    expect(await texts(page, '#problem .gp__q')).toEqual(['Training Budgets Do Not Show Up as Earnings', HEADING]);
+    // WP175 (owner decision Q4 (a) of 2026-11-28): "Graduates Struggle to Find Work" is P1 again, so this pain is the third of three again
+    expect(await texts(page, '#problem .gp__q')).toEqual(['Graduates Struggle to Find Work', 'Training Budgets Do Not Show Up as Earnings', HEADING]);
     const item = page.locator('#problem .gp__pains li', { has: page.locator('.gp__q', { hasText: HEADING }) });
     await expect(item).toHaveCount(1);
     expect(compact(await item.locator('.gp__a').textContent())).toBe('National delivery needs trained facilitators and localized curricula.');

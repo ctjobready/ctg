@@ -112,10 +112,12 @@ test.describe('Home: the trial slide leads with income and keeps its scope (item
   });
 
   // WP166-A (marketing review R1-03, R1-17): the Includes band and its "Progress You Can Check" card are gone; the hero lead makes the monthly-reports promise, and the page's one scope sentence closes the Mechanism band
-  test('"Progress You Can Check" is gone with the Includes band (WP166-A); the hero lead promises the monthly reports and the scope sentence stays', async ({ page }) => {
+  // WP175 (owner decision of 2026-11-28, Q1 (a)): the Includes band is back with its "Progress You Can Check" card, its one line unscoped as this item left it (the scope sentence closes the Mechanism band)
+  test('"Progress You Can Check" is back with the Includes band (WP175), in one line; the hero lead promises the monthly reports and the scope sentence stays', async ({ page }) => {
     await open(page, '');
-    await expect(page.locator('#features')).toHaveCount(0);
-    expect(await mainText(page)).not.toContain('Monthly reports show progress toward paid work.');
+    const card = page.locator('#features li.card', { has: page.locator('h3', { hasText: 'Progress You Can Check' }) });
+    await expect(card.locator('.card__text')).toHaveText('Monthly reports show progress toward paid work.');
+    expect((await mainText(page)).split('Monthly reports show progress toward paid work.').length - 1).toBe(1);
     await expect(page.locator('main .hh__lead')).toContainText('with monthly reports on their progress');
     await expect(page.locator('#mechanism .mech__scope')).toHaveText('Inclusions and reporting on this page are agreed in the program scope.');
   });

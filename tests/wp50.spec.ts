@@ -86,8 +86,10 @@ test.describe('Home: the challenge band and the positioning statement (items 1 a
     await open(page, '');
     await expect(page.locator('#mechanism h2')).toHaveText('One Path from Learning to Earning');
     // WP166-A (marketing review R1-03): Home no longer prints the statement ("Our Approach" repeated the hero lead and the definition); the source keeps it, unchanged
-    await expect(page.locator('#mechanism .pos__text')).toHaveCount(0);
+    // WP175 (owner decision Q5 of 2026-11-28): Home prints its crafted statement first in C6 again (package A)
+    await expect(page.locator('#mechanism .pos__text')).toHaveText(POSITIONING.home.text);
     expect(await mainText(page)).not.toMatch(/Many programs cover one step|self-paced courses or freelance matching/);
+    expect(await mainText(page)).not.toContain(expected);
   });
 
   test('none of the earlier wording is on any built page', () => {
@@ -211,12 +213,17 @@ test.describe('Foundations: the first pain and the track-record band (items 2 an
     expect(sitePages().filter((p) => visible(p.html).includes('Grants Buy Training Hours')).map((p) => p.route)).toEqual([]);
   });
 
-  test('the track-record band opens with the origin line ("Since 2014, ..."), not an empathy line', async ({ page }) => {
+  // WP175 (owner decision Q2 (a) of 2026-11-28: every C5 is empathy → ORIGIN → authority → method): the band opens with a fresh empathy line (EMPATHY.foundations), then the origin line (back), then the funders
+  // sentence (R3-28's opening, after it); the doc 04 line this item removed stays off every page
+  test('the track-record band opens with its fresh empathy line, then the origin line and the funders sentence (WP175); the retired line stays gone', async ({ page }) => {
     await open(page, FOUND);
-    await expect(page.locator('#guide p.lead')).toHaveCount(0);
+    await expect(page.locator('#guide p.lead')).toHaveCount(1);
     // WP166-B (marketing review R3-28): the band opens with the funders who have worked with CodersTrust, in place of the origin line (it opened with ORIGIN_LINE); still a record line, not an empathy line
-    expect(compact(await page.locator('#guide .pg__copy > :first-child').textContent())).toBe('Organizations that have worked with CodersTrust include the Rockefeller Foundation, DANIDA and Porticus.');
-    expect(compact(await page.locator('#guide').textContent())).not.toContain(ORIGIN_LINE);
+    expect(await page.locator('#guide .pg__copy > *').evaluateAll((els) => els.map((e) => (e.textContent ?? '').replace(/\s+/g, ' ').trim()))).toEqual([
+      EMPATHY.foundations,
+      ORIGIN_LINE,
+      'Organizations that have worked with CodersTrust include the Rockefeller Foundation, DANIDA and Porticus.',
+    ]);
     expect(await everything(page)).not.toContain('You want your grant to change a young person’s income');
     // WP175 (owner decision Q2 (a) of 2026-11-28): every C5 opens with an empathy line again, each page its own fresh line (EMPATHY has a key for every conversion page); the retired line is not one of them
     expect(EMPATHY.foundations).not.toContain('You want your grant to change a young person’s income');

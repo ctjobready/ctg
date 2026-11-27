@@ -43,9 +43,13 @@ test.describe('WP90 A1: SC-02 detail is shortened, the figures are unchanged', (
 });
 
 test.describe('WP90 A2: Foundations Accountability callout removed', () => {
-  test('the scorecard card stays and the callout does not', async ({ page }) => {
+  // WP175 (owner decision of 2026-11-28: CMF C8 relieves each pain 1:1): the second card relieves "Independent Evidence Is Hard to Find" again, so the scorecard card is gone; the scorecard is stated by the first card and
+  // the restored risk band ("Scorecard Thresholds"), and the Accountability callout stays gone
+  test('the scorecard is stated by the first card and the risk band (WP175: the scorecard card relieves no pain) and the callout does not come back', async ({ page }) => {
     await open(page, 'partner-with-us/foundations/');
-    await expect(page.locator('#features h3', { hasText: 'A Pilot Scorecard Agreed with You' })).toHaveCount(1);
+    await expect(page.locator('#features h3', { hasText: 'A Pilot Scorecard Agreed with You' })).toHaveCount(0);
+    await expect(page.locator('#features li.card').first()).toContainText('Results are measured against the agreed scorecard');
+    await expect(page.locator('#risk')).toContainText('Scorecard Thresholds');
     await expect(page.locator('#platform-grants')).not.toContainText('Accountability');
     await expect(page.locator('#platform-grants')).not.toContainText('every pilot is judged');
     // the Funding Route 2 callout stays

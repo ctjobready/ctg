@@ -93,11 +93,14 @@ const profile = (slug: string) => `about/team/${slug}/index.html`;
 
 /* ============================================================================================== */
 test.describe('Home: twelve bands, the offer at band 9 (R1-08, owner approval item 1)', () => {
+  // WP175 (owner decisions of 28 November 2026: every conversion page follows CMF v3, C1 to C14; Q1 (a): the 2026-11-28 rules supersede WP166-A's band order and cuts): Home is fifteen bands, C1 to C14 with the
+  // recorded rows and the declared C2–C4 compression; the track record (C5) is back before the mechanism, the questions (C9) before the offer, and the Includes (C8), difference (C10) and risk (C12) bands are back
+  // (tests/wp175-home.spec.ts holds the full CMF checks). The hero, the carousel, the router and the other R1 items above and below are unchanged.
   test('the bands run in the approved order, each with its heading', () => {
     const raw = html(HOME);
     const bands = [...raw.matchAll(/<div class="tone[^"]*" data-cmf="([^"]+)"/g)].map((m) => m[1]);
-    expect(bands).toEqual(['C1', 'GEO', 'RESULTS', 'ROUTER', 'C2', 'C6', 'C7', 'C5', 'C11', 'C9', 'C13', 'C14']);
-    expect(bands.indexOf('C11') + 1, 'the offer is band 9').toBe(9);
+    expect(bands).toEqual(['C1', 'GEO', 'RESULTS', 'ROUTER', 'C2-C4 (compressed)', 'C5', 'C6', 'C7', 'C8', 'C9', 'C10', 'C11', 'C12', 'C13', 'C14']);
+    expect(bands.indexOf('C11') + 1, 'the offer is band 12').toBe(12);
     const h2 = [...mainRaw(HOME).matchAll(/<h2\b[^>]*>([\s\S]*?)<\/h2>/g)].map((m) => visible(m[1]));
     const want = [
       'Proof at a Glance',
@@ -105,30 +108,36 @@ test.describe('Home: twelve bands, the offer at band 9 (R1-08, owner approval it
       'Results You Can Check',
       'What Brings You Here?',
       'Education Alone Is Not Leading to Jobs',
+      'We’ve Built This Path Since 2014',
       'One Path from Learning to Earning',
       'Proof in Practice',
       'Three Learners Who Turned Training into Paid Work',
-      'We’ve Built This Path Since 2014',
-      'Choose Where to Start',
+      'What a Supported Youth Cohort Includes',
       'Questions Partners Ask',
+      'What Makes CodersTrust Different',
+      'Choose Where to Start',
+      'Start with a Multi-Cohort Pilot, Then Decide on Evidence',
       'Let’s Design Your First Cohort',
       'What Happens Next',
     ];
     expect(h2.filter((h) => want.includes(h))).toEqual(want);
   });
 
-  test('the Cost of Waiting, Imagine, Compare, Includes and separate Recognition and World bands are gone, with "Our Approach" and the launch story', () => {
+  // WP175 (owner decisions of 28 November 2026, Q1 (a) and Q5): the Includes band (#features, "What a Supported Youth Cohort Includes") and the "Our Approach" statement (POSITIONING.home, a crafted statement) are back;
+  // the Cost of Waiting, Imagine and Compare bands, the old statement and the launch story stay gone (C2–C4 is a declared compression; C10 is the short #difference band, not the comparison table)
+  test('the Cost of Waiting, Imagine, Compare and separate Recognition and World bands are gone, with the old statement and the launch story; the Includes band and "Our Approach" are back (WP175)', () => {
     const raw = mainRaw(HOME);
-    for (const id of ['cost', 'future', 'compare', 'features']) expect(raw, `#${id}`).not.toMatch(new RegExp(`\\bid="${id}"`));
+    for (const id of ['cost', 'future', 'compare']) expect(raw, `#${id}`).not.toMatch(new RegExp(`\\bid="${id}"`));
+    expect(raw).toMatch(/\bid="features"/);
     const text = mainText(HOME);
+    expect(text).toContain('What a Supported Youth Cohort Includes');
+    expect(count(text, 'Our Approach')).toBe(1);
     for (const gone of [
       'Training and Evidence Fall Behind While You Wait',
       'What It Means',
       'Imagine the Next 12 Months',
       'Three illustrative scenarios, not case studies.',
       'How CodersTrust Compares with Self-Paced Courses',
-      'What a Supported Youth Cohort Includes',
-      'Our Approach',
       'CodersTrust connects training, mentoring and placement support for educated, unemployed and underemployed youth',
       'CodersTrust launched in 2014 in Copenhagen',
       'University Partners National University (official training partner',
@@ -219,12 +228,18 @@ test.describe('Home: twelve bands, the offer at band 9 (R1-08, owner approval it
     );
   });
 
-  test('the mechanism band carries the training sentence, the TalentLEAP line beside the model link and the page’s one scope sentence (R1-17, R1-18)', () => {
+  // WP175 (owner decision Q2 (a) of 2026-11-28: the method line is C5's last line, said once): the TalentLEAP line left the mechanism band for the track-record band (METHOD.home); the training sentence (R1-17) and
+  // the page's one scope sentence stay in the mechanism band
+  test('the mechanism band carries the training sentence and the page’s one scope sentence (R1-17); the TalentLEAP line is the track record’s last line (WP175)', () => {
     const mech = visible(byId(HOME, 'section', 'mechanism'));
     expect(mech).toContain('100 training hours per certification, including exam preparation, followed by three months of milestone-based mentoring and placement support. Each track’s work-entry plan is agreed before enrollment.');
     expect(mech).not.toContain('Industry certification exam preparation by track, then three months');
-    expect(mech.indexOf('How Our Model Works')).toBeLessThan(mech.indexOf('Our method organizes skills into career paths. We call it TalentLEAP.'));
-    expect(mech).toContain('How TalentLEAP Works');
+    expect(mech).toContain('How Our Model Works');
+    expect(mech).not.toContain('TalentLEAP');
+    expect(mainText(HOME)).not.toContain('Our method organizes skills into career paths. We call it TalentLEAP.');
+    const guide = visible(byId(HOME, 'section', 'guide'));
+    expect(guide.endsWith('Our TalentLEAP method organizes skills into career paths. How TalentLEAP Works')).toBe(true);
+    expect(count(mainText(HOME), 'How TalentLEAP Works')).toBe(1);
     expect(mech).toContain('Inclusions and reporting on this page are agreed in the program scope.');
     expect(count(mainText(HOME), 'are agreed in the program scope.')).toBe(1);
   });
