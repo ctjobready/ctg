@@ -168,7 +168,9 @@ test.describe('Item 3 (GPT-6.1 Sol, Gemini): Foundations’ fourth glance tile i
     const glance = compact(await page.locator('#glance').textContent());
     expect(glance).not.toMatch(/711|833|WSDFM program records|71% of enrolled women/); // WP99: the +10.3 tile’s label now names "CodersTrust’s WSDFM program", so the bare word WSDFM is no longer the test of a program-record tile
     // the card’s band still names the trial’s count beside the program record (RC-07 beside PR-01), and keeps its second card
-    expect(((await page.locator('#cases [data-fact]').first().getAttribute('data-fact')) ?? '').split(' ')).toEqual(expect.arrayContaining(['PR-01', 'RC-07', 'PR-05']));
+    // WP175-Z (owner decision Q3 (a) of 2026-11-28): the band's lead is the one-line trial lead, marked RC-01 RC-02 (CaseStudyCarousel `trialLead`), so the band's wrapper is the first marker after it
+    expect(await page.locator('#cases .sh__lead').getAttribute('data-fact')).toBe('RC-01 RC-02');
+    expect(((await page.locator('#cases [data-fact]:not(.sh__lead)').first().getAttribute('data-fact')) ?? '').split(' ')).toEqual(expect.arrayContaining(['PR-01', 'RC-07', 'PR-05']));
     expect(await texts(page, '#cases article .card__title')).toEqual(['Women’s Skill Development for Freelancing Marketplace (WSDFM)', 'Her Power']);
   });
 

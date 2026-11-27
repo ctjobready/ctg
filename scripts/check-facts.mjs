@@ -34,17 +34,17 @@
 //     thing in the C6 band (#mechanism): only its eyebrow and H2 may come first (never a lead line, diagram or other text); it reads exactly as the statement declared for THAT page
 //     (POSITION_WHOLE_STATEMENT: one crafted statement per page that carries the four CMF elements, for whom, the need, what CodersTrust does and how it differs, in the audience's own wording, not the
 //     literal "For … who need …; unlike …, we …" template); and it is the page's only statement, printed once (one .pos__text, and its words nowhere else in the page's text). Until WP175 the pages
-//     carried short site sentences (WP36 to WP155) or the audience sentence plus the verbatim [UNLIKE] closing; those wordings are refused by the self-tests. Home and Investors (no statement since WP166-A
-//     and WP39) are POSITION_PENDING_PAGES: their statements are declared and checked in full once the page shows one (packages A and B), and package Z makes them required; the NU Post Graduate
-//     Diploma carries none (S4-C2). The declared statements are distinct and share no sentence, and none uses the template's "For …" opening, "who need" or the retired [UNLIKE] sentence; negative self-tests below
-//   - ranked pains and the C8 map (review round 14, M4): Home, /partner-with-us/local-partners/ and /programs/youthwide/ state exactly three
-//     pains in the C2 band (#problem; list items data-pain="P1".."P3", in that order) and give the C8 band (#features) exactly one card for
-//     each (<li data-relieves="P1">.. since WP38/WP39; a <tr> row is still read), in the same order; rows without data-relieves are gain creators; WP57: YouthWIDE may carry no C8 band
-//     (PAIN_C8_OPTIONAL: its three-card band was removed in cycle 29; its C2 pains are still checked, and a C8 band it shows is held to the same rule); negative self-tests below
+//     carried short site sentences (WP36 to WP155) or the audience sentence plus the verbatim [UNLIKE] closing; those wordings are refused by the self-tests. WP175-Z: Home and Investors (no statement
+//     from WP166-A and WP39 until packages A and B gave them one) are [POSITION] pages like the other ten, so their statements are required; the NU Post Graduate Diploma carries none (S4-C2). The declared statements are distinct and share no sentence, and none uses the template's "For …" opening, "who need" or the retired [UNLIKE] sentence; negative self-tests below
+//   - ranked pains and the C8 map (review round 14, M4; WP175-Z): Home, /partner-with-us/governments/, /development-partners/, /foundations/, /employers/, /local-partners/, /investors/,
+//     /programs/youthwide/ and /programs/jobready-work/ state exactly three pains in the C2 band (#problem; list items data-pain="P1".."P3", in that order; Investors: the <article> pains of
+//     its compressed C2–C3 band, #thesis) and give the C8 band (#features) exactly one card for each (<li data-relieves="P1">.. since WP38/WP39; a <tr> row is still read), in the same order;
+//     rows without data-relieves are gain creators. WP175-Z: every one of them must carry the C8 band (the WP57 and WP166-A allowances for YouthWIDE and Home, PAIN_C8_OPTIONAL, are gone with
+//     the bands' return); negative self-tests below
 //   - trial relevance line (round 14, m2): /partner-with-us/employers/, /programs/jobready-work/ (JobReady@Work) and /programs/nu-postgraduate-diploma/ (the NU
 //     Post Graduate Diploma) carry "This trial evaluated WSDFM training for women in Bangladesh, not <offering>." (WP172: it said "women in Dhaka") directly under the trial headline of
-//     the C7 proof band (WP31: the two employer pages show no proof band today, which is allowed; any band they show needs the line; WP34: the same for the NU diploma overview, which
-//     shows a one-link strip to the Impact page instead); negative self-tests below
+//     the C7 proof band, which all three must show (WP175-Z: the WP31 and WP34 allowances for a page with no proof band, TRIAL_SCOPE_OPTIONAL, are gone, because every C7 opens with the
+//     trial again); negative self-tests below
 //   - number guard (doc 10 §1 "Facts guard", WP1l): every claim-marked figure (%, pp, a leading + or ~, a trailing +, M/K/B/million, $ or BDT, ×,
 //     "about/at least/up to/over N") in the copy of an evergreen page (visible text, title, meta description) is a value the public dataset
 //     registers (facts, citations, the survey aggregates behind /impact/outcomes-2026/, one derivation list) or is whitelisted in
@@ -389,22 +389,22 @@ function sessionAgendaProblems(markup, wanted, bandId = 'cta') {
 // body text, no diagram, no list. WP175: each page carries its own crafted statement (the four CMF elements in the audience's words, doc 04 §1), declared here word for word and independently of
 // src/data/copy.ts (POSITIONING), so a change has to be made twice on purpose; and the page carries it once.
 const POSITION_PAGES = [
+  '/',
   '/partner-with-us/governments/',
   '/partner-with-us/development-partners/',
   '/partner-with-us/foundations/',
   '/partner-with-us/universities/',
   '/partner-with-us/employers/',
   '/partner-with-us/local-partners/',
+  '/partner-with-us/investors/',
   '/programs/youthwide/',
   '/programs/jobready-campus/',
   '/programs/jobready-work/',
   '/programs/superkids/',
 ];
 // WP39 (cycle-16 review) and WP166-A (marketing review R1-03) took the statement off Investors and Home, which were exempt from [POSITION] (POSITION_EXEMPT_PAGES) and so were checked for nothing.
-// WP175 (owner decision Q5 of 2026-11-28: Home and Investors get a statement too): both are pending. Their statements are declared below; a pending page that shows a C6 statement is held to every rule of
-// POSITION_PAGES (the declared words, first in the band, once on the page), and one that shows none yet is counted as pending. Packages A (Home) and B (Investors) render them; package Z moves both into
-// POSITION_PAGES, so the statement becomes required. The self-tests keep this list at these two pages.
-const POSITION_PENDING_PAGES = ['/', '/partner-with-us/investors/'];
+// WP175 (owner decision Q5 of 2026-11-28: Home and Investors get a statement too): package 0 listed both as pending (POSITION_PENDING_PAGES, held to the rules only once they showed one); packages A and B
+// render them, so WP175-Z makes both [POSITION] pages: the statement is required on all twelve, and a page that shows none fails. The NU Post Graduate Diploma carries none (S4-C2) and is not listed.
 // WP175: the statement of each page, whole. Each carries the four elements of the CMF positioning (for whom, the need, what CodersTrust does, how it differs) in wording crafted for its audience; the earlier
 // forms (the audience sentence plus the shared [UNLIKE] closing, the employer closing of WP18b/WP20b, and the short site sentences declared whole from WP36 to WP155) are retired fixtures of the self-tests below.
 // The rules the earlier reviews set still hold for the new words (tests/wp154.spec.ts, tests/wp155.spec.ts: a fact the band states in a card is not said again in the statement; WP141: no in-sentence scope clause).
@@ -439,12 +439,6 @@ const RETIRED_POSITION_STATEMENTS = Object.fromEntries([
   ['/programs/jobready-work/', 'JobReady@Work builds training around your roles, from needs assessment to workshops and progress evaluation.'],
   ['/programs/superkids/', 'SuperKids offers block coding, robotics and digital art through schools and education partners.'],
 ]);
-/** How a page is held to [POSITION]: 'check' (a [POSITION] page, or a pending page that shows a statement), 'pending' (a pending page with none yet) or 'none'. */
-function positionMode(path, markup) {
-  if (POSITION_PAGES.includes(path)) return 'check';
-  if (POSITION_PENDING_PAGES.includes(path)) return /<p\b[^>]*\bpos__text\b/.test(markup) ? 'check' : 'pending';
-  return 'none';
-}
 /** The sentences of a statement (a sentence ends at ". " before a capital letter, or at the end). */
 const statementSentences = (t) => t.split(/(?<=[.!?])\s+(?=[A-Z])/).filter(Boolean);
 /**
@@ -478,18 +472,30 @@ function positionProblems(markup, { whole, text = visibleText(markup) } = {}) {
   return out;
 }
 
-/* ---- ranked pains (C2b) and the C8 map on the bespoke pages (review round 14, M4) ---- */
+/* ---- ranked pains (C2b) and the C8 map (review round 14, M4; WP175-Z: the conversion pages that rank three pains) ---- */
 // Home, /partner-with-us/local-partners/ and /programs/youthwide/ are built by hand, not from a band matrix, so the messaging framework's C2b and
 // C8b rules are checked on the built pages: the C2 band (#problem) states exactly THREE ranked pains, each a list item with data-pain="P1", "P2",
 // "P3" in that order, and the C8 band (#features) has exactly ONE card for each of them, in the same order, as <li data-relieves="P1"> (pain →
 // how we relieve it → the registered feature behind it; WP38/WP39: three short cards, components/sections/IncludesBand.astro). An item without data-relieves is a gain creator and is not counted. Only the two bands
 // are read: the same attributes elsewhere on the page count for nothing. The wording lives in src/data/copy.ts (FUNDER_PAINS, LOCAL_PARTNER_PAINS).
-const PAIN_PAGES = ['/', '/partner-with-us/local-partners/', '/programs/youthwide/'];
-// WP57 (cycle-29 review, GPT-6.1 Sol G2): YouthWIDE's three-card C8 band restated its glance and its delivery-model band, so the page no longer carries one. Like TRIAL_SCOPE_OPTIONAL, this is one page's allowance: it still states its three
-// ranked pains in C2, and any C8 band it shows again is held to the one-card-per-pain rule. Home and the local-partners page must still carry the band.
-// WP166-A (marketing review R1-17, owner approval of 21 November 2026: Home consolidated to twelve bands): Home's "What a Supported Youth Cohort Includes" band re-explained the mechanism band, so it is gone (its training-hours sentence is the
-// mechanism's "What We Deliver" card); Home still states its three ranked pains in C2.
-const PAIN_C8_OPTIONAL = new Set(['/programs/youthwide/', '/']);
+// WP175-Z (owner decisions of 2026-11-28: C8 relieves each C2 pain 1:1, in rank order, on every conversion page): the pages that tag their three ranked pains (data-pain) and their relieving cards
+// (data-relieves) are read too: Governments, Development Partners, Foundations, Employers, Investors and JobReady@Work. Universities, JobReady@Campus and the NU Post Graduate Diploma count statistic tiles as
+// pains (Q4 (b)) and SuperKids ranks none (Q9 (a)), so they are not listed.
+const PAIN_PAGES = [
+  '/',
+  '/partner-with-us/governments/',
+  '/partner-with-us/development-partners/',
+  '/partner-with-us/foundations/',
+  '/partner-with-us/employers/',
+  '/partner-with-us/local-partners/',
+  '/partner-with-us/investors/',
+  '/programs/youthwide/',
+  '/programs/jobready-work/',
+];
+// WP57 and WP166-A had let YouthWIDE and Home carry no C8 band (PAIN_C8_OPTIONAL); WP175 brought both bands back, so every page above must carry one (WP175-Z).
+// Where a page states its pains, if not as list items in #problem: Investors' compressed C2–C3 band is #thesis and its three pains are <article> cards. Only that page is read this way, so every other page is
+// held to the <li> pains of #problem exactly as before.
+const PAIN_C2_AT = { '/partner-with-us/investors/': { band: 'thesis', element: 'article' } };
 const PAIN_IDS = ['P1', 'P2', 'P3'];
 /** The markup of the band whose <section> has this id, up to the next band (a <section class="band …">; a section nested in the band, such as a route card, is not one). */
 function bandMarkup(markup, id) {
@@ -499,17 +505,15 @@ function bandMarkup(markup, id) {
   const next = /<section\b[^>]*\bclass="band\b/.exec(rest);
   return next ? rest.slice(0, next.index) : rest;
 }
-function painMapProblems(markup, { c8Optional = false } = {}) {
-  const c2 = bandMarkup(markup, 'problem');
+function painMapProblems(markup, { band = 'problem', element = 'li' } = {}) {
+  const c2 = bandMarkup(markup, band);
   const c8 = bandMarkup(markup, 'features');
   const out = [];
-  if (c2 === null) out.push('the C2 band (#problem) is missing, so the ranked pains have nowhere to sit');
-  if (c8 === null && !c8Optional) out.push('the C8 band (#features) is missing, so the pains have no relieving rows');
-  if (c2 === null || (c8 === null && !c8Optional)) return out;
-  const pains = [...c2.matchAll(/<li\b[^>]*\bdata-pain="([^"]*)"/g)].map((m) => m[1]);
+  if (c2 === null) out.push(`the C2 band (#${band}) is missing, so the ranked pains have nowhere to sit`);
+  if (c8 === null) out.push('the C8 band (#features) is missing, so the pains have no relieving rows');
+  if (c2 === null || c8 === null) return out;
+  const pains = [...c2.matchAll(new RegExp(`<${element}\\b[^>]*\\bdata-pain="([^"]*)"`, 'g'))].map((m) => m[1]);
   if (pains.join(' ') !== PAIN_IDS.join(' ')) out.push(`C2 must state exactly three ranked pains, P1, P2 and P3 in that order (data-pain), found [${pains.join(' ') || 'none'}]`);
-  // WP57: a page that may show no C8 band and shows none has no relieving rows to check (its pains were checked above); a band it does show is read like any other
-  if (c8 === null) return out;
   // WP18b: the C8 rows were concern-led cards (<li>); WP38/WP39: three short cards (<li>). A table row (<tr>) is still read
   const rows = [...c8.matchAll(/<(?:tr|li)\b[^>]*\bdata-relieves="([^"]*)"/g)].map((m) => m[1]);
   for (const id of PAIN_IDS) {
@@ -532,12 +536,11 @@ const TRIAL_SCOPE_BY_PAGE = {
   '/programs/nu-postgraduate-diploma/': 'This trial evaluated WSDFM training for women in Bangladesh, not the NU Post Graduate Diploma.',
 };
 const TRIAL_SCOPE_PAGES = Object.keys(TRIAL_SCOPE_BY_PAGE);
-// WP31: the two employer pages show no trial band (they link to the evidence pages), so a missing #proof-band is fine there; the sentence stays required on any band they grow.
-// WP34 (cycle-11 review): the NU Post Graduate Diploma overview is treated the same way (a one-link strip to the Impact page replaced its trial and survey band).
-const TRIAL_SCOPE_OPTIONAL = new Set(['/partner-with-us/employers/', '/programs/jobready-work/', '/programs/nu-postgraduate-diploma/']);
-function trialScopeProblems(markup, wanted, { optional = false } = {}) {
+// WP31 and WP34 let the two employer pages and the NU Post Graduate Diploma show no trial band (TRIAL_SCOPE_OPTIONAL). WP175 (owner decision Q3 (a) of 2026-11-28): every C7 opens with the trial again, and
+// all three show the proof band with the line, so WP175-Z makes the band required on all three.
+function trialScopeProblems(markup, wanted) {
   const band = bandMarkup(markup, 'proof-band');
-  if (band === null) return optional ? [] : ['the C7 proof band (#proof-band) is missing, so the trial relevance line has nowhere to sit'];
+  if (band === null) return ['the C7 proof band (#proof-band) is missing, so the trial relevance line has nowhere to sit'];
   const head = /<header\b[^>]*\bproofband__head\b[^>]*>([\s\S]*?)<\/header>/.exec(band)?.[1];
   if (head === undefined) return ['the proof band has no header, so the trial relevance line cannot sit under the trial headline'];
   const heading = /<h2\b[\s\S]*?<\/h2>/.exec(head);
@@ -1095,11 +1098,12 @@ function surveyEditionProblems(factsById, rows, pins = { facts: SURVEY_FACTS, ro
     if (!positionProblems(markup, opts).length) problems.push(`self-test: the [POSITION] check accepted ${why}`);
   };
   const declared = Object.entries(POSITION_WHOLE_STATEMENT);
-  // the declarations: exactly the [POSITION] pages and the pending pages, each with a crafted statement (not the template), distinct, sharing no sentence
-  if (Object.keys(POSITION_WHOLE_STATEMENT).sort().join(' ') !== [...POSITION_PAGES, ...POSITION_PENDING_PAGES].sort().join(' ')) problems.push('self-test: POSITION_WHOLE_STATEMENT declares a statement for exactly the [POSITION] pages and the pending pages (WP175)');
-  if (POSITION_PENDING_PAGES.join(' ') !== '/ /partner-with-us/investors/') problems.push('self-test: the pending [POSITION] pages are exactly / and /partner-with-us/investors/ (WP175: packages A and B render their statements, package Z makes them required)');
-  for (const pending of POSITION_PENDING_PAGES) if (POSITION_PAGES.includes(pending)) problems.push(`self-test: ${pending} is pending but also listed as a [POSITION] page`);
-  if (POSITION_PAGES.length !== 10) problems.push(`self-test: ${POSITION_PAGES.length} [POSITION] pages; the ten conversion pages that carry a statement today are expected`);
+  // the declarations: exactly the [POSITION] pages, each with a crafted statement (not the template), distinct, sharing no sentence
+  if (Object.keys(POSITION_WHOLE_STATEMENT).sort().join(' ') !== [...POSITION_PAGES].sort().join(' ')) problems.push('self-test: POSITION_WHOLE_STATEMENT declares a statement for exactly the [POSITION] pages (WP175)');
+  // WP175-Z: the twelve conversion pages that carry a statement, Home and Investors included (no pending page is left); the NU Post Graduate Diploma carries none (S4-C2)
+  if (POSITION_PAGES.length !== 12 || new Set(POSITION_PAGES).size !== 12) problems.push(`self-test: ${POSITION_PAGES.length} [POSITION] pages; the twelve conversion pages that carry a statement are expected`);
+  for (const required of ['/', '/partner-with-us/investors/']) if (!POSITION_PAGES.includes(required)) problems.push(`self-test: ${required} must be a [POSITION] page (WP175-Z: its statement is required, not pending)`);
+  if (POSITION_PAGES.includes('/programs/nu-postgraduate-diploma/')) problems.push('self-test: the NU Post Graduate Diploma carries no positioning statement until National University signs off (S4-C2), so it is not a [POSITION] page');
   const sentenceOwner = new Map();
   for (const [page, statement] of declared) {
     if (/^For /.test(statement)) problems.push(`self-test: the ${page} statement opens with the template's "For …" (WP175: crafted wording, not the literal template)`);
@@ -1142,13 +1146,13 @@ function surveyEditionProblems(factsById, rows, pins = { facts: SURVEY_FACTS, ro
   posBad('a page with no C6 band', '<main><p>nothing</p></main>', { whole: anyOwn });
   posBad('a statement that is not in the #mechanism band', `<main><section class="band" id="mechanism"><p>x</p></section>${posBlock(anyOwn)}</main>`, { whole: anyOwn });
   posBad('a statement with no text', mech(`${headerHtml}${posBlock('')}</header>`), { whole: anyOwn });
-  // the pending pages: held to every rule once they show a statement, counted as pending until then; a [POSITION] page is always held; any other page is not read
-  const withPos = mech(`${headerHtml}${posBlock(anyOwn)}</header>`);
+  // WP175-Z: Home and Investors are held like every [POSITION] page: a band with no statement fails (it was counted as pending), and so does another page's statement
   const withoutPos = mech(`${headerHtml}</header><p>No statement yet.</p>`);
-  for (const [path, markup, want] of [['/', withPos, 'check'], ['/', withoutPos, 'pending'], ['/partner-with-us/investors/', withPos, 'check'], ['/partner-with-us/investors/', withoutPos, 'pending'], ['/programs/youthwide/', withoutPos, 'check'], ['/about/', withPos, 'none']]) {
-    if (positionMode(path, markup) !== want) problems.push(`self-test: [POSITION] reads ${path} ${markup === withPos ? 'with' : 'without'} a statement as "${positionMode(path, markup)}", expected "${want}"`);
+  for (const page of ['/', '/partner-with-us/investors/']) {
+    posBad(`${page} with no statement in its C6 band (no longer pending)`, withoutPos, { whole: POSITION_WHOLE_STATEMENT[page] });
+    posBad(`${page} with no C6 band at all`, '<main><p>nothing</p></main>', { whole: POSITION_WHOLE_STATEMENT[page] });
   }
-  posBad('a pending page (Home) that shows another page’s statement', withPos, { whole: POSITION_WHOLE_STATEMENT['/'] });
+  posBad('Home showing the YouthWIDE statement', mech(`${headerHtml}${posBlock(anyOwn)}</header>`), { whole: POSITION_WHOLE_STATEMENT['/'] });
   // the earlier template forms are refused on every page: the audience sentence with the [UNLIKE] closing, and the employer closing of WP18b/WP20b
   const posFor = 'For governments who need youth in paid digital work, CodersTrust offers an integrated training-to-earnings model.';
   posBad('the retired audience-sentence-plus-[UNLIKE] statement', mech(`${headerHtml}${posBlock(`${posFor} ${RETIRED_UNLIKE_SENTENCE}`)}</header>`), { whole: POSITION_WHOLE_STATEMENT['/partner-with-us/governments/'] });
@@ -1195,24 +1199,34 @@ function surveyEditionProblems(factsById, rows, pins = { facts: SURVEY_FACTS, ro
   painBad('a page with no C2 band', painPage({ c2: false }));
   painBad('a page with no C8 band', painPage({ c8: false }));
   painBad('pain ids that sit only outside C2 (the attributes in a later band do not count)', painPage({ pains: [] }).replace('<ol><li data-pain="P4">x</li></ol>', `<ol>${painLi('P1')}${painLi('P2')}${painLi('P3')}</ol>`));
-  // WP57: YouthWIDE alone may carry no C8 band; its pains are still read, and a band it shows is held to the one-card-per-pain rule
-  const painOptOk = (why, markup) => {
-    const r = painMapProblems(markup, { c8Optional: true });
+  // WP175-Z: no page may carry its pains without the C8 band any more (the YouthWIDE and Home allowances are gone): their pages with only the C2 band fail
+  painBad('YouthWIDE or Home with its three pains and no C8 band (the WP57 and WP166-A allowances are gone)', painPage({ c8: false, cards: true }));
+  // the list: the nine conversion pages that tag three ranked pains, each read with its C8 band
+  const PAIN_PAGES_WANT = ['/', '/partner-with-us/governments/', '/partner-with-us/development-partners/', '/partner-with-us/foundations/', '/partner-with-us/employers/', '/partner-with-us/local-partners/', '/partner-with-us/investors/', '/programs/youthwide/', '/programs/jobready-work/'];
+  if (PAIN_PAGES.join(' ') !== PAIN_PAGES_WANT.join(' ')) problems.push(`self-test: the ranked-pain pages are exactly ${PAIN_PAGES_WANT.join(', ')} (WP175-Z)`);
+  for (const p of Object.keys(PAIN_C2_AT)) if (!PAIN_PAGES.includes(p)) problems.push(`self-test: ${p} has its own C2 reading (PAIN_C2_AT) but is not a ranked-pain page`);
+  if (Object.keys(PAIN_C2_AT).join(' ') !== '/partner-with-us/investors/') problems.push('self-test: only Investors reads its pains outside the <li> items of #problem (its <article> cards in #thesis)');
+  // Investors' reading: three <article> pains in the compressed #thesis band; it is held to every rule of the others, and the other pages are not read this way
+  const investorsPage = ({ pains = PAIN_IDS, element = 'article', band = 'thesis' } = {}) =>
+    painPage({ c2: false, cards: true }).replace(
+      '<main>',
+      `<main><section class="band band--deep-ink" id="${band}" aria-labelledby="${band}-h"><div class="container"><h2 id="${band}-h">Thesis</h2><div class="grid-cards">${pains.map((id) => `<${element} class="card factcard" data-pain="${id}" data-astro-cid-x><h3>A pain</h3><p>Its words.</p></${element}>`).join('')}</div></div></section>`,
+    );
+  const invOk = (why, markup) => {
+    const r = painMapProblems(markup, PAIN_C2_AT['/partner-with-us/investors/']);
     if (r.length) problems.push(`self-test: the pain-map check rejected ${why}: ${r.join('; ')}`);
   };
-  const painOptBad = (why, markup) => {
-    if (!painMapProblems(markup, { c8Optional: true }).length) problems.push(`self-test: the pain-map check accepted ${why}`);
+  const invBad = (why, markup) => {
+    if (!painMapProblems(markup, PAIN_C2_AT['/partner-with-us/investors/']).length) problems.push(`self-test: the pain-map check accepted ${why} (Investors)`);
   };
-  painOptOk('a page that may carry no C8 band and carries none (WP57: YouthWIDE)', painPage({ c8: false }));
-  painOptOk('a page that may carry a C8 band and carries one card for each pain', painPage({ cards: true }));
-  painOptBad('a page that may carry no C8 band but states two pains in C2', painPage({ c8: false, pains: ['P1', 'P2'] }));
-  painOptBad('a page that may carry no C8 band but states its pains out of rank order', painPage({ c8: false, pains: ['P2', 'P1', 'P3'] }));
-  painOptBad('a page that may carry no C8 band and has no C2 band either', painPage({ c2: false, c8: false }));
-  painOptBad('a page that may carry no C8 band but shows one with a pain missing (P2)', painPage({ cards: true, rows: ['P1', 'P3'] }));
-  painOptBad('a page that may carry no C8 band but shows one whose cards are out of rank order', painPage({ cards: true, rows: ['P3', 'P1', 'P2'] }));
-  // the allowance is exactly YouthWIDE and, since WP166-A, Home (the local-partners page must still carry the C8 band)
-  if ([...PAIN_C8_OPTIONAL].join(' ') !== '/programs/youthwide/ /') problems.push('self-test: exactly /programs/youthwide/ (WP57) and / (WP166-A) may carry no C8 band, and no other page');
-  for (const optional of PAIN_C8_OPTIONAL) if (!PAIN_PAGES.includes(optional)) problems.push(`self-test: ${optional} may carry no C8 band but is not one of the ranked-pain pages`);
+  invOk('three <article> pains in #thesis and one C8 card each', investorsPage());
+  invBad('two <article> pains in #thesis', investorsPage({ pains: ['P1', 'P2'] }));
+  invBad('<article> pains out of rank order', investorsPage({ pains: ['P2', 'P1', 'P3'] }));
+  invBad('the pains as <li> items in #thesis (not the cards the page states them in)', investorsPage({ element: 'li' }));
+  invBad('the pains in a #problem band (Investors has no #problem band)', investorsPage({ band: 'problem' }));
+  invBad('a C8 card missing (P3)', investorsPage().replace(/<li class="card inc__card" data-relieves="P3"[\s\S]*?<\/li>/, ''));
+  invBad('no C8 band', investorsPage().replace(/<section class="band band--white band--pad-md" id="features"[\s\S]*?<\/section>/, ''));
+  painBad('<article> pains in #problem on a page read for <li> pains (the Investors reading is that page’s alone)', investorsPage({ band: 'problem' }));
   // the trial relevance line (m2): directly under the trial headline, in the plan's words for the page's own offering
   const scopeWork = TRIAL_SCOPE_BY_PAGE['/programs/jobready-work/'];
   const scopeNu = TRIAL_SCOPE_BY_PAGE['/programs/nu-postgraduate-diploma/'];
@@ -1237,13 +1251,12 @@ function surveyEditionProblems(factsById, rows, pins = { facts: SURVEY_FACTS, ro
   trialBad('a line above the headline', proofPage(`${trialLine(scopeWork)}${trialH2}`), scopeWork);
   trialBad('a line outside the header (after the stats, away from the proof)', proofPage(trialH2, trialLine(scopeWork)), scopeWork);
   trialBad('a page with no proof band', '<main><p>nothing</p></main>', scopeWork);
-  // WP31: an employer page may show no trial band at all, but a band it shows still needs the line
-  const trialOptionalOk = (why, markup, wanted) => {
-    const r = trialScopeProblems(markup, wanted, { optional: true });
-    if (r.length) problems.push(`self-test: the trial-relevance check rejected ${why}: ${r.join('; ')}`);
-  };
-  trialOptionalOk('an employer page with no proof band (links to the evidence pages only)', '<main><p>nothing</p></main>', scopeWork);
-  if (!trialScopeProblems(proofPage(trialH2), scopeWork, { optional: true }).length) problems.push('self-test: the trial-relevance check accepted an employer page whose proof band has no relevance line');
+  // WP175-Z: the WP31 and WP34 allowances are gone: an employer page or the NU diploma page that links to the evidence pages instead of showing the proof band fails
+  const evidenceLinksOnly = '<main><nav aria-label="Broader Evidence from Our Youth Programs"><a href="/impact/independent-evaluation/">The Randomized Trial</a><a href="/impact/outcomes-2026/">Impact Survey 2026</a></nav></main>';
+  trialBad('an employer page with only the two evidence links and no proof band (the WP31 allowance is gone)', evidenceLinksOnly, scopeWork);
+  trialBad('the NU diploma page with only a link strip and no proof band (the WP34 allowance is gone)', evidenceLinksOnly, scopeNu);
+  // the line follows the one-line trial lead under the headline (WP175): a band led by it is read like any other
+  trialOk('the line under the trial lead, below the headline (WP175)', proofPage(`${trialH2}<p class="lead" data-fact="RC-01 RC-02">A randomized trial found…</p>${trialLine(scopeWork)}`), scopeWork);
   // retired wording: the USP heading "Earning starts within months" overgeneralizes OC-05 (round 14, m3)
   const disciplineHits = (text) => DISCIPLINE.filter(([re]) => re.test(text)).length;
   if (!disciplineHits('<h3>Earning starts within months</h3>')) problems.push('self-test: the wording gate accepted the retired USP heading "Earning starts within months"');
@@ -1390,9 +1403,7 @@ let plainLinePages = 0;
 let proofCardPages = 0;
 let agendaPages = 0;
 let positionPages = 0;
-let positionPending = 0;
 let painPages = 0;
-let painC8Pages = 0;
 let trialScopePages = 0;
 const guard ={ pages: 0, tokens: 0, byRegister: 0, byWhitelist: 0 };
 guardLog.clear(); // the self-tests above also pass through the guard
@@ -1461,24 +1472,20 @@ for (const file of htmlFiles(dist)) {
     }
     problems.push(...g.problems);
   }
-  // [POSITION] opens C6 on the pages that carry a positioning statement; a pending page (Home, Investors) is held to the same rules once it shows one (WP175)
-  const positionAs = positionMode(path, markup);
-  if (positionAs === 'check') {
+  // [POSITION] opens C6 on the twelve pages that carry a positioning statement (WP175-Z: Home and Investors included, no longer pending)
+  if (POSITION_PAGES.includes(path)) {
     positionPages++;
     for (const p of positionProblems(markup, { whole: POSITION_WHOLE_STATEMENT[path], text })) problems.push(`${path}: ${p}`);
-  } else if (positionAs === 'pending') positionPending++;
-  // three ranked pains in C2 and one C8 card for each, on the three bespoke pages (round 14, M4)
+  }
+  // three ranked pains in C2 and one C8 card for each, on the nine ranked-pain pages (round 14, M4; WP175-Z)
   if (PAIN_PAGES.includes(path)) {
     painPages++;
-    // WP57: the count of the pages whose C8 band was read (a page that may show none and shows none has no band to count)
-    if (!PAIN_C8_OPTIONAL.has(path) || bandMarkup(markup, 'features') !== null) painC8Pages++;
-    for (const p of painMapProblems(markup, { c8Optional: PAIN_C8_OPTIONAL.has(path) })) problems.push(`${path}: ${p}`);
+    for (const p of painMapProblems(markup, PAIN_C2_AT[path])) problems.push(`${path}: ${p}`);
   }
-  // the trial relevance line directly under the randomized-trial headline where the offering is not the evaluated program (round 14, m2)
+  // the trial relevance line directly under the randomized-trial headline where the offering is not the evaluated program (round 14, m2); WP175-Z: the proof band is required on all three pages
   if (TRIAL_SCOPE_PAGES.includes(path)) {
-    // a page that may show no proof band and shows none has nothing to check (WP31); the count is of the pages whose band was read
-    if (!TRIAL_SCOPE_OPTIONAL.has(path) || bandMarkup(markup, 'proof-band') !== null) trialScopePages++;
-    for (const p of trialScopeProblems(markup, TRIAL_SCOPE_BY_PAGE[path], { optional: TRIAL_SCOPE_OPTIONAL.has(path) })) problems.push(`${path}: ${p}`);
+    trialScopePages++;
+    for (const p of trialScopeProblems(markup, TRIAL_SCOPE_BY_PAGE[path])) problems.push(`${path}: ${p}`);
   }
   // [SESSION-AGENDA] required beside the C13 CTA on the five funder and government pages
   if (SESSION_AGENDA_PAGES.includes(path)) {
@@ -1496,7 +1503,7 @@ if (pages === 0) {
   process.exit(1);
 }
 // A page that must carry the [PLAIN-LINE], the [SESSION-AGENDA], the [POSITION] statement, the ranked pains or the trial relevance line has to be in the build at all (and so does a page exempted from one of them, so a rename cannot leave a stale exemption).
-for (const p of new Set([...PLAIN_LINE_PAGES, ...PLAIN_LINE_EXEMPT_PAGES, ...PROOF_CARD_PAGES, ...SESSION_AGENDA_PAGES, ...POSITION_PAGES, ...POSITION_PENDING_PAGES, ...PAIN_PAGES, ...TRIAL_SCOPE_PAGES])) if (!seenPaths.has(p)) problems.push(`${p}: page not found in ${relative(root, dist) || '.'}, so its [PLAIN-LINE], [PROOF-CARD], [SESSION-AGENDA], [POSITION], ranked pains or trial relevance line cannot be checked`);
+for (const p of new Set([...PLAIN_LINE_PAGES, ...PLAIN_LINE_EXEMPT_PAGES, ...PROOF_CARD_PAGES, ...SESSION_AGENDA_PAGES, ...POSITION_PAGES, ...PAIN_PAGES, ...TRIAL_SCOPE_PAGES])) if (!seenPaths.has(p)) problems.push(`${p}: page not found in ${relative(root, dist) || '.'}, so its [PLAIN-LINE], [PROOF-CARD], [SESSION-AGENDA], [POSITION], ranked pains or trial relevance line cannot be checked`);
 // A whitelist entry that no page used any more is stale: the list stays as small as the site needs it.
 for (const e of allowList) if (!e.used) problems.push(`scripts/facts-guard-allow.json: the entry for "${e.text}" on ${e.page} matched nothing in ${relative(root, dist) || '.'} (stale; remove it)`);
 // Production fact holds: a held fact must not be rendered anywhere. Only fact IDs, item numbers and page paths are printed.
@@ -1512,6 +1519,6 @@ if (problems.length) {
   process.exit(1);
 }
 console.log(
-  `check-facts: OK — ${pages} pages, ${refs} fact references, no gated facts or internal wording; ${vendorPages} page(s) name vendor certifications and carry the note once; no "enquir*", "licence" or "tripled" outside /news/<post>/ (and the essay text of /blog/<post>/); [PLAIN-LINE] on ${plainLinePages} page(s) with RC-02's numbers; [PROOF-CARD] (the hero's plain-language trial reading, held to RC-02 and RC-07) on ${proofCardPages} page(s); [SESSION-AGENDA] beside the CTA on ${agendaPages} page(s); [POSITION] opens C6 on ${positionPages} page(s) (${positionPending} pending page(s) without a statement yet); three ranked pains (C2) on ${painPages} page(s), with one C8 card each on ${painC8Pages} of them; trial relevance line under the trial headline on ${trialScopePages} page(s); number guard: ${guard.pages} evergreen page(s) scanned, ${guard.tokens} claim-marked figure(s) checked, ${guard.byRegister} allowed by the register, ${guard.byWhitelist} by the whitelist (${allowList.length} entries); survey dataset pinned to ${SURVEY_EDITION} (${Object.keys(SURVEY_FACTS).length} facts, ${SURVEY_CSV_ROWS.length} CSV rows); report CTA ${reportWithheld ? 'withheld' : 'enabled'}` +
+  `check-facts: OK — ${pages} pages, ${refs} fact references, no gated facts or internal wording; ${vendorPages} page(s) name vendor certifications and carry the note once; no "enquir*", "licence" or "tripled" outside /news/<post>/ (and the essay text of /blog/<post>/); [PLAIN-LINE] on ${plainLinePages} page(s) with RC-02's numbers; [PROOF-CARD] (the hero's plain-language trial reading, held to RC-02 and RC-07) on ${proofCardPages} page(s); [SESSION-AGENDA] beside the CTA on ${agendaPages} page(s); [POSITION] opens C6 on ${positionPages} page(s); three ranked pains (C2), with one C8 card each, on ${painPages} page(s); trial relevance line under the trial headline on ${trialScopePages} page(s); number guard: ${guard.pages} evergreen page(s) scanned, ${guard.tokens} claim-marked figure(s) checked, ${guard.byRegister} allowed by the register, ${guard.byWhitelist} by the whitelist (${allowList.length} entries); survey dataset pinned to ${SURVEY_EDITION} (${Object.keys(SURVEY_FACTS).length} facts, ${SURVEY_CSV_ROWS.length} CSV rows); report CTA ${reportWithheld ? 'withheld' : 'enabled'}` +
     (production ? `; production holds: ${holds.size} held fact(s), none rendered.` : '.'),
 );

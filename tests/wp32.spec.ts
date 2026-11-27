@@ -176,7 +176,7 @@ test.describe('the employer credentials are stated once', () => {
   const AIVOLVE = 'AIvolve';
 
   for (const route of ['programs/jobready-work/', 'partner-with-us/employers/']) {
-    test(`${route}: each credential appears once, in the Track Record band; the evidence strip is the two links`, async ({ page }) => {
+    test(`${route}: each credential appears once, in the Track Record band; the two evidence links close the C7 trial band, which restates none (WP175)`, async ({ page }) => {
       await open(page, route);
       const text = await mainText(page);
       for (const c of CREDENTIALS) expect(count(text, c), c).toBe(1);
@@ -184,12 +184,12 @@ test.describe('the employer credentials are stated once', () => {
       expect(count(text, AIVOLVE), AIVOLVE).toBe(1);
       expect(compact(await page.locator('#guide').textContent()), `${route}: AIvolve is not in the Track Record band`).not.toContain(AIVOLVE);
       expect(count(text, '23,000+'), '23,000+').toBe(1);
-      const strip = page.locator('#offer-evidence');
-      await expect(strip.locator('h2')).toHaveText('Broader Evidence from Our Youth Programs');
-      await expect(strip.locator('.pe__item')).toHaveCount(0);
-      await expect(strip.locator('[data-fact]')).toHaveCount(0);
-      expect(await texts(page, '#offer-evidence .pe__more a')).toEqual(['The Randomized Trial', 'Impact Survey 2026']);
-      await expect(strip.locator('nav[aria-label="Broader Evidence from Our Youth Programs"]')).toHaveCount(1);
+      // WP175 (owner decision Q3 (a) of 2026-11-28): the C7 trial band is back (tests/wp31.spec.ts), so the two-link evidence strip that stood in for it (#offer-evidence, WP31) is gone; its two links close the
+      // trial band now, and no credential is restated in it
+      await expect(page.locator('#offer-evidence')).toHaveCount(0);
+      await expect(page.locator('nav[aria-label="Broader Evidence from Our Youth Programs"]')).toHaveCount(0);
+      expect(await texts(page, '#proof-band .proofband__links a')).toEqual(['The Randomized Trial', 'Impact Survey 2026']);
+      for (const c of [...CREDENTIALS, AIVOLVE, '23,000+']) expect(compact(await page.locator('#proof-band').textContent()), `${route}: ${c} is not in the trial band`).not.toContain(c);
       expect(text).not.toContain('The Delivery Record for Employers');
     });
   }
@@ -237,11 +237,21 @@ test.describe('benefit lines start with a capital letter', () => {
     // WP57 (cycle-29 review, GPT-6.1 Sol G2): YouthWIDE's three-card band is gone, so the page is not in this list
     // WP166-B (marketing review R2): JobReady@Campus's "What You Get" band (#features) is gone; the assertion is gone with it.
   ];
+  // WP175 (owner decisions of 2026-11-28: C8 relieves each C2 pain 1:1, then names its gain creators): each page's C8 is one card per ranked pain (three, data-relieves P1 to P3 in order), then the gain
+  // creator its doc 04 matrix names (one card; Employers, whose matrix 4.6 names none, has none), so the count is four on six pages and three on Employers; every sentence still opens with a capital or a figure.
+  const GAIN_CREATORS: Record<string, number> = { 'partner-with-us/employers/': 0 };
   test('every card sentence on the audience and program pages opens with a capital letter or a figure', async ({ page }) => {
     for (const route of CARD_ROUTES) {
       await open(page, route);
       const lines = await texts(page, '#features .card__text');
-      expect(lines.length, `${route} has three card sentences`).toBe(3);
+      const gains = GAIN_CREATORS[route] ?? 1;
+      expect(lines.length, `${route} has one card sentence per pain and ${gains} for its gain creator`).toBe(3 + gains);
+      expect(await page.locator('#features li.card').evaluateAll((els) => els.map((e) => e.getAttribute('data-relieves'))), `${route}: the relievers in rank order, then the gain creator`).toEqual([
+        'P1',
+        'P2',
+        'P3',
+        ...Array(gains).fill(null),
+      ]);
       for (const l of lines) expect(l, `${route}: "${l.slice(0, 40)}…"`).toMatch(/^[A-Z0-9]/);
     }
   });

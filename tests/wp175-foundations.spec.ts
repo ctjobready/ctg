@@ -114,6 +114,8 @@ test.describe('Foundations: C7 leads with the trial', () => {
     const proof = band('C7');
     expect(h2Of(proof)).toBe('Proof in Practice');
     expect(afterHeading(proof)[0]).toBe(TRIAL_LEAD.text);
+    // WP175-Z: the lead is claim-marked with the trial's facts (CaseStudyCarousel `trialLead`), as ProofBand's and ContractTable's trial leads are
+    expect(proof).toMatch(new RegExp(`<p class="sh__lead lead" data-fact="${TRIAL_LEAD.facts.join(' ')}"[^>]*>${TRIAL_LEAD.text}</p>`));
     expect(proof.indexOf('id="cases"')).toBeLessThan(proof.indexOf('id="learner-voice"'));
   });
 });

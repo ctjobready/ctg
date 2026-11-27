@@ -310,17 +310,27 @@ test.describe('Single-source wording (items 31, 32, 34, 35, 36)', () => {
   });
 
   // WP166-B (marketing review R3-40): the degree-holders pain cards on Governments and Universities are gone (the 19M+ tile, PX-02, states the problem); the assertions on their wording are gone with them.
-  test('item 36: the degree-holders pain ("A degree alone does not guarantee a job offer.") is off Governments and Universities (WP166-B: the 19M+ tile states it)', async ({ page }) => {
-    for (const [route, title] of [
-      ['partner-with-us/governments/', 'Graduates Struggle to Find Work'],
-      ['partner-with-us/universities/', 'Degree Holders Struggle to Find Work'],
+  // WP175 (owner decision Q4 (a) of 2026-11-28): Governments' pain "Graduates Struggle to Find Work" is back as P1, from its earlier text ("A degree alone does not guarantee a job offer.", fec0dce2^), with the
+  // 19M+ tile beside it; Universities keeps none (Q4 (b): its PX-02 and PX-05 tiles count as its pains P1 and P2). Item 36's wording rule still holds on both: the line is the single-source sentence, and the
+  // "not producing job offers" wording stays off.
+  test('item 36: the degree-holders pain ("A degree alone does not guarantee a job offer.") is Governments’ P1 again (WP175) and stays off Universities (its 19M+ tile states it)', async ({ page }) => {
+    for (const [route, title, n] of [
+      ['partner-with-us/governments/', 'Graduates Struggle to Find Work', 1],
+      ['partner-with-us/universities/', 'Degree Holders Struggle to Find Work', 0],
     ] as const) {
       await open(page, route);
       const item = page.locator('#problem .gp__pains li', { has: page.locator('.gp__q', { hasText: title }) });
-      await expect(item, route).toHaveCount(0); // WP166-B: it was 1
+      await expect(item, route).toHaveCount(n); // WP166-B: 0 on both; WP175: Governments' P1 again
       await expect(page.locator('#problem [data-fact="PX-02"]'), route).toContainText('19M+');
       expect(await mainText(page), route).not.toContain('not producing job offers');
     }
+    const gov = page.locator('#problem .gp__pains li', { has: page.locator('.gp__q', { hasText: 'Graduates Struggle to Find Work' }) });
+    await open(page, 'partner-with-us/governments/');
+    expect(await gov.getAttribute('data-pain')).toBe('P1');
+    expect(compact(await gov.locator('.gp__a').textContent())).toBe('A degree alone does not guarantee a job offer.');
+    expect((await mainText(page)).split('A degree alone does not guarantee a job offer.').length - 1, 'said once on the page').toBe(1);
+    await open(page, 'partner-with-us/universities/');
+    expect(await mainText(page)).not.toContain('A degree alone does not guarantee a job offer.');
   });
 });
 

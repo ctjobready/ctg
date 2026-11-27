@@ -271,10 +271,15 @@ test.describe('copy.ts: the campus and employer lines that packages B and C shar
     expect([...cardTexts(features)].sort()).toEqual(EMPLOYER_INCLUDES.map((c) => c.text).sort());
   });
 
-  test('EMPLOYER_STEPS: Assess, Train, Support and Measure, with the exam terms set per program (no second scope sentence)', () => {
+  // WP175-Z (owner decisions of 2026-11-28; WP145): step 2 says the certification preparation in WP145's approved words ("can be added where a track offers one"), not the wording WP145 retired on
+  // Employers and JobReady@Work ("including preparation for an industry certification where a track offers one"), and it leaves the exam terms ("set per program", which it carried) to the one
+  // statement each page makes elsewhere (JobReady@Work's glance, Employers' C10 line; tests/wp163.spec.ts holds the qualifier to once per page).
+  test('EMPLOYER_STEPS: Assess, Train, Support and Measure; step 2 in WP145’s wording, with no second scope sentence and no exam-terms qualifier', () => {
     expect(EMPLOYER_STEPS.map((s) => s.title)).toEqual(['Assess', 'Train', 'Support and Measure']);
     for (const s of EMPLOYER_STEPS) expect(s.text).not.toContain('agreed in the program scope');
-    expect(EMPLOYER_STEPS[1].text).toContain('set per program');
+    expect(EMPLOYER_STEPS[1].text).toBe('Custom curriculum and workshops; preparation for an industry certification can be added where a track offers one.');
+    expect(EMPLOYER_STEPS[1].text).not.toContain('including preparation for an industry certification where a track offers one');
+    for (const s of EMPLOYER_STEPS) expect(s.text).not.toMatch(/\b(?:exam fees?|exam eligibility|eligibility, attempts)\b[^.;]*?\bset per program\b/);
   });
 
   test('WORK_BRIDGE is the Employers definition band’s bridge sentence', () => {
@@ -303,8 +308,26 @@ test.describe('the shared bands: new options shown on the styleguide, defaults u
   test('ProblemBand: `transition` closes the band with its line; without it the band ends with its cards, as before', () => {
     const demo = cmfFreeBand(SG, 'sg-problem-transition');
     expect(demo).toMatch(/<p class="pb__transition"[^>]*data-transition[^>]*>[^<]+<\/p>\s*<\/div>\s*<\/section>$/);
-    expect(lastParagraph(demo)).toBe('A sample transition line closes the band.');
+    // WP175-Z (owner decisions of 2026-11-28): the sample carries the C3 line itself (it printed "A sample transition line closes the band." only while tests/wp40.spec.ts held the line off every page)
+    expect(lastParagraph(demo)).toBe(C3_TRANSITION);
+    expect(demo.split(C3_TRANSITION).length - 1, 'the sample prints the line once').toBe(1);
+    expect(SG).not.toContain('A sample transition line closes the band.');
     expect(cmfFreeBand(SG, 'band-problem')).not.toContain('data-transition');
+  });
+
+  // WP175-Z: CaseStudyCarousel's `trialLead` (Home, Development Partners and Foundations) marks the lead with the trial's facts; a carousel given a plain `lead`, or none, is unchanged (no marker)
+  test('CaseStudyCarousel: `trialLead` prints the lead with data-fact="RC-01 RC-02"; a plain lead or none carries no marker, as before', () => {
+    for (const route of ['/', '/partner-with-us/development-partners/', '/partner-with-us/foundations/']) {
+      const header = /<section\b[^>]*\bid="cases"[\s\S]*?<\/header>/.exec(readBuilt(route))![0];
+      expect(header, route).toContain(`<p class="sh__lead lead" data-fact="RC-01 RC-02"`);
+      expect(textOf(/<p class="sh__lead lead"[^>]*>([\s\S]*?)<\/p>/.exec(header)![1]), route).toBe(TRIAL_LEAD.text);
+    }
+    // SectionHeader's `leadFacts` is set only through `trialLead`: no other section-header lead on the site carries a marker (every other caller of SectionHeader is unchanged)
+    const marked = listPages()
+      .filter((p) => /class="sh__lead lead" data-fact=/.test(readFileSync(p.file, 'utf8')))
+      .map((p) => p.route)
+      .sort();
+    expect(marked).toEqual(['/', '/partner-with-us/development-partners/', '/partner-with-us/foundations/']);
   });
 
   test('DifferenceBand: #difference, the one C10 heading, two to four USP lines, no table', () => {

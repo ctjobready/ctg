@@ -5,6 +5,7 @@ import { fact } from '../src/data/facts';
 import { faqs, faqsFor } from '../src/data/faqs';
 import { DESKTOP, MOBILE, open } from './support/browser';
 import { listPages } from './support/pages';
+import { cmfBandHtml, lastParagraph, readBuilt, textOf } from './support/cmf';
 
 /**
  * WP40 behaviors (cycle-17 whole-site review, GPT-6.1 Sol): Investors' "What JobReady Does" is three short cards and one link (IncludesBand) in place of the status table, YouthWIDE's glance row is
@@ -281,12 +282,26 @@ test.describe('Local Partners: the positioning statement divides the work (item 
   });
 });
 
-test.describe('the "It doesn’t have to be this way." line is gone from every page (item 8)', () => {
-  test('no built page, including the component gallery, prints it', () => {
+// WP175-Z (owner decisions of 2026-11-28, Q1 (a) and Q7 (a)): every conversion page follows CMF v3, and each declared C2–C4 or C2–C3 compression keeps the C3 transition line as the problem band's last line
+// (doc 04 §4), so the line WP40 took off every page (item 8) is back on exactly the thirteen conversion pages, once each, in that place, and on the component gallery's ProblemBand sample; no other page prints it.
+test.describe('the "It doesn’t have to be this way." line closes the compressed problem band of every conversion page, and is on no other page (item 8, WP175)', () => {
+  const CONVERSION = ['/', '/partner-with-us/governments/', '/partner-with-us/development-partners/', '/partner-with-us/foundations/', '/partner-with-us/universities/', '/partner-with-us/employers/', '/partner-with-us/local-partners/', '/partner-with-us/investors/', '/programs/youthwide/', '/programs/jobready-campus/', '/programs/jobready-work/', '/programs/superkids/', '/programs/nu-postgraduate-diploma/'];
+  test('exactly the thirteen conversion pages and the component gallery print it', () => {
     const printing = listPages()
       .filter((p) => /have to be this way/i.test(readFileSync(p.file, 'utf8')))
-      .map((p) => p.route);
-    expect(printing).toEqual([]);
+      .map((p) => p.route)
+      .sort();
+    expect(printing).toEqual([...CONVERSION, '/styleguide/'].sort());
+  });
+
+  test('each conversion page prints it once, as the last line of its compressed problem band (C2–C4 or C2–C3)', () => {
+    for (const route of CONVERSION) {
+      const html = readBuilt(route);
+      expect(textOf(/<main\b[\s\S]*<\/main>/.exec(html)![0]).split('It doesn’t have to be this way.').length - 1, `${route}: once on the page`).toBe(1);
+      const bands = [...cmfBandHtml(html, 'C2-C4 (compressed)'), ...cmfBandHtml(html, 'C2-C3 (compressed)')];
+      expect(bands, `${route}: one declared C2–C4 or C2–C3 band`).toHaveLength(1);
+      expect(lastParagraph(bands[0]), `${route}: the band's last line`).toBe('It doesn’t have to be this way.');
+    }
   });
 
   // WP47 (owner decision 2026-10-15): the closing line ("A first cohort can show who is earning, and you decide on the evidence.") is gone, so Home's band ends with its cards like the others (tests/wp47.spec.ts)

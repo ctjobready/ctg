@@ -102,7 +102,9 @@ test.describe('Home: Proof in Practice says what was delivered where its carouse
     // WP55 (owner decision 2026-10-17, "Show both"): the Kosovo card adds the World Bank's own figure (PR-02b, one line: "World Bank: 77 trainees won at least one online contract."). WP57 (cycle-29 review, Gemini GM4): and its program records
     // (PR-02, "Program records: 102 of 150 women in work."); the band's wrapper names both, and each line names its own. The other program-record figures (PR-01, PR-05) stay slide 4's alone, so no other fact is named.
     // WP94 (triage A2): the Her Power card now states its register figure (PR-05, and GV-11 for the 2,400), so its line names both.
-    expect(await page.locator('#cases [data-fact]').evaluateAll((els) => els.map((e) => e.getAttribute('data-fact')))).toEqual(['PR-01 PR-02 TL-04 PR-05 GV-11 PR-02b', 'PR-01', 'PR-02 TL-04', 'PR-02b', 'PR-05 GV-11']);
+    // WP175-Z (owner decision Q3 (a) of 2026-11-28): the band's lead is the one-line trial lead, marked with the trial's own facts (RC-01 RC-02, CaseStudyCarousel `trialLead`); it states no program record, and the
+    // cards' markers are unchanged
+    expect(await page.locator('#cases [data-fact]').evaluateAll((els) => els.map((e) => e.getAttribute('data-fact')))).toEqual(['RC-01 RC-02', 'PR-01 PR-02 TL-04 PR-05 GV-11 PR-02b', 'PR-01', 'PR-02 TL-04', 'PR-02b', 'PR-05 GV-11']);
   });
 
   test('the other pages keep their case-study figures: Development Partners and Foundations show the Kosovo and Her Power results, no card shows a context line', async ({ page }) => {

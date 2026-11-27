@@ -165,7 +165,8 @@ test.describe('Home: the WSDFM card of "Proof in Practice" shows a context line 
     expect(compact(await cards.nth(0).locator('.card__title').textContent())).toBe(WSDFM_TITLE);
     // WP55 (owner decision 2026-10-17, "Show both"): the Kosovo card adds one World Bank line (PR-02b). WP57 (cycle-29 review, Gemini GM4): and its own program-records line (PR-02); the band's wrapper names both. WP63 (cycle-35 review, Gemini M4): and the WSDFM card's program records (PR-01); Her Power's fact (PR-05) is not named.
     // WP94 (triage A2): the Her Power card's line names PR-05 and GV-11 (its 2,400), so the band's wrapper and that card name them too.
-    expect(await page.locator('#cases [data-fact]').evaluateAll((els) => els.map((e) => e.getAttribute('data-fact')))).toEqual(['PR-01 PR-02 TL-04 PR-05 GV-11 PR-02b', 'PR-01', 'PR-02 TL-04', 'PR-02b', 'PR-05 GV-11']);
+    // WP175-Z (owner decision Q3 (a) of 2026-11-28): the band's lead, the one-line trial lead, is marked with the trial's facts (RC-01 RC-02) ahead of the cards' markers, which are unchanged
+    expect(await page.locator('#cases [data-fact]').evaluateAll((els) => els.map((e) => e.getAttribute('data-fact')))).toEqual(['RC-01 RC-02', 'PR-01 PR-02 TL-04 PR-05 GV-11 PR-02b', 'PR-01', 'PR-02 TL-04', 'PR-02b', 'PR-05 GV-11']);
   });
 
   test('the figure is stated on Home in slide 4, with its qualifier, and in the WSDFM card as program records (WP63; it was slide 4’s alone)', async ({ page }) => {
@@ -350,9 +351,11 @@ test.describe('Home: the Outcome Tracking row, the positioning statement and the
     expect(POSITIONING.home.text).not.toContain('as agreed in the program scope');
     const gate = readFileSync(resolve('scripts/check-facts.mjs'), 'utf8');
     expect(gate).not.toContain(`'/': '${CLOSING}'`);
-    expect(gate).toContain("const POSITION_PENDING_PAGES = ['/', '/partner-with-us/investors/'];");
+    // WP175-Z: Home is a required [POSITION] page now (it was pending, POSITION_PENDING_PAGES, until packages A and B rendered the two statements); the pending list is gone from the gate
+    expect(/const POSITION_PAGES = \[([\s\S]*?)\];/.exec(gate)?.[1] ?? '').toMatch(/^\s*'\/',$/m);
+    expect(gate).not.toContain('const POSITION_PENDING_PAGES');
     await open(page, '');
-    // WP175 (package A): Home prints its crafted statement, unscoped, first in C6; the gate holds it to the declared words while Home is pending (package Z makes it required)
+    // WP175 (package A): Home prints its crafted statement, unscoped, first in C6; the gate holds it to the declared words (WP175-Z: as a required page)
     await expect(page.locator('#mechanism .pos__text')).toHaveText(POSITIONING.home.text);
     expect(gate).toContain(`'/': '${POSITIONING.home.text}'`);
   });

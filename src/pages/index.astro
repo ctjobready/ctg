@@ -207,9 +207,9 @@ const homeCredential: Usp = { title: USPS.credential.title, text: 'Each track in
        sentence (WP166-A, R1-17). The TalentLEAP line (R1-18) is C5's last line now. -->
   <Tone cmf="C6" tone="ice"><HomeMechanism id="mechanism" title="One Path from Learning to Earning" tone="white" positioning={POSITIONING.home} link={{ label: 'How Our Model Works', href: '/our-model/' }} scope={PROGRAM_SCOPE_STATEMENT} /></Tone>
 
-  <!-- 8. C7, Proof in Practice and the learner stories, led by the one-line trial lead (WP175, Q3 (a)). WP37/WP51: the program-results slide of the carousel states the figures, so the three cards show delivery context and none repeats a figure. -->
+  <!-- 8. C7, Proof in Practice and the learner stories, led by the one-line trial lead (WP175, Q3 (a); WP175-Z: `trialLead`, so the lead is marked RC-01 RC-02). WP37/WP51: the program-results slide of the carousel states the figures, so the three cards show delivery context and none repeats a figure. -->
   <Tone cmf="C7" join>
-    <CaseStudyCarousel id="cases" eyebrow="Case Studies" title="Proof in Practice" lead={TRIAL_LEAD.text} items={caseStudyItems}>
+    <CaseStudyCarousel id="cases" eyebrow="Case Studies" title="Proof in Practice" trialLead={TRIAL_LEAD} items={caseStudyItems}>
       <a slot="more" class="link" href={caseStudies.href}>See All Case Studies<Icon name="arrow-right" size={16} /></a>
       <a slot="more" class="link" href={trialResults.href}>Read the Trial Results<Icon name="arrow-right" size={16} /></a>
       <a slot="more" class="link" href={surveyResults.href}>Impact Survey 2026<Icon name="arrow-right" size={16} /></a>

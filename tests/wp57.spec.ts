@@ -3,6 +3,7 @@ import { readFileSync } from 'node:fs';
 import { expect, test, type Page } from '@playwright/test';
 import { titleCase } from '../src/lib/titleCase.mjs';
 import { fact } from '../src/data/facts';
+import { TRIAL_LEAD } from '../src/data/copy';
 import { WORLD_STRIP } from '../src/data/globalStrip';
 import { DESKTOP, MOBILE, open, scrollThrough } from './support/browser';
 import { listPages } from './support/pages';
@@ -150,12 +151,14 @@ test.describe('G2, YouthWIDE: "Built Around What Funders and Agencies Ask" is go
     }
   });
 
-  test('npm run check:facts accepts the page with no C8 band: the pain map is read on three pages and the card map on the two that carry the band', () => {
-    // the allowance is one page (PAIN_C8_OPTIONAL); the script's own negative self-tests (a page with no C2 band, two pains, a band with a pain missing, ...) run on every call
+  // WP175-Z (owner decisions of 2026-11-28: C8 relieves each C2 pain 1:1 on every conversion page): YouthWIDE's C8 band is back (WP175-C), and so is Home's (WP175-A), so the gate's allowance for a page
+  // with no C8 band (PAIN_C8_OPTIONAL, WP57 and WP166-A) is gone, and the pain map is read with its cards on the nine conversion pages that rank three pains (it was three pages, one with its cards)
+  test('npm run check:facts reads the pain map with its C8 cards on every ranked-pain page; no page may carry its pains without the C8 band', () => {
+    // the script's own negative self-tests (a page with no C2 band, two pains, a band with a pain missing, a page with no C8 band, ...) run on every call
     const out = execFileSync(process.execPath, ['--experimental-strip-types', 'scripts/check-facts.mjs'], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] });
     expect(out).toContain('check-facts: OK');
-    // WP166-A (marketing review R1-17): Home's C8 band ("What a Supported Youth Cohort Includes") is gone, so Home joins YouthWIDE in PAIN_C8_OPTIONAL and one page carries the band
-    expect(out).toMatch(/three ranked pains \(C2\) on 3 page\(s\), with one C8 card each on 1 of them/);
+    expect(out).toMatch(/three ranked pains \(C2\), with one C8 card each, on 9 page\(s\)/);
+    expect(readFileSync('scripts/check-facts.mjs', 'utf8')).not.toMatch(/\bconst PAIN_C8_OPTIONAL\b|c8Optional/);
   });
 });
 
@@ -424,7 +427,9 @@ test.describe('GM4, Kosovo: Home’s "Proof in Practice" card shows both figures
     expect(compact(await card(page).locator('.case__context, .case__note').allTextContents().then((t) => t.join(' ')))).toBe(`${RECORDS} ${WORLD_BANK}`);
     await expect(card(page).locator('.case__stat, .case__value, .case__label')).toHaveCount(0);
     // the band's wrapper names both Kosovo facts; WP63 (cycle-35 review, Gemini M4): and the WSDFM card's program records (PR-01); Her Power's card states no fact
-    expect(await page.locator('#cases [data-fact]').evaluateAll((els) => els.map((e) => e.getAttribute('data-fact')))).toEqual(['PR-01 PR-02 TL-04 PR-05 GV-11 PR-02b', 'PR-01', 'PR-02 TL-04', 'PR-02b', 'PR-05 GV-11']); // WP94 (triage A2): the Her Power card names PR-05 and GV-11
+    // WP175-Z (owner decision Q3 (a) of 2026-11-28): the band's lead is the one-line trial lead, marked with its own facts (RC-01 RC-02, CaseStudyCarousel `trialLead`), ahead of the cards' markers, which are unchanged
+    expect(await page.locator('#cases [data-fact]').evaluateAll((els) => els.map((e) => e.getAttribute('data-fact')))).toEqual(['RC-01 RC-02', 'PR-01 PR-02 TL-04 PR-05 GV-11 PR-02b', 'PR-01', 'PR-02 TL-04', 'PR-02b', 'PR-05 GV-11']); // WP94 (triage A2): the Her Power card names PR-05 and GV-11
+    await expect(page.locator('#cases .sh__lead[data-fact="RC-01 RC-02"]')).toHaveText(TRIAL_LEAD.text);
     // the program records are on Home in the hero slide and in this card; the World Bank's figure is on this card alone
     const main = compact(await page.locator('main').textContent());
     expect(main.split('102 of').length - 1).toBe(2);

@@ -92,10 +92,12 @@ const FAQ_IDS = ['Q1-employer', 'Q8-employer'];
 // work in 16 countries and territories."): "since 2014" is said once in the band (WP64).
 const employersOrigin = originShortUnder('We’ve Built This Path Since 2014');
 // WP166-B (R3-30): the third obstacle is PX-08 with its source note, as on Investors. WP175: the three pains are EMPLOYER_PAINS (src/data/copy.ts), the same words, shared with JobReady@Work.
-// WP175 (C8d): EMPLOYER_STEPS, with step 2 cut to its first words: its "including preparation for an industry certification where a track offers one" is the wording WP145 retired on this page (the "Deliver" card
-// says the preparation "can be added where a track offers one", and C10 says it again), so the step says the training alone. The build stops if the shared step changes, so this cut is revisited then.
-if (!EMPLOYER_STEPS[1].text.startsWith('Custom curriculum and workshops, including preparation for an industry certification where a track offers one')) throw new Error('Employers: EMPLOYER_STEPS step 2 changed; review the page-local cut (employerSteps)');
-const employerSteps = [EMPLOYER_STEPS[0], { title: EMPLOYER_STEPS[1].title, text: 'Custom curriculum and workshops.' }, EMPLOYER_STEPS[2]];
+// WP175 (C8d): EMPLOYER_STEPS, with step 2 cut to its first clause. WP175-Z: the shared step now says the preparation in WP145's words ("can be added where a track offers one"), the words of this page's
+// "Deliver" card in C6 ("Soft-skills and hard-skills tracks; preparation for an industry certification can be added where a track offers one."), and C10 says it again, so the step says the training alone rather
+// than repeat the card's clause two bands later. The build stops if the shared step changes, so this cut is revisited then.
+const STEP2_PREP = '; preparation for an industry certification can be added where a track offers one.';
+if (!EMPLOYER_STEPS[1].text.endsWith(STEP2_PREP)) throw new Error('Employers: EMPLOYER_STEPS step 2 changed; review the page-local cut (employerSteps)');
+const employerSteps = [EMPLOYER_STEPS[0], { title: EMPLOYER_STEPS[1].title, text: `${EMPLOYER_STEPS[1].text.slice(0, -STEP2_PREP.length)}.` }, EMPLOYER_STEPS[2]];
 // WP46 (cycle-22 review): the hiring route is two steps in the same step component as the training route (it was one sentence beside four steps), both in wording this page already has (EMPLOYER_HIRING_STEPS in copy.ts;
 // WP47: JobReady@Work uses the same two steps).
 // WP54 (cycle-28 review, Kimi K3): the AWS credential (PA-06, "AWS Authorized Training Partner") is one more sentence of the Track Record logo strip's caption. The sentence is built from the register's words, and the build stops if PA-06 changes.

@@ -64,9 +64,11 @@ test.describe('Employers and JobReady@Work: the track-record opener makes no spe
   test('neither page opens the band with the line any more, and it is not their empathy line (WP175)', async ({ page }) => {
     // WP175 (owner decision Q2 (a) of 2026-11-28): every C5 opens with an empathy line again, each page its own fresh line (EMPATHY has a key for every conversion page); the retired line is not one of them
     expect([EMPATHY.employers, EMPATHY.work]).not.toContain(LINE);
-    for (const route of [EMP, WORK]) {
+    // WP175-Z: so the band opens with one lead line again, the page's own empathy line (it had none since WP61), and the retired line is still on neither page
+    for (const [route, empathy] of [[EMP, EMPATHY.employers], [WORK, EMPATHY.work]] as const) {
       await open(page, route);
-      await expect(page.locator('#guide p.lead'), route).toHaveCount(0);
+      await expect(page.locator('#guide p.lead'), route).toHaveCount(1);
+      await expect(page.locator('#guide p.lead'), route).toHaveText(empathy);
       expect(compact(await page.locator('main').textContent()), route).not.toContain(LINE);
     }
     expect(pagesWith(LINE)).toEqual([]);

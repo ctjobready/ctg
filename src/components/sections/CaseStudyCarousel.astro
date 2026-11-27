@@ -5,6 +5,7 @@ import Carousel from '../system/Carousel.astro';
 import CaseStudyCard from '../ui/CaseStudyCard.astro';
 import { fact } from '../../data/facts';
 import { CASE_CARD_LABELS, CASE_CARD_LABEL_FACTS, casePhoto } from '../pages/home/caseStudies';
+import type { CopyBlock } from '../../data/copy';
 import type { ImageMetadata } from 'astro';
 
 /** C7 Proof in practice: scroll-snap carousel of case-study cards, each with an outcome stat from the register (or, per card, a line of delivery context in its place: Home). */
@@ -34,12 +35,18 @@ interface Item {
 interface Props {
   title: string;
   lead?: string;
+  /**
+   * WP175 (owner decision Q3 (a) of 2026-11-28: every C7 opens with a one-line trial lead): the trial in one line (TRIAL_LEAD in src/data/copy.ts) as the header's lead, marked with its facts
+   * (data-fact="RC-01 RC-02"), so the claim is tied to the register like ProofBand's `trialLead`. It takes the place of `lead` (a band passes one or the other). Left out, the band is unchanged.
+   */
+  trialLead?: CopyBlock;
   items: Item[];
   /** The small label over the heading (default "Program Results", so it never repeats a heading titled "Proof in Practice"). */
   eyebrow?: string;
   id?: string;
 }
-const { title, lead, items, eyebrow = 'Program Results', id = 'cases' } = Astro.props;
+const { title, lead, trialLead, items, eyebrow = 'Program Results', id = 'cases' } = Astro.props;
+if (trialLead && lead) throw new Error('CaseStudyCarousel: pass `trialLead` or `lead`, not both (the trial lead is the band’s lead line)');
 const cards = items.map((it) => {
   // A card with a context line shows no figure; any other card needs its fact's stat.
   const s = it.context ? undefined : fact(it.factId).stat;
@@ -53,7 +60,7 @@ const stated = [...items.filter((i) => !i.context).map((i) => i.factId), ...item
 ---
 
 <Section id={id} tone="airy" aria-labelledby={`${id}-h`}>
-  <SectionHeader id={`${id}-h`} eyebrow={eyebrow} title={title} lead={lead} />
+  <SectionHeader id={`${id}-h`} eyebrow={eyebrow} title={title} lead={trialLead?.text ?? lead} leadFacts={trialLead?.facts.join(' ')} />
   <div data-fact={stated}>
     <Carousel label="Case Studies" perView={3} count={cards.length}>
       {cards.map((c) => <CaseStudyCard title={c.title} program={c.program} partner={c.partner} image={c.image} imageAlt={c.imageAlt} assetId={c.assetId} stat={c.stat} context={c.context} contextFacts={c.contextFacts} note={c.note} href={c.href} />)}

@@ -77,12 +77,17 @@ test.describe('audience pages', () => {
       }
     });
 
-    test(`${slug}: one learner story card near the top (before the problem band)`, async ({ page }) => {
+    // WP175 (owner decisions of 2026-11-28: every conversion page follows CMF v3, C1 to C14): the learner story is proof, so packages A and B moved it from above the problem band into C7, after the
+    // page's evidence and before C8 (#features); it is still one card, and it is no longer between the hero and the problem band.
+    test(`${slug}: one learner story card, in C7 (after the problem band and the evidence, before C8)`, async ({ page }) => {
       await page.goto(`partner-with-us/${slug}/`);
       const ids = await idOrder(page);
       const story = ids.indexOf('learner-voice');
       expect(story, 'learner story exists').toBeGreaterThan(-1);
-      expect(story, 'before the problem band').toBeLessThan(ids.indexOf('problem'));
+      expect(ids.filter((id) => id === 'learner-voice'), 'one learner story card').toHaveLength(1);
+      expect(story, 'after the problem band').toBeGreaterThan(ids.indexOf('problem'));
+      expect(story, 'before the C8 band').toBeLessThan(ids.indexOf('features'));
+      expect(await page.locator('#learner-voice').evaluate((el) => el.closest('[data-cmf]')?.getAttribute('data-cmf')), 'inside the C7 wrapper').toBe('C7');
     });
   }
 

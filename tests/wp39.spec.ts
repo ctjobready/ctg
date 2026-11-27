@@ -41,7 +41,7 @@ interface CardSpec {
   title: string;
   text: string;
   facts: string[];
-  /** The ranked pain the card answers (Local Partners only here: Home is not in this list, and YouthWIDE has had no C8 band since WP57). */
+  /** The ranked pain the card answers (data-relieves). WP175 (owner decisions of 2026-11-28): every card that relieves a pain says which, P1 to P3 in rank order; a card without one is the page's gain creator. */
   pain?: string;
 }
 interface PageSpec {
@@ -61,7 +61,11 @@ const DELIVERY_WORK = 'Training follows an AI-supported flipped classroom: all l
 // in their own words name the track menu (src/data/copy.ts TRACK_MENU, PD-10) instead; tests/wp166-b.spec.ts pins the delivery model once per page.
 const TRACKS = 'Tracks are set per country from employer demand, from a menu that includes digital marketing, graphic design, video editing, web design and development, digital accounting, Python programming and data analysis.';
 
-/** The three cards of each page's "What You Get" band, in the order of the page's three pains. Each page's cards are derived from the rows its matrix had (cycle-16 review, item 1). */
+/**
+ * The cards of each page's "What You Get" band, in the order of the page's three pains. Each page's cards are derived from the rows its matrix had (cycle-16 review, item 1).
+ * WP175 (owner decisions of 2026-11-28: C8 relieves each C2 pain 1:1, in rank order, then names its gain creators): the three cards relieve P1 to P3 (data-relieves), and a fourth card is the gain creator the
+ * page's doc 04 matrix names (Employers' matrix 4.6 names none, so it keeps three). The cards are still short cards, never the concern / inclusion / benefit matrix.
+ */
 const PAGES: PageSpec[] = [
   {
     route: 'partner-with-us/development-partners/',
@@ -69,9 +73,11 @@ const PAGES: PageSpec[] = [
     cards: [
       // WP49 (cycle-24 review): the 100 hours per certification stay in the delivery model above (tests/wp49.spec.ts); WP65 (cycle-37 review, Gemini, Sonnet): "CodersTrust connects training, mentoring and placement support in one program." (it said "One delivery partner connects ...")
       // WP166-B: card 1 ended with DELIVERY (facts PD-01 PD-02a IN-04); card 2 now ends with the track menu (it ended "... agreed for each program.")
-      { title: 'Training, Mentoring and Placement Support', text: 'Certification exam preparation and one exam fee per trainee (any further attempts set per program), three months of mentoring and placement support in one program.', facts: ['PD-01', 'PD-02a'] },
-      { title: 'Accessible Local Delivery', text: `Outreach, accessible selection and tracks chosen from employer demand, with safeguarding agreed for each program. ${TRACKS}`, facts: ['PD-02', 'PD-10', 'PD-12'] },
-      { title: 'Progress Your Evaluators Can Check', text: 'Baseline data, follow-up surveys and monthly reports, with documentary evidence where available.', facts: ['PD-08', 'PD-09'] },
+      { title: 'Training, Mentoring and Placement Support', text: 'Certification exam preparation and one exam fee per trainee (any further attempts set per program), three months of mentoring and placement support in one program.', facts: ['PD-01', 'PD-02a'], pain: 'P1' },
+      { title: 'Accessible Local Delivery', text: `Outreach, accessible selection and tracks chosen from employer demand, with safeguarding agreed for each program. ${TRACKS}`, facts: ['PD-02', 'PD-10', 'PD-12'], pain: 'P2' },
+      { title: 'Progress Your Evaluators Can Check', text: 'Baseline data, follow-up surveys and monthly reports, with documentary evidence where available.', facts: ['PD-08', 'PD-09'], pain: 'P3' },
+      // WP175: the gain creator of doc 04 4.1 (certification exam preparation → a supported route to a recognized credential)
+      { title: 'A Supported Route to a Recognized Credential', text: 'Each track prepares learners for an industry certification exam.', facts: ['PD-02', 'PD-03'] },
     ],
   },
   {
@@ -80,14 +86,17 @@ const PAGES: PageSpec[] = [
     cards: [
       // WP49 (cycle-24 review): "completers", the site's word for people who finished a program (it said "graduates"); WP62 (cycle-34 review, Gemini): "... placement support toward local, remote and global work." (it said "... that point completers toward paid work.")
       // WP166-B: it read "Certification tracks chosen from employer demand, then three months of mentoring and placement support toward local, remote and global work. ${DELIVERY}" (facts PD-10 PD-01 IN-04)
-      { title: 'Certification Preparation and Placement Support', text: `${TRACKS} Three months of mentoring and placement support follow, toward local, remote and global work.`, facts: ['PD-10', 'PD-01'] },
-      { title: 'Spending Measured Against Outcomes', text: 'A pilot scorecard with cost per completer and per verified outcome, and monthly reports. Spending is reported against the agreed scorecard.', facts: ['PD-11', 'PD-08'] },
+      { title: 'Certification Preparation and Placement Support', text: `${TRACKS} Three months of mentoring and placement support follow, toward local, remote and global work.`, facts: ['PD-10', 'PD-01'], pain: 'P1' },
+      { title: 'Spending Measured Against Outcomes', text: 'A pilot scorecard with cost per completer and per verified outcome, and monthly reports. Spending is reported against the agreed scorecard.', facts: ['PD-11', 'PD-08'], pain: 'P2' },
       {
         title: 'Capacity Designed to Stay in Your System',
         // WP60 (cycle-32 review, Gemini GM5): the list opens "Where included:" (it read as unconditional)
         text: 'Where included: curriculum and manuals; CodersTrust-trained facilitators; and blended learning in existing labs that works with limited connectivity, so rural labs can take part.',
         facts: ['GV-11', 'PD-06', 'PD-07'],
+        pain: 'P3',
       },
+      // WP175: the gain creator of doc 04 4.2 (local, remote and global work, PD-15)
+      { title: 'Access to Work Beyond the Local Market', text: 'Placement support includes career advising, job-application and interview preparation, employer matching and freelance-marketplace onboarding.', facts: ['PD-15'] },
     ],
   },
   {
@@ -101,14 +110,20 @@ const PAGES: PageSpec[] = [
         // WP166-B: the card opened with DELIVERY (facts also IN-04)
         text: 'Three months of mentoring and placement support are standard inclusions, and outcomes are tracked for 12 months after each course. Results are measured against the agreed scorecard, including first paid work, not attendance alone.',
         facts: ['PD-01', 'PD-02', 'PD-11'],
+        pain: 'P1',
       },
-      { title: 'A Pilot Scorecard Agreed with You', text: 'Cost per completer and per verified outcome, with thresholds agreed before the first cohort starts.', facts: ['PD-11'] },
+      // WP175 (doc 04 4.3 C8 map: P2 "Independent evidence is thin" is relieved by the trial and the evaluation welcome): the card answers P2 (it was "A Pilot Scorecard Agreed with You", "Cost per completer and per
+      // verified outcome, with thresholds agreed before the first cohort starts.", PD-11, which card 1's scorecard sentence and the risk-reversal band already state)
+      { title: 'A Model with Independent Evidence', text: 'A randomized trial of CodersTrust’s WSDFM program, and independent evaluation welcome on new programs.', facts: ['RC-01', 'PD-08'], pain: 'P2' },
       {
         title: 'Progress You Can See Every Month',
         // WP49 (cycle-24 review): two sentences; the scorecard and the contracting entity and due-diligence confirmation are stated elsewhere on the page (the first two cards, the Due Diligence band), so the card rests on PD-08 and PD-18 alone
-        text: 'Monthly reports and quarterly reviews keep progress visible. Where agreed, SDG-mapped reporting follows your CSR framework, with co-branded certificates and events.',
-        facts: ['PD-08', 'PD-18'],
+        // WP175: its SDG sentence is the gain creator's card now (doc 04 4.3), so the card rests on PD-08
+        text: 'Monthly reports and quarterly reviews keep progress visible.',
+        facts: ['PD-08'],
+        pain: 'P3',
       },
+      { title: 'SDG-Mapped Reporting', text: 'Where agreed, SDG-mapped reporting follows your CSR framework, with co-branded certificates and events.', facts: ['PD-18'] },
     ],
   },
   {
@@ -116,9 +131,11 @@ const PAGES: PageSpec[] = [
     h2: 'What Your Students and Your Institution Get',
     cards: [
       // WP166-B (marketing review R3-24, R3-05): card 1 ended with DELIVERY (facts also IN-04); card 2 was EMPLOYER_SKILLS (facts PD-10 PD-02)
-      { title: 'Certification Exam Preparation and Mentoring', text: CERT_AND_MENTORING, facts: ['PD-02', 'PD-01'] },
-      { title: 'Skills Employers Ask For', text: TRACKS, facts: ['PD-10'] },
-      { title: 'Placement Evidence You Can Report', text: SCOPE_RESULTS, facts: ['PD-08', 'PD-09'] },
+      { title: 'Certification Exam Preparation and Mentoring', text: CERT_AND_MENTORING, facts: ['PD-02', 'PD-01'], pain: 'P1' },
+      { title: 'Skills Employers Ask For', text: TRACKS, facts: ['PD-10'], pain: 'P2' },
+      { title: 'Placement Evidence You Can Report', text: SCOPE_RESULTS, facts: ['PD-08', 'PD-09'], pain: 'P3' },
+      // WP175: the gain creator of doc 04 4.5 (certified local facilitators and campus labs → capacity that stays)
+      { title: 'Capacity Designed to Stay on Campus', text: 'Campus labs keep working as blended-learning centers, with CodersTrust-trained facilitators.', facts: ['IN-09', 'PD-06'] },
     ],
   },
   {
@@ -158,22 +175,28 @@ const PAGES: PageSpec[] = [
         facts: ['PD-08'],
         pain: 'P3',
       },
+      // WP175: the gain creator doc 06 P7b names (connectivity-light delivery, PD-07)
+      { title: 'Connectivity-Light Delivery', text: 'Lessons that run on a basic connection.', facts: ['PD-07'] },
     ],
   },
-  // WP57 (cycle-29 review, GPT-6.1 Sol G2): YouthWIDE's three-card band ("Built Around What Funders and Agencies Ask") is gone; tests/wp57.spec.ts holds the page to having no C8 band and its Reporting row
+  // WP57 (cycle-29 review, GPT-6.1 Sol G2): YouthWIDE's three-card band ("Built Around What Funders and Agencies Ask") was gone; WP175 brought it back as C8 (one card per funder pain), and
+  // tests/wp175-youthwide.spec.ts holds its cards, so the page is not in this list
   // WP166-B (marketing review R2): JobReady@Campus's "Built Around What Institutions Ask For" band (#features) is gone; the assertions on it are gone with it (tests/wp166-b.spec.ts pins its absence).
 ];
 
 const MATRIX_LABELS = /Funder Concern Addressed|Concern Addressed|What Is Included|Practical Benefit|Added Benefit/;
 
-test.describe('"What You Get" is three short cards on every audience and program page (item 1), not a concern / inclusion / benefit matrix', () => {
+// WP175 (owner decisions of 2026-11-28): "three short cards" became one short card per ranked pain plus the page's gain creator (four on five pages, three on Employers); they are still short cards, never the matrix
+test.describe('"What You Get" is short cards on every audience and program page (item 1): one per ranked pain and the gain creator, not a concern / inclusion / benefit matrix', () => {
   for (const p of PAGES) {
-    test(`${p.route}: "${p.h2}" is three cards, each a Title Case heading and its sentences, tied to its register facts`, async ({ page }) => {
+    test(`${p.route}: "${p.h2}" is one card per pain and its gain creator, each a Title Case heading and its sentences, tied to its register facts`, async ({ page }) => {
       await open(page, p.route);
       await expect(page.locator('#features h2')).toHaveText(p.h2);
       await expect(page.locator('#features .eyebrow')).toHaveText('What You Get');
       const cards = page.locator('#features li.card');
-      await expect(cards).toHaveCount(3);
+      await expect(cards).toHaveCount(p.cards.length);
+      expect(p.cards.slice(0, 3).map((c) => c.pain), `${p.route}: the first three cards relieve P1 to P3 in order`).toEqual(['P1', 'P2', 'P3']);
+      expect(p.cards.slice(3).every((c) => !c.pain), `${p.route}: the cards after them are gain creators`).toBe(true);
       for (const [i, c] of p.cards.entries()) {
         const card = cards.nth(i);
         await expect(card.locator('h3'), c.title).toHaveText(c.title);
@@ -193,7 +216,7 @@ test.describe('"What You Get" is three short cards on every audience and program
     for (const p of PAGES) {
       await open(page, p.route);
       const lines = await texts(page, '#features .card__text');
-      expect(lines.length, p.route).toBe(3);
+      expect(lines.length, p.route).toBe(p.cards.length); // WP175: one per pain and the gain creator (it was three)
       for (const [i, l] of lines.entries()) {
         expect(l, `${p.route}: "${l.slice(0, 40)}…"`).toMatch(/^[A-Z0-9]/);
         expect(l.toLowerCase().startsWith(p.cards[i].title.toLowerCase()), `${p.route}: card ${i + 1} opens with its heading`).toBe(false);
@@ -238,13 +261,14 @@ test.describe('"What You Get" is three short cards on every audience and program
   });
 
   for (const vp of [DESKTOP, MOBILE]) {
-    test(`at ${vp.width}px the cards sit in one row of three (1280) or stack (390) and nothing scrolls sideways`, async ({ page }) => {
+    // WP175: with the gain creator a band holds four cards, set as two rows of two at 1280 (three cards stay one row of three); at 390 every card still takes its own row
+    test(`at ${vp.width}px the cards sit in one row of three or two rows of two (1280) or stack (390) and nothing scrolls sideways`, async ({ page }) => {
       await page.setViewportSize(vp);
       for (const p of PAGES) {
         await open(page, p.route);
         const tops = await page.locator('#features li.card').evaluateAll((els) => els.map((e) => Math.round(e.getBoundingClientRect().top)));
-        if (vp.width >= 1024) expect(new Set(tops).size, `${p.route}: one row of three`).toBe(1);
-        else expect(new Set(tops).size, `${p.route}: one card per row`).toBe(3);
+        if (vp.width >= 1024) expect(new Set(tops).size, `${p.route}: ${p.cards.length === 3 ? 'one row of three' : 'two rows of two'}`).toBe(p.cards.length === 3 ? 1 : 2);
+        else expect(new Set(tops).size, `${p.route}: one card per row`).toBe(p.cards.length);
         const pad = await page.locator('#features').evaluate((el) => parseFloat(getComputedStyle(el).paddingBottom));
         expect(pad, `${p.route}: bottom padding of the band`).toBeGreaterThanOrEqual(40);
         expect(await noOverflow(page), `${p.route} at ${vp.width}px`).toBe(true);

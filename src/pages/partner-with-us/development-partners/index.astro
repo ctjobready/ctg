@@ -217,12 +217,12 @@ const steps = [STEPS[0], { title: STEPS[1].title, text: STEPS[1].text.replace(HO
     />
   </Tone>
 
-  <!-- C7 · Proof. WP175 (Q3 (a)): the case-study carousel leads with the one-line trial lead (TRIAL_LEAD); the trial and survey tiles stay in the glance above (WP166-B, R3-23). Adrian Afraham's story follows the carousel,
+  <!-- C7 · Proof. WP175 (Q3 (a)): the case-study carousel leads with the one-line trial lead (TRIAL_LEAD; WP175-Z: `trialLead`, so the lead is marked RC-01 RC-02); the trial and survey tiles stay in the glance above (WP166-B, R3-23). Adrian Afraham's story follows the carousel,
        inside C7 (it sat between the glance and the problem band). -->
   <Tone cmf="C7">
     <CaseStudyCarousel
       title="Proof in Practice"
-      lead={TRIAL_LEAD.text}
+      trialLead={TRIAL_LEAD}
       items={[
         { title: 'Women’s Skill Development for Freelancing Marketplace (WSDFM)', program: 'Commissioned by Porticus', factId: 'PR-01', href: LINKS.caseWsdfm },
         { title: 'Women in Online Work, Kosovo', program: 'World Bank Group', factId: 'PR-02', statLabel: KOSOVO_WOW_TILE_LABEL, note: WB_KOSOVO, href: LINKS.caseWow },

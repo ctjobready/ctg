@@ -235,12 +235,12 @@ const FAQ_IDS = ['Q3', 'Q8-route', 'Q9-route', 'Q10'];
     </div>
   </Tone>
 
-  <!-- C7 · Proof. WP175 (Q3 (a)): the case-study carousel leads with the one-line trial lead (TRIAL_LEAD); the trial and survey tiles stay in the glance above (WP166-B, R3-23). Samina's story follows the carousel,
+  <!-- C7 · Proof. WP175 (Q3 (a)): the case-study carousel leads with the one-line trial lead (TRIAL_LEAD; WP175-Z: `trialLead`, so the lead is marked RC-01 RC-02); the trial and survey tiles stay in the glance above (WP166-B, R3-23). Samina's story follows the carousel,
        inside C7 (it sat between the glance and the problem band). -->
   <Tone cmf="C7">
     <CaseStudyCarousel
       title="Proof in Practice"
-      lead={TRIAL_LEAD.text}
+      trialLead={TRIAL_LEAD}
       items={[
         { title: 'Women’s Skill Development for Freelancing Marketplace (WSDFM)', program: 'Commissioned by Porticus', factId: 'PR-01', href: LINKS.caseWsdfm },
         { title: 'Her Power', program: 'ICT Division / Department of ICT (DoICT)', factId: 'PR-05', href: LINKS.caseHerPower },

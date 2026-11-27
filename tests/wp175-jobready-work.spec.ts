@@ -99,6 +99,10 @@ test.describe('JobReady@Work: CMF v3 order and coverage, C2 back and C2 to C4 co
     expect([...steps.matchAll(/<h4 class="steps__title"[^>]*>([\s\S]*?)<\/h4>/g)].map((m) => textOf(m[1]))).toEqual(EMPLOYER_STEPS.map((s) => titleCase(s.title)));
     // step 2 leaves the exam-terms clause to the glance's Training row: the qualifier is said once per page (WP145)
     expect(count(textOf(html()), 'exam eligibility and any further attempts are set per program')).toBe(1);
+    // WP175-Z: the step is EMPLOYER_STEPS word for word (no page-local cut), in WP145's wording; the wording WP145 retired on this page is gone
+    expect([...steps.matchAll(/<li class="steps__item"[^>]*>([\s\S]*?)<\/li>/g)].map((m) => textOf(m[1]))).toEqual(EMPLOYER_STEPS.map((s, i) => `${i + 1} ${titleCase(s.title)} ${s.text}`));
+    expect(EMPLOYER_STEPS[1].text).toContain('can be added where a track offers one');
+    expect(textOf(html())).not.toContain('including preparation for an industry certification where a track offers one');
     // the AI card leaves the AIvolve offering to the glance's Training row, where the page names it once (WP104)
     expect(count(textOf(band('C8')), 'AIvolve')).toBe(0);
     expect(count(textOf(html().replace(/<script[\s\S]*?<\/script>/g, '')), 'AIvolve')).toBe(1);

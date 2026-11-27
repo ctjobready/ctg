@@ -528,11 +528,18 @@ test.describe('S1 extended: the other statements of the 16 say "work", not "prog
     expect(pages.map((p) => p.route)).toContain('/partner-with-us/foundations/');
     expect(pages.map((p) => p.route)).toContain('/');
     // WP166-B (marketing review R3-06): Employers' band is headed "Employers and Partners We Work With"; its signed-agreement sentence carries "since 2014" (WP66), so the origin line is the year-less one it printed before ("since 2014" once in the band, WP64).
-    const HEADINGS: Record<string, string> = {};
+    // WP175 (owner decision Q2 (a) of 2026-11-28): JobReady@Campus, JobReady@Work and the NU Post Graduate Diploma print the origin line in their track-record bands too, under headings without the year, so
+    // they print it whole, with its "Since 2014," lead-in (originShortUnder; tests/wp64.spec.ts holds "since 2014" to once per band)
+    expect(pages.map((p) => p.route)).toEqual(expect.arrayContaining(['/programs/jobready-campus/', '/programs/jobready-work/', '/programs/nu-postgraduate-diploma/']));
+    const HEADINGS: Record<string, string> = {
+      '/programs/jobready-campus/': 'Working with National University, UPEACE and CCNY',
+      '/programs/jobready-work/': 'Employers and Partners We Work With',
+      '/programs/nu-postgraduate-diploma/': 'An Affiliated College of National University',
+    };
     for (const p of pages) {
       await open(page, p);
       // WP64 rework RW2 (coordinator): every one of these bands is headed "... Since 2014", so the line drops that lead-in (ORIGIN_SHORT.text above keeps it)
-      expect(compact(await page.locator('[data-fact="ID-02 SC-03"]').first().textContent()), p.route).toBe(originShortUnder(HEADINGS[p.route] ?? 'Since 2014', { tile: ['/partner-with-us/development-partners/', '/partner-with-us/investors/', '/styleguide/', '/'].includes(p.route) }).text); // WP175: the styleguide's PartnerGuideBand sample (`withOrigin`) shows the SC-03 tile too; Home's hero card and world strip state the count, so its line names the regions. WP150: where the SC-03 tile is shown the line names the regions
+      expect(compact(await page.locator('[data-fact="ID-02 SC-03"]').first().textContent()), p.route).toBe(originShortUnder(HEADINGS[p.route] ?? 'Since 2014', { tile: ['/partner-with-us/development-partners/', '/partner-with-us/investors/', '/styleguide/', '/', '/programs/youthwide/'].includes(p.route) }).text); // WP175-Z: YouthWIDE's track record prints the line too, beside its SC-03 tile, so it names the regions. WP175: the styleguide's PartnerGuideBand sample (`withOrigin`) shows the SC-03 tile too; Home's hero card and world strip state the count, so its line names the regions. WP150: where the SC-03 tile is shown the line names the regions
     }
   });
 

@@ -618,9 +618,15 @@ test.describe('WP166-B shared strings', () => {
     }
     expect(bandText('partner-with-us/foundations', 'due-diligence')).toContain(fact('ID-12').text);
   });
-  test('no TalentLEAP method line in the track-record band of the four funder and local pages', () => {
+  // WP175 (owner decisions of 2026-11-28, Q2 (a)): every C5 ends with the page's one-sentence method line (METHOD), so the four pages' track-record bands carry the TalentLEAP line again (R3-29 had removed it).
+  // R3-29's point still holds: the method is said once in the band, as its last line, and no other TalentLEAP sentence sits there (the only other mention is the line's own "How TalentLEAP Works" link).
+  test('the TalentLEAP method line closes the track-record band of the four funder and local pages, once', () => {
+    const METHOD_LINE = 'Our TalentLEAP method organizes skills into career paths.';
     for (const P of ['partner-with-us/development-partners', 'partner-with-us/governments', 'partner-with-us/foundations', 'partner-with-us/local-partners']) {
-      expect(bandText(P, 'guide'), P).not.toContain('TalentLEAP');
+      const g = bandText(P, 'guide');
+      expect(count(g, METHOD_LINE), P).toBe(1);
+      expect(count(g, 'TalentLEAP'), `${P}: the method line and its link, nothing else`).toBe(2);
+      expect(g.endsWith(`${METHOD_LINE} How TalentLEAP Works`), `${P}: the method line is the band's last line`).toBe(true);
     }
   });
 });

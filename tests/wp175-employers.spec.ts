@@ -13,8 +13,9 @@ import { cmfBandHtml, cmfBandText, cmfProblems, cmfSequence, inOrder, lastParagr
  *               assessment, IN-10); the TalentLEAP line that C6 printed is gone, so the method is said once.
  *   C6          the crafted statement first, once; the band is light, so the dark trial band after it is not a second dark band in a row.
  *   C7          the trial band (it was two links): the one-line trial lead, the TRIAL-SCOPE line directly under it, the survey sentence with its youth-programs lead-in; then Mysha’s story.
- *   C8          EMPLOYER_INCLUDES relieve P1 to P3 in order, then "How It Works in Three Steps" (EMPLOYER_STEPS, step 2 cut to "Custom curriculum and workshops.": its certification clause is the wording WP145
- *               retired on this page). Doc 04 4.6 and doc 06 P7 name no gain creator for this page, so none is drafted.
+ *   C8          EMPLOYER_INCLUDES relieve P1 to P3 in order, then "How It Works in Three Steps" (EMPLOYER_STEPS, step 2 cut to "Custom curriculum and workshops.": WP175-Z put WP145's wording in the shared
+ *               step, "can be added where a track offers one", which is the C6 "Deliver" card's clause word for word, so the step keeps only its first clause here). Doc 04 4.6 and doc 06 P7 name no gain creator
+ *               for this page, so none is drafted.
  *   C10         "What Makes CodersTrust Different": USP 3 (the employer form, credentialWork) and USP 1 (evidence). Doc 04 4.6 names USPs 3 and 4, but USP 4 (labs, colleges, Training of Trainers) describes youth
  *               delivery, and a page that explains delivery must name its facilitators (tests/wp152.spec.ts).
  *   C11         the hiring band (it sat before C2) and the two options.
@@ -128,6 +129,8 @@ test.describe('Employers (P7): CMF v3 order and coverage', () => {
     expect([...steps.matchAll(/<li class="steps__item"[^>]*>([\s\S]*?)<\/li>/g)].map((m) => textOf(m[1]))).toEqual(shown.map((s, i) => `${i + 1} ${s.title} ${s.text}`));
     // WP145: certification preparation "can be added where a track offers one" (the Deliver card); the step does not say it again in the retired form
     expect(mainText()).not.toContain('including preparation for an industry certification where a track offers one');
+    // WP175-Z: nor in WP145's form, which the shared step now carries: the page says it in the Deliver card (and C10's line), not a second time in the step
+    expect(mainText().split('preparation for an industry certification can be added where a track offers one').length - 1).toBe(1);
   });
 
   test('C9: the FAQ, then the due-diligence view (it sat after the offer)', () => {

@@ -291,7 +291,10 @@ test.describe('S4 (Claude; owner answer 2026-10-20: "711 of 1000 is correct. The
       const card = page.locator('#cases article', { hasText: 'Women’s Skill Development for Freelancing Marketplace (WSDFM)' });
       await expect(card.locator('.case__value')).toHaveText('711 of 1,000');
       expect(compact(await card.locator('.case__label').textContent())).toBe(CAPTION);
-      expect(((await page.locator('#cases [data-fact]').first().getAttribute('data-fact')) ?? '').split(' ')).toContain('RC-07');
+      // WP175-Z (owner decision Q3 (a) of 2026-11-28): the band's lead is the one-line trial lead, marked RC-01 RC-02 (CaseStudyCarousel `trialLead`), so the band's wrapper is the first marker after it
+      if (['partner-with-us/development-partners/', 'partner-with-us/foundations/'].includes(route)) expect(await page.locator('#cases .sh__lead').getAttribute('data-fact')).toBe('RC-01 RC-02');
+      else await expect(page.locator('#cases .sh__lead[data-fact]')).toHaveCount(0);
+      expect(((await page.locator('#cases [data-fact]:not(.sh__lead)').first().getAttribute('data-fact')) ?? '').split(' ')).toContain('RC-07');
     });
   }
 
@@ -573,7 +576,11 @@ test.describe('GM7 (Gemini): Home’s "Our Approach" is one sentence that keeps 
     const whole = /const POSITION_WHOLE_STATEMENT = \{([\s\S]*?)\n\};/.exec(gate)?.[1] ?? '';
     expect(whole).not.toContain(`'/': '${STATEMENT}'`);
     expect(whole).toContain(`'/': '${POSITIONING.home.text}'`);
-    expect(gate).toContain("const POSITION_PENDING_PAGES = ['/', '/partner-with-us/investors/'];");
+    // WP175-Z: Home and Investors are required [POSITION] pages now (pending, POSITION_PENDING_PAGES, until packages A and B rendered their statements); the pending list is gone from the gate
+    const required = /const POSITION_PAGES = \[([\s\S]*?)\];/.exec(gate)?.[1] ?? '';
+    expect(required).toMatch(/^\s*'\/',$/m);
+    expect(required).toContain("'/partner-with-us/investors/',");
+    expect(gate).not.toContain('const POSITION_PENDING_PAGES');
     expect(/const POSITION_EMPLOYER_CLOSING = \{([\s\S]*?)\n\};/.exec(gate)?.[1] ?? '').not.toMatch(/^\s*'\/':/m);
     await open(page, HOME);
     // WP175 (package A): Home prints the crafted statement, once, first in C6; the earlier audience sentence and the WP60 sentence stay off the page

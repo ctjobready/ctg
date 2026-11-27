@@ -469,10 +469,23 @@ test.describe('RW2 (coordinator): "Since 2014" is said once in the bands whose h
 
   // WP166-B (marketing review R3-06, R3-28): Employers' band is no longer headed with the year, so it prints the full origin line, "Since 2014, from a Copenhagen launch ..." (it printed LINE); Foundations prints
   // no origin line. The other pages that print it are still headed with the year.
-  test('no built page prints the old origin line, "Since 2014, from a Copenhagen launch ..."', () => {
-    expect(pagesWith('Since 2014, from a Copenhagen launch')).toEqual([]); // WP166-B (marketing review R3-06): Employers' band is headed "Employers and Partners We Work With"; its signed-agreement sentence carries "since 2014" (WP66), so the origin line is the year-less one it printed before ("since 2014" once in the band, WP64)
-    expect(pagesWith(LINE).sort()).toEqual(['/partner-with-us/employers/', '/partner-with-us/governments/', '/partner-with-us/universities/']); // WP150: Development Partners and Investors name the regions
-    expect(pagesWith(LINE_REGIONS).sort()).toEqual(['/partner-with-us/development-partners/', '/partner-with-us/investors/', '/styleguide/']); // WP175: the styleguide shows PartnerGuideBand's `withOrigin` option beside an SC-03 tile (WP150's form)
+  // WP175 (owner decision Q2 (a) of 2026-11-28: every C5 carries ORIGIN in one line): JobReady@Campus, JobReady@Work and the NU Post Graduate Diploma print it in their track-record bands too, and none of the
+  // three is headed with the year ("Working with National University, UPEACE and CCNY", "Employers and Partners We Work With", "An Affiliated College of National University") or says "since 2014" elsewhere in
+  // the band, so by originShortUnder's rule they print the full line with its "Since 2014," lead-in; RW2's rule holds on every page: "since 2014" is said once in each such band.
+  test('the full origin line, "Since 2014, from a Copenhagen launch ...", is printed only where the band does not already say "since 2014" (the three program pages), once in the band', async ({ page }) => {
+    const FULL = ['/programs/jobready-campus/', '/programs/jobready-work/', '/programs/nu-postgraduate-diploma/'];
+    expect(pagesWith('Since 2014, from a Copenhagen launch').sort()).toEqual(FULL);
+    for (const route of FULL) {
+      await open(page, route.replace(/^\//, ''));
+      const band = compact(await page.locator('#guide').textContent());
+      expect(band.match(/since 2014/gi)?.length, `${route}: "since 2014" once in the band`).toBe(1);
+      expect(compact(await page.locator('#guide h2').textContent()), `${route}: the heading does not carry the year`).not.toMatch(/since 2014/i);
+    }
+    // the year-less line, as before: WP166-B (marketing review R3-06): Employers' band is headed "Employers and Partners We Work With"; its signed-agreement sentence carries "since 2014" (WP66), so the origin line is the year-less one it printed before ("since 2014" once in the band, WP64)
+    // WP175 (Q2 (a)): Foundations, Local Partners and SuperKids print the origin line again, year-less (Foundations' and SuperKids' bands are headed "We’ve Built This Path Since 2014"; Local Partners' tiles say
+    // "since 2014"), and Home and YouthWIDE print it in the regions form beside the count they state (WP150)
+    expect(pagesWith(LINE).sort()).toEqual(['/partner-with-us/employers/', '/partner-with-us/foundations/', '/partner-with-us/governments/', '/partner-with-us/local-partners/', '/partner-with-us/universities/', '/programs/superkids/']); // WP150: Development Partners and Investors name the regions
+    expect(pagesWith(LINE_REGIONS).sort()).toEqual(['/', '/partner-with-us/development-partners/', '/partner-with-us/investors/', '/programs/youthwide/', '/styleguide/']); // WP175: the styleguide shows PartnerGuideBand's `withOrigin` option beside an SC-03 tile (WP150's form)
   });
 
   test('the changed bands fit at 1280 and 390, with no sideways scroll', async ({ page }) => {

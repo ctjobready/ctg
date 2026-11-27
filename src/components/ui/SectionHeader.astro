@@ -12,17 +12,19 @@ interface Props {
   leadLast?: boolean;
   /** The header is the whole band (WP34: a heading and one statement, nothing after it), so the gap to content below it is dropped. */
   flush?: boolean;
+  /** The fact ids the lead line states (its data-fact), for a lead that makes a claim (WP175: the C7 one-line trial lead, CaseStudyCarousel `trialLead`). Left out, the lead carries no marker, as before. */
+  leadFacts?: string;
 }
-const { eyebrow, title, lead, align = 'start', level = 2, id, class: className, leadLast = false, flush = false } = Astro.props;
+const { eyebrow, title, lead, align = 'start', level = 2, id, class: className, leadLast = false, flush = false, leadFacts } = Astro.props;
 const Tag = (`h${level}`) as 'h2' | 'h3';
 ---
 
 <header class:list={['sh', `sh--${align}`, flush && 'sh--flush', className]} data-reveal>
   {eyebrow && <p class="eyebrow">{eyebrow}</p>}
   <Tag class="sh__title" id={id}>{title}</Tag>
-  {lead && !leadLast && <p class="sh__lead lead">{lead}</p>}
+  {lead && !leadLast && <p class="sh__lead lead" data-fact={leadFacts}>{lead}</p>}
   <slot />
-  {lead && leadLast && <p class="sh__lead lead">{lead}</p>}
+  {lead && leadLast && <p class="sh__lead lead" data-fact={leadFacts}>{lead}</p>}
 </header>
 
 <style>

@@ -555,7 +555,7 @@ export const TRIAL_SCOPE = {
  * closing, UNLIKE_APPROVED, and the short two-sentence statements of WP36 to WP155) are retired with the unused `nationwide` statement and Home's WP60 sentence. The negative rules of the
  * earlier reviews still hold: no "as agreed in the program scope" in a statement (WP141), and no fact the band states elsewhere said twice in the band (WP154, WP155: "existing labs and colleges"
  * on Development Partners, Governments and YouthWIDE, "academic studies" on Universities, outcome tracking on Development Partners). scripts/check-facts.mjs declares each statement whole,
- * independently of this file (POSITION_WHOLE_STATEMENT; Home and Investors in POSITION_PENDING_PAGES until packages A and B render theirs), so a change has to be made twice on purpose.
+ * independently of this file (POSITION_WHOLE_STATEMENT; WP175-Z: Home and Investors are required [POSITION] pages like the other ten), so a change has to be made twice on purpose.
  * The NU Post Graduate Diploma page has no statement: its copy waits for National University sign-off (S4-C2, Q10).
  */
 export type PositioningKey = Exclude<ConversionPage, 'nuPgd'>;
@@ -1281,6 +1281,8 @@ export interface IncludesCard {
  * The employer pains (C2b), cards (C8) and steps (C8d) that Employers (P7, package B) and JobReady@Work (P13, package C) share. The pains and cards are the Employers page's own wording, word for word
  * (WP46, WP60, WP142, WP166-B R3-08 and R3-30); the cards are ordered P1 to P3, so the customized curriculum answers "Hiring alone does not close the gap" and the AI-skills card the AI wage premium.
  * The steps are the earlier site's (e90f9629^), with "Train" for doc 04's "Train and certify" (CodersTrust prepares for third-party exams, WP144) and the exam terms "set per program" (WP141).
+ * WP175-Z: step 2 says the preparation in WP145's words, "can be added where a track offers one" (it read "including preparation for an industry certification where a track offers one", the wording WP145 retired on
+ * Employers and JobReady@Work), and leaves the exam terms to the one statement each page makes elsewhere (WP145, tests/wp163.spec.ts: JobReady@Work's glance, Employers' C10 line), so neither page cuts it.
  */
 export const EMPLOYER_PAINS: Pain[] = [
   { id: 'P1', name: 'You struggle to find the digital talent you need', text: `${withSourceNote('PX-05', 'AI skills are the hardest to find')}.` },
@@ -1294,7 +1296,7 @@ export const EMPLOYER_INCLUDES: IncludesCard[] = [
 ];
 export const EMPLOYER_STEPS = [
   { title: 'Assess', text: 'A needs assessment scopes the skills and team size.' },
-  { title: 'Train', text: 'Custom curriculum and workshops, including preparation for an industry certification where a track offers one; exam eligibility and any further attempts are set per program.' },
+  { title: 'Train', text: 'Custom curriculum and workshops; preparation for an industry certification can be added where a track offers one.' },
   { title: 'Support and Measure', text: 'Post-training support and a progress evaluation against the measures you set.' },
 ] as const;
 /** The bridge sentence after the definition on Employers, and on JobReady@Work when its GEO band returns (WP166-B R3-34). */

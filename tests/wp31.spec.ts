@@ -1,5 +1,6 @@
 import { expect, test, type Page } from '@playwright/test';
 import { DESKTOP, MOBILE, open } from './support/browser';
+import { TRIAL_LEAD } from '../src/data/copy';
 
 /**
  * WP31 behaviors (cycle-8 whole-site reviews): the freelancing label, a Governments page that speaks to any ministry, the corporate offer pages without
@@ -193,19 +194,32 @@ test.describe('Governments speaks to any ministry', () => {
   });
 });
 
-test.describe('corporate offer pages carry no youth-program trial block', () => {
+// WP175 (owner decision Q3 (a) of 2026-11-28: every C7 opens with the one-line trial lead): the two corporate offer pages show the C7 trial band again (WP31 had made it two links), in doc 04 4.6's form:
+// the trial in one line, the TRIAL-SCOPE line directly under it (the trial evaluated WSDFM, not JobReady@Work), then the survey sentence labelled as the youth programs' own result. What WP31 removed stays
+// removed: no pathways block, no 10.3 figure, no "(Not Corporate Training)" labels and no second trial block; the two evidence links are the band's own links now.
+test.describe('corporate offer pages carry the C7 trial band in its scoped form, and no youth-program pathway block', () => {
   for (const route of ['partner-with-us/employers/', 'programs/jobready-work/']) {
-    test(`${route}: no trial band, no survey or pathway figures, no "(Not Corporate Training)" labels; a two-link group stands in`, async ({ page }) => {
+    test(`${route}: one trial band led by the trial lead with the TRIAL-SCOPE line under it and the survey labelled as the youth programs'; no pathway figures, no "(Not Corporate Training)" labels; the two evidence links close the band`, async ({ page }) => {
       await open(page, route);
-      await expect(page.locator('#proof-band')).toHaveCount(0);
+      await expect(page.locator('#proof-band')).toHaveCount(1);
       await expect(page.locator('.pwp')).toHaveCount(0);
-      await expect(page.locator('[data-trial-scope]')).toHaveCount(0);
+      await expect(page.locator('[data-trial-scope]')).toHaveCount(1);
+      expect(await texts(page, '#proof-band .proofband__head p')).toEqual([
+        'The Evidence',
+        TRIAL_LEAD.text,
+        'This trial evaluated WSDFM training for women in Bangladesh, not JobReady@Work.',
+      ]);
+      expect(await page.locator('#proof-band .proofband__headline').getAttribute('data-fact')).toBe('RC-01 RC-02');
+      await expect(page.locator('#proof-band .proofband__chartlead strong')).toHaveText('From CodersTrust’s youth programs:');
       const text = await mainText(page);
-      expect(text).not.toMatch(/10\.3|78\.2%|48\.0%|Not Corporate Training|This trial evaluated WSDFM/);
-      const group = page.locator('nav[aria-label="Broader Evidence from Our Youth Programs"]');
-      await expect(group).toHaveCount(1);
-      expect(await texts(page, 'nav[aria-label="Broader Evidence from Our Youth Programs"] a')).toEqual(['The Randomized Trial', 'Impact Survey 2026']);
-      const hrefs = await group.locator('a').evaluateAll((els) => els.map((a) => a.getAttribute('href') ?? ''));
+      expect(text).not.toMatch(/10\.3|Not Corporate Training/);
+      expect(text.split('This trial evaluated WSDFM').length - 1, 'one TRIAL-SCOPE line').toBe(1);
+      // the survey figures are stated once, in the band, under the youth-programs label
+      expect(text.split('78.2%').length - 1).toBe(1);
+      expect(compact(await page.locator('#proof-band').textContent())).toContain('From CodersTrust’s youth programs: Among surveyed completers, employment was 78.2% at the October 2026 survey, against 48.0% before training.');
+      await expect(page.locator('nav[aria-label="Broader Evidence from Our Youth Programs"]')).toHaveCount(0);
+      expect(await texts(page, '#proof-band .proofband__links a')).toEqual(['The Randomized Trial', 'Impact Survey 2026']);
+      const hrefs = await page.locator('#proof-band .proofband__links a').evaluateAll((els) => els.map((a) => a.getAttribute('href') ?? ''));
       expect(hrefs.map((h) => h.replace(/^.*\/ctg\//, ''))).toEqual(['impact/independent-evaluation/', 'impact/outcomes-2026/']);
     });
   }

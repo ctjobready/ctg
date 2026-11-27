@@ -59,7 +59,7 @@ import FactCard from '../components/facts/FactCard.astro';
 import WorldMap from '../components/ui/WorldMap.astro';
 import DifferenceBand from '../components/sections/DifferenceBand.astro';
 import PartnerGuideBand from '../components/pages/partners/PartnerGuideBand.astro';
-import { C14, EMPATHY, METHOD, TRIAL_LEAD } from '../data/copy';
+import { C14, C3_TRANSITION, EMPATHY, METHOD, TRIAL_LEAD } from '../data/copy';
 import { CLAIM_PX06, CLAIM_RC06 } from '../components/sections/copyText';
 import { faqJsonLd } from '../lib/faq';
 import { fact } from '../data/facts';
@@ -605,11 +605,11 @@ const sectionLinks = [
   </div>
 
   <!-- ===================================== WP175 SHARED BAND OPTIONS ===================================== -->
-  <!-- WP175 (owner decisions of 2026-11-28): the options packages A to C use on the conversion pages, each beside the band's default form above. The transition line here is a sample: the
-       C3 line itself (C3_TRANSITION) is printed by the pages that declare a compression (tests/wp40.spec.ts holds it off every page until they do). -->
+  <!-- WP175 (owner decisions of 2026-11-28): the options packages A to C use on the conversion pages, each beside the band's default form above. WP175-Z: the transition line here is the C3 line itself
+       (C3_TRANSITION); the sample sentence stood in for it only while tests/wp40.spec.ts held the line off every page, and every page that declares a compression prints it now. -->
   <div id="sg-wp175">
     <Section pad="sm" aria-label="WP175 shared band options intro"><SectionHeader eyebrow="Sections" title="Shared Band Options for the Conversion Pages" lead="Four options: the problem band’s transition line, the short differentiation band (C10), the Track Record band’s origin and method lines and the evidence band’s one-line trial lead." /></Section>
-    <ProblemBand id="sg-problem-transition" title="A Compressed Problem Band Ends with Its Transition" bluf="The band carries the ranked pains, then the transition line." factIds={['PX-01', 'PX-02']} transition="A sample transition line closes the band." />
+    <ProblemBand id="sg-problem-transition" title="A Compressed Problem Band Ends with Its Transition" bluf="The band carries the ranked pains, then the transition line." factIds={['PX-01', 'PX-02']} transition={C3_TRANSITION} />
     <DifferenceBand usps={['evidence', 'credential', 'infrastructure']} tone="airy" />
     <PartnerGuideBand id="sg-guide-c5" title="Our Record Since 2014" empathy={EMPATHY.foundations} stats={['SC-03']} withOrigin opening={{ facts: C14.validateFor.foundations.facts, text: C14.validateFor.foundations.text }} method={METHOD.foundations} methodLast partnerGroup="private" />
     <ProofBand id="sg-proof-lead" title="An Evidence Band Led by the Trial" trialLead={TRIAL_LEAD} surveyLeadIn="From CodersTrust’s youth programs:" statIds={['OC-09']} compact links={[{ label: 'The Randomized Trial', href: '/impact/independent-evaluation/' }]} />

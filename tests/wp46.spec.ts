@@ -535,10 +535,12 @@ test.describe('OC-05: the six months are counted from the end of the course (ite
     for (const r of rows) expect(r, r).toContain('with months counted from the end of the course and including earnings during the course (timing only)');
   });
 
-  test('no built page says "within six months" (OC-05 counts those who started during the course too); the three pages that state it say "by six months after"', () => {
+  // WP175 (owner decisions of 2026-11-28: the short C10 band, doc 04 §6 USP 2): Development Partners and Foundations show USP 2 in their "What Makes CodersTrust Different" band, headed "Most Surveyed New Earners
+  // Started Earning by Six Months After the Course", so five pages state the timing, all with "by six months after", and still none with "within six months"
+  test('no built page says "within six months" (OC-05 counts those who started during the course too); the five pages that state it say "by six months after"', () => {
     const old = builtPages().filter((p) => /within six months/i.test(p.html)).map((p) => p.route);
     expect(old).toEqual([]);
     const named = builtPages().filter((p) => /by six months after (?:finishing|the course)/i.test(p.html)).map((p) => p.route).sort();
-    expect(named).toEqual(['/', '/impact/', '/impact/outcomes-2026/']);
+    expect(named).toEqual(['/', '/impact/', '/impact/outcomes-2026/', '/partner-with-us/development-partners/', '/partner-with-us/foundations/']);
   });
 });

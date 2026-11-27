@@ -445,6 +445,9 @@ test.describe('the facts gate carries the two WP42 allowances', () => {
     const out = execFileSync(process.execPath, ['--experimental-strip-types', 'scripts/check-facts.mjs'], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] });
     expect(out).toContain('check-facts: OK');
     expect(out).toMatch(/\[PLAIN-LINE\] on 1 page\(s\)/);
-    expect(out).toMatch(/\[POSITION\] opens C6 on 10 page\(s\)/); // WP166-A (marketing review R1-03): Home's "Our Approach" statement is gone, so Home is exempt and ten pages declare one
+    // WP166-A (marketing review R1-03) had taken Home's "Our Approach" statement off, so ten pages declared one; WP175-Z (owner decision Q5 of 2026-11-28): Home and Investors carry their crafted
+    // statements and are required [POSITION] pages, so twelve pages declare one and none is pending
+    expect(out).toMatch(/\[POSITION\] opens C6 on 12 page\(s\);/);
+    expect(out).not.toMatch(/pending/);
   });
 });

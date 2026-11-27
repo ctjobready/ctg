@@ -65,10 +65,8 @@ const jsonLd = [
 
 // IN-10: needs assessment → customized solution → comprehensive curriculum → interactive workshops → progress evaluation → post-training support → measurable outcomes.
 // WP25s: "checked against the measures you set" belongs to the progress evaluation; the measurable outcome is the team capability named in the needs assessment.
-// WP175: "How It Works in Three Steps" is the Employers steps (EMPLOYER_STEPS), with step 2 stopping before its exam-terms clause: the glance's Training row states it, and the qualifier is said once per page
-// (WP145, tests/wp163.spec.ts).
-const WORK_STEPS = EMPLOYER_STEPS.map((s, i) => (i === 1 ? { ...s, text: s.text.replace(/; exam eligibility and any further attempts are set per program\.$/, '.') } : s));
-if (WORK_STEPS[1].text === EMPLOYER_STEPS[1].text) throw new Error('JobReady@Work: EMPLOYER_STEPS step 2 no longer ends with its exam-terms clause; update WORK_STEPS');
+// WP175: "How It Works in Three Steps" is the Employers steps (EMPLOYER_STEPS), word for word. WP175-Z: step 2 no longer carries the exam-terms clause (the glance's Training row states it, and the qualifier is said
+// once per page, WP145, tests/wp163.spec.ts), so the page-local cut that dropped it (WORK_STEPS) is gone.
 // WP175: the C8 cards are the Employers cards (EMPLOYER_INCLUDES), with the AI card leaving the AIvolve offering to the glance's Training row, where this page names it once (WP104; tests/wp32.spec.ts),
 // so the card rests on PD-02 and IN-10 without PA-07.
 const AIVOLVE_CLAUSE = ', plus AI leadership and AI-transformation programs with AIvolve.';
@@ -171,10 +169,10 @@ const approach = [
   </Tone>
 
   <!-- C8. WP175 (Q1 (a)): restored (the page has had none since WP20b/WP30d): the Employers page's three cards (EMPLOYER_INCLUDES; WORK_INCLUDES above), one per pain in the problem band's order, under the Employers page's
-       heading, then "How It Works in Three Steps" (Assess, Train, Support and Measure, as on Employers; WORK_STEPS above). Doc 04 matrix 4.6 names no gain creator. -->
+       heading, then "How It Works in Three Steps" (Assess, Train, Support and Measure: EMPLOYER_STEPS, as on Employers). Doc 04 matrix 4.6 names no gain creator. -->
   <Tone cmf="C8">
     <IncludesBand title="What Your Business Gets" cards={WORK_INCLUDES} />
-    <HowItWorks steps={WORK_STEPS} />
+    <HowItWorks steps={EMPLOYER_STEPS} />
   </Tone>
 
   <!-- C9: only the questions about the program itself; the audience page answers the rest -->
