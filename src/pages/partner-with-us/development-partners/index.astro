@@ -125,7 +125,7 @@ const FAQ_IDS = ['Q1-development-partners', 'Q6-development-partners', 'Q3', 'Q1
  */
 const HOURS_CLAUSE = /^\d+ training hours per certification, including exam preparation, then /;
 if (!HOURS_CLAUSE.test(STEPS[1].text)) throw new Error('Development Partners: STEPS[1] no longer opens "<hours> training hours per certification, including exam preparation, then"; update the steps');
-// WP175 DRAFT: owner approval pending (step 2 without its hours clause).
+// WP175: owner-approved wording of 2026-11-28 (step 2 without its hours clause).
 const steps = [STEPS[0], { title: STEPS[1].title, text: STEPS[1].text.replace(HOURS_CLAUSE, 'Training, then ') }, STEPS[2]];
 ---
 

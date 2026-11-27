@@ -55,8 +55,8 @@ test.describe('Investors: "What JobReady Does" is short cards (one per thesis pa
       pain: 'P1',
     },
     {
-      title: 'An AI-Ready Curriculum',
-      text: 'An AI-ready curriculum, designed to prepare people to work with AI tools, in tracks chosen from employer demand.',
+      title: 'Curriculum Built for AI-Era Work', // WP175: owner wording of 2026-11-28
+      text: 'Every track is selected from employer demand and includes AI-ready content, agreed with partners before enrollment.',
       facts: ['PD-02', 'PD-10'],
       pain: 'P2',
     },

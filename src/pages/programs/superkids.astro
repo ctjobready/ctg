@@ -11,7 +11,7 @@
 // carries its CMF component (data-cmf; tests/wp175-superkids.spec.ts reads the order). The page runs C1 → GEO (restored) → the glance (a recorded non-CMF row) → C2–C3 compressed (doc 06 P14's declared band,
 // restored: the PX-08 sentence and the C3 transition line) → C4 → C5 (restored: the empathy line, the one-line origin, the 400+ learners tile, the method line last) → C6 (the statement, then the two offers)
 // → C7 (the agreement targets and the photographs) → C8 (restored: two cards from the earlier "What Your School Receives") → C9 → C10 (short, drafted lines) → C11 → C12 (restored, one line) → C13 → C14.
-// Two declared exceptions (Q9 (a)): C7 carries no randomized trial (a K-12 offer) and there is no "How It Works in Three Steps" band. Every new line below marked WP175 DRAFT waits for the owner's approval.
+// Two declared exceptions (Q9 (a)): C7 carries no randomized trial (a K-12 offer) and there is no "How It Works in Three Steps" band. The owner approved every new line below on 2026-11-28.
 import LandingLayout from '../../layouts/LandingLayout.astro';
 import Tone from '../../components/pages/home/Tone.astro';
 import DefinitionBand from '../../components/sections/DefinitionBand.astro';
@@ -84,7 +84,7 @@ const courses = linkAttrs(COURSES_URL);
 
 // WP175 (Q2 (a)): the track-record heading the site's C5 bands use (YouthWIDE, the partner pages); it says the year, so the origin line drops its "Since 2014," (originShortUnder).
 const guideTitle = 'We’ve Built This Path Since 2014';
-// WP175 DRAFT: owner approval pending. C8 (Q9 (a)): two cards of the earlier "What Your School Receives" band (c211b0a5^), gain creators only. Card 1 is the earlier card without its serial comma and with
+// WP175: owner-approved wording of 2026-11-28. C8 (Q9 (a)): two cards of the earlier "What Your School Receives" band (c211b0a5^), gain creators only. Card 1 is the earlier card without its serial comma and with
 // "a STEAM program for young learners" for its "a K-12 STEAM program" (WP129: SuperKids says "young learners", not K-12); card 2 keeps
 // the earlier title, and its line keeps only the earlier "shaped with you in a discovery session" (C5's method line now says the earlier "Courses are taught through schools and education partners"). The earlier
 // third card ("Safeguarding, Answered Up Front", a pointer to the FAQ) is left out: C10 states the safeguarding line.
@@ -92,13 +92,13 @@ const C8_CARDS: IncludesCard[] = [
   { icon: 'blocks', title: 'Courses in STEAM, Coding, Robotics and Digital Art', text: 'Block coding, robotics and graphic design for kids, within a STEAM program for young learners.' },
   { icon: 'school', title: 'Delivery Through Schools and Education Partners', text: 'Each program is shaped with you in a discovery session.' },
 ];
-// WP175 DRAFT: owner approval pending. C10 (Q9 (a)): no shared USP line fits a K-12 offer (doc 06 P14 C10), so the band carries two drafted lines, no figure: the public-sector agreements, in the earlier C5 band's
+// WP175: owner-approved wording of 2026-11-28. C10 (Q9 (a)): no shared USP line fits a K-12 offer (doc 06 P14 C10), so the band carries two drafted lines, no figure: the public-sector agreements, in the earlier C5 band's
 // sentence (c211b0a5^, GV-08), and safeguarding agreed before enrollment (PD-12's own words; the title is the earlier site's card "Safeguarding Is Agreed Before Enrollment").
 const C10_ITEMS: Usp[] = [
   { title: 'Public-Sector Agreements', text: 'SuperKids has agreements with the Department of ICT (DoICT) and the National Curriculum and Textbook Board (NCTB).', facts: ['GV-08'] },
   { title: 'Safeguarding Agreed Before Enrollment', text: 'Safeguarding, including guardian consent and supervision, is agreed and documented before enrollment.', facts: ['PD-12'] },
 ];
-// WP175 DRAFT: owner approval pending. C12 (Q9 (a)): doc 06 P14 C12's line ("Pilot in a few classrooms first; review before expansion", marked "to confirm"), as one sentence under a heading drafted from it.
+// WP175: owner-approved wording of 2026-11-28. C12 (Q9 (a)): doc 06 P14 C12's line ("Pilot in a few classrooms first; review before expansion", marked "to confirm"), as one sentence under a heading drafted from it.
 const C12_RISK = { title: 'Start with Pilot Classes', text: 'Pilot in a few classrooms first, then review before expansion.' };
 ---
 

@@ -153,7 +153,7 @@ const includes: IncludesCard[] = [
   // WP58 (cycle-30 review, Claude S10): "Progress You Can Check", a reporting plan, not results.
   { painId: painForRow(FUNDER_PAINS, 'P2').painId, icon: 'clipboard-check', title: 'Progress You Can Check', text: 'Monthly reports show progress toward paid work.', facts: ['PD-08'] },
   { painId: painForRow(FUNDER_PAINS, 'P3').painId, icon: 'briefcase', title: 'Tracks Chosen from Employer Demand', text: 'A curriculum designed to follow the skills employers ask for as entry-level tasks change.', facts: ['PD-02', 'PD-10'] },
-  // WP175 DRAFT: owner approval pending. Gain creator (doc 06 P1 C8, "accessible readiness assessment → The right career or foundation track"); the title is doc 06's outcome cell, the sentence PD-14's own words.
+  // WP175: owner-approved wording of 2026-11-28. Gain creator (doc 06 P1 C8, "accessible readiness assessment → The right career or foundation track"); the title is doc 06's outcome cell, the sentence PD-14's own words.
   { icon: 'compass', title: 'The Right Career or Foundation Track', text: 'A readiness assessment, a written test and an interview guide selection and placement into a career or foundation track.', facts: ['PD-14'] },
 ];
 
@@ -163,14 +163,14 @@ const includes: IncludesCard[] = [
  */
 const HOURS_CLAUSE = /^\d+ training hours per certification, including exam preparation, then /;
 if (!HOURS_CLAUSE.test(STEPS[1].text)) throw new Error('Home: STEPS[1] no longer opens "<hours> training hours per certification, including exam preparation, then"; update the steps');
-// WP175 DRAFT: owner approval pending (step 2 without its hours clause).
+// WP175: owner-approved wording of 2026-11-28 (step 2 without its hours clause).
 const steps = [STEPS[0], { title: STEPS[1].title, text: STEPS[1].text.replace(HOURS_CLAUSE, 'Training, then ') }, STEPS[2]];
 
 /**
  * WP175 (C10): USP 3 on Home. The shared line ends "..., with exam terms set per program." (USPS.credential); Home names no exam terms (WP142: its one scope sentence covers inclusions and reporting only, and the page
  * states no exam fee or attempt), so it prints the line's first clause, which makes no exam-terms claim to qualify. The heading is the shared one.
  */
-// WP175 DRAFT: owner approval pending (the shared USP 3 line without its exam-terms clause).
+// WP175: owner-approved wording of 2026-11-28 (the shared USP 3 line without its exam-terms clause).
 const homeCredential: Usp = { title: USPS.credential.title, text: 'Each track includes preparation for an industry certification exam.', facts: USPS.credential.facts };
 ---
 

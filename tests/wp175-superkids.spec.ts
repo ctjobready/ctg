@@ -21,7 +21,7 @@ const EXCEPTIONS = {
   C8d: 'P14 has no “How It Works in Three Steps” band (doc 04 §4.0 STEPS by page; owner decision Q9 (a) of 2026-11-28). Its C8 holds gain creators only: C2 carries the PX-08 context and no ranked pains.',
 };
 const EXPECTED = ['C1', 'GEO', 'GLANCE', 'C2-C3 (compressed)', 'C4', 'C5', 'C6', 'C7', 'C8', 'C9', 'C10', 'C11', 'C12', 'C13', 'C14'];
-/** The lines drafted for the owner's approval (WP175 DRAFT in the page source). */
+/** The lines drafted in WP175 and approved by the owner on 2026-11-28. */
 const DRAFT = {
   c8: ['Courses in STEAM, Coding, Robotics and Digital Art', 'Delivery Through Schools and Education Partners'],
   c10: ['Public-Sector Agreements', 'Safeguarding Agreed Before Enrollment'],

@@ -119,7 +119,7 @@ test.describe('Investors (P8): CMF v3 order and coverage', () => {
     const pains = [...one('C2-C3 (compressed)').matchAll(/\bdata-pain="([^"]+)"/g)].map((m) => m[1]);
     const cards = [...c8.matchAll(/<li class="card inc__card"([^>]*)>([\s\S]*?)<\/li>/g)].map((m) => ({ relieves: attr(m[1], 'data-relieves'), title: textOf(/<h3[^>]*>([\s\S]*?)<\/h3>/.exec(m[2])![1]) }));
     expect(cards.filter((c) => c.relieves).map((c) => c.relieves)).toEqual(pains);
-    expect(cards.map((c) => c.title)).toEqual(['Connect to Paid Work', 'An AI-Ready Curriculum', 'Learn Through TalentLEAP', 'Equip Partner Institutions']);
+    expect(cards.map((c) => c.title)).toEqual(['Connect to Paid Work', 'Curriculum Built for AI-Era Work', 'Learn Through TalentLEAP', 'Equip Partner Institutions']);
     expect(cards.filter((c) => !c.relieves).map((c) => c.title)).toEqual(['Equip Partner Institutions']);
     const steps = /<section\b[^>]*\bid="how-it-works"[\s\S]*$/.exec(c8)![0];
     expect(textOf(/<h3\b[^>]*>([\s\S]*?)<\/h3>/.exec(steps)![1])).toBe('How It Works in Three Steps');
@@ -159,7 +159,7 @@ test.describe('Investors (P8): CMF v3 order and coverage', () => {
     const c12 = one('C12');
     expect(sectionIds(c12)).toEqual(['risk']);
     expect(textOf(/<h2\b[^>]*>([\s\S]*?)<\/h2>/.exec(c12)![1])).toBe('Start with a Conversation, Not a Commitment');
-    expect([...c12.matchAll(/<h3\b[^>]*>([\s\S]*?)<\/h3>/g)].map((m) => textOf(m[1]))).toEqual(['The Call Does Not Commit Either Side', 'An NDA Comes First']);
+    expect([...c12.matchAll(/<h3\b[^>]*>([\s\S]*?)<\/h3>/g)].map((m) => textOf(m[1]))).toEqual(['An Exploratory First Call', 'Disclosure Under NDA']);
   });
 
   test('C13: one primary action and the micro-commitment line', () => {
