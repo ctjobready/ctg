@@ -107,7 +107,8 @@ test.describe('A-01 case studies and Stories declare the day their visible text 
 test.describe('A-02 partner route pages declare their own dateModified', () => {
   // WP163 (owner answers of 3 November 2026): the three route pages and Investors changed visible text again on 2026-11-03 (one exam fee per trainee, the delivery model, no live or planned labels).
   // WP172 (owner decision 2026-11-27): Development Partners and Local Partners changed visible text again (the trial figures), so they read 2026-11-27; Universities keeps WP166-B's day
-  const dayOfRoute = (route: string) => (route === 'universities' ? WP166B_DAY : '2026-11-27');
+  // WP175 (owner decision Q5 of 2026-11-28: the crafted C6 statement) moved it to 2026-11-28: Development Partners, Local Partners and Universities
+  const dayOfRoute = (route: string) => (['development-partners', 'local-partners', 'universities'].includes(route) ? '2026-11-28' : '2026-11-27');
   for (const route of ['development-partners', 'local-partners', 'universities']) {
     test(`${route}: WebPage.dateModified is ${dayOfRoute(route)}, its last visible change (WP172; WP166-B; WP163 had ${TODAY}; it was 2026-11-02)`, () => {
       expect(nodeOf(`partner-with-us/${route}/index.html`, 'WebPage').dateModified).toBe(dayOfRoute(route)); // WP166-B: it was TODAY (2026-11-03)
@@ -115,10 +116,10 @@ test.describe('A-02 partner route pages declare their own dateModified', () => {
   }
   test(`Employers, Governments and Foundations change visible text in this package, so they say ${TODAY}; Investors does too since WP163 (WP166-B: all four say ${WP166B_DAY})`, () => {
     // WP166-B: the four pages changed visible text again, so each is WP166B_DAY (they were TODAY, 2026-11-03).
-    expect(nodeOf(EMPLOYERS, 'WebPage').dateModified).toBe('2026-11-24'); // WP168-B (owner decision 2026-11-24): the Akij Group line moved Employers on
+    expect(nodeOf(EMPLOYERS, 'WebPage').dateModified).toBe('2026-11-28'); // WP168-B (owner decision 2026-11-24): the Akij Group line moved Employers on; WP175 (owner decision Q5 of 2026-11-28: the crafted C6 statement) moved it to 2026-11-28
     // WP172 (owner decision 2026-11-27): Governments, Foundations and Investors changed visible text again (the trial figures)
-    expect(nodeOf(GOVERNMENTS, 'WebPage').dateModified).toBe('2026-11-27');
-    expect(nodeOf(FOUNDATIONS, 'WebPage').dateModified).toBe('2026-11-27');
+    expect(nodeOf(GOVERNMENTS, 'WebPage').dateModified).toBe('2026-11-28'); // WP175 (owner decision Q5 of 2026-11-28: the crafted C6 statement) moved it to 2026-11-28
+    expect(nodeOf(FOUNDATIONS, 'WebPage').dateModified).toBe('2026-11-28'); // WP175 (owner decision Q5 of 2026-11-28: the crafted C6 statement) moved it to 2026-11-28
     expect(nodeOf('partner-with-us/investors/index.html', 'WebPage').dateModified).toBe('2026-11-27');
   });
 });

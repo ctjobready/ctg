@@ -69,7 +69,7 @@ test.describe('1 YouthWIDE how-it-works band: the delivery place is said once, w
 
   test('the statement drops "in existing labs and colleges"; the "How We Reach Them" card says it once and names the CodersTrust-trained facilitators', () => {
     const b = band();
-    expect(b).toContain('Our Approach YouthWIDE combines training, mentoring and placement support. Partners receive monthly reports on progress toward paid work. 1 Who We Reach');
+    expect(b).toContain('Our Approach Funders and agencies want a program they can start in one country and grow on its results. YouthWIDE combines training, mentoring and placement support in one delivery model, with monthly reports to partners and an independent randomized trial of an earlier CodersTrust program behind it. 1 Who We Reach');
     expect(b).toContain('2 How We Reach Them Accessible Selection, Blended Delivery Outreach and an accessible readiness assessment, then blended training in existing labs and colleges, led by CodersTrust-trained facilitators. 3 What We Deliver');
     expect(count(b, 'existing labs and colleges')).toBe(1);
     expect(count(b, 'CodersTrust-trained facilitators')).toBe(1);
@@ -148,7 +148,7 @@ test.describe('3 Investors: the national-scale answer does not restate Her Power
 test.describe('4 Universities "JobReady@Campus: Training Alongside the Degree"', () => {
   test('the statement does not say "alongside academic studies" again; the card states the timing once', () => {
     const band = between(main(UNIVERSITIES), 'JobReady@Campus: Training Alongside the Degree', 'About JobReady@Campus');
-    expect(band).toContain(`Our Approach JobReady@Campus combines training, mentoring and placement support in campus labs. Your institution receives monthly reports on progress toward paid work. ${DELIVERY_MODEL.text} 1 Set Up`); // WP166-B (marketing review R3-24): the delivery-model sentence follows the statement (it led the first "What Your Students and Your Institution Get" card)
+    expect(band).toContain(`Our Approach Universities and colleges want degree holders who move into paid work, and placement results they can stand behind. JobReady@Campus runs in their own campus labs and adds certification exam preparation, mentoring and placement support to the degree, with monthly reports on each cohort. ${DELIVERY_MODEL.text} 1 Set Up`); // WP166-B (marketing review R3-24): the delivery-model sentence follows the statement (it led the first "What Your Students and Your Institution Get" card)
     expect(band).toContain('4 Alongside Studies In Parallel with the Degree Training runs in parallel with academic studies, with professional internships where employer placements are available.');
     expect(count(band, 'academic studies')).toBe(1);
     expect(band).not.toContain('alongside academic studies');
@@ -156,9 +156,9 @@ test.describe('4 Universities "JobReady@Campus: Training Alongside the Degree"',
 });
 
 test.describe('5 Development Partners and Governments: the lead does not repeat the last card', () => {
-  test('Development Partners: "We combine training, mentoring and placement support. Partners receive monthly reports."; the card keeps the outcome tracking', () => {
+  test('Development Partners: "Development partners want youth programs whose results hold up with their evaluators. CodersTrust carries each cohort from training through mentoring and placement support into paid work, in one program, with monthly reports on placements and first earnings."; the card keeps the outcome tracking', () => {
     const band = between(main(DEV), 'An Integrated Path from Training to Earnings', 'Learn. Earn. Prosper.');
-    expect(band).toContain('Our Approach We combine training, mentoring and placement support. Partners receive monthly reports. YouthWIDE is the program through which funders deploy');
+    expect(band).toContain('Our Approach Development partners want youth programs whose results hold up with their evaluators. CodersTrust carries each cohort from training through mentoring and placement support into paid work, in one program, with monthly reports on placements and first earnings. YouthWIDE is the program through which funders deploy');
     expect(band).toContain('4 Where They Work Local, Remote and Global Work Placement support, then outcome tracking for 12 months after each course.');
     expect(count(band, /outcome|tracked/gi)).toBe(1);
     expect(band).not.toContain('outcomes are tracked after each course');
@@ -166,7 +166,7 @@ test.describe('5 Development Partners and Governments: the lead does not repeat 
 
   test('Governments: the card gives the placement support and the follow-up surveys; the monthly reports are in the statement only', () => {
     const band = between(main(GOVERNMENTS), 'A National Delivery Model, Built on Labs That Already Exist', 'Learn. Earn. Prosper.');
-    expect(band).toContain('Our Approach We combine training, mentoring and placement support. Your agency receives monthly reports on progress toward paid work.');
+    expect(band).toContain('Our Approach Your agency wants training budgets that end in jobs and earnings for young people. CodersTrust runs training, mentoring and placement support as one program, phase by phase, with monthly reports to your agency on progress toward paid work.');
     expect(band).toContain('4 Where They Work Local, Remote and Global Work Placement support, then follow-up surveys at 3, 6 and 12 months after each course.');
     expect(count(band, 'monthly reports')).toBe(1);
     expect(band).not.toContain('Placement support into local, remote and global work');

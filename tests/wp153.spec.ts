@@ -114,7 +114,7 @@ test.describe('3 "In parallel with / alongside academic studies" stays where it 
     expect(text).toContain('with professional internships where employer placements are available. Our TalentLEAP method organizes skills into career paths. Learn. Earn. Prosper. How TalentLEAP Works');
     expect(text).not.toContain('JobReady@Campus runs training in parallel with academic studies');
     // WP155 (Polish 4): the approach line no longer repeats the idea ("... in campus labs." then the monthly reports); the "In Parallel with the Degree" card is the one place on the page that states it.
-    expect(text).toContain('JobReady@Campus combines training, mentoring and placement support in campus labs. Your institution receives monthly reports on progress toward paid work.');
+    expect(text).toContain('Universities and colleges want degree holders who move into paid work, and placement results they can stand behind. JobReady@Campus runs in their own campus labs and adds certification exam preparation, mentoring and placement support to the degree, with monthly reports on each cohort.');
     expect(text).not.toContain('JobReady@Campus combines training, mentoring and placement support in campus labs alongside academic studies.');
     expect(text).toContain('In Parallel with the Degree Training runs in parallel with academic studies, with professional internships where employer placements are available.');
     // WP166-B (marketing review R3-14): twice (it was once): the card and the new FAQ answer "Does It Change Our Curriculum?" ("Training runs in parallel with academic studies in your campus labs, and
@@ -130,7 +130,7 @@ test.describe('3 "In parallel with / alongside academic studies" stays where it 
     expect(text).toContain('The first cohort begins in your campus labs.');
     expect(text).not.toContain('Training runs in parallel with academic studies.');
     expect(text).toContain('Run mentored, certification-focused training in your campus labs alongside academic studies.');
-    expect(text).toContain('JobReady@Campus combines certification exam preparation, mentoring and placement support in campus labs alongside academic studies.');
+    expect(text).toContain('JobReady@Campus runs certification exam preparation, mentoring and placement support in campus labs alongside academic studies, with monthly reports on progress toward paid work.'); // WP175 (owner decision Q5 of 2026-11-28): re-pinned to the crafted statement (POSITIONING; scripts/check-facts.mjs POSITION_WHOLE_STATEMENT)
     expect(count(text, WITH_STUDIES)).toBe(2);
   });
 });

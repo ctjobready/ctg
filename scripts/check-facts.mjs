@@ -30,18 +30,13 @@
 //     claim, so the three stand on the same fact); WP34: Foundations has two funding routes, so its paragraph says what is discussed for each ("For a cohort grant, we discuss …
 //     For a platform grant, we discuss …"), still one paragraph with the PD-02 marker; WP39 (cycle-16 review): YouthWIDE's two entry routes (the discovery session and the briefing) share ONE line,
 //     "We discuss your priority groups, locations, tracks, indicative budget, scorecard and reporting plan.", still one paragraph with the PD-02 marker, in place of the two near-identical agendas; negative self-tests below
-//   - [POSITION] opens C6 (plan v1.13, conversion-page rule 9): on the pages that carry a positioning statement (POSITION_PAGES; WP39: Investors is the one page without), the statement is the first
-//     thing in the C6 band (#mechanism): only its eyebrow and H2 may come first (never a lead line, diagram or other text), and it reads as
-//     the audience sentence followed by the verbatim shared closing sentences, called [UNLIKE] here (SuperKids, whose clause is pending, is exempt from that
-//     second part); WP36: /programs/youthwide/ declares its statement whole (POSITION_WHOLE_STATEMENT: the two shared sentences with the program as the subject), and carries exactly
-//     that text; WP40 (cycle-17 review): /partner-with-us/local-partners/ declares its statement whole as well (the partner mobilizes and hosts, CodersTrust supports delivery, mentoring, placement and
-//     reporting; the audience and outcome are in the hero and the problem band above it), and carries exactly that text; WP42 (cycle-19 reviews): /partner-with-us/development-partners/ and
-//     /partner-with-us/governments/ declare theirs whole too (the two shared sentences, the reader named in the second; their audience and outcome are in the hero, the problem band and the glance above); WP43
-//     (cycle-20 review): /programs/jobready-campus/ declares its statement whole as well (what the program combines, in campus labs alongside academic studies, and the monthly reports the institution receives, as agreed in the
-//     program scope; its audience and outcome are in the hero and the glance above), and carries exactly that text; WP61 (cycle-33 review, GPT-6.1 Sol G3): /programs/jobready-work/ declares its one-sentence statement whole as well (it
-//     repeated the four cards under it), and carries exactly that text; no other page
-//     is affected (SuperKids' wording, which carries no comparison clause, is not pinned: it opens the band and says what the program offers); WP39 (cycle-16 review): /partner-with-us/investors/ carries no statement
-//     (it restated the hero and returned to cohort language on a page about backing the platform; POSITION_EXEMPT_PAGES), and no other page is exempt; negative self-tests below
+//   - [POSITION] opens C6 (plan v1.13, conversion-page rule 9; WP175, owner decision Q5 of 2026-11-28): on the pages that carry a positioning statement (POSITION_PAGES), the statement is the first
+//     thing in the C6 band (#mechanism): only its eyebrow and H2 may come first (never a lead line, diagram or other text); it reads exactly as the statement declared for THAT page
+//     (POSITION_WHOLE_STATEMENT: one crafted statement per page that carries the four CMF elements, for whom, the need, what CodersTrust does and how it differs, in the audience's own wording, not the
+//     literal "For … who need …; unlike …, we …" template); and it is the page's only statement, printed once (one .pos__text, and its words nowhere else in the page's text). Until WP175 the pages
+//     carried short site sentences (WP36 to WP155) or the audience sentence plus the verbatim [UNLIKE] closing; those wordings are refused by the self-tests. Home and Investors (no statement since WP166-A
+//     and WP39) are POSITION_PENDING_PAGES: their statements are declared and checked in full once the page shows one (packages A and B), and package Z makes them required; the NU Post Graduate
+//     Diploma carries none (S4-C2). The declared statements are distinct and share no sentence, and none uses the template's "For …" opening, "who need" or the retired [UNLIKE] sentence; negative self-tests below
 //   - ranked pains and the C8 map (review round 14, M4): Home, /partner-with-us/local-partners/ and /programs/youthwide/ state exactly three
 //     pains in the C2 band (#problem; list items data-pain="P1".."P3", in that order) and give the C8 band (#features) exactly one card for
 //     each (<li data-relieves="P1">.. since WP38/WP39; a <tr> row is still read), in the same order; rows without data-relieves are gain creators; WP57: YouthWIDE may carry no C8 band
@@ -389,13 +384,11 @@ function sessionAgendaProblems(markup, wanted, bandId = 'cta') {
   return out;
 }
 
-/* ---- [POSITION] opens C6 (plan v1.13: conversion-page rule 9, review round 12 Mi2) ---- */
-// Every C6 band opens with the positioning statement: "For ... who need ..., CodersTrust ...." then the verbatim shared closing sentences (doc 04 section 1 calls the slot [UNLIKE]; WP31 made it two plain sentences).
-// "Opens" means nothing precedes the statement in the band except its own eyebrow and H2 (the band's title): no lead line, no model heading as
-// body text, no diagram, no list. The [UNLIKE] sentence is declared here independently of src/data/copy.ts, so a change to it must be made twice on purpose.
+/* ---- [POSITION] opens C6 (plan v1.13: conversion-page rule 9, review round 12 Mi2; WP175: the crafted statements, owner decision Q5 of 2026-11-28) ---- */
+// Every C6 band opens with the page's positioning statement. "Opens" means nothing precedes the statement in the band except its own eyebrow and H2 (the band's title): no lead line, no model heading as
+// body text, no diagram, no list. WP175: each page carries its own crafted statement (the four CMF elements in the audience's words, doc 04 §1), declared here word for word and independently of
+// src/data/copy.ts (POSITIONING), so a change has to be made twice on purpose; and the page carries it once.
 const POSITION_PAGES = [
-  // '/' is exempt since WP166-A: see POSITION_EXEMPT_PAGES below.
-  // '/partner-with-us/investors/' is exempt: see POSITION_EXEMPT_PAGES below (WP39).
   '/partner-with-us/governments/',
   '/partner-with-us/development-partners/',
   '/partner-with-us/foundations/',
@@ -407,57 +400,58 @@ const POSITION_PAGES = [
   '/programs/jobready-work/',
   '/programs/superkids/',
 ];
-// WP39 (cycle-16 review): the one page that carries no positioning statement. Investors' "Our Approach" restated the hero lead and returned to cohort language on a page about backing the platform ("How JobReady Builds on
-// Delivery", lower on the page, said how the platform relates to delivery once; WP43 removed that band, and "What JobReady Does" says it), so the statement was deleted there. The page is exempt from [POSITION] and from nothing else: every page in POSITION_PAGES keeps the rule unchanged,
-// and the self-tests below keep the exemption to this one page (it must not also be listed, and it must be a real page of the site, so a rename cannot leave a stale entry).
-// WP166-A (marketing review R1-03, owner approval of 21 November 2026): Home carries no positioning statement either. Its "Our Approach" sentence was the third near-identical statement of what CodersTrust does (the hero lead and the
-// "What Is CodersTrust?" band say it), so it is gone and the mechanism band opens with its four cards; Home is exempt from [POSITION] and from nothing else.
-const POSITION_EXEMPT_PAGES = ['/partner-with-us/investors/', '/'];
-// SuperKids' "unlike ... we ..." clause waits for CodersTrust's approval (doc 06 P14), so its statement carries no comparison clause (WP42: it says what the program offers and that the two agreements set targets, not delivered reach).
-const POSITION_WITHOUT_UNLIKE = ['/programs/superkids/'];
-const UNLIKE_SENTENCE =
-  'We combine training, mentoring and placement support in existing labs and colleges. Partners receive monthly reports on progress toward paid work.';
-// WP18b: the employer pages are an offer for a single organization's team, not a youth-program comparison, so a statement closes with an
-// employer-specific sentence instead of the [UNLIKE] sentence (which names training-only programs and the BIGD trial of the youth programs).
-// This changes only the closing sentence of THAT page's statement: the rule for every other page, and every claims rule, is unchanged. The
-// sentence is declared here independently of src/data/copy.ts (POSITIONING.employers), so a change to it must be made twice on purpose.
-// WP61 (cycle-33 review, GPT-6.1 Sol G3): JobReady@Work's statement is one sentence that carries no closing of its own any more, so it is declared whole, in POSITION_WHOLE_STATEMENT below.
-const POSITION_EMPLOYER_CLOSING = {
-  // WP19, item 13: Home replaced the long [UNLIKE] sentence with its own closing sentence, declared here independently of src/data/copy.ts (HOME_POSITIONING); WP50 and WP51 reworded it.
-  // WP60 (cycle-32 review, Gemini GM7): Home's statement is ONE sentence that keeps the audience, so Home has no closing of its own any more: it is declared whole, in POSITION_WHOLE_STATEMENT below.
-  // WP20b: Employers' "Our Approach" (formerly "Where We Stand") statement is employer-specific too (the [UNLIKE] sentence describes the youth-cohort model); declared independently of src/data/copy.ts (POSITIONING.employers).
-  '/partner-with-us/employers/': 'Training is customized to your roles, and hiring starts from your talent request.',
-};
-// WP36 (cycle-13 review): YouthWIDE's hero lead and "at a Glance" rows already say who the program is for and where it runs, so its "Our Approach" statement is the two shared sentences alone, with the program named as the
-// subject. WP40 (cycle-17 review): Local Partners' hero and problem band already say who the page is for and what they need, and the four cards under the statement are the responsibilities, so its statement is the two
-// sentences that divide the work. WP42 (cycle-19 reviews): Development Partners' and Governments' hero, problem band and glance already say who the page is for and what they need, so each page's statement is the two shared
-// sentences with the reader named in the second (Development Partners: "Partners receive monthly reports and outcome tracking after each course, as agreed in the program scope."; Governments: "Your agency receives monthly
-// reports on progress toward paid work, as agreed in the program scope."). WP43 (cycle-20 review): JobReady@Campus' hero and glance already say who the page is for and what they need, so its statement is two sentences with the program as the subject (what it
-// combines, in campus labs alongside academic studies; the monthly reports the institution receives, as agreed in the program scope). Each is declared WHOLE, for its one page: a page listed here must carry exactly this text as its
-// statement (nothing may precede it in the band, as on every page), and the audience-sentence-plus-[UNLIKE] shape stays the rule for every page that is not listed (WP44 adds Foundations and Universities, so seven pages are listed; WP60 adds Home, so eight; WP61 adds JobReady@Work, so nine, and the self-tests below keep it at
-// these nine). Declared here independently of src/data/copy.ts (POSITIONING.home, POSITIONING.youthwide, POSITIONING.localPartners, POSITIONING.developmentPartners, POSITIONING.governments, POSITIONING.campus, POSITIONING.foundations, POSITIONING.universities, POSITIONING.work), so a change to any has to be made
-// twice on purpose; negative self-tests below.
+// WP39 (cycle-16 review) and WP166-A (marketing review R1-03) took the statement off Investors and Home, which were exempt from [POSITION] (POSITION_EXEMPT_PAGES) and so were checked for nothing.
+// WP175 (owner decision Q5 of 2026-11-28: Home and Investors get a statement too): both are pending. Their statements are declared below; a pending page that shows a C6 statement is held to every rule of
+// POSITION_PAGES (the declared words, first in the band, once on the page), and one that shows none yet is counted as pending. Packages A (Home) and B (Investors) render them; package Z moves both into
+// POSITION_PAGES, so the statement becomes required. The self-tests keep this list at these two pages.
+const POSITION_PENDING_PAGES = ['/', '/partner-with-us/investors/'];
+// WP175: the statement of each page, whole. Each carries the four elements of the CMF positioning (for whom, the need, what CodersTrust does, how it differs) in wording crafted for its audience; the earlier
+// forms (the audience sentence plus the shared [UNLIKE] closing, the employer closing of WP18b/WP20b, and the short site sentences declared whole from WP36 to WP155) are retired fixtures of the self-tests below.
+// The rules the earlier reviews set still hold for the new words (tests/wp154.spec.ts, tests/wp155.spec.ts: a fact the band states in a card is not said again in the statement; WP141: no in-sentence scope clause).
 const POSITION_WHOLE_STATEMENT = {
-  // WP60 (cycle-32 review, Gemini GM7; raised in nearly every cycle): Home's "Our Approach" was one sentence that kept the audience; WP63 named the group as ID-01 does. WP166-A (marketing review R1-03): Home carries no statement any more
-  // (POSITION_EXEMPT_PAGES), so its entry is gone and eight pages are listed; the self-tests below keep its last wording (RETIRED_HOME_STATEMENT) as a fixture, so a page still cannot carry another page's statement.
-  // WP93 (triage A4): the YouthWIDE statement carried the scope guard "as agreed in the program scope", as every Approach statement did; WP141 (owner answer 2026-11-01): the guard is stated once per page now (PROGRAM_SCOPE_STATEMENT), so the statements are declared without it.
-  // WP155 (Opus Max run 2, kit 122, Polish 1): without "in existing labs and colleges", which the band's "How We Reach Them" card says (with who teaches); src/data/copy.ts changed with it. Development Partners (Polish 5) and Universities (Polish 4) changed the same way below.
-  '/programs/youthwide/': 'YouthWIDE combines training, mentoring and placement support. Partners receive monthly reports on progress toward paid work.',
-  '/partner-with-us/local-partners/': 'Your organization mobilizes learners and hosts training. CodersTrust supports delivery, mentoring, placement and reporting.',
-  '/partner-with-us/development-partners/': 'We combine training, mentoring and placement support. Partners receive monthly reports.',
-  '/partner-with-us/governments/': 'We combine training, mentoring and placement support. Your agency receives monthly reports on progress toward paid work.',
-  // WP44 (cycle-21 review): Foundations' and Universities' statements are whole too (see the comment on the WP43 entry below)
-  '/partner-with-us/foundations/': 'Fund a YouthWIDE cohort or JobReady’s platform infrastructure. For cohort grants, we agree a pilot scorecard and combine training, mentoring and placement support, with monthly progress reports.',
-  '/partner-with-us/universities/': 'JobReady@Campus combines training, mentoring and placement support in campus labs. Your institution receives monthly reports on progress toward paid work.',
-  '/programs/jobready-campus/': 'JobReady@Campus combines certification exam preparation, mentoring and placement support in campus labs alongside academic studies. Institutions receive monthly reports on progress toward paid work.',
-  // WP61 (cycle-33 review, GPT-6.1 Sol G3): JobReady@Work's "Our Approach" is one sentence (it was an audience sentence and a three-part closing that repeated the four cards under it).
-  '/programs/jobready-work/': 'JobReady@Work builds training around your roles, from needs assessment to workshops and progress evaluation.',
+  '/': 'Funders and governments want young people in paid work, not only trained. CodersTrust takes each learner the whole way, from training and mentoring to placement support, with outcome evidence that includes an independent randomized trial of its own training.',
+  '/partner-with-us/governments/': 'Your agency wants training budgets that end in jobs and earnings for young people. CodersTrust runs training, mentoring and placement support as one program, phase by phase, with monthly reports to your agency on progress toward paid work.',
+  '/partner-with-us/development-partners/': 'Development partners want youth programs whose results hold up with their evaluators. CodersTrust carries each cohort from training through mentoring and placement support into paid work, in one program, with monthly reports on placements and first earnings.',
+  '/partner-with-us/foundations/': 'Foundations and CSR teams want each grant to change what young people earn, with evidence that it did. A YouthWIDE cohort grant funds training, mentoring and placement support against a pilot scorecard agreed in advance; a JobReady platform grant funds CodersTrust’s digital learning and earning platform.',
+  '/partner-with-us/universities/': 'Universities and colleges want degree holders who move into paid work, and placement results they can stand behind. JobReady@Campus runs in their own campus labs and adds certification exam preparation, mentoring and placement support to the degree, with monthly reports on each cohort.',
+  '/partner-with-us/employers/': 'Employers want teams that can work with AI tools and candidates ready for open roles. CodersTrust builds training from a needs assessment of their own roles rather than a fixed catalog, with job-ready candidates introduced through its placement team.',
+  '/partner-with-us/local-partners/': 'Your organization wants the young people it serves to reach paid work. Delivery is shared: you lead locally, and we bring the curriculum, facilitator training, mentoring, placement support and monthly reports.',
+  '/partner-with-us/investors/': 'Impact investors look for platforms that can move young people in emerging markets into paid work. JobReady builds on CodersTrust’s training and mentoring programs, one of which was tested in an independent randomized trial.',
+  '/programs/youthwide/': 'Funders and agencies want a program they can start in one country and grow on its results. YouthWIDE combines training, mentoring and placement support in one delivery model, with monthly reports to partners and an independent randomized trial of an earlier CodersTrust program behind it.',
+  '/programs/jobready-campus/': 'Colleges and universities want their students to graduate with skills that employers recognize. JobReady@Campus runs certification exam preparation, mentoring and placement support in campus labs alongside academic studies, with monthly reports on progress toward paid work.',
+  '/programs/jobready-work/': 'If your teams need AI and digital skills for their own roles, JobReady@Work builds the training around them, from needs assessment to workshops and progress evaluation, rather than offering a standard course.',
+  '/programs/superkids/': 'Schools and education partners want young learners to discover what they can make with technology, and SuperKids@School brings block coding, robotics and digital art into their classrooms, with each program shaped around the school.',
 };
+/** The statements the pages carried before WP175 (and the [UNLIKE] closing they were built from): fixtures of the self-tests, so none can come back unnoticed. */
+const RETIRED_UNLIKE_SENTENCE = 'We combine training, mentoring and placement support in existing labs and colleges. Partners receive monthly reports on progress toward paid work.';
+// kept as [page, statement] pairs, not in the declaration's form, so the gate's source never reads as declaring a retired statement (tests/wp51.spec.ts, tests/wp60.spec.ts)
+const RETIRED_POSITION_STATEMENTS = Object.fromEntries([
+  ['/', 'CodersTrust connects training, mentoring and placement support for educated, unemployed and underemployed youth, with monthly reports on progress toward paid work.'],
+  ['/partner-with-us/governments/', 'We combine training, mentoring and placement support. Your agency receives monthly reports on progress toward paid work.'],
+  ['/partner-with-us/development-partners/', 'We combine training, mentoring and placement support. Partners receive monthly reports.'],
+  ['/partner-with-us/foundations/', 'Fund a YouthWIDE cohort or JobReady’s platform infrastructure. For cohort grants, we agree a pilot scorecard and combine training, mentoring and placement support, with monthly progress reports.'],
+  ['/partner-with-us/universities/', 'JobReady@Campus combines training, mentoring and placement support in campus labs. Your institution receives monthly reports on progress toward paid work.'],
+  ['/partner-with-us/employers/', 'CodersTrust offers employer training built from a needs assessment, and job-ready digital talent through its placement team. Training is customized to your roles, and hiring starts from your talent request.'],
+  ['/partner-with-us/local-partners/', 'Your organization mobilizes learners and hosts training. CodersTrust supports delivery, mentoring, placement and reporting.'],
+  ['/partner-with-us/investors/', `For impact investors who need a platform that moves emerging-market youth into paid digital work, CodersTrust offers an integrated training-to-earnings model. ${RETIRED_UNLIKE_SENTENCE}`],
+  ['/programs/youthwide/', 'YouthWIDE combines training, mentoring and placement support. Partners receive monthly reports on progress toward paid work.'],
+  ['/programs/jobready-campus/', 'JobReady@Campus combines certification exam preparation, mentoring and placement support in campus labs alongside academic studies. Institutions receive monthly reports on progress toward paid work.'],
+  ['/programs/jobready-work/', 'JobReady@Work builds training around your roles, from needs assessment to workshops and progress evaluation.'],
+  ['/programs/superkids/', 'SuperKids offers block coding, robotics and digital art through schools and education partners.'],
+]);
+/** How a page is held to [POSITION]: 'check' (a [POSITION] page, or a pending page that shows a statement), 'pending' (a pending page with none yet) or 'none'. */
+function positionMode(path, markup) {
+  if (POSITION_PAGES.includes(path)) return 'check';
+  if (POSITION_PENDING_PAGES.includes(path)) return /<p\b[^>]*\bpos__text\b/.test(markup) ? 'check' : 'pending';
+  return 'none';
+}
+/** The sentences of a statement (a sentence ends at ". " before a capital letter, or at the end). */
+const statementSentences = (t) => t.split(/(?<=[.!?])\s+(?=[A-Z])/).filter(Boolean);
 /**
- * Problems with the C6 band's opening: the statement exists, nothing but eyebrow and H2 precedes it, and it ends with the verbatim [UNLIKE] sentence (or, on a page in POSITION_EMPLOYER_CLOSING, that page's employer sentence).
- * A page in POSITION_WHOLE_STATEMENT (`whole`) must instead carry exactly that declared statement.
+ * Problems with the C6 band's opening: the statement exists, nothing but eyebrow and H2 precedes it, it reads exactly as the statement declared for the page (`whole`), and it is the page's only
+ * statement (one .pos__text in the page) and its words are on the page once (`text`, the page's visible text; defaults to the markup's).
  */
-function positionProblems(markup, { unlike = true, closing = UNLIKE_SENTENCE, whole } = {}) {
+function positionProblems(markup, { whole, text = visibleText(markup) } = {}) {
   const band = /<section\b[^>]*\bid="mechanism"[^>]*>([\s\S]*)/.exec(markup);
   if (!band) return ['the C6 band (#mechanism) is missing, so the positioning statement has nowhere to open'];
   const pos = /<div\b[^>]*\bclass="[^"]*\bpos\b[^"]*"[^>]*>([\s\S]*?)<\/div>/.exec(band[1]);
@@ -470,15 +464,16 @@ function positionProblems(markup, { unlike = true, closing = UNLIKE_SENTENCE, wh
   const leading = decode(before);
   if (leading) out.push(`the C6 band puts "${leading.slice(0, 80)}${leading.length > 80 ? '…' : ''}" before the positioning statement (only its eyebrow and H2 may come first)`);
   else if (/<(svg|img|ul|ol|table|figure|a)\b/.test(before)) out.push('the C6 band puts a diagram, list, image or link before the positioning statement (only its eyebrow and H2 may come first)');
-  const text = /<p\b[^>]*\bpos__text\b[^>]*>([\s\S]*?)<\/p>/.exec(pos[1]);
-  const statement = text ? decode(text[1]) : '';
+  const p = /<p\b[^>]*\bpos__text\b[^>]*>([\s\S]*?)<\/p>/.exec(pos[1]);
+  const statement = p ? decode(p[1]) : '';
   if (!statement) out.push('the positioning statement has no text');
-  else if (whole !== undefined) {
-    if (statement !== whole) out.push(`the positioning statement reads "${statement}", expected the statement declared for this page: "${whole}"`);
-  } else if (unlike) {
-    const which = closing === UNLIKE_SENTENCE ? '[UNLIKE]' : 'employer';
-    if (!statement.endsWith(` ${closing}`)) out.push(`the positioning statement does not end with the verbatim ${which} sentence as its own sentence`);
-    else if (!/[.!?]$/.test(statement.slice(0, -closing.length - 1))) out.push(`the positioning statement runs the audience sentence into the ${which} sentence (they are two sentences)`);
+  else if (whole === undefined) out.push('no statement is declared for this page (POSITION_WHOLE_STATEMENT)');
+  else if (statement !== whole) out.push(`the positioning statement reads "${statement}", expected the statement declared for this page: "${whole}"`);
+  const blocks = (markup.match(/<p\b[^>]*\bpos__text\b/g) ?? []).length;
+  if (blocks !== 1) out.push(`the page carries ${blocks} positioning statements (one, in C6)`);
+  if (statement) {
+    const times = text.split(statement).length - 1;
+    if (times !== 1) out.push(`the statement's words are on the page ${times} times (once, in C6)`);
   }
   return out;
 }
@@ -1088,11 +1083,10 @@ function surveyEditionProblems(factsById, rows, pins = { facts: SURVEY_FACTS, ro
   sharedBad('the shared line wrapping a list', entryBand(`<p class="agenda" data-session-agenda data-fact="PD-02">We discuss <ul><li>your priority groups</li></ul></p>`));
   if (!sessionAgendaProblems(ctaBand(agendaP(agendaWant)), agendaWantY).length) problems.push('self-test: the [SESSION-AGENDA] check accepted the discovery agenda where YouthWIDE\'s shared line is wanted');
 
-  // [POSITION] opens C6: the statement first (after, at most, the band's eyebrow and H2), then the verbatim [UNLIKE] sentence
-  const posFor = 'For governments who need youth in paid digital work, CodersTrust offers an integrated training-to-earnings model.';
-  const posBlock = (text = `${posFor} ${UNLIKE_SENTENCE}`) => `<div class="pos" data-reveal data-fact="ID-06" data-astro-cid-x><p class="pos__label">Where we stand</p><p class="pos__text">${text}</p></div>`;
+  // [POSITION] opens C6 (WP175): the page's declared statement, first in the band (after, at most, its eyebrow and H2), exactly its words, the page's only statement and said once
+  const posBlock = (text) => `<div class="pos" data-reveal data-fact="PD-01" data-astro-cid-x><p class="pos__label">Our Approach</p><p class="pos__text">${text}</p></div>`;
   const headerHtml = '<header class="sh sh--start"><p class="eyebrow">How it works</p><h2 class="sh__title" id="mechanism-h">A title</h2>';
-  const mech = (inner) => `<main><section class="band" id="mechanism" aria-labelledby="mechanism-h"><div class="container">${inner}</div></section><section class="band" id="proof"><p>Next band</p></section></main>`;
+  const mech = (inner, after = '') => `<main><section class="band" id="mechanism" aria-labelledby="mechanism-h"><div class="container">${inner}</div></section><section class="band" id="proof"><p>Next band</p>${after}</section></main>`;
   const posOk = (why, markup, opts) => {
     const r = positionProblems(markup, opts);
     if (r.length) problems.push(`self-test: the [POSITION] check rejected ${why}: ${r.join('; ')}`);
@@ -1100,126 +1094,65 @@ function surveyEditionProblems(factsById, rows, pins = { facts: SURVEY_FACTS, ro
   const posBad = (why, markup, opts) => {
     if (!positionProblems(markup, opts).length) problems.push(`self-test: the [POSITION] check accepted ${why}`);
   };
-  posOk('eyebrow, H2, then the statement', mech(`${headerHtml}${posBlock()}</header><div class="diagram"><svg></svg></div>`));
-  posOk('the statement before the header (nothing precedes it)', mech(`${posBlock()}${headerHtml}</header><div class="diagram"><svg></svg></div>`));
-  posOk('a lead line that follows the statement', mech(`${headerHtml}${posBlock()}<p class="sh__lead lead">A lead.</p></header>`));
-  posOk('SuperKids’ audience-only statement (no [UNLIKE] pending approval)', mech(`${headerHtml}${posBlock(posFor)}</header>`), { unlike: false });
-  const empClosing = POSITION_EMPLOYER_CLOSING['/partner-with-us/employers/'];
-  posOk('the employer closing sentence on a page that declares one (Employers)', mech(`${headerHtml}${posBlock(`${posFor} ${empClosing}`)}</header>`), { closing: empClosing });
-  posBad('the [UNLIKE] sentence on a page that declares an employer closing', mech(`${headerHtml}${posBlock()}</header>`), { closing: empClosing });
-  posBad('the employer closing sentence on a page that must carry [UNLIKE]', mech(`${headerHtml}${posBlock(`${posFor} ${empClosing}`)}</header>`));
-  posBad('a lead line before the statement', mech(`${headerHtml}<p class="sh__lead lead">A lead line.</p>${posBlock()}</header>`));
-  posBad('a model block before the statement', mech(`<div class="diagram"><svg></svg></div>${posBlock()}`));
-  posBad('a paragraph before the statement', mech(`<p>The model: learn, earn, prosper.</p>${posBlock()}`));
-  posBad('a list before the statement', mech(`<ul><li>01 Who we reach</li></ul>${posBlock()}`));
-  posBad('a band with no statement', mech(`${headerHtml}</header><p>Just text.</p>`));
-  posBad('a page with no C6 band', '<main><p>nothing</p></main>');
-  posBad('an altered [UNLIKE] sentence', mech(`${headerHtml}${posBlock(`${posFor} ${UNLIKE_SENTENCE.replace('in existing labs and colleges', 'in labs')}`)}</header>`));
-  posBad('a statement without the [UNLIKE] sentence', mech(`${headerHtml}${posBlock(posFor)}</header>`));
-  posBad('an audience sentence run into [UNLIKE] with a semicolon', mech(`${headerHtml}${posBlock(`${posFor.slice(0, -1)}; ${UNLIKE_SENTENCE.charAt(0).toLowerCase()}${UNLIKE_SENTENCE.slice(1)}`)}</header>`));
-  posBad('a statement that is not in the #mechanism band', `<main><section class="band" id="mechanism"><p>x</p></section>${posBlock()}</main>`);
-  // WP36: a page-specific whole statement (YouthWIDE) passes only with exactly its declared text, and the declaration never loosens the rule for any other page
-  const wholeYw = POSITION_WHOLE_STATEMENT['/programs/youthwide/'];
-  if (wholeYw !== 'YouthWIDE combines training, mentoring and placement support. Partners receive monthly reports on progress toward paid work.') problems.push('self-test: the YouthWIDE whole statement is no longer the WP155 wording');
-  posOk('the declared whole statement on the page that declares it (YouthWIDE)', mech(`${headerHtml}${posBlock(wholeYw)}</header>`), { whole: wholeYw });
-  posOk('the declared whole statement with the statement before the header (nothing precedes it)', mech(`${posBlock(wholeYw)}${headerHtml}</header>`), { whole: wholeYw });
-  posBad('the shared audience-plus-[UNLIKE] statement on the page that declares a whole statement', mech(`${headerHtml}${posBlock()}</header>`), { whole: wholeYw });
-  posBad('a reworded whole statement', mech(`${headerHtml}${posBlock(wholeYw.replace('combines', 'blends'))}</header>`), { whole: wholeYw });
-  posBad('a whole statement with a sentence added in front of it', mech(`${headerHtml}${posBlock(`${posFor} ${wholeYw}`)}</header>`), { whole: wholeYw });
-  posBad('a lead line before the whole statement', mech(`${headerHtml}<p class="sh__lead lead">A lead line.</p>${posBlock(wholeYw)}</header>`), { whole: wholeYw });
-  posBad('the whole statement on a page that must carry the audience sentence and [UNLIKE]', mech(`${headerHtml}${posBlock(wholeYw)}</header>`));
-  posBad('the whole statement on a page that declares an employer closing', mech(`${headerHtml}${posBlock(wholeYw)}</header>`), { closing: empClosing });
-  // WP40: Local Partners declares its statement whole too, with the same guarantees, and (WP42) so do Development Partners and Governments, and (WP43) JobReady@Campus; the declarations stay at these five pages
-  const wholeLp = POSITION_WHOLE_STATEMENT['/partner-with-us/local-partners/'];
-  if (wholeLp !== 'Your organization mobilizes learners and hosts training. CodersTrust supports delivery, mentoring, placement and reporting.') problems.push('self-test: the Local Partners whole statement is no longer the WP40 wording');
-  // WP166-A: Home is no longer in the list (it carries no statement; POSITION_EXEMPT_PAGES)
-  if (Object.keys(POSITION_WHOLE_STATEMENT).sort().join(' ') !== '/partner-with-us/development-partners/ /partner-with-us/foundations/ /partner-with-us/governments/ /partner-with-us/local-partners/ /partner-with-us/universities/ /programs/jobready-campus/ /programs/jobready-work/ /programs/youthwide/') problems.push('self-test: exactly /programs/youthwide/, /partner-with-us/local-partners/ (WP36, WP40), /partner-with-us/development-partners/ and /partner-with-us/governments/ (WP42), /programs/jobready-campus/ (WP43), /partner-with-us/foundations/ and /partner-with-us/universities/ (WP44) and /programs/jobready-work/ (WP61) declare a whole positioning statement and no other page (Home, WP60, until WP166-A)');
-  posOk('the declared whole statement on the page that declares it (Local Partners)', mech(`${headerHtml}${posBlock(wholeLp)}</header>`), { whole: wholeLp });
-  posBad('the shared audience-plus-[UNLIKE] statement on Local Partners, which declares a whole statement', mech(`${headerHtml}${posBlock()}</header>`), { whole: wholeLp });
-  posBad('a reworded Local Partners statement', mech(`${headerHtml}${posBlock(wholeLp.replace('mobilizes', 'recruits'))}</header>`), { whole: wholeLp });
-  posBad('a Local Partners statement with the audience sentence in front of it', mech(`${headerHtml}${posBlock(`${posFor} ${wholeLp}`)}</header>`), { whole: wholeLp });
-  posBad('the YouthWIDE statement on Local Partners (each page carries only its own)', mech(`${headerHtml}${posBlock(wholeYw)}</header>`), { whole: wholeLp });
-  posBad('the Local Partners statement on YouthWIDE (each page carries only its own)', mech(`${headerHtml}${posBlock(wholeLp)}</header>`), { whole: wholeYw });
-  posBad('the Local Partners statement on a page that must carry the audience sentence and [UNLIKE]', mech(`${headerHtml}${posBlock(wholeLp)}</header>`));
-  // WP42: Development Partners and Governments declare theirs whole, with the same guarantees (the exact wording, nothing in front of it, each page its own text only)
-  const wholeDp = POSITION_WHOLE_STATEMENT['/partner-with-us/development-partners/'];
-  const wholeGov = POSITION_WHOLE_STATEMENT['/partner-with-us/governments/'];
-  if (wholeDp !== 'We combine training, mentoring and placement support. Partners receive monthly reports.') problems.push('self-test: the Development Partners whole statement is no longer the WP155 wording');
-  if (wholeGov !== 'We combine training, mentoring and placement support. Your agency receives monthly reports on progress toward paid work.') problems.push('self-test: the Governments whole statement is no longer the WP154 wording');
-  for (const [name, own, other, otherName] of [['Development Partners', wholeDp, wholeGov, 'Governments'], ['Governments', wholeGov, wholeDp, 'Development Partners']]) {
-    posOk(`the declared whole statement on the page that declares it (${name})`, mech(`${headerHtml}${posBlock(own)}</header>`), { whole: own });
-    posOk(`the declared ${name} statement with the statement before the header (nothing precedes it)`, mech(`${posBlock(own)}${headerHtml}</header>`), { whole: own });
-    posBad(`the shared audience-plus-[UNLIKE] statement on ${name}, which declares a whole statement`, mech(`${headerHtml}${posBlock()}</header>`), { whole: own });
-    posBad(`a reworded ${name} statement`, mech(`${headerHtml}${posBlock(own.replace('combine', 'blend'))}</header>`), { whole: own });
-    posBad(`a ${name} statement with the audience sentence in front of it`, mech(`${headerHtml}${posBlock(`${posFor} ${own}`)}</header>`), { whole: own });
-    posBad(`a lead line before the ${name} statement`, mech(`${headerHtml}<p class="sh__lead lead">A lead line.</p>${posBlock(own)}</header>`), { whole: own });
-    posBad(`the ${otherName} statement on ${name} (each page carries only its own)`, mech(`${headerHtml}${posBlock(other)}</header>`), { whole: own });
-    posBad(`the ${name} statement on a page that must carry the audience sentence and [UNLIKE]`, mech(`${headerHtml}${posBlock(own)}</header>`));
+  const declared = Object.entries(POSITION_WHOLE_STATEMENT);
+  // the declarations: exactly the [POSITION] pages and the pending pages, each with a crafted statement (not the template), distinct, sharing no sentence
+  if (Object.keys(POSITION_WHOLE_STATEMENT).sort().join(' ') !== [...POSITION_PAGES, ...POSITION_PENDING_PAGES].sort().join(' ')) problems.push('self-test: POSITION_WHOLE_STATEMENT declares a statement for exactly the [POSITION] pages and the pending pages (WP175)');
+  if (POSITION_PENDING_PAGES.join(' ') !== '/ /partner-with-us/investors/') problems.push('self-test: the pending [POSITION] pages are exactly / and /partner-with-us/investors/ (WP175: packages A and B render their statements, package Z makes them required)');
+  for (const pending of POSITION_PENDING_PAGES) if (POSITION_PAGES.includes(pending)) problems.push(`self-test: ${pending} is pending but also listed as a [POSITION] page`);
+  if (POSITION_PAGES.length !== 10) problems.push(`self-test: ${POSITION_PAGES.length} [POSITION] pages; the ten conversion pages that carry a statement today are expected`);
+  const sentenceOwner = new Map();
+  for (const [page, statement] of declared) {
+    if (/^For /.test(statement)) problems.push(`self-test: the ${page} statement opens with the template's "For …" (WP175: crafted wording, not the literal template)`);
+    if (/\bwho need\b/.test(statement)) problems.push(`self-test: the ${page} statement uses the template's "who need" (WP175)`);
+    if (statement.includes(RETIRED_UNLIKE_SENTENCE) || /Unlike approaches|provision varies/.test(statement)) problems.push(`self-test: the ${page} statement carries the retired [UNLIKE] closing (WP31, WP175)`);
+    if (/agreed in (?:the|each) program(?:’s)? scope/.test(statement)) problems.push(`self-test: the ${page} statement carries the scope clause (WP141: stated once per page, not in the statement)`);
+    if (/\d/.test(statement)) problems.push(`self-test: the ${page} statement carries a figure`);
+    if (statement === RETIRED_POSITION_STATEMENTS[page]) problems.push(`self-test: the ${page} statement is its retired pre-WP175 wording`);
+    const parts = statementSentences(statement);
+    if (parts.length < 1 || parts.length > 2) problems.push(`self-test: the ${page} statement has ${parts.length} sentences (one or two)`);
+    for (const sentence of parts) {
+      if (sentence.split(/\s+/).length > 50) problems.push(`self-test: a sentence of the ${page} statement runs past 50 words (review round 11, F26)`);
+      if (sentenceOwner.has(sentence)) problems.push(`self-test: "${sentence}" is in the statements of both ${sentenceOwner.get(sentence)} and ${page} (WP175: no sentence repeated page to page)`);
+      sentenceOwner.set(sentence, page);
+    }
   }
-  posBad('the YouthWIDE statement on Governments (each page carries only its own)', mech(`${headerHtml}${posBlock(wholeYw)}</header>`), { whole: wholeGov });
-  // WP43: JobReady@Campus declares its statement whole, with the same guarantees (the exact wording including its scope clause, nothing in front of it, each page its own text only)
-  const wholeCampus = POSITION_WHOLE_STATEMENT['/programs/jobready-campus/'];
-  if (wholeCampus !== 'JobReady@Campus combines certification exam preparation, mentoring and placement support in campus labs alongside academic studies. Institutions receive monthly reports on progress toward paid work.') problems.push('self-test: the JobReady@Campus whole statement is no longer the WP43 wording');
-  posOk('the declared whole statement on the page that declares it (JobReady@Campus)', mech(`${headerHtml}${posBlock(wholeCampus)}</header>`), { whole: wholeCampus });
-  posOk('the declared JobReady@Campus statement with the statement before the header (nothing precedes it)', mech(`${posBlock(wholeCampus)}${headerHtml}</header>`), { whole: wholeCampus });
-  posBad('the shared audience-plus-[UNLIKE] statement on JobReady@Campus, which declares a whole statement', mech(`${headerHtml}${posBlock()}</header>`), { whole: wholeCampus });
-  posBad('a reworded JobReady@Campus statement', mech(`${headerHtml}${posBlock(wholeCampus.replace('combines', 'blends'))}</header>`), { whole: wholeCampus });
-  posBad('a JobReady@Campus statement that puts the in-sentence scope clause back (WP141: the qualifier is stated once per page, not in the statement)', mech(`${headerHtml}${posBlock(`${wholeCampus.slice(0, -1)}, as agreed in the program scope.`)}</header>`), { whole: wholeCampus });
-  posBad('a JobReady@Campus statement with the audience sentence in front of it', mech(`${headerHtml}${posBlock(`${posFor} ${wholeCampus}`)}</header>`), { whole: wholeCampus });
-  posBad('a lead line before the JobReady@Campus statement', mech(`${headerHtml}<p class="sh__lead lead">A lead line.</p>${posBlock(wholeCampus)}</header>`), { whole: wholeCampus });
-  posBad('the Governments statement on JobReady@Campus (each page carries only its own)', mech(`${headerHtml}${posBlock(wholeGov)}</header>`), { whole: wholeCampus });
-  posBad('the JobReady@Campus statement on Governments (each page carries only its own)', mech(`${headerHtml}${posBlock(wholeCampus)}</header>`), { whole: wholeGov });
-  posBad('the JobReady@Campus statement on a page that must carry the audience sentence and [UNLIKE]', mech(`${headerHtml}${posBlock(wholeCampus)}</header>`));
-  // WP44: Foundations and Universities declare theirs whole, with the same guarantees (the exact wording, nothing in front of it, each page its own text only); Universities keeps its scope clause
-  const wholeFdn = POSITION_WHOLE_STATEMENT['/partner-with-us/foundations/'];
-  const wholeUni = POSITION_WHOLE_STATEMENT['/partner-with-us/universities/'];
-  if (wholeFdn !== 'Fund a YouthWIDE cohort or JobReady’s platform infrastructure. For cohort grants, we agree a pilot scorecard and combine training, mentoring and placement support, with monthly progress reports.') problems.push('self-test: the Foundations whole statement is no longer the WP44 wording');
-  if (wholeUni !== 'JobReady@Campus combines training, mentoring and placement support in campus labs. Your institution receives monthly reports on progress toward paid work.') problems.push('self-test: the Universities whole statement is no longer the WP155 wording');
-  for (const [name, own, other, otherName] of [['Foundations', wholeFdn, wholeUni, 'Universities'], ['Universities', wholeUni, wholeFdn, 'Foundations']]) {
-    posOk(`the declared whole statement on the page that declares it (${name})`, mech(`${headerHtml}${posBlock(own)}</header>`), { whole: own });
-    posOk(`the declared ${name} statement with the statement before the header (nothing precedes it)`, mech(`${posBlock(own)}${headerHtml}</header>`), { whole: own });
-    posBad(`the shared audience-plus-[UNLIKE] statement on ${name}, which declares a whole statement`, mech(`${headerHtml}${posBlock()}</header>`), { whole: own });
-    posBad(`a reworded ${name} statement`, mech(`${headerHtml}${posBlock(own.replace('combine', 'blend'))}</header>`), { whole: own });
-    posBad(`a ${name} statement with the audience sentence in front of it`, mech(`${headerHtml}${posBlock(`${posFor} ${own}`)}</header>`), { whole: own });
-    posBad(`a lead line before the ${name} statement`, mech(`${headerHtml}<p class="sh__lead lead">A lead line.</p>${posBlock(own)}</header>`), { whole: own });
-    posBad(`the ${otherName} statement on ${name} (each page carries only its own)`, mech(`${headerHtml}${posBlock(other)}</header>`), { whole: own });
-    posBad(`the ${name} statement on a page that must carry the audience sentence and [UNLIKE]`, mech(`${headerHtml}${posBlock(own)}</header>`));
+  if (new Set(declared.map(([, t]) => t)).size !== declared.length) problems.push('self-test: two pages declare the same positioning statement');
+  // the check itself, on each declared statement and against the other pages' statements and the retired wordings
+  for (const [page, own] of declared) {
+    posOk(`the declared statement on its own page (${page})`, mech(`${headerHtml}${posBlock(own)}</header><div class="diagram"><svg></svg></div>`), { whole: own });
+    posOk(`the declared statement before the header, nothing preceding it (${page})`, mech(`${posBlock(own)}${headerHtml}</header>`), { whole: own });
+    posOk(`a lead line that follows the statement (${page})`, mech(`${headerHtml}${posBlock(own)}<p class="sh__lead lead">A lead.</p></header>`), { whole: own });
+    posBad(`the retired pre-WP175 statement on ${page}`, mech(`${headerHtml}${posBlock(RETIRED_POSITION_STATEMENTS[page])}</header>`), { whole: own });
+    posBad(`a reworded statement on ${page}`, mech(`${headerHtml}${posBlock(own.replace(/\w+(?=\W*$)/, 'changed'))}</header>`), { whole: own });
+    posBad(`the statement with the retired [UNLIKE] closing after it on ${page}`, mech(`${headerHtml}${posBlock(`${own} ${RETIRED_UNLIKE_SENTENCE}`)}</header>`), { whole: own });
+    posBad(`the statement with the scope clause put back on ${page} (WP141)`, mech(`${headerHtml}${posBlock(`${own.slice(0, -1)}, as agreed in the program scope.`)}</header>`), { whole: own });
+    posBad(`only the first sentence of the statement on ${page}`, mech(`${headerHtml}${posBlock(statementSentences(own)[0])}</header>`), { whole: statementSentences(own).length > 1 ? own : `${own} More.` });
+    posBad(`a lead line before the statement on ${page}`, mech(`${headerHtml}<p class="sh__lead lead">A lead line.</p>${posBlock(own)}</header>`), { whole: own });
+    posBad(`the statement twice on ${page} (a second .pos block)`, mech(`${headerHtml}${posBlock(own)}</header>`, posBlock(own)), { whole: own });
+    posBad(`a second statement block, in other words, on ${page}`, mech(`${headerHtml}${posBlock(own)}</header>`, posBlock('Another statement.')), { whole: own });
+    posBad(`the statement's words repeated in another band of ${page}`, mech(`${headerHtml}${posBlock(own)}</header>`, `<p>${own}</p>`), { whole: own });
+    posBad(`a statement where none is declared (${page} without its declaration)`, mech(`${headerHtml}${posBlock(own)}</header>`), {});
+    for (const [other, theirs] of declared) if (other !== page) posBad(`the ${other} statement on ${page} (each page carries only its own)`, mech(`${headerHtml}${posBlock(theirs)}</header>`), { whole: own });
   }
-  posBad('a Universities statement that puts the in-sentence scope clause back (WP141: the qualifier is stated once per page, not in the statement)', mech(`${headerHtml}${posBlock(`${wholeUni.slice(0, -1)}, as agreed in the program scope.`)}</header>`), { whole: wholeUni });
-  // WP60: Home declares its statement whole too (one sentence that keeps the audience), with the same guarantees: the exact wording including its audience and its scope clause, nothing in front of it, each page its own text only, and the earlier two-sentence statement is refused
-  // WP166-A: Home declares no statement any more; the one it carried until WP166 stays a fixture of the whole-statement checks (each page carries only its own)
-  const wholeHome = 'CodersTrust connects training, mentoring and placement support for educated, unemployed and underemployed youth, with monthly reports on progress toward paid work.';
-  if (POSITION_WHOLE_STATEMENT['/'] !== undefined) problems.push('self-test: Home declares a whole positioning statement again, but it is exempt from [POSITION] since WP166-A');
-  posOk('the declared whole statement on the page that declares it (Home)', mech(`${headerHtml}${posBlock(wholeHome)}</header>`), { whole: wholeHome });
-  posOk('the declared Home statement with the statement before the header (nothing precedes it)', mech(`${posBlock(wholeHome)}${headerHtml}</header>`), { whole: wholeHome });
-  posBad('the shared audience-plus-[UNLIKE] statement on Home, which declares a whole statement', mech(`${headerHtml}${posBlock()}</header>`), { whole: wholeHome });
-  posBad('the earlier two-sentence Home statement (an audience sentence in front of the connecting sentence)', mech(`${headerHtml}${posBlock('For funders who need educated, unemployed youth in paid digital work, CodersTrust offers an integrated training-to-earnings model. CodersTrust connects training, mentoring and placement support in one program, and partners receive monthly reports on progress toward paid work, as agreed in the program scope.')}</header>`), { whole: wholeHome });
-  posBad('a reworded Home statement', mech(`${headerHtml}${posBlock(wholeHome.replace('connects', 'links'))}</header>`), { whole: wholeHome });
-  posBad('a Home statement that puts the in-sentence scope clause back (WP141: the qualifier is stated once per page, not in the statement)', mech(`${headerHtml}${posBlock(`${wholeHome.slice(0, -1)}, as agreed in the program scope.`)}</header>`), { whole: wholeHome });
-  posBad('a Home statement that drops its audience ("for educated, unemployed and underemployed youth")', mech(`${headerHtml}${posBlock(wholeHome.replace(' for educated, unemployed and underemployed youth', ''))}</header>`), { whole: wholeHome });
-  posBad('a Home statement that drops "underemployed" from its audience ("for educated, unemployed youth")', mech(`${headerHtml}${posBlock(wholeHome.replace('unemployed and underemployed youth', 'unemployed youth'))}</header>`), { whole: wholeHome });
-  posBad('a lead line before the Home statement', mech(`${headerHtml}<p class="sh__lead lead">A lead line.</p>${posBlock(wholeHome)}</header>`), { whole: wholeHome });
-  posBad('the Foundations statement on Home (each page carries only its own)', mech(`${headerHtml}${posBlock(wholeFdn)}</header>`), { whole: wholeHome });
-  posBad('the Home statement on Foundations (each page carries only its own)', mech(`${headerHtml}${posBlock(wholeHome)}</header>`), { whole: wholeFdn });
-  posBad('the Home statement on a page that must carry the audience sentence and [UNLIKE]', mech(`${headerHtml}${posBlock(wholeHome)}</header>`));
-  // WP61: JobReady@Work declares its statement whole too (one sentence, no closing of its own), with the same guarantees: the exact wording, nothing in front of it, each page its own text only, and the earlier two-sentence statement (an audience sentence and the three-part employer closing) is refused
-  const wholeWork = POSITION_WHOLE_STATEMENT['/programs/jobready-work/'];
-  if (wholeWork !== 'JobReady@Work builds training around your roles, from needs assessment to workshops and progress evaluation.') problems.push('self-test: the JobReady@Work whole statement is no longer the WP61 wording');
-  posOk('the declared whole statement on the page that declares it (JobReady@Work)', mech(`${headerHtml}${posBlock(wholeWork)}</header>`), { whole: wholeWork });
-  posOk('the declared JobReady@Work statement with the statement before the header (nothing precedes it)', mech(`${posBlock(wholeWork)}${headerHtml}</header>`), { whole: wholeWork });
-  posBad('the shared audience-plus-[UNLIKE] statement on JobReady@Work, which declares a whole statement', mech(`${headerHtml}${posBlock()}</header>`), { whole: wholeWork });
-  posBad('the earlier two-sentence JobReady@Work statement (an audience sentence and the employer closing)', mech(`${headerHtml}${posBlock('For employers who need teams ready to use AI in their daily work, CodersTrust offers JobReady@Work, training custom-developed for each organization. Each program starts with a needs assessment of your roles, is delivered through workshops on tasks from those roles, and is checked against success measures you agree before you start.')}</header>`), { whole: wholeWork });
-  posBad('a reworded JobReady@Work statement', mech(`${headerHtml}${posBlock(wholeWork.replace('builds', 'designs'))}</header>`), { whole: wholeWork });
-  posBad('a JobReady@Work statement with a sentence added in front of it', mech(`${headerHtml}${posBlock(`${posFor} ${wholeWork}`)}</header>`), { whole: wholeWork });
-  posBad('a lead line before the JobReady@Work statement', mech(`${headerHtml}<p class="sh__lead lead">A lead line.</p>${posBlock(wholeWork)}</header>`), { whole: wholeWork });
-  posBad('the Home statement on JobReady@Work (each page carries only its own)', mech(`${headerHtml}${posBlock(wholeHome)}</header>`), { whole: wholeWork });
-  posBad('the JobReady@Work statement on Home (each page carries only its own)', mech(`${headerHtml}${posBlock(wholeWork)}</header>`), { whole: wholeHome });
-  posBad('the JobReady@Work statement on a page that must carry the audience sentence and [UNLIKE]', mech(`${headerHtml}${posBlock(wholeWork)}</header>`));
-  posBad('the JobReady@Work statement on a page that declares an employer closing (Employers)', mech(`${headerHtml}${posBlock(wholeWork)}</header>`), { closing: empClosing });
-  for (const wholePage of Object.keys(POSITION_WHOLE_STATEMENT)) if (!POSITION_PAGES.includes(wholePage)) problems.push(`self-test: ${wholePage} declares a whole positioning statement but is not one of the [POSITION] pages`);
-  // WP39: the exemption is one page and not also a [POSITION] page. WP166-A: two pages, Investors and Home.
-  if (POSITION_EXEMPT_PAGES.join(' ') !== '/partner-with-us/investors/ /') problems.push('self-test: the [POSITION] exemption is exactly /partner-with-us/investors/ (WP39) and / (WP166-A) and no other page');
-  for (const exempt of POSITION_EXEMPT_PAGES) if (POSITION_PAGES.includes(exempt)) problems.push(`self-test: ${exempt} is exempt from [POSITION] but also listed as a [POSITION] page`);
+  const anyOwn = POSITION_WHOLE_STATEMENT['/programs/youthwide/'];
+  posBad('a model block before the statement', mech(`<div class="diagram"><svg></svg></div>${posBlock(anyOwn)}`), { whole: anyOwn });
+  posBad('a paragraph before the statement', mech(`<p>The model: learn, earn, prosper.</p>${posBlock(anyOwn)}`), { whole: anyOwn });
+  posBad('a list before the statement', mech(`<ul><li>01 Who we reach</li></ul>${posBlock(anyOwn)}`), { whole: anyOwn });
+  posBad('a band with no statement', mech(`${headerHtml}</header><p>Just text.</p>`), { whole: anyOwn });
+  posBad('a page with no C6 band', '<main><p>nothing</p></main>', { whole: anyOwn });
+  posBad('a statement that is not in the #mechanism band', `<main><section class="band" id="mechanism"><p>x</p></section>${posBlock(anyOwn)}</main>`, { whole: anyOwn });
+  posBad('a statement with no text', mech(`${headerHtml}${posBlock('')}</header>`), { whole: anyOwn });
+  // the pending pages: held to every rule once they show a statement, counted as pending until then; a [POSITION] page is always held; any other page is not read
+  const withPos = mech(`${headerHtml}${posBlock(anyOwn)}</header>`);
+  const withoutPos = mech(`${headerHtml}</header><p>No statement yet.</p>`);
+  for (const [path, markup, want] of [['/', withPos, 'check'], ['/', withoutPos, 'pending'], ['/partner-with-us/investors/', withPos, 'check'], ['/partner-with-us/investors/', withoutPos, 'pending'], ['/programs/youthwide/', withoutPos, 'check'], ['/about/', withPos, 'none']]) {
+    if (positionMode(path, markup) !== want) problems.push(`self-test: [POSITION] reads ${path} ${markup === withPos ? 'with' : 'without'} a statement as "${positionMode(path, markup)}", expected "${want}"`);
+  }
+  posBad('a pending page (Home) that shows another page’s statement', withPos, { whole: POSITION_WHOLE_STATEMENT['/'] });
+  // the earlier template forms are refused on every page: the audience sentence with the [UNLIKE] closing, and the employer closing of WP18b/WP20b
+  const posFor = 'For governments who need youth in paid digital work, CodersTrust offers an integrated training-to-earnings model.';
+  posBad('the retired audience-sentence-plus-[UNLIKE] statement', mech(`${headerHtml}${posBlock(`${posFor} ${RETIRED_UNLIKE_SENTENCE}`)}</header>`), { whole: POSITION_WHOLE_STATEMENT['/partner-with-us/governments/'] });
+  posBad('the retired employer closing', mech(`${headerHtml}${posBlock(`${posFor} Training is customized to your roles, and hiring starts from your talent request.`)}</header>`), { whole: POSITION_WHOLE_STATEMENT['/partner-with-us/employers/'] });
 
   // ranked pains and the C8 map (M4): exactly P1, P2, P3 in C2, exactly one C8 row for each, in order; only the two bands are read
   const painLi = (id) => `<li data-pain="${id}" data-astro-cid-x><span class="gp__n">1</span><div><p class="gp__q">A pain</p><p class="gp__a">Its words.</p></div></li>`;
@@ -1457,6 +1390,7 @@ let plainLinePages = 0;
 let proofCardPages = 0;
 let agendaPages = 0;
 let positionPages = 0;
+let positionPending = 0;
 let painPages = 0;
 let painC8Pages = 0;
 let trialScopePages = 0;
@@ -1527,11 +1461,12 @@ for (const file of htmlFiles(dist)) {
     }
     problems.push(...g.problems);
   }
-  // [POSITION] opens C6 on the pages that carry a positioning statement (SuperKids' [UNLIKE] clause is pending approval; Investors carries none, POSITION_EXEMPT_PAGES)
-  if (POSITION_PAGES.includes(path)) {
+  // [POSITION] opens C6 on the pages that carry a positioning statement; a pending page (Home, Investors) is held to the same rules once it shows one (WP175)
+  const positionAs = positionMode(path, markup);
+  if (positionAs === 'check') {
     positionPages++;
-    for (const p of positionProblems(markup, { unlike: !POSITION_WITHOUT_UNLIKE.includes(path), closing: POSITION_EMPLOYER_CLOSING[path] ?? UNLIKE_SENTENCE, whole: POSITION_WHOLE_STATEMENT[path] })) problems.push(`${path}: ${p}`);
-  }
+    for (const p of positionProblems(markup, { whole: POSITION_WHOLE_STATEMENT[path], text })) problems.push(`${path}: ${p}`);
+  } else if (positionAs === 'pending') positionPending++;
   // three ranked pains in C2 and one C8 card for each, on the three bespoke pages (round 14, M4)
   if (PAIN_PAGES.includes(path)) {
     painPages++;
@@ -1561,7 +1496,7 @@ if (pages === 0) {
   process.exit(1);
 }
 // A page that must carry the [PLAIN-LINE], the [SESSION-AGENDA], the [POSITION] statement, the ranked pains or the trial relevance line has to be in the build at all (and so does a page exempted from one of them, so a rename cannot leave a stale exemption).
-for (const p of new Set([...PLAIN_LINE_PAGES, ...PLAIN_LINE_EXEMPT_PAGES, ...PROOF_CARD_PAGES, ...SESSION_AGENDA_PAGES, ...POSITION_PAGES, ...POSITION_EXEMPT_PAGES, ...PAIN_PAGES, ...TRIAL_SCOPE_PAGES])) if (!seenPaths.has(p)) problems.push(`${p}: page not found in ${relative(root, dist) || '.'}, so its [PLAIN-LINE], [PROOF-CARD], [SESSION-AGENDA], [POSITION], ranked pains or trial relevance line cannot be checked`);
+for (const p of new Set([...PLAIN_LINE_PAGES, ...PLAIN_LINE_EXEMPT_PAGES, ...PROOF_CARD_PAGES, ...SESSION_AGENDA_PAGES, ...POSITION_PAGES, ...POSITION_PENDING_PAGES, ...PAIN_PAGES, ...TRIAL_SCOPE_PAGES])) if (!seenPaths.has(p)) problems.push(`${p}: page not found in ${relative(root, dist) || '.'}, so its [PLAIN-LINE], [PROOF-CARD], [SESSION-AGENDA], [POSITION], ranked pains or trial relevance line cannot be checked`);
 // A whitelist entry that no page used any more is stale: the list stays as small as the site needs it.
 for (const e of allowList) if (!e.used) problems.push(`scripts/facts-guard-allow.json: the entry for "${e.text}" on ${e.page} matched nothing in ${relative(root, dist) || '.'} (stale; remove it)`);
 // Production fact holds: a held fact must not be rendered anywhere. Only fact IDs, item numbers and page paths are printed.
@@ -1577,6 +1512,6 @@ if (problems.length) {
   process.exit(1);
 }
 console.log(
-  `check-facts: OK — ${pages} pages, ${refs} fact references, no gated facts or internal wording; ${vendorPages} page(s) name vendor certifications and carry the note once; no "enquir*", "licence" or "tripled" outside /news/<post>/ (and the essay text of /blog/<post>/); [PLAIN-LINE] on ${plainLinePages} page(s) with RC-02's numbers; [PROOF-CARD] (the hero's plain-language trial reading, held to RC-02 and RC-07) on ${proofCardPages} page(s); [SESSION-AGENDA] beside the CTA on ${agendaPages} page(s); [POSITION] opens C6 on ${positionPages} page(s); three ranked pains (C2) on ${painPages} page(s), with one C8 card each on ${painC8Pages} of them; trial relevance line under the trial headline on ${trialScopePages} page(s); number guard: ${guard.pages} evergreen page(s) scanned, ${guard.tokens} claim-marked figure(s) checked, ${guard.byRegister} allowed by the register, ${guard.byWhitelist} by the whitelist (${allowList.length} entries); survey dataset pinned to ${SURVEY_EDITION} (${Object.keys(SURVEY_FACTS).length} facts, ${SURVEY_CSV_ROWS.length} CSV rows); report CTA ${reportWithheld ? 'withheld' : 'enabled'}` +
+  `check-facts: OK — ${pages} pages, ${refs} fact references, no gated facts or internal wording; ${vendorPages} page(s) name vendor certifications and carry the note once; no "enquir*", "licence" or "tripled" outside /news/<post>/ (and the essay text of /blog/<post>/); [PLAIN-LINE] on ${plainLinePages} page(s) with RC-02's numbers; [PROOF-CARD] (the hero's plain-language trial reading, held to RC-02 and RC-07) on ${proofCardPages} page(s); [SESSION-AGENDA] beside the CTA on ${agendaPages} page(s); [POSITION] opens C6 on ${positionPages} page(s) (${positionPending} pending page(s) without a statement yet); three ranked pains (C2) on ${painPages} page(s), with one C8 card each on ${painC8Pages} of them; trial relevance line under the trial headline on ${trialScopePages} page(s); number guard: ${guard.pages} evergreen page(s) scanned, ${guard.tokens} claim-marked figure(s) checked, ${guard.byRegister} allowed by the register, ${guard.byWhitelist} by the whitelist (${allowList.length} entries); survey dataset pinned to ${SURVEY_EDITION} (${Object.keys(SURVEY_FACTS).length} facts, ${SURVEY_CSV_ROWS.length} CSV rows); report CTA ${reportWithheld ? 'withheld' : 'enabled'}` +
     (production ? `; production holds: ${holds.size} held fact(s), none rendered.` : '.'),
 );

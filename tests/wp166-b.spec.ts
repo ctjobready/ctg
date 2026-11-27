@@ -28,6 +28,9 @@ const WP168B_DAY = '2026-11-24';
 const WP168B_SHOWN = 'November 24, 2026';
 // WP170 (owner answers of 2026-11-26): the five NU pages changed again (the Application Deadline key fact) and are dated 2026-11-26.
 const NU_DAY = '2026-11-26';
+// WP175 (owner decision Q5 of 2026-11-28: the crafted C6 statement) moved it to 2026-11-28: YouthWIDE, JobReady@Campus, JobReady@Work, SuperKids and six partner pages changed visible text again
+const WP175_DAY = '2026-11-28';
+const WP175_SHOWN = 'November 28, 2026';
 const NU_SHOWN = 'November 26, 2026';
 
 const html = (rel: string) => readFileSync(join(DIST_DIR, rel, 'index.html'), 'utf8');
@@ -147,9 +150,9 @@ test.describe('WP166-B programs: YouthWIDE', () => {
     const faq = bandText(P, 'faq');
     expect(faq).toContain('What About Safeguarding and Data Protection? Safeguarding and data protection are specified for each program and agreed before enrollment. See how we handle them.');
   });
-  test('dated 2026-11-27 (WP172; it was 2026-11-21)', () => {
-    expect(mainText(P)).toContain(`Last updated ${WP172_SHOWN}`);
-    expect(dateModified(P)).toContain(WP172_DAY); // WP172 (owner decision 2026-11-27): the trial figures moved it on
+  test('dated 2026-11-28 (WP175; WP172 dated it 2026-11-27, and it was 2026-11-21)', () => {
+    expect(mainText(P)).toContain(`Last updated ${WP175_SHOWN}`);
+    expect(dateModified(P)).toContain(WP175_DAY); // WP175: the crafted C6 statement; // WP172 (owner decision 2026-11-27): the trial figures moved it on
   });
 });
 
@@ -190,10 +193,10 @@ test.describe('WP166-B programs: JobReady@Campus', () => {
     expect(f).not.toContain('Who Is JobReady@Campus For?');
     expect(f).toContain('What Does Our Institution Need to Provide? Campus labs to serve as blended-learning centers and faculty members to act as coordinators. The labs run with CodersTrust-trained facilitators.');
   });
-  test('the options lead puts the reader’s choice first; dated 2026-11-21', () => {
+  test('the options lead puts the reader’s choice first; dated 2026-11-28 (WP175; it was 2026-11-21)', () => {
     expect(bandText(P, 'offer')).toContain('You choose the starting scope in the discovery session, for your goals, country and delivery capacity. The sizes below are program sizes, not commitments.');
-    expect(mainText(P)).toContain(`Last updated ${TODAY_SHOWN}`);
-    expect(dateModified(P)).toContain(TODAY);
+    expect(mainText(P)).toContain(`Last updated ${WP175_SHOWN}`);
+    expect(dateModified(P)).toContain(WP175_DAY);
   });
 });
 
@@ -224,9 +227,9 @@ test.describe('WP166-B programs: JobReady@Work', () => {
     expect(bandText(P, 'mechanism')).toContain('See the JobReady Platform');
     expect(bandText(P, 'faq')).toContain('What Does It Cost?');
   });
-  test('dated 2026-11-24 (WP168-B; WP166-B dated it 2026-11-21)', () => {
-    expect(mainText(P)).toContain(`Last updated ${WP168B_SHOWN}`);
-    expect(dateModified(P)).toContain(WP168B_DAY);
+  test('dated 2026-11-28 (WP175; WP168-B dated it 2026-11-24, WP166-B 2026-11-21)', () => {
+    expect(mainText(P)).toContain(`Last updated ${WP175_SHOWN}`); // WP175 (it was WP168B_SHOWN)
+    expect(dateModified(P)).toContain(WP175_DAY); // WP175 (it was WP168B_DAY)
   });
 });
 
@@ -297,7 +300,7 @@ test.describe('WP166-B programs: SuperKids and the Programs hub', () => {
     expect(offer).toContain('Three Things to Bring to the Discovery Session');
     expect(offer).not.toContain('Options Are Shaped with You in a Discovery Session');
     expect(offer).not.toContain('Pricing is set per program');
-    expect(mainText(SK)).toContain(`Last updated ${TODAY_SHOWN}`);
+    expect(mainText(SK)).toContain(`Last updated ${WP175_SHOWN}`); // WP175 (it was TODAY_SHOWN)
   });
   test('Programs hub: the YouthWIDE card says what the program does; each partner-program card opens with "Explore ..."', () => {
     const grid = bandText('programs', 'programs-grid');
@@ -398,7 +401,7 @@ test.describe('WP166-B partners: hub, Development Partners, Governments and Foun
     expect(features).toContain(`Outreach, accessible selection and tracks chosen from employer demand, with safeguarding agreed for each program. ${TRACK_MENU.text}`);
     expect(bandText(P, 'faq')).toContain('What Does It Cost? Pricing is set per program; we share an indicative budget in the discovery session. Every pilot is judged against its scorecard, including cost per completer and per verified outcome, with thresholds agreed with you before the first cohort starts. See what a partnership includes.');
     expect(count(mainText(P), 'Every pilot is judged against its scorecard')).toBe(1);
-    expect(dateModified(P)).toContain(WP172_DAY); // WP172 (owner decision 2026-11-27): the trial figures moved it on
+    expect(dateModified(P)).toContain(WP175_DAY); // WP172 (owner decision 2026-11-27): the trial figures moved it on; WP175: the crafted C6 statement
   });
   test('Governments', () => {
     const P = 'partner-with-us/governments';
@@ -426,7 +429,7 @@ test.describe('WP166-B partners: hub, Development Partners, Governments and Foun
     expect(offer).toContain('Curriculum development, manuals and Training of Trainers, as provided for Her Power.');
     expect(offer).toContain('Training for staff on the learning platform and lab operations, as contracted for the Digital Lab Establishment Project (Phase II).');
     expect(bandText(P, 'cta')).toContain('A briefing is a conversation, not a commitment.');
-    expect(dateModified(P)).toContain(WP172_DAY); // WP172 (owner decision 2026-11-27): the trial figures moved it on
+    expect(dateModified(P)).toContain(WP175_DAY); // WP172 (owner decision 2026-11-27): the trial figures moved it on; WP175: the crafted C6 statement
   });
   test('Foundations', () => {
     const P = 'partner-with-us/foundations';
@@ -447,7 +450,7 @@ test.describe('WP166-B partners: hub, Development Partners, Governments and Foun
     expect(bandText(P, 'features')).not.toContain(DELIVERY_MODEL.text);
     expect(bandText(P, 'cta')).toContain('A discovery session is a conversation, not a commitment.');
     expect(bandIds(P)).not.toContain('proof-band');
-    expect(dateModified(P)).toContain(WP172_DAY); // WP172 (owner decision 2026-11-27): the trial figures moved it on
+    expect(dateModified(P)).toContain(WP175_DAY); // WP172 (owner decision 2026-11-27): the trial figures moved it on; WP175: the crafted C6 statement
   });
 });
 
@@ -471,7 +474,7 @@ test.describe('WP166-B partners: Universities, Employers, Investors and Local Pa
     expect(bandText(P, 'features')).not.toContain('built around the skills employers say they cannot find');
     expect(bandText(P, 'faq')).toContain('Does It Change Our Curriculum? Training runs in parallel with academic studies in your campus labs, and faculty members act as coordinators.');
     expect(bandText(P, 'cta')).toContain('A discovery session is a conversation, not a commitment.');
-    expect(dateModified(P)).toContain(TODAY);
+    expect(dateModified(P)).toContain(WP175_DAY); // WP175 (it was TODAY)
   });
   test('Employers', () => {
     const P = 'partner-with-us/employers';
@@ -511,7 +514,7 @@ test.describe('WP166-B partners: Universities, Employers, Investors and Local Pa
     expect(dd).not.toContain('Needs Assessment First');
     expect(dd).not.toContain('Progress Evaluation A progress evaluation checks results');
     expect(bandText(P, 'risk')).not.toContain('Independent Evaluation Welcome');
-    expect(dateModified(P)).toContain(WP168B_DAY); // WP168-B: the Akij Group line (it was TODAY, 2026-11-21)
+    expect(dateModified(P)).toContain(WP175_DAY); // WP168-B: the Akij Group line (it was TODAY, 2026-11-21); WP175: the crafted C6 statement
   });
   test('Investors', () => {
     const P = 'partner-with-us/investors';
@@ -545,7 +548,7 @@ test.describe('WP166-B partners: Universities, Employers, Investors and Local Pa
     expect(bandText(P, 'mechanism')).toContain(DELIVERY_MODEL.text);
     expect(bandText(P, 'features')).toContain(`You do not have to build the curriculum or certification route yourself. ${TRACK_MENU.text}`);
     expect(bandText(P, 'features')).not.toContain(DELIVERY_MODEL.text);
-    expect(dateModified(P)).toContain(WP172_DAY); // WP172 (owner decision 2026-11-27): the trial figures moved it on
+    expect(dateModified(P)).toContain(WP175_DAY); // WP172 (owner decision 2026-11-27): the trial figures moved it on; WP175: the crafted C6 statement
   });
 });
 

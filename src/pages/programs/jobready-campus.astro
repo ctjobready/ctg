@@ -7,7 +7,7 @@
 // build placement evidence from your own cohorts."); the mechanism's last block says "Mentoring and placement support toward paid work" (support toward work, not a promise that it leads into work).
 // WP51 (cycle-26 review): the two problem cards after the first are "Make Students’ Skills Visible" and "Build Placement Evidence" (what the program does for the students, not a deficiency of the institution); the options lead is the
 // program-sizes note alone ("Program options are shown without prices." described the website itself; the budget sentence under the options stays).
-// WP52 (cycle-27 review): the problem band's lead (EMPATHY.universities) is "Help students prepare for paid digital work and build placement evidence from your campus cohorts." (it said "You see capable students finish their degrees and still struggle to find work, and you are
+// WP52 (cycle-27 review): the problem band's lead (EMPATHY.universities; WP175: CAMPUS_PROBLEM_LEAD, the same words) is "Help students prepare for paid digital work and build placement evidence from your campus cohorts." (it said "You see capable students finish their degrees and still struggle to find work, and you are
 // asked for placement results you cannot yet show.", which assumed the institution has none); the band's heading is about students, not about the reader, so it stays. The third vignette is "Capacity Designed to Stay on Campus" (it was
 // "Capacity That Stays on Campus", a promise with no scope; the Governments delivery card changed the same way).
 // WP53 (owner follow-up, 2026-10-16): the options band's eyebrow is "Options" (it was "Start", directly above "Two Ways to Start a Campus Program"), as on Governments, Development Partners, Universities and YouthWIDE.
@@ -34,7 +34,7 @@ import Icon from '../../components/system/Icon.astro';
 import { linkAttrs } from '../../lib/url';
 import { faqNode, type FaqSource } from '../../components/pages/programs/faq';
 import { C14_FIRST, PAGE_UPDATED, ctaFor, serviceNode, statValue } from '../../components/pages/programs/meta';
-import { DELIVERY_MODEL, EMPATHY, MICRO_COMMITMENT, POSITIONING, PRICING, PROGRAM_OPTIONS, PROGRAM_SCOPE_STATEMENT_EXAMS, PROGRAM_SIZES_NOTE, SPEED_UNIVERSITIES } from '../../data/copy';
+import { CAMPUS_PROBLEM_LEAD, DELIVERY_MODEL, MICRO_COMMITMENT, POSITIONING, PRICING, PROGRAM_OPTIONS, PROGRAM_SCOPE_STATEMENT_EXAMS, PROGRAM_SIZES_NOTE, SPEED_UNIVERSITIES } from '../../data/copy';
 import { fact } from '../../data/facts';
 import { formatDate, isoDate } from '../../lib/format';
 import { webPage } from '../../lib/schema';
@@ -103,7 +103,7 @@ const options = [
 
   <!-- C2 (WP24c): a short problem band, built only from content this page already states. WP34 (cycle-11 review): the Bangladesh graduate-unemployment tile (PX-03) is gone from this global page. -->
   <!-- WP166-B (R2-15): the two cards repeated the lead almost word for word; the band shows two registered statistics instead (PX-02 and PX-05, as on YouthWIDE and the NU page). The lead still states the reader's obstacle. -->
-  <ProblemSection title="Capable Students Still Struggle to Find Work" bluf={EMPATHY.universities} factIds={['PX-02', 'PX-05']} />
+  <ProblemSection title="Capable Students Still Struggle to Find Work" bluf={CAMPUS_PROBLEM_LEAD} factIds={['PX-02', 'PX-05']} />
 
   <!-- C5 (WP25s: credibility before the vision, as on Home and YouthWIDE). WP161 (A-39): the eyebrow says what the band lists (a diploma delivery and two MOUs, not JobReady@Campus cohorts); the default is "Our Track Record". -->
   <!-- WP166-B (R2-16): the heading names the three partners, and National University's two figures (SC-04, SC-05) sit in this band beside the partner list, with their note after them and the three evidence links of the

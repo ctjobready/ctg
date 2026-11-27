@@ -390,7 +390,7 @@ test.describe('Universities: the meta description states only what the page stat
     expect(body).toContain('For Universities and Colleges');
     expect(body).toContain('Mentored, certification-focused training in your campus labs, alongside the degree, with placement evidence your institution can report.');
     // WP155 (Polish 4): the statement is "... in campus labs."; the "alongside academic studies" of the description is the band's H2 ("Training Alongside the Degree") and its card ("Training runs in parallel with academic studies").
-    expect(body).toContain('JobReady@Campus combines training, mentoring and placement support in campus labs.');
+    expect(body).toContain('JobReady@Campus runs in their own campus labs'); // WP175 (owner decision Q5 of 2026-11-28): re-pinned to the crafted statement (POSITIONING; scripts/check-facts.mjs POSITION_WHOLE_STATEMENT)
     expect(body).toContain('Training Alongside the Degree');
     expect(body).toContain('Training runs in parallel with academic studies');
     expect(body).not.toContain('85.0');

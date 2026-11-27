@@ -61,7 +61,9 @@ test.describe('WP111 item 3: Foundations lead, reporting card and funder pain', 
 
   test('the "Two Ways to Fund the Path" lead says the reports without the clause (WP141: the qualifier is stated once per page)', () => {
     const raw = distHtml('partner-with-us/foundations/index.html');
-    expect(raw).toContain('with monthly progress reports.');
+    // WP175 (owner decision Q5 of 2026-11-28): re-pinned to the crafted statement (POSITIONING; scripts/check-facts.mjs POSITION_WHOLE_STATEMENT): the lead is the crafted statement, and it still carries no scope clause
+    expect(raw).toContain('a JobReady platform grant funds CodersTrust’s digital learning and earning platform.');
+    expect(html()).not.toContain('agreed in advance, as agreed in the program scope');
     expect(html()).not.toContain('with monthly progress reports, as agreed in the program scope');
   });
 

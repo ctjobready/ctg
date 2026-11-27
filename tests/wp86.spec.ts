@@ -69,7 +69,7 @@ test.describe('Item 3: "Last updated" and the Her Power news date are October 24
   test('YouthWIDE and JobReady Platform show October 24, 2026', async ({ page }) => {
     await open(page, 'programs/youthwide/');
     // WP104: both stamps moved on with their later content changes (tests/wp104.spec.ts); WP141: November 1, 2026
-    await expect(page.locator('.updated')).toHaveText('Last updated November 27, 2026'); // WP172 (2026-11-27): the trial tiles; WP151; WP163: re-dated 2026-11-03; WP166-B (marketing review R2): 2026-11-21
+    await expect(page.locator('.updated')).toHaveText('Last updated November 28, 2026'); // WP175 (owner decision Q5 of 2026-11-28: the crafted C6 statement) moved it to 2026-11-28. WP172 (2026-11-27): the trial tiles; WP151; WP163: re-dated 2026-11-03; WP166-B (marketing review R2): 2026-11-21
     await open(page, 'our-model/jobready-platform/');
     // WP166-B (marketing review R2-06): the platform page prints the line at its foot (.jr__updated; it was .lf-updated in the header), dated 2026-11-21.
     await expect(page.locator('.jr__updated')).toHaveText('Last updated November 21, 2026'); // WP157: re-dated 2026-11-02; WP163: 2026-11-03; WP166-B: 2026-11-21

@@ -129,7 +129,8 @@ test.describe('Governments, Universities and Local Partners: the wording the rev
     expect(offer).toContain('Reach the young people your community serves; women are a priority in every program.'); // WP138 (was "Mobilize priority groups in your community, with women a priority in every program.")
     expect(offer).toContain('Open your labs or classrooms for blended training, so cohorts meet where young people already are.');
     expect(sitePages().filter((p) => /national programs miss/i.test(visible(p.html))).map((p) => p.route)).toEqual([]);
-    expect(Object.keys(EMPATHY)).not.toContain('localPartners');
+    // WP175 (owner decision Q2 (a) of 2026-11-28): every C5 opens with an empathy line again, each page its own fresh line (EMPATHY has a key for every conversion page); the retired line is not one of them
+    expect(EMPATHY.localPartners).not.toMatch(/(?:national|central) programs miss/);
   });
 });
 

@@ -123,8 +123,11 @@ test.describe('G1 (GPT-6.1 Sol): Home slide 2 is three sentences with the same f
 test.describe('G2 (GPT-6.1 Sol; Kimi K1): the Employers and JobReady@Work track-record bands have no empathy line', () => {
   const LINE = 'You have roles to fill and teams that need AI skills for their daily work.';
 
-  test('the line is on no built page and EMPATHY has no employers key (Campus and the NU diploma keep theirs)', () => {
-    expect(Object.keys(EMPATHY).sort()).toEqual(['nuPgd', 'universities']);
+  test('the line is on no built page and is not the Employers or JobReady@Work empathy line (WP175: each has a fresh line)', () => {
+    // WP175 (owner decision Q2 (a) of 2026-11-28): every C5 opens with an empathy line again, each page its own fresh line (EMPATHY has a key for every conversion page); the retired line is not one of them
+    expect(Object.keys(EMPATHY)).toContain('employers');
+    expect([EMPATHY.employers, EMPATHY.work]).not.toContain(LINE);
+    for (const line of Object.values(EMPATHY)) expect(line).not.toContain('teams that need AI skills for their daily work');
     expect(pagesWith(LINE, 'teams that need AI skills for their daily work')).toEqual([]);
   });
 
@@ -169,7 +172,8 @@ test.describe('G2 (GPT-6.1 Sol; Kimi K1): the Employers and JobReady@Work track-
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 test.describe('G3 (GPT-6.1 Sol): JobReady@Work’s "Our Approach" is one sentence above the four cards', () => {
-  const STATEMENT = 'JobReady@Work builds training around your roles, from needs assessment to workshops and progress evaluation.';
+  // WP175 (owner decision Q5 of 2026-11-28): re-pinned to the crafted statement (POSITIONING; scripts/check-facts.mjs POSITION_WHOLE_STATEMENT); still one sentence (WP61)
+  const STATEMENT = 'If your teams need AI and digital skills for their own roles, JobReady@Work builds the training around them, from needs assessment to workshops and progress evaluation, rather than offering a standard course.';
 
   test('the statement is the one sentence, in the source and on the page; the gate declares it whole for this page, independently of the source, and no longer lists an employer closing for it', async ({ page }) => {
     expect(POSITIONING.work.text).toBe(STATEMENT);
@@ -177,9 +181,9 @@ test.describe('G3 (GPT-6.1 Sol): JobReady@Work’s "Our Approach" is one sentenc
     const gate = readFileSync(new URL('../scripts/check-facts.mjs', import.meta.url), 'utf8');
     const whole = /const POSITION_WHOLE_STATEMENT = \{([\s\S]*?)\n\};/.exec(gate)?.[1] ?? '';
     expect(whole).toContain(`'/programs/jobready-work/': '${STATEMENT}'`);
-    const closing = /const POSITION_EMPLOYER_CLOSING = \{([\s\S]*?)\n\};/.exec(gate)?.[1] ?? '';
-    expect(closing).not.toContain('/programs/jobready-work/');
-    expect(closing).toContain('/partner-with-us/employers/');
+    // WP175: every statement is declared whole, Employers' too, so the gate keeps no employer closing (POSITION_EMPLOYER_CLOSING is gone)
+    expect(gate).not.toContain('const POSITION_EMPLOYER_CLOSING');
+    expect(whole).toContain(`'/partner-with-us/employers/': '${POSITIONING.employers.text}'`);
     await open(page, WORK);
     await expect(page.locator('#mechanism .pos__label')).toHaveText('Our Approach');
     const text = compact(await page.locator('#mechanism .pos__text').textContent());

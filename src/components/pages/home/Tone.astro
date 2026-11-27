@@ -1,19 +1,24 @@
 ---
+import { CMF_TAGS, isCmfTag, looksLikeCmfTag, type CmfTag } from '../../../data/cmf';
+
 /**
- * Page-local band rhythm helper. Several shared bands fix their own background (white, airy, ice, klein),
+ * Band rhythm helper (Home and Investors first; WP175: every conversion page wraps its bands in it). Several shared bands fix their own background (white, airy, ice, klein),
  * which can put two same-tone or two dark bands side by side. This wrapper re-maps the band's tone tokens
  * from the outside (the shared components stay untouched) and carries the CMF component id (`data-cmf`)
- * so the section order can be audited in the markup.
+ * so the section order can be audited in the markup (tests/support/cmf.ts reads it).
  *
  *   tone: remap the direct-child `.band` to white | airy | ice (omit to keep the band's own tone)
+ *   cmf:  the CMF component, declared compression or recorded row the band stands for (src/data/cmf.ts); a value that reads as a CMF component but is not one ("C6a",
+ *         "C2-C4 (compresed)") stops the build. The partner hub, which is not a conversion page, labels its bands in its own words (HERO, AUDIENCES, …).
  *   join: two bands that read as one block (the second drops its top padding)
  */
 interface Props {
   tone?: 'white' | 'airy' | 'ice';
-  cmf?: string;
+  cmf?: CmfTag | (string & {});
   join?: boolean;
 }
 const { tone, cmf, join = false } = Astro.props;
+if (cmf !== undefined && looksLikeCmfTag(cmf) && !isCmfTag(cmf)) throw new Error(`Tone: data-cmf "${cmf}" is not a CMF tag (${CMF_TAGS.join(', ')})`);
 ---
 
 <div class:list={['tone', tone && `tone--${tone}`, join && 'tone--join']} data-cmf={cmf}><slot /></div>

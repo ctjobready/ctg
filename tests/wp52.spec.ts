@@ -2,7 +2,7 @@ import { readFileSync } from 'node:fs';
 import { expect, test, type Page } from '@playwright/test';
 import { fact } from '../src/data/facts';
 import { faqs } from '../src/data/faqs';
-import { C14, EMPATHY, PROGRAM_SIZES_NOTE, VALUE_PROPOSITION } from '../src/data/copy'; // WP168-B: defineNewEarners is gone (the Impact tile's note defines the term)
+import { C14, CAMPUS_PROBLEM_LEAD, CONVERSION_PAGES, EMPATHY, PROGRAM_SIZES_NOTE, VALUE_PROPOSITION } from '../src/data/copy'; // WP168-B: defineNewEarners is gone (the Impact tile's note defines the term)
 import { timeline } from '../src/data/timeline';
 import { DESKTOP, MOBILE, open } from './support/browser';
 import { listPages } from './support/pages';
@@ -61,8 +61,9 @@ test.describe('Employers and JobReady@Work: the track-record opener makes no spe
   // or the credentials list (JobReady@Work). The speed comparison it replaced in WP52 is still on no page (next test). tests/wp61.spec.ts holds the rest.
   const LINE = 'You have roles to fill and teams that need AI skills for their daily work.';
 
-  test('neither page opens the band with the line any more, and EMPATHY has no employers key', async ({ page }) => {
-    expect(Object.keys(EMPATHY)).not.toContain('employers');
+  test('neither page opens the band with the line any more, and it is not their empathy line (WP175)', async ({ page }) => {
+    // WP175 (owner decision Q2 (a) of 2026-11-28): every C5 opens with an empathy line again, each page its own fresh line (EMPATHY has a key for every conversion page); the retired line is not one of them
+    expect([EMPATHY.employers, EMPATHY.work]).not.toContain(LINE);
     for (const route of [EMP, WORK]) {
       await open(page, route);
       await expect(page.locator('#guide p.lead'), route).toHaveCount(0);
@@ -80,8 +81,10 @@ test.describe('JobReady@Campus: the problem band’s lead says what the program 
   const LEAD = 'A degree alone does not show employers what students can do, and without follow-up data an institution cannot show where its students start earning.';
   const HEADING = 'Capable Students Still Struggle to Find Work';
 
-  test('the lead is the line (EMPATHY.universities), stated once; the heading speaks of students, not of the reader, and stays', async ({ page }) => {
-    expect(EMPATHY.universities).toBe(LEAD);
+  test('the lead is the line (CAMPUS_PROBLEM_LEAD, WP175), stated once; the heading speaks of students, not of the reader, and stays', async ({ page }) => {
+    // WP175: the lead is CAMPUS_PROBLEM_LEAD, the same words (EMPATHY.universities is the Universities page's own C5 line now)
+    expect(CAMPUS_PROBLEM_LEAD).toBe(LEAD);
+    expect(Object.values(EMPATHY)).not.toContain(LEAD);
     await open(page, CAMPUS);
     expect(compact(await page.locator('#problem .sh__lead').textContent())).toBe(LEAD);
     expect(compact(await page.locator('#problem h2').textContent())).toBe(HEADING);
@@ -590,16 +593,18 @@ test.describe('Development Partners: the glance is three tiles and the +10 tile 
 });
 
 test.describe('The Track Record bands of Governments and Investors start with their record (items 34 and 35)', () => {
-  test('Governments: the band opens with the origin line, there is no empathy line and no EMPATHY key for it', async ({ page }) => {
-    expect(Object.keys(EMPATHY)).not.toContain('governments');
+  test('Governments: the band opens with the origin line and has no empathy line yet; the retired line is not its WP175 line', async ({ page }) => {
+    // WP175 (owner decision Q2 (a) of 2026-11-28): every C5 opens with an empathy line again, each page its own fresh line (EMPATHY has a key for every conversion page); the retired line is not one of them
+    expect(EMPATHY.governments).not.toMatch(/must (?:show up as|produce) young people in work/);
     await open(page, GOV);
     await expect(page.locator('#guide p.lead')).toHaveCount(0);
     expect(compact(await page.locator('#guide .pg__copy > :first-child').textContent())).toBe('From a Copenhagen launch to work in 16 countries and territories.'); // WP64 rework RW2 (coordinator): the heading says "Since 2014", so the line does not
     await expect(page.locator('#guide h2')).toHaveText('We’ve Built This Path Since 2014');
   });
 
-  test('Investors: after the eyebrow and heading the band opens with the origin line; no empathy line and no EMPATHY key for it', async ({ page }) => {
-    expect(Object.keys(EMPATHY)).not.toContain('investors');
+  test('Investors: after the eyebrow and heading the band opens with the origin line and no empathy line yet; the retired line is not its WP175 line', async ({ page }) => {
+    // WP175 (owner decision Q2 (a) of 2026-11-28): every C5 opens with an empathy line again, each page its own fresh line (EMPATHY has a key for every conversion page); the retired line is not one of them
+    expect(EMPATHY.investors).not.toMatch(/what is proven and what is still being built|only promised/);
     await open(page, INVEST);
     await expect(page.locator('#guide .ig__empathy')).toHaveCount(0);
     const kids = await page.locator('#guide .ig__copy').first().evaluate((el) => Array.from(el.children).map((c) => (c.textContent ?? '').replace(/\s+/g, ' ').trim()));
@@ -608,8 +613,10 @@ test.describe('The Track Record bands of Governments and Investors start with th
   });
 
   // WP61 (cycle-33 reviews, GPT-6.1 Sol G2 and Kimi K1): Employers and JobReady@Work have none either
-  test('the remaining empathy lines are the JobReady@Campus and NU lines', () => {
-    expect(Object.keys(EMPATHY).sort()).toEqual(['nuPgd', 'universities']);
+  // WP175 (owner decision Q2 (a) of 2026-11-28): every C5 opens with an empathy line again, each page its own fresh line (EMPATHY has a key for every conversion page); the retired line is not one of them
+  test('EMPATHY has one line for each conversion page (WP175), none of them a retired line', () => {
+    expect(Object.keys(EMPATHY).sort()).toEqual([...CONVERSION_PAGES].sort());
+    for (const line of Object.values(EMPATHY)) expect(line).not.toMatch(/what is proven and what is still being built|teams that need AI skills|must produce young people in work|placement results you cannot yet show|job offers did not follow/);
   });
 });
 

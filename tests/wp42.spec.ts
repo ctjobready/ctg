@@ -196,12 +196,13 @@ test.describe('Local Partners: the evidence is a two-line strip (item 2)', () =>
 
 test.describe('Development Partners, Governments and SuperKids: the approach in two plain sentences (items 3, 4 and 8)', () => {
   const STATEMENTS: [string, string, string[]][] = [
-    ['partner-with-us/development-partners/', 'We combine training, mentoring and placement support. Partners receive monthly reports.', ['PD-01', 'PD-08']], // WP155 (Polish 5): was "... monthly reports, and outcomes are tracked after each course." resting on PD-09 as well; the "Where They Work" card states the tracking
-    ['partner-with-us/governments/', 'We combine training, mentoring and placement support. Your agency receives monthly reports on progress toward paid work.', ['PD-01', 'PD-08']],
-    ['programs/superkids/', 'SuperKids offers block coding, robotics and digital art through schools and education partners.' /* WP137: the qualifier is said in its own band */, ['GV-08']],
+    // WP175 (owner decision Q5 of 2026-11-28): re-pinned to the crafted statement (POSITIONING; scripts/check-facts.mjs POSITION_WHOLE_STATEMENT)
+    ['partner-with-us/development-partners/', 'Development partners want youth programs whose results hold up with their evaluators. CodersTrust carries each cohort from training through mentoring and placement support into paid work, in one program, with monthly reports on placements and first earnings.', ['PD-01', 'PD-08']], // WP155 (Polish 5): was "... monthly reports, and outcomes are tracked after each course." resting on PD-09 as well; the "Where They Work" card states the tracking
+    ['partner-with-us/governments/', 'Your agency wants training budgets that end in jobs and earnings for young people. CodersTrust runs training, mentoring and placement support as one program, phase by phase, with monthly reports to your agency on progress toward paid work.', ['PD-01', 'PD-05', 'PD-08']], // WP175: the program is rolled out phase by phase (PD-05)
+    ['programs/superkids/', 'Schools and education partners want young learners to discover what they can make with technology, and SuperKids@School brings block coding, robotics and digital art into their classrooms, with each program shaped around the school.' /* WP137: the qualifier is said in its own band; WP175: one crafted sentence, Q9 (a) */, ['GV-08']],
   ];
   for (const [route, statement, facts] of STATEMENTS) {
-    test(`${route}: "Our Approach" is exactly the two sentences, rests on ${facts.join(', ')}, and opens the band`, async ({ page }) => {
+    test(`${route}: "Our Approach" is exactly the declared statement, rests on ${facts.join(', ')}, and opens the band`, async ({ page }) => {
       await open(page, route);
       await expect(page.locator('#mechanism .pos__label')).toHaveText('Our Approach');
       await expect(page.locator('#mechanism .pos__text')).toHaveText(statement);

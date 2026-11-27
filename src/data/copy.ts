@@ -89,13 +89,69 @@ export const HEADLINE: Record<Audience, string> = {
 // WP52 (cycle-27 reviews, Grok M2 and m1, and Gemini m6 for Governments): nor do Governments ("You answer for training budgets that must produce young people in work, not only seats filled.") and Investors ("Impact investors need to see what is proven and
 // what is still being built."): each line restated the problem band above its track-record band, which now starts with the origin line (Governments) or its record (Investors), as Local Partners' and Foundations' do.
 // WP61 (cycle-33 reviews, GPT-6.1 Sol G2 and Kimi K1; flagged in many cycles): nor do Employers and JobReady@Work ("You have roles to fill and teams that need AI skills for their daily work."): their track-record bands open with the origin line (Employers) or the credentials list
-// (JobReady@Work, which prints no origin line). `universities` and `nuPgd` remain.
-export const EMPATHY: Record<Exclude<Audience, 'developmentPartners' | 'home' | 'localPartners' | 'foundations' | 'governments' | 'investors' | 'employers'>, string> = {
-  // WP52 (cycle-27 review): "Help students prepare for paid digital work and build placement evidence from your campus cohorts." (it said "You see capable students finish their degrees and still struggle to find work, and you are asked for placement results you cannot yet show.",
-  // which assumed the institution has no results to show). JobReady@Campus's problem band reads it as its lead; its heading, "Capable Students Still Struggle to Find Work", speaks of students, not of the reader, and stays.
-  // WP114 (Opus Low run 6): the lead states the obstacle the band's heading names (the reader's, not an instruction).
-  universities: 'A degree alone does not show employers what students can do, and without follow-up data an institution cannot show where its students start earning.',
-  nuPgd: 'You worked hard for your degree, but the job offers did not follow, and it is hard to know which skills to add next.',
+// (JobReady@Work, which prints no origin line). `universities` and `nuPgd` remained.
+// WP175 (owner decisions of 28 November 2026, Q2 (a) and the empathy-line rule): every C5 opens with an empathy line again, then ORIGIN_SHORT, the page's authority and METHOD (below) as the band's last line.
+// Each conversion page has its own line, freshly written: about the reader's goal, with no presumed deficit and no comparison with other programs (the reasons reviews retired the doc 04 lines of P6, P12, P7, P13,
+// P8, P7b and P14, which are not restored). YouthWIDE keeps doc 04's funder line (4.1 C5, [EMP] P10), which no review retired; the Development Partners and Home pages, which shared it, have lines of their own.
+// The NU Post Graduate Diploma line no longer says the job offers did not follow (a deficit). No page reads these lines before packages A to C (WP175) place them; the owner approves the wording before the push.
+// JobReady@Campus's problem-band lead, which was EMPATHY.universities, is CAMPUS_PROBLEM_LEAD now, word for word, so that page is unchanged.
+
+/** The thirteen conversion pages of CMF v3 (doc 06): Home, the seven audience pages and the five program pages (P11 is a route inside YouthWIDE). */
+export const CONVERSION_PAGES = ['home', 'governments', 'developmentPartners', 'foundations', 'universities', 'employers', 'localPartners', 'investors', 'youthwide', 'campus', 'work', 'superkids', 'nuPgd'] as const;
+export type ConversionPage = (typeof CONVERSION_PAGES)[number];
+
+export const EMPATHY: Record<ConversionPage, string> = {
+  home: 'You want the training you fund to end in paid work, with evidence you can stand behind.',
+  governments: 'You plan skills programs for a whole country, and you answer for the jobs they create.',
+  developmentPartners: 'You are accountable for youth employment results across a portfolio of programs.',
+  foundations: 'You give so that young people can build a livelihood, and you want to see that they did.',
+  universities: 'You measure your institution’s success by where its graduates go next.',
+  employers: 'You want your team ready for the tasks ahead, and new hires who can contribute from day one.',
+  localPartners: 'You know the young people in your community, and they trust you to open doors for them.',
+  investors: 'You look for a model with a record you can check before you back it to grow.',
+  // doc 04 4.1 C5 and doc 06 [EMP] P10, verbatim (YouthWIDE printed it until WP30d)
+  youthwide: 'You need more than enrollment numbers: you need credible evidence that young people are moving into paid work.',
+  campus: 'You want students to finish their degree ready for the work that follows it.',
+  work: 'You want your team’s training time to pay off in the work it does every day.',
+  superkids: 'You want the children you teach to start creating with technology early.',
+  nuPgd: 'You have earned your degree, and you are ready to build on it with skills for digital work.',
+};
+
+/**
+ * JobReady@Campus's problem-band lead (C2), the obstacle its heading names. WP52 (cycle-27 review) and WP114 (Opus Low run 6) wrote it; it was EMPATHY.universities until WP175 gave the
+ * Universities page an empathy line of its own, so it is its own constant now, with the same words (tests/wp114.spec.ts, tests/wp50.spec.ts and tests/wp52.spec.ts pin them).
+ */
+export const CAMPUS_PROBLEM_LEAD = 'A degree alone does not show employers what students can do, and without follow-up data an institution cannot show where its students start earning.';
+
+/**
+ * WP175 (Q2 (a)): the method signal that closes each conversion page's C5 band, one sentence (CMF C5: empathy → ORIGIN → authority → method). The TalentLEAP line is IN-06's, in the
+ * words the Universities, Employers and earlier partner pages printed ("Our TalentLEAP method organizes skills into career paths.", WP166-B moved it out of their track-record bands);
+ * Investors, YouthWIDE and JobReady@Campus keep their own wording of it; JobReady@Work and Employers use JobReady@Work's own path (IN-10, WP161 A-37: not the TalentLEAP path), the NU Post
+ * Graduate Diploma its affiliated-college line (NU-04) and SuperKids the earlier site's delivery line (c211b0a5^, "Courses are taught through schools and education partners").
+ */
+export interface MethodLine {
+  text: string;
+  /** Fact ids the sentence rests on (data-fact). */
+  facts: string[];
+  link?: { label: string; href: string };
+}
+const TALENTLEAP_LINK = { label: 'How TalentLEAP Works', href: '/our-model/talentleap/' } as const;
+const TALENTLEAP_METHOD: MethodLine = { text: 'Our TalentLEAP method organizes skills into career paths.', facts: ['IN-06'], link: TALENTLEAP_LINK };
+const WORK_METHOD: MethodLine = { text: 'JobReady@Work builds each program around a needs assessment.', facts: ['IN-10'] };
+export const METHOD: Record<ConversionPage, MethodLine> = {
+  home: TALENTLEAP_METHOD,
+  governments: TALENTLEAP_METHOD,
+  developmentPartners: TALENTLEAP_METHOD,
+  foundations: TALENTLEAP_METHOD,
+  universities: TALENTLEAP_METHOD,
+  employers: WORK_METHOD,
+  localPartners: TALENTLEAP_METHOD,
+  investors: { text: 'TalentLEAP, our method, organizes skills into career paths.', facts: ['IN-06'], link: TALENTLEAP_LINK },
+  youthwide: { text: 'TalentLEAP organizes skills into career paths.', facts: ['IN-06'], link: TALENTLEAP_LINK },
+  campus: { text: 'JobReady@Campus is built on the TalentLEAP model.', facts: ['IN-06'], link: TALENTLEAP_LINK },
+  work: WORK_METHOD,
+  superkids: { text: 'Courses are taught through schools and education partners.', facts: [] },
+  nuPgd: { text: 'Practical digital-skills courses, delivered by CodersTrust.', facts: ['NU-04'] },
 };
 
 export const ORIGIN: CopyBlock = {
@@ -490,110 +546,91 @@ export const TRIAL_SCOPE = {
  * WP141 (owner answer 2026-11-01): the statements above no longer end ", as agreed in the program scope" (their quoted wording in this comment is the earlier form): the qualifier is stated once per page (PROGRAM_SCOPE_STATEMENT), and the gate
  * (scripts/check-facts.mjs) declares the statements whole without it.
  */
-export type PositioningKey = Exclude<Audience, 'nuPgd' | 'investors'> | 'youthwide' | 'nationwide' | 'campus' | 'work' | 'superkids';
-
 /**
- * The shared closing of the positioning statements (the slot doc 04 §1 calls [UNLIKE] + [WE]), word for word; scripts/check-facts.mjs declares it independently (UNLIKE_SENTENCE).
- * WP31: two plain sentences in place of the long comparison sentence. It rests on PD-01 (training, mentoring, placement support) and PD-08 (monthly reports).
+ * WP175 (owner decision of 28 November 2026, Q5: "Shouldn't be the exact sentence format literally... should be well-crafted variations"): each page's C6 opens with a statement that carries the four
+ * elements of the CMF positioning (doc 04 §1): for whom, what they need, what CodersTrust does, and how it differs (the "unlike" idea). The wording is crafted for each audience: it is not the
+ * literal "For … who need …, CodersTrust …; unlike …, we …" template, no sentence is repeated from page to page, and Home and Investors carry one again. Every statement is built from the register
+ * (its `facts`) and doc 04/06 wording, with no figure and no named competitor; the difference is said about CodersTrust (the whole path in one program, phased delivery, programs built on the
+ * reader's own roles or labs, a randomized trial by an independent evaluator of a CodersTrust program), never as a verdict on other providers. The earlier forms quoted above (the shared [UNLIKE]
+ * closing, UNLIKE_APPROVED, and the short two-sentence statements of WP36 to WP155) are retired with the unused `nationwide` statement and Home's WP60 sentence. The negative rules of the
+ * earlier reviews still hold: no "as agreed in the program scope" in a statement (WP141), and no fact the band states elsewhere said twice in the band (WP154, WP155: "existing labs and colleges"
+ * on Development Partners, Governments and YouthWIDE, "academic studies" on Universities, outcome tracking on Development Partners). scripts/check-facts.mjs declares each statement whole,
+ * independently of this file (POSITION_WHOLE_STATEMENT; Home and Investors in POSITION_PENDING_PAGES until packages A and B render theirs), so a change has to be made twice on purpose.
+ * The NU Post Graduate Diploma page has no statement: its copy waits for National University sign-off (S4-C2, Q10).
  */
-const UNLIKE_APPROVED =
-  'We combine training, mentoring and placement support in existing labs and colleges. Partners receive monthly reports on progress toward paid work.';
-
-/**
- * Home's closing sentence (WP19, item 13: two plain sentences in place of the long [UNLIKE] sentence; scripts/check-facts.mjs pins it for Home only).
- * WP50 (cycle-25 review): the first of the two ("Many programs cover one step: training, self-paced courses or freelance matching.") is gone; the sentence that names what CodersTrust connects stays.
- * WP51 (cycle-26 review): the monthly reports are scoped as every other reporting statement on the site is ("..., as agreed in the program scope"); scripts/check-facts.mjs declares the sentence independently (POSITION_EMPLOYER_CLOSING['/']).
- * WP60 (cycle-32 review, Gemini GM7; raised in nearly every cycle): Home's "Our Approach" is ONE sentence that keeps the audience, "CodersTrust connects training, mentoring and placement support for educated, unemployed youth, with monthly reports on progress toward paid work, as agreed
- * in the program scope." (it was two sentences: "For funders who need educated, unemployed youth in paid digital work, CodersTrust offers an integrated training-to-earnings model." and "CodersTrust connects training, mentoring and placement support in one program, and partners
- * receive monthly reports on progress toward paid work, as agreed in the program scope."). scripts/check-facts.mjs declares it whole for Home (POSITION_WHOLE_STATEMENT['/']), independently of this file, so a change to it has to be made twice on purpose.
- * WP63 (cycle-35 review, Grok R1): the audience is "educated, unemployed and underemployed youth", the group ID-01 and the hero's value proposition name ("... for educated, unemployed and underemployed youth, with monthly reports ..."); the declaration in scripts/check-facts.mjs changed with it.
- */
-// WP166-A (marketing review R1-03, owner approval of 21 November 2026): Home no longer prints this statement (its hero lead names the buyer and the reporting, and "What Is CodersTrust?" says what CodersTrust does);
-// scripts/check-facts.mjs lists Home among the pages exempt from [POSITION]. The entry stays for reference; no page reads it.
-const HOME_POSITIONING =
-  'CodersTrust connects training, mentoring and placement support for educated, unemployed and underemployed youth, with monthly reports on progress toward paid work.';
+export type PositioningKey = Exclude<ConversionPage, 'nuPgd'>;
 
 export const POSITIONING: Record<PositioningKey, CopyBlock> = {
+  // P1 (funders and governments): the whole path, with the trial as the evidence (PD-01: training, mentoring, placement support; RC-01). It said, until WP166-A removed it, "CodersTrust connects training,
+  // mentoring and placement support for educated, unemployed and underemployed youth, with monthly reports on progress toward paid work."
   home: {
-    text: HOME_POSITIONING,
-    facts: ['PD-08'],
+    text: 'Funders and governments want young people in paid work, not only trained. CodersTrust takes each learner the whole way, from training and mentoring to placement support, with outcome evidence that includes an independent randomized trial of its own training.',
+    facts: ['PD-01', 'RC-01'],
   },
-  developmentPartners: {
-    // WP42 (cycle-19 review): the hero, the problem band and the glance above say who the page is for and what they need, so "Our Approach" states what the model does, in the two shared sentences with the tracking said as the page's
-    // cards say it ("outcome tracking after each course, as agreed in the program scope"). scripts/check-facts.mjs declares it whole for /partner-with-us/development-partners/ (POSITION_WHOLE_STATEMENT). It rests on PD-01
-    // (training, mentoring, placement support), PD-08 (monthly reports) and PD-09 (follow-up surveys at 3, 6 and 12 months).
-    // WP149 (Opus XHigh run 3, kit 116): "Partners receive monthly reports, and outcomes are tracked after each course." (it was "... monthly reports and outcome tracking after each course.": an odd object for "receive", and it could read as reports arriving only after each course);
-    // scripts/check-facts.mjs declares the new wording whole as well.
-    // WP154 (Opus Max run 1, kit 121, Polish): "... placement support." without "in existing labs and colleges": the band's "Existing Labs and Colleges" card heading says it once.
-    // WP155 (Opus Max run 2, kit 122, Polish 5): "Partners receive monthly reports." without ", and outcomes are tracked after each course": the band's last card ("Where They Work") states the outcome tracking (PD-02, 12 months after each course).
-    text: 'We combine training, mentoring and placement support. Partners receive monthly reports.',
-    facts: ['PD-01', 'PD-08'],
-  },
+  // P3: one program delivered phase by phase (PD-01, PD-05), the agency's monthly reports (PD-08); the labs are the band's H2 and its "Government Digital Labs" card (WP154). It said "We combine training,
+  // mentoring and placement support. Your agency receives monthly reports on progress toward paid work."
   governments: {
-    // WP42 (cycle-19 review): as Development Partners: the two shared sentences, the reader named in the second ("Your agency receives monthly reports on progress toward paid work"). Declared whole for /partner-with-us/governments/
-    // (POSITION_WHOLE_STATEMENT); it rests on PD-01 and PD-08.
-    // WP154 (Opus Max run 1, kit 121, Polish): without "in existing labs and colleges": the H2 ("Built on Labs That Already Exist") and the "Government Digital Labs" card carry the point.
-    text: 'We combine training, mentoring and placement support. Your agency receives monthly reports on progress toward paid work.',
+    text: 'Your agency wants training budgets that end in jobs and earnings for young people. CodersTrust runs training, mentoring and placement support as one program, phase by phase, with monthly reports to your agency on progress toward paid work.',
+    facts: ['PD-01', 'PD-05', 'PD-08'],
+  },
+  // P4: results an evaluator can check, one program from training to paid work, monthly reports on placements and first earnings (PD-01, PD-08); the outcome tracking stays the "Where They Work" card's
+  // (WP155). It said "We combine training, mentoring and placement support. Partners receive monthly reports."
+  developmentPartners: {
+    text: 'Development partners want youth programs whose results hold up with their evaluators. CodersTrust carries each cohort from training through mentoring and placement support into paid work, in one program, with monthly reports on placements and first earnings.',
     facts: ['PD-01', 'PD-08'],
   },
+  // P5: the two funding routes (IN-02, IN-04), the cohort grant held to a pilot scorecard agreed before the first cohort (PD-11, PD-01). It said "Fund a YouthWIDE cohort or JobReady’s platform
+  // infrastructure. For cohort grants, we agree a pilot scorecard and combine training, mentoring and placement support, with monthly progress reports."
   foundations: {
-    // WP44 (cycle-21 review): the hero and the Funding Route chooser already say who the page is for, so "Our Approach" states what the two grants fund and what they agree, in two sentences. scripts/check-facts.mjs declares it whole
-    // for /partner-with-us/foundations/ (POSITION_WHOLE_STATEMENT). It rests on IN-04 (the platform grant), PD-01 (training, mentoring, placement support), PD-08 (monthly reports) and PD-11 (the pilot scorecard agreed in co-design).
-    text: 'Fund a YouthWIDE cohort or JobReady’s platform infrastructure. For cohort grants, we agree a pilot scorecard and combine training, mentoring and placement support, with monthly progress reports.',
-    facts: ['IN-04', 'PD-01', 'PD-08', 'PD-11'],
+    text: 'Foundations and CSR teams want each grant to change what young people earn, with evidence that it did. A YouthWIDE cohort grant funds training, mentoring and placement support against a pilot scorecard agreed in advance; a JobReady platform grant funds CodersTrust’s digital learning and earning platform.',
+    facts: ['IN-02', 'IN-04', 'PD-01', 'PD-11'],
   },
+  // P6: on the institution's own campus labs (IN-09), certification exam preparation, mentoring and placement support (PD-02, PD-01), monthly reports (PD-08); "in parallel with academic studies" stays
+  // the "In Parallel with the Degree" card's (WP155). It said "JobReady@Campus combines training, mentoring and placement support in campus labs. Your institution receives monthly reports on progress toward paid work."
   universities: {
-    // WP44 (cycle-21 review): as JobReady@Campus: the program is the subject, and the institution's reports are scoped as the program scope says. scripts/check-facts.mjs declares it whole for /partner-with-us/universities/ (POSITION_WHOLE_STATEMENT).
-    // It rests on IN-09 (training in parallel with academic studies, in on-campus labs), PD-01 (mentoring, placement support) and PD-08 (monthly reports).
-    // WP155 (Opus Max run 2, kit 122, Polish 4): "... in campus labs." without "alongside academic studies": the band's H2 ("Training Alongside the Degree") and its "In Parallel with the Degree" card state the timing. IN-09 (on-campus labs) still carries the statement.
-    text: 'JobReady@Campus combines training, mentoring and placement support in campus labs. Your institution receives monthly reports on progress toward paid work.',
-    facts: ['IN-09', 'PD-01', 'PD-08'],
+    text: 'Universities and colleges want degree holders who move into paid work, and placement results they can stand behind. JobReady@Campus runs in their own campus labs and adds certification exam preparation, mentoring and placement support to the degree, with monthly reports on each cohort.',
+    facts: ['IN-09', 'PD-01', 'PD-02', 'PD-08'],
   },
+  // P7: training built from a needs assessment of the employer's roles (IN-10), job-ready candidates through the placement team (IN-04). It said "CodersTrust offers employer training built from a needs
+  // assessment, and job-ready digital talent through its placement team. Training is customized to your roles, and hiring starts from your talent request."
   employers: {
-    // WP20b: employer-specific (the [UNLIKE] sentence describes the youth-cohort model); scripts/check-facts.mjs may pin it for this page only.
-    text: 'CodersTrust offers employer training built from a needs assessment, and job-ready digital talent through its placement team. Training is customized to your roles, and hiring starts from your talent request.',
+    text: 'Employers want teams that can work with AI tools and candidates ready for open roles. CodersTrust builds training from a needs assessment of their own roles rather than a fixed catalog, with job-ready candidates introduced through its placement team.',
     facts: ['IN-10', 'IN-04'],
   },
+  // P7b: the work divided, the partner leading locally (PD-06: facilitators trained by CodersTrust; PD-01; PD-08). It said "Your organization mobilizes learners and hosts training. CodersTrust supports
+  // delivery, mentoring, placement and reporting."
   localPartners: {
-    // WP40 (cycle-17 review): what each side does, in the words of the four cards under it (Mobilizes and Hosts; Trains and Prepares for Certification; Mentoring and Placement; Monthly Reporting). scripts/check-facts.mjs declares it whole
-    // for /partner-with-us/local-partners/ (POSITION_WHOLE_STATEMENT). It rests on PD-06 (facilitators trained by CodersTrust, in existing labs and colleges), PD-01 (mentoring, with placement support alongside) and PD-08 (monthly reports).
-    text: 'Your organization mobilizes learners and hosts training. CodersTrust supports delivery, mentoring, placement and reporting.',
+    text: 'Your organization wants the young people it serves to reach paid work. Delivery is shared: you lead locally, and we bring the curriculum, facilitator training, mentoring, placement support and monthly reports.',
     facts: ['PD-01', 'PD-06', 'PD-08'],
   },
+  // P8 (impact investors, owner 2026-10-14): the platform (IN-04) builds on the delivery record, one of whose programs a randomized trial tested (RC-01); no platform outcome is claimed (INVESTOR_EVIDENCE says
+  // "Youth-program outcomes are not platform outcomes"). The page had no statement since WP39.
+  investors: {
+    text: 'Impact investors look for platforms that can move young people in emerging markets into paid work. JobReady builds on CodersTrust’s training and mentoring programs, one of which was tested in an independent randomized trial.',
+    facts: ['IN-04', 'RC-01'],
+  },
+  // P10: a country program that grows on its results (IN-02), one delivery model (PD-01), monthly reports (PD-08), the trial of an earlier CodersTrust program (RC-01: WSDFM); where training happens and who
+  // teaches stay the "How We Reach Them" card's (WP155). It said "YouthWIDE combines training, mentoring and placement support. Partners receive monthly reports on progress toward paid work."
   youthwide: {
-    // WP36 (cycle-13 review): YouthWIDE's hero lead and "at a Glance" rows already say who the program is for and where it runs, so "Our Approach" states only what the program does, in the two shared sentences
-    // with the program named as the subject. This is the one page-specific statement of its kind: scripts/check-facts.mjs declares it whole for /programs/youthwide/ (POSITION_WHOLE_STATEMENT).
-    // WP93 (triage A4): the reporting promise carries the scope guard, as the other Approach statements do.
-    // WP155 (Opus Max run 2, kit 122, Polish 1): "... placement support." without "in existing labs and colleges": the band's "How We Reach Them" card says where training happens and who teaches (PD-06), as the Home, Development Partners and Governments cards do.
-    text: 'YouthWIDE combines training, mentoring and placement support. Partners receive monthly reports on progress toward paid work.',
-    facts: ['PD-01', 'PD-08'],
+    text: 'Funders and agencies want a program they can start in one country and grow on its results. YouthWIDE combines training, mentoring and placement support in one delivery model, with monthly reports to partners and an independent randomized trial of an earlier CodersTrust program behind it.',
+    facts: ['IN-02', 'PD-01', 'PD-08', 'RC-01'],
   },
-  // No page uses this statement today (the YouthWIDE page's is `youthwide`, above). WP45 (cycle-21 review): it no longer calls the Bangladesh initiative "a national initiative" (IN-01 is an initiative that aims to train educated youth by 2030, in Bangladesh and similar countries).
-  nationwide: {
-    text: `For ministries, agencies and national funders who need educated, unemployed and underemployed youth in paid digital work, CodersTrust offers YouthWIDE in Bangladesh. ${UNLIKE_APPROVED}`,
-    facts: ['IN-01', 'PD-01', 'PD-08'],
-  },
+  // P12: certification exam preparation, mentoring and placement support in campus labs alongside academic studies (IN-09, PD-01), monthly reports (PD-08). It said "JobReady@Campus combines certification
+  // exam preparation, mentoring and placement support in campus labs alongside academic studies. Institutions receive monthly reports on progress toward paid work."
   campus: {
-    // WP43 (cycle-20 review): the audience sentence ("For universities and colleges who need ...") restated the hero lead and the glance above it, so "Our Approach" states what the program does and what the institution receives, in two
-    // sentences, with the program as the subject (as YouthWIDE's does) and the reporting scoped as the Development Partners and Governments statements scope it ("as agreed in the program scope"; PD-08 states the reports for
-    // funders and the page's cards state them for the institution, in the program scope). scripts/check-facts.mjs declares it whole for /programs/jobready-campus/ (POSITION_WHOLE_STATEMENT). It rests on IN-09 (training in parallel
-    // with academic studies, in on-campus labs, with preparation for industry-recognized certifications), PD-01 (mentoring, placement support) and PD-08 (monthly reports).
-    text: 'JobReady@Campus combines certification exam preparation, mentoring and placement support in campus labs alongside academic studies. Institutions receive monthly reports on progress toward paid work.',
+    text: 'Colleges and universities want their students to graduate with skills that employers recognize. JobReady@Campus runs certification exam preparation, mentoring and placement support in campus labs alongside academic studies, with monthly reports on progress toward paid work.',
     facts: ['IN-09', 'PD-01', 'PD-08'],
   },
+  // P13: one sentence, as WP61 made it (the four cards under it detail the range, IN-10). It said "JobReady@Work builds training around your roles, from needs assessment to workshops and progress evaluation."
   work: {
-    // WP18b: an employer-specific statement in place of [UNLIKE] (which is about youth programs).
-    // WP61 (cycle-33 review, GPT-6.1 Sol G3): the two sentences (an audience sentence, then "Each program starts with a needs assessment of your roles, is delivered through workshops on tasks from those roles, and is checked against success measures you agree before
-    // you start.") repeated the four cards under the statement (Scope, Deliver, Measure, Support), so "Our Approach" is one sentence that names the range the cards detail, from IN-10 (needs assessment, workshops, progress evaluation). scripts/check-facts.mjs declares it whole for
-    // /programs/jobready-work/ (POSITION_WHOLE_STATEMENT), independently of this file, so a change to it has to be made twice on purpose.
-    text: 'JobReady@Work builds training around your roles, from needs assessment to workshops and progress evaluation.',
+    text: 'If your teams need AI and digital skills for their own roles, JobReady@Work builds the training around them, from needs assessment to workshops and progress evaluation, rather than offering a standard course.',
     facts: ['IN-10'],
   },
-  // SuperKids carries no "unlike … we …" clause (review round 9, Mi3): neither a registered fact nor approved wording in this file
-  // supports a comparison with other approaches, so the statement stops at what GV-08 and the page definition already say.
-  // WP42 (cycle-19 review): two plain sentences in place of one long qualified one: what the program offers, and that the two agreements set targets (GV-08: "target reach 20M+ students"), not delivered reach.
+  // P14 (Q9 (a): minimal wording from the earlier site copy, for the owner's approval): one sentence, the school route (SuperKids@School) and its difference in the earlier copy's words ("courses shaped
+  // with you in a discovery session"); no comparison with other providers and no figure (GV-08 is the program's register fact). It said "SuperKids offers block coding, robotics and digital art through
+  // schools and education partners."
   superkids: {
-    text: 'SuperKids offers block coding, robotics and digital art through schools and education partners.',
+    text: 'Schools and education partners want young learners to discover what they can make with technology, and SuperKids@School brings block coding, robotics and digital art into their classrooms, with each program shaped around the school.',
     facts: ['GV-08'],
   },
 };
@@ -1176,3 +1213,110 @@ export const ACCOUNTABILITY: CopyBlock = {
   text: 'Every pilot is judged against its scorecard, including cost per completer and per verified outcome, with thresholds agreed with you before the first cohort starts.',
   facts: ['PD-11'],
 };
+
+/* ============================================================================================================================================================
+ * WP175 (owner decisions of 28 November 2026): the shared lines packages A, B and C place when every conversion page follows CMF v3, C1 to C14. No page reads them before those packages.
+ * ============================================================================================================================================================ */
+
+/**
+ * The C3 transition line (doc 04 §4: every C3 ends with it, a compressed C2 band too). WP40 (cycle-17 review) took it off every page with CostBand's default; the 2026-11-28 decision brings it back
+ * as the last line of each declared C2–C4 (or C2–C3) band (ProblemBand and ProblemSection `transition`).
+ */
+export const C3_TRANSITION = 'It doesn’t have to be this way.';
+
+/** C10: the one heading of the short differentiation band on every page that has one (owner decision of 2026-11-28), and its eyebrow (DifferenceBand). */
+export const DIFFERENCE_HEADING = 'What Makes CodersTrust Different';
+export const DIFFERENCE_EYEBROW = 'Why CodersTrust';
+
+/** One C10 line: a Title Case heading and one supporting line, with the facts it rests on. */
+export interface Usp {
+  title: string;
+  text: string;
+  facts: string[];
+}
+/**
+ * USP 2, read from OC-05 (doc 04 §6 still says 58.8% of 170; the register says 58.7% of 172): the heading is the claim in the words check-facts asks for ("had started earning by six months after
+ * finishing the course"; never "within six months", tests/wp48.spec.ts), and the line gives its base and the survey qualifier. The builder throws if OC-05 stops reading that way.
+ */
+function earnersUsp(): Usp {
+  const s = fact('OC-05').stat;
+  const base = /^of the (\d+) surveyed new earners had started earning by six months after finishing the course \(October 2026 survey\)$/.exec(s?.label ?? '')?.[1];
+  if (!s || !base || !fact('OC-05').text.includes(`${s.value} had started earning by six months after finishing it`)) throw new Error('USPS: OC-05 no longer reads "<P> had started earning by six months after finishing it" with the label "of the <N> surveyed new earners ..."');
+  return {
+    title: 'Most Surveyed New Earners Started Earning by Six Months After the Course',
+    text: `${s.value} of the ${base} surveyed completers who first earned during or after training, at the October 2026 survey.`,
+    facts: ['OC-05'],
+  };
+}
+/**
+ * The C10 lines (doc 04 §6, USPs 1 to 4, with no figure but OC-05's and no "9,000+"; the exam terms "set per program", WP141). A page shows two to four of them (DifferenceBand), the ones its matrix
+ * leads with (doc 04 4.1 to 4.6). `credentialWork` is USP 3 for the employer pages, whose tracks add certification preparation only where one is offered (JobReady@Work's glance and the Employers
+ * "Deliver" card say so). The evidence line names the evaluator's role, not "BIGD", so it needs no spelling-out wherever it is the first mention.
+ */
+export const USPS = {
+  evidence: { title: 'Independent Evidence on Our Own Training', text: 'A randomized trial of CodersTrust’s WSDFM program by an independent evaluator, and the Impact Survey 2026 of our completers.', facts: ['RC-01'] },
+  earners: earnersUsp(),
+  credential: { title: 'Preparation for a Recognized Credential in Every Track', text: 'Each track includes preparation for an industry certification exam, with exam terms set per program.', facts: ['PD-02'] },
+  credentialWork: { title: 'Certification Preparation Where a Track Offers One', text: 'Training can add preparation for an industry certification where a track offers one, with exam terms set per program.', facts: ['PD-02'] },
+  infrastructure: { title: 'Built on Infrastructure That Already Exists', text: 'Delivery uses labs and colleges already in place, with Training of Trainers and lessons designed for limited connectivity.', facts: ['PD-06', 'PD-07', 'GV-11'] },
+} satisfies Record<string, Usp>;
+export type UspKey = keyof typeof USPS;
+
+/**
+ * C7's one-line trial lead (Q3 (a): every C7 opens with it, even where the trial is also higher on the page). It is the Local Partners evidence line, read from RC-02 like it (the trial named, the
+ * employment result in percentage points, no claim about the page's own offer), with RC-01 beside RC-02 as the trial's own fact.
+ */
+export const TRIAL_LEAD: CopyBlock = { text: LOCAL_PARTNER_EVIDENCE[0].text, facts: ['RC-01', 'RC-02'] };
+
+/** A C8 card as IncludesBand takes it: `painId` makes it the reliever of that C2 pain (data-relieves); a card without one is a gain creator. */
+export interface IncludesCard {
+  icon: string;
+  title: string;
+  text: string;
+  painId?: PainId;
+  facts?: string[];
+}
+
+/**
+ * The employer pains (C2b), cards (C8) and steps (C8d) that Employers (P7, package B) and JobReady@Work (P13, package C) share. The pains and cards are the Employers page's own wording, word for word
+ * (WP46, WP60, WP142, WP166-B R3-08 and R3-30); the cards are ordered P1 to P3, so the customized curriculum answers "Hiring alone does not close the gap" and the AI-skills card the AI wage premium.
+ * The steps are the earlier site's (e90f9629^), with "Train" for doc 04's "Train and certify" (CodersTrust prepares for third-party exams, WP144) and the exam terms "set per program" (WP141).
+ */
+export const EMPLOYER_PAINS: Pain[] = [
+  { id: 'P1', name: 'You struggle to find the digital talent you need', text: `${withSourceNote('PX-05', 'AI skills are the hardest to find')}.` },
+  { id: 'P2', name: 'Hiring alone does not close the gap', text: 'Hiring adds people, but your current teams still need the skills their own tasks now require.' },
+  { id: 'P3', name: 'AI skills carry a wage premium', text: `${withSourceNote('PX-08', fact('PX-08').text)}.`, facts: ['PX-08'] },
+];
+export const EMPLOYER_INCLUDES: IncludesCard[] = [
+  { icon: 'users', title: 'Job-Ready Candidates for Your Roles', text: 'Access to candidates from CodersTrust’s placement team for your roles, plus trainees from certification tracks chosen from employer demand.', painId: 'P1', facts: ['IN-04', 'PD-10'] },
+  { icon: 'presentation', title: 'Customized Curriculum and Workshops', text: 'JobReady@Work builds a customized curriculum and interactive workshops, so your team learns on tasks from your own roles.', painId: 'P2', facts: ['IN-10'] },
+  { icon: 'cpu', title: 'AI Skills Scoped to Your Team’s Tasks', text: 'An AI-ready curriculum, designed to prepare people to work with AI tools, plus AI leadership and AI-transformation programs with AIvolve. Each track’s AI content is agreed with you before training starts.', painId: 'P3', facts: ['PD-02', 'IN-10', 'PA-07'] },
+];
+export const EMPLOYER_STEPS = [
+  { title: 'Assess', text: 'A needs assessment scopes the skills and team size.' },
+  { title: 'Train', text: 'Custom curriculum and workshops, including preparation for an industry certification where a track offers one; exam eligibility and any further attempts are set per program.' },
+  { title: 'Support and Measure', text: 'Post-training support and a progress evaluation against the measures you set.' },
+] as const;
+/** The bridge sentence after the definition on Employers, and on JobReady@Work when its GEO band returns (WP166-B R3-34). */
+export const WORK_BRIDGE: CopyBlock = { text: 'JobReady@Work is its program for employers: training built around your roles and job-ready talent through the placement team.', facts: ['IN-10', 'IN-04'] };
+
+/**
+ * The campus cards (C8) and steps (C8d) that Universities (P6, package B) and JobReady@Campus (P12, package C) share. The cards are the Universities page's own (WP163, WP166-B R3-05: the skills card is
+ * TRACK_MENU), ordered P1 to P3 as its pains are (the PX-02 and PX-05 tiles, then "Placement Results Are Hard to Publish"; Q4 (b) counts the tiles as the pains on JobReady@Campus too). The steps are the
+ * earlier site's (e90f9629^), with "Prepare for Certification" for "Train and certify" (WP144, WP150), PD-01's hours read from the register and "follow-up surveys" for "tracers" (WP32).
+ */
+export const CAMPUS_INCLUDES: IncludesCard[] = [
+  { icon: 'award', title: 'Certification Exam Preparation and Mentoring', text: 'Industry certification exam preparation by track, followed by three months of milestone-based mentoring toward a first client or a first job.', painId: 'P1', facts: ['PD-02', 'PD-01'] },
+  { icon: 'briefcase', title: 'Skills Employers Ask For', text: TRACK_MENU.text, painId: 'P2', facts: TRACK_MENU.facts },
+  { icon: 'clipboard-check', title: 'Placement Evidence You Can Report', text: 'Follow-up surveys, monthly reports and documentary evidence where available give your institution outcome data it can report.', painId: 'P3', facts: ['PD-08', 'PD-09'] },
+];
+function campusSteps() {
+  const hours = fact('PD-01').stat?.value;
+  if (!hours || !/^\d+$/.test(hours)) throw new Error('CAMPUS_STEPS: PD-01 no longer has a plain count of training hours as its stat value');
+  return [
+    { title: 'Set Up', text: 'Agree tracks and campus labs in a discovery session.' },
+    { title: 'Prepare for Certification', text: `${hours} training hours per certification, including exam preparation.` },
+    { title: 'Mentor and Place', text: 'Three months of milestone-based mentoring, placement support and follow-up surveys at 3, 6 and 12 months.' },
+  ] as const;
+}
+export const CAMPUS_STEPS = campusSteps();

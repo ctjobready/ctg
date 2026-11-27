@@ -341,10 +341,12 @@ test.describe('Home: the Outcome Tracking row, the positioning statement and the
   // WP60 (cycle-32 review, Gemini GM7): the statement is one sentence (CLOSING above), declared whole for Home in the gate (POSITION_WHOLE_STATEMENT['/']); it was an audience sentence followed by that closing sentence
   // WP166-A (marketing review R1-03): Home no longer prints the statement ("Our Approach" repeated the hero lead and the definition), so the gate exempts Home and no longer declares it; the source keeps the sentence, scoped
   test('the positioning statement’s reports are scoped in the source; Home prints no statement and the gate exempts it (WP166-A; it declared the same sentence)', async ({ page }) => {
-    expect(POSITIONING.home.text).toBe(CLOSING);
+    // WP175 (owner decision Q5 of 2026-11-28: Home carries a crafted statement again; package A renders it, and scripts/check-facts.mjs holds Home pending until then)
+    expect(POSITIONING.home.text).toBe('Funders and governments want young people in paid work, not only trained. CodersTrust takes each learner the whole way, from training and mentoring to placement support, with outcome evidence that includes an independent randomized trial of its own training.');
+    expect(POSITIONING.home.text).not.toContain('as agreed in the program scope');
     const gate = readFileSync(resolve('scripts/check-facts.mjs'), 'utf8');
     expect(gate).not.toContain(`'/': '${CLOSING}'`);
-    expect(gate).toContain("const POSITION_EXEMPT_PAGES = ['/partner-with-us/investors/', '/'];");
+    expect(gate).toContain("const POSITION_PENDING_PAGES = ['/', '/partner-with-us/investors/'];");
     await open(page, '');
     await expect(page.locator('#mechanism .pos__text')).toHaveCount(0);
   });
@@ -466,8 +468,9 @@ test.describe('Programs: the grid’s eyebrow counts the five program cards (ite
 
 test.describe('Governments: the empathy line and the glance tile (items 14 and 18)', () => {
   // WP52 (cycle-27 reviews, Grok M2 and Gemini m6): the Track Record band opens with the origin line; the empathy line that WP51 reworded ("... must produce young people in work, not only seats filled.") is gone, with its EMPATHY key (tests/wp52.spec.ts)
-  test('the Track Record band has no empathy line (the earlier wordings are on no built page either)', async ({ page }) => {
-    expect(Object.keys(EMPATHY)).not.toContain('governments');
+  test('the Track Record band has no empathy line yet (the earlier wordings are on no built page, and neither is the WP175 line)', async ({ page }) => {
+    // WP175 (owner decision Q2 (a) of 2026-11-28): every C5 opens with an empathy line again, each page its own fresh line (EMPATHY has a key for every conversion page); the retired line is not one of them
+    expect(EMPATHY.governments).not.toMatch(/must (?:show up as|produce) young people in work/);
     await open(page, GOV);
     await expect(page.locator('#guide p.lead')).toHaveCount(0);
     expect(sitePages().filter((p) => visible(p.html).includes('must show up as young people in work') || visible(p.html).includes('must produce young people in work, not only seats filled')).map((p) => p.route)).toEqual([]);

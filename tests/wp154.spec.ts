@@ -190,21 +190,21 @@ test.describe('3 Investors: the model band', () => {
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 test.describe('4 "How It Works": existing labs and colleges is said once per band', () => {
-  test('Development Partners: the statement is "We combine training, mentoring and placement support. Partners receive monthly reports." (WP155: it ended ", and outcomes are tracked after each course."); the card heading says "Existing Labs and Colleges" once', () => {
+  test('Development Partners: the statement is "Development partners want youth programs whose results hold up with their evaluators. CodersTrust carries each cohort from training through mentoring and placement support into paid work, in one program, with monthly reports on placements and first earnings." (WP155: it ended ", and outcomes are tracked after each course."); the card heading says "Existing Labs and Colleges" once', () => {
     const text = main(DEV);
     const band = text.slice(text.indexOf('An Integrated Path from Training to Earnings'), text.indexOf('See the Evidence Behind the Results'));
     expect(band.length).toBeGreaterThan(300);
-    expect(band).toContain('Our Approach We combine training, mentoring and placement support. Partners receive monthly reports.');
+    expect(band).toContain('Our Approach Development partners want youth programs whose results hold up with their evaluators. CodersTrust carries each cohort from training through mentoring and placement support into paid work, in one program, with monthly reports on placements and first earnings.');
     expect(count(band, /existing labs and colleges/gi)).toBe(1);
     expect(band).toContain('How We Reach Them Existing Labs and Colleges Outreach and selection with local partners');
     expect(count(text, /placement support in existing labs and colleges/gi)).toBe(0);
   });
 
-  test('Governments: the statement is "We combine training, mentoring and placement support. Your agency receives monthly reports on progress toward paid work."; the H2 and the card carry the labs idea in their own words', () => {
+  test('Governments: the statement is "Your agency wants training budgets that end in jobs and earnings for young people. CodersTrust runs training, mentoring and placement support as one program, phase by phase, with monthly reports to your agency on progress toward paid work."; the H2 and the card carry the labs idea in their own words', () => {
     const text = main(GOVERNMENTS);
     const band = text.slice(text.indexOf('A National Delivery Model, Built on Labs That Already Exist'), text.indexOf('See the Evidence Behind the Results'));
     expect(band.length).toBeGreaterThan(300);
-    expect(band).toContain('Our Approach We combine training, mentoring and placement support. Your agency receives monthly reports on progress toward paid work.');
+    expect(band).toContain('Our Approach Your agency wants training budgets that end in jobs and earnings for young people. CodersTrust runs training, mentoring and placement support as one program, phase by phase, with monthly reports to your agency on progress toward paid work.');
     expect(count(band, /existing labs and colleges/gi)).toBe(0);
     expect(band).toContain('Government Digital Labs Blended learning in government labs you already run');
     expect(count(text, /placement support in existing labs and colleges/gi)).toBe(0);
@@ -218,7 +218,7 @@ test.describe('4 "How It Works": existing labs and colleges is said once per ban
 test('5 JobReady@Campus: the "In Parallel with Studies" card does not repeat the statement', () => {
   const text = main(CAMPUS);
   const band = text.slice(text.indexOf('Training Beside the Degree, in Your Own Labs'), text.indexOf('Delivery Context: National University'));
-  expect(band).toContain('Our Approach JobReady@Campus combines certification exam preparation, mentoring and placement support in campus labs alongside academic studies.');
+  expect(band).toContain('Our Approach Colleges and universities want their students to graduate with skills that employers recognize. JobReady@Campus runs certification exam preparation, mentoring and placement support in campus labs alongside academic studies,'); // WP175 (owner decision Q5 of 2026-11-28): re-pinned to the crafted statement (POSITIONING; scripts/check-facts.mjs POSITION_WHOLE_STATEMENT)
   expect(band).toContain('1 When In Parallel with Studies Industry-oriented skills training for your students. 2 Where On-Campus Labs');
   expect(band).not.toContain('runs alongside the academic program');
   // "alongside academic studies" is said once in the band (the statement).

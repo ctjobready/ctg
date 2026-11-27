@@ -7,7 +7,7 @@ import Icon from '../system/Icon.astro';
 import { fact } from '../../data/facts';
 import { linkAttrs } from '../../lib/url';
 import { titleCase } from '../../lib/titleCase.mjs';
-import { TRIAL_BAND_HEADING, spellOutBigd } from '../../data/copy';
+import { TRIAL_BAND_HEADING, spellOutBigd, type CopyBlock } from '../../data/copy';
 
 /**
  * C7 Proof (Klein band): FactStats + before→after chart derived from a fact + evidence links.
@@ -34,12 +34,23 @@ interface Props {
   eyebrow?: string;
   /** Short form: the survey result as one sentence instead of the before-and-after chart (pages whose offer the youth programs did not evaluate). */
   compact?: boolean;
+  /**
+   * WP175 (Q3 (a): every C7 opens with a one-line trial lead): the trial stated in one line (TRIAL_LEAD in src/data/copy.ts) as the band's first line, in place of `headlineFact`'s full headline
+   * (with `headlineFact` the heading stays the trial heading); its facts join the headline fact in data-fact. The relevance line (`trialScope`) still follows it directly. Left out, the band prints the full headline, as before.
+   */
+  trialLead?: CopyBlock;
+  /**
+   * WP175 (doc 04 4.6 C7, S4-M5): a bold lead-in before the survey sentence ("From CodersTrust’s youth programs:"), so a page whose own offer the youth programs did not evaluate (Employers,
+   * JobReady@Work) says whose survey it is in the sentence itself. Left out, the sentence reads as before.
+   */
+  surveyLeadIn?: string;
 }
-const { title, lead, statIds, chartId = 'OC-01', chartTitle = 'Employment Among Surveyed Completers', headlineFact, plainLine = false, trialScope, links = [], id = 'proof-band', eyebrow = 'The Evidence', compact = false } = Astro.props;
+const { title, lead, statIds, chartId = 'OC-01', chartTitle = 'Employment Among Surveyed Completers', headlineFact, plainLine = false, trialScope, links = [], id = 'proof-band', eyebrow = 'The Evidence', compact = false, trialLead, surveyLeadIn } = Astro.props;
 // A band headed by the randomized trial carries a short H2; the fact's own headline is body text below it. RC-01's headline leads with the
 // +10.3 pp employment result (WP7), so no separate RC-02 sentence is printed before it; the [PLAIN-LINE] still follows where a page asks for it.
 const heading = headlineFact ? TRIAL_BAND_HEADING : titleCase(title);
-const headlineText = headlineFact ? spellOutBigd(fact(headlineFact).headline ?? fact(headlineFact).text) : undefined;
+const headlineText = trialLead ? trialLead.text : headlineFact ? spellOutBigd(fact(headlineFact).headline ?? fact(headlineFact).text) : undefined;
+const headlineFacts = [...new Set([...(headlineFact ? [headlineFact] : []), ...(trialLead?.facts ?? [])])].join(' ') || undefined;
 const employmentLine: string | undefined = undefined;
 const cf = fact(chartId);
 const after = cf.stat?.numeric;
@@ -63,7 +74,7 @@ const chartLead = `Among surveyed completers, employment was ${cf.stat?.value} a
     <h2 class="proofband__title" id={`${id}-h`}>{heading}</h2>
     {plainLine && <PlainLine />}
     {employmentLine && <p class="lead proofband__employment" data-fact="RC-02">{employmentLine}</p>}
-    {headlineFact && headlineText && <p class="lead proofband__headline" data-fact={headlineFact}>{headlineText}</p>}
+    {headlineText && <p class="lead proofband__headline" data-fact={headlineFacts}>{headlineText}</p>}
     {trialScope && <p class="proofband__scope" data-trial-scope>{trialScope}</p>}
     {lead && <p class="lead">{lead}</p>}
   </header>
@@ -84,7 +95,7 @@ const chartLead = `Among surveyed completers, employment was ${cf.stat?.value} a
       )
     }
     <div class="proofband__chart" data-fact={compact ? chartId : undefined}>
-      <p class="proofband__chartlead">{chartLead}</p>
+      <p class="proofband__chartlead">{surveyLeadIn && <><strong>{surveyLeadIn}</strong>{' '}</>}{chartLead}</p>
       {!compact && <>
       <BeforeAfter
         title={chartTitle}

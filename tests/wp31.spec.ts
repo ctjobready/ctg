@@ -250,14 +250,15 @@ test.describe('the positioning statements share one plain closing', () => {
   // Partners and Governments state the two shared sentences with the reader named in the second (declared whole too); WP43 (cycle-20 review): JobReady@Campus' statement is two sentences with the program as the subject and the
   // reporting scoped ("as agreed in the program scope"; declared whole as well); every other page keeps its audience sentence and the shared closing
   const WHOLE: Record<string, string> = {
-    'programs/youthwide/': 'YouthWIDE combines training, mentoring and placement support. Partners receive monthly reports on progress toward paid work.', // WP155 (Polish 1)
-    'partner-with-us/local-partners/': 'Your organization mobilizes learners and hosts training. CodersTrust supports delivery, mentoring, placement and reporting.',
-    'partner-with-us/development-partners/': 'We combine training, mentoring and placement support. Partners receive monthly reports.', // WP155 (Polish 5)
-    'partner-with-us/governments/': 'We combine training, mentoring and placement support. Your agency receives monthly reports on progress toward paid work.',
-    'programs/jobready-campus/': 'JobReady@Campus combines certification exam preparation, mentoring and placement support in campus labs alongside academic studies. Institutions receive monthly reports on progress toward paid work.',
+    // WP175 (owner decision Q5 of 2026-11-28): re-pinned to the crafted statement (POSITIONING; scripts/check-facts.mjs POSITION_WHOLE_STATEMENT)
+    'programs/youthwide/': 'Funders and agencies want a program they can start in one country and grow on its results. YouthWIDE combines training, mentoring and placement support in one delivery model, with monthly reports to partners and an independent randomized trial of an earlier CodersTrust program behind it.',
+    'partner-with-us/local-partners/': 'Your organization wants the young people it serves to reach paid work. Delivery is shared: you lead locally, and we bring the curriculum, facilitator training, mentoring, placement support and monthly reports.',
+    'partner-with-us/development-partners/': 'Development partners want youth programs whose results hold up with their evaluators. CodersTrust carries each cohort from training through mentoring and placement support into paid work, in one program, with monthly reports on placements and first earnings.',
+    'partner-with-us/governments/': 'Your agency wants training budgets that end in jobs and earnings for young people. CodersTrust runs training, mentoring and placement support as one program, phase by phase, with monthly reports to your agency on progress toward paid work.',
+    'programs/jobready-campus/': 'Colleges and universities want their students to graduate with skills that employers recognize. JobReady@Campus runs certification exam preparation, mentoring and placement support in campus labs alongside academic studies, with monthly reports on progress toward paid work.',
     // WP44 (cycle-21 review): Foundations and Universities are declared whole too (tests/wp44.spec.ts)
-    'partner-with-us/foundations/': 'Fund a YouthWIDE cohort or JobReady’s platform infrastructure. For cohort grants, we agree a pilot scorecard and combine training, mentoring and placement support, with monthly progress reports.',
-    'partner-with-us/universities/': 'JobReady@Campus combines training, mentoring and placement support in campus labs. Your institution receives monthly reports on progress toward paid work.', // WP155 (Polish 4)
+    'partner-with-us/foundations/': 'Foundations and CSR teams want each grant to change what young people earn, with evidence that it did. A YouthWIDE cohort grant funds training, mentoring and placement support against a pilot scorecard agreed in advance; a JobReady platform grant funds CodersTrust’s digital learning and earning platform.',
+    'partner-with-us/universities/': 'Universities and colleges want degree holders who move into paid work, and placement results they can stand behind. JobReady@Campus runs in their own campus labs and adds certification exam preparation, mentoring and placement support to the degree, with monthly reports on each cohort.',
   };
   for (const route of PAGES) {
     test(`${route}: ${WHOLE[route] ? 'the statement is the two sentences declared for this page' : 'the audience sentence stays, the comparison sentence is gone'}`, async ({ page }) => {

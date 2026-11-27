@@ -3,7 +3,7 @@ import { expect, test, type Page } from '@playwright/test';
 import { titleCase } from '../src/lib/titleCase.mjs';
 import { fact } from '../src/data/facts';
 import { faqs, faqsFor } from '../src/data/faqs';
-import { BIGD_FULL, EMPATHY, NEXT_STEPS_TITLE, POSITIONING } from '../src/data/copy';
+import { BIGD_FULL, CAMPUS_PROBLEM_LEAD, EMPATHY, NEXT_STEPS_TITLE, POSITIONING } from '../src/data/copy';
 import { STAGE_STEPS } from '../src/components/pages/model/stagePipeline';
 import { DESKTOP, MOBILE, open } from './support/browser';
 import { listPages } from './support/pages';
@@ -78,8 +78,11 @@ test.describe('Home: the challenge band and the positioning statement (items 1 a
       // WP51 (cycle-26 review): the reports are scoped like every other reporting statement on the site ("..., as agreed in the program scope"; tests/wp51.spec.ts)
       // WP63 (cycle-35 review, Grok R1): "... for educated, unemployed and underemployed youth, ..." (the group ID-01 names)
       'CodersTrust connects training, mentoring and placement support for educated, unemployed and underemployed youth, with monthly reports on progress toward paid work.';
-    expect(POSITIONING.home.text).toBe(expected);
-    expect(POSITIONING.home.facts).toEqual(['PD-08']);
+    // WP175 (owner decision Q5 of 2026-11-28: Home carries a crafted statement again; package A renders it, and scripts/check-facts.mjs holds Home pending until then): the WP60 sentence (expected) is retired; neither form carries the "Many programs cover one step" sentence
+    expect(POSITIONING.home.text).toBe('Funders and governments want young people in paid work, not only trained. CodersTrust takes each learner the whole way, from training and mentoring to placement support, with outcome evidence that includes an independent randomized trial of its own training.');
+    expect(POSITIONING.home.facts).toEqual(['PD-01', 'RC-01']);
+    expect(POSITIONING.home.text).not.toContain(expected);
+    expect(POSITIONING.home.text).not.toMatch(/Many programs cover one step|self-paced courses or freelance matching/);
     await open(page, '');
     await expect(page.locator('#mechanism h2')).toHaveText('One Path from Learning to Earning');
     // WP166-A (marketing review R1-03): Home no longer prints the statement ("Our Approach" repeated the hero lead and the definition); the source keeps it, unchanged
@@ -215,7 +218,8 @@ test.describe('Foundations: the first pain and the track-record band (items 2 an
     expect(compact(await page.locator('#guide .pg__copy > :first-child').textContent())).toBe('Organizations that have worked with CodersTrust include the Rockefeller Foundation, DANIDA and Porticus.');
     expect(compact(await page.locator('#guide').textContent())).not.toContain(ORIGIN_LINE);
     expect(await everything(page)).not.toContain('You want your grant to change a young person’s income');
-    expect(Object.keys(EMPATHY)).not.toContain('foundations');
+    // WP175 (owner decision Q2 (a) of 2026-11-28): every C5 opens with an empathy line again, each page its own fresh line (EMPATHY has a key for every conversion page); the retired line is not one of them
+    expect(EMPATHY.foundations).not.toContain('You want your grant to change a young person’s income');
   });
 });
 
@@ -230,8 +234,10 @@ test.describe('Universities: the track-record band opens with the origin line; J
     expect(await everything(page)).not.toContain(CAMPUS_SENTENCE);
   });
 
-  test('JobReady@Campus still states the sentence once, as its problem band’s lead (EMPATHY.universities)', async ({ page }) => {
-    expect(EMPATHY.universities).toBe(CAMPUS_SENTENCE);
+  test('JobReady@Campus still states the sentence once, as its problem band’s lead (CAMPUS_PROBLEM_LEAD, WP175)', async ({ page }) => {
+    // WP175: the lead is CAMPUS_PROBLEM_LEAD, the same words (EMPATHY.universities is the Universities page's own C5 line now)
+    expect(CAMPUS_PROBLEM_LEAD).toBe(CAMPUS_SENTENCE);
+    expect(Object.values(EMPATHY)).not.toContain(CAMPUS_SENTENCE);
     await open(page, 'programs/jobready-campus/');
     expect(count(await everything(page), CAMPUS_SENTENCE)).toBe(1);
     expect(compact(await page.locator('#problem .sh__lead').textContent())).toBe(CAMPUS_SENTENCE);

@@ -245,7 +245,7 @@ test.describe('Local Partners: the positioning statement divides the work (item 
   test('the statement is the two sentences, opens the band, rests on PD-01, PD-06 and PD-08, and the four responsibility cards follow it', async ({ page }) => {
     await open(page, 'partner-with-us/local-partners/');
     await expect(page.locator('#mechanism .pos__label')).toHaveText('Our Approach');
-    await expect(page.locator('#mechanism .pos__text')).toHaveText('Your organization mobilizes learners and hosts training. CodersTrust supports delivery, mentoring, placement and reporting.');
+    await expect(page.locator('#mechanism .pos__text')).toHaveText('Your organization wants the young people it serves to reach paid work. Delivery is shared: you lead locally, and we bring the curriculum, facilitator training, mentoring, placement support and monthly reports.');
     expect(await page.locator('#mechanism .pos').getAttribute('data-fact')).toBe('PD-01 PD-06 PD-08');
     expect(await texts(page, '#mechanism .model__label')).toEqual(['Your Organization', 'With CodersTrust', 'Together', 'Throughout']);
     const [pos, cards] = await Promise.all([page.locator('#mechanism .pos').boundingBox(), page.locator('#mechanism .model__list').boundingBox()]);
@@ -257,8 +257,8 @@ test.describe('Local Partners: the positioning statement divides the work (item 
   // WP44 (cycle-21 review): Foundations and Universities are declared whole too (tests/wp44.spec.ts), so neither keeps the audience sentence any more
   test('Foundations and Universities carry their own declared statements, not the audience sentence (the declaration is for the pages the gate lists only)', async ({ page }) => {
     const WHOLE: [string, string][] = [
-      ['partner-with-us/foundations/', 'Fund a YouthWIDE cohort or JobReady’s platform infrastructure. For cohort grants, we agree a pilot scorecard and combine training, mentoring and placement support, with monthly progress reports.'],
-      ['partner-with-us/universities/', 'JobReady@Campus combines training, mentoring and placement support in campus labs. Your institution receives monthly reports on progress toward paid work.'], // WP155 (Polish 4)
+      ['partner-with-us/foundations/', 'Foundations and CSR teams want each grant to change what young people earn, with evidence that it did. A YouthWIDE cohort grant funds training, mentoring and placement support against a pilot scorecard agreed in advance; a JobReady platform grant funds CodersTrust’s digital learning and earning platform.'],
+      ['partner-with-us/universities/', 'Universities and colleges want degree holders who move into paid work, and placement results they can stand behind. JobReady@Campus runs in their own campus labs and adds certification exam preparation, mentoring and placement support to the degree, with monthly reports on each cohort.'], // WP155 (Polish 4)
     ];
     for (const [route, statement] of WHOLE) {
       await open(page, route);

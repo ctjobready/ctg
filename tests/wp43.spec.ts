@@ -301,7 +301,7 @@ test.describe('Partner with Us hub: "What Does It Cost?" is three shorter senten
 
 test.describe('JobReady@Campus: "Our Approach" is two sentences with the reporting scoped (item 6)', () => {
   const STATEMENT =
-    'JobReady@Campus combines certification exam preparation, mentoring and placement support in campus labs alongside academic studies. Institutions receive monthly reports on progress toward paid work.';
+    'Colleges and universities want their students to graduate with skills that employers recognize. JobReady@Campus runs certification exam preparation, mentoring and placement support in campus labs alongside academic studies, with monthly reports on progress toward paid work.';
 
   test('the statement is exactly these two sentences, tied to IN-09, PD-01 and PD-08, with the program as the subject and the scope clause on the reporting claim', async ({ page }) => {
     await open(page, 'programs/jobready-campus/');
@@ -334,7 +334,7 @@ test.describe('JobReady@Campus: "Our Approach" is two sentences with the reporti
     await open(page, 'partner-with-us/universities/');
     const statement = compact(await page.locator('#mechanism .pos__text').textContent());
     expect(statement.startsWith('For universities and colleges that need to prepare their degree holders for paid digital work')).toBe(false);
-    expect(statement).toBe('JobReady@Campus combines training, mentoring and placement support in campus labs. Your institution receives monthly reports on progress toward paid work.'); // WP155 (Polish 4): was "... in campus labs alongside academic studies. ..."
+    expect(statement).toBe('Universities and colleges want degree holders who move into paid work, and placement results they can stand behind. JobReady@Campus runs in their own campus labs and adds certification exam preparation, mentoring and placement support to the degree, with monthly reports on each cohort.'); // WP155 (Polish 4): was "... in campus labs alongside academic studies. ..."
   });
 });
 

@@ -160,7 +160,7 @@ test.describe('WP108 item 6: the pages changed here carry a date modified of 202
   // WP166-B: both moved on to 2026-11-21 (marketing review R3: Investors' hero and NU partnership band; Foundations' hero, track-record band and due-diligence band); they were 2026-11-03.
   for (const [name, route, file, day] of [
     ['Investors', 'partner-with-us/investors/', 'src/pages/partner-with-us/investors/index.astro', '2026-11-27'], // WP172 (owner decision 2026-11-27: the published study's trial figures) moved it to 2026-11-27
-    ['Foundations', 'partner-with-us/foundations/', 'src/pages/partner-with-us/foundations/index.astro', '2026-11-27'], // WP172 (owner decision 2026-11-27: the published study's trial figures) moved it to 2026-11-27
+    ['Foundations', 'partner-with-us/foundations/', 'src/pages/partner-with-us/foundations/index.astro', '2026-11-28'], // WP175 (owner decision Q5 of 2026-11-28: the crafted C6 statement) moved it to 2026-11-28. Earlier: WP172 (owner decision 2026-11-27: the published study's trial figures) moved it to 2026-11-27
   ]) {
     test(`${name}: the page states its modified date in the source and in its JSON-LD`, async ({ page }) => {
       expect(readFileSync(file, 'utf8')).toContain(`dateModified: '${day}'`); // WP129 re-dated the page (WP128 changed its copy on 30 October); WP141 moved it to 2026-11-01 (the program-scope qualifier is stated once per page); WP151 to 2026-11-02 (Foundations: the learner card label is "Individual Story"; Investors: the Not a Fit Yet clause and the thesis body)
@@ -171,8 +171,8 @@ test.describe('WP108 item 6: the pages changed here carry a date modified of 202
     });
   }
 
-  test('JobReady@Work shows “Last updated November 24, 2026” (WP141)', async ({ page }) => { // WP157: re-dated 2026-11-02; WP163: re-dated 2026-11-03; WP166-B: re-dated 2026-11-21; WP168-B: re-dated 2026-11-24 (the Akij Group line)
+  test('JobReady@Work shows “Last updated November 28, 2026” (WP141)', async ({ page }) => { // WP175 (owner decision Q5 of 2026-11-28: the crafted C6 statement) moved it to 2026-11-28 // WP157: re-dated 2026-11-02; WP163: re-dated 2026-11-03; WP166-B: re-dated 2026-11-21; WP168-B: re-dated 2026-11-24 (the Akij Group line)
     await open(page, 'programs/jobready-work/');
-    await expect(page.locator('p.updated')).toHaveText(/Last updated\s+November 24, 2026/); // WP163: one exam fee per trainee, the delivery model and the platform question changed; WP166-B (marketing review R2): the ManpowerGroup glance tile and one closing band (it was November 3, 2026)
+    await expect(page.locator('p.updated')).toHaveText(/Last updated\s+November 28, 2026/); // WP163: one exam fee per trainee, the delivery model and the platform question changed; WP166-B (marketing review R2): the ManpowerGroup glance tile and one closing band (it was November 3, 2026)
   });
 });

@@ -470,7 +470,7 @@ test.describe('RW2 (coordinator): "Since 2014" is said once in the bands whose h
   test('no built page prints the old origin line, "Since 2014, from a Copenhagen launch ..."', () => {
     expect(pagesWith('Since 2014, from a Copenhagen launch')).toEqual([]); // WP166-B (marketing review R3-06): Employers' band is headed "Employers and Partners We Work With"; its signed-agreement sentence carries "since 2014" (WP66), so the origin line is the year-less one it printed before ("since 2014" once in the band, WP64)
     expect(pagesWith(LINE).sort()).toEqual(['/partner-with-us/employers/', '/partner-with-us/governments/', '/partner-with-us/universities/']); // WP150: Development Partners and Investors name the regions
-    expect(pagesWith(LINE_REGIONS).sort()).toEqual(['/partner-with-us/development-partners/', '/partner-with-us/investors/']);
+    expect(pagesWith(LINE_REGIONS).sort()).toEqual(['/partner-with-us/development-partners/', '/partner-with-us/investors/', '/styleguide/']); // WP175: the styleguide shows PartnerGuideBand's `withOrigin` option beside an SC-03 tile (WP150's form)
   });
 
   test('the changed bands fit at 1280 and 390, with no sideways scroll', async ({ page }) => {

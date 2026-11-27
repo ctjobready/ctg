@@ -165,9 +165,10 @@ test.describe('NU Post Graduate Diploma: campus, next intake and installments (o
   }
 
   // PAGE_UPDATED (src/components/pages/programs/meta.ts) cannot be imported in a spec (it reaches import.meta.env through src/lib/url.ts); its source is read instead.
-  test('PAGE_UPDATED: the NU overview, the NU course pages and JobReady@Work are dated 2026-11-24', () => {
+  // WP175 (owner decision Q5 of 2026-11-28: the crafted C6 statement) moved it to 2026-11-28 (JobReady@Work)
+  test('PAGE_UPDATED: the NU overview and the NU course pages are dated 2026-11-26, JobReady@Work 2026-11-28', () => {
     const meta = readFileSync('src/components/pages/programs/meta.ts', 'utf8');
-    for (const key of ['work']) expect(new RegExp(`\\n  ${key}: '${TODAY}',`).test(meta), key).toBe(true);
+    for (const key of ['work']) expect(new RegExp(`\\n  ${key}: '2026-11-28',`).test(meta), key).toBe(true);
     for (const key of ['nu', 'nuCourse']) expect(new RegExp(`\\n  ${key}: '${NU_DAY}',`).test(meta), key).toBe(true); // WP170
   });
 
@@ -219,7 +220,7 @@ test.describe('Akij Group, a named client (owner permission of 24 November 2026)
     expect(list[1][1]).toBe('AWS Authorized Training Partner.');
     const guide = /<section\b[^>]*id="guide"[\s\S]*?<\/section>/.exec(html(EMPLOYERS))?.[0] ?? '';
     expect(guide).toMatch(new RegExp(`<a class="link" href="${BASE}news/${AKIJ_SLUG}/"[^>]*>Read About the 2023 Training`));
-    expect(modified(EMPLOYERS)).toEqual([TODAY]);
+    expect(modified(EMPLOYERS)).toEqual(['2026-11-28']); // WP175 (owner decision Q5 of 2026-11-28: the crafted C6 statement) moved it to 2026-11-28
   });
 
   test('JobReady@Work: the first credential, with the same link and marker; dated 2026-11-24', () => {
@@ -228,8 +229,8 @@ test.describe('Akij Group, a named client (owner permission of 24 November 2026)
     expect(list[0][1]).toBe(LINE);
     expect(attr(list[0][0], 'data-asset')).toBe('client-akij-group');
     expect(html(WORK)).toMatch(new RegExp(`<a class="link" href="${BASE}news/${AKIJ_SLUG}/"[^>]*>Read About the 2023 Training`));
-    expect(lastUpdated(WORK)).toBe(TODAY);
-    expect(nodes(WORK, 'WebPage')[0]?.dateModified).toBe(TODAY);
+    expect(lastUpdated(WORK)).toBe('2026-11-28'); // WP175 (owner decision Q5 of 2026-11-28: the crafted C6 statement) moved it to 2026-11-28
+    expect(nodes(WORK, 'WebPage')[0]?.dateModified).toBe('2026-11-28');
   });
 
   test('PA-12 renders on Employers and JobReady@Work only', () => {

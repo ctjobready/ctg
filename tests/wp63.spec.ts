@@ -279,8 +279,10 @@ test.describe('R1 (Grok): Home’s "Our Approach" names the group as ID-01 does'
 
   // WP166-A (marketing review R1-03): Home no longer prints the statement, so the gate no longer declares it; the source sentence keeps ID-01's group, and the hero lead names it the same way
   test('the source statement is one sentence naming the group as ID-01 does; Home prints none, its hero lead names the group, and the gate no longer declares a statement for Home (WP166-A)', async ({ page }) => {
-    expect(POSITIONING.home.text).toBe(STATEMENT);
-    expect(STATEMENT.split(/(?<=\.)\s+/)).toHaveLength(1);
+    // WP175 (owner decision Q5 of 2026-11-28: Home carries a crafted statement again; package A renders it, and scripts/check-facts.mjs holds Home pending until then): the source statement is the crafted one, which names no narrower group than ID-01's (the WP63 sentence above is retired)
+    expect(POSITIONING.home.text).toBe('Funders and governments want young people in paid work, not only trained. CodersTrust takes each learner the whole way, from training and mentoring to placement support, with outcome evidence that includes an independent randomized trial of its own training.');
+    expect(POSITIONING.home.text).not.toContain('educated, unemployed youth');
+    expect(POSITIONING.home.text).not.toContain(STATEMENT);
     expect(fact('ID-01').text).toContain('educated, unemployed and underemployed youth');
     const gate = readFileSync(new URL('../scripts/check-facts.mjs', import.meta.url), 'utf8');
     expect(/const POSITION_WHOLE_STATEMENT = \{([\s\S]*?)\n\};/.exec(gate)?.[1] ?? '').not.toContain(`'/': '${STATEMENT}'`);
@@ -359,7 +361,7 @@ test.describe('R9 (Grok, not done): YouthWIDE keeps its "Last updated" line', ()
     expect(withLine).toContain('/programs/youthwide/');
     expect(withLine.length, `pages with a "Last updated" line: ${withLine.join(', ')}`).toBeGreaterThan(5);
     await open(page, YOUTHWIDE);
-    await expect(page.locator('.updated')).toHaveText('Last updated November 27, 2026'); // WP172 (2026-11-27): the trial tiles; WP104; WP141 moved it to November 1; WP151 to November 2; WP163 to November 3; WP166-B (marketing review R2) to November 21
+    await expect(page.locator('.updated')).toHaveText('Last updated November 28, 2026'); // WP175 (owner decision Q5 of 2026-11-28: the crafted C6 statement) moved it to 2026-11-28. WP172 (2026-11-27): the trial tiles; WP104; WP141 moved it to November 1; WP151 to November 2; WP163 to November 3; WP166-B (marketing review R2) to November 21
   });
 });
 

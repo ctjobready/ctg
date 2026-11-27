@@ -563,12 +563,16 @@ test.describe('GM7 (Gemini): Home’s "Our Approach" is one sentence that keeps 
 
   // WP166-A (marketing review R1-03): Home no longer prints the statement ("Our Approach" repeated the hero lead and the definition), so the gate no longer declares it for Home; the source keeps the one sentence
   test('the statement is the one sentence in the source; Home prints none and the gate no longer declares one for Home (WP166-A)', async ({ page }) => {
-    expect(POSITIONING.home.text).toBe(STATEMENT);
-    expect(POSITIONING.home.facts).toEqual(['PD-08']);
-    expect(STATEMENT.split(/(?<=\.)\s+/)).toHaveLength(1);
+    // WP175 (owner decision Q5 of 2026-11-28: Home carries a crafted statement again; package A renders it, and scripts/check-facts.mjs holds Home pending until then): the crafted statement replaces the one-sentence form (two sentences, each under 50 words), on PD-01 and RC-01
+    expect(POSITIONING.home.text).toBe('Funders and governments want young people in paid work, not only trained. CodersTrust takes each learner the whole way, from training and mentoring to placement support, with outcome evidence that includes an independent randomized trial of its own training.');
+    expect(POSITIONING.home.facts).toEqual(['PD-01', 'RC-01']);
+    expect(POSITIONING.home.text.split(/(?<=\.)\s+/).length).toBeLessThanOrEqual(2);
+    expect(POSITIONING.home.text).not.toContain(STATEMENT);
     const gate = readFileSync(new URL('../scripts/check-facts.mjs', import.meta.url), 'utf8');
     const whole = /const POSITION_WHOLE_STATEMENT = \{([\s\S]*?)\n\};/.exec(gate)?.[1] ?? '';
-    expect(whole).not.toMatch(/^\s*'\/':/m);
+    expect(whole).not.toContain(`'/': '${STATEMENT}'`);
+    expect(whole).toContain(`'/': '${POSITIONING.home.text}'`);
+    expect(gate).toContain("const POSITION_PENDING_PAGES = ['/', '/partner-with-us/investors/'];");
     expect(/const POSITION_EMPLOYER_CLOSING = \{([\s\S]*?)\n\};/.exec(gate)?.[1] ?? '').not.toMatch(/^\s*'\/':/m);
     await open(page, HOME);
     await expect(page.locator('#mechanism .pos, #mechanism .pos__text')).toHaveCount(0);

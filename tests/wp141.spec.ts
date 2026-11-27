@@ -218,11 +218,11 @@ test.describe('WP141 item 1: the in-sentence copies are rewritten (spot checks)'
     // WP166-A (marketing review R1-03): Home's statement is gone; the hero lead carries the monthly reports, without the clause
     expect(main('index.html')).toContain('with monthly reports on their progress.');
     expect(main('index.html')).not.toContain('as agreed in the program scope');
-    expect(main('programs/youthwide/index.html')).toContain('Partners receive monthly reports on progress toward paid work.');
-    expect(main('partner-with-us/development-partners/index.html')).toContain('We combine training, mentoring and placement support. Partners receive monthly reports.'); // WP155 (Polish 5): was "Partners receive monthly reports, and outcomes are tracked after each course."
-    expect(main('partner-with-us/governments/index.html')).toContain('Your agency receives monthly reports on progress toward paid work.');
-    expect(main('partner-with-us/universities/index.html')).toContain('Your institution receives monthly reports on progress toward paid work.');
-    expect(main('programs/jobready-campus/index.html')).toContain('Institutions receive monthly reports on progress toward paid work.');
+    expect(main('programs/youthwide/index.html')).toContain('with monthly reports to partners and an independent randomized trial'); // WP175 (owner decision Q5 of 2026-11-28): re-pinned to the crafted statement (POSITIONING; scripts/check-facts.mjs POSITION_WHOLE_STATEMENT)
+    expect(main('partner-with-us/development-partners/index.html')).toContain('Development partners want youth programs whose results hold up with their evaluators. CodersTrust carries each cohort from training through mentoring and placement support into paid work, in one program, with monthly reports on placements and first earnings.'); // WP155 (Polish 5): was "Partners receive monthly reports, and outcomes are tracked after each course."
+    expect(main('partner-with-us/governments/index.html')).toContain('with monthly reports to your agency on progress toward paid work.');
+    expect(main('partner-with-us/universities/index.html')).toContain('with monthly reports on each cohort.');
+    expect(main('programs/jobready-campus/index.html')).toContain('with monthly reports on progress toward paid work.');
   });
 
   // WP163 (owner answers of 3 November 2026): one exam fee per trainee is included, any further attempts set per program (it read "exam fees and attempts set per program"); the terms still say "set per program".

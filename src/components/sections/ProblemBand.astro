@@ -10,9 +10,14 @@ interface Props {
   /** Short BLUF sentence under the heading. */
   bluf?: string;
   factIds: string[];
+  /**
+   * WP175 (owner decision of 2026-11-28): the C3 transition line (C3_TRANSITION in src/data/copy.ts) as the band's last line, for a page that declares its C2 to C4 (or C2 to C3) compressed into this band.
+   * Left out, the band ends with its cards, as before.
+   */
+  transition?: string;
   id?: string;
 }
-const { eyebrow = 'The Challenge', title, bluf, factIds, id = 'problem' } = Astro.props;
+const { eyebrow = 'The Challenge', title, bluf, factIds, transition, id = 'problem' } = Astro.props;
 ---
 
 <Section id={id} aria-labelledby={`${id}-h`}>
@@ -20,4 +25,18 @@ const { eyebrow = 'The Challenge', title, bluf, factIds, id = 'problem' } = Astr
   <div class:list={['grid-cards', factIds.length === 4 && 'grid-cards--4']}>
     {factIds.map((f) => <FactCard id={f} />)}
   </div>
+  {transition && <p class="pb__transition" data-transition data-reveal>{transition}</p>}
 </Section>
+
+<style is:global>
+  /* the same type as ProblemSection's transition line (the program pages) and CostBand's before WP40. Global, not scoped: a scoped style would add its scope attribute to the band's
+     markup on every page, and a page that does not pass `transition` renders exactly as before. */
+  .pb__transition {
+    margin: var(--space-lg) 0 0;
+    font-size: var(--fs-heading-xl);
+    line-height: var(--lh-heading-xl);
+    font-weight: var(--fw-bold);
+    color: var(--secondary);
+    letter-spacing: -0.5px;
+  }
+</style>

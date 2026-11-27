@@ -295,11 +295,11 @@ test.describe('TalentLEAP and YouthWIDE', () => {
   test('YouthWIDE: "Our Approach" is the two shared sentences with the program as subject, and opens the band', async ({ page }) => {
     await open(page, 'programs/youthwide/');
     await expect(page.locator('#mechanism .pos__label')).toHaveText('Our Approach');
-    await expect(page.locator('#mechanism .pos__text')).toHaveText('YouthWIDE combines training, mentoring and placement support. Partners receive monthly reports on progress toward paid work.'); // WP155 (Polish 1): was "... placement support in existing labs and colleges. ..."; the band's "How We Reach Them" card says where and who teaches
-    expect(await page.locator('#mechanism .pos').getAttribute('data-fact')).toBe('PD-01 PD-08');
+    await expect(page.locator('#mechanism .pos__text')).toHaveText('Funders and agencies want a program they can start in one country and grow on its results. YouthWIDE combines training, mentoring and placement support in one delivery model, with monthly reports to partners and an independent randomized trial of an earlier CodersTrust program behind it.'); // WP155 (Polish 1): was "... placement support in existing labs and colleges. ..."; the band's "How We Reach Them" card says where and who teaches
+    expect(await page.locator('#mechanism .pos').getAttribute('data-fact')).toBe('IN-02 PD-01 PD-08 RC-01'); // WP175 (owner decision Q5 of 2026-11-28): re-pinned to the crafted statement (POSITIONING; scripts/check-facts.mjs POSITION_WHOLE_STATEMENT): a country program (IN-02), the trial of an earlier program (RC-01)
     // WP44 (cycle-21 review): Foundations is declared whole too, with its own two sentences (tests/wp44.spec.ts), not the audience sentence it had here
     await open(page, 'partner-with-us/foundations/');
-    expect(compact(await page.locator('#mechanism .pos__text').textContent())).toBe('Fund a YouthWIDE cohort or JobReady’s platform infrastructure. For cohort grants, we agree a pilot scorecard and combine training, mentoring and placement support, with monthly progress reports.');
+    expect(compact(await page.locator('#mechanism .pos__text').textContent())).toBe('Foundations and CSR teams want each grant to change what young people earn, with evidence that it did. A YouthWIDE cohort grant funds training, mentoring and placement support against a pilot scorecard agreed in advance; a JobReady platform grant funds CodersTrust’s digital learning and earning platform.');
   });
 });
 
@@ -498,7 +498,7 @@ test.describe('dating lines', () => {
     // WP166-B (marketing review R2-06, R2-34): November 21 (it was November 3), and the line is at the foot of the page (.tl__updated; it was .lf-updated in the header).
     expect(compact(await page.locator('.tl__updated').textContent())).toBe('Last updated November 27, 2026'); // WP172 (2026-11-27): the trial tile and the FAQ's trial answer. WP112: TalentLEAP's wording last changed on 29 October (was 28 October, WP104); WP141 changed it on 1 November; WP154 on 2 November; WP163 on 3 November; WP166-B on 21 November
     await open(page, 'programs/superkids/');
-    expect(compact(await page.locator('.updated').textContent())).toBe('Last updated November 21, 2026'); // WP166-B (marketing review R2, 21 November; it was November 2). WP143 moved it; WP104: SuperKids gained its consent line on 29 October
+    expect(compact(await page.locator('.updated').textContent())).toBe('Last updated November 28, 2026'); // WP175 (owner decision Q5 of 2026-11-28: the crafted C6 statement) moved it to 2026-11-28. WP166-B (marketing review R2, 21 November; it was November 2). WP143 moved it; WP104: SuperKids gained its consent line on 29 October
   });
 });
 

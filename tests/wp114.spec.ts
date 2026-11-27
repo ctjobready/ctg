@@ -99,10 +99,12 @@ test.describe('WP114 item 2: JobReady@Campus "The Challenge" band states obstacl
     }
   });
 
-  test('the lead is EMPATHY.universities in the source (one place, read by the band)', () => {
+  // WP175: the lead is CAMPUS_PROBLEM_LEAD (it was EMPATHY.universities, which is the Universities page's own C5 line now); the band reads it from there
+  test('the lead is CAMPUS_PROBLEM_LEAD in the source (one place, read by the band)', () => {
     expect(srcText('src/data/copy.ts')).toContain(
-      "universities: 'A degree alone does not show employers what students can do, and without follow-up data an institution cannot show where its students start earning.',",
+      "export const CAMPUS_PROBLEM_LEAD = 'A degree alone does not show employers what students can do, and without follow-up data an institution cannot show where its students start earning.';",
     );
+    expect(srcText('src/pages/programs/jobready-campus.astro')).toContain('bluf={CAMPUS_PROBLEM_LEAD}');
   });
 });
 

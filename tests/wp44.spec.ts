@@ -35,8 +35,8 @@ test.describe('Foundations: the second card is the scorecard and the approach is
   test('"Our Approach" is exactly the declared whole statement, rests on IN-04, PD-01, PD-08 and PD-11, and opens the band', async ({ page }) => {
     await open(page, 'partner-with-us/foundations/');
     await expect(page.locator('#mechanism .pos__label')).toHaveText('Our Approach');
-    await expect(page.locator('#mechanism .pos__text')).toHaveText('Fund a YouthWIDE cohort or JobReady’s platform infrastructure. For cohort grants, we agree a pilot scorecard and combine training, mentoring and placement support, with monthly progress reports.');
-    expect(await page.locator('#mechanism .pos').getAttribute('data-fact')).toBe('IN-04 PD-01 PD-08 PD-11');
+    await expect(page.locator('#mechanism .pos__text')).toHaveText('Foundations and CSR teams want each grant to change what young people earn, with evidence that it did. A YouthWIDE cohort grant funds training, mentoring and placement support against a pilot scorecard agreed in advance; a JobReady platform grant funds CodersTrust’s digital learning and earning platform.');
+    expect(await page.locator('#mechanism .pos').getAttribute('data-fact')).toBe('IN-02 IN-04 PD-01 PD-11'); // WP175 (owner decision Q5 of 2026-11-28): re-pinned to the crafted statement (POSITIONING; scripts/check-facts.mjs POSITION_WHOLE_STATEMENT): the two routes (IN-02, IN-04), the pilot scorecard (PD-11)
     const before = await page.evaluate(() => {
       const band = document.querySelector('#mechanism')!;
       const pos = band.querySelector('.pos')!;
@@ -54,8 +54,8 @@ test.describe('Universities: "Our Approach" is one whole statement with the repo
   test('the statement is the declared JobReady@Campus wording for universities, keeps "as agreed in the program scope", and rests on IN-09, PD-01 and PD-08', async ({ page }) => {
     await open(page, 'partner-with-us/universities/');
     await expect(page.locator('#mechanism .pos__label')).toHaveText('Our Approach');
-    await expect(page.locator('#mechanism .pos__text')).toHaveText('JobReady@Campus combines training, mentoring and placement support in campus labs. Your institution receives monthly reports on progress toward paid work.'); // WP155 (Polish 4): was "... in campus labs alongside academic studies. ..."; the H2 and the "In Parallel with the Degree" card state the timing
-    expect(await page.locator('#mechanism .pos').getAttribute('data-fact')).toBe('IN-09 PD-01 PD-08');
+    await expect(page.locator('#mechanism .pos__text')).toHaveText('Universities and colleges want degree holders who move into paid work, and placement results they can stand behind. JobReady@Campus runs in their own campus labs and adds certification exam preparation, mentoring and placement support to the degree, with monthly reports on each cohort.'); // WP155 (Polish 4): was "... in campus labs alongside academic studies. ..."; the H2 and the "In Parallel with the Degree" card state the timing
+    expect(await page.locator('#mechanism .pos').getAttribute('data-fact')).toBe('IN-09 PD-01 PD-02 PD-08'); // WP175: certification exam preparation (PD-02)
     await expect(page.locator('#mechanism .pos__text')).not.toContainText('For universities and colleges');
   });
 });

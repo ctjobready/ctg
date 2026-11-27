@@ -1,0 +1,87 @@
+---
+import Section from '../ui/Section.astro';
+import SectionHeader from '../ui/SectionHeader.astro';
+import Icon from '../system/Icon.astro';
+import { DIFFERENCE_EYEBROW, DIFFERENCE_HEADING, USPS, type Usp, type UspKey } from '../../data/copy';
+
+/**
+ * C10 Differentiation, short (WP175, owner decision of 2026-11-28): the one heading "What Makes CodersTrust Different" and two to four USP lines from doc 04 §6 (USPS in src/data/copy.ts), each a
+ * Title Case heading with one supporting line. No table and no comparison with named or typed providers: the full approaches-and-trade-offs table (ComparisonBand, #compare) stays off the
+ * conversion pages (WP47). The band keeps the id `difference` on every page. Design-system tokens only, and no coloured top or left accent bar on the items (owner rule of 2026-10-15/16).
+ *   usps   the shared lines, by key, in the order the page's matrix leads with (doc 04 4.1 to 4.6)
+ *   items  page-specific lines after them (a page whose audience no shared line fits)
+ * The build stops unless the band has two to four lines.
+ */
+interface Props {
+  usps?: UspKey[];
+  items?: Usp[];
+  /** The band's ground (white by default; a page's Tone wrapper may re-map it). */
+  tone?: 'white' | 'airy' | 'ice';
+  id?: string;
+}
+const { usps = [], items = [], tone = 'white', id = 'difference' } = Astro.props;
+const lines: Usp[] = [...usps.map((k) => USPS[k]), ...items];
+if (lines.length < 2 || lines.length > 4) throw new Error(`DifferenceBand: ${lines.length} USP lines; the short C10 band holds two to four`);
+---
+
+<Section id={id} tone={tone} aria-labelledby={`${id}-h`}>
+  <SectionHeader id={`${id}-h`} eyebrow={DIFFERENCE_EYEBROW} title={DIFFERENCE_HEADING} />
+  <ul class="diff" role="list">
+    {
+      lines.map((u) => (
+        <li class="diff__item" data-fact={u.facts.length ? u.facts.join(' ') : undefined} data-reveal>
+          <Icon name="circle-check" size={24} class="diff__icon" />
+          <div class="diff__body">
+            <h3 class="diff__title">{u.title}</h3>
+            <p class="diff__text">{u.text}</p>
+          </div>
+        </li>
+      ))
+    }
+  </ul>
+</Section>
+
+<style>
+  .diff {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-lg) var(--space-gutter);
+    border: 0;
+  }
+  @media (min-width: 768px) {
+    .diff {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  .diff__item {
+    display: flex;
+    gap: var(--space-sm);
+    align-items: flex-start;
+    border: 0;
+  }
+  .diff__item > :global(.icon) {
+    flex: none;
+    margin-top: var(--space-xs);
+    color: var(--success);
+  }
+  .diff__body {
+    display: grid;
+    gap: var(--space-xs);
+    max-width: var(--measure);
+  }
+  .diff__body > * {
+    margin: 0;
+  }
+  /* a bold subhead (the owner's direction for subheads), one heading step below the card titles: these are lines, not cards */
+  .diff__title {
+    font-size: var(--fs-heading-m);
+    line-height: var(--lh-heading-m);
+    font-weight: var(--fw-bold);
+    color: var(--ctx-heading);
+  }
+  .diff__text {
+    color: var(--on-surface-variant);
+  }
+</style>
