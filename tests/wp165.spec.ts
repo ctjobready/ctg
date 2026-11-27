@@ -97,7 +97,7 @@ const FATHER: Post = {
   substack: `https://${SUBSTACK_HOST}/p/the-father-the-godfather-and-the`,
   first: 'The man who named artificial intelligence and the man who made it work have, between them, handed my generation a warning and a homework assignment.',
   last: 'McKenzie, D. (2017), “How Effective Are Active Labor Market Policies in Developing Countries?”, World Bank.',
-  words: 1630,
+  words: 1693 /* WP174 (owner answers of 2026-11-27): the entrants line follows ADB 2023 and UGC 2022, and two source lines were added (it was 1630, the Substack text) */,
   headings: 7,
 };
 const BEYOND: Post = {

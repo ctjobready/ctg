@@ -36,7 +36,7 @@ The numbers were worrying before AI entered the picture:
 
 - Bangladesh's 2024 Labour Force Survey counted 2.62 million unemployed people, and 2.03 million of them were between 15 and 29.
 - Roughly 885,000 unemployed people are university graduates, more than double the 2017 figure. Graduates now have the highest unemployment rate of any education group, at 13.5%, and 16.8% for young women graduates.
-- Around 2.2 to 2.3 million young people enter the job market every year, about 750,000 of them university graduates.
+- More than 2 million people enter the job market every year, and Bangladesh's universities produced about 700,000 graduates in 2022.
 
 Now add AI. Bangladesh is one of the world's largest suppliers of online freelance labor, with roughly 650,000 registered freelancers, and more than 80% of active freelancers are tertiary-educated, the group most exposed to generative AI. Freelancers are already reporting a contraction of around 21% in routine gigs.
 
@@ -83,6 +83,8 @@ And to young people in Bangladesh and across the Global South: do not compete wi
 - Hinton quotes: The Diary of a CEO podcast, June 2025, as reported by Business Insider, CTV News and Benzinga.
 - McCarthy quote: attributed by Bertrand Meyer (2011); see Quote Investigator, "As Soon As It Works, No One Calls It AI Anymore" (2024).
 - Bangladesh Bureau of Statistics, Labour Force Survey 2024, via Dhaka Tribune, The Daily Star, The Financial Express and Banglanews24.
+- Asian Development Bank, Report and Recommendation of the President, Skills for Industry Competitiveness and Innovation Program (BAN 55148), July 2023, p. 2, para. 5: "2 million new entrants to the labor force every year".
+- University Grants Commission of Bangladesh, 49th Annual Report (2022): 701,993 graduates in 2022, via The Business Standard (September 20, 2025).
 - IMF, Finance & Development (September 2026), via Dhaka Tribune.
 - LightCastle Partners, freelance economy and automation analyses (2026).
 - Centre for Policy Dialogue, report on automation, AI and the labor market (2026), via The Daily Observer and The Financial Express.
