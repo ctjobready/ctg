@@ -322,10 +322,13 @@ test.describe('Employers and JobReady@Work: the pricing sentence is said once, i
     await expect(page.locator('#offer article.card')).toHaveCount(2);
     await open(page, 'programs/jobready-work/');
     // WP166-B (marketing review R2-20): the options band and the closing band are one band (#cta); its lead "Pick one or both." is gone (the hero lead keeps it), and the two cards carry no pricing note
-    await expect(page.locator('#offer')).toHaveCount(0);
-    await expect(page.locator('#cta .sh__lead')).toHaveCount(0);
-    await expect(page.locator('#cta .note')).toHaveCount(0);
-    await expect(page.locator('#cta article.card')).toHaveCount(2);
+    // WP175 (owner decision Q1 (a) of 2026-11-28: out-of-order bands move): the options band is its own band again (#offer, C11, before the pilot band), still with no lead and no pricing note; the closing band (#cta) has no cards
+    await expect(page.locator('#offer')).toHaveCount(1);
+    await expect(page.locator('#offer .sh__lead')).toHaveCount(0);
+    await expect(page.locator('#offer .note')).toHaveCount(0);
+    await expect(page.locator('#offer article.card')).toHaveCount(2);
+    await expect(page.locator('#cta article.card')).toHaveCount(0);
+    expect(compact(await page.locator('#offer').textContent())).not.toContain('Pricing is set per program');
     expect(compact(await page.locator('#cta').textContent())).not.toContain('Pricing is set per program');
   });
 

@@ -13,9 +13,19 @@
 // WP53 (owner follow-up, 2026-10-16): the options band's eyebrow is "Options" (it was "Start", directly above "Two Ways to Start a Campus Program"), as on Governments, Development Partners, Universities and YouthWIDE.
 // WP151 (Opus XHigh run 5, kit 118): the How It Works "On-Campus Labs" card is this page's delivery sentence, so it names who teaches ("facilitators trained by CodersTrust (Training of Trainers) and faculty members as coordinators", as the Universities card does);
 // the "Illustrative" band's Capacity card says "CodersTrust-trained facilitators". The glance label is "Training and Certification Preparation" (CodersTrust prepares learners for third-party exams; WP144, WP150).
+// WP175 (owner decisions of 28 November 2026: every conversion page follows CMF v3, C1 to C14, in order and coverage; scratchpad wp175-decisions.md): every band sits in a Tone wrapper that carries its
+// CMF component (data-cmf; tests/wp175-jobready-campus.spec.ts reads the order). The page runs C1 → GEO (restored) → the route link and the glance (recorded non-CMF rows) → C2–C3 compressed (Q7 (a): the
+// problem band ends with the C3 transition line; its two tiles and lead are the pains, Q4 (b)) → C4 (moved before the track record) → C5 (the empathy line, the one-line origin, the NU figures and
+// partners, the method line last) → C6 → C7 (restored: the trial lead and the evidence links) → C8 (restored: the campus cards and "How It Works in Three Steps") → C9 → C10 (restored short) → C11 → C12 → C13 → C14.
 import LandingLayout from '../../layouts/LandingLayout.astro';
 import CTABand from '../../components/ui/CTABand.astro';
+import Tone from '../../components/pages/home/Tone.astro';
 import HeroBand from '../../components/sections/HeroBand.astro';
+import DefinitionBand from '../../components/sections/DefinitionBand.astro';
+import ProofBand from '../../components/sections/ProofBand.astro';
+import IncludesBand from '../../components/sections/IncludesBand.astro';
+import DifferenceBand from '../../components/sections/DifferenceBand.astro';
+import HowItWorks from '../../components/pages/partners/HowItWorks.astro';
 import FutureBand from '../../components/sections/FutureBand.astro';
 import { futurePhotos } from '../../data/photos';
 import RouteLink from '../../components/pages/partners/RouteLink.astro';
@@ -30,11 +40,9 @@ import OfferSection from '../../components/pages/programs/OfferSection.astro';
 import RiskSection from '../../components/pages/programs/RiskSection.astro';
 import NextSteps from '../../components/pages/programs/NextSteps.astro';
 import Section from '../../components/ui/Section.astro';
-import Icon from '../../components/system/Icon.astro';
-import { linkAttrs } from '../../lib/url';
 import { faqNode, type FaqSource } from '../../components/pages/programs/faq';
 import { C14_FIRST, PAGE_UPDATED, ctaFor, serviceNode, statValue } from '../../components/pages/programs/meta';
-import { CAMPUS_PROBLEM_LEAD, DELIVERY_MODEL, MICRO_COMMITMENT, POSITIONING, PRICING, PROGRAM_OPTIONS, PROGRAM_SCOPE_STATEMENT_EXAMS, PROGRAM_SIZES_NOTE, SPEED_UNIVERSITIES } from '../../data/copy';
+import { C3_TRANSITION, CAMPUS_INCLUDES, CAMPUS_PROBLEM_LEAD, CAMPUS_STEPS, DELIVERY_MODEL, EMPATHY, METHOD, MICRO_COMMITMENT, ORIGIN_SHORT, POSITIONING, PRICING, PROGRAM_OPTIONS, PROGRAM_SCOPE_STATEMENT_EXAMS, PROGRAM_SIZES_NOTE, SPEED_UNIVERSITIES, TRIAL_LEAD } from '../../data/copy';
 import { fact } from '../../data/facts';
 import { formatDate, isoDate } from '../../lib/format';
 import { webPage } from '../../lib/schema';
@@ -80,125 +88,172 @@ const options = [
 
 <LandingLayout title={title} description={description} path={path} breadcrumbs={[{ label: 'Programs', href: '/programs/' }, { label: 'JobReady@Campus' }]} jsonLd={jsonLd} stickyCta={campus}>
   <!-- C1 -->
-  <HeroBand
-    audience="JobReady@Campus · For Universities and Colleges"
-    title="Give Your Students a Route into Digital Work Alongside Their Degree"
-    lead="Run mentored, certification-focused training in your campus labs alongside academic studies. Prepare students for paid digital work and build placement evidence from your own cohorts."
-    cta={campus}
-    artSeed="jobready-campus"
-  />
+  <Tone cmf="C1">
+    <HeroBand
+      audience="JobReady@Campus · For Universities and Colleges"
+      title="Give Your Students a Route into Digital Work Alongside Their Degree"
+      lead="Run mentored, certification-focused training in your campus labs alongside academic studies. Prepare students for paid digital work and build placement evidence from your own cohorts."
+      cta={campus}
+      artSeed="jobready-campus"
+    />
+  </Tone>
 
-  <RouteLink kicker="The Partnership Route" label="University Partnership Overview" href="/partner-with-us/universities/" />
+  <!-- GEO · What is CodersTrust? (ID-01 verbatim, directly under the hero). WP175 (owner decision of 2026-11-28): restored; WP30d had cut the definition band. The glance's "Who It Is For" row is the page's BLUF. -->
+  <Tone cmf="GEO"><DefinitionBand /></Tone>
 
-  <ProgramGlance
-    title="JobReady@Campus at a Glance"
-    rows={[
-      { label: 'Who It Is For', text: 'Universities and colleges that need a practical route into digital work for their students, beside the degree.', facts: ['IN-09'] },
-      // WP166-B (R2-08): the delivery-model sentence is in How It Works ("What" card), not in this glance row.
-      { label: 'Training and Certification Preparation', text: `${hours} training hours per certification, including certification exam preparation and one exam fee per trainee, then three months of milestone-based mentoring; exam eligibility and any further attempts are set per program.`, facts: ['IN-09', 'PD-01', 'PD-03', 'PD-02a'] },
-      { label: 'Reporting', text: 'Baseline data, follow-up surveys and monthly reports, so your institution builds placement evidence from its own students.', facts: ['PD-08', 'PD-09'] },
-    ]}
-    scope={PROGRAM_SCOPE_STATEMENT_EXAMS}
-  />
+  <!-- The partnership route link and the glance: recorded non-CMF rows between GEO and C2 (doc 06 P12, WP175). -->
+  <Tone cmf="GLANCE"><RouteLink kicker="The Partnership Route" label="University Partnership Overview" href="/partner-with-us/universities/" /></Tone>
 
-  <!-- C2 (WP24c): a short problem band, built only from content this page already states. WP34 (cycle-11 review): the Bangladesh graduate-unemployment tile (PX-03) is gone from this global page. -->
-  <!-- WP166-B (R2-15): the two cards repeated the lead almost word for word; the band shows two registered statistics instead (PX-02 and PX-05, as on YouthWIDE and the NU page). The lead still states the reader's obstacle. -->
-  <ProblemSection title="Capable Students Still Struggle to Find Work" bluf={CAMPUS_PROBLEM_LEAD} factIds={['PX-02', 'PX-05']} />
+  <Tone cmf="GLANCE">
+    <ProgramGlance
+      title="JobReady@Campus at a Glance"
+      rows={[
+        { label: 'Who It Is For', text: 'Universities and colleges that need a practical route into digital work for their students, beside the degree.', facts: ['IN-09'] },
+        // WP166-B (R2-08): the delivery-model sentence is in How It Works ("What" card), not in this glance row.
+        { label: 'Training and Certification Preparation', text: `${hours} training hours per certification, including certification exam preparation and one exam fee per trainee, then three months of milestone-based mentoring; exam eligibility and any further attempts are set per program.`, facts: ['IN-09', 'PD-01', 'PD-03', 'PD-02a'] },
+        { label: 'Reporting', text: 'Baseline data, follow-up surveys and monthly reports, so your institution builds placement evidence from its own students.', facts: ['PD-08', 'PD-09'] },
+      ]}
+      scope={PROGRAM_SCOPE_STATEMENT_EXAMS}
+    />
+  </Tone>
 
-  <!-- C5 (WP25s: credibility before the vision, as on Home and YouthWIDE). WP161 (A-39): the eyebrow says what the band lists (a diploma delivery and two MOUs, not JobReady@Campus cohorts); the default is "Our Track Record". -->
-  <!-- WP166-B (R2-16): the heading names the three partners, and National University's two figures (SC-04, SC-05) sit in this band beside the partner list, with their note after them and the three evidence links of the
-       former "Delivery Context: National University" band (that band is gone). -->
-  <GuideSection
-    eyebrow="Our University Partnerships"
-    title="Working with National University, UPEACE and CCNY"
-    statIds={['SC-04', 'SC-05']}
-    partnerGroup="academic"
-    method={{ text: 'JobReady@Campus is built on the TalentLEAP model.', factId: 'IN-06', link: { label: 'How TalentLEAP Works', href: '/our-model/talentleap/' } }}
-  >
-    <p data-fact="PA-05"><Fact id="PA-05" />.</p>
-    <p data-fact="SC-04 SC-05">These figures describe National University’s size and the learners being onboarded; they are not learners trained by CodersTrust.</p>
-    <p>
-      Broader evidence from our youth programs: <a class="link" href={linkAttrs('/impact/independent-evaluation/').href}>The Randomized Trial<Icon name="arrow-right" size={16} /></a>{' '}
-      <a class="link" href={linkAttrs('/impact/outcomes-2026/').href}>Impact Survey 2026<Icon name="arrow-right" size={16} /></a>{' '}
-      <a class="link" href={linkAttrs('/impact/case-studies/').href}>Case Studies<Icon name="arrow-right" size={16} /></a>
-    </p>
-  </GuideSection>
+  <!-- C2–C3, compressed (WP175, owner decision Q7 (a) of 2026-11-28; doc 04 4.5 and doc 06 P12 record it): the band keeps its two statistics and its lead, then the C3 transition line as its last line;
+       C4 keeps its own band below. WP24c: a short problem band, built only from content this page already states. WP34 (cycle-11 review): the Bangladesh graduate-unemployment tile (PX-03) is gone from this global page.
+       WP166-B (R2-15): the two cards repeated the lead almost word for word; the band shows two registered statistics instead (PX-02 and PX-05, as on YouthWIDE and the NU page). WP175 (Q4 (b)): the two tiles count
+       as the pains P1 (PX-02) and P2 (PX-05) and the lead as P3, as on Universities; the C8 cards answer them in that order. -->
+  <Tone cmf="C2-C3 (compressed)"><ProblemSection title="Capable Students Still Struggle to Find Work" bluf={CAMPUS_PROBLEM_LEAD} factIds={['PX-02', 'PX-05']} transition={C3_TRANSITION} /></Tone>
 
-  <!-- C4 -->
-  <FutureBand
-    photos={futurePhotos('jobready-campus')}
-    title="What a Campus Cohort Can Produce"
-    lead="Illustrative: a certification beside the degree, and placement evidence from your own students."
-    vignettes={[
-      { kind: 'Functional', title: 'An Industry Certification Beside the Degree', text: 'Students who pass the exam add an industry certification beside their degree. Certification is not guaranteed.' },
-      { kind: 'Emotional', title: 'A Stronger Employment Story', text: 'Every campus cohort includes baseline data and follow-up surveys at 3, 6 and 12 months, so your institution can build placement evidence from its own students.' },
-      { kind: 'Social', title: 'Capacity Designed to Stay on Campus', text: 'Campus labs keep working as blended-learning centers, with CodersTrust-trained facilitators.' },
-    ]}
-  />
+  <!-- C4. WP175 (Q1 (a)): the vision follows the problem band, before the track record (CMF order; WP25s had put it after the track record). -->
+  <Tone cmf="C4">
+    <FutureBand
+      photos={futurePhotos('jobready-campus')}
+      title="What a Campus Cohort Can Produce"
+      lead="Illustrative: a certification beside the degree, and placement evidence from your own students."
+      vignettes={[
+        { kind: 'Functional', title: 'An Industry Certification Beside the Degree', text: 'Students who pass the exam add an industry certification beside their degree. Certification is not guaranteed.' },
+        { kind: 'Emotional', title: 'A Stronger Employment Story', text: 'Every campus cohort includes baseline data and follow-up surveys at 3, 6 and 12 months, so your institution can build placement evidence from its own students.' },
+        { kind: 'Social', title: 'Capacity Designed to Stay on Campus', text: 'Campus labs keep working as blended-learning centers, with CodersTrust-trained facilitators.' },
+      ]}
+    />
+  </Tone>
+
+  <!-- C5. WP161 (A-39): the eyebrow says what the band lists (a diploma delivery and two MOUs, not JobReady@Campus cohorts); the default is "Our Track Record".
+       WP166-B (R2-16): the heading names the three partners, and National University's two figures (SC-04, SC-05) sit in this band beside the partner list, with their note after them.
+       WP175 (Q2 (a)): the empathy line and the one-line origin open the band and the method line closes it; the three evidence links are C7's now (Q3 (a)). -->
+  <Tone cmf="C5">
+    <GuideSection
+      eyebrow="Our University Partnerships"
+      title="Working with National University, UPEACE and CCNY"
+      empathy={EMPATHY.campus}
+      origin={ORIGIN_SHORT}
+      statIds={['SC-04', 'SC-05']}
+      partnerGroup="academic"
+      method={METHOD.campus}
+    >
+      <p data-fact="PA-05"><Fact id="PA-05" />.</p>
+      <p data-fact="SC-04 SC-05">These figures describe National University’s size and the learners being onboarded; they are not learners trained by CodersTrust.</p>
+    </GuideSection>
+  </Tone>
 
   <!-- C6 -->
-  <MechanismSection
-    title="Training Beside the Degree, in Your Own Labs"
-    positioning={POSITIONING.campus}
-    blocks={[
-      { label: 'When', title: 'In Parallel with Studies', text: 'Industry-oriented skills training for your students.', icon: 'calendar-check' },
-      { label: 'Where', title: 'On-Campus Labs', text: 'Labs serve as blended-learning centers, with facilitators trained by CodersTrust (Training of Trainers) and faculty members as coordinators.', icon: 'school' },
-      // WP166-B (R2-14, R2-08): the cut "What You Get" band's one new idea (tracks set from employer demand, PD-10) and the page's one delivery-model sentence (DELIVERY_MODEL, from the glance) are in this card.
-      { label: 'What', title: 'Certification Preparation and Internships', text: `Preparation for industry-recognized certifications on tracks set from employer demand, plus professional internships where employer placements are available. ${DELIVERY_MODEL.text}`, icon: 'award' },
-      { label: 'After', title: 'Local, Remote and Global Work', text: 'Mentoring and placement support toward paid work.', icon: 'globe' },
-    ]}
-    factIds={['IN-09', 'PD-06', 'PD-10', 'PD-01', 'IN-04']}
-  />
+  <Tone cmf="C6">
+    <MechanismSection
+      title="Training Beside the Degree, in Your Own Labs"
+      positioning={POSITIONING.campus}
+      blocks={[
+        { label: 'When', title: 'In Parallel with Studies', text: 'Industry-oriented skills training for your students.', icon: 'calendar-check' },
+        { label: 'Where', title: 'On-Campus Labs', text: 'Labs serve as blended-learning centers, with facilitators trained by CodersTrust (Training of Trainers) and faculty members as coordinators.', icon: 'school' },
+        // WP166-B (R2-14, R2-08): the cut "What You Get" band's one new idea (tracks set from employer demand, PD-10) and the page's one delivery-model sentence (DELIVERY_MODEL, from the glance) are in this card.
+        { label: 'What', title: 'Certification Preparation and Internships', text: `Preparation for industry-recognized certifications on tracks set from employer demand, plus professional internships where employer placements are available. ${DELIVERY_MODEL.text}`, icon: 'award' },
+        { label: 'After', title: 'Local, Remote and Global Work', text: 'Mentoring and placement support toward paid work.', icon: 'globe' },
+      ]}
+      factIds={['IN-09', 'PD-06', 'PD-10', 'PD-01', 'IN-04']}
+    />
+  </Tone>
 
-  <!-- C7 ("The National University Partnership") is folded into the university band above since WP166-B (R2-16). -->
+  <!-- C7. WP175 (owner decisions Q1 (a) and Q3 (a) of 2026-11-28): restored after C6 (WP166-B R2-16 had folded it into the university band as three links): the one-line trial lead, the survey line
+       and the three evidence links that sat in the university band. No figure tile: the degree holders' share (OC-09) is the FAQ's answer below. -->
+  <Tone cmf="C7">
+    <ProofBand
+      title="The Evidence"
+      headlineFact="RC-01"
+      trialLead={TRIAL_LEAD}
+      statIds={[]}
+      compact
+      links={[
+        { label: 'The Randomized Trial', href: '/impact/independent-evaluation/' },
+        { label: 'Impact Survey 2026', href: '/impact/outcomes-2026/' },
+        { label: 'Case Studies', href: '/impact/case-studies/' },
+      ]}
+    />
+  </Tone>
 
-  <!-- C8 ("Built Around What Institutions Ask For") is gone since WP166-B (R2-14): it repeated the glance, the vignettes and How It Works; its one new idea (tracks set from employer demand) is in the "What" card. -->
+  <!-- C8. WP175 (Q1 (a)): restored (WP166-B R2-14 had removed it): the campus cards Universities shows (CAMPUS_INCLUDES), one per pain in the problem band's order, under the heading published until
+       WP166-B, then "How It Works in Three Steps" (CAMPUS_STEPS, as on Universities). The cards do not restate the delivery-model sentence (the "What" card above says it once). -->
+  <Tone cmf="C8">
+    <IncludesBand title="Built Around What Institutions Ask For" cards={CAMPUS_INCLUDES} />
+    <HowItWorks steps={CAMPUS_STEPS} />
+  </Tone>
 
   <!-- C9 -->
-  <FaqSection sources={faqSources} title="Questions Institutions Ask" />
+  <Tone cmf="C9"><FaqSection sources={faqSources} title="Questions Institutions Ask" /></Tone>
+
+  <!-- C10. WP175 (owner decision of 2026-11-28): the short differentiation band; doc 04 4.5 C10 leads with USPs 3 and 4 (the credential, the existing infrastructure). -->
+  <Tone cmf="C10"><DifferenceBand usps={['credential', 'infrastructure']} /></Tone>
 
   <!-- C11 -->
   <!-- WP36 (cycle-13 review): Home's line that program sizes are not a commitment, ahead of the sizes. -->
-  <OfferSection eyebrow="Options" title="Two Ways to Start a Campus Program" lead={PROGRAM_SIZES_NOTE} options={options} recommended={0}>
-    <p class="note note--key" data-fact="PD-02">{pricingFirst}</p>
-  </OfferSection>
+  <Tone cmf="C11">
+    <OfferSection eyebrow="Options" title="Two Ways to Start a Campus Program" lead={PROGRAM_SIZES_NOTE} options={options} recommended={0}>
+      <p class="note note--key" data-fact="PD-02">{pricingFirst}</p>
+    </OfferSection>
+  </Tone>
 
   <!-- C12 -->
-  <RiskSection
-    title="Start with a Pilot, Then Decide on Evidence"
-    points={[
-      { icon: 'rocket', title: 'A Pilot Comes First', text: 'Prove the model on your campus before you widen it.', factIds: ['PD-05'] },
-      { icon: 'target', title: 'Scorecard Thresholds', text: 'Thresholds are agreed before the first cohort; a missed threshold triggers a corrective plan.', factIds: ['PD-11'] },
-      { icon: 'handshake', title: 'Expansion Is Your Decision', text: 'You choose whether and how far to scale.', factIds: ['PD-11'] },
-      { icon: 'shield', title: 'Independent Evaluation Welcome', text: 'We support third-party evaluation of outcomes.', factIds: ['PD-08'] },
-    ]}
-  />
+  <Tone cmf="C12">
+    <RiskSection
+      title="Start with a Pilot, Then Decide on Evidence"
+      points={[
+        { icon: 'rocket', title: 'A Pilot Comes First', text: 'Prove the model on your campus before you widen it.', factIds: ['PD-05'] },
+        { icon: 'target', title: 'Scorecard Thresholds', text: 'Thresholds are agreed before the first cohort; a missed threshold triggers a corrective plan.', factIds: ['PD-11'] },
+        { icon: 'handshake', title: 'Expansion Is Your Decision', text: 'You choose whether and how far to scale.', factIds: ['PD-11'] },
+        { icon: 'shield', title: 'Independent Evaluation Welcome', text: 'We support third-party evaluation of outcomes.', factIds: ['PD-08'] },
+      ]}
+    />
+  </Tone>
 
   <!-- C13 -->
-  <CTABand
-    id="cta"
-    heading="Bring Industry Skills to Your Campus"
-    cta={campus}
-    micro={MICRO_COMMITMENT}
-  >
-    <CopyP block={SPEED_UNIVERSITIES} class="cta-speed" />
-  </CTABand>
+  <Tone cmf="C13">
+    <CTABand
+      id="cta"
+      heading="Bring Industry Skills to Your Campus"
+      cta={campus}
+      micro={MICRO_COMMITMENT}
+    >
+      <CopyP block={SPEED_UNIVERSITIES} class="cta-speed" />
+    </CTABand>
+  </Tone>
 
   <!-- C14 -->
-  <NextSteps
-    steps={[
-      { title: 'Discovery Session', text: 'A conversation about your students, tracks and labs.' },
-      { title: 'Co-Design', text: 'We shape tracks, campus labs and the pilot scorecard with you.' },
-      { title: 'Agreement', text: 'Scope, schedule and the pilot scorecard are agreed.' },
-      { title: 'First cohort in training', text: 'The first cohort begins in your campus labs.' },
-      { title: 'Monthly Reports', text: 'Your institution sees results as they arrive.' },
-    ]}
-    firstAction={C14_FIRST}
-  />
+  <Tone cmf="C14">
+    <NextSteps
+      steps={[
+        { title: 'Discovery Session', text: 'A conversation about your students, tracks and labs.' },
+        { title: 'Co-Design', text: 'We shape tracks, campus labs and the pilot scorecard with you.' },
+        { title: 'Agreement', text: 'Scope, schedule and the pilot scorecard are agreed.' },
+        { title: 'First cohort in training', text: 'The first cohort begins in your campus labs.' },
+        { title: 'Monthly Reports', text: 'Your institution sees results as they arrive.' },
+      ]}
+      firstAction={C14_FIRST}
+    />
+  </Tone>
 
-  <Section pad="sm" aria-label="Last updated">
-    <p class="updated">Last updated <time datetime={isoDate(LAST_UPDATED)}>{formatDate(LAST_UPDATED)}</time></p>
-  </Section>
+  <!-- WP175: not a CMF band; the wrapper keeps the 32px join to a band on the same ground above it (Tone's join rule reads wrappers, not bare bands). -->
+  <Tone>
+    <Section pad="sm" aria-label="Last updated">
+      <p class="updated">Last updated <time datetime={isoDate(LAST_UPDATED)}>{formatDate(LAST_UPDATED)}</time></p>
+    </Section>
+  </Tone>
 </LandingLayout>
 
 <style>

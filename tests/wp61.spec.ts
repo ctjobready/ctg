@@ -144,11 +144,15 @@ test.describe('G2 (GPT-6.1 Sol; Kimi K1): the Employers and JobReady@Work track-
     await expect(page.locator('#guide section.partners')).toHaveCount(1);
   });
 
-  test('JobReady@Work: the band opens with the credentials list (AWS, the ministry contract; WP104: AIvolve is an offering in the glance, not a list item), then the method line; the figure and the logo strip stay', async ({ page }) => {
+  // WP175 (owner decision Q2 (a) of 2026-11-28: every C5 opens with an empathy line, then the one-line origin, then the authority, and ends with the method line): the band opens with a fresh empathy line
+  // (EMPATHY.work; the line WP61 removed is not restored, tests/wp52.spec.ts) and the origin line before the credentials list, and the method line is the band's last line, under the logo strip.
+  test('JobReady@Work: the band opens with the empathy and origin lines, then the credentials list (AWS, the ministry contract; WP104: AIvolve is an offering in the glance, not a list item); the method line closes it; the figure and the logo strip stay', async ({ page }) => {
     await open(page, WORK);
-    await expect(page.locator('#guide p.lead')).toHaveCount(0);
+    await expect(page.locator('#guide p.lead')).toHaveText('You want your team’s training time to pay off in the work it does every day.'); // WP175 (it had none)
+    await expect(page.locator('#guide p.lead')).not.toHaveText('You have roles to fill and teams that need AI skills for their daily work.');
     const kids = await page.locator('#guide .guide__copy').evaluate((el) => Array.from(el.children).map((c) => c.className));
-    expect(kids).toEqual(['guide__auth', 'guide__method']);
+    expect(kids).toEqual(['lead', 'guide__origin', 'guide__auth']); // WP175 (it was guide__auth, guide__method)
+    expect(await page.locator('#guide > .container').evaluate((el) => (el.lastElementChild as HTMLElement).className)).toMatch(/\bguide__method\b/);
     // WP168-B (owner decision 2026-11-24: Akij Group may be named as a client): the Akij Group line (PA-12) leads the credentials, with its link to the 2023 post
     expect(await texts(page, '#guide .guide-list li')).toEqual([
       'Corporate training for Akij Group, a conglomerate based in Bangladesh (2021–2024: workplace productivity, advanced Excel, corporate communications). Read About the 2023 Training',

@@ -167,16 +167,18 @@ test.describe('YouthWIDE: no Cost of Waiting band, no Imagine band, no hero link
 
   // WP166-B (marketing review R2-01): the evidence band (#proof-band, dark) follows the challenge band, before the track record (it came after the governments band), so the run is
   // problem, proof-band, guide, mechanism, governments (it was problem, guide, mechanism, governments) and its tones white, klein, airy, white, airy (they were white, airy, white, airy).
-  test('the challenge band stays, then the evidence, the track record and the delivery model; the tone alternates white, klein, airy, white, airy and never puts two dark bands together', async ({ page }) => {
+  // WP175 (owner decision Q1 (a) of 2026-11-28: the CMF order C5 → C6 → C7): the evidence band follows the governments band again, so the run is problem, guide, mechanism, governments, proof-band and its tones
+  // white, airy, white, airy, klein (they were white, klein, airy, white, airy).
+  test('the challenge band stays, then the track record, the delivery model, the governments band and the evidence; the tone alternates white, airy, white, airy, klein and never puts two dark bands together', async ({ page }) => {
     await open(page, 'programs/youthwide/');
     const ids = await sectionIds(page);
     expect(ids.indexOf('problem'), 'the challenge band stays').toBeGreaterThanOrEqual(0);
-    expect(ids.slice(ids.indexOf('problem'), ids.indexOf('problem') + 5)).toEqual(['problem', 'proof-band', 'guide', 'mechanism', 'governments']);
+    expect(ids.slice(ids.indexOf('problem'), ids.indexOf('problem') + 5)).toEqual(['problem', 'guide', 'mechanism', 'governments', 'proof-band']);
     const tones = await page.evaluate(() => {
       const tone = (id: string) => /\bband--(white|airy|ice|klein|deep-ink)\b/.exec(document.getElementById(id)?.className ?? '')?.[1];
-      return ['problem', 'proof-band', 'guide', 'mechanism', 'governments'].map(tone);
+      return ['problem', 'guide', 'mechanism', 'governments', 'proof-band'].map(tone);
     });
-    expect(tones).toEqual(['white', 'klein', 'airy', 'white', 'airy']);
+    expect(tones).toEqual(['white', 'airy', 'white', 'airy', 'klein']);
     const adjacent = await page.evaluate(() => {
       const bands = Array.from(document.querySelectorAll('main section.band')).filter((b) => !b.parentElement?.closest('section.band'));
       const dark = bands.map((b) => /\bband--(klein|deep-ink)\b/.test(b.className));

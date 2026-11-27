@@ -26,7 +26,10 @@ interface Props {
   factIds?: string[];
   extra?: Extra[];
   scope?: Record<string, { prefix?: string; label?: string }>;
-  /** Transition line closing the band, for a page whose C2 and C3 are compressed into one band (for example SuperKids). */
+  /**
+   * Transition line closing the band, for a page whose C2 and C3 (or C2 to C4) are compressed into one band. WP175 (owner decision of 2026-11-28): every program page passes C3_TRANSITION
+   * (src/data/copy.ts); the line carries `data-transition`, as ProblemBand's does, so a test or gate can find it.
+   */
   transition?: string;
   id?: string;
 }
@@ -75,7 +78,7 @@ const scoped = (fid: string) => {
     }
   </div>
   <slot />
-  {transition && <p class="pcs__transition" data-reveal>{transition}</p>}
+  {transition && <p class="pcs__transition" data-transition data-reveal>{transition}</p>}
 </Section>
 
 <style>

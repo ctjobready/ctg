@@ -127,7 +127,8 @@ test.describe('Programs', () => {
     await expect(page.locator('#governments .mech-stat')).toHaveCount(2);
   });
 
-  test('Campus says the empathy line once, and puts the Track Record before the vision', async ({ page }) => {
+  // WP175 (owner decision Q1 (a) of 2026-11-28: the CMF order C4 → C5): the vision (C4) comes before the Track Record (C5) again; WP25s (review cycle 5) had put the Track Record first
+  test('Campus says its problem lead once, and puts the vision before the Track Record (CMF C4 before C5)', async ({ page }) => {
     await open(page, 'programs/jobready-campus/');
     const text = compact(await main(page));
     // WP52 (cycle-27 review): the line is "Help students prepare for paid digital work and build placement evidence from your campus cohorts." (it read "You see capable students finish their degrees and still struggle to find work, ...")
@@ -138,9 +139,12 @@ test.describe('Programs', () => {
     // WP166-B (marketing review R2-16): the Track Record heading is "Working with National University, UPEACE and CCNY" (it was "Universities Partner with CodersTrust"); both headings must be found, so the order is a real check.
     const guideAt = titles.findIndex((t) => /Working with National University, UPEACE and CCNY/.test(t));
     expect(guideAt, 'the Track Record heading').toBeGreaterThan(-1);
-    expect(guideAt).toBeLessThan(titles.findIndex((t) => /What a Campus Cohort Can Produce/.test(t)));
+    const futureAt = titles.findIndex((t) => /What a Campus Cohort Can Produce/.test(t));
+    expect(futureAt, 'the vision heading').toBeGreaterThan(-1);
+    expect(futureAt).toBeLessThan(guideAt); // WP175 (it was guideAt < futureAt)
     // WP39 (cycle-16 review): the features band was three short cards; the second said tracks are "built around the skills employers say they cannot find". WP166-B (marketing review R2-14): that band ("Built Around What Institutions
-    // Ask For") is gone, and the assertion on its card with it; its one new idea is in How It Works' "What" card, "on tracks set from employer demand".
+    // Ask For") is gone, and the assertion on its card with it; its one new idea is in How It Works' "What" card, "on tracks set from employer demand". WP175: the band is back with the campus cards
+    // (CAMPUS_INCLUDES, the Universities cards), whose second card is the track menu; the earlier "training matches what employers say" wording stays off the page.
     expect(text).toContain('Preparation for industry-recognized certifications on tracks set from employer demand');
     expect(text).not.toContain('training matches what employers say');
   });
@@ -159,11 +163,16 @@ test.describe('Programs', () => {
     expect(blocks).toContain('toward team capability in the digital and AI tasks defined in the needs assessment.');
   });
 
-  test('Work shows no youth-program survey figure of its own: two links to the evidence pages stand in for it (WP31)', async ({ page }) => {
+  // WP175 (owner decisions Q1 (a) and Q3 (a) of 2026-11-28): Work's C7 is a compact proof band again: the one-line trial lead, the relevance line ("not JobReady@Work"), the survey line labelled as the youth
+  // programs' ("From CodersTrust’s youth programs:", doc 04 4.6 C7), then the two links (it was the two-link strip of WP31, with no figure). The survey figure is stated once, with that label.
+  test('Work states the youth programs’ survey figure once, labelled as theirs, under the trial and its relevance line; the two evidence links follow', async ({ page }) => {
     await open(page, 'programs/jobready-work/');
     const text = compact(await main(page));
-    expect(text).not.toContain('78.2%');
-    await expect(page.locator('#offer-evidence .pe__more a')).toHaveText(['The Randomized Trial', 'Impact Survey 2026']);
+    expect(text.split('78.2%').length - 1).toBe(1);
+    expect(text).toContain('From CodersTrust’s youth programs: Among surveyed completers, employment was 78.2%');
+    await expect(page.locator('#proof-band [data-trial-scope]')).toHaveText('This trial evaluated WSDFM training for women in Bangladesh, not JobReady@Work.');
+    await expect(page.locator('#offer-evidence')).toHaveCount(0);
+    await expect(page.locator('#proof-band .proofband__links a')).toHaveText(['The Randomized Trial', 'Impact Survey 2026']);
   });
 
   // WP39 (cycle-16 review): the answer names the practical work in plain words (tests/wp39.spec.ts holds both answers); each subject is a module of the course, which the build checks
@@ -179,9 +188,13 @@ test.describe('Programs', () => {
   // WP39 (cycle-16 review): YouthWIDE's features band was three short cards; its third said the curriculum is "designed to keep pace as AI changes entry-level tasks" (the designed-to scope stayed).
   // WP57 (cycle-29 review, GPT-6.1 Sol G2): that band is gone, so YouthWIDE no longer states the sentence (tests/wp31.spec.ts keeps the absolute "tracks have to follow" wording off the page).
   // WP40 (cycle-17 review): Investors' three cards no longer carry the AI-ready curriculum row; its AI answer (Q5) says tracks are chosen from current employer demand, with each track's AI content and work-entry plan agreed before enrollment
-  test('YouthWIDE no longer carries the removed card’s "designed to keep pace" sentence; Investors’ AI answer says tracks are chosen from current employer demand', async ({ page }) => {
+  // WP175 (owner decision Q1 (a) of 2026-11-28): YouthWIDE's C8 band is back, and its third card (P3, "Tracks That Follow Employer Demand") carries the sentence again, once, inside that band.
+  test('YouthWIDE states the "designed to keep pace" sentence once, in its restored C8 card; Investors’ AI answer says tracks are chosen from current employer demand', async ({ page }) => {
     await open(page, 'programs/youthwide/');
-    expect(compact(await main(page))).not.toContain('designed to keep pace as AI changes entry-level tasks');
+    const yw = compact(await main(page));
+    expect(yw.split('designed to keep pace as AI changes entry-level tasks').length - 1).toBe(1); // WP175 (it was absent)
+    expect(compact((await page.locator('#features').textContent()) ?? '')).toContain('designed to keep pace as AI changes entry-level tasks');
+    expect(yw).not.toMatch(/[Tt]racks have to follow/);
     await open(page, 'partner-with-us/investors/');
     expect(compact(await everything(page))).toContain('we choose tracks from current employer demand, set per country, and agree each track’s AI content and work-entry plan with the program partner before enrollment');
   });

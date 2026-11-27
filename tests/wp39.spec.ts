@@ -513,14 +513,18 @@ test.describe('smaller heading changes (item 10)', () => {
     }
   });
 
-  test('SuperKids: the agreements band is headed "Delivery and Agreements" and keeps its subheadings, its figure and its caution', async ({ page }) => {
+  // WP175 (owner decisions Q2 (a) and Q9 (a) of 2026-11-28): the delivered figure (SK-05, "400+ SuperKids learners since 2021") is the track-record band's authority (C5) now, so the agreements band (C7) is the
+  // agreement targets alone, headed with its former subheading, "Agreement Targets" (WP166-B R2: it was "Agreed, Not Delivered"); the caution still says they are not delivered reach.
+  test('SuperKids: the agreements band is headed "Agreement Targets" and keeps its caution; the delivered figure is in the track-record band', async ({ page }) => {
     await open(page, 'programs/superkids/');
     const band = page.locator('#agreements');
-    await expect(band.locator('h2')).toHaveText('Delivery and Agreements');
+    await expect(band.locator('h2')).toHaveText('Agreement Targets');
     await expect(band.locator('.eyebrow')).toHaveText('What Is in Place');
-    expect(await texts(page, '#agreements h3.agree__h')).toEqual(['Delivered', 'Agreement Targets']); // WP166-B (marketing review R2): the second subheading is "Agreement Targets" (it was "Agreed, Not Delivered"); the caution below still says they are not delivered reach
-    await expect(band.locator('.agree__delivered')).toHaveAttribute('data-fact', 'SK-05');
+    await expect(band.locator('h3')).toHaveCount(0); // WP175 (it had "Delivered" and "Agreement Targets" subheadings)
+    await expect(band.locator('[data-fact="SK-05"]')).toHaveCount(0);
+    await expect(page.locator('#guide [data-fact="SK-05"]')).toHaveCount(1);
     expect(compact(await band.textContent())).toContain('These are agreement targets, not delivered reach.');
+    expect(await mainText(page)).not.toContain('Delivery and Agreements');
     expect(await mainText(page)).not.toContain('What Has Been Delivered, and What Is Only Agreed');
   });
 });

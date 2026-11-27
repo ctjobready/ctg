@@ -298,34 +298,40 @@ test.describe('Foundations: what is discussed for each funding route is said onc
   });
 });
 
-test.describe('NU Post Graduate Diploma: a link to the wider programs, not their results', () => {
-  test('the overview shows a one-link strip headed "Evidence from CodersTrust’s Wider Programs" and no trial or survey figure', async ({ page }) => {
+// WP175 (owner decisions Q3 (a) of 2026-11-28 and the C7 TRIAL-SCOPE rule): the one-link strip is a compact proof band again (#proof-band): the one-line trial lead, the relevance line for this diploma directly
+// under it, the survey line and the one link to the Impact page. It still shows no tile and no "(Not This Diploma)" label, and none of the earlier figures (+41%, 10.3, +38%).
+test.describe('NU Post Graduate Diploma: the wider programs’ evidence, with the relevance line for this diploma', () => {
+  test('the overview shows a compact proof band from the wider programs: the trial lead, "not the NU Post Graduate Diploma", the survey line and one link to Impact', async ({ page }) => {
     await open(page, 'programs/nu-postgraduate-diploma/');
-    const strip = page.locator('#offer-evidence');
-    await expect(strip.locator('h2')).toHaveText('Evidence from CodersTrust’s Wider Programs');
-    await expect(strip.locator('.pe__item, [data-fact], .eyebrow')).toHaveCount(0);
-    const links = strip.locator('nav[aria-label="Evidence from CodersTrust’s Wider Programs"] a');
+    await expect(page.locator('#offer-evidence')).toHaveCount(0);
+    const band = page.locator('#proof-band');
+    await expect(band).toHaveCount(1);
+    await expect(band.locator('.eyebrow').first()).toHaveText('From CodersTrust’s Wider Programs');
+    await expect(band.locator('[data-trial-scope]')).toHaveText('This trial evaluated WSDFM training for women in Bangladesh, not the NU Post Graduate Diploma.');
+    await expect(band.locator('.factstat, .stat')).toHaveCount(0);
+    const links = band.locator('.proofband__links a');
     await expect(links).toHaveCount(1);
     expect(compact(await links.first().textContent())).toBe('See CodersTrust’s Impact');
     expect(await links.first().getAttribute('href')).toMatch(/\/impact\/$/);
-    await expect(page.locator('#proof-band')).toHaveCount(0);
-    await expect(page.locator('[data-trial-scope]')).toHaveCount(0);
     const text = await mainText(page);
-    expect(text).not.toMatch(/10\.3|\b10 percentage points|78\.2%|48\.0%|\+41%|\+38%|Not This Diploma|not from the National University Post Graduate Diploma|This trial evaluated/);
+    expect(text).toContain('A randomized trial of CodersTrust’s WSDFM program found women offered a place were 10 percentage points more likely to be employed.');
+    expect(text.split('78.2%').length - 1).toBe(1);
+    expect(text).not.toMatch(/10\.3|\+41%|\+38%|Not This Diploma|not from the National University Post Graduate Diploma/);
   });
 
-  test('the strip sits between "An Affiliated College of National University" (WP104; it was "Delivered with National University") and the questions, and the closing call to action keeps its one primary button', async ({ page }) => {
+  test('the proof band follows the courses (C6) and comes before the three steps (C8); the closing call to action keeps its one primary button', async ({ page }) => {
     await open(page, 'programs/nu-postgraduate-diploma/');
     const order = await page.evaluate(() => Array.from(document.querySelectorAll('main section[id]')).map((s) => s.id));
-    expect(order.indexOf('offer-evidence')).toBe(order.indexOf('guide') + 1);
-    expect(order.indexOf('faq')).toBe(order.indexOf('offer-evidence') + 1);
+    expect(order.indexOf('courses')).toBeGreaterThan(order.indexOf('guide')); // WP175: the track record ("An Affiliated College of National University") comes before the courses
+    expect(order.indexOf('proof-band')).toBe(order.indexOf('courses') + 1);
+    expect(order.indexOf('steps')).toBe(order.indexOf('proof-band') + 1);
     await expect(page.locator('#cta .btn--primary')).toHaveCount(1);
   });
 
   test('the page shows today as its last-updated date', async ({ page }) => {
     await open(page, 'programs/nu-postgraduate-diploma/');
     // WP76 (2026-10-22): the page's wording changed that day (four courses), so PAGE_UPDATED.nu moved from 2026-10-15
-    await expect(page.locator('.updated time')).toHaveAttribute('datetime', '2026-11-26'); // WP168-B (owner statement of 24 November 2026: campus, next intake, installments). Earlier: WP166-B (marketing review R2: the hero lead, the short-form line, the skills card and the eligibility FAQ; it read 2026-11-02). WP151 (the FAQ "How Do I Apply?" is gone); WP148: "Post Graduate Diploma" capitalised (it read 2026-10-31); WP104: the page's wording last changed on 29 October (WP102; the Context heading, WP104)
+    await expect(page.locator('.updated time')).toHaveAttribute('datetime', '2026-11-28'); // WP175 (owner decisions of 2026-11-28: the CMF v3 order and coverage; it read 2026-11-26, WP170). Earlier: WP168-B (owner statement of 24 November 2026: campus, next intake, installments). Earlier: WP166-B (marketing review R2: the hero lead, the short-form line, the skills card and the eligibility FAQ; it read 2026-11-02). WP151 (the FAQ "How Do I Apply?" is gone); WP148: "Post Graduate Diploma" capitalised (it read 2026-10-31); WP104: the page's wording last changed on 29 October (WP102; the Context heading, WP104)
   });
 });
 

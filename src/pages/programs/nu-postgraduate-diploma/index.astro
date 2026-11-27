@@ -5,6 +5,11 @@
 // WP30d (owner direction 2026-10-14: less is more): the definition, "employers are asking" (cost), "a clearer route" (vignettes), three-step, "start your application" and
 // "talk to admissions" bands are cut; admissions' details stay in Before You Apply and the call and application actions stay in the hero and the closing band.
 // WP34 (cycle-11 review): the trial and survey band (which said, under its own figures, that it was not about this diploma) is a one-link strip to the Impact page.
+// WP175 (owner decisions of 28 November 2026: every conversion page follows CMF v3, C1 to C14, in order and coverage; scratchpad wp175-decisions.md): every band sits in a Tone wrapper that carries its
+// CMF component (data-cmf; tests/wp175-nu-pgd.spec.ts reads the order). The page runs C1 → GEO (restored) → C2–C4 compressed (Q7 (a): the two tiles, the pains, Q4 (b), and the C3 transition line) →
+// C5 (the empathy line, the one-line origin, the NU tile and logos, the method line last) → C6 (the courses, moved after C5) → C7 (the compact trial band again, with the TRIAL-SCOPE line) → C8 ("How It
+// Works in Three Steps" alone; the relievers wait for NU sign-off, Q10 (a)) → C9 → C11 (Before You Apply, moved after the FAQ) → C12 (restored, one line) → C13 with C14 inside it. The S4-C2 exception
+// stands (Q10 (a)): no C6 positioning statement and no C10 band until National University signs off.
 import LandingLayout from '../../../layouts/LandingLayout.astro';
 import Section from '../../../components/ui/Section.astro';
 import SectionHeader from '../../../components/ui/SectionHeader.astro';
@@ -15,7 +20,11 @@ import Fact from '../../../components/facts/Fact.astro';
 import { linkAttrs } from '../../../lib/url';
 import Hero from '../../../components/system/Hero.astro';
 import Button from '../../../components/system/Button.astro';
-import PairedEvidence from '../../../components/pages/partners/PairedEvidence.astro';
+import Tone from '../../../components/pages/home/Tone.astro';
+import DefinitionBand from '../../../components/sections/DefinitionBand.astro';
+import ProofBand from '../../../components/sections/ProofBand.astro';
+import StepFlow from '../../../components/ui/StepFlow.astro';
+import RiskSection from '../../../components/pages/programs/RiskSection.astro';
 import ProblemSection from '../../../components/pages/programs/ProblemSection.astro';
 import GuideSection from '../../../components/pages/programs/GuideSection.astro';
 import MechanismSection from '../../../components/pages/programs/MechanismSection.astro';
@@ -24,7 +33,7 @@ import { anchor, faqNode, type FaqSource } from '../../../components/pages/progr
 import { PAGE_UPDATED } from '../../../components/pages/programs/meta';
 import { NU_APPLY, NU_CALL, NU_CALL_NUMBER, NU_CALL_TEXT, NU_CAMPUS_DROP, NU_COURSE_COPY, NU_COURSE_SUBJECT, NU_INSTALLMENTS_DROP, NU_INTAKE_SWAP, NU_NAME, NU_PATH, nuAdmissionsFaqs, nuCourses, nuOverview } from '../../../components/pages/programs/nuPgd';
 import NuNoticeLinks from '../../../components/pages/programs/NuNoticeLinks.astro';
-import { HEADLINE, NU_ELIGIBILITY, VALUE_PROPOSITION } from '../../../data/copy';
+import { C3_TRANSITION, EMPATHY, HEADLINE, METHOD, NU_ELIGIBILITY, ORIGIN_SHORT, TRIAL_LEAD, TRIAL_SCOPE, VALUE_PROPOSITION } from '../../../data/copy';
 import { COURSES_URL } from '../../../lib/site';
 import { formatDate, isoDate } from '../../../lib/format';
 import { pageUrl, webPage } from '../../../lib/schema';
@@ -66,107 +75,160 @@ const jsonLd = [
 ---
 
 <LandingLayout title={title} description={description} path={path} breadcrumbs={[{ label: 'Programs', href: '/programs/' }, { label: 'NU Post Graduate Diploma' }]} jsonLd={jsonLd} stickyCta={apply}>
-  <!-- C1: one primary CTA (Apply Now); admissions is a text link; duration and fee sit in the hero, the full table (eligibility and delivery included, stated once) follows the value band -->
-  <Hero eyebrow={NU_NAME} title={HEADLINE.nuPgd} lead={VALUE_PROPOSITION.nuPgd} artSeed="nu-pgd">
-    <Fragment slot="actions">
-      <Button href={apply.href} iconEnd="arrow-right">{apply.label}</Button>
-      <a class="link" href={NU_CALL.href}>{NU_CALL_TEXT}</a>
-      <!-- WP168-B (owner statement of 24 November 2026): the campus and the next intake are in the key facts below, so the link that offered to confirm them ("Confirm Intake, Schedule and Location", WP27) goes to the full admissions table -->
-      <a class="link" href="#before-you-apply">See All Admissions Details</a>
-      <!-- WP166-B (marketing review R2-23): what "Apply Now" opens, under the button (the closing band keeps its two steps). -->
-      <p class="hero-note">A short form: your name, contact details and course. Admissions then shares the application steps.</p>
-    </Fragment>
-    <!-- WP168-B (owner statement of 24 November 2026): the key facts add the fee in installments (NU-16), the campus (NU-14) and the next intake (NU-15) -->
-    <dl slot="stats" class="keyfacts">
-      <div><dt>Duration</dt><dd><Fact id="NU-02" /></dd></div>
-      <div><dt>Program Fee</dt><dd><Fact id="NU-03" />, <Fact id="NU-16" drop={NU_INSTALLMENTS_DROP} /></dd></div>
-      <div><dt>Campus</dt><dd><Fact id="NU-14" drop={NU_CAMPUS_DROP} /></dd></div>
-      <div><dt>Application Deadline</dt><dd><Fact id="NU-15" swap={NU_INTAKE_SWAP} /></dd></div>
-    </dl>
-  </Hero>
+  <!-- C1: one primary CTA (Apply Now); admissions is a text link; duration and fee sit in the hero, the full table (eligibility and delivery included, stated once) is C11 -->
+  <Tone cmf="C1">
+    <Hero eyebrow={NU_NAME} title={HEADLINE.nuPgd} lead={VALUE_PROPOSITION.nuPgd} artSeed="nu-pgd">
+      <Fragment slot="actions">
+        <Button href={apply.href} iconEnd="arrow-right">{apply.label}</Button>
+        <a class="link" href={NU_CALL.href}>{NU_CALL_TEXT}</a>
+        <!-- WP168-B (owner statement of 24 November 2026): the campus and the next intake are in the key facts below, so the link that offered to confirm them ("Confirm Intake, Schedule and Location", WP27) goes to the full admissions table -->
+        <a class="link" href="#before-you-apply">See All Admissions Details</a>
+        <!-- WP166-B (marketing review R2-23): what "Apply Now" opens, under the button (the closing band keeps its two steps). -->
+        <p class="hero-note">A short form: your name, contact details and course. Admissions then shares the application steps.</p>
+      </Fragment>
+      <!-- WP168-B (owner statement of 24 November 2026): the key facts add the fee in installments (NU-16), the campus (NU-14) and the next intake (NU-15) -->
+      <dl slot="stats" class="keyfacts">
+        <div><dt>Duration</dt><dd><Fact id="NU-02" /></dd></div>
+        <div><dt>Program Fee</dt><dd><Fact id="NU-03" />, <Fact id="NU-16" drop={NU_INSTALLMENTS_DROP} /></dd></div>
+        <div><dt>Campus</dt><dd><Fact id="NU-14" drop={NU_CAMPUS_DROP} /></dd></div>
+        <div><dt>Application Deadline</dt><dd><Fact id="NU-15" swap={NU_INTAKE_SWAP} /></dd></div>
+      </dl>
+    </Hero>
+  </Tone>
 
-  <!-- WP22: the course-choice cards sit directly under the hero (they were the C6 band). WP76 (owner answer 2026-10-22: the diploma has four courses): four cards, and the lead names all four (NU-13 states them; SC-04 the partnership). -->
-  <MechanismSection id="courses" title="Choose Your Course" lead={coursesLead} eyebrow="The Courses" factIds={['NU-04', 'NU-13']} tone="airy">
-    <div class="courses" data-fact="NU-04 NU-13">
-      {
-        courses.map((c) => (
-          <CourseCard
-            title={c.title}
-            image={nuBanner(c.slug)?.src}
-            imageAlt={nuBanner(c.slug)?.alt}
-            assetId={nuBanner(c.slug)?.assetId}
-            ratio="808 / 555"
-            meta={NU_COURSE_COPY[c.slug].topics.map((t) => ({ icon: 'book-open', label: t }))}
-            href={`${path}${c.slug}/`}
-            actionLabel="View Course"
-          />
-        ))
-      }
-    </div>
-  </MechanismSection>
+  <!-- GEO · What is CodersTrust? (ID-01 verbatim, directly under the hero; doc 06 P15 GEO). WP175 (owner decision of 2026-11-28): restored; WP30d had cut the definition band. -->
+  <Tone cmf="GEO"><DefinitionBand /></Tone>
 
-  <!-- C2 -->
-  <ProblemSection
-    title="A Degree Alone May Not Be Enough for Today’s Digital Jobs"
-    bluf="You are aiming for interviews, a first digital job and credentials employers recognize."
-    factIds={['PX-03', 'PX-05']}
-    scope={{ 'PX-05': { label: 'of employers globally reported difficulty finding talent in 2026' } }}
-  />
+  <!-- C2–C4, compressed (WP175, owner decision Q7 (a) of 2026-11-28; doc 04 4.7 and doc 06 P15 record it): the two statistic tiles are the pains (Q4 (b); P3 was removed with owner approval, WP166-B R2-24),
+       then the C3 transition line as the band's last line. C3 and C4 are not rendered. -->
+  <Tone cmf="C2-C4 (compressed)">
+    <ProblemSection
+      title="A Degree Alone May Not Be Enough for Today’s Digital Jobs"
+      bluf="You are aiming for interviews, a first digital job and credentials employers recognize."
+      factIds={['PX-03', 'PX-05']}
+      scope={{ 'PX-05': { label: 'of employers globally reported difficulty finding talent in 2026' } }}
+      transition={C3_TRANSITION}
+    />
+  </Tone>
   <!-- WP166-B (marketing review R2-24): the card "It Is Hard to Know Which Skills to Pick" is gone (it raised a worry the page never answered); the band keeps its heading, lead and two statistics. -->
 
-  <Section id="before-you-apply" aria-labelledby="before-h">
-    <!-- WP161 (A-32): the lead says these are CodersTrust's delivery terms (it said "as stated for the National University Post Graduate Diploma", which read as NU's own fee and eligibility) -->
-    <SectionHeader id="before-h" eyebrow="Admissions" title="Before You Apply" lead="Program details for CodersTrust’s delivery of the National University Post Graduate Diploma." />
-    <dl class="ba">
-      <div class="ba__row"><dt>Eligibility</dt><dd><Fact id="NU-01" /></dd></div>
-      <div class="ba__row"><dt>Duration</dt><dd><Fact id="NU-02" /></dd></div>
-      <div class="ba__row"><dt>Credit Hours and Subjects (Each Course)</dt><dd><Fact id="NU-09" /></dd></div>
-      <!-- WP168-B (owner statement of 24 November 2026): the Intake row states the next intake (NU-15; it was "Schedule and Intake": "Admissions confirms intake dates and schedule with each applicant."; the class schedule is not set, so none is stated) before National University's notices for its own intake;
-           the Campus row says where classes are held (NU-14; it was "Teaching Location": "Admissions confirms the teaching location with each applicant."); the fee is payable in installments (NU-16) -->
-      <div class="ba__row"><dt>Intake</dt><dd><Fact id="NU-15" /> <NuNoticeLinks /></dd></div>
-      <div class="ba__row"><dt>Delivery</dt><dd><Fact id="NU-10" /></dd></div>
-      <div class="ba__row"><dt>Campus</dt><dd><Fact id="NU-14" /></dd></div>
-      <div class="ba__row"><dt>Program Fee</dt><dd><Fact id="NU-03" />, <Fact id="NU-16" drop={NU_INSTALLMENTS_DROP} /></dd></div>
-      <div class="ba__row"><dt>Payment</dt><dd><Fact id="NU-05" /></dd></div>
-      <div class="ba__row"><dt>Recognition</dt><dd><Fact id="NU-04" /></dd></div>
-      <!-- WP161 (A-34): the linked Google Form registers interest (name, contact details and course); admissions then shares the application steps -->
-      <div class="ba__row" id="admissions-contact"><dt>How to Apply</dt><dd>Complete the <a class="link" href={applyLink.href} rel={applyLink.rel}>short form</a> (name, contact details and course); admissions then shares the application steps. For help, call <a class="link" href={NU_CALL.href}>{NU_CALL_NUMBER}</a> or email <a class="link" href="mailto:hello@coderstrustbd.com">hello@coderstrustbd.com</a>.</dd></div>
-    </dl>
-  </Section>
+  <!-- C5. WP105 (Sonnet XHigh run 1, kit 71, Polish 6): the band no longer opens with "CodersTrust is an affiliated college (College Code: 6634) under the National University of Bangladesh." (the Recognition row in Before You Apply says it, NU-04).
+       WP175 (Q2 (a)): the band follows the problem band (CMF order; the courses and Before You Apply moved down), opens with the empathy line and the one-line origin, and ends with the method line (the affiliated-college
+       line, NU-04, WP102). -->
+  <Tone cmf="C5">
+    <GuideSection
+      eyebrow="Context"
+      title="An Affiliated College of National University"
+      empathy={EMPATHY.nuPgd}
+      origin={ORIGIN_SHORT}
+      statIds={['SC-05']}
+      partnerGroup="academic"
+      method={METHOD.nuPgd}
+    />
+  </Tone>
 
-  <!-- C5. WP105 (Sonnet XHigh run 1, kit 71, Polish 6): the band no longer opens with "CodersTrust is an affiliated college (College Code: 6634) under the National University of Bangladesh." (the Recognition row in Before You Apply says it, NU-04). -->
-  <GuideSection
-    eyebrow="Context"
-    title="An Affiliated College of National University"
-    statIds={['SC-05']}
-    partnerGroup="academic"
-    method={{ text: 'Practical digital-skills courses, delivered by CodersTrust.', factId: 'NU-04' }}
-  />
+  <!-- C6: the course choice (WP22 had put it directly under the hero; WP175, Q1 (a): it follows C5). WP76 (owner answer 2026-10-22: the diploma has four courses): four cards, and the lead names all four (NU-13 states them; SC-04 the partnership).
+       Declared exception S4-C2 (doc 06 P15, doc 04 4.7; WP175, Q10 (a)): no positioning statement until National University signs off; the lead stands in for it. White ground: the track-record band above is airy. -->
+  <Tone cmf="C6">
+    <MechanismSection id="courses" title="Choose Your Course" lead={coursesLead} eyebrow="The Courses" factIds={['NU-04', 'NU-13']}>
+      <div class="courses" data-fact="NU-04 NU-13">
+        {
+          courses.map((c) => (
+            <CourseCard
+              title={c.title}
+              image={nuBanner(c.slug)?.src}
+              imageAlt={nuBanner(c.slug)?.alt}
+              assetId={nuBanner(c.slug)?.assetId}
+              ratio="808 / 555"
+              meta={NU_COURSE_COPY[c.slug].topics.map((t) => ({ icon: 'book-open', label: t }))}
+              href={`${path}${c.slug}/`}
+              actionLabel="View Course"
+            />
+          ))
+        }
+      </div>
+    </MechanismSection>
+  </Tone>
 
-  <!-- C7. WP34 (cycle-11 review): no trial or survey figure is shown on the admissions page (they are not this diploma's results); a one-link strip points to the wider programs' evidence. The trial relevance line has no band to sit in (scripts/check-facts.mjs allows that, as on the two employer pages). -->
-  <PairedEvidence
-    title="Evidence from CodersTrust’s Wider Programs"
-    eyebrow=""
-    items={[]}
-    broaderLabel="Evidence from CodersTrust’s Wider Programs"
-    broader={[{ label: 'See CodersTrust’s Impact', href: '/impact/' }]}
-    tone="white"
-  />
+  <!-- C7. WP175 (owner decisions Q1 (a) and Q3 (a) of 2026-11-28): the compact proof band is back (WP34 had replaced it with a one-link strip): the one-line trial lead, the TRIAL-SCOPE line for this diploma
+       directly under it (scripts/check-facts.mjs pins the words), the survey line and the link to the Impact page. The eyebrow says whose evidence it is (the earlier band's, without "(Not This Diploma)", which the
+       relevance line now says). -->
+  <Tone cmf="C7">
+    <ProofBand
+      title="Outcomes from CodersTrust’s Wider Programs"
+      eyebrow="From CodersTrust’s Wider Programs"
+      headlineFact="RC-01"
+      trialLead={TRIAL_LEAD}
+      trialScope={TRIAL_SCOPE.nuPgd.text}
+      statIds={[]}
+      compact
+      links={[{ label: 'See CodersTrust’s Impact', href: '/impact/' }]}
+    />
+  </Tone>
+
+  <!-- C8. WP175 (owner decision Q10 (a) of 2026-11-28): only "How It Works in Three Steps" (Apply → Learn → Prepare for Work; the band published until WP30d, c211b0a5^): the C8 relievers wait for National University's
+       sign-off. Step 1 names the short form, as the hero and Before You Apply do (WP161 A-34: it registers interest, it is not the application). -->
+  <Tone cmf="C8">
+    <Section id="steps" tone="airy" aria-labelledby="steps-h">
+      <SectionHeader id="steps-h" eyebrow="How It Works" title="How It Works in Three Steps" />
+      <StepFlow
+        steps={[
+          { title: 'Apply', text: 'Complete the short form.' },
+          { title: 'Learn', text: 'Attend the diploma courses.' },
+          { title: 'Prepare for Work', text: 'Take your new skills into interviews, freelance work or your next role.' },
+        ]}
+      />
+    </Section>
+  </Tone>
 
   <!-- C9 -->
-  <FaqSection sources={faqSources} title="Questions Applicants Ask" />
+  <Tone cmf="C9"><FaqSection sources={faqSources} title="Questions Applicants Ask" /></Tone>
 
-  <!-- C13 + C14 (WP24c): "Ready to Apply?" and "What Happens After You Apply" are one band -->
-  <CTABand id="cta" heading="Ready to Apply?" cta={apply} secondary={NU_CALL}>
-    <ol class="after" aria-label="What Happens After You Apply">
-      <li><strong>Register Your Interest.</strong> The Apply Now button opens a short form asking for your name, contact details and course.</li>
-      <li><strong>Admissions Contacts You.</strong> Our admissions team shares the application steps.</li>
-    </ol>
-  </CTABand>
+  <!-- C10: none (declared exception S4-C2, doc 06 P15; WP175, owner decision Q10 (a) of 2026-11-28: no C10 band until National University signs off). -->
 
-  <Section pad="sm" aria-label="Last updated">
-    <p class="updated">Last updated <time datetime={isoDate(PAGE_UPDATED.nu)}>{formatDate(PAGE_UPDATED.nu)}</time></p>
-  </Section>
+  <!-- C11: the offer terms (WP175, Q1 (a): the band follows the FAQ; it stood before the track record). -->
+  <Tone cmf="C11">
+    <Section id="before-you-apply" aria-labelledby="before-h">
+      <!-- WP161 (A-32): the lead says these are CodersTrust's delivery terms (it said "as stated for the National University Post Graduate Diploma", which read as NU's own fee and eligibility) -->
+      <SectionHeader id="before-h" eyebrow="Admissions" title="Before You Apply" lead="Program details for CodersTrust’s delivery of the National University Post Graduate Diploma." />
+      <dl class="ba">
+        <div class="ba__row"><dt>Eligibility</dt><dd><Fact id="NU-01" /></dd></div>
+        <div class="ba__row"><dt>Duration</dt><dd><Fact id="NU-02" /></dd></div>
+        <div class="ba__row"><dt>Credit Hours and Subjects (Each Course)</dt><dd><Fact id="NU-09" /></dd></div>
+        <!-- WP168-B (owner statement of 24 November 2026): the Intake row states the next intake (NU-15; it was "Schedule and Intake": "Admissions confirms intake dates and schedule with each applicant."; the class schedule is not set, so none is stated) before National University's notices for its own intake;
+             the Campus row says where classes are held (NU-14; it was "Teaching Location": "Admissions confirms the teaching location with each applicant."); the fee is payable in installments (NU-16) -->
+        <div class="ba__row"><dt>Intake</dt><dd><Fact id="NU-15" /> <NuNoticeLinks /></dd></div>
+        <div class="ba__row"><dt>Delivery</dt><dd><Fact id="NU-10" /></dd></div>
+        <div class="ba__row"><dt>Campus</dt><dd><Fact id="NU-14" /></dd></div>
+        <div class="ba__row"><dt>Program Fee</dt><dd><Fact id="NU-03" />, <Fact id="NU-16" drop={NU_INSTALLMENTS_DROP} /></dd></div>
+        <div class="ba__row"><dt>Payment</dt><dd><Fact id="NU-05" /></dd></div>
+        <div class="ba__row"><dt>Recognition</dt><dd><Fact id="NU-04" /></dd></div>
+        <!-- WP161 (A-34): the linked Google Form registers interest (name, contact details and course); admissions then shares the application steps -->
+        <div class="ba__row" id="admissions-contact"><dt>How to Apply</dt><dd>Complete the <a class="link" href={applyLink.href} rel={applyLink.rel}>short form</a> (name, contact details and course); admissions then shares the application steps. For help, call <a class="link" href={NU_CALL.href}>{NU_CALL_NUMBER}</a> or email <a class="link" href="mailto:hello@coderstrustbd.com">hello@coderstrustbd.com</a>.</dd></div>
+      </dl>
+    </Section>
+  </Tone>
+
+  <!-- C12. WP175 (Q1 (a)): restored as one line (the band published until WP30d, c211b0a5^; doc 04 4.7 C12), directly before the closing band. It has no phone link of its own: the closing band's "Call
+       Admissions" is the page's phone action there (S4-m10). -->
+  <Tone cmf="C12"><RiskSection eyebrow="Ask First" title="Talk to Admissions Before You Decide" lead="Call with your eligibility and recognition questions before you apply." /></Tone>
+
+  <!-- C13 + C14 (WP24c): "Ready to Apply?" and "What Happens After You Apply" are one band; the list is the C14 sub-block (data-cmf). -->
+  <Tone cmf="C13">
+    <CTABand id="cta" heading="Ready to Apply?" cta={apply} secondary={NU_CALL}>
+      <ol class="after" aria-label="What Happens After You Apply" data-cmf="C14">
+        <li><strong>Register Your Interest.</strong> The Apply Now button opens a short form asking for your name, contact details and course.</li>
+        <li><strong>Admissions Contacts You.</strong> Our admissions team shares the application steps.</li>
+      </ol>
+    </CTABand>
+  </Tone>
+
+  <!-- WP175: not a CMF band; the wrapper keeps the 32px join to a band on the same ground above it (Tone's join rule reads wrappers, not bare bands). -->
+  <Tone>
+    <Section pad="sm" aria-label="Last updated">
+      <p class="updated">Last updated <time datetime={isoDate(PAGE_UPDATED.nu)}>{formatDate(PAGE_UPDATED.nu)}</time></p>
+    </Section>
+  </Tone>
 </LandingLayout>
 
 <style>

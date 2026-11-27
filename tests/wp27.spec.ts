@@ -89,7 +89,9 @@ test.describe('JobReady@Campus and JobReady@Work', () => {
     await open(page, 'programs/jobready-campus/');
     // WP39 (cycle-16 review): the features band was three short cards, the first "Industry certification exam preparation by track, ...". WP166-B (marketing review R2-14): that band ("Built Around What Institutions Ask For")
     // is gone, and the assertion on its card with it; the page states exam preparation in the glance's training row and in How It Works' "What" card, and still never the certification itself.
-    await expect(page.locator('#features')).toHaveCount(0);
+    // WP175 (owner decision Q1 (a) of 2026-11-28): the band is back (CAMPUS_INCLUDES); its first card states exam preparation again, not the certification itself.
+    await expect(page.locator('#features')).toHaveCount(1);
+    expect(compact(await page.locator('#features li.card').first().textContent())).toContain('Industry certification exam preparation by track');
     const text = compact((await page.locator('main').textContent()) ?? '');
     expect(text).toContain('100 training hours per certification, including certification exam preparation and one exam fee per trainee');
     expect(text).toContain('Preparation for industry-recognized certifications on tracks set from employer demand');

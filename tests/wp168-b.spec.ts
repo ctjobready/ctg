@@ -159,17 +159,19 @@ test.describe('NU Post Graduate Diploma: campus, next intake and installments (o
       const link = /<a class="link" href="([^"]+)"[^>]*>See All Admissions Details<\/a>/.exec(hero);
       expect(link?.[1]).toBe('#before-you-apply');
       expect(html(rel)).toContain('id="before-you-apply"');
-      expect(lastUpdated(rel)).toBe(NU_DAY);
-      expect(nodes(rel, 'WebPage')[0]?.dateModified).toBe(NU_DAY);
+      // WP175 (owner decisions of 2026-11-28): the overview's CMF v3 order and coverage moved it to 2026-11-28; the course pages stay at 2026-11-26
+      const day = rel === NU ? '2026-11-28' : NU_DAY;
+      expect(lastUpdated(rel)).toBe(day);
+      expect(nodes(rel, 'WebPage')[0]?.dateModified).toBe(day);
     });
   }
 
   // PAGE_UPDATED (src/components/pages/programs/meta.ts) cannot be imported in a spec (it reaches import.meta.env through src/lib/url.ts); its source is read instead.
-  // WP175 (owner decision Q5 of 2026-11-28: the crafted C6 statement) moved it to 2026-11-28 (JobReady@Work)
-  test('PAGE_UPDATED: the NU overview and the NU course pages are dated 2026-11-26, JobReady@Work 2026-11-28', () => {
+  // WP175 (owner decision Q5 of 2026-11-28: the crafted C6 statement) moved it to 2026-11-28 (JobReady@Work); WP175 (package C: the CMF v3 order and coverage) moved the NU overview to 2026-11-28 too
+  test('PAGE_UPDATED: the NU course pages are dated 2026-11-26, the NU overview and JobReady@Work 2026-11-28', () => {
     const meta = readFileSync('src/components/pages/programs/meta.ts', 'utf8');
-    for (const key of ['work']) expect(new RegExp(`\\n  ${key}: '2026-11-28',`).test(meta), key).toBe(true);
-    for (const key of ['nu', 'nuCourse']) expect(new RegExp(`\\n  ${key}: '${NU_DAY}',`).test(meta), key).toBe(true); // WP170
+    for (const key of ['work', 'nu']) expect(new RegExp(`\\n  ${key}: '2026-11-28',`).test(meta), key).toBe(true);
+    for (const key of ['nuCourse']) expect(new RegExp(`\\n  ${key}: '${NU_DAY}',`).test(meta), key).toBe(true); // WP170
   });
 
   test('the overview answers the next intake, where classes are held and the installments in place (visible FAQ and FAQPage JSON-LD)', () => {

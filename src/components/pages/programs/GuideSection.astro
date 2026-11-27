@@ -11,18 +11,21 @@ import { statLabelUnder, type CopyBlock } from '../../../data/copy';
 import { fact } from '../../../data/facts';
 
 /**
- * C5 Guide, empathy first: empathy line (lead) → ORIGIN → authority (default slot) → method signal.
+ * C5 Guide, empathy first: empathy line (lead) → ORIGIN → authority (default slot, stat tiles, partner strip) → method signal.
  * Stats are FactStats; partner logos come from the shared PartnerStrip (PA-04 caption).
  * WP64 rework RW2 (coordinator): when the heading says the period (YouthWIDE: "We’ve Built This Path Since 2014", WP67), a tile whose label ends "since 2014" drops it ("learners trained"; statLabelUnder, src/data/copy.ts).
+ * WP175 (owner decision of 28 November 2026, Q2 (a)): every program page's C5 has four elements, one line each, in CMF order: the empathy line (EMPATHY[page]), the one-line origin (ORIGIN_SHORT),
+ * the authority (the slot, the tiles and the logo strip) and the method line (METHOD[page]), which is the band's last line, under the logo strip (as PartnerGuideBand's `methodLast`).
  */
 interface Props {
   title: string;
-  /** The empathy line that opens the band; a page that already says it in its problem band (JobReady@Campus) leaves it out, and JobReady@Work has none (WP61). */
+  /** The empathy line that opens the band (EMPATHY[page] in src/data/copy.ts). */
   empathy?: string;
-  /** Optional history line; a page that already prints it elsewhere omits it. */
+  /** The origin line (ORIGIN_SHORT, or originShortUnder the band's heading). */
   origin?: CopyBlock;
   statIds?: string[];
-  method?: { text: string; factId?: string; link?: { label: string; href: string } };
+  /** The method line, the band's last line (METHOD[page]); `facts` become its data-fact. */
+  method?: { text: string; facts?: string[]; link?: { label: string; href: string } };
   partnerGroup?: PartnerGroup | PartnerGroup[];
   showPartners?: boolean;
   id?: string;
@@ -39,16 +42,6 @@ const { eyebrow = 'Our Track Record', title, empathy, origin, statIds = [], meth
       {empathy && <p class="lead">{empathy}</p>}
       {origin && <CopyP block={origin} class="guide__origin" />}
       <div class="guide__auth"><slot /></div>
-      {
-        method && (
-          <p class="guide__method" data-fact={method.factId}>
-            {method.text}{' '}
-            {method.link && (
-              <a class="link" href={linkAttrs(method.link.href).href}>{method.link.label}<Icon name="arrow-right" size={16} /></a>
-            )}
-          </p>
-        )
-      }
     </div>
     {
       statIds.length > 0 && (
@@ -59,6 +52,16 @@ const { eyebrow = 'Our Track Record', title, empathy, origin, statIds = [], meth
     }
   </div>
   {showPartners && <PartnerStrip variant="grid" group={partnerGroup} caption={PARTNER_CAPTION} />}
+  {
+    method && (
+      <p class:list={['guide__method', showPartners && 'guide__method--after']} data-fact={method.facts?.length ? method.facts.join(' ') : undefined}>
+        {method.text}{' '}
+        {method.link && (
+          <a class="link" href={linkAttrs(method.link.href).href}>{method.link.label}<Icon name="arrow-right" size={16} /></a>
+        )}
+      </p>
+    )
+  }
 </Section>
 
 <style>
@@ -94,12 +97,18 @@ const { eyebrow = 'Our Track Record', title, empathy, origin, statIds = [], meth
   .guide__auth :global(ul) {
     margin: 0;
   }
+  /* WP175: the method line is the band's last line, a section step (32px) under the copy and tiles (the .guide grid's margin) or under the logo strip */
   .guide__method {
+    margin: 0;
+    max-width: 44rem;
     color: var(--on-surface-variant);
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     gap: var(--space-sm);
+  }
+  .guide__method--after {
+    margin-top: var(--space-lg);
   }
   .guide__stats {
     display: grid;

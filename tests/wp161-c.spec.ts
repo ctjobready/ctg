@@ -231,16 +231,25 @@ test.describe('A-36 "cybersecurity" as a common noun; "Cyber Security" stays the
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 test.describe('A-37 JobReady@Work: the track-record line is its own needs assessment (IN-10)', () => {
+  // WP175 (owner decision Q2 (a) of 2026-11-28): the method line is the band's last line, after the logo strip (a <section> nested in the band), so these two tests read the band up to the next band
+  // (sectionRaw stops at the strip); the line's class adds the spacing modifier it takes after the strip.
+  const bandRaw = (rel: string, id: string) => {
+    const raw = mainRaw(rel);
+    const i = raw.search(new RegExp(`<section[^>]*\\bid="${id}"`));
+    expect(i, `section #${id} is on ${rel}`).toBeGreaterThanOrEqual(0);
+    const j = raw.indexOf('<section class="band', i + 10);
+    return raw.slice(i, j > i ? j : undefined);
+  };
   test('"JobReady@Work builds each program around a needs assessment." with IN-10 and no TalentLEAP link in the band', () => {
-    const raw = sectionRaw(WORK, 'guide');
-    const m = /<p class="guide__method" data-fact="([^"]*)"[^>]*>([\s\S]*?)<\/p>/.exec(raw);
+    const raw = bandRaw(WORK, 'guide');
+    const m = /<p class="guide__method[^"]*" data-fact="([^"]*)"[^>]*>([\s\S]*?)<\/p>/.exec(raw);
     expect(m).not.toBeNull();
     expect(m![1]).toBe('IN-10');
     expect(visible(m![2])).toBe('JobReady@Work builds each program around a needs assessment.');
     expect(visible(raw)).not.toContain('TalentLEAP');
   });
   test('JobReady@Campus keeps its TalentLEAP line (it is on the path)', () => {
-    expect(section(CAMPUS, 'guide')).toContain('JobReady@Campus is built on the TalentLEAP model. How TalentLEAP Works');
+    expect(visible(bandRaw(CAMPUS, 'guide'))).toContain('JobReady@Campus is built on the TalentLEAP model. How TalentLEAP Works'); // WP175: read to the end of the band (bandRaw above)
   });
 });
 
@@ -351,7 +360,10 @@ test.describe('B3 SuperKids: SuperKids@School for schools, SuperKids courses for
   test('the school route, the agreements, the 400+ figure and the safeguarding answer stay', () => {
     const t = main(SUPERKIDS);
     expect(section(SUPERKIDS, 'agreements')).toContain('These are agreement targets, not delivered reach.');
-    expect(section(SUPERKIDS, 'agreements')).toContain('400+');
+    // WP175 (owner decisions Q2 (a) and Q9 (a) of 2026-11-28): the 400+ figure is the track-record band's authority now (it was the agreements band's "Delivered" figure), still stated once (WP143)
+    expect(section(SUPERKIDS, 'agreements')).not.toContain('400+');
+    expect(section(SUPERKIDS, 'guide')).toContain('400+');
+    expect(count(t, '400+')).toBe(1);
     expect(t).toContain('Bring SuperKids to Your School or Program');
     expect(t).toContain('Three Things to Bring to the Discovery Session'); // WP166-B (marketing review R2-30): the start band's heading (it was "Options Are Shaped with You in a Discovery Session")
     expect(t).toContain('Questions Schools and Partners Ask');

@@ -7,7 +7,19 @@
 // the general government logo strip stays out, because its logos are CodersTrust-wide relationships, not SuperKids partners.
 // The C6 positioning statement (POSITIONING.superkids) has no "unlike … we …" clause: it states only what GV-08 registers.
 // WP42 (cycle-19 review): it is two plain sentences: "SuperKids offers block coding, robotics and digital art through schools and education partners. DoICT and NCTB agreements set targets, not delivered reach." (the agreements block below says it in full).
+// WP175 (owner decisions of 28 November 2026: every conversion page follows CMF v3, C1 to C14, in order and coverage; Q9 (a) for SuperKids; scratchpad wp175-decisions.md): every band sits in a Tone wrapper that
+// carries its CMF component (data-cmf; tests/wp175-superkids.spec.ts reads the order). The page runs C1 → GEO (restored) → the glance (a recorded non-CMF row) → C2–C3 compressed (doc 06 P14's declared band,
+// restored: the PX-08 sentence and the C3 transition line) → C4 → C5 (restored: the empathy line, the one-line origin, the 400+ learners tile, the method line last) → C6 (the statement, then the two offers)
+// → C7 (the agreement targets and the photographs) → C8 (restored: two cards from the earlier "What Your School Receives") → C9 → C10 (short, drafted lines) → C11 → C12 (restored, one line) → C13 → C14.
+// Two declared exceptions (Q9 (a)): C7 carries no randomized trial (a K-12 offer) and there is no "How It Works in Three Steps" band. Every new line below marked WP175 DRAFT waits for the owner's approval.
 import LandingLayout from '../../layouts/LandingLayout.astro';
+import Tone from '../../components/pages/home/Tone.astro';
+import DefinitionBand from '../../components/sections/DefinitionBand.astro';
+import IncludesBand from '../../components/sections/IncludesBand.astro';
+import DifferenceBand from '../../components/sections/DifferenceBand.astro';
+import ProblemSection from '../../components/pages/programs/ProblemSection.astro';
+import GuideSection from '../../components/pages/programs/GuideSection.astro';
+import RiskSection from '../../components/pages/programs/RiskSection.astro';
 import Section from '../../components/ui/Section.astro';
 import SectionHeader from '../../components/ui/SectionHeader.astro';
 import CTABand from '../../components/ui/CTABand.astro';
@@ -17,8 +29,6 @@ import FutureBand from '../../components/sections/FutureBand.astro';
 import FeatureCard from '../../components/ui/FeatureCard.astro';
 import { futurePhotos, galleryPhotos } from '../../data/photos';
 import GalleryDisclosure from '../../components/pages/programs/GalleryDisclosure.astro';
-import StatusTag from '../../components/system/StatusTag.astro';
-import Fact from '../../components/facts/Fact.astro';
 import MechanismSection from '../../components/pages/programs/MechanismSection.astro';
 import FaqSection from '../../components/pages/programs/FaqSection.astro';
 import OfferSection from '../../components/pages/programs/OfferSection.astro';
@@ -27,14 +37,14 @@ import ProgramGlance from '../../components/pages/programs/ProgramGlance.astro';
 import { fact } from '../../data/facts';
 import { faqNode, type FaqSource } from '../../components/pages/programs/faq';
 import { C14_FIRST, ctaFor, serviceNode } from '../../components/pages/programs/meta';
-import { MICRO_COMMITMENT, POSITIONING, PRICING } from '../../data/copy';
+import { C3_TRANSITION, EMPATHY, METHOD, MICRO_COMMITMENT, POSITIONING, PRICING, originShortUnder, type IncludesCard, type Usp } from '../../data/copy';
 import { COURSES_URL } from '../../lib/site';
 import { formatDate, isoDate } from '../../lib/format';
 import { webPage } from '../../lib/schema';
 import { linkAttrs } from '../../lib/url';
 
 const path = '/programs/superkids/';
-const LAST_UPDATED = '2026-11-28'; // WP175 (owner decision Q5 of 2026-11-28): the C6 positioning statement is the crafted statement for this audience (POSITIONING in src/data/copy.ts). Earlier: WP166-B (marketing review R2, owner approval of 21 November 2026): the parents' link in the hero, the shorter glance rows, the "The Program" band cut, the agreements as two lines under "Agreement Targets", the cost question in the FAQ and the gallery before the start band. Earlier: WP161 (owner answer 2026-11-02: SuperKids@School for schools and SuperKids courses for families; A-40: no template photo note). Earlier: WP157 (owner decision 2026-11-02: the four learner portraits are captioned "SuperKids learner", with no first names). Earlier: WP143: the glance row with the repeated 400+ figure is gone. WP129 (owner rule 2026-10-31: any change to visible text moves the date, copy edits included): the serial-comma, semicolon and copy edits of WP126 to WP128 and the WP129 edits. Earlier: WP104: the gallery's consent line was added. WP36: the cycle-13 wording changes (the two agreement targets, the safeguarding answer); WP20c had 2026-10-14 (PAGE_UPDATED.superkids is 2026-10-10)
+const LAST_UPDATED = '2026-11-28'; // WP175 (owner decisions of 2026-11-28): CMF v3 order and coverage (the definition band, the C2–C3 band with the transition line, the track-record band, the two offers after the statement, the agreement targets as their own band, the photographs before the FAQ, the C8, C10 and C12 bands, Q9 (a)); Q5: the C6 positioning statement is the crafted statement for this audience (POSITIONING in src/data/copy.ts). Earlier: WP166-B (marketing review R2, owner approval of 21 November 2026): the parents' link in the hero, the shorter glance rows, the "The Program" band cut, the agreements as two lines under "Agreement Targets", the cost question in the FAQ and the gallery before the start band. Earlier: WP161 (owner answer 2026-11-02: SuperKids@School for schools and SuperKids courses for families; A-40: no template photo note). Earlier: WP157 (owner decision 2026-11-02: the four learner portraits are captioned "SuperKids learner", with no first names). Earlier: WP143: the glance row with the repeated 400+ figure is gone. WP129 (owner rule 2026-10-31: any change to visible text moves the date, copy edits included): the serial-comma, semicolon and copy edits of WP126 to WP128 and the WP129 edits. Earlier: WP104: the gallery's consent line was added. WP36: the cycle-13 wording changes (the two agreement targets, the safeguarding answer); WP20c had 2026-10-14 (PAGE_UPDATED.superkids is 2026-10-10)
 const title = 'SuperKids: STEAM, Coding and Robotics';
 // WP161 (WP160-B, owner answer 2026-11-02: "SuperKids D2C offer is for parents to enroll their kids. SuperKids@School is the B2B2C program with schools."): the meta description names both offers, in plain words (never "D2C" or "B2B2C").
 const description = 'SuperKids brings STEAM, coding and robotics to young learners in schools and in courses for families on JobReady.global. 400+ learners since 2021.';
@@ -71,124 +81,182 @@ const jsonLd = [
   faqNode(faqSources, path),
 ];
 const courses = linkAttrs(COURSES_URL);
+
+// WP175 (Q2 (a)): the track-record heading the site's C5 bands use (YouthWIDE, the partner pages); it says the year, so the origin line drops its "Since 2014," (originShortUnder).
+const guideTitle = 'We’ve Built This Path Since 2014';
+// WP175 DRAFT: owner approval pending. C8 (Q9 (a)): two cards of the earlier "What Your School Receives" band (c211b0a5^), gain creators only. Card 1 is the earlier card without its serial comma and with
+// "a STEAM program for young learners" for its "a K-12 STEAM program" (WP129: SuperKids says "young learners", not K-12); card 2 keeps
+// the earlier title, and its line keeps only the earlier "shaped with you in a discovery session" (C5's method line now says the earlier "Courses are taught through schools and education partners"). The earlier
+// third card ("Safeguarding, Answered Up Front", a pointer to the FAQ) is left out: C10 states the safeguarding line.
+const C8_CARDS: IncludesCard[] = [
+  { icon: 'blocks', title: 'Courses in STEAM, Coding, Robotics and Digital Art', text: 'Block coding, robotics and graphic design for kids, within a STEAM program for young learners.' },
+  { icon: 'school', title: 'Delivery Through Schools and Education Partners', text: 'Each program is shaped with you in a discovery session.' },
+];
+// WP175 DRAFT: owner approval pending. C10 (Q9 (a)): no shared USP line fits a K-12 offer (doc 06 P14 C10), so the band carries two drafted lines, no figure: the public-sector agreements, in the earlier C5 band's
+// sentence (c211b0a5^, GV-08), and safeguarding agreed before enrollment (PD-12's own words; the title is the earlier site's card "Safeguarding Is Agreed Before Enrollment").
+const C10_ITEMS: Usp[] = [
+  { title: 'Public-Sector Agreements', text: 'SuperKids has agreements with the Department of ICT (DoICT) and the National Curriculum and Textbook Board (NCTB).', facts: ['GV-08'] },
+  { title: 'Safeguarding Agreed Before Enrollment', text: 'Safeguarding, including guardian consent and supervision, is agreed and documented before enrollment.', facts: ['PD-12'] },
+];
+// WP175 DRAFT: owner approval pending. C12 (Q9 (a)): doc 06 P14 C12's line ("Pilot in a few classrooms first; review before expansion", marked "to confirm"), as one sentence under a heading drafted from it.
+const C12_RISK = { title: 'Start with Pilot Classes', text: 'Pilot in a few classrooms first, then review before expansion.' };
 ---
 
 <LandingLayout title={title} description={description} path={path} breadcrumbs={[{ label: 'Programs', href: '/programs/' }, { label: 'SuperKids' }]} jsonLd={jsonLd} stickyCta={inquiry}>
   <!-- WP166-B (marketing review R2-27): the hero tells parents they can enroll, so it gives them the link (a text link under the one button, as on JobReady@Work). -->
   <!-- C1. WP161 (WP160-B, owner answer 2026-11-02): the eyebrow and the lead name both offers, SuperKids@School for schools and SuperKids courses that parents buy on JobReady.global (two sentences: ", and parents ..." after a series reads as a serial comma to tests/wp127); the discovery session is in the SuperKids@School card below. -->
-  <HeroBand
-    audience="SuperKids · For Schools, Education Partners and Families"
-    title="Bring Coding, Robotics and Digital Art into Your Classroom"
-    lead="SuperKids@School brings block coding, robotics and graphic design for kids into schools. Parents can enroll their children in SuperKids courses on JobReady.global."
-    cta={inquiry}
-    routeLinks={[{ label: 'Parents: Explore SuperKids Courses at JobReady.global', href: COURSES_URL }]}
-    artSeed="superkids"
-  />
+  <Tone cmf="C1">
+    <HeroBand
+      audience="SuperKids · For Schools, Education Partners and Families"
+      title="Bring Coding, Robotics and Digital Art into Your Classroom"
+      lead="SuperKids@School brings block coding, robotics and graphic design for kids into schools. Parents can enroll their children in SuperKids courses on JobReady.global."
+      cta={inquiry}
+      routeLinks={[{ label: 'Parents: Explore SuperKids Courses at JobReady.global', href: COURSES_URL }]}
+      artSeed="superkids"
+    />
+  </Tone>
 
-  <ProgramGlance
-    title="SuperKids at a Glance"
-    rows={[
-      // WP166-B (marketing review R2-27): shorter rows (the course list is in the hero and the two offer cards; "details below" is gone). The 400+ figure stays once on the page, in "Delivery and Agreements" (WP143), so no "Delivered" row is added here.
-      { label: 'Who It Is For', text: 'Schools and education partners that want young learners to build digital skills early.' },
-      { label: 'Agreements', text: 'Department of ICT (DoICT) and National Curriculum and Textbook Board (NCTB).', facts: ['GV-08'] },
-    ]}
-  />
+  <!-- GEO · What is CodersTrust? (ID-01 verbatim, directly under the hero). WP175 (owner decision of 2026-11-28): restored; WP30d had cut the definition band. The hero lead describes SuperKids, so the band has no page BLUF. -->
+  <Tone cmf="GEO"><DefinitionBand /></Tone>
 
-  <!-- WP161 (WP160-B): the two offers, one card each. The course names are the storefront's own (jobready.global, SuperKids STEAM section, checked 2026-11-03: "Introduction to Robotics (On-Campus Course)",
-       "Graphics Design for Kids (Live Online Course)", "Fundamentals of Block Coding (Live Online Course)"). The school route (discovery session, agreements, safeguarding, the CTA) is unchanged. -->
-  <Section id="two-ways" aria-labelledby="two-ways-h">
-    <SectionHeader id="two-ways-h" eyebrow="Schools and Families" title="Two Ways to Join SuperKids" />
-    <ul class="grid-cards grid-cards--stretch" role="list">
-      <li>
-        <FeatureCard icon="school" title="SuperKids@School" text="For schools and education partners: block coding, robotics and graphic design for kids in your classrooms, with courses shaped with you in a discovery session." />
-      </li>
-      <li>
-        <FeatureCard icon="users" title="SuperKids Courses for Families" text="Parents can enroll their children in SuperKids courses on JobReady.global, including Introduction to Robotics on campus and Graphics Design for Kids and Fundamentals of Block Coding online.">
-          <p class="two-ways__link"><a class="link" href={courses.href} rel={courses.rel}>Explore SuperKids Courses at JobReady.global<Icon name="arrow-up-right" size={16} /><span class="sr-only"> {courses.srText}</span></a></p>
-        </FeatureCard>
-      </li>
-    </ul>
-  </Section>
+  <!-- The glance: a recorded non-CMF row between GEO and C2 (doc 06 P14, WP175). -->
+  <Tone cmf="GLANCE">
+    <ProgramGlance
+      title="SuperKids at a Glance"
+      rows={[
+        // WP166-B (marketing review R2-27): shorter rows (the course list is in the hero and the two offer cards; "details below" is gone). The 400+ figure stays once on the page, in the track-record band (WP143; WP175 moved it there), so no "Delivered" row is added here.
+        { label: 'Who It Is For', text: 'Schools and education partners that want young learners to build digital skills early.' },
+        { label: 'Agreements', text: 'Department of ICT (DoICT) and National Curriculum and Textbook Board (NCTB).', facts: ['GV-08'] },
+      ]}
+    />
+  </Tone>
 
-  <!-- C4 (C2 and C3 omitted: the hero already says why digital skills start early, and no register fact supports a cost-of-late-exposure statement). WP161 (A-40): no template photo note; the lead says the photographs are SuperKids' own. -->
-  <FutureBand
-    photos={futurePhotos('superkids')}
-    note={false}
-    title="A Classroom with Coding, Robotics and Digital Art"
-    lead="Photographs from SuperKids workshops, events and school partnerships."
-    vignettes={[
-      { kind: 'Block Coding', title: 'Learners Build with Blocks', text: 'Visual coding with blocks is a first step into programming.' },
-      { kind: 'Robotics', title: 'Ideas Become Things That Move', text: 'Learners design and program simple robots.' },
-      { kind: 'Digital Art', title: 'Creativity Meets Technology', text: 'Graphic design for kids brings art into the digital classroom.' },
-    ]}
-  />
+  <!-- C2–C3, compressed (doc 06 P14 declares it, R9-Mi3; WP175, owner decision Q7 (a) of 2026-11-28, restores the band WP30d had cut): the heading published until WP30d, the PX-08 sentence (doc 06 P14: the one
+       register fact for the band; it opens "Globally"), then the C3 transition line as the band's last line. No ranked pains: PX-08 is context. C4 keeps its own band below. -->
+  <Tone cmf="C2-C3 (compressed)"><ProblemSection title="Digital Skills Start Early" factIds={['PX-08']} transition={C3_TRANSITION} /></Tone>
+
+  <!-- C4. WP161 (A-40): no template photo note; the lead says the photographs are SuperKids' own. -->
+  <Tone cmf="C4">
+    <FutureBand
+      photos={futurePhotos('superkids')}
+      note={false}
+      title="A Classroom with Coding, Robotics and Digital Art"
+      lead="Photographs from SuperKids workshops, events and school partnerships."
+      vignettes={[
+        { kind: 'Block Coding', title: 'Learners Build with Blocks', text: 'Visual coding with blocks is a first step into programming.' },
+        { kind: 'Robotics', title: 'Ideas Become Things That Move', text: 'Learners design and program simple robots.' },
+        { kind: 'Digital Art', title: 'Creativity Meets Technology', text: 'Graphic design for kids brings art into the digital classroom.' },
+      ]}
+    />
+  </Tone>
+
+  <!-- C5. WP175 (Q2 (a), Q9 (a)): restored (WP30d had cut the band): the empathy line (a fresh one; doc 06's "to confirm" line is not restored), the one-line origin, the delivered figure (SK-05, moved here
+       from the agreements band; stated once, WP143) and the method line last (the earlier site's delivery line). The heading is the site's track-record heading (YouthWIDE and the partner pages). No logo strip:
+       its logos are CodersTrust-wide relationships, not SuperKids partners (WP30d). For the owner's approval before the push. -->
+  <Tone cmf="C5">
+    <GuideSection
+      title={guideTitle}
+      empathy={EMPATHY.superkids}
+      origin={originShortUnder(guideTitle)}
+      statIds={['SK-05']}
+      showPartners={false}
+      method={METHOD.superkids}
+    />
+  </Tone>
 
   <!-- C6 (the positioning statement opens the band; scripts/check-facts.mjs [POSITION] requires the band on this page). WP166-B (marketing review R2-28): the band is the statement alone; its line "Looking for a SuperKids course for your own child,
        or courses for older learners? Explore Courses at JobReady.global" is gone (the hero and the families card carry that link). The reviewer's cut of the whole band is not applied, because the gate needs it. -->
-  <MechanismSection title="A School STEAM Program for Young Learners" positioning={POSITIONING.superkids} eyebrow="The Program" />
+  <Tone cmf="C6"><MechanismSection title="A School STEAM Program for Young Learners" positioning={POSITIONING.superkids} eyebrow="The Program" /></Tone>
 
-  <!-- C7: agreements and targets only -->
-  <Section id="agreements" tone="airy" aria-labelledby="agreements-h">
-    <SectionHeader id="agreements-h" eyebrow="What Is in Place" title="Delivery and Agreements" />
-    <div class="agree">
-      <h3 class="agree__h t-heading-xl" data-reveal>Delivered</h3>
-      <div class="agree__delivered" data-reveal data-fact="SK-05"><StatusTag status="Delivered" /><p class="agree__num"><Fact id="SK-05" /></p></div>
-      <!-- WP166-B (marketing review R2-29): headed "Agreement Targets" (it said "Agreed, Not Delivered", a heading about what has not been done); each agreement is one line, its scope and its target (GV-08's words), and the caveat is said once. -->
-      <h3 class="agree__h agree__h--apart t-heading-xl" data-reveal>Agreement Targets</h3>
+  <!-- WP161 (WP160-B): the two offers, one card each. The course names are the storefront's own (jobready.global, SuperKids STEAM section, checked 2026-11-03: "Introduction to Robotics (On-Campus Course)",
+       "Graphics Design for Kids (Live Online Course)", "Fundamentals of Block Coding (Live Online Course)"). The school route (discovery session, agreements, safeguarding, the CTA) is unchanged.
+       WP175 (Q1 (a)): the band follows the statement as a C6 sub-block (it stood before C4, out of CMF order). -->
+  <Tone cmf="C6">
+    <Section id="two-ways" aria-labelledby="two-ways-h">
+      <SectionHeader id="two-ways-h" eyebrow="Schools and Families" title="Two Ways to Join SuperKids" />
+      <ul class="grid-cards grid-cards--stretch" role="list">
+        <li>
+          <FeatureCard icon="school" title="SuperKids@School" text="For schools and education partners: block coding, robotics and graphic design for kids in your classrooms, with courses shaped with you in a discovery session." />
+        </li>
+        <li>
+          <FeatureCard icon="users" title="SuperKids Courses for Families" text="Parents can enroll their children in SuperKids courses on JobReady.global, including Introduction to Robotics on campus and Graphics Design for Kids and Fundamentals of Block Coding online.">
+            <p class="two-ways__link"><a class="link" href={courses.href} rel={courses.rel}>Explore SuperKids Courses at JobReady.global<Icon name="arrow-up-right" size={16} /><span class="sr-only"> {courses.srText}</span></a></p>
+          </FeatureCard>
+        </li>
+      </ul>
+    </Section>
+  </Tone>
+
+  <!-- C7: agreements and targets only (doc 06 P14 C7). WP175 (Q9 (a)): a declared exception to the C7 trial lead: SuperKids is a K-12 offer and carries no randomized trial. The delivered figure (SK-05) is
+       C5's authority now, so the band is the agreement targets: WP166-B R2-29's "Agreement Targets", the band's heading (it was the sub-heading under "Delivery and Agreements"). -->
+  <Tone cmf="C7">
+    <Section id="agreements" tone="airy" aria-labelledby="agreements-h">
+      <SectionHeader id="agreements-h" eyebrow="What Is in Place" title="Agreement Targets" />
+      <!-- WP166-B (marketing review R2-29): each agreement is one line, its scope and its target (GV-08's words), and the caveat is said once. -->
       <div class="agree__fact" data-reveal data-fact="GV-08">
         <p><strong>DoICT agreement</strong>, {doictScope}: target of {doictReach}.</p>
         <p><strong>NCTB agreement</strong>, {nctbScope}: target of {nctbReach}.</p>
         <p>These are agreement targets, not delivered reach.</p>
       </div>
-    </div>
-  </Section>
+    </Section>
+  </Tone>
+
+  <!-- WP175 (Q1 (a)): the photographs are a C7 sub-block, so they follow the agreements (WP166-B R2-28 had put them after the FAQ). -->
+  <Tone cmf="C7"><GalleryDisclosure id="in-the-field" eyebrow="In the Field" title="Inside SuperKids Classrooms and Events" lead="Workshops, certificate ceremonies and school agreements, in photographs." note="Photographs are used with the consent of those pictured or their guardians." photos={galleryPhotos('superkids')} visible={4} /></Tone>
+
+  <!-- C8. WP175 (Q9 (a)): restored (WP30d had cut "What Your School Receives"): two of the earlier band's cards, gain creators only (the C2 band has no ranked pains), for the owner's approval before the push.
+       Declared exception: no "How It Works in Three Steps" band (doc 04 §4.0, STEPS by page: SuperKids has no step band). -->
+  <Tone cmf="C8"><IncludesBand title="What Your School Receives" cards={C8_CARDS} /></Tone>
 
   <!-- C9 -->
-  <FaqSection sources={faqSources} title="Questions Schools and Partners Ask" />
+  <Tone cmf="C9"><FaqSection sources={faqSources} title="Questions Schools and Partners Ask" /></Tone>
 
-  <!-- WP166-B (marketing review R2-28): the gallery comes before the start band, so the three things to bring are followed directly by the button. -->
-  <GalleryDisclosure id="in-the-field" eyebrow="In the Field" title="Inside SuperKids Classrooms and Events" lead="Workshops, certificate ceremonies and school agreements, in photographs." note="Photographs are used with the consent of those pictured or their guardians." photos={galleryPhotos('superkids')} visible={4} />
+  <!-- C10. WP175 (owner decision of 2026-11-28, Q9 (a)): the short differentiation band, with two lines drafted from the earlier site copy and the register (no shared USP line fits a K-12 offer), for the owner's approval before the push. -->
+  <Tone cmf="C10"><DifferenceBand items={C10_ITEMS} /></Tone>
 
   <!-- C11. WP166-B (marketing review R2-30): headed "Three Things to Bring to the Discovery Session" (it said "Options Are Shaped with You in a Discovery Session", with the lead "Bring these three things to the conversation.", which the heading now says);
        the pricing sentence is the FAQ's cost answer. -->
-  <OfferSection
-    title="Three Things to Bring to the Discovery Session"
-    cards={[
-      { icon: 'school', title: 'Your School or Organization', text: 'Location, age groups and the approximate number of learners.' },
-      { icon: 'target', title: 'Your Goals', text: 'Which of STEAM, coding, robotics and digital art you want to start with.' },
-      { icon: 'calendar-check', title: 'Your Timeline', text: 'When you would like to begin.' },
-    ]}
-  />
+  <Tone cmf="C11">
+    <OfferSection
+      title="Three Things to Bring to the Discovery Session"
+      cards={[
+        { icon: 'school', title: 'Your School or Organization', text: 'Location, age groups and the approximate number of learners.' },
+        { icon: 'target', title: 'Your Goals', text: 'Which of STEAM, coding, robotics and digital art you want to start with.' },
+        { icon: 'calendar-check', title: 'Your Timeline', text: 'When you would like to begin.' },
+      ]}
+    />
+  </Tone>
 
-
-  <!-- C12 (risk reversal) is the micro-commitment line under the C13 button. Safeguarding is stated once on this page, in the FAQ answer
-       above (Q9); the former "Safeguarding Is Agreed Before Enrollment" card repeated it word for word. -->
+  <!-- C12. WP175 (Q9 (a)): the risk-reversal band, restored as one line (doc 06 P14 C12), directly before the call to action, for the owner's approval before the push. Safeguarding is stated in the FAQ (Q9)
+       and in C10; the micro-commitment line stays under the C13 button. -->
+  <Tone cmf="C12"><RiskSection title={C12_RISK.title} lead={C12_RISK.text} /></Tone>
 
   <!-- C13 -->
-  <CTABand id="cta" heading="Bring SuperKids to Your School or Program" cta={inquiry} micro={MICRO_COMMITMENT} />
+  <Tone cmf="C13"><CTABand id="cta" heading="Bring SuperKids to Your School or Program" cta={inquiry} micro={MICRO_COMMITMENT} /></Tone>
 
   <!-- C14 -->
-  <NextSteps
-    steps={[
-      { title: 'Discovery Session', text: 'A conversation about your learners and goals.' },
-      { title: 'Agreement', text: 'Scope and schedule are agreed together.' },
-      { title: 'Pilot Classes', text: 'Classes begin with your learners.' },
-    ]}
-    firstAction={C14_FIRST}
-  />
+  <Tone cmf="C14">
+    <NextSteps
+      steps={[
+        { title: 'Discovery Session', text: 'A conversation about your learners and goals.' },
+        { title: 'Agreement', text: 'Scope and schedule are agreed together.' },
+        { title: 'Pilot Classes', text: 'Classes begin with your learners.' },
+      ]}
+      firstAction={C14_FIRST}
+    />
+  </Tone>
 
-  <Section pad="sm" aria-label="Last updated">
-    <p class="updated">Last updated <time datetime={isoDate(LAST_UPDATED)}>{formatDate(LAST_UPDATED)}</time></p>
-  </Section>
+  <!-- WP175: not a CMF band; the wrapper keeps the 32px join to a band on the same ground above it (Tone's join rule reads wrappers, not bare bands). -->
+  <Tone>
+    <Section pad="sm" aria-label="Last updated">
+      <p class="updated">Last updated <time datetime={isoDate(LAST_UPDATED)}>{formatDate(LAST_UPDATED)}</time></p>
+    </Section>
+  </Tone>
 </LandingLayout>
 
 <style>
   .two-ways__link {
     margin: var(--space-sm) 0 0;
-  }
-  .agree {
-    display: grid;
-    gap: var(--space-lg);
   }
   .agree__fact {
     margin: 0;
@@ -199,27 +267,6 @@ const courses = linkAttrs(COURSES_URL);
     color: var(--on-surface);
     font-size: var(--fs-body-m);
     line-height: var(--lh-body-m);
-  }
-  .agree__h {
-    margin: 0;
-    color: var(--secondary);
-  }
-  .agree__h--apart {
-    margin-top: var(--space-md);
-    padding-top: var(--space-lg);
-    border-top: 1px solid var(--outline-variant);
-  }
-  .agree__delivered {
-    max-width: 52rem;
-    display: grid;
-    gap: var(--stack-title);
-    justify-items: start;
-  }
-  .agree__num {
-    margin: 0;
-    color: var(--on-surface);
-    font-size: var(--fs-body-l, var(--fs-body-m));
-    font-weight: var(--fw-medium);
   }
   .agree__fact > :global(p) {
     margin: 0 0 var(--space-xs);
