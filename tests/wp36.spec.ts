@@ -181,11 +181,16 @@ test.describe('Investors', () => {
     const band = page.locator('#proof-band');
     await expect(band).toHaveCount(1);
     await expect(band.locator('h2')).toHaveText('Evidence from the Youth Programs');
+    // WP175 (owner decision Q3 (a) of 2026-11-28: every C7 opens with the one-line trial lead): the first sentence is the band's lead line (TRIAL_LEAD, RC-01 and RC-02), the survey sentence and the qualifier its next line
+    // (OC-01); the three sentences are unchanged
     const body = band.locator('p.lead');
     await expect(body).toHaveCount(1);
-    expect(compact(await body.textContent())).toBe(EVIDENCE);
+    const [lead, ...rest] = sentences(EVIDENCE);
+    expect(compact(await body.textContent())).toBe(lead);
+    expect(await body.getAttribute('data-fact')).toBe('RC-01 RC-02');
+    expect(compact(await band.locator('p.ie__more').textContent())).toBe(rest.join(' '));
+    expect(await band.locator('p.ie__more').getAttribute('data-fact')).toBe('OC-01');
     expect(sentences(EVIDENCE)).toHaveLength(3);
-    expect(await body.getAttribute('data-fact')).toBe('RC-02 OC-01');
     expect(await texts(page, '#proof-band a')).toEqual(['Impact Survey 2026', 'The Randomized Trial', 'Case Studies']);
     expect((await hrefs(page, '#proof-band a')).map((h) => h.replace(/^.*\/ctg\//, ''))).toEqual(['impact/outcomes-2026/', 'impact/independent-evaluation/', 'impact/case-studies/']);
     await expect(band.locator('svg:not(.icon), .stat, .ba, .ba__data, table, [data-plain-line], article')).toHaveCount(0);
@@ -206,19 +211,21 @@ test.describe('Investors', () => {
   test('"The Sectors Involved" is gone from the mechanism band; the band keeps its model blocks and its link', async ({ page }) => {
     await open(page, 'partner-with-us/investors/');
     expect(await mainText(page)).not.toMatch(/Sectors Involved|four sectors|freelance marketplaces and job sites/);
-    // WP39 (cycle-16 review): the band carries no "Our Approach" statement any more (tests/wp39.spec.ts)
-    await expect(page.locator('#mechanism .pos__text')).toHaveCount(0);
+    // WP39 (cycle-16 review): the band carried no "Our Approach" statement (tests/wp39.spec.ts). WP175 (owner decision Q5 of 2026-11-28): it opens with the crafted statement for impact investors again, once
+    await expect(page.locator('#mechanism .pos__text')).toHaveCount(1);
+    expect(compact(await page.locator('#mechanism .pos__text').textContent())).toMatch(/^Impact investors look for platforms/);
     await expect(page.locator('#mechanism').getByRole('link', { name: 'How Our Model Works' })).toHaveCount(1);
     expect(await texts(page, '#mechanism h3'), 'the four model blocks are the band’s only sub-headings').toEqual(['Courses, Supported Cohorts and University Programs', 'Jobs, Freelance Work and Gigs', 'Career Paths and Continuing Development', 'A Digital Delivery Platform']);
   });
 
-  test('no two dark bands meet, and the evidence band sits between the reach band and the features band', async ({ page }) => {
+  // WP175 (owner decision Q3 (a) of 2026-11-28: the trial leads C7): the evidence band opens C7 and "Contracts and Recognition" (#reach) follows it, directly before the features band
+  test('no two dark bands meet, and the evidence band leads C7, before the reach band, which the features band follows', async ({ page }) => {
     await open(page, 'partner-with-us/investors/');
     const order = await page.evaluate(() => Array.from(document.querySelectorAll('main .band[id]')).map((b) => ({ id: b.id, dark: /band--(klein|deep-ink)/.test(b.className) })));
     for (let i = 1; i < order.length; i++) expect(order[i].dark && order[i - 1].dark, `${order[i - 1].id} then ${order[i].id}`).toBe(false);
     const ids = order.map((o) => o.id);
-    expect(ids.indexOf('proof-band')).toBe(ids.indexOf('reach') + 1);
-    expect(ids.indexOf('features')).toBe(ids.indexOf('proof-band') + 1);
+    expect(ids.indexOf('reach')).toBe(ids.indexOf('proof-band') + 1);
+    expect(ids.indexOf('features')).toBe(ids.indexOf('reach') + 1);
   });
 });
 
@@ -444,9 +451,11 @@ test.describe('option bands: program sizes are not a commitment', () => {
   // WP51 (cycle-26 review): "Program options are shown without prices." described the website itself and is gone from JobReady@Campus' lead; the pricing statement under the options stays (tests/wp51.spec.ts)
   test('Universities’ lead is its one line, not the note (its cost answer is in the FAQ); JobReady@Campus’ lead is the note alone, and its pricing statement stays beside the options', async ({ page }) => {
     await open(page, 'partner-with-us/universities/');
-    // WP135 (Opus High run 10, Polish 3): the one-line band is folded into the pilot band (no #offer on this page); its line is the pilot band's first point. WP133: the heading said "Start with One Campus" // WP132: tracks and labs are agreed in co-design (was "set in the discovery session")
-    await expect(page.locator('#offer')).toHaveCount(0);
-    expect(compact(await page.locator('.risk__item', { hasText: 'A Pilot Comes First' }).textContent())).toContain('Start with one campus; cohort size, tracks and labs are agreed in co-design.');
+    // WP135 (Opus High run 10, Polish 3) had folded the one-line band into the pilot band. WP175 (owner decision of 2026-11-28: CMF v3, every page keeps C11): "Start with One Campus" (#offer) is back, its lead the one
+    // line (no program-sizes note), and the pilot band's first point is its dee46ac1^ line // WP132: tracks and labs are agreed in co-design (was "set in the discovery session")
+    expect(compact(await page.locator('#offer .sh__lead').textContent())).toBe('Cohort size, tracks and labs are agreed in co-design.');
+    expect(compact(await page.locator('#offer').textContent())).not.toContain(NOTE);
+    expect(compact(await page.locator('.risk__item', { hasText: 'A Pilot Comes First' }).textContent())).toContain('Start with a first campus program and see its results.');
     await open(page, 'programs/jobready-campus/');
     expect(compact(await page.locator('#offer .sh__lead').textContent())).toBe(NOTE);
     await expect(page.locator('#offer [data-fact="PD-02"]')).toHaveCount(1);

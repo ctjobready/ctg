@@ -2,11 +2,11 @@
 import LandingLayout from '../../../layouts/LandingLayout.astro';
 import HeroBand from '../../../components/sections/HeroBand.astro';
 import ProblemBand from '../../../components/sections/ProblemBand.astro';
-import GuideBand from '../../../components/sections/GuideBand.astro';
 import CaseStudyCarousel from '../../../components/sections/CaseStudyCarousel.astro';
 import IncludesBand from '../../../components/sections/IncludesBand.astro';
 import FAQBand from '../../../components/sections/FAQBand.astro';
 import RiskReversalBand from '../../../components/sections/RiskReversalBand.astro';
+import DifferenceBand from '../../../components/sections/DifferenceBand.astro';
 import Section from '../../../components/ui/Section.astro';
 import SectionHeader from '../../../components/ui/SectionHeader.astro';
 import CTABand from '../../../components/ui/CTABand.astro';
@@ -14,13 +14,16 @@ import FeatureCard from '../../../components/ui/FeatureCard.astro';
 import StepFlow from '../../../components/ui/StepFlow.astro';
 import DefinitionPlus from '../../../components/pages/about/DefinitionPlus.astro';
 import HomeMechanism from '../../../components/pages/home/HomeMechanism.astro';
+import Tone from '../../../components/pages/home/Tone.astro';
 import DueDiligenceView from '../../../components/pages/hub/DueDiligenceView.astro';
 import LearnerVoice from '../../../components/pages/impact/LearnerVoice.astro';
 import GainsPains from '../../../components/pages/partners/GainsPains.astro';
+import HowItWorks from '../../../components/pages/partners/HowItWorks.astro';
 import PairedEvidence from '../../../components/pages/partners/PairedEvidence.astro';
-import { LINKS } from '../../../components/pages/partners/partners';
+import PartnerGuideBand from '../../../components/pages/partners/PartnerGuideBand.astro';
+import { HOURS, LINKS, TRACER_MONTHS } from '../../../components/pages/partners/partners';
 import { localCta } from '../../../components/pages/about/routes';
-import { DELIVERY_MODEL, LOCAL_PARTNER_EVIDENCE, LOCAL_PARTNER_PAINS, HEADLINE, MICRO_COMMITMENT, NEXT_STEPS_TITLE, POSITIONING, PROGRAM_SCOPE_STATEMENT, TRACK_MENU, VALUE_PROPOSITION, painForList, painForRow } from '../../../data/copy';
+import { C3_TRANSITION, DELIVERY_MODEL, EMPATHY, LOCAL_PARTNER_EVIDENCE, LOCAL_PARTNER_PAINS, HEADLINE, METHOD, MICRO_COMMITMENT, NEXT_STEPS_TITLE, POSITIONING, PROGRAM_SCOPE_STATEMENT, TRACK_MENU, TRIAL_LEAD, VALUE_PROPOSITION, originShortUnder, painForList, painForRow } from '../../../data/copy';
 import { fact } from '../../../data/facts';
 import { faqJsonLd } from '../../../lib/faq';
 import { webPage } from '../../../lib/schema';
@@ -54,6 +57,15 @@ import { BANGLADESH_HQ } from '../../../lib/site';
  * preparation for industry certification. You do not have to build the curriculum or certification route yourself."
  * WP148 (Opus XHigh run 2, kit 115; the owner's words were "Trained by CodersTrust"): facilitators are trained, not certified. The second "Three Ways to Partner with Us" card is "Put Your Trainers Through Our Training" ("Your trainers join CodersTrust’s Training of Trainers, so delivery capacity can stay in your
  * community where the program includes it."; it was "Supply Certified Facilitators"); the support card is "Facilitator Training and a Local Curriculum" ("Training of Trainers, a localized curriculum and preparation for industry certification. ..."); the comparison tile says "CodersTrust-trained facilitators".
+ * WP175 (owner decisions of 28 November 2026: every conversion page follows CMF v3, C1 to C14, in order and coverage; tests/wp175-local-partners.spec.ts): every band sits in a Tone wrapper (data-cmf), with the
+ * band as the wrapper's direct child so Tone's 32px join holds (the track-record band, white after the white problem band). C2–C4 is a declared compression: the problem band keeps the three ranked pains and
+ * ends with the C3 transition line (C3_TRANSITION). C5 is PartnerGuideBand (it was GuideBand inside a data-fact div): the empathy line (EMPATHY.localPartners), the origin line in its year-less form (the SC-11 and
+ * SC-01 tile labels say "since 2014", and no page prints "Since 2014, from a Copenhagen launch ...", WP64), then the authority (the SC-11 and SC-01 tiles, the Bangladesh team line with its own ID-07 and SC-03 markers,
+ * the logos) and the TalentLEAP method line (METHOD) as the band's last line (Q2 (a); WP166-B R3-29 had removed it).
+ * C7 opens with the one-line trial lead (TRIAL_LEAD) and ends with Samina's story, which sat before the problem band (WP24a, WP51). C8 adds one gain creator, "Connectivity-Light Delivery" (doc 06 P7b; PD-07): the
+ * other two doc 06 names are said on this page already (the labs in "How a Local Partnership Works" and "Host a Cohort"; safeguarding agreed before enrollment in the FAQ answer), and "How It Works in Three
+ * Steps" returns (7c37339c^, with "CodersTrust-trained facilitators", WP148, and "follow-up surveys", WP32). The due-diligence view moves into C9, after the FAQ. C10 is the short "What Makes CodersTrust
+ * Different" band (USPs 4 and 3). The mechanism band's facts wrapper is gone too: the statement carries PD-01, PD-06 and PD-08, and the gain creator PD-07.
  */
 const local = localCta();
 // Q9-route: the one-line safeguarding answer with a link to the governance page, which keeps the full account (WP36).
@@ -62,8 +74,22 @@ const path = '/partner-with-us/local-partners/';
 // WP161-A (adversarial review A-02): the WebPage carries the page's own dateModified, its last visible change (it fell back to the build date). WP166-B: 2026-11-21 (the marketing review R3 changes).
 const description = 'Bangladeshi NGOs, colleges and chambers can deliver CodersTrust’s mentored digital-skills programs in their communities.';
 const jsonLd = [
-  webPage({ path, name: 'Local Implementing Partners', description, dateModified: '2026-11-28' /* WP175 (owner decision Q5 of 2026-11-28): the C6 positioning statement is the crafted statement for this audience (POSITIONING in src/data/copy.ts) */, breadcrumb: [{ name: 'Home', path: '/' }, { name: 'Partner with Us', path: '/partner-with-us/' }, { name: 'Local Partners', path }] }),
+  webPage({ path, name: 'Local Implementing Partners', description, dateModified: '2026-11-28' /* WP175 (owner decisions of 2026-11-28): the crafted C6 statement (Q5), and the CMF v3 bands (the transition line, the C5 empathy and method lines, the trial lead, the gain creator and three steps, the short C10) */, breadcrumb: [{ name: 'Home', path: '/' }, { name: 'Partner with Us', path: '/partner-with-us/' }, { name: 'Local Partners', path }] }),
   faqJsonLd('variants', path, FAQ_IDS),
+];
+
+// WP175: the origin line of the track-record band, year-less as on Employers (the tiles' labels carry "since 2014", WP64), and the Bangladesh team line (it was GuideBand's `method` paragraph), now an authority
+// sentence with its own markers (ID-07: the country office and campuses; SC-03: where delivery has been).
+const origin = originShortUnder('We’ve Built This Path Since 2014');
+const bangladeshTeam = `CodersTrust Bangladesh, our country office in ${BANGLADESH_HQ.city}, runs campuses in Mirpur and Agrabad, Chattogram. ${fact('SC-03').stat?.detail ?? ''}`.trim();
+// WP175 (C8c): the gain creator, in doc 06 P7b's words (feature "Connectivity-Light Delivery", outcome "Lessons that run on a basic connection"; PD-07); it carries no painId, so it relieves no ranked pain.
+const gainCreator = { icon: 'wifi', title: 'Connectivity-Light Delivery', text: 'Lessons that run on a basic connection.', facts: ['PD-07'] };
+// WP175 (C8d): "How It Works in Three Steps", as the page printed it until WP30c (7c37339c^), with facilitators "trained by CodersTrust" (WP148), the training hours "including exam preparation" (WP150, WP151) and
+// "follow-up surveys" (WP32); the hours and survey months are the register's (PD-01, PD-09).
+const localSteps = [
+  { title: 'Tell the Bangladesh Team', text: 'Describe your organization, your district and the groups you work with, and we shape the cohort, tracks, safeguarding and reporting together.' },
+  { title: 'Host, Train and Mentor', text: `CodersTrust-trained facilitators deliver the localized curriculum in your labs, classrooms or centers: ${HOURS} training hours per certification, including exam preparation, then three months of milestone-based mentoring.` },
+  { title: 'Place and Report', text: `Placement support into local, remote and global work, then follow-up surveys at ${TRACER_MONTHS}.` },
 ];
 
 const ways = [
@@ -81,40 +107,42 @@ const ways = [
   stickyCta={{ label: local.label, href: local.href }}
 >
   <!-- C1 -->
-  <HeroBand audience="For Bangladeshi NGOs, Colleges, Chambers and Associations" title={HEADLINE.localPartners} lead={VALUE_PROPOSITION.localPartners} cta={{ label: local.label, href: local.href }} artSeed="local-partners" />
+  <Tone cmf="C1">
+    <HeroBand audience="For Bangladeshi NGOs, Colleges, Chambers and Associations" title={HEADLINE.localPartners} lead={VALUE_PROPOSITION.localPartners} cta={{ label: local.label, href: local.href }} artSeed="local-partners" />
+  </Tone>
 
   <!-- GEO definition + page BLUF (WP22: before the fit check, as on every other audience page) -->
-  <DefinitionPlus id="definition">
-    <p data-fact="PD-06 GV-09">Larger programs are designed to run through facilitators trained by CodersTrust (Training of Trainers) in existing labs and colleges, coordinated centrally. CodersTrust Bangladesh supports local partners with curriculum, certification exam preparation, mentoring, reporting and safeguarding.</p>
-  </DefinitionPlus>
+  <Tone cmf="GEO">
+    <DefinitionPlus id="definition">
+      <p data-fact="PD-06 GV-09">Larger programs are designed to run through facilitators trained by CodersTrust (Training of Trainers) in existing labs and colleges, coordinated centrally. CodersTrust Bangladesh supports local partners with curriculum, certification exam preparation, mentoring, reporting and safeguarding.</p>
+    </DefinitionPlus>
+  </Tone>
 
-  <LearnerVoice story="samina-tasneem-chowdhury" excerpt="During the training period, she began offering her services as a graphic designer on the freelance marketplace Fiverr." program="WSDFM" tone="white" />
+  <!-- C2–C4, declared compressed (WP47, owner decision 2026-10-15, recast 2026-11-28): no Cost of Waiting (C3) or Imagine (C4) band; the three ranked pains, then the C3 transition line. -->
+  <Tone cmf="C2-C4 (compressed)">
+    <ProblemBand id="problem" title="Connect Your Community to Paid Digital Work" bluf="Your organization reaches young people, but a curriculum, certification preparation and links to paid work are hard to build alone." factIds={['PX-03']} transition={C3_TRANSITION}>
+      <GainsPains slot="lead" painsHeading="What Gets in the Way" pains={LOCAL_PARTNER_PAINS.map(painForList)} />
+    </ProblemBand>
+  </Tone>
 
-  <!-- C2 -->
-  <ProblemBand id="problem" title="Connect Your Community to Paid Digital Work" bluf="Your organization reaches young people, but a curriculum, certification preparation and links to paid work are hard to build alone." factIds={['PX-03']}>
-    <GainsPains slot="lead" painsHeading="What Gets in the Way" pains={LOCAL_PARTNER_PAINS.map(painForList)} />
-  </ProblemBand>
-
-  <!-- C3 (Cost of Waiting) and C4 (Imagine) are left to Home since WP47 (owner decision 2026-10-15). -->
-
-  <!-- C5 -->
-  <!-- WP166-B (marketing review R3-38, R3-29): the band's second figure is CodersTrust's delivery scale (SC-01, "130,000+ learners trained since 2014", with SC-03's note "Most delivery has been in Bangladesh."), in place of the government-lab count a local
-       organization does not host in (GV-09, "9,000+ ... that could host blended learning"), and the TalentLEAP method line and link are gone. -->
-  <div data-fact="ID-07 PA-01 PA-02 SC-03">
-    <GuideBand
+  <!-- C5: empathy → ORIGIN → authority → method (WP175, Q2 (a)). WP166-B (marketing review R3-38): the band's second figure is CodersTrust's delivery scale (SC-01, "130,000+ learners trained since 2014", with SC-03's note
+       "Most delivery has been in Bangladesh."), in place of the government-lab count a local organization does not host in (GV-09). -->
+  <Tone cmf="C5">
+    <PartnerGuideBand
       id="guide"
       title="Delivered with a Bangladesh Team Beside You"
-      authorityIds={['SC-11', 'SC-01']}
+      empathy={EMPATHY.localPartners}
+      opening={{ facts: origin.facts, text: origin.text }}
+      stats={['SC-11', 'SC-01']}
+      statements={[{ facts: ['ID-07', 'SC-03'], text: bangladeshTeam }]}
       partnerGroup={['government', 'development']}
-      variant="grid"
-      method={{
-        text: `CodersTrust Bangladesh, our country office in ${BANGLADESH_HQ.city}, runs campuses in Mirpur and Agrabad, Chattogram. ${fact('SC-03').stat?.detail ?? ''}`.trim(),
-      }}
+      method={METHOD.localPartners}
+      methodLast
     />
-  </div>
+  </Tone>
 
   <!-- C6: the light variant of the mechanism band (as on Home). WP166-B (marketing review R3-24): the approach closes with the page's one delivery-model sentence (it led the first "What Your Community Gets" card). -->
-  <div data-fact="PD-01 PD-06 PD-07 PD-08 IN-04">
+  <Tone cmf="C6">
     <HomeMechanism
       id="mechanism"
       tone="airy"
@@ -129,112 +157,134 @@ const ways = [
       ]}
       link={{ label: 'How Our Model Works', href: '/our-model/' }}
     />
-  </div>
+  </Tone>
 
-  <!-- C7 · Proof: the broader evidence from the youth programs, one line each for the trial and the survey (WP42, cycle-19 review; as Universities, WP38), in place of the full trial-and-survey band. The strip keeps the band's
-       id (#proof) and sits on a white ground between the light mechanism band and the light program-result cards, so the rhythm is unchanged (there is no dark band on this page). -->
-  <PairedEvidence
-    id="proof"
-    tone="white"
-    eyebrow="The Evidence"
-    title="Evidence from Our Wider Youth Programs"
-    items={[]}
-    statements={LOCAL_PARTNER_EVIDENCE}
-    broader={[
-      { label: 'The Randomized Trial', href: LINKS.trial },
-      { label: 'Impact Survey 2026', href: LINKS.outcomes },
-    ]}
-    broaderLabel="Evidence from our wider youth programs"
-  />
-  <CaseStudyCarousel
-    id="cases"
-    title="Women-Focused Programs in Practice"
-    items={[
-      { title: 'Women’s Skill Development for Freelancing Marketplace (WSDFM)', program: 'Commissioned by Porticus', factId: 'PR-01', href: '/impact/case-studies/wsdfm-women-freelancers/' },
-      { title: 'Her Power', program: 'ICT Division / Department of ICT (DoICT)', factId: 'PR-05', href: '/impact/case-studies/her-power/' },
-    ]}
-  />
+  <!-- C7 · Proof: the broader evidence from the youth programs, one line each for the trial and the survey (WP42, cycle-19 review), in place of the full trial-and-survey band. WP175 (Q3 (a)): the trial line is the shared one-line
+       trial lead (TRIAL_LEAD, the same words, held to RC-01 and RC-02). The strip keeps its id (#proof) and its white ground between the light mechanism band and the light program-result cards (there is no dark band on this page);
+       Samina's story closes the band (it sat before the problem band, WP24a and WP51). -->
+  <Tone cmf="C7">
+    <PairedEvidence
+      id="proof"
+      tone="white"
+      eyebrow="The Evidence"
+      title="Evidence from Our Wider Youth Programs"
+      items={[]}
+      statements={[TRIAL_LEAD, LOCAL_PARTNER_EVIDENCE[1]]}
+      broader={[
+        { label: 'The Randomized Trial', href: LINKS.trial },
+        { label: 'Impact Survey 2026', href: LINKS.outcomes },
+      ]}
+      broaderLabel="Evidence from our wider youth programs"
+    />
+    <CaseStudyCarousel
+      id="cases"
+      title="Women-Focused Programs in Practice"
+      items={[
+        { title: 'Women’s Skill Development for Freelancing Marketplace (WSDFM)', program: 'Commissioned by Porticus', factId: 'PR-01', href: '/impact/case-studies/wsdfm-women-freelancers/' },
+        { title: 'Her Power', program: 'ICT Division / Department of ICT (DoICT)', factId: 'PR-05', href: '/impact/case-studies/her-power/' },
+      ]}
+    />
+    <LearnerVoice story="samina-tasneem-chowdhury" excerpt="During the training period, she began offering her services as a graphic designer on the freelance marketplace Fiverr." program="WSDFM" tone="white" />
+  </Tone>
 
   <!-- C8 (review round 14, M4): one card per ranked pain of C2, keyed to the C6 elements "Trains and certifies", "Mentoring and placement" and "Monthly reporting".
        WP39 (cycle-16 review): three short cards in place of the concern / inclusion / benefit matrix; each keeps its pain's id (`data-relieves`, held by scripts/check-facts.mjs) and its register facts, and its sentences keep
-       the matrix rows' words (PD-06 and PD-02: Training of Trainers, a localized curriculum, preparation for industry certification; PD-01 and PD-15: mentoring with placement support alongside; PD-08: monthly reports). -->
-  <IncludesBand
-    id="features"
-    title="What Your Community Gets"
-    cards={[
-      {
-        painId: painForRow(LOCAL_PARTNER_PAINS, 'P1').painId,
-        icon: 'graduation-cap',
-        title: 'Facilitator Training and a Local Curriculum',
-        // WP163 (owner answers of 3 November 2026) put the delivery model in this card; WP166-B (marketing review R3-24, R3-05): it is in How It Works, and the card names the track menu once (TRACK_MENU, PD-10).
-        text: `Training of Trainers, a localized curriculum and preparation for industry certification. You do not have to build the curriculum or certification route yourself. ${TRACK_MENU.text}`,
-        facts: ['PD-06', 'PD-02', 'PD-01', 'PD-10'],
-      },
-      {
-        painId: painForRow(LOCAL_PARTNER_PAINS, 'P2').painId,
-        icon: 'handshake',
-        title: 'Mentoring and Placement Support',
-        text: 'Three months of milestone-based mentoring, with placement support alongside, gives your completers a route into work.',
-        facts: ['PD-01', 'PD-15'],
-      },
-      {
-        painId: painForRow(LOCAL_PARTNER_PAINS, 'P3').painId,
-        icon: 'chart-bar',
-        title: 'Monthly Reports and Program Updates',
-        text: 'Where a funder is involved, it receives monthly reports, and your organization receives agreed program updates on enrollment, completion, certification and placement.',
-        facts: ['PD-08'],
-      },
-    ]}
-    scope={PROGRAM_SCOPE_STATEMENT}
-  />
+       the matrix rows' words (PD-06 and PD-02: Training of Trainers, a localized curriculum, preparation for industry certification; PD-01 and PD-15: mentoring with placement support alongside; PD-08: monthly reports).
+       WP175 (C8c, C8d): then the gain creator (no data-relieves) and "How It Works in Three Steps". -->
+  <Tone cmf="C8">
+    <IncludesBand
+      id="features"
+      title="What Your Community Gets"
+      cards={[
+        {
+          painId: painForRow(LOCAL_PARTNER_PAINS, 'P1').painId,
+          icon: 'graduation-cap',
+          title: 'Facilitator Training and a Local Curriculum',
+          // WP163 (owner answers of 3 November 2026) put the delivery model in this card; WP166-B (marketing review R3-24, R3-05): it is in How It Works, and the card names the track menu once (TRACK_MENU, PD-10).
+          text: `Training of Trainers, a localized curriculum and preparation for industry certification. You do not have to build the curriculum or certification route yourself. ${TRACK_MENU.text}`,
+          facts: ['PD-06', 'PD-02', 'PD-01', 'PD-10'],
+        },
+        {
+          painId: painForRow(LOCAL_PARTNER_PAINS, 'P2').painId,
+          icon: 'handshake',
+          title: 'Mentoring and Placement Support',
+          text: 'Three months of milestone-based mentoring, with placement support alongside, gives your completers a route into work.',
+          facts: ['PD-01', 'PD-15'],
+        },
+        {
+          painId: painForRow(LOCAL_PARTNER_PAINS, 'P3').painId,
+          icon: 'chart-bar',
+          title: 'Monthly Reports and Program Updates',
+          text: 'Where a funder is involved, it receives monthly reports, and your organization receives agreed program updates on enrollment, completion, certification and placement.',
+          facts: ['PD-08'],
+        },
+        gainCreator,
+      ]}
+      scope={PROGRAM_SCOPE_STATEMENT}
+    />
+    <HowItWorks steps={localSteps} />
+  </Tone>
 
-  <!-- C9 -->
-  <FAQBand id="faq" audience="variants" ids={FAQ_IDS} title="Questions Local Partners Ask" />
+  <!-- C9: the questions, then the due-diligence view (WP34, cycle-11 review: one item and a link; WP175: it sat between C11 and C12) -->
+  <Tone cmf="C9">
+    <FAQBand id="faq" audience="variants" ids={FAQ_IDS} title="Questions Local Partners Ask" />
+    <DueDiligenceView brief id="due-diligence" />
+  </Tone>
 
-  <!-- C10: the positioning statement opens C6; the comparison table is on Home and Investors only (WP30c). -->
+  <!-- C10 (WP175): the short differentiation band, two USP lines (doc 04 §6: USP 4, the infrastructure that already exists, and USP 3, preparation for a recognized credential); the full comparison table stays off this page (WP30c, WP47). -->
+  <Tone cmf="C10">
+    <DifferenceBand usps={['infrastructure', 'credential']} />
+  </Tone>
 
   <!-- C11 -->
-  <Section id="offer" tone="airy" aria-labelledby="offer-h">
-    <SectionHeader id="offer-h" eyebrow="Ways to Partner" title="Three Ways to Partner with Us" lead="Choose one or combine them; how a partnership is funded is agreed in the first conversations." />
-    <div class="grid-cards grid-cards--stretch" data-fact="PD-06 PD-05">
-      {ways.map((w) => <FeatureCard icon={w.icon} title={w.title} text={w.text} />)}
-    </div>
-  </Section>
+  <Tone cmf="C11">
+    <Section id="offer" tone="airy" aria-labelledby="offer-h">
+      <SectionHeader id="offer-h" eyebrow="Ways to Partner" title="Three Ways to Partner with Us" lead="Choose one or combine them; how a partnership is funded is agreed in the first conversations." />
+      <div class="grid-cards grid-cards--stretch" data-fact="PD-06 PD-05">
+        {ways.map((w) => <FeatureCard icon={w.icon} title={w.title} text={w.text} />)}
+      </div>
+    </Section>
+  </Tone>
 
-  <!-- C12. WP34 (cycle-11 review): the four diligence cards repeated what this page's bands state, so one item and a link stand in -->
-  <DueDiligenceView brief id="due-diligence" />
-  <RiskReversalBand
-    id="risk"
-    title="Start with a Pilot Cohort, Then Decide on Evidence"
-    points={[
-      { icon: 'chart-bar', title: 'Expansion Review on Real Results', text: 'Review early progress at three months; any expansion decision uses the scorecard measures available then.' },
-      { icon: 'target', title: 'Scorecard Thresholds', text: 'Thresholds are agreed before the first cohort; a missed threshold triggers a corrective plan.' },
-      { icon: 'handshake', title: 'Your Participation Is Your Decision', text: 'You choose whether and how far to take part.' },
-      { icon: 'shield', title: 'Independent Evaluation Welcome', text: 'We support third-party evaluation of outcomes.' },
-    ]}
-  />
+  <!-- C12 -->
+  <Tone cmf="C12">
+    <RiskReversalBand
+      id="risk"
+      title="Start with a Pilot Cohort, Then Decide on Evidence"
+      points={[
+        { icon: 'chart-bar', title: 'Expansion Review on Real Results', text: 'Review early progress at three months; any expansion decision uses the scorecard measures available then.' },
+        { icon: 'target', title: 'Scorecard Thresholds', text: 'Thresholds are agreed before the first cohort; a missed threshold triggers a corrective plan.' },
+        { icon: 'handshake', title: 'Your Participation Is Your Decision', text: 'You choose whether and how far to take part.' },
+        { icon: 'shield', title: 'Independent Evaluation Welcome', text: 'We support third-party evaluation of outcomes.' },
+      ]}
+    />
+  </Tone>
 
   <!-- C13 -->
-  <CTABand
-    id="cta"
-    heading="Let’s Plan Your First Local Cohort"
-    text="Tell the Bangladesh team about your organization, your district and the groups you work with."
-    cta={{ label: local.label, href: local.href }}
-    fallbackLabel="the Bangladesh team at"
-    micro={MICRO_COMMITMENT}
-  />
+  <Tone cmf="C13">
+    <CTABand
+      id="cta"
+      heading="Let’s Plan Your First Local Cohort"
+      text="Tell the Bangladesh team about your organization, your district and the groups you work with."
+      cta={{ label: local.label, href: local.href }}
+      fallbackLabel="the Bangladesh team at"
+      micro={MICRO_COMMITMENT}
+    />
+  </Tone>
 
   <!-- C14 -->
-  <Section id="next-steps" aria-labelledby="next-h">
-    <SectionHeader id="next-h" eyebrow="After You Write" title={NEXT_STEPS_TITLE} />
-    <StepFlow steps={[
-      { title: 'Discovery Session', text: 'A conversation about your organization and the young people you reach.' },
-      { title: 'Fit Check and Co-Design', text: 'We shape the cohort, tracks, safeguarding, reporting and the pilot scorecard with you.' },
-      { title: 'Agreement', text: 'Scope, schedule and the pilot scorecard are agreed.' },
-      { title: 'First Cohort', text: 'Training begins at your site.' },
-    ]} />
-    <p class="lp-after">In your inquiry, include two suitable times for a discovery session.</p>
-  </Section>
+  <Tone cmf="C14">
+    <Section id="next-steps" aria-labelledby="next-h">
+      <SectionHeader id="next-h" eyebrow="After You Write" title={NEXT_STEPS_TITLE} />
+      <StepFlow steps={[
+        { title: 'Discovery Session', text: 'A conversation about your organization and the young people you reach.' },
+        { title: 'Fit Check and Co-Design', text: 'We shape the cohort, tracks, safeguarding, reporting and the pilot scorecard with you.' },
+        { title: 'Agreement', text: 'Scope, schedule and the pilot scorecard are agreed.' },
+        { title: 'First Cohort', text: 'Training begins at your site.' },
+      ]} />
+      <p class="lp-after">In your inquiry, include two suitable times for a discovery session.</p>
+    </Section>
+  </Tone>
 
 </LandingLayout>
 

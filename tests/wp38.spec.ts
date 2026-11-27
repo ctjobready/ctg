@@ -127,21 +127,27 @@ test.describe('Home: the Guide band and the cost-of-waiting card', () => {
 // WP43 (cycle-20 review): the second evidence strip this page had since WP38 ("Evidence from Our Wider Youth Programs": the trial line, the survey line and two links, #proof-band) is gone; the first band's linked strip
 // ("Broader Evidence from Our Youth Programs") is the one evidence pointer left (tests/wp43.spec.ts)
 test.describe('Universities: the one evidence strip, the National University heading and the third pain', () => {
-  test('there is one evidence strip: no #proof-band, no "Evidence from Our Wider Youth Programs", no trial or survey result line; the first band links the trial, the survey and the case studies', async ({ page }) => {
+  // WP175 (owner decision Q3 (a) of 2026-11-28: every C7 opens with the one-line trial lead): C7 opens with the compact trial band (#proof-band, "An Independent Randomized Trial"); the WP38 strip, the predecessor wording,
+  // the degree-share line, the survey chart and the median income stay gone, and the National University band still links the trial, the survey and the case studies
+  test('one trial band and one evidence strip: no "Evidence from Our Wider Youth Programs", no survey chart or degree-share line; the National University band links the trial, the survey and the case studies', async ({ page }) => {
     await open(page, 'partner-with-us/universities/');
-    await expect(page.locator('#proof-band')).toHaveCount(0);
+    await expect(page.locator('#proof-band')).toHaveCount(1);
     const text = await mainText(page);
-    expect(text).not.toMatch(/Evidence from Our Wider Youth Programs|A randomized trial of the predecessor WSDFM program|Among surveyed completers, 85\.0%|An Independent Randomized Trial|What Surveyed Completers Report|Employment Among Surveyed Completers|median monthly income was \$245/);
+    expect(text).not.toMatch(/Evidence from Our Wider Youth Programs|A randomized trial of the predecessor WSDFM program|Among surveyed completers, 85\.0%|What Surveyed Completers Report|Employment Among Surveyed Completers|median monthly income was \$245/);
+    expect(text.split('An Independent Randomized Trial').length - 1).toBe(1);
     expect(await texts(page, '#offer-evidence nav a')).toEqual(['The Randomized Trial', 'Impact Survey 2026', 'Case Studies']);
     expect((await hrefs(page, '#offer-evidence nav a')).map((h) => h.replace(/^.*\/ctg\//, ''))).toEqual(['impact/independent-evaluation/', 'impact/outcomes-2026/', 'impact/case-studies/']);
-    await expect(page.locator('main .eyebrow', { hasText: 'The Evidence' })).toHaveCount(0);
+    await expect(page.locator('main .eyebrow', { hasText: 'The Evidence' })).toHaveCount(1); // WP175: the trial band's eyebrow
   });
 
-  test('the features band follows the dark mechanism band directly; no two dark bands meet', async ({ page }) => {
+  // WP175 (owner decision of 2026-11-28: CMF v3): C7 (the Klein trial band, the National University band, Maria Dewan's story) sits between the mechanism band, which is light now, and the features band
+  test('the features band follows C7 (it ends with the learner story); the mechanism band is light, so no two dark bands meet', async ({ page }) => {
     await open(page, 'partner-with-us/universities/');
     const order = await bands(page);
     const ids = order.map((b) => b.id);
-    expect(ids.indexOf('features')).toBe(ids.indexOf('mechanism') + 1);
+    expect(ids.indexOf('features')).toBe(ids.indexOf('learner-voice') + 1);
+    expect(ids.indexOf('proof-band')).toBe(ids.indexOf('mechanism') + 1);
+    expect(await page.locator('#mechanism').getAttribute('class')).toMatch(/band--(airy|ice|white)/);
     expect(await page.locator('#features').getAttribute('class')).toMatch(/band--(airy|ice|white)/);
     for (let i = 1; i < order.length; i++) expect(order[i].dark && order[i - 1].dark, `${order[i - 1].id} then ${order[i].id}`).toBe(false);
   });

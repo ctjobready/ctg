@@ -26,6 +26,14 @@
  * WP128 (Opus High run 3, kit 95): "The National University Partnership" says its disclaimer once, in the lead; the first card leaves out the bracketed copy of it, and the second and third cards do not open with their own label.
  * WP136 (Opus High run 11, Polish): "The National University Partnership" has two cards, not three: the University Partners card (PA-05) is gone, because the band is headed for one partner and the three universities are named in the Track Record band's logo alt text; its lead reads "These cards describe ...".
  * WP66 (owner request 2026-10-20): the Track Record band has one proof line, the signed-agreement sentence for universities and colleges (SC-11b, `signed` on PartnerGuideBand: "CodersTrust has signed MOUs, agreements or contracts with ... universities and colleges."); the band's heading says "Since 2014", so the sentence leaves the year to it.
+ * WP175 (owner decisions of 28 November 2026: every conversion page follows CMF v3, C1 to C14, in order and coverage; tests/wp175-universities.spec.ts): every band sits in a Tone wrapper (data-cmf). The
+ * "See the Program" link moves under the definition, so GEO directly follows the hero. C2–C4 is a declared compression: the PX-02 and PX-05 tiles are pains P1 and P2 (as doc 04 4.5 records), "Placement Results
+ * Are Hard to Publish" is P3, and the band ends with the C3 transition line (C3_TRANSITION). C5 opens with the empathy line again (EMPATHY.universities, a fresh line: not the one WP50 retired) and ends with the
+ * TalentLEAP method line (METHOD, Q2 (a)); C6 no longer prints the line or its link (WP166-B R3-29 had moved them there), so the method is said once. C6 is the light mechanism band (HomeMechanism, airy), because
+ * the C7 trial band (ProofBand, Klein) now follows it and two dark bands never touch (tests/wp47.spec.ts). C7 is the trial band, led by the one-line trial lead (TRIAL_LEAD), then the National University band (it opened
+ * the page before the problem band, WP24a) with its links to the broader evidence, then Maria Dewan's story (also moved from before C2). C8 is CAMPUS_INCLUDES (P1 to P3), one gain creator ("Capacity Designed to
+ * Stay on Campus", JobReady@Campus's own vignette, PD-06) and "How It Works in Three Steps" (CAMPUS_STEPS). C10 is the short "What Makes CodersTrust Different" band (USPs 3 and 4, doc 04 4.5). C11 "Start with One
+ * Campus" returns as its heading and one line (dee46ac1^; WP135 had folded the line into the pilot band, whose first point reads "Start with a first campus program and see its results." again).
  */
 import DueDiligenceView from '../../../components/pages/hub/DueDiligenceView.astro';
 import LearnerVoice from '../../../components/pages/impact/LearnerVoice.astro';
@@ -33,20 +41,25 @@ import LandingLayout from '../../../layouts/LandingLayout.astro';
 import HeroBand from '../../../components/sections/HeroBand.astro';
 import DefinitionBand from '../../../components/sections/DefinitionBand.astro';
 import ProblemBand from '../../../components/sections/ProblemBand.astro';
-import MechanismBand from '../../../components/sections/MechanismBand.astro';
 import IncludesBand from '../../../components/sections/IncludesBand.astro';
 import FAQBand from '../../../components/sections/FAQBand.astro';
 import RiskReversalBand from '../../../components/sections/RiskReversalBand.astro';
+import ProofBand from '../../../components/sections/ProofBand.astro';
+import DifferenceBand from '../../../components/sections/DifferenceBand.astro';
 import CTABand from '../../../components/ui/CTABand.astro';
+import HomeMechanism from '../../../components/pages/home/HomeMechanism.astro';
+import Tone from '../../../components/pages/home/Tone.astro';
 import PairedEvidence from '../../../components/pages/partners/PairedEvidence.astro';
 import GainsPains from '../../../components/pages/partners/GainsPains.astro';
+import HowItWorks from '../../../components/pages/partners/HowItWorks.astro';
+import OfferCards from '../../../components/pages/partners/OfferCards.astro';
 import PartnerGuideBand from '../../../components/pages/partners/PartnerGuideBand.astro';
 import RouteLink from '../../../components/pages/partners/RouteLink.astro';
 import StepsBand from '../../../components/pages/partners/StepsBand.astro';
 import Reinforcement from '../../../components/pages/partners/Reinforcement.astro';
 import PageEnhancements from '../../../components/pages/partners/PageEnhancements.astro';
 import { HOURS, LINKS, TRACKING_MONTHS, meta } from '../../../components/pages/partners/partners';
-import { DELIVERY_MODEL, HEADLINE, MICRO_COMMITMENT, POSITIONING, PROGRAM_SCOPE_STATEMENT_EXAMS, READ_THE_EVIDENCE, SPEED_UNIVERSITIES, TRACK_MENU, VALUE_PROPOSITION } from '../../../data/copy';
+import { C3_TRANSITION, CAMPUS_INCLUDES, CAMPUS_STEPS, DELIVERY_MODEL, EMPATHY, HEADLINE, METHOD, MICRO_COMMITMENT, POSITIONING, PROGRAM_SCOPE_STATEMENT_EXAMS, READ_THE_EVIDENCE, SPEED_UNIVERSITIES, TRIAL_BAND_HEADING, TRIAL_LEAD, VALUE_PROPOSITION } from '../../../data/copy';
 import { faqJsonLd } from '../../../lib/faq';
 import { cta } from '../../../lib/mailto';
 import { webPage } from '../../../lib/schema';
@@ -66,6 +79,10 @@ const { title, description } = meta(
 // Q8-route: the one-line cost answer with a link to the partner hub FAQ, which keeps the full answer (WP36).
 // WP166-B (marketing review R3-14): "Does It Change Our Curriculum?" (Q16-curriculum) answers a dean's second question.
 const FAQ_IDS = ['Q1-campus', 'Q10-campus', 'Q16-curriculum', 'Q8-route'];
+// WP175 (C11, restored from dee46ac1^): the one line of "Start with One Campus" (WP57: no size cards; WP132: tracks and labs are agreed in co-design, as the closing band and What Happens Next say).
+const START_LINE = 'Cohort size, tracks and labs are agreed in co-design.';
+// WP175 (C8c): the gain creator, JobReady@Campus's vignette "Capacity Designed to Stay on Campus" word for word (doc 04 4.5: campus labs as blended-learning centers with facilitators trained by CodersTrust, PD-06, IN-09); no painId, so it relieves no ranked pain.
+const gainCreator = { icon: 'landmark', title: 'Capacity Designed to Stay on Campus', text: 'Campus labs keep working as blended-learning centers, with CodersTrust-trained facilitators.', facts: ['IN-09', 'PD-06'] };
 ---
 
 <LandingLayout
@@ -73,152 +90,168 @@ const FAQ_IDS = ['Q1-campus', 'Q10-campus', 'Q16-curriculum', 'Q8-route'];
   description={description}
   path={PATH}
   breadcrumbs={[{ label: 'Partner with Us', href: LINKS.hub }, { label: 'Universities' }]}
-  jsonLd={[webPage({ path: PATH, name: title, description, dateModified: '2026-11-28' /* WP175 (owner decision Q5 of 2026-11-28): the C6 positioning statement is the crafted statement for this audience (POSITIONING in src/data/copy.ts) */ }), faqJsonLd('universities', PATH, FAQ_IDS)]}
+  jsonLd={[webPage({ path: PATH, name: title, description, dateModified: '2026-11-28' /* WP175 (owner decisions of 2026-11-28): the crafted C6 statement (Q5), and the CMF v3 bands (the transition line, the C5 empathy and method lines, the trial band, the gain creator and three steps, the short C10, the restored C11) */ }), faqJsonLd('universities', PATH, FAQ_IDS)]}
   stickyCta={{ label: primary.label, href: primary.href }}
 >
   <!-- C1 · Identity hook -->
-  <HeroBand
-    audience="For Universities and Colleges"
-    title={HEADLINE.universities}
-    lead={VALUE_PROPOSITION.universities}
-    cta={{ label: primary.label, href: primary.href }}
-    artSeed="partners-universities"
-  />
-  <RouteLink kicker="See the Program" label="See Campus Delivery Details" href={LINKS.campus} />
-  <!-- GEO · What is CodersTrust? -->
-  <DefinitionBand />
+  <Tone cmf="C1">
+    <HeroBand
+      audience="For Universities and Colleges"
+      title={HEADLINE.universities}
+      lead={VALUE_PROPOSITION.universities}
+      cta={{ label: primary.label, href: primary.href }}
+      artSeed="partners-universities"
+    />
+  </Tone>
+  <!-- GEO · What is CodersTrust? WP175: the "See the Program" link (WP20b) sits under the definition, so GEO directly follows the hero. -->
+  <Tone cmf="GEO">
+    <DefinitionBand />
+    <RouteLink kicker="See the Program" label="See Campus Delivery Details" href={LINKS.campus} />
+  </Tone>
 
-  <!-- Compact NU proof band, before the challenge (WP24a). WP166-B (marketing review R3-13): the heading states the claim (SC-04, SC-05; it said "The National University Partnership"), and the qualifier is the note under the two cards (it was the lead above them). -->
-  <PairedEvidence
-    eyebrow="Our Partnerships"
-    title="Official Training Partner of the World’s Second-Largest University by Enrollment"
-    note="These cards describe the learners being onboarded and National University’s size, not learners trained by CodersTrust."
-    noteFacts={['SC-04', 'SC-05']}
-    items={[
-      { id: 'SC-04', label: 'Official Training Partner', drop: ' (the university’s own learners, not learners trained by CodersTrust)' },
-      { id: 'SC-05', label: 'National University' },
-    ]}
-  />
-  <LearnerVoice story="maria-dewan" excerpt="Maria Dewan was a third-year Biology student when she first came across Her Power, where CodersTrust was a training partner." program="Her Power" tone="white" />
+  <!-- C2–C4, declared compressed (WP47, owner decision 2026-10-15, recast 2026-11-28). WP34 (cycle-11 review): the Bangladesh graduate-unemployment tile (PX-03) is gone from this global page; the employer-skills tile (PX-05) stays.
+       The PX-02 and PX-05 tiles are pains P1 and P2 (doc 04 4.5), the card below is P3, and the band ends with the C3 transition line. -->
+  <Tone cmf="C2-C4 (compressed)">
+    <ProblemBand
+      title="Degrees Alone Are Not Turning into Jobs"
+      bluf="Capable students finish their degrees, and employers still say they cannot find the skills they need."
+      factIds={['PX-02', 'PX-05']}
+      transition={C3_TRANSITION}
+    >
+      <!-- WP166-B (marketing review R3-40): the students' pain is the 19M+ tile (PX-02, as on Home and YouthWIDE) in place of the card "Degree holders struggle to find work" ("A degree alone does not guarantee a job offer."). -->
+      <GainsPains
+        slot="lead"
+        pains={[
+          // WP46 (cycle-22 review): the employers' pain is the 72% tile directly below (PX-05, worldwide), so a card that restated it is gone; the two pains left are the students' and the institution's.
+          // WP38 (cycle-15 review): a general institutional pain, stated in one line like its neighbor; it rests on no CodersTrust fact.
+          // WP49 (cycle-24 review): the line says what the institution needs ("is rarely collected" was a claim about the whole sector).
+          // WP51 (cycle-26 review): the pain is headed as the goal ("Build Placement Results You Can Publish"); it was "Institutions Lack Placement Results They Can Publish", which presumed the reader's institution is deficient. The line under it is unchanged.
+          // WP58 (cycle-30 review, GLM L4): the pain is stated as a pain, "Placement Results Are Hard to Publish" (the goal-framed "Build Placement Results You Can Publish" sat inside a list of pains). The line under it is unchanged.
+          // WP175: it is P3 (data-pain), the pain the third campus card relieves.
+          { id: 'P3', q: 'Placement results are hard to publish', text: 'Your institution needs placement data it can report to a board or ministry.' },
+        ]}
+      />
+    </ProblemBand>
+  </Tone>
 
-  <!-- C2 · Problem. WP34 (cycle-11 review): the Bangladesh graduate-unemployment tile (PX-03) is gone from this global page; the employer-skills tile (PX-05) stays. -->
-  <ProblemBand
-    title="Degrees Alone Are Not Turning into Jobs"
-    bluf="Capable students finish their degrees, and employers still say they cannot find the skills they need."
-    factIds={['PX-02', 'PX-05']}
-  >
-    <!-- WP166-B (marketing review R3-40): the students' pain is the 19M+ tile (PX-02, as on Home and YouthWIDE) in place of the card "Degree holders struggle to find work" ("A degree alone does not guarantee a job offer."). -->
-    <GainsPains
-      slot="lead"
-      pains={[
-        // WP46 (cycle-22 review): the employers' pain is the 72% tile directly below (PX-05, worldwide), so a card that restated it is gone; the two pains left are the students' and the institution's.
-        // WP38 (cycle-15 review): a general institutional pain, stated in one line like its neighbor; it rests on no CodersTrust fact.
-        // WP49 (cycle-24 review): the line says what the institution needs ("is rarely collected" was a claim about the whole sector).
-        // WP51 (cycle-26 review): the pain is headed as the goal ("Build Placement Results You Can Publish"); it was "Institutions Lack Placement Results They Can Publish", which presumed the reader's institution is deficient. The line under it is unchanged.
-        // WP58 (cycle-30 review, GLM L4): the pain is stated as a pain, "Placement Results Are Hard to Publish" (the goal-framed "Build Placement Results You Can Publish" sat inside a list of pains). The line under it is unchanged.
-        { q: 'Placement results are hard to publish', text: 'Your institution needs placement data it can report to a board or ministry.' },
+  <!-- C5 · Guide: empathy → ORIGIN → authority → method (WP175, Q2 (a)).
+       WP39 (cycle-16 review): no National University sentence here: the National University band (C7 below) states the relationship. WP66 (owner request 2026-10-20): the band's one proof line is the signed-agreement sentence for universities
+       and colleges (SC-11b, `signed`). WP175: the TalentLEAP method line closes the band again (WP166-B R3-29 had moved it to How It Works). -->
+  <Tone cmf="C5">
+    <PartnerGuideBand
+      empathy={EMPATHY.universities}
+      signed="SC-11b"
+      partnerGroup="academic"
+      method={METHOD.universities}
+      methodLast
+    />
+  </Tone>
+
+  <!-- C6 · Mechanism (JobReady@Campus), the light variant of the mechanism band (WP175: the C7 trial band after it is the Klein one). WP166-B (marketing review R3-24): the approach closes with the page's one delivery-model sentence. -->
+  <Tone cmf="C6">
+    <HomeMechanism
+      tone="airy"
+      title="JobReady@Campus: Training Alongside the Degree"
+      positioning={POSITIONING.universities}
+      lead={DELIVERY_MODEL.text}
+      blocks={[
+        { label: 'Set Up', title: 'Campus Labs as Learning Centers', text: 'On-campus labs become blended-learning centers with facilitators trained by CodersTrust (Training of Trainers); faculty members act as coordinators.', icon: 'landmark' },
+        { label: 'Prepare for Certification', title: 'Certification Preparation by Track', text: `${HOURS} training hours per certification, including exam preparation and one exam fee per trainee; exam eligibility and any further attempts are set per program.`, icon: 'award' },
+        { label: 'Mentor and Place', title: 'Mentoring and Placement', text: `Three months of milestone-based mentoring and placement support, with outcome tracking for ${TRACKING_MONTHS} months after each course.`, icon: 'users' },
+        { label: 'Alongside Studies', title: 'In Parallel with the Degree', text: 'Training runs in parallel with academic studies, with professional internships where employer placements are available.', icon: 'graduation-cap' },
+      ]}
+      link={{ label: 'About JobReady@Campus', href: LINKS.campus }}
+    />
+  </Tone>
+
+  <!-- C7 · Proof (WP175, Q3 (a)): the trial band, led by the one-line trial lead, with the survey's employment readings in one sentence (compact); then the National University band, whose links go to the broader evidence (WP43:
+       the band that WP38 put here said those links again), then Maria Dewan's story. Both stood before the problem band (WP24a). -->
+  <Tone cmf="C7">
+    <ProofBand title={TRIAL_BAND_HEADING} headlineFact="RC-01" trialLead={TRIAL_LEAD} statIds={[]} compact />
+    <!-- WP166-B (marketing review R3-13): the heading states the claim (SC-04, SC-05; it said "The National University Partnership"), and the qualifier is the note under the two cards (it was the lead above them). -->
+    <PairedEvidence
+      eyebrow="Our Partnerships"
+      title="Official Training Partner of the World’s Second-Largest University by Enrollment"
+      note="These cards describe the learners being onboarded and National University’s size, not learners trained by CodersTrust."
+      noteFacts={['SC-04', 'SC-05']}
+      items={[
+        { id: 'SC-04', label: 'Official Training Partner', drop: ' (the university’s own learners, not learners trained by CodersTrust)' },
+        { id: 'SC-05', label: 'National University' },
       ]}
     />
-  </ProblemBand>
+    <LearnerVoice story="maria-dewan" excerpt="Maria Dewan was a third-year Biology student when she first came across Her Power, where CodersTrust was a training partner." program="Her Power" tone="white" />
+  </Tone>
 
-  <!-- C3 (Cost of Waiting) and C4 (Imagine) are left to Home since WP47 (owner decision 2026-10-15). -->
+  <!-- C8 · Features to benefits. WP39 (cycle-16 review): three short cards in place of the concern / inclusion / benefit matrix, in the order of the three pains in C2 (the PX-02 and PX-05 tiles, then "Placement Results Are Hard to Publish").
+       WP175: the cards are CAMPUS_INCLUDES (the same words, with painId P1 to P3), then the gain creator and "How It Works in Three Steps" (CAMPUS_STEPS). -->
+  <Tone cmf="C8">
+    <IncludesBand
+      title="What Your Students and Your Institution Get"
+      cards={[...CAMPUS_INCLUDES, gainCreator]}
+      scope={PROGRAM_SCOPE_STATEMENT_EXAMS}
+    />
+    <HowItWorks steps={CAMPUS_STEPS} />
+  </Tone>
 
-  <!-- C5 · Guide. -->
-  <!-- WP39 (cycle-16 review): no authority bullet here: "The National University Partnership" (the first band) states the NU relationship, so the Guide band keeps the origin line, the method line and the logos.
-       WP50 (cycle-25 review): no empathy line either: the band opens with the origin line, since the problem band above states the problem (JobReady@Campus keeps the sentence as its own problem band's lead).
-       WP66 (owner request 2026-10-20): the band's one proof line is the signed-agreement sentence for universities and colleges (SC-11b, `signed`); it is not the National University relationship, which the first band still states once. -->
-  <!-- WP166-B (marketing review R3-29): the TalentLEAP method line and its link are at the end of How It Works below, where career paths are relevant. -->
-  <PartnerGuideBand
-    signed="SC-11b"
-    partnerGroup="academic"
-  />
+  <!-- C9 · Objections, then the due-diligence view (WP34, cycle-11 review: one item and a link stand in for the four diligence cards) -->
+  <Tone cmf="C9">
+    <FAQBand
+      audience="universities"
+      ids={FAQ_IDS}
+      title="Questions Universities Ask"
+    />
+    <DueDiligenceView brief id="due-diligence" />
+  </Tone>
 
-  <!-- C6 · Mechanism (JobReady@Campus) -->
-  <!-- WP166-B (marketing review R3-24, R3-29): the approach closes with the page's one delivery-model sentence (it led the first "What Your Students and Your Institution Get" card), and the TalentLEAP line and link close the band. -->
-  <MechanismBand
-    title="JobReady@Campus: Training Alongside the Degree"
-    positioning={POSITIONING.universities}
-    lead={DELIVERY_MODEL.text}
-    blocks={[
-      { label: 'Set Up', title: 'Campus Labs as Learning Centers', text: 'On-campus labs become blended-learning centers with facilitators trained by CodersTrust (Training of Trainers); faculty members act as coordinators.', icon: 'landmark' },
-      { label: 'Prepare for Certification', title: 'Certification Preparation by Track', text: `${HOURS} training hours per certification, including exam preparation and one exam fee per trainee; exam eligibility and any further attempts are set per program.`, icon: 'award' },
-      { label: 'Mentor and Place', title: 'Mentoring and Placement', text: `Three months of milestone-based mentoring and placement support, with outcome tracking for ${TRACKING_MONTHS} months after each course.`, icon: 'users' },
-      { label: 'Alongside Studies', title: 'In Parallel with the Degree', text: 'Training runs in parallel with academic studies, with professional internships where employer placements are available.', icon: 'graduation-cap' },
-    ]}
-    moreLinks={[{ label: 'How TalentLEAP Works', href: LINKS.talentleap }]}
-    link={{ label: 'About JobReady@Campus', href: LINKS.campus }}
-  >
-    <p class="uni__method" data-fact="IN-06">Our TalentLEAP method organizes skills into career paths.</p>
-  </MechanismBand>
+  <!-- C10 · Differentiation (WP175): the short band, USPs 3 and 4 (doc 04 4.5); the full comparison table stays off this page (WP30c, WP47). -->
+  <Tone cmf="C10">
+    <DifferenceBand usps={['credential', 'infrastructure']} />
+  </Tone>
 
-  <!-- C7 · Proof: the National University partnership band opens the page, before the challenge, and ends in the linked strip "Broader Evidence from Our Youth Programs" (the trial, the survey, the case studies). WP43 (cycle-20 review): the second
-       evidence band that stood here ("Evidence from Our Wider Youth Programs": the trial line, the survey line and two of the same links) is gone; it said again what that strip links, and no page linked its anchor (#proof-band). -->
+  <!-- C11 · Offer (WP175, restored from dee46ac1^). WP57 (cycle-29 review, Grok R5): no size cards, so no pilot size is recommended to a campus; the band is its heading and one line (OfferCards with no cards), and it holds no button of its own.
+       WP133 (Opus High run 8): one path, so the heading names it. -->
+  <Tone cmf="C11">
+    <OfferCards eyebrow="" title="Start with One Campus" lead={START_LINE} cards={[]} />
+  </Tone>
 
-  <!-- C8 · Features to benefits. WP39 (cycle-16 review): three short cards in place of the concern / inclusion / benefit matrix, in the order of the three pains in C2 (degree holders struggle to find work; employers cannot find the
-       skills they need; build placement results you can publish). Each sentence rests on the register: PD-02 and PD-01 (certification exam preparation, three months of milestone-based mentoring), PD-10 and PD-02
-       (tracks set from employer demand, an AI-ready curriculum), PD-08 and PD-09 (follow-up surveys, monthly reports, documentary evidence where available). -->
-  <IncludesBand
-    title="What Your Students and Your Institution Get"
-    cards={[
-      // WP163 (owner answers of 3 November 2026): the card states the delivery model once on this page (DELIVERY_MODEL, the AI-supported flipped classroom).
-      // WP166-B (marketing review R3-24, R3-05): the delivery-model sentence is in How It Works; the skills card names the track menu (TRACK_MENU, PD-10) in place of "Tracks are set from employer demand in an AI-ready curriculum, built around the skills employers say they cannot find."
-      { icon: 'award', title: 'Certification Exam Preparation and Mentoring', text: 'Industry certification exam preparation by track, followed by three months of milestone-based mentoring toward a first client or a first job.', facts: ['PD-02', 'PD-01'] },
-      { icon: 'briefcase', title: 'Skills Employers Ask For', text: TRACK_MENU.text, facts: TRACK_MENU.facts },
-      { icon: 'clipboard-check', title: 'Placement Evidence You Can Report', text: 'Follow-up surveys, monthly reports and documentary evidence where available give your institution outcome data it can report.', facts: ['PD-08', 'PD-09'] },
-    ]}
-    scope={PROGRAM_SCOPE_STATEMENT_EXAMS}
-  />
-
-  <!-- C9 · Objections -->
-  <FAQBand
-    audience="universities"
-    ids={FAQ_IDS}
-    title="Questions Universities Ask"
-  />
-
-  <!-- C10 · Differentiation: the positioning statement opens C6; the comparison table is on Home and Investors only (WP30c). -->
-
-  <!-- WP135 (Opus High run 10, Polish 3): no separate "Start with One Campus" band: its one line (cohort size, tracks and labs are agreed in co-design) is the first point of the pilot band below, which says the same "start small" thing. The #offer anchor is gone with the band; nothing linked to it. -->
-
-  <!-- C12 · Risk reversal (immediately before C13). WP34 (cycle-11 review): the four diligence cards repeated what this page's bands state, so one item and a link stand in -->
-  <DueDiligenceView brief id="due-diligence" />
-  <RiskReversalBand
-    title="Start with a Pilot, Then Decide on Evidence"
-    points={[
-      { icon: 'rocket', title: 'A Pilot Comes First', text: 'Start with one campus; cohort size, tracks and labs are agreed in co-design.' },
-      { icon: 'target', title: 'Scorecard Thresholds', text: 'Thresholds are agreed before the first cohort; a missed threshold triggers a corrective plan.' },
-      { icon: 'handshake', title: 'Expansion Is Your Decision', text: 'You decide whether to add campuses or tracks after the pilot.' },
-      { icon: 'shield', title: 'Independent Evaluation Welcome', text: 'We support third-party evaluation of outcomes.' },
-    ]}
-  />
+  <!-- C12 · Risk reversal (immediately before C13). WP175: the first point is the dee46ac1^ line again, now that C11 states the start line. -->
+  <Tone cmf="C12">
+    <RiskReversalBand
+      title="Start with a Pilot, Then Decide on Evidence"
+      points={[
+        { icon: 'rocket', title: 'A Pilot Comes First', text: 'Start with a first campus program and see its results.' },
+        { icon: 'target', title: 'Scorecard Thresholds', text: 'Thresholds are agreed before the first cohort; a missed threshold triggers a corrective plan.' },
+        { icon: 'handshake', title: 'Expansion Is Your Decision', text: 'You decide whether to add campuses or tracks after the pilot.' },
+        { icon: 'shield', title: 'Independent Evaluation Welcome', text: 'We support third-party evaluation of outcomes.' },
+      ]}
+    />
+  </Tone>
 
   <!-- C13 · Call to action. WP166-B (marketing review R3-39): the reassurance line the other route pages carry ("A discovery session is a conversation, not a commitment."). -->
-  <CTABand
-    id="cta"
-    heading="Let’s Bring JobReady@Campus to Your Students"
-    cta={{ label: primary.label, href: primary.href }}
-    secondary={{ label: READ_THE_EVIDENCE, href: LINKS.evidence }}
-    urgency={SPEED_UNIVERSITIES.text}
-    micro={MICRO_COMMITMENT}
-  />
+  <Tone cmf="C13">
+    <CTABand
+      id="cta"
+      heading="Let’s Bring JobReady@Campus to Your Students"
+      cta={{ label: primary.label, href: primary.href }}
+      secondary={{ label: READ_THE_EVIDENCE, href: LINKS.evidence }}
+      urgency={SPEED_UNIVERSITIES.text}
+      micro={MICRO_COMMITMENT}
+    />
+  </Tone>
 
   <!-- C14 · Next steps -->
-  <StepsBand
-    steps={[
-      { title: 'Discovery Session', text: 'A conversation about your students, programs and timeline.' },
-      { title: 'Co-Design', text: 'Tracks, campus labs and the pilot scorecard are shaped with you.' },
-      { title: 'Agreement', text: 'Scope, schedule and the pilot scorecard are agreed.' },
-      { title: 'First cohort in training', text: 'CodersTrust-trained facilitators begin the first cohort in your labs.' },
-    ]}
-  />
-  <Reinforcement logos={false} reminder={false} />
+  <Tone cmf="C14">
+    <StepsBand
+      steps={[
+        { title: 'Discovery Session', text: 'A conversation about your students, programs and timeline.' },
+        { title: 'Co-Design', text: 'Tracks, campus labs and the pilot scorecard are shaped with you.' },
+        { title: 'Agreement', text: 'Scope, schedule and the pilot scorecard are agreed.' },
+        { title: 'First cohort in training', text: 'CodersTrust-trained facilitators begin the first cohort in your labs.' },
+      ]}
+    />
+    <Reinforcement logos={false} reminder={false} />
+  </Tone>
 
   <PageEnhancements />
 </LandingLayout>
 
-<style>
-  /* WP166-B (R3-29): the TalentLEAP line under the diagram, one step above the ribbon */
-  .uni__method {
-    margin: var(--space-lg) 0 0;
-  }
-</style>

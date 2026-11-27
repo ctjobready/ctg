@@ -121,9 +121,11 @@ test.describe('Governments, Universities and Local Partners: the wording the rev
     expect('Connect Your Community to Paid Digital Work').toBe(titleCase('Connect Your Community to Paid Digital Work'));
     // WP50 (cycle-25 review): the problem band's lead is "Connect your community reach with CodersTrust’s curriculum, mentoring, placement support and reporting." (it was "Local organizations often lack ..."; tests/wp50.spec.ts)
     expect(compact(await page.locator('#problem .sh__lead').textContent())).toBe('Your organization reaches young people, but a curriculum, certification preparation and links to paid work are hard to build alone.'); // WP136 (Opus High run 11, Minor): the lead states the reader's obstacle (it was WP52's "Pair your community reach with ...")
-    // the track-record band opens with its method paragraph, which names the Bangladesh team; its empathy line is gone
-    await expect(page.locator('#guide p.lead')).toHaveCount(0);
-    expect(compact(await page.locator('#guide .guide__method').textContent())).toContain('CodersTrust Bangladesh, our country office in');
+    // the track-record band's line about the Bangladesh team stays; the empathy line WP49 removed ("You reach young people that national programs miss, ...") stays gone. WP175 (owner decision Q2 (a) of 2026-11-28): the band
+    // opens with a fresh empathy line of its own (no comparison), and the team line is one of its authority sentences
+    await expect(page.locator('#guide p.lead')).toHaveCount(1);
+    expect(compact(await page.locator('#guide p.lead').textContent())).not.toMatch(/programs miss/);
+    expect(compact(await page.locator('#guide .pg__list').textContent())).toContain('CodersTrust Bangladesh, our country office in');
     const offer = compact(await page.locator('#offer').textContent());
     expect(offer).toContain('Mobilize Priority Groups');
     expect(offer).toContain('Reach the young people your community serves; women are a priority in every program.'); // WP138 (was "Mobilize priority groups in your community, with women a priority in every program.")
@@ -310,9 +312,10 @@ test.describe('Governments: the briefing, not a discovery session (items 12, 28 
     // WP52 (cycle-27 review): the lead is the note alone ("Prefer to fund the platform? See JobReady Platform Grants below." is gone; the funding-route comparison above carries the platform-grant row; tests/wp52.spec.ts)
     expect(compact(await page.locator('#cohort-grants .sh__lead').textContent())).toBe(PROGRAM_SIZES_NOTE);
     await open(page, UNI);
-    // WP135 (Opus High run 10, Polish 3): the one-line band is folded into the pilot band (no #offer on Universities); WP133: the heading said "Start with One Campus" // WP132: tracks and labs are agreed in co-design (was "set in the discovery session")
-    await expect(page.locator('#offer')).toHaveCount(0);
-    expect(compact(await page.locator('.risk__item', { hasText: 'A Pilot Comes First' }).textContent())).toContain('Start with one campus; cohort size, tracks and labs are agreed in co-design.');
+    // WP135 (Opus High run 10, Polish 3) had folded the one-line band into the pilot band. WP175 (owner decision of 2026-11-28: CMF v3, every page keeps C11): "Start with One Campus" (#offer) is back, and its lead is
+    // the one line, not the pricing sentence // WP132: tracks and labs are agreed in co-design (was "set in the discovery session")
+    expect(compact(await page.locator('#offer .sh__lead').textContent())).toBe('Cohort size, tracks and labs are agreed in co-design.');
+    expect(compact(await page.locator('#offer').textContent())).not.toMatch(/Pricing is set per program/);
     await open(page, DP);
     expect(compact(await page.locator('#offer .sh__lead').textContent())).toBe(PROGRAM_SIZES_NOTE);
     for (const route of [GOV, FOUND]) { // WP135: Universities has no "Choose Where to Start" lead any more (the one line is in its pilot band)
@@ -453,10 +456,14 @@ test.describe('SC-16 reads "learners trained" (item 18)', () => {
 });
 
 test.describe('Investors: the due-diligence line and the eyebrow (items 20 and 34)', () => {
-  test('the band "What Happens After You Ask" has the eyebrow "Next Steps" and one due-diligence line that names the contracting entities as the register does and links Governance and Accountability', async ({ page }) => {
+  // WP175 (owner decision of 2026-11-28: CMF v3, the offer in C11 and the four steps in C14): the offer band is "What You Receive" (eyebrow "The Offer") and keeps the due-diligence line; "What Happens After You Ask"
+  // (eyebrow "Next Steps") is the C14 band after the call to action
+  test('the offer band keeps the one due-diligence line that names the contracting entities as the register does and links Governance and Accountability; "What Happens After You Ask" (eyebrow "Next Steps") is the next-steps band', async ({ page }) => {
     await open(page, 'partner-with-us/investors/');
-    await expect(page.locator('#offer .eyebrow').first()).toHaveText('Next Steps');
-    await expect(page.locator('#offer h2')).toHaveText('What Happens After You Ask');
+    await expect(page.locator('#offer .eyebrow').first()).toHaveText('The Offer');
+    await expect(page.locator('#offer h2')).toHaveText('What You Receive');
+    await expect(page.locator('#next-steps .eyebrow').first()).toHaveText('Next Steps');
+    await expect(page.locator('#next-steps h2')).toHaveText('What Happens After You Ask');
     const line = page.locator('#offer .io__diligence');
     await expect(line).toHaveCount(1);
     // WP166-B (marketing review R3-35): the investor's line names the corporate structure, the parent (CT USA, Inc., the for-profit company incorporated in New York, ID-12) and the country office, both by the

@@ -162,11 +162,13 @@ test.describe('audience pages', () => {
     expect(text).not.toMatch(/Fund YouthWIDE Cohorts|Choose a Cohort Starting Point/);
   });
 
-  test('universities: the National University scale band comes before the challenge', async ({ page }) => {
+  // WP175 (owner decision of 2026-11-28: CMF v3 in order; Q3 (a): the trial leads C7): the National University band is C7, directly after the trial band; it no longer comes before the challenge (WP24a)
+  test('universities: the National University scale band follows the trial band in C7, after the challenge', async ({ page }) => {
     await page.goto('partner-with-us/universities/');
     const ids = await idOrder(page);
     expect(ids.indexOf('offer-evidence'), 'NU band').toBeGreaterThan(-1);
-    expect(ids.indexOf('offer-evidence')).toBeLessThan(ids.indexOf('problem'));
+    expect(ids.indexOf('offer-evidence')).toBeGreaterThan(ids.indexOf('problem'));
+    expect(ids.indexOf('offer-evidence')).toBeGreaterThan(ids.indexOf('proof-band'));
     // WP38 (cycle-15 review): the heading names the partnership; the sentence under it still says the figures are National University's, not learners trained by CodersTrust
     // WP166-B (marketing review R3-13): the heading states the claim (it was "The National University Partnership"); the sentence is the note under the two cards (it was the lead, .sh__lead).
     await expect(page.locator('#offer-evidence h2')).toHaveText('Official Training Partner of the World’s Second-Largest University by Enrollment');

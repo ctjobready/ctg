@@ -40,20 +40,30 @@ async function faqJsonLd(page: Page) {
   return out;
 }
 
-test.describe('Investors: "What JobReady Does" is three short cards and one link (item 1)', () => {
+// WP175 (owner decision of 2026-11-28: C8 relieves each thesis pain 1:1, in order, and names its gain creator): four short cards, one per pain (painId) and the gain creator, and one link
+test.describe('Investors: "What JobReady Does" is short cards (one per thesis pain and the gain creator) and one link (item 1)', () => {
   // WP163 (owner answers of 3 November 2026): the cards say what JobReady offers, with no live, pre-launch, planned or roadmap label; the Learn card states the delivery model, the page's one statement of it.
   // WP166-B (marketing review R3-24): the delivery-model sentence ("Training follows an AI-supported flipped classroom: ...") left the Learn card for the lead of "How JobReady Connects Learning to Work"; the card's
   // other sentences are unchanged.
-  const CARDS = [
-    {
-      title: 'Learn Through TalentLEAP',
-      text: 'TalentLEAP’s levels run from Competent to Proficient and Expert, with AI-driven personalized and adaptive learning paths. Supported cohorts include mentoring, certification exam preparation and placement support. Cohort inclusions on this page are agreed in each program’s scope.', // WP142: the page's one scope sentence follows the cohort-inclusions sentence. WP64 (cycle-36 review, Claude): it said "Competent is the published first level; Proficient and Expert are planned."
-      facts: ['IN-06', 'IN-08', 'PD-01', 'PD-02', 'IN-04'],
-    },
+  // WP175: the cards follow the thesis pains (P1 young people need work and employers need skills; P2 AI skills in rising demand; P3 connect learning to paid work), then the gain creator; the AI card is new (doc 04 4.4's AI row)
+  const CARDS: { title: string; text: string; facts: string[]; pain?: string }[] = [
     {
       title: 'Connect to Paid Work',
       text: 'The employer marketplace and the gig-work marketplace connect learners to paid work, and an AI career coach guides them on careers, interviews and portfolios. Placement also runs through CodersTrust’s placement team and marketplaces such as Upwork and Fiverr.',
       facts: ['IN-04'],
+      pain: 'P1',
+    },
+    {
+      title: 'An AI-Ready Curriculum',
+      text: 'An AI-ready curriculum, designed to prepare people to work with AI tools, in tracks chosen from employer demand.',
+      facts: ['PD-02', 'PD-10'],
+      pain: 'P2',
+    },
+    {
+      title: 'Learn Through TalentLEAP',
+      text: 'TalentLEAP’s levels run from Competent to Proficient and Expert, with AI-driven personalized and adaptive learning paths. Supported cohorts include mentoring, certification exam preparation and placement support. Cohort inclusions on this page are agreed in each program’s scope.', // WP142: the page's one scope sentence follows the cohort-inclusions sentence. WP64 (cycle-36 review, Claude): it said "Competent is the published first level; Proficient and Expert are planned."
+      facts: ['IN-06', 'IN-08', 'PD-01', 'PD-02', 'IN-04'],
+      pain: 'P3',
     },
     {
       title: 'Equip Partner Institutions',
@@ -62,20 +72,20 @@ test.describe('Investors: "What JobReady Does" is three short cards and one link
     },
   ];
 
-  test('the band keeps its id and heading and has the three cards, each with its sentences and the register facts they rest on', async ({ page }) => {
+  test('the band keeps its id and heading and has its cards in pain order, each with its sentences, the register facts they rest on and the pain it relieves', async ({ page }) => {
     await open(page, 'partner-with-us/investors/');
     await expect(page.locator('section#features')).toHaveCount(1);
     await expect(page.locator('#features h2')).toHaveText('What JobReady Does');
     await expect(page.locator('#features .eyebrow')).toHaveText('What You Get');
     const cards = page.locator('#features li.card');
-    await expect(cards).toHaveCount(3);
+    await expect(cards).toHaveCount(CARDS.length);
     for (const [i, c] of CARDS.entries()) {
       const card = cards.nth(i);
       await expect(card.locator('h3'), c.title).toHaveText(c.title);
       expect(c.title, 'a card heading is in Title Case').toBe(titleCase(c.title));
       expect(await texts(page, `#features li.card:nth-child(${i + 1}) p`), c.title).toEqual([c.text]);
       expect(((await card.getAttribute('data-fact')) ?? '').split(' ').sort(), c.title).toEqual([...c.facts].sort());
-      expect(await card.getAttribute('data-relieves'), 'Investors has no ranked-pain map').toBeNull();
+      expect(await card.getAttribute('data-relieves'), `${c.title}: the thesis pain it relieves (none: the gain creator)`).toBe(c.pain ?? null); // WP175: the cards relieve the thesis pains P1 to P3 (data-pain on #thesis)
     }
   });
 
@@ -119,12 +129,16 @@ test.describe('Investors: "What JobReady Does" is three short cards and one link
   // WP166-B (marketing review R3-33): the platform question whose answer linked to this band ("See What JobReady Does above ...", Q11-investor) is gone from Investors; the test of that link is gone with it.
 
   for (const vp of [DESKTOP, MOBILE]) {
-    test(`at ${vp.width}px the cards sit in one row (1280) or stack (390), the band has room under them, nothing scrolls sideways and no two dark bands meet`, async ({ page }) => {
+    test(`at ${vp.width}px the cards sit two by two (1280) or stack (390), the band has room under them, nothing scrolls sideways and no two dark bands meet`, async ({ page }) => {
       await page.setViewportSize(vp);
       await open(page, 'partner-with-us/investors/');
       const tops = await page.locator('#features li.card').evaluateAll((els) => els.map((e) => Math.round(e.getBoundingClientRect().top)));
-      if (vp.width >= 1024) expect(new Set(tops).size, 'one row of three').toBe(1);
-      else expect(new Set(tops).size, 'one card per row').toBe(3);
+      // WP175: four cards (three relievers and the gain creator): two rows of two at 1280 (src/styles/utilities.css: a set of exactly four reads 2 × 2, not 3 + 1), one per row at 390
+      if (vp.width >= 1024) {
+        expect(new Set(tops.slice(0, 2)).size, 'a first row of two').toBe(1);
+        expect(new Set(tops.slice(2)).size, 'a second row of two').toBe(1);
+        expect(new Set(tops).size, 'two rows').toBe(2);
+      } else expect(new Set(tops).size, 'one card per row').toBe(4);
       expect(await page.locator('#features').evaluate((el) => parseFloat(getComputedStyle(el).paddingBottom)), 'bottom padding of the band').toBeGreaterThanOrEqual(40);
       expect(await noOverflow(page)).toBe(true);
       const order = await bands(page);
@@ -288,7 +302,10 @@ test.describe('the "It doesn’t have to be this way." line is gone from every p
     await open(page, 'programs/youthwide/');
     await expect(page.locator('#cost')).toHaveCount(0);
     await open(page, 'partner-with-us/investors/');
-    expect(await page.locator('#thesis .container > :last-child').getAttribute('class')).toContain('grid-cards');
+    // WP175 (owner decision of 2026-11-28: a declared C2–C3 band ends with the C3 transition line): the three cards are followed by the transition line, the band's last line; the stakes line stays gone
+    expect(await page.locator('#thesis .container > :last-child').getAttribute('class')).toContain('th__transition');
+    expect(compact(await page.locator('#thesis .container > :last-child').textContent())).toBe('It doesn’t have to be this way.');
+    expect(await page.locator('#thesis .container > :nth-last-child(2)').getAttribute('class')).toContain('grid-cards');
     await expect(page.locator('#thesis .th__stakes')).toHaveCount(0);
     expect(await mainText(page)).not.toContain('is an opportunity employers and communities are not yet capturing');
   });

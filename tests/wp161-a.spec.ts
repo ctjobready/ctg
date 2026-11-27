@@ -120,7 +120,7 @@ test.describe('A-02 partner route pages declare their own dateModified', () => {
     // WP172 (owner decision 2026-11-27): Governments, Foundations and Investors changed visible text again (the trial figures)
     expect(nodeOf(GOVERNMENTS, 'WebPage').dateModified).toBe('2026-11-28'); // WP175 (owner decision Q5 of 2026-11-28: the crafted C6 statement) moved it to 2026-11-28
     expect(nodeOf(FOUNDATIONS, 'WebPage').dateModified).toBe('2026-11-28'); // WP175 (owner decision Q5 of 2026-11-28: the crafted C6 statement) moved it to 2026-11-28
-    expect(nodeOf('partner-with-us/investors/index.html', 'WebPage').dateModified).toBe('2026-11-27');
+    expect(nodeOf('partner-with-us/investors/index.html', 'WebPage').dateModified).toBe('2026-11-28'); // WP175 (owner decisions of 2026-11-28: CMF v3 on Investors) moved it to 2026-11-28
   });
 });
 

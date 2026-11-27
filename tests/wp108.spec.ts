@@ -159,7 +159,7 @@ test.describe('WP108 item 6: the pages changed here carry a date modified of 202
   // WP161-A: Foundations moved on to 2026-11-03 (three months of mentoring; the ID-12 legal form beside the due-diligence line). WP163: Investors moved on to 2026-11-03 (no live, pre-launch or planned labels; the delivery model).
   // WP166-B: both moved on to 2026-11-21 (marketing review R3: Investors' hero and NU partnership band; Foundations' hero, track-record band and due-diligence band); they were 2026-11-03.
   for (const [name, route, file, day] of [
-    ['Investors', 'partner-with-us/investors/', 'src/pages/partner-with-us/investors/index.astro', '2026-11-27'], // WP172 (owner decision 2026-11-27: the published study's trial figures) moved it to 2026-11-27
+    ['Investors', 'partner-with-us/investors/', 'src/pages/partner-with-us/investors/index.astro', '2026-11-28'], // WP175 (owner decisions of 2026-11-28: CMF v3, the statement, the empathy and transition lines, the restored bands) moved it to 2026-11-28. Earlier: WP172 (owner decision 2026-11-27: the published study's trial figures) moved it to 2026-11-27
     ['Foundations', 'partner-with-us/foundations/', 'src/pages/partner-with-us/foundations/index.astro', '2026-11-28'], // WP175 (owner decision Q5 of 2026-11-28: the crafted C6 statement) moved it to 2026-11-28. Earlier: WP172 (owner decision 2026-11-27: the published study's trial figures) moved it to 2026-11-27
   ]) {
     test(`${name}: the page states its modified date in the source and in its JSON-LD`, async ({ page }) => {

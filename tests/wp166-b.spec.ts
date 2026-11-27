@@ -465,11 +465,12 @@ test.describe('WP166-B partners: Universities, Employers, Investors and Local Pa
     const problem = byId(P, 'problem');
     expect(problem).toMatch(/data-fact="PX-02"/);
     expect(text(problem)).not.toContain('Degree Holders Struggle to Find Work');
-    expect(bandText(P, 'guide')).not.toContain('Our TalentLEAP method');
+    // WP175 (owner decision Q2 (a) of 2026-11-28): the TalentLEAP line and its link close the track-record band again (R3-29 had moved them to How It Works), so How It Works no longer says them
+    expect(bandText(P, 'guide')).toContain('Our TalentLEAP method organizes skills into career paths. How TalentLEAP Works');
     const mech = bandText(P, 'mechanism');
     expect(mech).toContain(DELIVERY_MODEL.text);
-    expect(mech).toContain('Our TalentLEAP method organizes skills into career paths.');
-    expect(mech).toContain('How TalentLEAP Works');
+    expect(mech).not.toContain('Our TalentLEAP method');
+    expect(mech).not.toContain('How TalentLEAP Works');
     expect(bandText(P, 'features')).toContain(TRACK_MENU.text);
     expect(bandText(P, 'features')).not.toContain('built around the skills employers say they cannot find');
     expect(bandText(P, 'faq')).toContain('Does It Change Our Curriculum? Training runs in parallel with academic studies in your campus labs, and faculty members act as coordinators.');
@@ -497,7 +498,9 @@ test.describe('WP166-B partners: Universities, Employers, Investors and Local Pa
     expect(guide).not.toContain('Our TalentLEAP method');
     const mech = bandText(P, 'mechanism');
     expect(mech).toContain(DELIVERY_MODEL_WORK.text);
-    expect(mech).toContain('Our TalentLEAP method organizes skills into career paths.');
+    // WP175 (owner decision Q2 (a) of 2026-11-28): the method is said once, as the track-record band's last line (JobReady@Work's needs assessment, IN-10); How It Works no longer prints the TalentLEAP line
+    expect(mech).not.toContain('Our TalentLEAP method organizes skills into career paths.');
+    expect(guide).toContain('JobReady@Work builds each program around a needs assessment.');
     const features = bandText(P, 'features');
     expect(features).toContain('AI Skills Scoped to Your Team’s Tasks');
     expect(features).toContain('An AI-ready curriculum, designed to prepare people to work with AI tools, plus AI leadership and AI-transformation programs with AIvolve. Each track’s AI content is agreed with you before training starts.');
@@ -533,7 +536,7 @@ test.describe('WP166-B partners: Universities, Employers, Investors and Local Pa
     expect(bandText(P, 'offer')).toContain('Due diligence: CT USA, Inc., a for-profit company incorporated in New York, is CodersTrust’s parent company; CodersTrust Bangladesh Ltd. is its country office.');
     expect(bandText(P, 'mechanism')).toContain(DELIVERY_MODEL.text);
     expect(bandText(P, 'features')).not.toContain(DELIVERY_MODEL.text);
-    expect(dateModified(P)).toContain(WP172_DAY); // WP172 (owner decision 2026-11-27): the trial figures moved it on
+    expect(dateModified(P)).toContain(WP175_DAY); // WP172 (owner decision 2026-11-27): the trial figures moved it on; WP175 (owner decisions of 2026-11-28): CMF v3 on Investors
   });
   test('Local Partners', () => {
     const P = 'partner-with-us/local-partners';
@@ -543,7 +546,8 @@ test.describe('WP166-B partners: Universities, Employers, Investors and Local Pa
     expect(guide).not.toMatch(/data-fact="GV-09"/);
     const g = text(guide);
     expect(g).toContain('Most delivery has been in Bangladesh.');
-    expect(g).not.toContain('Our TalentLEAP method');
+    // WP175 (owner decision Q2 (a) of 2026-11-28): the TalentLEAP method line closes the band again (R3-29 had removed it), once
+    expect(g.split('Our TalentLEAP method organizes skills into career paths.').length - 1).toBe(1);
     expect(g).not.toContain('could host blended learning');
     expect(bandText(P, 'mechanism')).toContain(DELIVERY_MODEL.text);
     expect(bandText(P, 'features')).toContain(`You do not have to build the curriculum or certification route yourself. ${TRACK_MENU.text}`);

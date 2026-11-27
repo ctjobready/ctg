@@ -22,7 +22,8 @@ const main = (rel: string) => visible(/<main[\s\S]*<\/main>/.exec(html(rel))?.[0
 
 test('Minor 1: Universities says tracks and labs are agreed in co-design', () => {
   const text = main('partner-with-us/universities/index.html');
-  expect(text).toContain('Start with one campus; cohort size, tracks and labs are agreed in co-design.'); // WP135: the line is the pilot band's first point (WP133 had it under a "Start with One Campus" heading)
+  // WP175 (owner decision of 2026-11-28: CMF v3, every page keeps C11): the line is the lead of the restored "Start with One Campus" band again (dee46ac1^; WP135 had made it the pilot band's first point)
+  expect(text).toContain('Start with One Campus Cohort size, tracks and labs are agreed in co-design.');
   expect(text).not.toContain('are set in the discovery session');
 });
 

@@ -285,8 +285,10 @@ test.describe('copy.ts: the campus and employer lines that packages B and C shar
   test('CAMPUS_INCLUDES are the Universities page’s three cards, P1 to P3, in its order; CAMPUS_STEPS read PD-01’s hours', () => {
     expect(CAMPUS_INCLUDES.map((c) => c.painId)).toEqual(['P1', 'P2', 'P3']);
     const features = cmfFreeBand(UNIVERSITIES, 'features');
-    expect(cardTitles(features)).toEqual(CAMPUS_INCLUDES.map((c) => c.title));
-    expect(cardTexts(features)).toEqual(CAMPUS_INCLUDES.map((c) => c.text));
+    // WP175 package B (owner decision of 2026-11-28: C8 names its gain creator): the page's cards are CAMPUS_INCLUDES, P1 to P3 in order, then one gain creator (tests/wp175-universities.spec.ts)
+    expect(cardTitles(features).slice(0, 3)).toEqual(CAMPUS_INCLUDES.map((c) => c.title));
+    expect(cardTexts(features).slice(0, 3)).toEqual(CAMPUS_INCLUDES.map((c) => c.text));
+    expect([...features.matchAll(/<li class="card inc__card"[^>]*data-relieves="(P\d)"/g)].map((m) => m[1])).toEqual(['P1', 'P2', 'P3']);
     expect(CAMPUS_INCLUDES[1].text).toBe(TRACK_MENU.text);
     expect(CAMPUS_STEPS.map((s) => s.title)).toEqual(['Set Up', 'Prepare for Certification', 'Mentor and Place']);
     expect(CAMPUS_STEPS[1].text).toBe(`${fact('PD-01').stat!.value} training hours per certification, including exam preparation.`);

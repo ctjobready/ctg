@@ -250,10 +250,13 @@ test.describe('The contract-scope note says who trained whom, and Home’s slide
 });
 
 // WP52 (cycle-27 review, Grok m1): the Investors Track Record band no longer opens with the guide line ("Impact investors need to see what is proven and what is still being built."); it starts with its record (tests/wp52.spec.ts)
-test.describe('Investors: the guide band has no empathy line, and the "only promised" test stays gone (item 13)', () => {
-  test('the band starts with its heading and the origin line; the "only promised" wording is gone', async ({ page }) => {
+// WP175 (owner decision Q2 (a) of 2026-11-28: every C5 opens with an empathy line, each page its own fresh line): the band has one again, under its heading; the retired lines ("what is proven and what is still being built",
+// "only promised") stay on no page
+test.describe('Investors: the guide band has its WP175 empathy line, and the "only promised" test stays gone (item 13)', () => {
+  test('the band has one empathy line, not a retired one; the "only promised" wording is gone', async ({ page }) => {
     await open(page, 'partner-with-us/investors/');
-    await expect(page.locator('#guide .ig__empathy')).toHaveCount(0);
+    await expect(page.locator('#guide .ig__empathy')).toHaveCount(1);
+    expect(compact(await page.locator('#guide .ig__empathy').textContent())).not.toMatch(/what is proven and what is still being built|only promised/);
     expect(await mainText(page)).not.toContain('only promised');
   });
 });

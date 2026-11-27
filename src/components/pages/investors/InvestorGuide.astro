@@ -5,7 +5,7 @@ import Stat from '../../system/Stat.astro';
 import StatusTag from '../../system/StatusTag.astro';
 import Badge from '../../system/Badge.astro';
 import CopyBlock from '../home/CopyBlock.astro';
-import { INVESTOR_PARTNERS, originShortUnder, withoutSince2014 } from '../../../data/copy';
+import { EMPATHY, INVESTOR_PARTNERS, METHOD, originShortUnder, withoutSince2014 } from '../../../data/copy';
 import { fact } from '../../../data/facts';
 import { linkAttrs } from '../../../lib/url';
 
@@ -25,6 +25,9 @@ import { linkAttrs } from '../../../lib/url';
  * WP52 (cycle-27 review, Grok m1): the band no longer opens with the empathy line ("Impact investors need to see what is proven and what is still being built."; EMPATHY.investors is gone): after the eyebrow and heading it starts with its record,
  * the origin line, as the other audience pages' Track Record bands do.
  * WP58 (cycle-30 reviews, Claude S1 a and GPT-6.1 Sol G1): SC-03's tile (the countries and territories where CodersTrust has worked) carries a badge and no "Delivered" status: the count includes a launch location, an announced cooperation and partnerships. WP61 (cycle-33 review, Kimi P1): the badge says "Where We Have Worked" (it said "Since 2014", which this band’s heading and the group’s sub-heading already say). The learners and the enrollments keep their "Delivered" tags.
+ * WP175 (owner decisions of 28 November 2026, Q2 (a): every C5 runs empathy → ORIGIN → authority → method, one line each; tests/wp175-investors.spec.ts): after the eyebrow and heading the band opens with an empathy line again
+ * (EMPATHY.investors, a fresh line: not the one WP52 retired), then the origin line, the delivered tiles, the institutions and the leadership link (the authority), and the TalentLEAP method line (METHOD.investors, the
+ * same words it printed under the origin line) is the band's last line.
  */
 interface Props {
   id?: string;
@@ -33,7 +36,8 @@ const { id = 'guide' } = Astro.props;
 // WP64 rework RW2 (coordinator): the band's heading says the period, so the origin line below it drops its "Since 2014," lead-in ("From a Copenhagen launch to work in 16 countries and territories."; originShortUnder, src/data/copy.ts).
 const heading = 'A Record Built Since 2014';
 const origin = originShortUnder(heading, { tile: true }); // WP150: SC-03's tile (below) carries the count, so the line names the regions instead
-const talentleap = linkAttrs('/our-model/talentleap/');
+const method = METHOD.investors;
+const methodLink = method.link && { label: method.link.label, href: linkAttrs(method.link.href).href };
 const team = linkAttrs('/about/team/');
 const delivered = ['SC-01', 'SC-02', 'SC-03'] as const;
 const stat = (sid: string) => {
@@ -58,11 +62,8 @@ const notes = (['SC-02', 'SC-03'] as const).map((sid) => {
     <div class="ig__copy">
       <p class="eyebrow" data-reveal>Our Track Record</p>
       <h2 id={`${id}-h`} data-reveal>{heading}</h2>
+      <p class="ig__empathy" data-reveal>{EMPATHY.investors}</p>
       <CopyBlock block={origin} class="ig__origin" />
-      <p class="ig__method" data-fact="IN-06">
-        TalentLEAP, our method, organizes skills into career paths.{' '}
-        <a class="link" href={talentleap.href}>How TalentLEAP Works<Icon name="arrow-right" size={16} /></a>
-      </p>
     </div>
     <div class="ig__delivered" data-reveal>
       <h3 class="ig__h">Scale and Partners</h3>
@@ -83,6 +84,10 @@ const notes = (['SC-02', 'SC-03'] as const).map((sid) => {
     <CopyBlock block={INVESTOR_PARTNERS} class="ig__names" />
     <p class="ig__leaders"><a class="link" href={team.href}>Meet the Leadership Team<Icon name="arrow-right" size={16} /></a></p>
   </div>
+  <p class="ig__method" data-fact={method.facts.join(' ')} data-reveal>
+    {method.text}{' '}
+    {methodLink && <a class="link" href={methodLink.href}>{methodLink.label}<Icon name="arrow-right" size={16} /></a>}
+  </p>
 </Section>
 
 <style>
@@ -104,7 +109,18 @@ const notes = (['SC-02', 'SC-03'] as const).map((sid) => {
     line-height: var(--lh-body-m);
     color: var(--on-surface);
   }
+  /* WP175: the empathy line under the heading, in the size Investors gave it before WP52 (9a546eae^), with no accent bar (owner design rule of 2026-10-16) */
+  .ig__empathy {
+    font-size: var(--fs-heading-l);
+    line-height: var(--lh-heading-l);
+    font-weight: var(--fw-medium);
+    color: var(--secondary);
+    max-width: 36rem;
+  }
+  /* WP175: the method line closes the band, a section step under the institutions */
   .ig__method {
+    margin: var(--space-lg) 0 0;
+    max-width: 48rem;
     color: var(--on-surface-variant);
     display: flex;
     flex-direction: column;

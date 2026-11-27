@@ -151,7 +151,8 @@ test.describe('Investors: the mechanism heading and the platform band (items 8 a
     expect(await texts(page, '#mechanism h3')).toEqual(['Courses, Supported Cohorts and University Programs', 'Jobs, Freelance Work and Gigs', 'Career Paths and Continuing Development', 'A Digital Delivery Platform']);
   });
 
-  test('the one-sentence platform band is gone: the FAQ is followed by the offer; the platform-outcomes sentence closes the evidence block once; the "What JobReady Does" band (#features) keeps its id and heading', async ({ page }) => {
+  // WP175 (owner decision of 2026-11-28: CMF v3, C9 → C10 → C11): the FAQ is followed by the short "What Makes CodersTrust Different" band and then the offer; still no platform band
+  test('the one-sentence platform band is gone: the FAQ is followed by the short differentiation band and the offer; the platform-outcomes sentence closes the evidence block once; the "What JobReady Does" band (#features) keeps its id and heading', async ({ page }) => {
     await open(page, URL);
     await expect(page.locator('#platform')).toHaveCount(0);
     const text = await mainText(page);
@@ -160,16 +161,18 @@ test.describe('Investors: the mechanism heading and the platform band (items 8 a
     expect(count(text, 'Youth-program outcomes are not platform outcomes.'), 'said once').toBe(1);
     expect(compact(await page.locator('#proof-band').textContent())).toContain('Youth-program outcomes are not platform outcomes.');
     const ids = (await bands(page)).map((b) => b.id);
-    expect(ids.indexOf('offer')).toBe(ids.indexOf('faq') + 1);
+    expect(ids.indexOf('difference')).toBe(ids.indexOf('faq') + 1);
+    expect(ids.indexOf('offer')).toBe(ids.indexOf('difference') + 1);
     // WP166-B (marketing review R3-33): the first FAQ answer (Q11-investor, "See What JobReady Does above ...") and its link to #features are gone with the platform question; the assertions on that link are gone with it.
     await expect(page.locator('section#features h2')).toHaveText('What JobReady Does');
   });
 
-  test('the bands keep their order (guide, vision, mechanism, reach, proof, features, questions, offer, call to action) and no two dark bands touch', async ({ page }) => {
+  // WP175 (owner decision of 2026-11-28: CMF v3, C1 to C14 in order): vision (C4), guide (C5), mechanism (C6), proof and reach (C7), features (C8), questions (C9), difference (C10), offer (C11), risk (C12), call to action (C13), next steps (C14)
+  test('the bands keep the CMF order (vision, guide, mechanism, proof, reach, features, questions, difference, offer, risk, call to action, next steps) and no two dark bands touch', async ({ page }) => {
     await open(page, URL);
     const list = await bands(page);
     const ids = list.map((b) => b.id);
-    const order = ['guide', 'vision', 'mechanism', 'reach', 'proof-band', 'features', 'faq', 'offer', 'cta'];
+    const order = ['vision', 'guide', 'mechanism', 'proof-band', 'reach', 'features', 'faq', 'difference', 'offer', 'risk', 'cta', 'next-steps'];
     for (const id of order) expect(ids, id).toContain(id);
     expect(order.map((id) => ids.indexOf(id)), 'in this order').toEqual([...order.map((id) => ids.indexOf(id))].sort((a, b) => a - b));
     for (let i = 1; i < list.length; i++) expect(list[i].dark && list[i - 1].dark, `bands ${list[i - 1].id} and ${list[i].id}`).toBe(false);
@@ -191,15 +194,17 @@ test.describe('About: "Outcomes over Outputs" is about youth-employment programs
 test.describe('Universities: one evidence strip, not two (item 3)', () => {
   const URL = 'partner-with-us/universities/';
 
-  test('the later strip ("Evidence from Our Wider Youth Programs": the trial line, the survey line, the repeated links) and its anchor are gone; the first band keeps its linked strip', async ({ page }) => {
+  // WP175 (owner decision Q3 (a) of 2026-11-28: every C7 opens with the one-line trial lead): the compact trial band (#proof-band) states the trial and the survey once each; the WP38 strip stays gone, and the National
+  // University band keeps its linked strip
+  test('the later strip ("Evidence from Our Wider Youth Programs": the trial line, the survey line, the repeated links) stays gone; the trial band states each result once; the National University band keeps its linked strip', async ({ page }) => {
     await open(page, URL);
-    await expect(page.locator('#proof-band')).toHaveCount(0);
+    await expect(page.locator('#proof-band')).toHaveCount(1);
     const text = await mainText(page);
     expect(text).not.toMatch(/Evidence from Our Wider Youth Programs|A randomized trial of the predecessor WSDFM program/);
-    expect(count(text, '10 percentage points'), 'the trial result is not restated').toBe(0); // WP172 (owner decision 2026-11-27): the published study's figures (10; it was 10.3)
+    expect(count(text, '10 percentage points'), 'the trial result once, in the trial lead').toBe(1); // WP172 (owner decision 2026-11-27): the published study's figures (10; it was 10.3)
     expect(count(text, '10.3 percentage points')).toBe(0);
-    expect(count(text, '78.2%'), 'the survey result is not restated').toBe(0);
-    await expect(page.locator('main .eyebrow', { hasText: 'The Evidence' })).toHaveCount(0);
+    expect(count(text, '78.2%'), 'the survey result once, in the trial band').toBe(1);
+    await expect(page.locator('main .eyebrow', { hasText: 'The Evidence' })).toHaveCount(1);
     // the first band ends in the strip that links the evidence
     // WP166-B (marketing review R3-13): the band's heading states the claim (it was "The National University Partnership").
     await expect(page.locator('#offer-evidence h2')).toHaveText('Official Training Partner of the World’s Second-Largest University by Enrollment');
@@ -215,13 +220,15 @@ test.describe('Universities: one evidence strip, not two (item 3)', () => {
     await expect(page.locator('#proof h2')).toHaveText('Evidence from Our Wider Youth Programs');
   });
 
-  test('the features band follows the dark mechanism band directly (no two dark bands meet) and the page fits at 1280 and 390', async ({ page }) => {
+  // WP175 (owner decision of 2026-11-28: CMF v3): C7 sits between the mechanism band (light now) and the features band, which follows the learner story
+  test('the features band follows C7, the mechanism band is light (no two dark bands meet), and the page fits at 1280 and 390', async ({ page }) => {
     for (const vp of [DESKTOP, MOBILE]) {
       await page.setViewportSize(vp);
       await open(page, URL);
       const list = await bands(page);
       const ids = list.map((b) => b.id);
-      expect(ids.indexOf('features'), `${vp.width}px`).toBe(ids.indexOf('mechanism') + 1);
+      expect(ids.indexOf('features'), `${vp.width}px`).toBe(ids.indexOf('learner-voice') + 1);
+      expect(list.find((b) => b.id === 'mechanism')?.dark, `${vp.width}px: the mechanism band is light`).toBe(false);
       for (let i = 1; i < list.length; i++) expect(list[i].dark && list[i - 1].dark, `${vp.width}px: ${list[i - 1].id} then ${list[i].id}`).toBe(false);
       expect(await noOverflow(page), `${vp.width}px`).toBe(true);
     }

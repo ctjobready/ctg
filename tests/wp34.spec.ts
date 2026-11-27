@@ -120,7 +120,9 @@ test.describe('Investors: no cohort comparison, and (WP43) no one-sentence platf
     expect(text.split('Youth-program outcomes are not platform outcomes.').length - 1, 'said once').toBe(1);
     expect(compact(await page.locator('#proof-band').textContent())).toContain('Youth-program outcomes are not platform outcomes.');
     const order = await page.evaluate(() => Array.from(document.querySelectorAll('main section[id]')).map((s) => s.id));
-    expect(order.indexOf('offer')).toBe(order.indexOf('faq') + 1);
+    // WP175 (owner decision of 2026-11-28: CMF v3, C9 → C10 → C11): the short "What Makes CodersTrust Different" band (#difference, no comparison) sits between the questions and the offer; still no platform band
+    expect(order.indexOf('difference')).toBe(order.indexOf('faq') + 1);
+    expect(order.indexOf('offer')).toBe(order.indexOf('difference') + 1);
   });
 
   test('the meta description names the staged rollout and stays within the SEO limit', async ({ page }) => {

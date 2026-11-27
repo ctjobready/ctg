@@ -109,10 +109,13 @@ test.describe('survey figures say what completers report, not an effect', () => 
 
   // WP38 (cycle-15 review): Universities' evidence band was two lines; the median income and the chart left it, and the survey line kept the two-readings form ("was 77.9% ... up from 47.4% before training").
   // WP43 (cycle-20 review): that strip is gone (the first band's linked strip points to the Impact Survey 2026 page), so Universities states no survey reading; it still has no "rose", no multiplier, no chart and no median income
-  test('Universities states no survey reading, and has no "rose", no multiplier, no chart and no median income', async ({ page }) => {
+  // WP175 (owner decision Q3 (a) of 2026-11-28: every C7 opens with the trial lead): the compact trial band (#proof-band) states the survey in its one sentence ("... was 78.2% at the October 2026 survey, against 48.0%
+  // before training"), once; still no "rose", no multiplier, no chart and no median income
+  test('Universities states the survey in one sentence (the compact trial band), and has no "rose", no multiplier, no chart and no median income', async ({ page }) => {
     await open(page, 'partner-with-us/universities/');
-    await expect(page.locator('#proof-band')).toHaveCount(0);
-    expect(await mainText(page)).not.toMatch(/employment was 78\.2%|rose from|2\.5×|median monthly income/);
+    await expect(page.locator('#proof-band')).toHaveCount(1);
+    expect((await mainText(page)).split('employment was 78.2% at the October 2026 survey, against 48.0% before training').length - 1).toBe(1);
+    expect(await mainText(page)).not.toMatch(/rose from|2\.5×|median monthly income/);
     await expect(page.locator('main .ba__data, main .ev')).toHaveCount(0);
   });
 
@@ -282,12 +285,13 @@ test.describe('the evaluator is spelled out where a page first names it', () => 
   // WP38 (cycle-15 review): Universities' evidence band is two lines ("A randomized trial of CodersTrust’s WSDFM program found ..."), so, like Development Partners and Governments, it no longer names the evaluator
   // WP42 (cycle-19 review): Local Partners' evidence band is the same two-line strip, so it names no evaluator either (the trial page it links spells it out)
   // WP43 (cycle-20 review): Universities' two-line strip is gone; the linked strip that ends its first band ("Broader Evidence from Our Youth Programs", #offer-evidence) links the trial page and names no evaluator
-  test('Local Partners and Universities name no evaluator: the evidence is a strip that links the trial page', async ({ page }) => {
-    for (const [route, strip] of [['partner-with-us/local-partners/', '#proof'], ['partner-with-us/universities/', '#offer-evidence']]) {
+  // WP175 (owner decision Q3 (a) of 2026-11-28): Universities' C7 opens with the compact trial band, whose lead is the one-line trial lead (it names no evaluator either), so the page has one proof-band header
+  test('Local Partners and Universities name no evaluator: the evidence is a strip that links the trial page (Universities: after its one-line trial band)', async ({ page }) => {
+    for (const [route, strip, heads] of [['partner-with-us/local-partners/', '#proof', 0], ['partner-with-us/universities/', '#offer-evidence', 1]] as const) {
       await open(page, route);
       expect(await mainText(page), route).not.toContain('BIGD');
       expect(await mainText(page), route).not.toContain(SPELLED);
-      await expect(page.locator('.proofband__head'), route).toHaveCount(0);
+      await expect(page.locator('.proofband__head'), route).toHaveCount(heads);
       await expect(page.locator(strip).getByRole('link', { name: 'The Randomized Trial' }), route).toHaveAttribute('href', /\/impact\/independent-evaluation\/$/);
     }
   });
