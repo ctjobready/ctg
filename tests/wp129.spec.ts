@@ -455,8 +455,10 @@ test.describe('WP129 item 6: every dated page whose visible text changed carries
 // ---------------------------------------------------------------------------------------------------------------------------------
 test.describe('WP129 item 7: the trial chart caption spells the months out', () => {
   // WP172 (owner decision 2026-11-27): YouthWIDE's trial comparison chart is gone (the published study gives the control group's employment, not the rate for women offered a place), so its caption is too; the range rule still holds everywhere
-  test('YouthWIDE draws no trial comparison chart; no built page abbreviates the range', () => {
-    expect(text('programs/youthwide/index.html')).not.toContain('Employment at Follow-Up (November–December 2021), Randomized Trial');
+  // WP173 (owner answer of 2026-11-27): the chart is back (WP172 had removed it), 54% beside a worked-out 64%, and its note says the 64% is worked out
+  test('YouthWIDE: "Employment at Follow-Up (November–December 2021), Randomized Trial", with the worked-out note; no built page abbreviates the range', () => {
+    expect(text('programs/youthwide/index.html')).toContain('Employment at Follow-Up (November–December 2021), Randomized Trial');
+    expect(text('programs/youthwide/index.html')).toContain('Chart data: employment at follow-up. The published study gives the control group’s rate (54%); the rate for women offered a place (64%) is worked out as that rate plus the 10-point effect.');
     expect(text('programs/youthwide/index.html')).not.toMatch(/63\.1%|52\.8%/);
     const offenders: string[] = [];
     for (const p of listPages()) for (const s of everything(read(p))) if (/Nov(?:\.|ember)?\s?[–-]\s?Dec\.? 2021/.test(s) && !/November–December 2021/.test(s)) offenders.push(p.route);

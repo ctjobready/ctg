@@ -143,13 +143,13 @@ test.describe('Programs hub: the trial is one line (item 4)', () => {
 
   // WP166-B (marketing review R2-02): the band shows RC-01's +41% income tile beside RC-02's +10.3 tile, so it has three tiles with the survey tile (it had two: RC-02 and OC-03); still one trial sentence and the chart.
   // WP172 (owner decision 2026-11-27): the trial comparison chart is gone (the published study gives no employment rate for women offered a place), so the band is one column
-  test('YouthWIDE’s evidence band keeps its shape: the single trial sentence and the tiles; no chart since WP172', async ({ page }) => {
+  test('YouthWIDE’s evidence band keeps its shape: the single trial sentence, the tiles and the chart (back since WP173, owner answer of 2026-11-27)', async ({ page }) => {
     await open(page, 'programs/youthwide/');
     await expect(page.locator('#proof-band .eb__headline')).toHaveCount(1);
     await expect(page.locator('#proof-band .eb__stat')).toHaveCount(3);
     expect(await page.locator('#proof-band .eb__stat').evaluateAll((els) => els.map((e) => e.getAttribute('data-fact')))).toEqual(['RC-02', 'RC-01', 'OC-03']);
-    await expect(page.locator('#proof-band svg[role="img"]')).toHaveCount(0);
-    await expect(page.locator('#proof-band .eb--single')).toHaveCount(1);
+    await expect(page.locator('#proof-band svg[role="img"]').first()).toBeVisible();
+    await expect(page.locator('#proof-band .eb--single')).toHaveCount(0);
   });
 });
 

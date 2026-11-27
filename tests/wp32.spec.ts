@@ -142,7 +142,7 @@ test.describe('Employers', () => {
 test.describe('YouthWIDE', () => {
   // WP166-B (marketing review R2): the band is headed "More Employment for Women Offered a Place, in a Randomized Trial" (it was "Trial and Survey Evidence") and shows both trial tiles (RC-02 and RC-01)
   // WP172 (owner decision 2026-11-27): the trial comparison chart is gone (the published study gives no employment rate for women offered a place), so the band is one column
-  test('"Trial and Survey Evidence" states the trial once, in one sentence; the tiles and the links stay, and the trial chart is gone (WP172)', async ({ page }) => {
+  test('"Trial and Survey Evidence" states the trial once, in one sentence; the tiles, the chart (back since WP173) and the links stay', async ({ page }) => {
     await open(page, 'programs/youthwide/');
     const band = page.locator('#proof-band');
     await expect(band.locator('.eb__headline')).toHaveCount(1);
@@ -162,7 +162,10 @@ test.describe('YouthWIDE', () => {
     expect((await texts(page, '#proof-band p:not(.stat__value)')).filter((p) => p.includes('10 percentage points')), 'no other paragraph states the effect').toHaveLength(0); // WP172 (owner decision 2026-11-27): the published study's figures (+10; it was +10.3)
     expect((await texts(page, '#proof-band .eb__stat .stat__value')).filter((p) => p.includes('10 percentage points')), 'the tile states the effect once').toHaveLength(1);
     await expect(band.locator('.eb__stat')).toHaveCount(3); // WP166-B: the +41% income tile (RC-01) joined the +10.3 tile and the survey tile (it was 2)
-    await expect(band.locator('svg[role="img"]')).toHaveCount(0);
+    // WP173 (owner answer of 2026-11-27): the trial chart is back: 54.0% for the control group beside a worked-out 64.0%, and the note says so
+    await expect(band.locator('svg[role="img"]').first()).toBeVisible();
+    expect(await band.locator('svg[role="img"]').first().getAttribute('aria-label')).toMatch(/54\.0%.*64\.0%/);
+    await expect(band.locator('.eb__fn[data-fact="RC-02"]')).toHaveText('Chart data: employment at follow-up. The published study gives the control group’s rate (54%); the rate for women offered a place (64%) is worked out as that rate plus the 10-point effect.');
     expect(await texts(page, '#proof-band .eb__links a')).toEqual(['Impact Survey 2026', 'The Randomized Trial']);
   });
 });

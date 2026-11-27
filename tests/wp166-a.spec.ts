@@ -534,7 +534,7 @@ test.describe('Titles, descriptions and share cards of the other pages (R7-04, R
   });
 
   test('the Impact, Trial and Governments descriptions are their own (R7-21, R7-22)', () => {
-    expect(meta('impact/index.html', 'name', 'description')).toBe('Program records from Kosovo and Bangladesh, an independent trial in Dhaka and a 2026 survey of completers. Each figure names its kind of evidence.');
+    expect(meta('impact/index.html', 'name', 'description')).toBe('Program records from Kosovo and Bangladesh, an independent trial in Bangladesh and a 2026 survey of completers. Each figure names its kind of evidence.'); // WP173 (owner answer of 2026-11-27): "in Bangladesh" (it was "in Dhaka")
     expect(meta('impact/independent-evaluation/index.html', 'name', 'description')).toBe(
       'A BRAC University (BIGD) randomized trial of CodersTrust’s WSDFM program: women offered a place were 10 percentage points more likely to be employed.', // WP172 (owner decision 2026-11-27): the published study's figures (it was the 2022 report's 10.3)
     );

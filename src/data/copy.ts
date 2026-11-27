@@ -705,11 +705,29 @@ function trialLine(): CopyBlock {
 }
 export const TRIAL_LINE: CopyBlock = trialLine();
 
-/*
- * WP172 (owner decision 2026-11-27): RCT_COMPARISON is gone. It read the control group's employment at follow-up from RC-02's text and added RC-02's stat to give the rate for women
- * offered a place (63.1% from the 2022 report). The published study (EDCC26) states the control mean (54%) and the effect, not the treated group's rate, so no page draws that bar
- * (EvidenceBand's `trial` chart, YouthWIDE's only user, is gone with it).
+/**
+ * Employment at follow-up in the randomized trial, read from RC-02's text ("than the control group (54%)"), so the YouthWIDE
+ * comparison chart never retypes a figure. The women offered a place are the control rate plus RC-02's stat (+10 pp). It throws
+ * if the text stops reading that way.
+ * WP173 (owner answer of 2026-11-27): back after WP172 removed it. The published study (EDCC26) states the control mean (54%) and the effect (+10 percentage points),
+ * not the treated group's rate, so the chart's 64% is worked out as 54% plus 10 points and the chart's note says so.
  */
+export interface RctComparison {
+  control: number;
+  offered: number;
+  /** RC-02's stat value, e.g. "+10 pp". */
+  delta: string;
+}
+function rctComparison(): RctComparison {
+  const rc02 = fact('RC-02');
+  const m = rc02.text.match(/than the control group \((\d+(?:\.\d+)?)%\)/);
+  if (!m || !rc02.stat || rc02.stat.numeric === undefined) {
+    throw new Error(`RCT_COMPARISON: RC-02's text no longer states "than the control group (X%)": "${rc02.text}"`);
+  }
+  const control = Number(m[1]);
+  return { control, offered: Math.round((control + rc02.stat.numeric) * 10) / 10, delta: rc02.stat.value };
+}
+export const RCT_COMPARISON: RctComparison = rctComparison();
 
 /**
  * SC-01 and SC-03 stated apart (review round 13, M3): the 130,000+ trained is mostly in Bangladesh, and the international programs are
