@@ -31,10 +31,14 @@ test.describe('Home evidence band (#proof-band): gone (WP48); the trial and surv
   });
 
   // WP172 (owner decision 2026-11-27): the published study's figures (+10; it was +10.3)
-  test('the trial figure is the hero card’s (+10 percentage points); the Proof in Practice band does not restate it', async ({ page }) => {
+  // WP175 (owner decision Q3 (a) of 2026-11-28: every C7 opens with a one-line trial lead, even where the trial is also higher on the page): the Proof in Practice band states the trial once, in its lead line
+  // (TRIAL_LEAD), and its cards and link row restate no figure of it
+  test('the trial figure is the hero card’s (+10 percentage points); the Proof in Practice band states it once, in its one-line trial lead (WP175)', async ({ page }) => {
     await open(page, '');
     expect(compact(await page.locator('.hh__card[data-fact="RC-02"]').textContent())).toContain('+10 percentage points');
-    expect(compact(await page.locator('#cases').textContent())).not.toContain('10 percentage points');
+    const cases = compact(await page.locator('#cases').textContent());
+    expect(cases.split('10 percentage points').length - 1).toBe(1);
+    expect(compact(await page.locator('#cases .sh__lead').textContent())).toBe('A randomized trial of CodersTrust’s WSDFM program found women offered a place were 10 percentage points more likely to be employed.');
   });
 
   for (const vp of [DESKTOP, MOBILE]) {

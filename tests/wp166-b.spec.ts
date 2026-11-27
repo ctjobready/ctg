@@ -394,7 +394,9 @@ test.describe('WP166-B partners: hub, Development Partners, Governments and Foun
     expect(bandText(P, 'glance')).toContain('The trial evaluated CodersTrust’s WSDFM program; the survey describes what completers who responded report about work and income. Read the Trial Results Impact Survey 2026');
     expect(bandIds(P)).not.toContain('proof-band');
     expect(mainText(P)).not.toContain('See the Evidence Behind the Results');
-    expect(bandText(P, 'guide')).not.toContain('Our TalentLEAP method');
+    // WP175 (owner decision Q2 (a) of 2026-11-28; R3-29 superseded): the method line is the track-record band's last line, said once
+    expect(bandText(P, 'guide').endsWith('Our TalentLEAP method organizes skills into career paths. How TalentLEAP Works')).toBe(true);
+    expect(count(mainText(P), 'Our TalentLEAP method')).toBe(1);
     expect(bandText(P, 'mechanism')).toContain(`it builds on results from earlier programs in Bangladesh and Kosovo. ${DELIVERY_MODEL.text}`);
     const features = bandText(P, 'features');
     expect(features).not.toContain(DELIVERY_MODEL.text);
@@ -420,7 +422,8 @@ test.describe('WP166-B partners: hub, Development Partners, Governments and Foun
     const problem = byId(P, 'problem');
     expect(problem).toMatch(/data-fact="PX-02"/);
     expect(problem).not.toMatch(/data-fact="PX-01"/);
-    expect(text(problem)).not.toContain('Graduates Struggle to Find Work');
+    // WP175 (owner decision Q4 (a) of 2026-11-28; R3-40 superseded): "Graduates Struggle to Find Work" is P1 again, in its words before fec0dce2, beside the PX-02 tile
+    expect(text(problem)).toContain('1 Graduates Struggle to Find Work A degree alone does not guarantee a job offer.');
     expect(bandText(P, 'mechanism')).toContain(DELIVERY_MODEL.text);
     expect(bandText(P, 'features')).toContain(`${TRACK_MENU.text} Three months of mentoring and placement support follow, toward local, remote and global work.`);
     expect(bandText(P, 'faq')).toContain('How Fast Can We Start? Delivery uses government digital labs you already run. Timing follows your agency’s own procurement timeline, so the first step is a briefing for your ministry.');
@@ -442,8 +445,13 @@ test.describe('WP166-B partners: hub, Development Partners, Governments and Foun
     expect(bandText(P, 'glance')).toContain('More than four times the 2.3-point average across nine vocational-training trials.');
     const guide = bandText(P, 'guide');
     expect(guide.indexOf('Organizations that have worked with CodersTrust include the Rockefeller Foundation, DANIDA and Porticus.')).toBeGreaterThan(-1);
-    expect(guide).not.toContain('From a Copenhagen launch to work in 16 countries and territories.');
-    expect(guide).not.toContain('Our TalentLEAP method');
+    // WP175 (owner decision Q2 (a) of 2026-11-28: every C5 is empathy → ORIGIN → authority → method): the one-line origin is back, before the funders sentence (R3-28's opening keeps its place in the band), and the
+    // method line closes the band (R3-29 is superseded); each is said once
+    expect(guide.indexOf('From a Copenhagen launch to work in 16 countries and territories.')).toBeGreaterThan(-1);
+    expect(guide.indexOf('From a Copenhagen launch to work in 16 countries and territories.')).toBeLessThan(guide.indexOf('Organizations that have worked with CodersTrust include'));
+    expect(count(guide, 'From a Copenhagen launch')).toBe(1);
+    expect(guide.endsWith('Our TalentLEAP method organizes skills into career paths. How TalentLEAP Works')).toBe(true);
+    expect(count(guide, 'Our TalentLEAP method')).toBe(1);
     expect(count(guide, 'Organizations that have worked with CodersTrust include')).toBe(1);
     expect(bandText(P, 'mechanism')).toContain(DELIVERY_MODEL.text);
     expect(bandText(P, 'features')).toContain('Three months of mentoring and placement support are standard inclusions, and outcomes are tracked for 12 months after each course.');

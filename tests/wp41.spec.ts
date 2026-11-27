@@ -85,10 +85,11 @@ test.describe('"What Does It Cost?" and Home’s inclusions heading: standard in
   });
 
   // WP166-A (marketing review R1-17): the band re-explained the Mechanism band and is gone (tests/wp38.spec.ts); neither its heading nor the earlier one comes back
-  test('Home’s inclusions band, headed "What a Supported Youth Cohort Includes", is gone (WP166-A), and the earlier heading stays gone', async ({ page }) => {
+  // WP175 (owner decision of 2026-11-28, Q1 (a): R1-17 superseded): the band is back as Home's C8, headed "What a Supported Youth Cohort Includes" (the supported-cohort heading this item set); the earlier heading stays gone
+  test('Home’s inclusions band, headed "What a Supported Youth Cohort Includes", is back (WP175), and the earlier heading stays gone', async ({ page }) => {
     await open(page, '');
-    await expect(page.locator('section#features')).toHaveCount(0);
-    expect(await mainText(page)).not.toContain('What a Supported Youth Cohort Includes');
+    await expect(page.locator('section#features')).toHaveCount(1);
+    await expect(page.locator('section#features h2')).toHaveText('What a Supported Youth Cohort Includes');
     expect(await mainText(page)).not.toContain('What Your Partnership Includes');
   });
 });

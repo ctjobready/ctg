@@ -4,6 +4,7 @@ import Icon from '../../system/Icon.astro';
 import PartnerRelationships from './PartnerRelationships.astro';
 import { signedWith } from '../../sections/copyText';
 import { linkAttrs } from '../../../lib/url';
+import type { CopyBlock } from '../../../data/copy';
 
 /**
  * C5 Guide (Home): the H2, the method signal (TalentLEAP) and the leadership link, then the partner logos grouped into relationship cards (WP24a; PartnerRelationships).
@@ -16,11 +17,21 @@ import { linkAttrs } from '../../../lib/url';
  *          the funders' logo row sits under the hero (HomeHero), so the wall here is the other three relationship cards, with "These are working relationships, not endorsements." once, under it.
  *   R1-18  the TalentLEAP method sentence is in the mechanism band, where the method is explained (HomeMechanism's foot), not here.
  *   R1-19  the recognition items (AWS and HolonIQ) and the world strip are this band's second half (the default slot), so Home has one credibility band, not three.
+ * WP175 (owner decisions of 28 November 2026, Q2 (a): every C5 is empathy → ORIGIN → authority → method, one line each): the band carries the four elements again. `empathy` (EMPATHY.home) is the
+ * first line under the H2, `origin` the one-line ORIGIN (ORIGIN_SHORT as originShortUnder words it; Home's hero card and world strip state the count of countries, so the page passes the
+ * regions form), the signed-agreement sentence, the relationship cards, the recognition items and the world strip are the authority, and `method` (METHOD.home) is the band's last line,
+ * after the slot. Home says the method once, here (the mechanism band no longer prints its TalentLEAP line). Each prop is optional, so the band without them renders as before.
  */
 interface Props {
   id?: string;
+  /** The empathy line that opens the band's copy, directly under the H2. */
+  empathy?: string;
+  /** ORIGIN in one line, with its facts (data-fact). */
+  origin?: CopyBlock;
+  /** The method line, the band's last line (data-fact), with its link. */
+  method?: { text: string; facts: string[]; link?: { label: string; href: string } };
 }
-const { id = 'guide' } = Astro.props;
+const { id = 'guide', empathy, origin, method } = Astro.props;
 const heading = 'We’ve Built This Path Since 2014';
 // Review round 15, enhancement 3: named accountable people matter to government and multilateral buyers; /investors/ already links the team the same way.
 const team = linkAttrs('/about/team/');
@@ -31,6 +42,8 @@ const team = linkAttrs('/about/team/');
     <div class="guide__copy">
       <p class="eyebrow" data-reveal>Our Track Record</p>
       <h2 id={`${id}-h`} data-reveal>{heading}</h2>
+      {empathy && <p class="guide__empathy lead" data-reveal>{empathy}</p>}
+      {origin && <p class="guide__from" data-fact={origin.facts.join(' ')}>{origin.text}</p>}
       <p class="guide__origin" data-fact="SC-11">{signedWith('SC-11', heading)}</p>
       <p class="guide__leaders" data-reveal>
         <a class="link" href={team.href}>Meet the Leadership Team<Icon name="arrow-right" size={16} /></a>
@@ -39,6 +52,14 @@ const team = linkAttrs('/about/team/');
   </div>
   <PartnerRelationships omit={['development']} captionLast />
   <slot />
+  {
+    method && (
+      <p class="guide__method" data-fact={method.facts.length ? method.facts.join(' ') : undefined}>
+        {method.text}{' '}
+        {method.link && <a class="link" href={linkAttrs(method.link.href).href}>{method.link.label}<Icon name="arrow-right" size={16} /></a>}
+      </p>
+    )
+  }
 </Section>
 
 <style>
@@ -64,6 +85,16 @@ const team = linkAttrs('/about/team/');
     font-size: var(--fs-body-m);
     line-height: var(--lh-body-m);
     color: var(--on-surface);
+  }
+  /* WP175: the origin line, in the audience pages' origin-line colour (PartnerGuideBand .pg__origin) */
+  .guide__from {
+    color: var(--on-surface-variant);
+  }
+  /* WP175: the method line closes the band, one section step under the world strip, at the band's reading width */
+  .guide__method {
+    margin: var(--space-xl) 0 0;
+    max-width: 48rem;
+    color: var(--on-surface-variant);
   }
   /* WP166-A (R1-19): the world strip closes the band, one section step under the recognition items */
   :global(.guide__world) {

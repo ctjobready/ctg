@@ -144,8 +144,10 @@ test.describe('Governments: Her Power is told once', () => {
     // WP50 (cycle-25 review, item 15): the row's lines are full sentences ("CodersTrust trained 2,500 women directly."; tests/wp50.spec.ts)
     expect(firstRow).toContain('CodersTrust trained 2,400 women directly.');
     // the contracts table is followed directly by "What Your Agency Gets"
+    // WP175 (owner decision of 2026-11-28: CMF v3): the learner story (C7) now sits between them, so the table is followed by the story and then by "What Your Agency Gets" (C8)
     const ids = await page.evaluate(() => Array.from(document.querySelectorAll('main section[id]')).map((s) => s.id));
-    expect(ids.indexOf('features')).toBe(ids.indexOf('contracts') + 1);
+    expect(ids.indexOf('learner-voice')).toBe(ids.indexOf('contracts') + 1);
+    expect(ids.indexOf('features')).toBe(ids.indexOf('learner-voice') + 1);
   });
 
   test('Results at a Glance keeps its Her Power tile, linked to the case study, and states the 372 of 800 once on the page', async ({ page }) => {

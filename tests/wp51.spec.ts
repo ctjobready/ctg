@@ -286,14 +286,18 @@ test.describe('Closing partner lines (items 9 and 17)', () => {
 
   // WP166-B (marketing review R3-28, owner approval of 21 November 2026): the line opens the Track Record band, in place of the origin line (it was the list's second item, directly after the BIGD line), still unchanged and once on the page;
   // the list is the BIGD line and the signed-agreement sentence.
-  test('Foundations: the line moved, unchanged, into the Track Record band, which it now opens (not deleted); the closing strip holds the first-action line alone', async ({ page }) => {
+  // WP175 (owner decision Q2 (a) of 2026-11-28: every C5 is empathy → ORIGIN → authority → method): the one-line origin is back before it, so the line follows the empathy line and the origin line (the band's two
+  // record lines, .pg__origin), still unchanged and once on the page
+  test('Foundations: the line moved, unchanged, into the Track Record band, directly after the origin line (WP175; not deleted); the closing strip holds the first-action line alone', async ({ page }) => {
     const LINE = 'Organizations that have worked with CodersTrust include the Rockefeller Foundation, DANIDA and Porticus.';
     expect(C14.validateFor.foundations.text).toBe(LINE);
     await open(page, FOUND);
-    const opening = page.locator('#guide .pg__copy > .pg__origin');
-    await expect(opening).toHaveCount(1);
+    await expect(page.locator('#guide .pg__copy > .pg__origin')).toHaveCount(2);
+    await expect(page.locator('#guide .pg__copy > .pg__origin').first()).toHaveAttribute('data-fact', 'ID-02 SC-03');
+    const opening = page.locator('#guide .pg__copy > .pg__origin').nth(1);
     expect(compact(await opening.textContent())).toBe(LINE);
     expect(await opening.getAttribute('data-fact')).toBe('PA-01');
+    expect(count(await mainText(page), LINE)).toBe(1);
     const items = page.locator('#guide .pg__list li');
     // WP66 (owner request 2026-10-20): a line closes the list, the signed-agreement sentence for development partners and NGOs (SC-11c); the BIGD line keeps its place (tests/wp66.spec.ts). WP166-B: two items (it was three).
     await expect(items).toHaveCount(2);
@@ -348,7 +352,9 @@ test.describe('Home: the Outcome Tracking row, the positioning statement and the
     expect(gate).not.toContain(`'/': '${CLOSING}'`);
     expect(gate).toContain("const POSITION_PENDING_PAGES = ['/', '/partner-with-us/investors/'];");
     await open(page, '');
-    await expect(page.locator('#mechanism .pos__text')).toHaveCount(0);
+    // WP175 (package A): Home prints its crafted statement, unscoped, first in C6; the gate holds it to the declared words while Home is pending (package Z makes it required)
+    await expect(page.locator('#mechanism .pos__text')).toHaveText(POSITIONING.home.text);
+    expect(gate).toContain(`'/': '${POSITIONING.home.text}'`);
   });
 });
 
@@ -391,12 +397,14 @@ test.describe('The shared origin line on Development Partners and Investors (ite
   });
 
   // WP166-B (marketing review R3-29): the TalentLEAP method line is no longer printed in this credibility band; the assertion that it followed the origin line is gone with it, and the origin line is the band's one copy line.
-  test('Development Partners: the band opens with the origin line, and no longer prints the launch alone', async ({ page }) => {
+  // WP175 (owner decision Q2 (a) of 2026-11-28: every C5 opens with an empathy line): the band's copy is the fresh empathy line, then the origin line (the method line closes the band, after the logo strip)
+  test('Development Partners: the band opens with its empathy line, then the origin line (WP175), and no longer prints the launch alone', async ({ page }) => {
     await open(page, DP);
     expect(compact(await page.locator('#guide').textContent())).not.toContain('Launched in Copenhagen in 2014.');
     const copy = await texts(page, '#guide .pg__copy > *');
-    expect(copy[0]).toBe(originShortUnder('We’ve Built This Path Since 2014', { tile: true }).text); // WP150: the tile carries the 16; // WP64 rework RW2 (coordinator): the heading says "Since 2014", so the line drops that lead-in
-    expect(copy).toHaveLength(1);
+    expect(copy[0]).toBe(EMPATHY.developmentPartners);
+    expect(copy[1]).toBe(originShortUnder('We’ve Built This Path Since 2014', { tile: true }).text); // WP150: the tile carries the 16; // WP64 rework RW2 (coordinator): the heading says "Since 2014", so the line drops that lead-in
+    expect(copy).toHaveLength(2);
   });
 
   test('Investors prints the same line in its own band (InvestorGuide), followed by the TalentLEAP line', async ({ page }) => {
@@ -468,11 +476,13 @@ test.describe('Programs: the grid’s eyebrow counts the five program cards (ite
 
 test.describe('Governments: the empathy line and the glance tile (items 14 and 18)', () => {
   // WP52 (cycle-27 reviews, Grok M2 and Gemini m6): the Track Record band opens with the origin line; the empathy line that WP51 reworded ("... must produce young people in work, not only seats filled.") is gone, with its EMPATHY key (tests/wp52.spec.ts)
-  test('the Track Record band has no empathy line yet (the earlier wordings are on no built page, and neither is the WP175 line)', async ({ page }) => {
+  test('the Track Record band opens with its fresh WP175 empathy line; the earlier wordings are on no built page', async ({ page }) => {
     // WP175 (owner decision Q2 (a) of 2026-11-28): every C5 opens with an empathy line again, each page its own fresh line (EMPATHY has a key for every conversion page); the retired line is not one of them
     expect(EMPATHY.governments).not.toMatch(/must (?:show up as|produce) young people in work/);
     await open(page, GOV);
-    await expect(page.locator('#guide p.lead')).toHaveCount(0);
+    // WP175 (package A): the band prints its line now, once, first in the band's copy
+    await expect(page.locator('#guide p.lead')).toHaveCount(1);
+    await expect(page.locator('#guide .pg__copy > :first-child')).toHaveText(EMPATHY.governments);
     expect(sitePages().filter((p) => visible(p.html).includes('must show up as young people in work') || visible(p.html).includes('must produce young people in work, not only seats filled')).map((p) => p.route)).toEqual([]);
   });
 

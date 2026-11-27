@@ -12,10 +12,13 @@ const UPEACE = 'news/coderstrust-students-invited-to-join-upeaces-young-leaders-
 
 // WP166-A (marketing review R1-17, owner approval of 21 November 2026, item 1): the band is gone from Home; its training sentence is the mechanism band's "What We Deliver" card, the monthly reports are in the hero lead,
 // and the page's one program-scope statement sits under the mechanism band. The card checks below are replaced by those of what took the band's place.
-test.describe('What a Supported Youth Cohort Includes (#features; WP41: it was "What Your Partnership Includes"; gone from Home since WP166-A)', () => {
+test.describe('What a Supported Youth Cohort Includes (#features; WP41: it was "What Your Partnership Includes"; gone from Home in WP166-A, back since WP175)', () => {
   test('the monthly reports are unscoped in the sentence, and the page carries its one program-scope statement (WP141), under the mechanism band', async ({ page }) => {
     await open(page, '');
-    await expect(page.locator('#features')).toHaveCount(0);
+    // WP175 (owner decision of 2026-11-28, Q1 (a)): the band is back on Home (C8), one card per funder pain; its reporting card says the monthly reports unscoped, and the page's one scope statement stays under the mechanism band
+    await expect(page.locator('#features')).toHaveCount(1);
+    expect(compact(await page.locator('#features').textContent())).toContain('Monthly reports show progress toward paid work.');
+    expect(compact(await page.locator('#features').textContent())).not.toContain('agreed in the program scope');
     expect(compact(await page.locator('.hh__lead').textContent())).toContain('with monthly reports on their progress.');
     expect(compact(await page.locator('main').textContent())).not.toContain('Documentary Evidence of Earnings');
     expect(compact(await page.locator('#mechanism').textContent())).toContain('Inclusions and reporting on this page are agreed in the program scope.'); // WP142: Home states no exam fees, attempts or eligibility, so the sentence names no exam terms

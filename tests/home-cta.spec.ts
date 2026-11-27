@@ -98,7 +98,9 @@ test('home: the router follows the carousel, and the bands before the closing ca
   const order = await page.evaluate(() => Array.from(document.querySelectorAll('[data-cmf]')).map((el) => el.getAttribute('data-cmf')));
   const cta = order.indexOf('C13');
   expect(cta, 'the closing call-to-action band is on the page').toBeGreaterThan(0);
-  expect(order.slice(cta - 2, cta), `the bands before the closing call to action (order: ${order.join(' > ')})`).toEqual(['C11', 'C9']);
+  // WP175 (owner decision of 2026-11-28: CMF v3, C1 to C14 in order; Q1 (a) supersedes WP166-A R1-08): the FAQ (C9) is before the offer again and the risk reversal (C12) is restored, so the bands before the closing call
+  // to action are the offer and the risk reversal (C11, C12)
+  expect(order.slice(cta - 2, cta), `the bands before the closing call to action (order: ${order.join(' > ')})`).toEqual(['C11', 'C12']);
   expect(order.indexOf('ROUTER'), `the router follows the Results and Programs carousel (order: ${order.join(' > ')})`).toBe(order.indexOf('RESULTS') + 1);
   expect(order.filter((c) => c === 'ROUTER'), 'one router').toHaveLength(1);
 

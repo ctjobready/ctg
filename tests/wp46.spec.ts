@@ -331,8 +331,11 @@ test.describe('Track Record bands: "with progressive levels" is gone (item 16)',
   test('Home and Investors read "…organizes skills into career paths." and keep their TalentLEAP link', async ({ page }) => {
     await open(page, '');
     // WP166-A (marketing review R1-18): on Home the sentence and its link sit at the foot of the Mechanism band, the band that explains the method
-    expect(compact(await page.locator('#mechanism .mech__method').textContent())).toBe('Our method organizes skills into career paths. We call it TalentLEAP. How TalentLEAP Works');
-    await expect(page.locator('#guide .guide__method')).toHaveCount(0);
+    // WP175 (owner decision Q2 (a) of 2026-11-28: the method line is C5's last line): on Home it closes the track-record band again, as METHOD.home ("Our TalentLEAP method organizes skills into career paths."),
+    // still without "with progressive levels", and the Mechanism band no longer prints it
+    expect(compact(await page.locator('#guide .guide__method').textContent())).toBe('Our TalentLEAP method organizes skills into career paths. How TalentLEAP Works');
+    await expect(page.locator('#mechanism .mech__method')).toHaveCount(0);
+    expect(compact(await page.locator('main').textContent())).not.toContain('progressive levels');
     await open(page, 'partner-with-us/investors/');
     expect(compact(await page.locator('#guide .ig__method').textContent())).toBe('TalentLEAP, our method, organizes skills into career paths. How TalentLEAP Works');
   });
@@ -372,7 +375,9 @@ test.describe('Governments: "What a Ministry Sees" is gone and its follow-up sur
     const bands = await page.evaluate(() => Array.from(document.querySelectorAll('main section.band')).map((s) => ({ id: s.id, tone: /band--(white|airy|ice|klein|deep-ink)/.exec(s.className)?.[1] ?? '' })));
     const features = bands.findIndex((b) => b.id === 'features');
     expect(bands[features].tone).toBe('white');
-    expect(bands[features + 1]).toEqual({ id: 'faq', tone: 'ice' });
+    // WP175 (owner decision of 2026-11-28: CMF C8 ends with How It Works in Three Steps): the steps follow the cards on the same white ground, then the questions on ice
+    expect(bands[features + 1]).toEqual({ id: 'how-it-works', tone: 'white' });
+    expect(bands[features + 2]).toEqual({ id: 'faq', tone: 'ice' });
     expect(builtPages().filter((p) => p.html.includes('#ministry-sees')).map((p) => p.route)).toEqual([]);
   });
 });

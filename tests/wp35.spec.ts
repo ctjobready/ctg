@@ -365,15 +365,20 @@ test.describe('plain words and plain claims', () => {
     expect(gov.join(' ')).not.toContain('curricula that stay');
   });
 
-  test('Foundations: the second features card is the pilot scorecard the grant agrees (WP44: it replaced the trial-evidence card)', async ({ page }) => {
+  // WP175 (owner decision of 2026-11-28: CMF C8 relieves each C2 pain 1:1, in rank order): the second card relieves P2, "Independent Evidence Is Hard to Find", with doc 04 4.3's feature (the trial of CodersTrust's WSDFM
+  // program, and independent evaluation welcome on new programs), as before WP44; it names no evaluator and no "predecessor program". The pilot scorecard WP44 put here is stated by the first card ("measured against the
+  // agreed scorecard") and the risk-reversal band (C12, "Scorecard Thresholds").
+  test('Foundations: the second features card relieves "Independent Evidence Is Hard to Find" (WP175; WP44 had made it the pilot scorecard)', async ({ page }) => {
     await open(page, 'partner-with-us/foundations/');
     // WP39 (cycle-16 review) headed this card "Independent Evidence on the Predecessor Program"; WP44 (cycle-21 review) describes the scorecard instead, since the card lists a deliverable (tests/wp44.spec.ts)
-    const card = page.locator('#features li.card', { has: page.locator('h3', { hasText: 'A Pilot Scorecard Agreed with You' }) });
-    await expect(card).toHaveCount(1);
-    await expect(card.locator('.card__text')).toHaveText('Cost per completer and per verified outcome, with thresholds agreed before the first cohort starts.');
+    const card = page.locator('#features li.card').nth(1);
+    await expect(card).toHaveAttribute('data-relieves', 'P2');
+    await expect(card.locator('h3')).toHaveText('A Model with Independent Evidence');
+    await expect(card.locator('.card__text')).toHaveText('A randomized trial of CodersTrust’s WSDFM program, and independent evaluation welcome on new programs.');
     const text = await mainText(page);
-    expect(text).not.toMatch(/Independent evidence on a CodersTrust program|fund a model with independent evidence/);
-    expect(compact(await card.textContent())).not.toContain('Independent evaluation');
+    expect(text).not.toMatch(/Independent evidence on a CodersTrust program|fund a model with independent evidence|Predecessor Program/);
+    await expect(page.locator('#features li.card', { has: page.locator('h3', { hasText: 'A Pilot Scorecard Agreed with You' }) })).toHaveCount(0);
+    expect(compact(await page.locator('#risk').textContent())).toContain('Scorecard Thresholds');
   });
 
   // WP46 (cycle-22 review): "What a Ministry Sees" is gone; the delivery model's "Placement and Monthly Reports" card names the follow-up surveys at 3, 6 and 12 months after each course

@@ -285,7 +285,10 @@ test.describe('"CodersTrust Around the World": seven tiles on Home and About, th
     await expect(links).toHaveText('See Global Reach');
     expect(await links.getAttribute('href')).toMatch(/\/impact\/global-reach\/$/);
     // the strip adds Bangladesh to Home once, as its last tile: SC-03 is not anywhere else on the page
-    await expect(page.locator('main [data-fact~="SC-03"]')).toHaveCount(1);
+    // WP175 (owner decision Q2 (a) of 2026-11-28): besides the strip's tile, SC-03 ties the track record's one-line origin, which names its regions and no count
+    await expect(page.locator('main [data-world-strip] [data-fact~="SC-03"]')).toHaveCount(1);
+    await expect(page.locator('main [data-fact~="SC-03"]')).toHaveCount(2);
+    await expect(page.locator('#guide p.guide__from[data-fact="ID-02 SC-03"]')).toHaveCount(1);
   });
 
   test('About: the same seven tiles as an H3 under the timeline, inside Our Story (the page keeps its H2 jump list)', async ({ page }) => {

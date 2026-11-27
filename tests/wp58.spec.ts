@@ -336,9 +336,10 @@ test.describe('S9: the press line is not repeated on About', () => {
 test.describe('S10 and S11: headings', () => {
   // WP166-A (marketing review R1-17): the Includes band and its "Progress You Can Check" card are gone. S10 kept "results" off a card about monthly progress reports; R1-11 heads Home's carousel
   // "Results You Can Check", where every slide is a result that links its evidence page, so that heading is the one use and no reporting card says it
-  test('Home’s "Progress You Can Check" card is gone (WP166-A); "Results You Can Check" heads only Home’s results carousel, and no page says "Results Your Evaluators Can Check"', async ({ page }) => {
+  // WP175 (owner decision of 2026-11-28, Q1 (a)): the Includes band is back with its "Progress You Can Check" card (S10's heading); "Results You Can Check" still heads only the carousel
+  test('Home’s "Progress You Can Check" card is back (WP175); "Results You Can Check" heads only Home’s results carousel, and no page says "Results Your Evaluators Can Check"', async ({ page }) => {
     await open(page, HOME);
-    await expect(page.locator('#features')).toHaveCount(0);
+    await expect(page.locator('#features li.card h3', { hasText: 'Progress You Can Check' })).toHaveCount(1);
     await expect(page.locator('#results-h')).toHaveText('Results You Can Check');
     const hits = sitePages().filter((p) => /Results You Can Check|Results Your Evaluators Can Check/.test(visible(p.html))).map((p) => p.route);
     expect(hits).toEqual(['/']);
@@ -348,7 +349,8 @@ test.describe('S10 and S11: headings', () => {
 
   test('Development Partners’ third card is "Progress Your Evaluators Can Check", tied to PD-08 and PD-09', async ({ page }) => {
     await open(page, DP);
-    expect(await texts(page, '#features .card__title')).toEqual(['Training, Mentoring and Placement Support', 'Accessible Local Delivery', 'Progress Your Evaluators Can Check']);
+    // WP175 (owner decision of 2026-11-28: CMF C8 names the gain creators after the relievers): a fourth card, the gain creator, follows the three
+    expect(await texts(page, '#features .card__title')).toEqual(['Training, Mentoring and Placement Support', 'Accessible Local Delivery', 'Progress Your Evaluators Can Check', 'A Supported Route to a Recognized Credential']);
     const card = page.locator('#features li.card', { has: page.locator('h3', { hasText: 'Progress Your Evaluators Can Check' }) });
     expect(await card.getAttribute('data-fact')).toBe('PD-08 PD-09');
     for (const h of ['Progress You Can Check', 'Progress Your Evaluators Can Check']) expect(h).toBe(titleCase(h));
@@ -519,16 +521,18 @@ test.describe('S1 extended: the other statements of the 16 say "work", not "prog
   test('every page that prints the origin line prints it with "work", tied to ID-02 and SC-03 (the audience pages’ Track Record bands)', async ({ page }) => {
     const pages = listPages().filter((p) => /data-fact="ID-02 SC-03"/.test(readFileSync(p.file, 'utf8')));
     // WP166-B (marketing review R3-28): Foundations' track-record band opens with the funders who have worked with CodersTrust in place of the origin line, so it is out of this list (it was in it).
+    // WP175 (owner decision Q2 (a) of 2026-11-28: every C5 carries ORIGIN in one line): Foundations prints the origin line again (before the funders sentence), and Home's track record prints it too (the regions form)
     expect(pages.map((p) => p.route)).toEqual(
       expect.arrayContaining(['/partner-with-us/governments/', '/partner-with-us/development-partners/', '/partner-with-us/investors/', '/partner-with-us/universities/', '/partner-with-us/employers/']),
     );
-    expect(pages.map((p) => p.route)).not.toContain('/partner-with-us/foundations/');
+    expect(pages.map((p) => p.route)).toContain('/partner-with-us/foundations/');
+    expect(pages.map((p) => p.route)).toContain('/');
     // WP166-B (marketing review R3-06): Employers' band is headed "Employers and Partners We Work With"; its signed-agreement sentence carries "since 2014" (WP66), so the origin line is the year-less one it printed before ("since 2014" once in the band, WP64).
     const HEADINGS: Record<string, string> = {};
     for (const p of pages) {
       await open(page, p);
       // WP64 rework RW2 (coordinator): every one of these bands is headed "... Since 2014", so the line drops that lead-in (ORIGIN_SHORT.text above keeps it)
-      expect(compact(await page.locator('[data-fact="ID-02 SC-03"]').first().textContent()), p.route).toBe(originShortUnder(HEADINGS[p.route] ?? 'Since 2014', { tile: ['/partner-with-us/development-partners/', '/partner-with-us/investors/', '/styleguide/'].includes(p.route) }).text); // WP175: the styleguide's PartnerGuideBand sample (`withOrigin`) shows the SC-03 tile too. WP150: where the SC-03 tile is shown the line names the regions
+      expect(compact(await page.locator('[data-fact="ID-02 SC-03"]').first().textContent()), p.route).toBe(originShortUnder(HEADINGS[p.route] ?? 'Since 2014', { tile: ['/partner-with-us/development-partners/', '/partner-with-us/investors/', '/styleguide/', '/'].includes(p.route) }).text); // WP175: the styleguide's PartnerGuideBand sample (`withOrigin`) shows the SC-03 tile too; Home's hero card and world strip state the count, so its line names the regions. WP150: where the SC-03 tile is shown the line names the regions
     }
   });
 

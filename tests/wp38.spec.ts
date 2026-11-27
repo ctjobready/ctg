@@ -49,14 +49,24 @@ test.describe('Home: "What a Supported Youth Cohort Includes" (WP41: it was "Wha
   // WP166-A (marketing review R1-17, owner approval of 21 November 2026): the band re-explained the Mechanism band, so it is gone; its first card's sentence, verbatim, is the
   // Mechanism's "What We Deliver" text, and the other two cards' lines are on no Home band. The band's place, padding and layout tests (it sat after Recognition, before the
   // questions; one row of three at 1280, one card per row at 390) pinned the band itself and are deleted with it.
-  test('the band is gone; its first card’s sentence is the Mechanism’s "What We Deliver" text, and its other two cards are on no Home band (WP166-A)', async ({ page }) => {
+  // WP175 (owner decision of 2026-11-28, Q1 (a): R1-17 superseded): the band is back (C8), three short cards in the pains' order, then one gain creator; the first card's full sentence stays the Mechanism's "What We
+  // Deliver" text, so the card says the mentoring and placement support alone (no sentence is printed twice), and the other two cards are back word for word
+  test('the band is back (WP175): one card per funder pain in rank order, the first leaving the Mechanism’s "What We Deliver" sentence to it, then a gain creator', async ({ page }) => {
     await open(page, '');
-    await expect(page.locator('#features')).toHaveCount(0);
+    await expect(page.locator('#features h2')).toHaveText('What a Supported Youth Cohort Includes');
     const deliver = page.locator('#mechanism .model__block', { has: page.locator('.model__label', { hasText: 'What We Deliver' }) });
     await expect(deliver.locator('.model__text')).toHaveText(CARDS[0].text);
+    const cards = page.locator('#features li.card');
+    await expect(cards).toHaveCount(4);
+    expect(await cards.evaluateAll((els) => els.map((e) => e.getAttribute('data-relieves')))).toEqual(['P1', 'P2', 'P3', null]);
+    expect(await texts(page, '#features .card__title')).toEqual([...CARDS.map((c) => c.title), 'The Right Career or Foundation Track']);
+    expect(await texts(page, '#features .card__text')).toEqual([
+      'Three months of milestone-based mentoring and placement support after training.',
+      ...CARDS.slice(1).map((c) => c.text),
+      'A readiness assessment, a written test and an interview guide selection and placement into a career or foundation track.',
+    ]);
     const text = await mainText(page);
-    expect(text).not.toContain('What a Supported Youth Cohort Includes');
-    for (const c of CARDS.slice(1)) expect(text, c.title).not.toContain(c.text);
+    expect(count(text, CARDS[0].text), 'the training sentence is said once').toBe(1);
   });
 
   // WP39 and WP40 (cycle-16 and cycle-17 reviews): the audience and program pages and Investors state their features as three short cards too (tests/wp39.spec.ts and tests/wp40.spec.ts hold them)
@@ -82,8 +92,9 @@ test.describe('Home: the Guide band and the cost-of-waiting card', () => {
     // Mechanism band; the development partners' logos are the hero's funders row, so three relationship cards remain here
     expect(guide).toContain('CodersTrust has signed MOUs, agreements or contracts with 70+ organizations: 13 government bodies;');
     expect(guide).not.toContain('CodersTrust launched in 2014 in Copenhagen and began training freelancers in Bangladesh.');
-    await expect(page.locator('#guide').getByRole('link', { name: 'How TalentLEAP Works' })).toHaveCount(0);
-    await expect(page.locator('#mechanism').getByRole('link', { name: 'How TalentLEAP Works' })).toHaveCount(1);
+    // WP175 (owner decision Q2 (a) of 2026-11-28): the TalentLEAP line is the track-record band's last line again (METHOD.home), and the Mechanism band no longer prints it
+    await expect(page.locator('#guide').getByRole('link', { name: 'How TalentLEAP Works' })).toHaveCount(1);
+    await expect(page.locator('#mechanism').getByRole('link', { name: 'How TalentLEAP Works' })).toHaveCount(0);
     await expect(page.locator('#guide').getByRole('link', { name: 'Meet the Leadership Team' })).toHaveCount(1);
     await expect(page.locator('#guide .rel__title')).toHaveCount(3);
     // (WP42, cycle-19 review: the government slide is the second slide)
@@ -182,7 +193,8 @@ test.describe('the three funder pains that had a heading and no line now have on
       expect(compact(await item.locator('.gp__a').textContent())).toBe(line);
       // WP46 (cycle-22 review): Universities states two pains now, so every pain on it (two) still has its line
       // WP166-B (marketing review R3-40): the degree-holders pain on Universities and the "Graduates Struggle to Find Work" pain on Governments are the 19M+ tile (PX-02) now, so Universities has one pain (it was 2) and Governments two (it was 3)
-      const pains = route === 'partner-with-us/universities/' ? 1 : route === 'partner-with-us/governments/' ? 2 : 3;
+      // WP175 (owner decision Q4 (a) of 2026-11-28): Governments' "Graduates Struggle to Find Work" is back, so Governments states three pains again
+      const pains = route === 'partner-with-us/universities/' ? 1 : 3;
       await expect(page.locator('.gp__pains li .gp__q')).toHaveCount(pains);
       await expect(page.locator('.gp__pains li .gp__a')).toHaveCount(pains);
     });
@@ -199,9 +211,10 @@ test.describe('Guide band: one origin line on the audience pages, the two-senten
     test(`${route}: the Guide band says it in one line tied to ID-02 and SC-03`, async ({ page }) => {
       await open(page, route);
       const line = page.locator('#guide p[data-fact="ID-02 SC-03"]');
-      await expect(line).toHaveCount(route === 'partner-with-us/foundations/' ? 0 : 1);
+      // WP175 (owner decision Q2 (a) of 2026-11-28: every C5 carries ORIGIN in its one-line form): Foundations prints the origin line again, before the funders sentence R3-28 put in its place
+      await expect(line).toHaveCount(1);
       // WP166-B (marketing review R3-06): Employers' band is headed "Employers and Partners We Work With"; its signed-agreement sentence carries "since 2014" (WP66), so the origin line is the year-less one it printed before ("since 2014" once in the band, WP64).
-      if (route !== 'partner-with-us/foundations/') expect(compact(await line.textContent())).toBe(ORIGIN_SHORT);
+      expect(compact(await line.textContent())).toBe(ORIGIN_SHORT);
       expect(compact(await page.locator('#guide').textContent())).not.toMatch(/began (?:developing|training) freelancers|first UNDP-supported pilot|Korail settlement/);
     });
   }
@@ -256,11 +269,14 @@ test.describe('Home carousel: the reach slide and the speed slide are one survey
   // WP38 (cycle-15 review) gave the reach slide SC-03's "15" as a tile and WP45 (cycle-21 review) as its heading ("Programs in 15 Countries and Territories"). WP53 (owner decision 2026-10-16): that slide is gone; SC-03 is no longer on Home, and the countries and
   // territories are the hero's reach card (SC-16), with no second statement of the figure.
   // WP55 (owner decisions 2026-10-17/18): the "CodersTrust Around the World" strip ends on a Bangladesh tile tied to SC-03 ("Most delivery has been in Bangladesh"), so SC-03 is on Home once, there and never in the carousel; the count itself is still stated once.
-  test('the reach slide is gone: no slide states SC-03, the only SC-03 on Home is the world strip’s Bangladesh tile, and the 130,000+ and the 16 countries and territories stand once, in the hero’s reach card', async ({ page }) => {
+  // WP175 (owner decision Q2 (a) of 2026-11-28): the track record's one-line origin is back; it names the regions from SC-03's sentence, not its count (originShortUnder's `tile` form), so the count still stands once
+  test('the reach slide is gone: no slide states SC-03; SC-03 is on Home in the world strip’s Bangladesh tile and the track record’s origin line (regions, no count); the 130,000+ and the 16 countries and territories stand once, in the hero’s reach card', async ({ page }) => {
     await open(page, '');
     expect(compact(await page.locator('#results').textContent())).not.toMatch(/Programs in 1[57] Countries|Explore Global Reach|130,000/);
     await expect(page.locator('#results [data-fact~="SC-03"]')).toHaveCount(0);
-    await expect(page.locator('main [data-fact~="SC-03"]')).toHaveCount(1);
+    await expect(page.locator('main [data-fact~="SC-03"]')).toHaveCount(2);
+    await expect(page.locator('#guide p.guide__from[data-fact="ID-02 SC-03"]')).toHaveText('From a Copenhagen launch to work across Asia, Africa, Europe and the Americas.');
+    expect(count(await mainText(page), '16 countries and territories'), 'the count is stated once, in the hero').toBe(1);
     await expect(page.locator('main [data-world-strip] [data-tile="bangladesh"][data-fact~="SC-03"]')).toHaveCount(1);
     await expect(page.locator('.hh__card[data-fact="SC-16"]')).toContainText('16 countries and territories');
   });

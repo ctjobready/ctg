@@ -278,7 +278,7 @@ test.describe('R1 (Grok): Home’s "Our Approach" names the group as ID-01 does'
   const STATEMENT = 'CodersTrust connects training, mentoring and placement support for educated, unemployed and underemployed youth, with monthly reports on progress toward paid work.';
 
   // WP166-A (marketing review R1-03): Home no longer prints the statement, so the gate no longer declares it; the source sentence keeps ID-01's group, and the hero lead names it the same way
-  test('the source statement is one sentence naming the group as ID-01 does; Home prints none, its hero lead names the group, and the gate no longer declares a statement for Home (WP166-A)', async ({ page }) => {
+  test('the source statement names no narrower group than ID-01 does; Home prints the crafted statement (WP175), its hero lead names the group, and the gate does not declare the retired sentence for Home', async ({ page }) => {
     // WP175 (owner decision Q5 of 2026-11-28: Home carries a crafted statement again; package A renders it, and scripts/check-facts.mjs holds Home pending until then): the source statement is the crafted one, which names no narrower group than ID-01's (the WP63 sentence above is retired)
     expect(POSITIONING.home.text).toBe('Funders and governments want young people in paid work, not only trained. CodersTrust takes each learner the whole way, from training and mentoring to placement support, with outcome evidence that includes an independent randomized trial of its own training.');
     expect(POSITIONING.home.text).not.toContain('educated, unemployed youth');
@@ -287,7 +287,8 @@ test.describe('R1 (Grok): Home’s "Our Approach" names the group as ID-01 does'
     const gate = readFileSync(new URL('../scripts/check-facts.mjs', import.meta.url), 'utf8');
     expect(/const POSITION_WHOLE_STATEMENT = \{([\s\S]*?)\n\};/.exec(gate)?.[1] ?? '').not.toContain(`'/': '${STATEMENT}'`);
     await open(page, HOME);
-    await expect(page.locator('#mechanism .pos__text')).toHaveCount(0);
+    // WP175 (package A): Home prints the crafted statement (it names no narrower group than ID-01's); the hero lead still names the group
+    await expect(page.locator('#mechanism .pos__text')).toHaveText(POSITIONING.home.text);
     await expect(page.locator('.hh__lead')).toContainText('educated, unemployed and underemployed youth');
     expect(pagesWith('support for educated, unemployed youth, with monthly reports')).toEqual([]);
   });

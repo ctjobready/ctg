@@ -51,6 +51,12 @@
  * "Two Ways to Fund the Path": Route 2's evidence cell is "Youth-program outcomes are not platform outcomes." alone (FundingRoutes; Gemini).
  * WP66 (owner request 2026-10-20): the Track Record band's list closes with the signed-agreement sentence for development partners and NGOs (SC-11c, `signed` on PartnerGuideBand: "CodersTrust has signed MOUs, agreements or contracts with ... development partners and NGOs."),
  * after the BIGD line and the names line (which keeps its place directly after the BIGD line); the band's heading says "Since 2014", so the sentence leaves the year to it.
+ * WP175 (owner decisions of 28 November 2026: every conversion page follows CMF v3, C1 to C14, in order and coverage; each band is tagged with its component through the Tone wrapper):
+ *   C1 hero · GEO · GLANCE Results at a Glance (a recorded row, doc 06 P5 v1.23) · C2–C4 the problem band, declared compressed (owner decision 2026-10-15, recast 2026-11-28), its three ranked pains and the
+ *   C3 transition line last · C5 the track record: the empathy line, the one-line origin (back before the funders sentence that WP166-B R3-28 had put in its place), the authority, the method line last
+ *   C6 the two funding routes, the positioning statement first · C7 Proof in Practice, led by the one-line trial lead (Q3 (a)), then Samina's story (it sat before the problem band)
+ *   C8 one card per pain in rank order (card 2 is the independent-evidence reliever of doc 04 4.3 again), the SDG-reporting gain creator and How It Works in Three Steps · C9 the questions and the due-diligence view
+ *   C10 What Makes CodersTrust Different · C11 the two funding routes' offers · C12 "Start with a Pilot, Then Decide on Evidence" (restored) · C13 · C14.
  */
 import PartnerGlance from '../../../components/pages/partners/PartnerGlance.astro';
 import DueDiligenceView from '../../../components/pages/hub/DueDiligenceView.astro';
@@ -73,10 +79,30 @@ import SubBand from '../../../components/pages/partners/SubBand.astro';
 import Callout from '../../../components/pages/partners/Callout.astro';
 import OfferCards from '../../../components/pages/partners/OfferCards.astro';
 import FundingRoutes from '../../../components/pages/partners/FundingRoutes.astro';
+import HowItWorks from '../../../components/pages/partners/HowItWorks.astro';
 import Reinforcement from '../../../components/pages/partners/Reinforcement.astro';
 import PageEnhancements from '../../../components/pages/partners/PageEnhancements.astro';
+import DifferenceBand from '../../../components/sections/DifferenceBand.astro';
+import RiskReversalBand from '../../../components/sections/RiskReversalBand.astro';
+import Tone from '../../../components/pages/home/Tone.astro';
 import { KOSOVO_WOW_TILE_LABEL, LINKS, TRACKING_MONTHS, UNDP_YES_TILE_LABEL, factPart, funderOptionCards, meta } from '../../../components/pages/partners/partners';
-import { BIGD_NAME, C14, DELIVERY_MODEL, HEADLINE, MICRO_COMMITMENT, POSITIONING, PROGRAM_SCOPE_STATEMENT, PROGRAM_SIZES_NOTE, VALUE_PROPOSITION, WB_KOSOVO } from '../../../data/copy';
+import {
+  BIGD_NAME,
+  C14,
+  C3_TRANSITION,
+  DELIVERY_MODEL,
+  EMPATHY,
+  HEADLINE,
+  METHOD,
+  MICRO_COMMITMENT,
+  POSITIONING,
+  PROGRAM_SCOPE_STATEMENT,
+  PROGRAM_SIZES_NOTE,
+  STEPS,
+  TRIAL_LEAD,
+  VALUE_PROPOSITION,
+  WB_KOSOVO,
+} from '../../../data/copy';
 import { fact } from '../../../data/facts';
 import { linkAttrs } from '../../../lib/url';
 import Icon from '../../../components/system/Icon.astro';
@@ -119,167 +145,213 @@ const FAQ_IDS = ['Q3', 'Q8-route', 'Q9-route', 'Q10'];
   stickyCta={{ label: primary.label, href: primary.href }}
 >
   <!-- C1 · Identity hook -->
-  <HeroBand
-    audience="For Foundations and CSR Leaders"
-    title={HEADLINE.foundations}
-    lead={VALUE_PROPOSITION.foundations}
-    cta={{ label: primary.label, href: primary.href }}
-    artSeed="partners-foundations"
-  />
+  <Tone cmf="C1">
+    <HeroBand
+      audience="For Foundations and CSR Leaders"
+      title={HEADLINE.foundations}
+      lead={VALUE_PROPOSITION.foundations}
+      cta={{ label: primary.label, href: primary.href }}
+      artSeed="partners-foundations"
+    />
+  </Tone>
   <!-- GEO · What is CodersTrust? -->
-  <DefinitionBand />
+  <Tone cmf="GEO"><DefinitionBand /></Tone>
   <!-- WP58 (cycle-30 review, GLM L3): the +10.3 trial tile (RC-02, the strongest evidence) is the first tile; the survey and Kosovo tiles follow. WP62 (cycle-34 review): the fourth tile, the single `more` tile that joins the main group, was the WSDFM program-record tile (PR-01),
        where it had been the +$27 tile (RC-04): the trial filled two of the four tiles. WP65 (cycle-37 review): it is the UNDP YES, Korail program-record tile (PR-03, as Development Partners shows it), because WSDFM's "711 of 1,000" is on the Proof in Practice card below. -->
   <!-- WP166-B (marketing review R3-15, R3-23): the +10.3 tile carries its benchmark note (RC-06a, as on Development Partners), and the evidence strip ("See the Evidence Behind the Results") is the note under the tiles. -->
-  <PartnerGlance
-    lead={[{ id: 'RC-02', href: '/impact/independent-evaluation/', note: benchmarkNote, also: ['RC-06a'] }, { id: 'OC-03', href: '/impact/outcomes-2026/' }, { id: 'PR-02', href: '/impact/case-studies/kosovo-women-in-online-work/', label: KOSOVO_WOW_TILE_LABEL, note: WB_KOSOVO.text, also: WB_KOSOVO.facts }]}
-    more={[{ id: 'PR-03', href: LINKS.caseUndp, label: UNDP_YES_TILE_LABEL }]}
-  >
-    <p>The trial evaluated CodersTrust’s WSDFM program; the survey describes what completers who responded report about work and income.</p>
-    <p class="cluster"><a class="link" href={linkAttrs(LINKS.trial).href}>Read the Trial Results<Icon name="arrow-right" size={16} /></a><a class="link" href={linkAttrs(LINKS.outcomes).href}>Impact Survey 2026<Icon name="arrow-right" size={16} /></a></p>
-  </PartnerGlance>
-  <LearnerVoice story="samina-tasneem-chowdhury" program="WSDFM" tone="white" />
+  <!-- WP175: Results at a Glance is a recorded row (doc 06 P5 v1.23), between GEO and C2. -->
+  <Tone cmf="GLANCE">
+    <PartnerGlance
+      lead={[{ id: 'RC-02', href: '/impact/independent-evaluation/', note: benchmarkNote, also: ['RC-06a'] }, { id: 'OC-03', href: '/impact/outcomes-2026/' }, { id: 'PR-02', href: '/impact/case-studies/kosovo-women-in-online-work/', label: KOSOVO_WOW_TILE_LABEL, note: WB_KOSOVO.text, also: WB_KOSOVO.facts }]}
+      more={[{ id: 'PR-03', href: LINKS.caseUndp, label: UNDP_YES_TILE_LABEL }]}
+    >
+      <p>The trial evaluated CodersTrust’s WSDFM program; the survey describes what completers who responded report about work and income.</p>
+      <p class="cluster"><a class="link" href={linkAttrs(LINKS.trial).href}>Read the Trial Results<Icon name="arrow-right" size={16} /></a><a class="link" href={linkAttrs(LINKS.outcomes).href}>Impact Survey 2026<Icon name="arrow-right" size={16} /></a></p>
+    </PartnerGlance>
+  </Tone>
 
   <!-- C2 · Problem. WP166-B (marketing review R3-01): the lead "You want to know what your grant changed, not only how many hours it paid for." is the H1 now; the band opens with the sentence the Governments page prints for the same obstacle. -->
-  <ProblemBand
-    title="Fund Training That Reaches Paid Work"
-    bluf="Most training budgets count who enrolled, not who is earning afterward."
-    factIds={['PX-01']}
-  >
-    <GainsPains
-      slot="lead"
-      pains={[
-        // WP91 (triage A10): a "Must" title, as the page's other "Must" card; the body sentence is unchanged.
-        { q: 'Earnings must be tracked, not only training hours', text: 'Attendance is easy to count; a change in income is harder to show.' },
-        // WP48 (cycle-23 review): "Independent evidence on youth-employment programs is thin." was a claim about the whole sector; the card states the funder's need instead.
-        { q: 'Independent evidence is hard to find', text: 'You need evidence an outsider can check, not only a provider’s own count.' },
-        // WP38 (cycle-15 review): a general funder pain, stated in one line like its two neighbors; it rests on no CodersTrust fact. WP40 (cycle-17 review): worded as the funder's need, not as a comparison with other implementers.
-        { q: 'Accountability must keep pace with scale', text: 'You need monthly outcome reports as delivery expands.' },
+  <!-- C2–C4, declared compressed (WP47, owner decision 2026-10-15; recast 2026-11-28): no Cost of Waiting (C3) or Imagine (C4) band; the band keeps pains P1 to P3 (data-pain, WP175) and ends with the C3 transition line. -->
+  <Tone cmf="C2-C4 (compressed)">
+    <ProblemBand
+      title="Fund Training That Reaches Paid Work"
+      bluf="Most training budgets count who enrolled, not who is earning afterward."
+      factIds={['PX-01']}
+      transition={C3_TRANSITION}
+    >
+      <GainsPains
+        slot="lead"
+        pains={[
+          // WP91 (triage A10): a "Must" title, as the page's other "Must" card; the body sentence is unchanged.
+          { id: 'P1', q: 'Earnings must be tracked, not only training hours', text: 'Attendance is easy to count; a change in income is harder to show.' },
+          // WP48 (cycle-23 review): "Independent evidence on youth-employment programs is thin." was a claim about the whole sector; the card states the funder's need instead.
+          { id: 'P2', q: 'Independent evidence is hard to find', text: 'You need evidence an outsider can check, not only a provider’s own count.' },
+          // WP38 (cycle-15 review): a general funder pain, stated in one line like its two neighbors; it rests on no CodersTrust fact. WP40 (cycle-17 review): worded as the funder's need, not as a comparison with other implementers.
+          { id: 'P3', q: 'Accountability must keep pace with scale', text: 'You need monthly outcome reports as delivery expands.' },
+        ]}
+      />
+    </ProblemBand>
+  </Tone>
+
+  <!-- C5 · Guide. WP175 (Q2 (a)): empathy (EMPATHY.foundations, a fresh line: WP50 had removed the doc 04 line) → the one-line origin (ORIGIN_SHORT, `withOrigin`: WP166-B R3-28 had put the funders sentence in its place;
+       the funders sentence follows it) → authority (the funders who have worked with CodersTrust, the BIGD line, the signed agreements, the world strip, the logo strip) → the method line (METHOD.foundations, which WP166-B
+       R3-29 had taken out) as the band's last line. -->
+  <Tone cmf="C5">
+    <PartnerGuideBand
+      empathy={EMPATHY.foundations}
+      withOrigin
+      opening={C14.validateFor.foundations}
+      statements={[
+        { facts: ['PR-01', 'RC-01'], markers: ['RC-01'], text: `The ${BIGD_NAME} evaluated CodersTrust’s WSDFM program, commissioned by Porticus, in a randomized trial.` },
       ]}
+      signed="SC-11c"
+      partnerGroup="development"
+      strip
+      method={METHOD.foundations}
+      methodLast
     />
-  </ProblemBand>
-
-  <!-- C3 (Cost of Waiting) and C4 (Imagine) are left to Home since WP47 (owner decision 2026-10-15). -->
-
-  <!-- C5 · Guide. WP50 (cycle-25 review): no empathy line; the band opens with the origin line, since the problem band above states the problem. -->
-  <!-- WP166-B (marketing review R3-28, R3-29): the funders who have worked with CodersTrust open the band (C14.validateFor.foundations, in place of the origin line; it was the second list item), and the TalentLEAP method line is gone. -->
-  <PartnerGuideBand
-    opening={C14.validateFor.foundations}
-    statements={[
-      { facts: ['PR-01', 'RC-01'], markers: ['RC-01'], text: `The ${BIGD_NAME} evaluated CodersTrust’s WSDFM program, commissioned by Porticus, in a randomized trial.` },
-    ]}
-    signed="SC-11c"
-    partnerGroup="development"
-    strip
-  />
+  </Tone>
 
   <!-- C6 · Mechanism (two funding routes). WP25s: one chooser, one naming scheme: Funding Route 1 (YouthWIDE Cohort Grants) and Funding Route 2 (JobReady Platform Grants), in the same order here and in the two offer bands below.
        WP40 (cycle-17 review): the two links under the comparison are one for each route, named for what they open ("Explore YouthWIDE Delivery": the program page; "Explore JobReady’s Capabilities": the platform page and its rollout status),
        in place of "See Funding Route 1 / 2" (jumps to the offer bands, #cohort-grants and #platform-grants, which keep their ids) and a separate "About the JobReady Platform" link to the same page as the second. -->
-  <div class="pp-two">
-    <!-- WP166-B (marketing review R3-24): the approach closes with the page's one delivery-model sentence (DELIVERY_MODEL; it led the first "What Your Cohort Grant Gets" card). -->
-    <MechanismBand
-      title="Two Ways to Fund the Path"
-      positioning={POSITIONING.foundations}
-      lead={DELIVERY_MODEL.text}
-      diagram={false}
-      moreLinks={[
-        { label: 'Explore YouthWIDE Delivery', href: LINKS.youthwide },
-        { label: 'Explore JobReady’s Capabilities', href: LINKS.platform }, // WP163: the platform page lists capabilities, not a rollout status
+  <Tone cmf="C6">
+    <div class="pp-two">
+      <!-- WP166-B (marketing review R3-24): the approach closes with the page's one delivery-model sentence (DELIVERY_MODEL; it led the first "What Your Cohort Grant Gets" card). -->
+      <MechanismBand
+        title="Two Ways to Fund the Path"
+        positioning={POSITIONING.foundations}
+        lead={DELIVERY_MODEL.text}
+        diagram={false}
+        moreLinks={[
+          { label: 'Explore YouthWIDE Delivery', href: LINKS.youthwide },
+          { label: 'Explore JobReady’s Capabilities', href: LINKS.platform }, // WP163: the platform page lists capabilities, not a rollout status
+        ]}
+      >
+        <!-- WP29 (benchmark review): the two routes as a two-row comparison (What It Supports, Evidence Relationship), in place of the two route cards. Their sentences moved into it; nothing was added. -->
+        <!-- WP30c (cycle-7 IA review): the two inquiry links sit directly under the comparison they belong to, not in the hero before the routes are explained. -->
+        <FundingRoutes inquiries={[routeYouthwide, routePlatform]} />
+      </MechanismBand>
+    </div>
+  </Tone>
+
+  <!-- C7 · Proof. WP175 (Q3 (a)): the case-study carousel leads with the one-line trial lead (TRIAL_LEAD); the trial and survey tiles stay in the glance above (WP166-B, R3-23). Samina's story follows the carousel,
+       inside C7 (it sat between the glance and the problem band). -->
+  <Tone cmf="C7">
+    <CaseStudyCarousel
+      title="Proof in Practice"
+      lead={TRIAL_LEAD.text}
+      items={[
+        { title: 'Women’s Skill Development for Freelancing Marketplace (WSDFM)', program: 'Commissioned by Porticus', factId: 'PR-01', href: LINKS.caseWsdfm },
+        { title: 'Her Power', program: 'ICT Division / Department of ICT (DoICT)', factId: 'PR-05', href: LINKS.caseHerPower },
       ]}
-    >
-      <!-- WP29 (benchmark review): the two routes as a two-row comparison (What It Supports, Evidence Relationship), in place of the two route cards. Their sentences moved into it; nothing was added. -->
-      <!-- WP30c (cycle-7 IA review): the two inquiry links sit directly under the comparison they belong to, not in the hero before the routes are explained. -->
-      <FundingRoutes inquiries={[routeYouthwide, routePlatform]} />
-    </MechanismBand>
-  </div>
+    />
+    <LearnerVoice story="samina-tasneem-chowdhury" program="WSDFM" tone="white" />
+  </Tone>
 
-  <!-- C7 · Proof: the trial and survey results are the tiles above, with their note and links (WP166-B, R3-23) -->
-  <CaseStudyCarousel
-    title="Proof in Practice"
-    items={[
-      { title: 'Women’s Skill Development for Freelancing Marketplace (WSDFM)', program: 'Commissioned by Porticus', factId: 'PR-01', href: LINKS.caseWsdfm },
-      { title: 'Her Power', program: 'ICT Division / Department of ICT (DoICT)', factId: 'PR-05', href: LINKS.caseHerPower },
-    ]}
-  />
+  <!-- C8 · Features to benefits. WP39 (cycle-16 review): short cards in place of the concern / inclusion / benefit matrix. WP175 (doc 04 4.3 C8 map): one card for each pain in C2, in rank order (data-relieves), then the
+       gain creator: P1 earnings tracked (mentoring, placement support and 12-month outcome tracking in the standard inclusions; results measured against the agreed scorecard: PD-01, PD-02, PD-11); P2 independent evidence
+       (the BIGD trial of CodersTrust's WSDFM program, and independent evaluation welcome on new programs: RC-01, PD-08; WP44 had made this card the pilot scorecard, which the first card and the risk-reversal band state);
+       P3 accountability as delivery expands (monthly reports and quarterly reviews, PD-08); the gain creator is the SDG-mapped reporting, co-branded certificates and events (PD-18), which was the third card's second sentence
+       (WP49). How It Works in Three Steps follows the cards (restored from 7c37339c^). -->
+  <Tone cmf="C8">
+    <IncludesBand
+      title="What Your Cohort Grant Gets"
+      cards={[
+        {
+          icon: 'target',
+          title: 'Mentoring, Placement Support and Outcome Tracking',
+          text: `Three months of mentoring and placement support are standard inclusions, and outcomes are tracked for ${TRACKING_MONTHS} months after each course. Results are measured against the agreed scorecard, including first paid work, not attendance alone.`,
+          painId: 'P1',
+          facts: ['PD-01', 'PD-02', 'PD-11'],
+        },
+        {
+          icon: 'badge-check',
+          // WP175 DRAFT: owner approval pending (the title; doc 04 4.3 C8 map: "You can fund a model with independent evidence and add your own evaluation"). The sentence is doc 04's feature cell, without the evaluator's
+          // name: the track-record band names it once, and the benefit cards do not (WP44, tests/wp35.spec.ts).
+          title: 'A Model with Independent Evidence',
+          text: 'A randomized trial of CodersTrust’s WSDFM program, and independent evaluation welcome on new programs.',
+          painId: 'P2',
+          facts: ['RC-01', 'PD-08'],
+        },
+        {
+          icon: 'file-check',
+          title: 'Progress You Can See Every Month',
+          text: 'Monthly reports and quarterly reviews keep progress visible.',
+          painId: 'P3',
+          facts: ['PD-08'],
+        },
+        {
+          icon: 'leaf',
+          title: 'SDG-Mapped Reporting',
+          text: 'Where agreed, SDG-mapped reporting follows your CSR framework, with co-branded certificates and events.',
+          facts: ['PD-18'],
+        },
+      ]}
+      scope={PROGRAM_SCOPE_STATEMENT}
+    />
+    <HowItWorks steps={STEPS} />
+  </Tone>
 
-  <!-- C8 · Features to benefits. WP39 (cycle-16 review): three short cards in place of the concern / inclusion / benefit matrix, in the order of the three pains in C2 (grants buy hours, rarely earnings; independent evidence is
-       hard to find; accountable implementers are hard to find). The fourth row (SDG-mapped reporting, co-branded certificates and events, "Added Benefit") joins the reporting card as its second sentence, so nothing it said is lost.
-       Each sentence rests on the register: PD-01 and PD-02 (mentoring and placement support; outcome tracking for 12 months after each course, in the standard inclusions), PD-11 (the pilot scorecard; WP44: the second card is the scorecard, not the WSDFM trial, because it describes a deliverable), PD-08 (monthly reports and the quarterly steering review) and PD-18 (SDG-mapped reporting, co-branded certificates and events).
-       WP49 (cycle-24 review): the third card no longer lists the scorecard (the first two cards, the Accountability callout and the agenda state it) or the contracting entity and due-diligence documents (the Due Diligence band states them), so its facts are PD-08 and PD-18. -->
-  <IncludesBand
-    title="What Your Cohort Grant Gets"
-    cards={[
-      {
-        icon: 'target',
-        title: 'Mentoring, Placement Support and Outcome Tracking',
-        text: `Three months of mentoring and placement support are standard inclusions, and outcomes are tracked for ${TRACKING_MONTHS} months after each course. Results are measured against the agreed scorecard, including first paid work, not attendance alone.`,
-        facts: ['PD-01', 'PD-02', 'PD-11'],
-      },
-      {
-        icon: 'badge-check',
-        title: 'A Pilot Scorecard Agreed with You',
-        text: 'Cost per completer and per verified outcome, with thresholds agreed before the first cohort starts.',
-        facts: ['PD-11'],
-      },
-      {
-        icon: 'file-check',
-        title: 'Progress You Can See Every Month',
-        text: 'Monthly reports and quarterly reviews keep progress visible. Where agreed, SDG-mapped reporting follows your CSR framework, with co-branded certificates and events.',
-        facts: ['PD-08', 'PD-18'],
-      },
-    ]}
-    scope={PROGRAM_SCOPE_STATEMENT}
-  />
+  <!-- C9 · Objections, with the due-diligence view (governance and the grantee's legal form, ID-12; WP34, cycle-11 review: one item and a link stand in for the four diligence cards). WP175: it sat between the offer and the call to action. -->
+  <Tone cmf="C9">
+    <FAQBand
+      audience="foundations"
+      ids={FAQ_IDS}
+      title="Questions About Cohort Grants"
+    />
+    <DueDiligenceView brief id="due-diligence"><Fact id="ID-12" /></DueDiligenceView>
+  </Tone>
 
-  <!-- C9 · Objections -->
-  <FAQBand
-    audience="foundations"
-    ids={FAQ_IDS}
-    title="Questions About Cohort Grants"
-  />
+  <!-- C10 · Differentiation (WP175, owner decision of 2026-11-28): the short band, doc 04 4.3's USPs 1 to 3; no comparison table (WP47). -->
+  <Tone cmf="C10"><DifferenceBand usps={['evidence', 'earners', 'credential']} /></Tone>
 
-  <!-- C10 · Differentiation: the positioning statement opens C6; the comparison table is on Home and Investors only (WP30c). -->
+  <!-- C11 · Offer: the two funding routes -->
+  <Tone cmf="C11">
+    <OfferCards
+      id="cohort-grants"
+      eyebrow="Funding Route 1 · YouthWIDE Cohort Grants"
+      title="Choose Where to Start Your Cohort Grant"
+      lead={PROGRAM_SIZES_NOTE}
+      cards={funderOptionCards()}
+      recommended={0}
+    />
+    <SubBand tone="airy" pull id="platform-grants">
+      <Callout eyebrow="Funding Route 2 · JobReady Platform Grants">
+        <!-- WP91 (triage A4): the sentence before the register line says the program sizes above are for cohort grants only, so the platform grant reads as the other route. -->
+        <p data-fact="IN-04">The program sizes above apply to cohort grants only. A platform grant supports JobReady’s infrastructure and staged rollout, not cohorts.</p>
+      </Callout>
+    </SubBand>
+  </Tone>
 
-  <!-- C11 · Offer -->
-  <OfferCards
-    id="cohort-grants"
-    eyebrow="Funding Route 1 · YouthWIDE Cohort Grants"
-    title="Choose Where to Start Your Cohort Grant"
-    lead={PROGRAM_SIZES_NOTE}
-    cards={funderOptionCards()}
-    recommended={0}
-  />
-  <SubBand tone="airy" pull id="platform-grants">
-    <Callout eyebrow="Funding Route 2 · JobReady Platform Grants">
-      <!-- WP91 (triage A4): the sentence before the register line says the program sizes above are for cohort grants only, so the platform grant reads as the other route. -->
-      <p data-fact="IN-04">The program sizes above apply to cohort grants only. A platform grant supports JobReady’s infrastructure and staged rollout, not cohorts.</p>
-    </Callout>
-  </SubBand>
-
-  <!-- C12 · Risk reversal (immediately before C13): WP34 (cycle-11 review): the four diligence cards repeated what this page's bands state, so one item and a link stand in. WP45 (cycle-21 review) left a "Reporting and Review" callout
-       after it; WP48 (cycle-23 review): that callout is gone, because its sentence (monthly reports track progress; quarterly reviews guide corrective action and any expansion) repeated the "Progress You Can See Every Month"
-       card above (monthly reports and a quarterly steering review). The due-diligence item links to Governance and Accountability. -->
-  <DueDiligenceView brief id="due-diligence"><Fact id="ID-12" /></DueDiligenceView>
+  <!-- C12 · Risk reversal, immediately before C13 (WP175: restored; RiskReversalBand had been removed in WP17, 948453bd, and the "Reporting and Review" callout in WP48). Doc 04 4.3 C12: pilot first, the scorecard,
+       expansion the funder's decision; "an independent evaluation can be budgeted separately" is the default "Independent Evaluation Welcome" point. -->
+  <Tone cmf="C12">
+    <RiskReversalBand title="Start with a Pilot, Then Decide on Evidence" />
+  </Tone>
 
   <!-- C13 · Call to action. WP166-B (marketing review R3-39): the reassurance line ("A discovery session is a conversation, not a commitment.") the other route pages carry. -->
-  <CTABand
-    id="cta"
-    heading="Let’s Explore a Funding Partnership"
-    cta={{ label: primary.label, href: primary.href }}
-    secondary={report}
-    micro={MICRO_COMMITMENT}
-  >
-    <!-- WP34 (cycle-11 review): the funders here choose a cohort grant or a platform grant, so the line says what is discussed for each (the cohort-only discovery-session agenda is on the pages that sell cohorts). It is said once; the band below does not repeat it. -->
-    <SessionAgenda lead="foundations" />
-  </CTABand>
+  <Tone cmf="C13">
+    <CTABand
+      id="cta"
+      heading="Let’s Explore a Funding Partnership"
+      cta={{ label: primary.label, href: primary.href }}
+      secondary={report}
+      micro={MICRO_COMMITMENT}
+    >
+      <!-- WP34 (cycle-11 review): the funders here choose a cohort grant or a platform grant, so the line says what is discussed for each (the cohort-only discovery-session agenda is on the pages that sell cohorts). It is said once; the band below does not repeat it. -->
+      <SessionAgenda lead="foundations" />
+    </CTABand>
+  </Tone>
 
   <!-- C14 · Next steps -->
   <!-- WP46 (cycle-22 review): the band has the same four steps as Development Partners, scoped "For cohort grants." (a platform grant is scoped in the discovery session, which the C13 agenda above says). WP32 (cycle-9 review) had left the band
        without steps and kept the cohort timing in the C13 urgency line; the steps now carry that timing (training starts 6–8 weeks after signing), so the urgency line that repeated it is gone, as on Development Partners.
        The "introductory call" sentence is gone with the stepless band: the page names one first step, the discovery session. -->
-  <NextStepsBand lead="For cohort grants, the steps below show target timing for grant-funded pilots." timing={false} />
-  <Reinforcement logos={false} reminder={false} />
+  <Tone cmf="C14">
+    <NextStepsBand lead="For cohort grants, the steps below show target timing for grant-funded pilots." timing={false} />
+    <Reinforcement logos={false} reminder={false} />
+  </Tone>
 
   <PageEnhancements />
 </LandingLayout>

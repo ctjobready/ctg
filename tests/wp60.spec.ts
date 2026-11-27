@@ -533,7 +533,8 @@ test.describe('GM5 (Gemini): Governments’ "Capacity Designed to Stay in Your S
   test('the card text is "Where included: ..." and keeps its list and facts; the other two "What Your Agency Gets" cards are unchanged', async ({ page }) => {
     await open(page, GOVERNMENTS);
     const cards = page.locator('main section:has(h2:text-is("What Your Agency Gets")) li');
-    expect(await cards.locator('.card__title').allTextContents()).toEqual(['Certification Preparation and Placement Support', 'Spending Measured Against Outcomes', 'Capacity Designed to Stay in Your System']);
+    // WP175 (owner decision of 2026-11-28: CMF C8 names the gain creators after the relievers): the gain creator "Access to Work Beyond the Local Market" (doc 04 4.2) follows the three cards
+    expect(await cards.locator('.card__title').allTextContents()).toEqual(['Certification Preparation and Placement Support', 'Spending Measured Against Outcomes', 'Capacity Designed to Stay in Your System', 'Access to Work Beyond the Local Market']);
     const card = cards.nth(2);
     expect(compact(await card.locator('.card__text').textContent())).toBe(
       'Where included: curriculum and manuals; CodersTrust-trained facilitators; and blended learning in existing labs that works with limited connectivity, so rural labs can take part.',
@@ -562,7 +563,7 @@ test.describe('GM7 (Gemini): Home’s "Our Approach" is one sentence that keeps 
   const STATEMENT = 'CodersTrust connects training, mentoring and placement support for educated, unemployed and underemployed youth, with monthly reports on progress toward paid work.';
 
   // WP166-A (marketing review R1-03): Home no longer prints the statement ("Our Approach" repeated the hero lead and the definition), so the gate no longer declares it for Home; the source keeps the one sentence
-  test('the statement is the one sentence in the source; Home prints none and the gate no longer declares one for Home (WP166-A)', async ({ page }) => {
+  test('the statement is the crafted one in the source and the gate (WP175); Home prints it, not the WP166-A-era sentence', async ({ page }) => {
     // WP175 (owner decision Q5 of 2026-11-28: Home carries a crafted statement again; package A renders it, and scripts/check-facts.mjs holds Home pending until then): the crafted statement replaces the one-sentence form (two sentences, each under 50 words), on PD-01 and RC-01
     expect(POSITIONING.home.text).toBe('Funders and governments want young people in paid work, not only trained. CodersTrust takes each learner the whole way, from training and mentoring to placement support, with outcome evidence that includes an independent randomized trial of its own training.');
     expect(POSITIONING.home.facts).toEqual(['PD-01', 'RC-01']);
@@ -575,8 +576,10 @@ test.describe('GM7 (Gemini): Home’s "Our Approach" is one sentence that keeps 
     expect(gate).toContain("const POSITION_PENDING_PAGES = ['/', '/partner-with-us/investors/'];");
     expect(/const POSITION_EMPLOYER_CLOSING = \{([\s\S]*?)\n\};/.exec(gate)?.[1] ?? '').not.toMatch(/^\s*'\/':/m);
     await open(page, HOME);
-    await expect(page.locator('#mechanism .pos, #mechanism .pos__text')).toHaveCount(0);
+    // WP175 (package A): Home prints the crafted statement, once, first in C6; the earlier audience sentence and the WP60 sentence stay off the page
+    await expect(page.locator('#mechanism .pos__text')).toHaveText(POSITIONING.home.text);
     expect(compact(await page.locator('main').textContent())).not.toContain('For funders who need educated, unemployed youth in paid digital work');
+    expect(compact(await page.locator('main').textContent())).not.toContain(STATEMENT);
   });
 });
 

@@ -24,12 +24,16 @@ test.describe('Contact: the inquiry fallback names both addresses (item 1)', () 
 });
 
 test.describe('Foundations: the second card is the scorecard and the approach is one whole statement (items 2 and 3)', () => {
-  test('the features card is "A Pilot Scorecard Agreed with You" with the scorecard sentence, and the card is not the WSDFM trial', async ({ page }) => {
+  // WP175 (owner decision of 2026-11-28: CMF C8 relieves each pain 1:1): the second card relieves "Independent Evidence Is Hard to Find" again (doc 04 4.3: the trial of CodersTrust's WSDFM program, independent evaluation
+  // welcome on new programs); the scorecard is the first card's ("measured against the agreed scorecard") and the risk-reversal band's; the predecessor-program heading stays gone (tests/wp35.spec.ts)
+  test('the second features card relieves the independent-evidence pain (WP175; WP44 had made it "A Pilot Scorecard Agreed with You"), and the predecessor-program heading stays gone', async ({ page }) => {
     await open(page, 'partner-with-us/foundations/');
-    const card = page.locator('#features li.card', { has: page.locator('h3', { hasText: 'A Pilot Scorecard Agreed with You' }) });
-    await expect(card).toHaveCount(1);
-    await expect(card.locator('.card__text')).toHaveText('Cost per completer and per verified outcome, with thresholds agreed before the first cohort starts.');
+    await expect(page.locator('#features li.card', { has: page.locator('h3', { hasText: 'A Pilot Scorecard Agreed with You' }) })).toHaveCount(0);
+    const card = page.locator('#features li.card').nth(1);
+    await expect(card).toHaveAttribute('data-relieves', 'P2');
+    await expect(card.locator('.card__text')).toHaveText('A randomized trial of CodersTrust’s WSDFM program, and independent evaluation welcome on new programs.');
     await expect(page.locator('#features')).not.toContainText('Independent Evidence on the Predecessor Program');
+    await expect(page.locator('#features li.card').first()).toContainText('Results are measured against the agreed scorecard');
   });
 
   test('"Our Approach" is exactly the declared whole statement, rests on IN-04, PD-01, PD-08 and PD-11, and opens the band', async ({ page }) => {
@@ -96,9 +100,12 @@ test.describe('NU Post Graduate Diploma: one admissions sentence in the FAQ (ite
 
 test.describe('Development Partners: the guide band has no empathy line (item 8)', () => {
   // WP51 (cycle-26 review, Kimi P2): the opening line is the shared origin line, "Since 2014, from a Copenhagen launch to work in 16 countries and territories." (it was the launch alone, "Launched in Copenhagen in 2014.")
-  test('the band opens with the origin line and carries no lead paragraph', async ({ page }) => {
+  // WP175 (owner decision Q2 (a) of 2026-11-28: every C5 opens with an empathy line): the band opens with a fresh empathy line (EMPATHY.developmentPartners), one lead paragraph, then the origin line; the doc 04 line
+  // this item removed stays gone
+  test('the band opens with its one empathy line (WP175), then the origin line; the retired doc 04 line stays gone', async ({ page }) => {
     await open(page, 'partner-with-us/development-partners/');
-    await expect(page.locator('#guide p.lead')).toHaveCount(0);
+    await expect(page.locator('#guide p.lead')).toHaveCount(1);
+    await expect(page.locator('#guide p.lead')).toHaveText('You are accountable for youth employment results across a portfolio of programs.');
     expect(compact(await page.locator('#guide').textContent())).not.toContain('You need more than enrollment numbers');
     await expect(page.locator('#guide .pg__origin').first()).toHaveText('From a Copenhagen launch to work across Asia, Africa, Europe and the Americas.'); // WP150: the tile carries the 16; // WP64 rework RW2 (coordinator): the heading says "Since 2014", so the line does not
   });

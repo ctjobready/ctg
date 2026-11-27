@@ -219,7 +219,9 @@ test.describe('WP127 item 2: no serial comma on any built page, meta description
 
 // The strings the review named, and the others the sweep changed by hand (lists whose items hold "and" are rewritten, not just un-commaed).
 const PAGE_TEXT: [string, string][] = [
-  ['index.html', 'Start with a multi-cohort pilot, agree the scorecard up front and decide on expansion from the evidence.'],
+  // WP175 (owner decision of 2026-11-28: CMF v3, C1 to C14; Q1 (a)): the closing band's line ("Start with a multi-cohort pilot, agree the scorecard up front and decide on expansion from the evidence.") is gone with WP48's
+  // stand-in: Home's risk-reversal band (C12) is back, headed with the same pilot-then-evidence message; the site-wide serial-comma scan above still covers every page
+  ['index.html', 'Start with a Multi-Cohort Pilot, Then Decide on Evidence'],
   ['programs/youthwide/index.html', 'Missed thresholds trigger a corrective plan, expansion is your decision and independent evaluation is welcome.'],
   ['our-model/jobready-platform/index.html', 'Train. Youth learn through courses, including preparation for industry certification where a track offers one. Connect to Work. Learners reach local, remote and global work.'], // WP166-B (marketing review R2): the four-jobs sentence is now four labelled jobs (it read "train youth through courses, ...; connect learners to local, remote and global work; supply employers ...; and give institutions ...")
   ['accessibility/index.html', 'Please tell us the page, what you were trying to do and the device or assistive technology you use.'],

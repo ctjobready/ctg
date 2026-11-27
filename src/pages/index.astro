@@ -30,6 +30,14 @@
 // Gone: the Cost of Waiting band (its two findings are in the problem band, PX-06 and RC-06 unchanged), Imagine the Next 12 Months (R1-14), the self-paced comparison (R1-15), What a Supported Youth Cohort Includes (R1-17),
 // "Our Approach" (R1-03: the hero lead now names the buyer and the reporting) and the launch story in the track-record band (R1-05: About tells it). No register sentence is reworded; register text was moved or cut.
 // Band grounds (Tone): hero, white, carousel, airy, white, ice, airy, white, ice, white, Klein, airy, so no two neighbors share a ground and no two dark bands touch.
+// WP175 (owner decisions of 28 November 2026: every conversion page follows CMF v3, C1 to C14, in order and coverage; Q1 (a): the 2026-11-28 rules supersede the WP166-A orders and cuts). Home is fifteen bands:
+//   C1 hero, with its proof cards and the funders' logo row (Q6 (a): a declared C1 exception, recorded in doc 06 P1) · GEO What Is CodersTrust? · RESULTS "Results You Can Check" and ROUTER (recorded rows before C2)
+//   C2–C4 the problem band, declared compressed (WP166-A R1-07 and R1-14), closing with the C3 transition line · C5 the track record, moved up from after C7: empathy, ORIGIN in one line, the authority, then the
+//   method line (METHOD.home, said once on the page; the mechanism band no longer prints its TalentLEAP line) · C6 One Path, opening with POSITIONING.home (Q5) · C7 Proof in Practice, led by the one-line trial
+//   lead (Q3 (a)), and the learner stories · C8 "What a Supported Youth Cohort Includes" restored (R1-17 superseded): one card per funder pain in rank order, a gain creator, How It Works in Three Steps ·
+//   C9 Questions Partners Ask, moved back before the offer · C10 What Makes CodersTrust Different (#difference) · C11 the offer · C12 "Start with a Multi-Cohort Pilot, Then Decide on Evidence" restored
+//   (WP48 had made its line the closing band's text) · C13 the closing call to action · C14 What Happens Next.
+// Band grounds: hero, white, carousel, airy, white, airy, ice, airy, white, ice, white, ice, airy, Klein, airy, so no two neighbors share a ground and no two dark bands touch.
 import LandingLayout from '../layouts/LandingLayout.astro';
 import HeroSlider from '../components/sections/HeroSlider.astro';
 import HomeHero from '../components/pages/home/HomeHero.astro';
@@ -52,7 +60,31 @@ import { caseStudyItems } from '../components/pages/home/caseStudies';
 import { WORLD_STRIP } from '../data/globalStrip';
 import { HOME_SLIDES } from '../data/heroSlides';
 import GainsPains from '../components/pages/partners/GainsPains.astro';
-import { C14, FUNDER_PAINS, HOME_META, MICRO_COMMITMENT, NEXT_STEPS_TITLE, PROGRAM_SCOPE_STATEMENT, PROGRAM_SIZES_NOTE, painForList } from '../data/copy';
+import IncludesBand from '../components/sections/IncludesBand.astro';
+import FeatureSteps from '../components/pages/home/FeatureSteps.astro';
+import DifferenceBand from '../components/sections/DifferenceBand.astro';
+import RiskReversalBand from '../components/sections/RiskReversalBand.astro';
+import {
+  C14,
+  C3_TRANSITION,
+  EMPATHY,
+  FUNDER_PAINS,
+  HOME_META,
+  METHOD,
+  MICRO_COMMITMENT,
+  NEXT_STEPS_TITLE,
+  POSITIONING,
+  PROGRAM_SCOPE_STATEMENT,
+  PROGRAM_SIZES_NOTE,
+  STEPS,
+  TRIAL_LEAD,
+  USPS,
+  originShortUnder,
+  painForList,
+  painForRow,
+  type IncludesCard,
+  type Usp,
+} from '../data/copy';
 import { fact } from '../data/facts';
 import { freelancePostingsFinding } from '../components/sections/copyText';
 import { cta } from '../lib/mailto';
@@ -102,6 +134,44 @@ const sessionPromise = { text: `${MICRO_COMMITMENT} It covers your country and p
 /** WP166-A (R1-20): IN-02's own words for YouthWIDE, the program the three sizes belong to. */
 const youthwide = /: (the program through which funders deploy the CodersTrust model in a country)\./.exec(fact('IN-02').text)?.[1];
 if (!youthwide) throw new Error('Home: IN-02 no longer reads "...: the program through which funders deploy the CodersTrust model in a country."; update the offer band');
+
+/**
+ * WP175 (C5, Q2 (a)): the track record's one-line ORIGIN. The hero's reach card and the world strip state the count of countries and territories (SC-03), so the line names the regions instead
+ * (originShortUnder's `tile` form, as on Development Partners, WP150): "From a Copenhagen launch to work across Asia, Africa, Europe and the Americas."
+ */
+const GUIDE_HEADING = 'We’ve Built This Path Since 2014';
+const origin = originShortUnder(GUIDE_HEADING, { tile: true });
+
+/**
+ * WP175 (C8, owner decision Q1 (a) of 2026-11-28, which supersedes WP166-A R1-17): "What a Supported Youth Cohort Includes" is back, one card for each funder pain in rank order (doc 06 "Funder pain model",
+ * FUNDER_PAINS), then one gain creator. The cards are the band's own words before WP166-A (cecff71c^), except that the first card leaves the training hours and the work-entry plan to the mechanism band's
+ * "What We Deliver" card, where R1-17 put them, so no sentence is printed twice. The gain creator is doc 06's readiness assessment (PD-14): the credential gain creator would repeat C10's
+ * credential line. The page's one scope sentence stays in the mechanism band (WP141), so this band has none.
+ */
+const includes: IncludesCard[] = [
+  { painId: painForRow(FUNDER_PAINS, 'P1').painId, icon: 'route', title: 'Training, Mentoring and Placement Support', text: 'Three months of milestone-based mentoring and placement support after training.', facts: ['PD-15', 'PD-01'] },
+  // WP58 (cycle-30 review, Claude S10): "Progress You Can Check", a reporting plan, not results.
+  { painId: painForRow(FUNDER_PAINS, 'P2').painId, icon: 'clipboard-check', title: 'Progress You Can Check', text: 'Monthly reports show progress toward paid work.', facts: ['PD-08'] },
+  { painId: painForRow(FUNDER_PAINS, 'P3').painId, icon: 'briefcase', title: 'Tracks Chosen from Employer Demand', text: 'A curriculum designed to follow the skills employers ask for as entry-level tasks change.', facts: ['PD-02', 'PD-10'] },
+  // WP175 DRAFT: owner approval pending. Gain creator (doc 06 P1 C8, "accessible readiness assessment → The right career or foundation track"); the title is doc 06's outcome cell, the sentence PD-14's own words.
+  { icon: 'compass', title: 'The Right Career or Foundation Track', text: 'A readiness assessment, a written test and an interview guide selection and placement into a career or foundation track.', facts: ['PD-14'] },
+];
+
+/**
+ * WP175 (C8d): How It Works in Three Steps, the shared STEPS. The mechanism band's "What We Deliver" card states the training hours (R1-17), so step 2 leaves the figure to it (one statement per fact, doc 04 §4)
+ * and opens "Training, then ..."; the build stops if STEPS[1] stops opening with the hours clause.
+ */
+const HOURS_CLAUSE = /^\d+ training hours per certification, including exam preparation, then /;
+if (!HOURS_CLAUSE.test(STEPS[1].text)) throw new Error('Home: STEPS[1] no longer opens "<hours> training hours per certification, including exam preparation, then"; update the steps');
+// WP175 DRAFT: owner approval pending (step 2 without its hours clause).
+const steps = [STEPS[0], { title: STEPS[1].title, text: STEPS[1].text.replace(HOURS_CLAUSE, 'Training, then ') }, STEPS[2]];
+
+/**
+ * WP175 (C10): USP 3 on Home. The shared line ends "..., with exam terms set per program." (USPS.credential); Home names no exam terms (WP142: its one scope sentence covers inclusions and reporting only, and the page
+ * states no exam fee or attempt), so it prints the line's first clause, which makes no exam-terms claim to qualify. The heading is the shared one.
+ */
+// WP175 DRAFT: owner approval pending (the shared USP 3 line without its exam-terms clause).
+const homeCredential: Usp = { title: USPS.credential.title, text: 'Each track includes preparation for an industry certification exam.', facts: USPS.credential.facts };
 ---
 
 <LandingLayout title={HOME_META.title} titleSuffix={false} description={HOME_META.description} jsonLd={jsonLd} stickyCta={{ label: discovery.label, href: discovery.href }}>
@@ -117,19 +187,29 @@ if (!youthwide) throw new Error('Home: IN-02 no longer reads "...: the program t
   <!-- 4. WP47 (owner decision 2026-10-15): the role router sits directly after the Results carousel, where a reader can reach their audience page sooner. -->
   <Tone cmf="ROUTER"><HomeRouter id="router" /></Tone>
 
-  <!-- 5. The problem, with the two research findings that prove pains 2 and 3 (WP166-A, R1-07). -->
-  <Tone cmf="C2">
-    <ProblemBand id="problem" title="Education Alone Is Not Leading to Jobs" bluf={problemBluf} factIds={['PX-01', 'PX-02']}>
+  <!-- 5. C2–C4, declared compressed (WP166-A R1-07 and R1-14; WP175): the problem, with the two research findings that prove pains 2 and 3, closing with the C3 transition line. -->
+  <Tone cmf="C2-C4 (compressed)">
+    <ProblemBand id="problem" title="Education Alone Is Not Leading to Jobs" bluf={problemBluf} factIds={['PX-01', 'PX-02']} transition={C3_TRANSITION}>
       <GainsPains slot="lead" painsHeading="What Gets in the Way" pains={homePains} />
     </ProblemBand>
   </Tone>
 
-  <!-- 6. One Path from Learning to Earning: the four cards (the "What We Deliver" card states the training hours), the model and TalentLEAP links, and the page's one program-scope sentence (WP166-A, R1-03, R1-17, R1-18). -->
-  <Tone cmf="C6" tone="ice"><HomeMechanism id="mechanism" title="One Path from Learning to Earning" tone="white" link={{ label: 'How Our Model Works', href: '/our-model/' }} method scope={PROGRAM_SCOPE_STATEMENT} /></Tone>
+  <!-- 6. C5, the track record and recognition in one band (WP166-A, R1-05, R1-19), directly after the problem (WP175): the empathy line, the one-line origin, the signed agreements, the rest of the logo wall, AWS and
+       HolonIQ, the world strip (WP55, owner global positioning: New York, 16 countries and territories, ending on Bangladesh), then the method line, the band's last line. -->
+  <Tone cmf="C5">
+    <HomeGuide id="guide" empathy={EMPATHY.home} origin={origin} method={METHOD.home}>
+      <HomeRecognition id="recognition" />
+      <WorldStrip tiles={WORLD_STRIP} level={3} id="world" class="guide__world" />
+    </HomeGuide>
+  </Tone>
 
-  <!-- 7. Proof in Practice and the learner stories. WP37/WP51: the program-results slide of the carousel states the figures, so the three cards show delivery context and none repeats a figure. -->
+  <!-- 7. C6, One Path from Learning to Earning: the positioning statement first (WP175, Q5), the four cards (the "What We Deliver" card states the training hours), the model link and the page's one program-scope
+       sentence (WP166-A, R1-17). The TalentLEAP line (R1-18) is C5's last line now. -->
+  <Tone cmf="C6" tone="ice"><HomeMechanism id="mechanism" title="One Path from Learning to Earning" tone="white" positioning={POSITIONING.home} link={{ label: 'How Our Model Works', href: '/our-model/' }} scope={PROGRAM_SCOPE_STATEMENT} /></Tone>
+
+  <!-- 8. C7, Proof in Practice and the learner stories, led by the one-line trial lead (WP175, Q3 (a)). WP37/WP51: the program-results slide of the carousel states the figures, so the three cards show delivery context and none repeats a figure. -->
   <Tone cmf="C7" join>
-    <CaseStudyCarousel id="cases" eyebrow="Case Studies" title="Proof in Practice" items={caseStudyItems}>
+    <CaseStudyCarousel id="cases" eyebrow="Case Studies" title="Proof in Practice" lead={TRIAL_LEAD.text} items={caseStudyItems}>
       <a slot="more" class="link" href={caseStudies.href}>See All Case Studies<Icon name="arrow-right" size={16} /></a>
       <a slot="more" class="link" href={trialResults.href}>Read the Trial Results<Icon name="arrow-right" size={16} /></a>
       <a slot="more" class="link" href={surveyResults.href}>Impact Survey 2026<Icon name="arrow-right" size={16} /></a>
@@ -138,29 +218,33 @@ if (!youthwide) throw new Error('Home: IN-02 no longer reads "...: the program t
     <LearnerJourneys id="journeys" tone="airy" />
   </Tone>
 
-  <!-- 8. Track record and recognition in one band (WP166-A, R1-05, R1-19): the signed agreements, the rest of the logo wall, AWS and HolonIQ, and the world strip (WP55, owner global positioning: New York, 16 countries and territories, ending on Bangladesh). -->
-  <Tone cmf="C5" tone="white">
-    <HomeGuide id="guide">
-      <HomeRecognition id="recognition" />
-      <WorldStrip tiles={WORLD_STRIP} level={3} id="world" class="guide__world" />
-    </HomeGuide>
+  <!-- 9. C8 (WP175, restored): one card per funder pain in rank order and a gain creator, then How It Works in Three Steps (STEPS, with its facts), one block: the steps band joins the cards band. -->
+  <Tone cmf="C8" join>
+    <IncludesBand id="features" title="What a Supported Youth Cohort Includes" cards={includes} />
+    <FeatureSteps steps={steps} programs={false} />
   </Tone>
 
-  <!-- 9. The offer, naming YouthWIDE (WP166-A, R1-20). -->
-  <Tone cmf="C11" tone="ice"><HomeOffer id="offer" lead={PROGRAM_SIZES_NOTE} program={`This is YouthWIDE, ${youthwide}.`} /></Tone>
-
-  <!-- 10. Questions Partners Ask, after the offer they defend (WP166-A, R1-08). -->
-  <Tone cmf="C9" tone="white">
+  <!-- 10. C9, Questions Partners Ask (WP175: before the offer again, C9 → C10 → C11). -->
+  <Tone cmf="C9">
     <FAQBand id="faq" audience="home" ids={FAQ_IDS} title="Questions Partners Ask" allLink={{ label: 'Find the Answers for Your Route', href: '/partner-with-us/#audiences' }} />
   </Tone>
 
-  <!-- 11. The closing call to action (WP166-A, R1-01): the button, then what the discovery session covers, then the government and investor routes and the email fallback. -->
+  <!-- 11. C10, What Makes CodersTrust Different (WP175): doc 04 4.1's USPs 1 and 3. USP 2 restates the carousel's survey-timing line and USP 4 the mechanism band's "How We Reach Them" card, so they are left out;
+       USP 3 is the page's own form, without the exam terms (homeCredential). -->
+  <Tone cmf="C10"><DifferenceBand usps={['evidence']} items={[homeCredential]} /></Tone>
+
+  <!-- 12. C11, the offer, naming YouthWIDE (WP166-A, R1-20). -->
+  <Tone cmf="C11" tone="ice"><HomeOffer id="offer" lead={PROGRAM_SIZES_NOTE} program={`This is YouthWIDE, ${youthwide}.`} /></Tone>
+
+  <!-- 13. C12 (WP175, restored from 9b09303a^): the risk reversal, directly before the call to action, with the band's default points (pilot review, scorecard thresholds, the funder's decision, independent evaluation). -->
+  <Tone cmf="C12" tone="airy"><RiskReversalBand id="risk" title="Start with a Multi-Cohort Pilot, Then Decide on Evidence" /></Tone>
+
+  <!-- 14. C13, the closing call to action (WP166-A, R1-01): the button, then what the discovery session covers, then the government and investor routes and the email fallback. WP175: the risk line WP48 put here is C12's again. -->
   <Tone cmf="C13">
     <CTABand
       id="cta"
       tone="klein"
       heading="Let’s Design Your First Cohort"
-      text="Start with a multi-cohort pilot, agree the scorecard up front and decide on expansion from the evidence."
       cta={{ label: discovery.label, href: discovery.href }}
       promise={sessionPromise}
       routes={[
@@ -170,7 +254,7 @@ if (!youthwide) throw new Error('Home: IN-02 no longer reads "...: the program t
     />
   </Tone>
 
-  <!-- 12. What Happens Next. The 6–8 week start is stated in the "First cohort" step only (doc 04 §4, one statement per fact). -->
+  <!-- 15. C14, What Happens Next. The 6–8 week start is stated in the "First cohort" step only (doc 04 §4, one statement per fact). -->
   <Tone cmf="C14">
     <ConversionNextSteps
       id="next-steps"
