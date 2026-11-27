@@ -20,9 +20,17 @@
 // founder and leadership entries, a directory in the middle of the platform story; the link was the closing band's secondary action). The mechanism band is headed "How JobReady Connects Learning to Work" (it was "A Multi-Sided
 // Model: Learn, Earn, Prosper"). The one-sentence platform band ("The Platform": "How JobReady Builds on Delivery") is gone: the evidence block above ends "Youth-program outcomes are not platform outcomes." and "What JobReady Does"
 // (#features, which the first FAQ answer links) states what is live, in pre-launch and planned.
+// WP175 (owner decisions of 28 November 2026: every conversion page follows CMF v3, C1 to C14, in order and coverage; tests/wp175-investors.spec.ts): nothing is reordered against doc 06 P8 any more. The thesis (C2–C3,
+// declared) states its three pains as P1 to P3 and ends with the C3 transition line; the vision (C4) comes before the track record (C5; WP24a had put credibility first); the track record opens with an empathy line and
+// ends with the TalentLEAP method line (Q2 (a)); the mechanism band opens with the crafted statement for impact investors (POSITIONING.investors, Q5; WP39 had removed the page's statement); the evidence band leads C7
+// with the one-line trial lead (Q3 (a)) and "Contracts and Recognition" follows it; "What JobReady Does" has one card per thesis pain in its order (painId), the gain creator "Equip Partner Institutions" (doc 04 4.4:
+// distribution through institutions) and "How It Works in Three Steps" (Learn → Earn → Prosper, doc 04 4.4); C10 is the short "What Makes CodersTrust Different" band (USPs 1 and 4, doc 04 4.4); and the offer (C11),
+// the restored risk reversal (C12, c0ef1e7c^), the call to action with doc 04's micro-commitment (C13) and the four next steps with the first action (C14, out of the offer band) each say their part once.
 import LandingLayout from '../../../layouts/LandingLayout.astro';
 import HeroBand from '../../../components/sections/HeroBand.astro';
 import IncludesBand from '../../../components/sections/IncludesBand.astro';
+import RiskReversalBand from '../../../components/sections/RiskReversalBand.astro';
+import DifferenceBand from '../../../components/sections/DifferenceBand.astro';
 import CTABand from '../../../components/ui/CTABand.astro';
 import Icon from '../../../components/system/Icon.astro';
 import Tone from '../../../components/pages/home/Tone.astro';
@@ -36,7 +44,10 @@ import InvestorReach from '../../../components/pages/investors/InvestorReach.ast
 import InvestorFit from '../../../components/pages/investors/InvestorFit.astro';
 import InvestorOffer from '../../../components/pages/investors/InvestorOffer.astro';
 import FaqBlock from '../../../components/pages/hub/FaqBlock.astro';
-import { DELIVERY_MODEL, HEADLINE, PROGRAM_SCOPE_COHORT_INCLUSIONS, VALUE_PROPOSITION } from '../../../data/copy';
+import HowItWorks from '../../../components/pages/partners/HowItWorks.astro';
+import StepsBand from '../../../components/pages/partners/StepsBand.astro';
+import Reinforcement from '../../../components/pages/partners/Reinforcement.astro';
+import { DELIVERY_MODEL, HEADLINE, POSITIONING, PROGRAM_SCOPE_COHORT_INCLUSIONS, VALUE_PROPOSITION } from '../../../data/copy';
 import { cta } from '../../../lib/mailto';
 import { faqJsonLd } from '../../../lib/faq';
 import { linkAttrs } from '../../../lib/url';
@@ -53,27 +64,42 @@ const investor = cta('investor');
 // Q11-investor (WP39, cycle-16 review): the live / pre-launch / planned list is "What JobReady Does" directly above, so the answer points there; the shared Q11 (Employers, JobReady@Work, the platform page) keeps the list.
 // WP166-B (marketing review R3-33): the platform question (Q11-investor, "see What JobReady Does above") is gone; the band above it answers it.
 const FAQ_IDS = ['Q5', 'Q2-investor'];
-const jsonLd = [webPage({ path, name: title, description, dateModified: '2026-11-27' }), faqJsonLd('investors', path, FAQ_IDS)]; // WP172 (owner decision 2026-11-27: the trial figures are the published study's, Arman et al. 2026): the evidence line says 10 percentage points. Earlier: WP166-B (marketing review R3: the hero, the NU partnership subheading, the due-diligence and thesis lines, the leadership line, the platform question cut; 2026-11-21). WP163 (owner answers of 3 November 2026): the hero, "What JobReady Does" and the platform question carry no live, pre-launch, planned or roadmap label (2026-11-03). WP161-A (adversarial review A-07): WebPage.name is the title without the site-name suffix, like the other route pages. WP151 (the "Not a Fit Yet" clause and the thesis body changed; 2026-11-02). Earlier: WP108: the page states no "last updated" date; its dateModified is the day SC-02's detail was reworded
+const jsonLd = [webPage({ path, name: title, description, dateModified: '2026-11-28' }), faqJsonLd('investors', path, FAQ_IDS)]; // WP175 (owner decisions of 2026-11-28: CMF v3 on this page; the statement, the empathy line, the transition line, the trial lead, the restored risk and next-steps bands). Earlier: WP172 (owner decision 2026-11-27: the trial figures are the published study's, Arman et al. 2026): the evidence line says 10 percentage points. Earlier: WP166-B (marketing review R3: the hero, the NU partnership subheading, the due-diligence and thesis lines, the leadership line, the platform question cut; 2026-11-21). WP163 (owner answers of 3 November 2026): the hero, "What JobReady Does" and the platform question carry no live, pre-launch, planned or roadmap label (2026-11-03). WP161-A (adversarial review A-07): WebPage.name is the title without the site-name suffix, like the other route pages. WP151 (the "Not a Fit Yet" clause and the thesis body changed; 2026-11-02). Earlier: WP108: the page states no "last updated" date; its dateModified is the day SC-02's detail was reworded
 
 // "What JobReady Does" (WP40, cycle-17 review): three cards, one for each job the platform does for a reader of this page: learning, paid work, institutions. The status words are the register's (IN-04: "Live today: partner
 // portals, marketing automation, customer relationship management and AI chat. In pre-launch: the employer marketplace and the gig-work marketplace."; IN-06: personalized and adaptive learning is roadmap;
 // IN-08: "Competent is the first level; Proficient and Expert are planned"), and the two marketplaces are named as two (tests/wp25s.spec.ts). "marketplaces such as Upwork and Fiverr" keeps the old row's "such as": placement
 // does not run through these two alone.
 // WP163 (owner answers of 3 November 2026): the cards say what JobReady offers, with no status words (IN-04, IN-06 and IN-08 no longer carry them); the Learn card states the delivery model once (DELIVERY_MODEL).
+// WP175 (C8b, C8c; doc 04 4.4 C8 map): one card per thesis pain, in the thesis order (InvestorThesis, data-pain P1 to P3), then the gain creator. P1 (young people need work and employers need skills) is met by
+// "Connect to Paid Work" (the marketplaces and the placement team, doc 04's P1 row); P2 (AI skills in rising demand) by the AI-ready curriculum (doc 04's AI row: PD-02, PD-10); P3 (connect learning to paid work) by
+// "Learn Through TalentLEAP" (doc 04's "skills to income" row: TalentLEAP, mentoring, certification preparation and placement support). "Equip Partner Institutions" carries no painId: it is the gain creator doc 04 names
+// (distribution through institutions that get a digital delivery platform, IN-04).
 const includes = [
+  {
+    icon: 'briefcase',
+    title: 'Connect to Paid Work',
+    text: 'The employer marketplace and the gig-work marketplace connect learners to paid work, and an AI career coach guides them on careers, interviews and portfolios. Placement also runs through CodersTrust’s placement team and marketplaces such as Upwork and Fiverr.',
+    painId: 'P1',
+    facts: ['IN-04'],
+  },
+  {
+    icon: 'cpu',
+    // WP175 DRAFT: owner approval pending. A new card for the thesis's AI pain (doc 04 4.4: "AI-ready curriculum in every track; tracks chosen from employer demand"), in words the site already prints: the Employers AI card's
+    // "An AI-ready curriculum, designed to prepare people to work with AI tools" and its first card's "tracks chosen from employer demand" (PD-02, PD-10).
+    title: 'An AI-Ready Curriculum',
+    text: 'An AI-ready curriculum, designed to prepare people to work with AI tools, in tracks chosen from employer demand.',
+    painId: 'P2',
+    facts: ['PD-02', 'PD-10'],
+  },
   {
     icon: 'graduation-cap',
     title: 'Learn Through TalentLEAP',
     // WP64 (cycle-36 review, Claude): the same sentence as the TalentLEAP page's opening. WP163: "Its levels run from Competent to Proficient and Expert." (it said "The first published TalentLEAP level is Competent; Proficient and Expert levels are planned.").
     // WP166-B (marketing review R3-24): the delivery-model sentence is the lead of "How JobReady Connects Learning to Work" (How It Works), not in this card.
     text: `TalentLEAP’s levels run from Competent to Proficient and Expert, with AI-driven personalized and adaptive learning paths. Supported cohorts include mentoring, certification exam preparation and placement support. ${PROGRAM_SCOPE_COHORT_INCLUSIONS}`,
+    painId: 'P3',
     facts: ['IN-06', 'IN-08', 'PD-01', 'PD-02', 'IN-04'],
-  },
-  {
-    icon: 'briefcase',
-    title: 'Connect to Paid Work',
-    text: 'The employer marketplace and the gig-work marketplace connect learners to paid work, and an AI career coach guides them on careers, interviews and portfolios. Placement also runs through CodersTrust’s placement team and marketplaces such as Upwork and Fiverr.',
-    facts: ['IN-04'],
   },
   {
     icon: 'building-2',
@@ -82,6 +108,15 @@ const includes = [
     facts: ['IN-04'],
   },
 ];
+// WP175 (C8d): "How It Works in Three Steps", doc 04 4.4's Learn → Earn → Prosper (TalentLEAP, ID-06), in its words.
+const investorSteps = [
+  { title: 'Learn', text: 'Competency development through certification-focused courses.' },
+  { title: 'Earn', text: 'Employment or freelance work with mentoring and placement support.' },
+  { title: 'Prosper', text: 'Career advancement along graduated levels.' },
+];
+// WP175 (C14): the four next steps (they were the offer band's cards since WP24a), by title only: what each step holds is said once, in the offer (C11) and the risk reversal (C12) above. The first action closes the band.
+const nextSteps = [{ title: 'Introduction Call' }, { title: 'NDA' }, { title: 'Deck and Data Room' }, { title: 'Your Questions' }];
+const FIRST_ACTION = 'Your first step: an introduction call. In your inquiry, include two suitable times for it.';
 const rollout = linkAttrs('/our-model/jobready-platform/');
 const mechanismBlocks = [
   { label: 'Learn', title: 'Courses, Supported Cohorts and University Programs', text: 'AI-ready digital skills, with preparation for industry certification where a track offers one.', icon: 'graduation-cap' },
@@ -108,17 +143,17 @@ const mechanismBlocks = [
 
   <Tone cmf="C2-C3 (compressed)"><InvestorThesis id="thesis" /></Tone>
 
-  <Tone cmf="C5"><InvestorGuide id="guide" /></Tone>
-
+  <!-- WP175: the vision (C4) before the track record (C5), in CMF order (doc 06 P8: "nothing is reordered"); WP24a had put credibility before the vision. -->
   <Tone cmf="C4"><InvestorVision id="vision" /></Tone>
 
+  <Tone cmf="C5"><InvestorGuide id="guide" /></Tone>
+
   <Tone cmf="C6">
-    <!-- WP166-B (marketing review R3-24): the band's lead is the page's one delivery-model sentence (it was in the "Learn Through TalentLEAP" card). -->
-    <HomeMechanism id="mechanism" tone="airy" eyebrow="The Model" title="How JobReady Connects Learning to Work" lead={DELIVERY_MODEL.text} blocks={mechanismBlocks} link={{ label: 'How Our Model Works', href: '/our-model/' }} />
+    <!-- WP166-B (marketing review R3-24): the band's lead is the page's one delivery-model sentence (it was in the "Learn Through TalentLEAP" card). WP175 (Q5): the crafted statement for impact investors opens the band. -->
+    <HomeMechanism id="mechanism" tone="airy" eyebrow="The Model" title="How JobReady Connects Learning to Work" positioning={POSITIONING.investors} lead={DELIVERY_MODEL.text} blocks={mechanismBlocks} link={{ label: 'How Our Model Works', href: '/our-model/' }} />
   </Tone>
 
-  <Tone cmf="C7"><InvestorReach id="reach" /></Tone>
-  <!-- WP36 (cycle-13 review): the evidence is three sentences and the links; the case studies are one link, "Case Studies", in the same row. -->
+  <!-- WP36 (cycle-13 review): the evidence is three sentences and the links; the case studies are one link, "Case Studies", in the same row. WP175 (Q3 (a)): the evidence band leads C7 with the one-line trial lead, and "Contracts and Recognition" follows it. -->
   <Tone cmf="C7">
     <InvestorEvidence
       id="proof-band"
@@ -128,24 +163,45 @@ const mechanismBlocks = [
         { label: 'Case Studies', href: '/impact/case-studies/' },
       ]}
     />
+    <InvestorReach id="reach" />
   </Tone>
 
   <Tone cmf="C8">
     <IncludesBand id="features" title="What JobReady Does" cards={includes}>
       <a slot="more" class="link" href={rollout.href}>See the Platform Capabilities<Icon name="arrow-right" size={16} /></a>
     </IncludesBand>
+    <HowItWorks steps={investorSteps} />
   </Tone>
 
   <Tone cmf="C9"><FaqBlock id="faq" audience="investors" ids={FAQ_IDS} tone="ice" title="Questions Investors Ask" eyebrow="Fit and Objections"><InvestorFit /></FaqBlock></Tone>
 
-  <!-- C10 · Differentiation: WP34 (cycle-11 review) swapped the approaches comparison for one statement ("How JobReady Builds on Delivery"); WP43 (cycle-20 review) removed that band: the evidence block above it ends "Youth-program outcomes are not platform outcomes."
-       and "What JobReady Does" (the live, pre-launch and planned status) is the platform statement, so the page goes from the questions to the offer. -->
+  <!-- C10 · Differentiation (WP175): the short band, USPs 1 and 4 (doc 04 4.4), statements about CodersTrust with no comparison of approaches; WP34 and WP43 had removed the page's comparison and its one-sentence successor. -->
+  <Tone cmf="C10"><DifferenceBand usps={['evidence', 'infrastructure']} /></Tone>
 
   <Tone cmf="C11"><InvestorOffer id="offer" /></Tone>
 
-  <!-- WP43 (cycle-20 review): the "Meet the Leadership Team" link that was this band's secondary action is in the track-record band (#guide), where the leadership entries were. -->
+  <!-- C12 · Risk reversal (WP175, restored from c0ef1e7c^; doc 04 4.4 and doc 06 P8: "Start with a conversation, not a commitment"), directly before the call to action. Its two points are the reassurances the offer band's
+       steps carried (the call commits neither side; you decide whether to continue) and the NDA that comes before the deck. -->
+  <Tone cmf="C12">
+    <RiskReversalBand
+      id="risk"
+      title="Start with a Conversation, Not a Commitment"
+      points={[
+        { icon: 'phone', title: 'The Call Does Not Commit Either Side', text: 'You choose whether to continue after the call.' },
+        { icon: 'file-lock', title: 'An NDA Comes First', text: 'An NDA is in place before the deck and data room are shared.' },
+      ]}
+    />
+  </Tone>
+
+  <!-- WP43 (cycle-20 review): the "Meet the Leadership Team" link that was this band's secondary action is in the track-record band (#guide), where the leadership entries were. WP175: doc 04 4.4's micro-commitment line. -->
   <Tone cmf="C13">
-    <CTABand id="cta" tone="klein" heading="Let’s Talk About Backing the Platform" cta={{ label: investor.label, href: investor.href }} />
+    <CTABand id="cta" tone="klein" heading="Let’s Talk About Backing the Platform" cta={{ label: investor.label, href: investor.href }} micro="An introduction call comes first; the deck follows under NDA." />
+  </Tone>
+
+  <!-- C14 · Next steps (WP175): the four steps and the first action, after the call to action (they sat in the offer band since WP24a). -->
+  <Tone cmf="C14">
+    <StepsBand title="What Happens After You Ask" lead="Four steps, at your pace." steps={nextSteps} />
+    <Reinforcement firstAction={FIRST_ACTION} logos={false} reminder={false} />
   </Tone>
 
 </LandingLayout>

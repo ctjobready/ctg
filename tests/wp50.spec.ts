@@ -234,10 +234,12 @@ test.describe('Universities: the track-record band opens with the origin line; J
   // WP52 (cycle-27 review): the sentence is "Help students prepare for paid digital work and build placement evidence from your campus cohorts." (it read "You see capable students finish their degrees and still struggle to find work, and you are asked for placement results you cannot yet show.")
   const CAMPUS_SENTENCE = 'A degree alone does not show employers what students can do, and without follow-up data an institution cannot show where its students start earning.';
 
-  test('the Universities partner page’s band opens with "Since 2014, ..." and has no empathy line', async ({ page }) => {
+  // WP175 (owner decision Q2 (a) of 2026-11-28: every C5 opens with an empathy line, each page its own fresh line): the band opens with EMPATHY.universities (not the line WP50 retired), then the origin line
+  test('the Universities partner page’s band opens with its WP175 empathy line, then the origin line', async ({ page }) => {
     await open(page, UNI);
-    await expect(page.locator('#guide p.lead')).toHaveCount(0);
-    expect(compact(await page.locator('#guide .pg__copy > :first-child').textContent())).toBe(ORIGIN_LINE);
+    await expect(page.locator('#guide p.lead')).toHaveCount(1);
+    expect(compact(await page.locator('#guide .pg__copy > :first-child').textContent())).toBe(EMPATHY.universities);
+    expect(compact(await page.locator('#guide .pg__copy > :nth-child(2)').textContent())).toBe(ORIGIN_LINE);
     expect(await everything(page)).not.toContain(CAMPUS_SENTENCE);
   });
 
@@ -508,8 +510,10 @@ test.describe('Home: the trial slide (items 17 and 18)', () => {
 test.describe('Investors: the Next Steps lead (item 19)', () => {
   test('the lead is "Four steps, at your pace."; the editorial sentence is on no page', async ({ page }) => {
     await open(page, INVEST);
-    expect(compact(await page.locator('#offer .sh__lead').textContent())).toBe('Four steps, at your pace.');
-    await expect(page.locator('#offer ol > li')).toHaveCount(4);
+    // WP175 (owner decision of 2026-11-28: the four steps are the C14 band, after the call to action): the lead and the four steps are in #next-steps now
+    expect(compact(await page.locator('#next-steps .sh__lead').textContent())).toBe('Four steps, at your pace.');
+    await expect(page.locator('#next-steps .steps__item')).toHaveCount(4);
+    await expect(page.locator('#offer ol > li')).toHaveCount(0);
     expect(sitePages().filter((p) => visible(p.html).includes('This page covers the thesis and results only')).map((p) => p.route)).toEqual([]);
   });
 });

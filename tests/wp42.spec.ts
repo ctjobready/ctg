@@ -107,16 +107,17 @@ test.describe('Investors: the delivered figures lead the track-record band (item
     expect(await mainText(page)).not.toContain('Reach to Date');
   });
 
-  test('the band order is unchanged (guide, vision, mechanism, reach, evidence, features) and no two dark bands touch', async ({ page }) => {
+  // WP175 (owner decision of 2026-11-28: CMF v3 in order): the vision (C4) before the track record (C5), and the evidence band leading C7 with "Contracts and Recognition" after it
+  test('the band order follows CMF (vision, guide, mechanism, evidence, reach, features) and no two dark bands touch', async ({ page }) => {
     await open(page, URL);
     const list = await bands(page);
     const ids = list.map((b) => b.id);
     for (const id of ['definition', 'thesis', 'guide', 'vision', 'mechanism', 'reach', 'proof-band', 'features', 'faq']) expect(ids, id).toContain(id);
     const at = (id: string) => ids.indexOf(id);
-    expect(at('guide')).toBeLessThan(at('vision'));
-    expect(at('vision')).toBeLessThan(at('mechanism'));
-    expect(at('mechanism')).toBeLessThan(at('reach'));
-    expect(at('reach')).toBe(at('proof-band') - 1);
+    expect(at('vision')).toBeLessThan(at('guide'));
+    expect(at('guide')).toBeLessThan(at('mechanism'));
+    expect(at('mechanism')).toBeLessThan(at('proof-band'));
+    expect(at('reach')).toBe(at('proof-band') + 1);
     for (let i = 1; i < list.length; i++) expect(list[i].dark && list[i - 1].dark, `bands ${list[i - 1].id} and ${list[i].id}`).toBe(false);
   });
 
@@ -159,7 +160,7 @@ test.describe('Local Partners: the evidence is a two-line strip (item 2)', () =>
     await expect(band.locator('h2')).toHaveText('Evidence from Our Wider Youth Programs');
     expect('Evidence from Our Wider Youth Programs').toBe(titleCase('Evidence from Our Wider Youth Programs'));
     expect(await texts(page, '#proof p.lead')).toEqual([TRIAL, SURVEY]);
-    expect(await page.locator('#proof p.lead').evaluateAll((els) => els.map((e) => e.getAttribute('data-fact')))).toEqual(['RC-02', 'OC-01']);
+    expect(await page.locator('#proof p.lead').evaluateAll((els) => els.map((e) => e.getAttribute('data-fact')))).toEqual(['RC-01 RC-02', 'OC-01']); // WP175 (owner decision Q3 (a) of 2026-11-28): the trial line is the shared trial lead (TRIAL_LEAD, the same words), held to RC-01 beside RC-02
     expect(await texts(page, '#proof nav a')).toEqual(['The Randomized Trial', 'Impact Survey 2026']);
     expect((await hrefs(page, '#proof nav a')).map(sitePath)).toEqual(['/impact/independent-evaluation/', '/impact/outcomes-2026/']);
     // one line each: no tile, chart, table or list

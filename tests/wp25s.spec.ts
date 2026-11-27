@@ -277,13 +277,16 @@ test.describe('Partner with Us', () => {
     expect(text.split('scoped against the experience and credentials available').length - 1).toBeLessThanOrEqual(3);
   });
 
-  test('Employers: proof comes before the features table, as on every other audience page (WP31: the proof is the delivery record for employers)', async ({ page }) => {
+  // WP175 (owner decision Q3 (a) of 2026-11-28; doc 04 4.6 C7: [RCT] with the [TRIAL-SCOPE] line): the proof is the trial band again (#proof-band, it was the two-link strip #offer-evidence), still between the mechanism
+  // band and the features
+  test('Employers: proof comes before the features table, as on every other audience page (WP175: the trial band with its relevance line)', async ({ page }) => {
     await open(page, 'partner-with-us/employers/');
     const order = await page.evaluate(() => Array.from(document.querySelectorAll('main section[id]')).map((s) => s.id));
-    expect(order.indexOf('offer-evidence'), 'delivery record band').toBeGreaterThan(-1);
+    expect(order.indexOf('proof-band'), 'trial band').toBeGreaterThan(-1);
+    expect(order.indexOf('offer-evidence'), 'the two-link strip it replaced').toBe(-1);
     expect(order.indexOf('features'), 'features').toBeGreaterThan(-1);
-    expect(order.indexOf('offer-evidence')).toBeLessThan(order.indexOf('features'));
-    expect(order.indexOf('mechanism')).toBeLessThan(order.indexOf('offer-evidence'));
+    expect(order.indexOf('proof-band')).toBeLessThan(order.indexOf('features'));
+    expect(order.indexOf('mechanism')).toBeLessThan(order.indexOf('proof-band'));
   });
 
   test('Foundations: one chooser, one naming scheme, measured against first paid work', async ({ page }) => {

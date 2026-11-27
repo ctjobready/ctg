@@ -133,13 +133,19 @@ test.describe('G2 (GPT-6.1 Sol; Kimi K1): the Employers and JobReady@Work track-
 
   // WP166-B (marketing review R3-06, R3-29): the band is headed "Employers and Partners We Work With", so the origin line keeps "Since 2014" (it read "From a Copenhagen launch ..." under "We’ve Built This Path
   // Since 2014"), and the TalentLEAP method line closes How It Works instead of following the origin line ("Our TalentLEAP method organizes skills into career paths. How TalentLEAP Works").
-  test('Employers: the band opens with the origin line (WP166-B: the method line is at the end of How It Works); the delivered figure and the logo strip stay', async ({ page }) => {
+  // WP175 (owner decision Q2 (a) of 2026-11-28: every C5 runs empathy → ORIGIN → authority → method): the band opens with its own fresh empathy line (not the line WP61 retired) and ends with JobReady@Work's method line
+  // (needs assessment, IN-10); How It Works no longer prints the TalentLEAP line (the method is said once, and JobReady@Work is not the TalentLEAP path, WP161 A-37)
+  test('Employers: the band opens with its WP175 empathy line and the origin line, and ends with the JobReady@Work method line; the delivered figure and the logo strip stay', async ({ page }) => {
     await open(page, EMPLOYERS);
-    await expect(page.locator('#guide p.lead')).toHaveCount(0);
+    await expect(page.locator('#guide p.lead')).toHaveCount(1);
     expect(await page.locator('#guide .pg__copy').evaluate((el) => Array.from(el.children).map((c) => (c.textContent ?? '').replace(/\s+/g, ' ').trim()))).toEqual([
+      EMPATHY.employers,
       'From a Copenhagen launch to work in 16 countries and territories.', // WP166-B (marketing review R3-06): Employers' band is headed "Employers and Partners We Work With"; its signed-agreement sentence carries "since 2014" (WP66), so the origin line is the year-less one it printed before ("since 2014" once in the band, WP64)
     ]);
-    expect(compact(await page.locator('#mechanism .emp__method').textContent())).toBe('Our TalentLEAP method organizes skills into career paths.');
+    expect(EMPATHY.employers).not.toBe('You have roles to fill and teams that need AI skills for their daily work.');
+    expect(compact(await page.locator('#guide .pg__method--last').textContent())).toBe('JobReady@Work builds each program around a needs assessment.');
+    await expect(page.locator('#mechanism .emp__method')).toHaveCount(0);
+    expect(compact(await page.locator('#mechanism').textContent())).not.toContain('Our TalentLEAP method');
     await expect(page.locator('#guide .factstat[data-fact="SC-15"]')).toHaveCount(1);
     await expect(page.locator('#guide section.partners')).toHaveCount(1);
   });

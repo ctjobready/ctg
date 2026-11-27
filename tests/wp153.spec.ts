@@ -111,7 +111,9 @@ test.describe('3 "In parallel with / alongside academic studies" stays where it 
     const text = main(UNIVERSITIES);
     // WP166-B (marketing review R3-29): the TalentLEAP line and its link moved from the track-record band to the end of How It Works, after the "In Parallel with the Degree" card and the
     // Learn. Earn. Prosper. ribbon (it read "Our TalentLEAP method organizes skills into career paths. How TalentLEAP Works" in the track-record band).
-    expect(text).toContain('with professional internships where employer placements are available. Our TalentLEAP method organizes skills into career paths. Learn. Earn. Prosper. How TalentLEAP Works');
+    // WP175 (owner decision Q2 (a) of 2026-11-28: the method line closes C5): the TalentLEAP line and its link close the track-record band again, after its logos, and How It Works ends with its ribbon and program link
+    expect(text).toContain('with professional internships where employer placements are available. Learn. Earn. Prosper. About JobReady@Campus');
+    expect(text).toContain('These are working relationships, not endorsements. Our TalentLEAP method organizes skills into career paths. How TalentLEAP Works How It Works JobReady@Campus: Training Alongside the Degree');
     expect(text).not.toContain('JobReady@Campus runs training in parallel with academic studies');
     // WP155 (Polish 4): the approach line no longer repeats the idea ("... in campus labs." then the monthly reports); the "In Parallel with the Degree" card is the one place on the page that states it.
     expect(text).toContain('Universities and colleges want degree holders who move into paid work, and placement results they can stand behind. JobReady@Campus runs in their own campus labs and adds certification exam preparation, mentoring and placement support to the degree, with monthly reports on each cohort.');

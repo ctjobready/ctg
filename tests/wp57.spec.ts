@@ -228,15 +228,16 @@ test.describe('G7, Employers: "Due Diligence in One View" is three rows without 
     expect(await texts(page, '#due-diligence .ddv__title')).toEqual(['Contracting Entities', 'Monthly Reports and Follow-Up Surveys', 'Safeguarding Agreed per Program', 'Independent Evaluation Welcome']);
   });
 
-  test('"Independent Evaluation Welcome" is on the Employers page no times (WP166-B: the pilot-team band’s card is gone); "Broader Evidence from Our Youth Programs" still links the trial and the survey', async ({ page }) => {
+  // WP175 (owner decision Q3 (a) of 2026-11-28): the two-link strip ("Broader Evidence from Our Youth Programs", #offer-evidence) is the trial band now (#proof-band), which links the same two pages
+  test('"Independent Evaluation Welcome" is on the Employers page no times (WP166-B: the pilot-team band’s card is gone); the trial band links the trial and the survey', async ({ page }) => {
     await open(page, EMPLOYERS);
     const main = compact(await page.locator('main').textContent());
     // WP166-B (marketing review R3-32): no times (it was once, the pilot-team band's card).
     expect(main.split('Independent Evaluation Welcome').length - 1).toBe(0);
     expect(await texts(page, '#risk h3')).not.toContain('Independent Evaluation Welcome');
     await expect(page.locator('#risk h2')).toHaveText('Start with a Pilot Team, Then Decide on Evidence');
-    await expect(page.locator('#offer-evidence h2')).toHaveText('Broader Evidence from Our Youth Programs');
-    expect(await texts(page, '#offer-evidence a')).toEqual(['The Randomized Trial', 'Impact Survey 2026']);
+    await expect(page.locator('#offer-evidence')).toHaveCount(0);
+    expect(await texts(page, '#proof-band a')).toEqual(['The Randomized Trial', 'Impact Survey 2026']);
   });
 
   // WP166-B (marketing review R3-32): one card now (it was three: three columns at 1280, two with the third across the row at 900, stacked at 390). The rule this test holds is unchanged: no cell is
@@ -584,18 +585,23 @@ test.describe('R2, the 30,000+ visibly includes Her Power’s national program (
 test.describe('R5, Universities: "Choose Where to Start" is one line, with no size cards', () => {
   // WP135 (Opus High run 10, Polish 3): the one-line band ("Start with One Campus", #offer) is folded into the pilot band: its line is the first point of "A Pilot Comes First".
   // The no-size-cards guarantee stays; the band and its anchor are gone (tests/wp135.spec.ts). WP133 headed the band "Start with One Campus"; WP132: was "...are set in the discovery session."
-  const LINE = 'Start with one campus; cohort size, tracks and labs are agreed in co-design.';
+  // WP175 (owner decision of 2026-11-28: CMF v3, every page keeps C11): the one-line band is back (dee46ac1^): "Start with One Campus" and its one line, no cards, no button; the pilot band's first point is its dee46ac1^ line
+  const LINE = 'Cohort size, tracks and labs are agreed in co-design.';
   const UNIVERSITIES = 'partner-with-us/universities/';
 
-  test('no separate start band (no #offer); the pilot band carries the one line; no cards, no size, no recommendation', async ({ page }) => {
+  test('the start band (#offer) is its heading and one line; no cards, no size, no recommendation; the pilot band does not repeat the line', async ({ page }) => {
     await open(page, UNIVERSITIES);
-    await expect(page.locator('#offer')).toHaveCount(0);
+    await expect(page.locator('#offer')).toHaveCount(1);
+    await expect(page.locator('#offer h2')).toHaveText('Start with One Campus');
+    expect(compact(await page.locator('#offer .sh__lead').textContent())).toBe(LINE);
+    await expect(page.locator('#offer article, #offer li, #offer a, #offer .btn')).toHaveCount(0);
     const pilot = page.locator('.risk__item', { hasText: 'A Pilot Comes First' });
     await expect(pilot).toHaveCount(1);
     expect(compact(await pilot.locator('h3').textContent())).toBe('A Pilot Comes First');
-    expect(compact(await pilot.locator('p').textContent())).toBe(LINE);
+    expect(compact(await pilot.locator('p').textContent())).toBe('Start with a first campus program and see its results.');
     const main = compact(await page.locator('main').textContent());
-    for (const gone of ['1,000', '2,500', 'Recommended First Step', 'Multi-Cohort Pilot Program', 'Option 1', 'Option 2', 'Start with One Campus']) expect(main, gone).not.toContain(gone);
+    for (const gone of ['1,000', '2,500', 'Recommended First Step', 'Multi-Cohort Pilot Program', 'Option 1', 'Option 2']) expect(main, gone).not.toContain(gone);
+    expect(main.split(LINE).length - 1, 'the line once').toBe(1);
     expect(LINE.endsWith('.')).toBe(true);
   });
 

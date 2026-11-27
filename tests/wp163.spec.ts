@@ -327,6 +327,7 @@ test.describe(`5. every page whose visible text changed says ${TODAY}`, () => {
   // WP175 (owner decision Q5 of 2026-11-28: the crafted C6 statement) moved it to 2026-11-28: the ten pages whose statement changed (Investors, TalentLEAP and the Platform page keep theirs)
   const WP175_DAY = '2026-11-28';
   const WP175 = new Set([YOUTHWIDE, CAMPUS, WORK, DEV, UNIVERSITIES, LOCAL, GOVERNMENTS, FOUNDATIONS, EMPLOYERS]);
+  WP175.add(INVESTORS); // WP175 package B (owner decisions of 2026-11-28: CMF v3 on Investors, its statement, empathy and transition lines and the restored bands) moved Investors to 2026-11-28
   const dayOf = (rel: string) => (WP175.has(rel) ? WP175_DAY : WP172.has(rel) ? WP172_DAY : rel === WORK || rel === EMPLOYERS ? WP168B_DAY : WP166B_DAY);
   const longOf = (rel: string) => (dayOf(rel) === WP175_DAY ? 'November 28, 2026' : dayOf(rel) === WP172_DAY ? 'November 27, 2026' : dayOf(rel) === WP168B_DAY ? 'November 24, 2026' : 'November 21, 2026');
   for (const [rel, cls] of STAMPED) {

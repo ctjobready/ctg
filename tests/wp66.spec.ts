@@ -224,7 +224,7 @@ test.describe('About, Careers and Local Partners: the SC-11 tile', () => {
   test('Local Partners: the authority row’s first tile is "70+" with the new label (its heading does not say the period, so the label keeps it) and the breakdown; the learners tile follows', async ({ page }) => {
     await open(page, LOCAL);
     await expect(page.locator('#guide h2')).toHaveText('Delivered with a Bangladesh Team Beside You');
-    const tiles = page.locator('#guide .guide__stats .factstat');
+    const tiles = page.locator('#guide .pg__stats .factstat'); // WP175: the band is PartnerGuideBand now (it was GuideBand), so the tiles sit in .pg__stats
     expect(await tiles.evaluateAll((els) => els.map((e) => e.getAttribute('data-fact')))).toEqual(['SC-11', 'SC-01']);
     const tile = tiles.first();
     await expect(tile.locator('.stat__value')).toHaveText('70+');

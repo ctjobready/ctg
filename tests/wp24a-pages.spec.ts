@@ -13,7 +13,8 @@ async function texts(page: Page, selector: string): Promise<string[]> {
 test.describe('Investors page structure', () => {
   const URL = 'partner-with-us/investors/';
 
-  test('credibility ("A Record Built Since 2014") comes before the vision', async ({ page }) => {
+  // WP175 (owner decision of 2026-11-28: CMF v3 in order, doc 06 P8 "nothing is reordered"): the vision (C4) comes before the track record ("A Record Built Since 2014", C5); WP24a had put credibility first
+  test('the vision (C4) comes before the track record ("A Record Built Since 2014", C5)', async ({ page }) => {
     await page.goto(URL);
     const order = await page.evaluate(() => {
       const idx = (id: string) => Array.from(document.querySelectorAll('main [id]')).findIndex((e) => e.id === id);
@@ -21,7 +22,7 @@ test.describe('Investors page structure', () => {
     });
     expect(order.guide, 'guide band exists').toBeGreaterThan(-1);
     expect(order.vision, 'vision band exists').toBeGreaterThan(-1);
-    expect(order.guide, 'guide before vision').toBeLessThan(order.vision);
+    expect(order.vision, 'vision before guide').toBeLessThan(order.guide);
   });
 
   test('program results are on the case studies the evidence band links, not on this page (WP36: the three case-study cards are one "Case Studies" link)', async ({ page }) => {
@@ -51,11 +52,19 @@ test.describe('Investors page structure', () => {
     expect(order.partners, 'the institutions come before the link to the leadership team').toBeLessThan(order.leadership);
   });
 
-  test('the offer is one four-step sequence: no separate low-risk band, no second next-steps band', async ({ page }) => {
+  // WP175 (owner decision of 2026-11-28: CMF v3, C11 to C14 each in its own band; doc 06 P8): the offer band is the offer again (the introduction call, the deck and data room under NDA), and the risk reversal (#risk, C12)
+  // and the four steps (#next-steps, C14, after the call to action) are their own bands, each once
+  test('the offer, the risk reversal and the four next steps are one band each, around the call to action', async ({ page }) => {
     await page.goto(URL);
-    await expect(page.locator('#offer ol > li')).toHaveCount(4);
-    await expect(page.locator('#risk')).toHaveCount(0);
-    await expect(page.locator('#next-steps')).toHaveCount(0);
+    await expect(page.locator('#offer li.card')).toHaveCount(2);
+    await expect(page.locator('#offer ol > li')).toHaveCount(0);
+    await expect(page.locator('#risk')).toHaveCount(1);
+    await expect(page.locator('#next-steps')).toHaveCount(1);
+    await expect(page.locator('#next-steps .steps__item')).toHaveCount(4);
+    const ids = await page.evaluate(() => Array.from(document.querySelectorAll('main section.band[id]')).map((s) => s.id));
+    const at = ['offer', 'risk', 'cta', 'next-steps'].map((id) => ids.indexOf(id));
+    expect(at, 'offer, risk, call to action, next steps').toEqual([...at].sort((a, b) => a - b));
+    expect(Math.min(...at)).toBeGreaterThan(-1);
   });
 
   test('no stray "Programs since 2014." sentence or founder sentence beside the founder cards', async ({ page }) => {

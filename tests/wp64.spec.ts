@@ -382,8 +382,9 @@ test.describe('Item 7 (GLM, Gemini, Claude): three polish fixes', () => {
       'TalentLEAP organizes learning around skill units that are assessed, not around hours attended alone. Levels run from Competent to Proficient and Expert, and three months of milestone-based mentoring follow the course.',
     );
     await open(page, INVESTORS);
-    await expect(page.locator('#features li.card').first().locator('h3')).toHaveText('Learn Through TalentLEAP');
-    expect(await texts(page, '#features li.card:nth-child(1) p')).toEqual([`TalentLEAP’s levels run from Competent to Proficient and Expert, with AI-driven personalized and adaptive learning paths. Supported cohorts include mentoring, certification exam preparation and placement support. Cohort inclusions on this page are agreed in each program’s scope.`]); // WP142: the page's one scope sentence follows the cohort-inclusions sentence
+    // WP175 (owner decision of 2026-11-28: the cards follow the thesis pains): "Learn Through TalentLEAP" relieves P3, so it is the third card (its words are unchanged)
+    await expect(page.locator('#features li.card').nth(2).locator('h3')).toHaveText('Learn Through TalentLEAP');
+    expect(await texts(page, '#features li.card:nth-child(3) p')).toEqual([`TalentLEAP’s levels run from Competent to Proficient and Expert, with AI-driven personalized and adaptive learning paths. Supported cohorts include mentoring, certification exam preparation and placement support. Cohort inclusions on this page are agreed in each program’s scope.`]); // WP142: the page's one scope sentence follows the cohort-inclusions sentence
     expect(pagesWith('Competent is the published first level; Proficient and Expert are planned')).toEqual([]);
     expect(fact('IN-08').text).toContain('Competent is the first level; Proficient and Expert are planned');
   });

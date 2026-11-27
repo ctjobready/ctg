@@ -553,9 +553,11 @@ test.describe('Home: the low-risk band, the FAQ trial answer, the hero line, the
 });
 
 test.describe('Investors and Development Partners (items 25 and 27)', () => {
-  test('the Investors thesis band ends with its three cards; the stakes line is gone', async ({ page }) => {
+  // WP175 (owner decision of 2026-11-28: a declared C2–C3 band ends with the C3 transition line): the three cards are followed by the transition line; the stakes line stays gone
+  test('the Investors thesis band ends with the transition line after its three cards; the stakes line is gone', async ({ page }) => {
     await open(page, 'partner-with-us/investors/');
-    expect(await page.locator('#thesis .container > :last-child').getAttribute('class')).toContain('grid-cards');
+    expect(await page.locator('#thesis .container > :last-child').getAttribute('class')).toContain('th__transition');
+    expect(await page.locator('#thesis .container > :nth-last-child(2)').getAttribute('class')).toContain('grid-cards');
     await expect(page.locator('#thesis .th__stakes')).toHaveCount(0);
     expect(await mainText(page)).not.toContain('Every trained young person who remains out of work');
     expect(await page.locator('#thesis').evaluate((el) => parseFloat(getComputedStyle(el).paddingBottom))).toBeGreaterThanOrEqual(40);

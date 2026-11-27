@@ -12,36 +12,36 @@ import { linkAttrs } from '../../../lib/url';
  * WP49 (cycle-24 reviews): one due-diligence line under the steps, as the other route pages have theirs: it names the contracting entities as the register does (CONTRACTING_ENTITIES: ID-07, PD-13) and links Governance and Accountability;
  * the eyebrow is "Next Steps", the label the other pages give this band (it was "The Offer"; the band is a process, not an offer).
  * WP50 (cycle-25 review): the lead is "Four steps, at your pace." The sentence after it ("This page covers the thesis and results only.") read as an editorial stage direction and is gone; the page still publishes no financial terms (D2).
+ * WP175 (owner decisions of 28 November 2026: CMF v3, C11 then C12, C13 and C14 in their own bands; doc 04 4.4 C11 "The offer is the introduction call: the deck and data room follow it, under NDA"): the band is the offer
+ * again, as before WP24a (c0ef1e7c^): "What You Receive", the introduction call and the deck and data room under NDA, with the due-diligence line under them. The four steps and the first action are the page's C14
+ * band now, and the two reassurances (the call commits neither side, you decide whether to continue) its C12 band, so each is said once. The first card no longer adds "It comes first." (the call to action's
+ * micro-commitment says it).
  */
 interface Props {
   id?: string;
 }
 const { id = 'offer' } = Astro.props;
-const steps = [
-  { icon: 'phone', title: 'Introduction Call', text: 'A conversation about your funding priorities and the thesis. The call does not commit either side.' },
-  { icon: 'file-lock', title: 'NDA', text: 'An NDA is in place before the deck and data room are shared.' },
-  { icon: 'folder-open', title: 'Deck and Data Room', text: 'You receive the deck and access to the data room.' },
-  { icon: 'message-circle', title: 'Your Questions', text: 'We answer your questions and agree what comes next. You decide whether to continue.' },
+const items = [
+  { icon: 'phone', title: 'An Introduction Call', text: 'A conversation about your funding priorities and the thesis.' },
+  { icon: 'file-lock', title: 'The Deck and Data Room, Under NDA', text: 'Shared after the introduction call, under NDA.' },
 ];
 ---
 
 <Section id={id} tone="white" aria-labelledby={`${id}-h`}>
-  <SectionHeader id={`${id}-h`} eyebrow="Next Steps" title="What Happens After You Ask" lead="Four steps, at your pace." />
-  <ol class="grid-cards io" role="list">
+  <SectionHeader id={`${id}-h`} eyebrow="The Offer" title="What You Receive" />
+  <ul class="grid-cards grid-cards--2 io" role="list">
     {
-      steps.map((s, i) => (
+      items.map((it) => (
         <li class="card" data-reveal>
           <div class="card__body">
-            <Icon name={s.icon} size={36} strokeWidth={1.5} class="io__icon" />
-            <p class="eyebrow">Step {i + 1}</p>
-            <h3 class="card__title">{s.title}</h3>
-            <p class="card__text">{s.text}</p>
+            <Icon name={it.icon} size={36} strokeWidth={1.5} class="io__icon" />
+            <h3 class="card__title">{it.title}</h3>
+            <p class="card__text">{it.text}</p>
           </div>
         </li>
       ))
     }
-  </ol>
-  <p class="io__first" data-reveal>Your first step: an introduction call. In your inquiry, include two suitable times for it.</p>
+  </ul>
   {/* WP166-B (marketing review R3-35, owner approval of 21 November 2026): an investor's due-diligence line names the corporate structure (CT USA, Inc., the for-profit parent incorporated in New York, ID-12; CodersTrust Bangladesh Ltd., the country office); it said "Due diligence: CodersTrust contracts through CT USA, Inc. in the United States or CodersTrust Bangladesh Ltd. in Bangladesh." */}
   <p class="io__diligence" data-reveal data-fact="ID-07 ID-12">Due diligence: CT USA, Inc., a for-profit company incorporated in New York, is CodersTrust’s parent company; CodersTrust Bangladesh Ltd. is its country office. <a class="link" href={linkAttrs('/about/governance/').href}>Governance and Accountability<Icon name="arrow-right" size={16} /></a></p>
 </Section>
@@ -55,18 +55,8 @@ const steps = [
   .io :global(.io__icon) {
     color: var(--primary);
   }
-  .io__first {
-    margin: var(--space-lg) 0 0;
-    font-weight: var(--fw-medium);
-    color: var(--on-surface);
-  }
   .io__diligence {
-    margin: var(--space-sm) 0 0;
+    margin: var(--space-lg) 0 0;
     color: var(--on-surface-variant);
-  }
-  @media (min-width: 1024px) {
-    .io.io {
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-    }
   }
 </style>

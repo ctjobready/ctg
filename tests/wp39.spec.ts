@@ -125,11 +125,13 @@ const PAGES: PageSpec[] = [
     route: 'partner-with-us/employers/',
     h2: 'What Your Business Gets',
     cards: [
-      { title: 'Job-Ready Candidates for Your Roles', text: 'Access to candidates from CodersTrust’s placement team for your roles, plus trainees from certification tracks chosen from employer demand.', facts: ['IN-04', 'PD-10'] },
-      // WP166-B (marketing review R3-08): it was "AI Content Agreed Before Training", "An AI-ready curriculum, designed to prepare people to work with AI tools. Each track’s AI content is agreed with you before training starts." (facts PD-02 IN-10)
-      { title: 'AI Skills Scoped to Your Team’s Tasks', text: 'An AI-ready curriculum, designed to prepare people to work with AI tools, plus AI leadership and AI-transformation programs with AIvolve. Each track’s AI content is agreed with you before training starts.', facts: ['PD-02', 'IN-10', 'PA-07'] }, // WP142 (kit 109): team-training wording, no youth-cohort "work-entry plan" or "enrollment"
+      // WP175 (owner decision of 2026-11-28: C8 relieves each C2 pain 1:1, in rank order): the cards are EMPLOYER_INCLUDES, P1 to P3 (the customized curriculum answers "Hiring alone does not close the gap", P2; the
+      // AI-skills card the AI wage premium, P3), each with its pain (data-relieves)
+      { title: 'Job-Ready Candidates for Your Roles', text: 'Access to candidates from CodersTrust’s placement team for your roles, plus trainees from certification tracks chosen from employer demand.', facts: ['IN-04', 'PD-10'], pain: 'P1' },
       // WP166-B: the card ended with DELIVERY_WORK (facts IN-10 PD-01 IN-04)
-      { title: 'Customized Curriculum and Workshops', text: 'JobReady@Work builds a customized curriculum and interactive workshops, so your team learns on tasks from your own roles.', facts: ['IN-10'] },
+      { title: 'Customized Curriculum and Workshops', text: 'JobReady@Work builds a customized curriculum and interactive workshops, so your team learns on tasks from your own roles.', facts: ['IN-10'], pain: 'P2' },
+      // WP166-B (marketing review R3-08): it was "AI Content Agreed Before Training", "An AI-ready curriculum, designed to prepare people to work with AI tools. Each track’s AI content is agreed with you before training starts." (facts PD-02 IN-10)
+      { title: 'AI Skills Scoped to Your Team’s Tasks', text: 'An AI-ready curriculum, designed to prepare people to work with AI tools, plus AI leadership and AI-transformation programs with AIvolve. Each track’s AI content is agreed with you before training starts.', facts: ['PD-02', 'IN-10', 'PA-07'], pain: 'P3' }, // WP142 (kit 109): team-training wording, no youth-cohort "work-entry plan" or "enrollment"
     ],
   },
   {
@@ -219,7 +221,8 @@ test.describe('"What You Get" is three short cards on every audience and program
     await open(page, 'partner-with-us/investors/');
     await expect(page.locator('#features h2')).toHaveText('What JobReady Does');
     await expect(page.locator('#features .fc__card')).toHaveCount(0);
-    await expect(page.locator('#features li.card')).toHaveCount(3);
+    // WP175 (owner decision of 2026-11-28: C8 relieves each pain 1:1 and names its gain creator): one card per thesis pain and the gain creator, four short cards
+    await expect(page.locator('#features li.card')).toHaveCount(4);
     expect(compact(await page.locator('#features').textContent())).not.toContain('Concern Addressed');
   });
 
@@ -280,11 +283,12 @@ test.describe('Universities: the Guide band does not repeat the National Univers
     expect(text).not.toContain('official training partner');
     expect(text).toContain('From a Copenhagen launch to work in 16 countries and territories.'); // WP64 rework RW2 (coordinator): the heading says "Since 2014", so the line does not
     // WP46 (cycle-22 review): "with progressive levels" is gone from the Track Record bands (only the first level is published)
-    // WP166-B (marketing review R3-29): the TalentLEAP line and its link close How It Works now, where career paths are relevant (they were in this band)
-    expect(text).not.toContain('Our TalentLEAP method');
-    await expect(guide.getByRole('link', { name: 'How TalentLEAP Works' })).toHaveCount(0);
-    expect(compact(await page.locator('#mechanism').textContent())).toContain('Our TalentLEAP method organizes skills into career paths.'); // WP153 (Opus XHigh run 7): the line no longer repeats "in parallel with academic studies"
-    await expect(page.locator('#mechanism').getByRole('link', { name: 'How TalentLEAP Works' })).toHaveCount(1);
+    // WP166-B (marketing review R3-29) had moved the TalentLEAP line and its link to How It Works. WP175 (owner decision Q2 (a) of 2026-11-28): they close this band again, as its last line (C5: empathy → origin →
+    // authority → method), and How It Works no longer says them
+    expect(text).toContain('Our TalentLEAP method organizes skills into career paths.'); // WP153 (Opus XHigh run 7): the line no longer repeats "in parallel with academic studies"
+    await expect(guide.getByRole('link', { name: 'How TalentLEAP Works' })).toHaveCount(1);
+    expect(compact(await page.locator('#mechanism').textContent())).not.toContain('Our TalentLEAP method');
+    await expect(page.locator('#mechanism').getByRole('link', { name: 'How TalentLEAP Works' })).toHaveCount(0);
     await expect(guide.locator('.partners__row img'), 'the logo strip stays: National University, UPEACE and CCNY').toHaveCount(3);
     await expect(guide.locator('.pg__proof')).toHaveCount(1);
     await expect(guide.locator('.pg--solo')).toHaveCount(0);
@@ -350,13 +354,16 @@ test.describe('Investors: the platform-status question points to "What JobReady 
   });
 
   // WP43 (cycle-20 review): the mechanism band is headed "How JobReady Connects Learning to Work" (it was "A Multi-Sided Model: Learn, Earn, Prosper"), and the "How JobReady Builds on Delivery" band WP39 kept is gone (tests/wp43.spec.ts)
-  test('the mechanism band opens with its eyebrow and heading; "Our Approach" and its statement are gone', async ({ page }) => {
+  // WP175 (owner decision Q5 of 2026-11-28: Home and Investors carry a crafted statement too): after its eyebrow and heading the band opens with the statement for impact investors ("Our Approach", once); the statement
+  // WP39 removed stays gone
+  test('the mechanism band opens with its eyebrow and heading, then its crafted statement; the statement WP39 removed stays gone', async ({ page }) => {
     await open(page, 'partner-with-us/investors/');
     await expect(page.locator('#mechanism .eyebrow').first()).toHaveText('The Model');
     await expect(page.locator('#mechanism h2')).toHaveText('How JobReady Connects Learning to Work');
-    await expect(page.locator('#mechanism .pos, .pos__label, .pos__text')).toHaveCount(0);
+    await expect(page.locator('#mechanism .pos')).toHaveCount(1);
+    await expect(page.locator('#mechanism .pos__text')).toHaveCount(1);
     const text = await mainText(page);
-    expect(text).not.toContain('Our Approach');
+    expect(count(text, 'Our Approach')).toBe(1);
     expect(text).not.toContain('weighing a platform for emerging-market youth employment');
     expect(text).not.toContain('Partners receive monthly reports on progress toward paid work');
     await expect(page.locator('#platform')).toHaveCount(0);

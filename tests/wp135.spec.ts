@@ -207,21 +207,24 @@ test('Polish 2: "On This Page" ends with the closing H2 on the Trial and Outcome
   }
 });
 
-test('Polish 3: Universities folds "Start with One Campus" into the pilot band', () => {
+// WP175 (owner decision of 2026-11-28: CMF v3, every page keeps C11): "Start with One Campus" is its own one-line band again (C11, dee46ac1^), so the pilot band's first point is its dee46ac1^ line again; the
+// co-design line is still said once
+test('Polish 3: Universities "Start with One Campus" is the one-line C11 band again (WP175), and the pilot band does not repeat its line', () => {
   const rel = 'partner-with-us/universities/index.html';
   const raw = html(rel);
   const text = main(rel);
-  expect(/<h2[^>]*>\s*Start with One Campus\s*<\/h2>/.test(raw), 'no H2 "Start with One Campus"').toBe(false);
-  expect(text).not.toContain('Start with One Campus');
+  expect((raw.match(/<h2[^>]*>\s*Start with One Campus\s*<\/h2>/g) ?? []).length, 'one H2 "Start with One Campus"').toBe(1);
   expect(/<h3[^>]*>\s*(?:<[^>]+>\s*)*A Pilot Comes First\s*<\/h3>/.test(raw), 'H3 "A Pilot Comes First"').toBe(true);
-  expect(text).toContain('A Pilot Comes First Start with one campus; cohort size, tracks and labs are agreed in co-design.');
-  expect(text).not.toContain('Start with a first campus program and see its results.');
+  expect(text).toContain('Start with One Campus Cohort size, tracks and labs are agreed in co-design.');
+  expect(text).toContain('A Pilot Comes First Start with a first campus program and see its results.');
+  expect(text).not.toContain('Start with one campus; cohort size, tracks and labs are agreed in co-design.');
   expect(text.match(/agreed in co-design/g) ?? []).toHaveLength(1);
 });
 
-test('Polish 3: nothing links to the Universities #offer anchor, and the page has no #offer left to link to', () => {
+// WP175 (owner decision of 2026-11-28): the C11 band and its #offer anchor are back, once; still nothing links to it
+test('Polish 3: nothing links to the Universities #offer anchor, and the page has one #offer (the restored C11 band)', () => {
   const rel = 'partner-with-us/universities/index.html';
-  expect(/\bid="offer"/.test(html(rel)), 'no id="offer" on the page').toBe(false);
+  expect((html(rel).match(/\bid="offer"/g) ?? []).length, 'one id="offer" on the page').toBe(1);
   const links = allPages().filter((p) => /href="[^"]*partner-with-us\/universities\/#offer"/.test(html(p)));
   expect(links, 'pages that link to /partner-with-us/universities/#offer').toEqual([]);
   expect(/href="#offer"/.test(html(rel)), 'no in-page link to #offer').toBe(false);

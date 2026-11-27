@@ -586,7 +586,9 @@ test.describe('Development Partners: the glance is three tiles and the +10 tile 
       await expect(page.locator('#offer h2'), route).toHaveText('Choose Where to Start');
     }
     await open(page, UNI);
-    await expect(page.locator('#offer')).toHaveCount(0); // WP135: the one-line band is folded into the pilot band (WP133 had headed it "Start with One Campus")
+    // WP135 had folded the one-line band into the pilot band; WP175 (owner decision of 2026-11-28: CMF v3, every page keeps C11) restores it under its WP133 heading, still with no eyebrow
+    await expect(page.locator('#offer h2')).toHaveText('Start with One Campus');
+    await expect(page.locator('#offer .sh .eyebrow')).toHaveCount(0);
     await open(page, EMP);
     expect(compact(await page.locator('#offer .sh .eyebrow').textContent())).toBe('Start');
     await open(page, FOUND);
@@ -606,13 +608,13 @@ test.describe('The Track Record bands of Governments and Investors start with th
     await expect(page.locator('#guide h2')).toHaveText('We’ve Built This Path Since 2014');
   });
 
-  test('Investors: after the eyebrow and heading the band opens with the origin line and no empathy line yet; the retired line is not its WP175 line', async ({ page }) => {
+  test('Investors: after the eyebrow and heading the band opens with its WP175 empathy line, then the origin line; the retired line is not its WP175 line', async ({ page }) => {
     // WP175 (owner decision Q2 (a) of 2026-11-28): every C5 opens with an empathy line again, each page its own fresh line (EMPATHY has a key for every conversion page); the retired line is not one of them
     expect(EMPATHY.investors).not.toMatch(/what is proven and what is still being built|only promised/);
     await open(page, INVEST);
-    await expect(page.locator('#guide .ig__empathy')).toHaveCount(0);
+    await expect(page.locator('#guide .ig__empathy')).toHaveCount(1);
     const kids = await page.locator('#guide .ig__copy').first().evaluate((el) => Array.from(el.children).map((c) => (c.textContent ?? '').replace(/\s+/g, ' ').trim()));
-    expect(kids.slice(0, 3)).toEqual(['Our Track Record', 'A Record Built Since 2014', 'From a Copenhagen launch to work across Asia, Africa, Europe and the Americas.']); // WP150: the tile carries the 16; // WP64 rework RW2 (coordinator): the heading says "Since 2014", so the line does not
+    expect(kids.slice(0, 4)).toEqual(['Our Track Record', 'A Record Built Since 2014', EMPATHY.investors, 'From a Copenhagen launch to work across Asia, Africa, Europe and the Americas.']); // WP150: the tile carries the 16; // WP64 rework RW2 (coordinator): the heading says "Since 2014", so the line does not
     expect(pagesWith('Impact investors need to see what is proven')).toEqual([]);
   });
 
